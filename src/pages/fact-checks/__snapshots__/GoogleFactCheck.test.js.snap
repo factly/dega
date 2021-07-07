@@ -6072,7 +6072,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                     </ForwardRef(InternalButton)>
                     <ForwardRef(InternalButton)
                       block={false}
-                      disabled={true}
+                      disabled={false}
                       ghost={false}
                       htmlType="button"
                       loading={false}
@@ -6398,7 +6398,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                         >
                           <Button
                             block={false}
-                            disabled={true}
+                            disabled={false}
                             ghost={false}
                             htmlType="button"
                             loading={false}
@@ -6407,7 +6407,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                             <Wave>
                               <button
                                 className="ant-btn"
-                                disabled={true}
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >
@@ -9370,7 +9370,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                     </ForwardRef(InternalButton)>
                     <ForwardRef(InternalButton)
                       block={false}
-                      disabled={true}
+                      disabled={false}
                       ghost={false}
                       htmlType="button"
                       loading={false}
@@ -9696,7 +9696,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                         >
                           <Button
                             block={false}
-                            disabled={true}
+                            disabled={false}
                             ghost={false}
                             htmlType="button"
                             loading={false}
@@ -9705,7 +9705,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                             <Wave>
                               <button
                                 className="ant-btn"
-                                disabled={true}
+                                disabled={false}
                                 onClick={[Function]}
                                 type="button"
                               >

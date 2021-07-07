@@ -10,12 +10,50 @@ import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
 import CategoriesList from './CategoryList';
-import { getCategories, deleteCategory } from '../../../actions/categories';
+import { deleteCategory } from '../../../actions/categories';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
 
+const info = {
+  total: 2,
+  loading: false,
+  categories: [
+    {
+      id: 1,
+      created_at: '2020-09-09T06:49:36.566567Z',
+      updated_at: '2020-09-09T06:49:36.566567Z',
+      deleted_at: null,
+      name: 'Andhra Pradesh',
+      slug: 'andhra-pradesh',
+      description: '',
+      parent_id: 0,
+      medium_id: 0,
+      space_id: 1,
+      posts: null,
+    },
+    {
+      id: 2,
+      created_at: '2020-09-09T06:49:54.027402Z',
+      updated_at: '2020-09-09T06:49:54.027402Z',
+      deleted_at: null,
+      name: 'Telangana',
+      slug: 'telangana',
+      description: '',
+      parent_id: 0,
+      medium_id: 0,
+      space_id: 1,
+      posts: null,
+    },
+  ],
+};
+const filters = {
+  page: 1,
+  limit: 20,
+};
+const setFilters = jest.fn();
+const fetchCategories = jest.fn();
 let state = {
   categories: {
     req: [
@@ -29,7 +67,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-09T06:49:36.566567Z',
         updated_at: '2020-09-09T06:49:36.566567Z',
@@ -42,7 +80,7 @@ let state = {
         space_id: 1,
         posts: null,
       },
-      '2': {
+      2: {
         id: 2,
         created_at: '2020-09-09T06:49:54.027402Z',
         updated_at: '2020-09-09T06:49:54.027402Z',
@@ -82,7 +120,13 @@ describe('Categories List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList actions={['update', 'delete']} />
+            <CategoriesList
+              actions={['update', 'delete']}
+              data={{ categories: [], loading: false, total: 0 }}
+              filters={filters}
+              setFilters={setFilters}
+              fetchCategories={fetchCategories}
+            />
           </Router>
         </Provider>,
       );
@@ -91,10 +135,18 @@ describe('Categories List component', () => {
     it('should match component when loading', () => {
       state.categories.loading = true;
       store = mockStore(state);
+      const info2 = { ...info };
+      info2.loading = true;
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList actions={['update', 'delete']} />
+            <CategoriesList
+              actions={['update', 'delete']}
+              data={info2}
+              filters={filters}
+              setFilters={setFilters}
+              fetchCategories={fetchCategories}
+            />
           </Router>
         </Provider>,
       );
@@ -106,14 +158,17 @@ describe('Categories List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <CategoriesList actions={['update', 'delete']} />
+            <CategoriesList
+              actions={['update', 'delete']}
+              data={info}
+              filters={filters}
+              setFilters={setFilters}
+              fetchCategories={fetchCategories}
+            />
           </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-
-      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -129,16 +184,22 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList actions={['update', 'delete']} />
+              <CategoriesList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchCategories={fetchCategories}
+              />
             </Router>
           </Provider>,
         );
       });
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(3);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(3);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete category', () => {
       store = mockStore(state);
@@ -147,12 +208,18 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList actions={['update', 'delete']} />
+              <CategoriesList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchCategories={fetchCategories}
+              />
             </Router>
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
+      const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -162,7 +229,6 @@ describe('Categories List component', () => {
         .simulate('click');
       expect(deleteCategory).toHaveBeenCalled();
       expect(deleteCategory).toHaveBeenCalledWith(1);
-      expect(getCategories).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit category', () => {
       store = mockStore(state);
@@ -171,7 +237,13 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList actions={['update', 'delete']} />
+              <CategoriesList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchCategories={fetchCategories}
+              />
             </Router>
           </Provider>,
         );
@@ -192,50 +264,20 @@ describe('Categories List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <CategoriesList actions={['update', 'delete']} />
+              <CategoriesList
+                actions={['update', 'delete']}
+                data={{ categories: [], loading: false, total: 0 }}
+                filters={filters}
+                setFilters={setFilters}
+                fetchCategories={fetchCategories}
+              />
             </Router>
           </Provider>,
         );
       });
 
       const button = wrapper.find(Button);
-      expect(button.length).toEqual(1);
-    });
-    it('should submit filters', () => {
-      store = mockStore(state);
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <CategoriesList actions={['update', 'delete']} />
-            </Router>
-          </Provider>,
-        );
-        wrapper
-          .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'category' } });
-        wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 'asc' } });
-
-        const submitButtom = wrapper.find('Button').at(0);
-        submitButtom.simulate('submit');
-      });
-
-      setTimeout(() => {
-        expect(getPosts).toHaveBeenCalledWith({
-          page: 1,
-          limit: 5,
-          q: 'category',
-        });
-      }, 0);
+      expect(button.length).toEqual(0);
     });
   });
 });

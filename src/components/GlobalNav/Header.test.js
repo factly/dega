@@ -5,6 +5,8 @@ import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
+import { Popover, Avatar } from 'antd';
 
 import '../../matchMedia.mock';
 import Header from './Header';
@@ -86,6 +88,58 @@ describe('Header component', () => {
         )
         .toJSON();
       expect(tree).toMatchSnapshot();
+    });
+  });
+  describe('component testing', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should display applications', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Header
+              applications={[
+                {
+                  id: 1,
+                  name: 'App1',
+                  url: 'http://1233434/1323',
+                  medium: { id: 1, url: { raw: 'mediumUrl' } },
+                },
+              ]}
+            />
+          </Provider>,
+        );
+        const popover = wrapper.find(Popover);
+        popover.simulate('click');
+        expect(wrapper.find(Popover).find(Avatar).length).toBe(0);
+      });
+    });
+    it('should display applications with no medium', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Header
+              applications={[
+                {
+                  id: 1,
+                  name: 'App1',
+                  url: 'http://1233434/1323',
+                },
+              ]}
+            />
+          </Provider>,
+        );
+        const popover = wrapper.find(Popover);
+        popover.simulate('click');
+        expect(wrapper.find(Avatar).length).not.toBe(0);
+      });
     });
   });
 });

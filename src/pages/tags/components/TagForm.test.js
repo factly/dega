@@ -107,6 +107,15 @@ describe('Tags Create Form component', () => {
       }, 0);
     });
     it('should submit form with given data', (done) => {
+      const data2 = { ...data };
+      data2.id = 1;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <TagForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');

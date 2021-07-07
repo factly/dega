@@ -29,7 +29,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         title: 'Request 1',
         description: 'Description',
@@ -41,7 +41,7 @@ let state = {
         episodes: -1,
         podcast: true,
       },
-      '2': {
+      2: {
         id: 2,
         title: 'Request 2',
         description: 'Description',
@@ -53,7 +53,7 @@ let state = {
         episodes: 10,
         podcast: true,
       },
-      '3': {
+      3: {
         id: 3,
         title: 'Request 3',
         description: 'Description',

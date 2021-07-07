@@ -40,6 +40,68 @@ exports[`Tags List component snapshot testing should match component when loadin
           "delete",
         ]
       }
+      data={
+        Object {
+          "loading": true,
+          "tags": Array [
+            Object {
+              "created_at": "2020-09-09T06:49:36.566567Z",
+              "deleted_at": null,
+              "description": Object {
+                "blocks": Array [
+                  Object {
+                    "data": Object {
+                      "text": "Description",
+                    },
+                    "type": "paragraph",
+                  },
+                ],
+                "time": 1613561493761,
+                "version": "2.19.0",
+              },
+              "id": 1,
+              "medium_id": 0,
+              "name": "Election",
+              "posts": null,
+              "slug": "election",
+              "space_id": 1,
+              "updated_at": "2020-09-09T06:49:36.566567Z",
+            },
+            Object {
+              "created_at": "2020-09-09T06:49:54.027402Z",
+              "deleted_at": null,
+              "description": Object {
+                "blocks": Array [
+                  Object {
+                    "data": Object {
+                      "text": "Description 2",
+                    },
+                    "type": "paragraph",
+                  },
+                ],
+                "time": 1613561493781,
+                "version": "2.19.0",
+              },
+              "id": 2,
+              "medium_id": 0,
+              "name": "Politics",
+              "posts": null,
+              "slug": "politics",
+              "space_id": 1,
+              "updated_at": "2020-09-09T06:49:54.027402Z",
+            },
+          ],
+          "total": 2,
+        }
+      }
+      fetchTags={[MockFunction]}
+      filters={
+        Object {
+          "limit": 20,
+          "page": 1,
+        }
+      }
+      setFilters={[MockFunction]}
     />
   </BrowserRouter>
 </ContextProvider>
@@ -85,6 +147,68 @@ exports[`Tags List component snapshot testing should match component with tags 1
           "delete",
         ]
       }
+      data={
+        Object {
+          "loading": false,
+          "tags": Array [
+            Object {
+              "created_at": "2020-09-09T06:49:36.566567Z",
+              "deleted_at": null,
+              "description": Object {
+                "blocks": Array [
+                  Object {
+                    "data": Object {
+                      "text": "Description",
+                    },
+                    "type": "paragraph",
+                  },
+                ],
+                "time": 1613561493761,
+                "version": "2.19.0",
+              },
+              "id": 1,
+              "medium_id": 0,
+              "name": "Election",
+              "posts": null,
+              "slug": "election",
+              "space_id": 1,
+              "updated_at": "2020-09-09T06:49:36.566567Z",
+            },
+            Object {
+              "created_at": "2020-09-09T06:49:54.027402Z",
+              "deleted_at": null,
+              "description": Object {
+                "blocks": Array [
+                  Object {
+                    "data": Object {
+                      "text": "Description 2",
+                    },
+                    "type": "paragraph",
+                  },
+                ],
+                "time": 1613561493781,
+                "version": "2.19.0",
+              },
+              "id": 2,
+              "medium_id": 0,
+              "name": "Politics",
+              "posts": null,
+              "slug": "politics",
+              "space_id": 1,
+              "updated_at": "2020-09-09T06:49:54.027402Z",
+            },
+          ],
+          "total": 2,
+        }
+      }
+      fetchTags={[MockFunction]}
+      filters={
+        Object {
+          "limit": 20,
+          "page": 1,
+        }
+      }
+      setFilters={[MockFunction]}
     />
   </BrowserRouter>
 </ContextProvider>
@@ -130,6 +254,21 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
           "delete",
         ]
       }
+      data={
+        Object {
+          "loading": false,
+          "tags": Array [],
+          "total": 0,
+        }
+      }
+      fetchTags={[MockFunction]}
+      filters={
+        Object {
+          "limit": 20,
+          "page": 1,
+        }
+      }
+      setFilters={[MockFunction]}
     />
   </BrowserRouter>
 </ContextProvider>

@@ -3,18 +3,19 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
+import { mount, render } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
 import CreateCategory from './CreateCategory';
 import * as actions from '../../actions/categories';
 import CategoryCreateForm from './components/CategoryForm';
-
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
-jest.mock('jsoneditor');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),

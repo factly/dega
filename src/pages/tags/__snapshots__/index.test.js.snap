@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Tags List component should render the component 1`] = `
+exports[`Tags List component snapshot testing should render the component 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -331,7 +331,7 @@ exports[`Tags List component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -653,7 +653,7 @@ exports[`Tags List component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -1299,9 +1299,9 @@ exports[`Tags List component should render the component 1`] = `
                   }
                   data={
                     Object {
-                      "loading": undefined,
-                      "tags": undefined,
-                      "total": undefined,
+                      "loading": false,
+                      "tags": Array [],
+                      "total": 0,
                     }
                   }
                   fetchTags={[Function]}
@@ -1355,12 +1355,14 @@ exports[`Tags List component should render the component 1`] = `
                                 },
                               ]
                             }
+                            dataSource={Array []}
+                            loading={false}
                             pagination={
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             rowKey="id"
@@ -1406,6 +1408,7 @@ exports[`Tags List component should render the component 1`] = `
                                         ]
                                       }
                                       data={Array []}
+                                      dataSource={Array []}
                                       emptyText={
                                         <Context.Consumer>
                                           [Function]
@@ -1526,12 +1529,13 @@ exports[`Tags List component should render the component 1`] = `
                                           },
                                         }
                                       }
+                                      loading={false}
                                       pagination={
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 20,
-                                          "total": undefined,
+                                          "total": 0,
                                         }
                                       }
                                       prefixCls="ant-table"
@@ -1570,7 +1574,7 @@ exports[`Tags List component should render the component 1`] = `
                                                 },
                                               ],
                                               "data": Array [],
-                                              "dataSource": undefined,
+                                              "dataSource": Array [],
                                               "direction": undefined,
                                               "emptyText": <Context.Consumer>
                                                 [Function]
@@ -1686,13 +1690,13 @@ exports[`Tags List component should render the component 1`] = `
                                                   </div>,
                                                 },
                                               },
-                                              "loading": undefined,
+                                              "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 20,
-                                                "total": undefined,
+                                                "total": 0,
                                               },
                                               "prefixCls": "ant-table",
                                               "rowClassName": [Function],
@@ -2192,12 +2196,12 @@ exports[`Tags List component should render the component 1`] = `
 </Provider>
 `;
 
-exports[`Tags List component should render the component with data 1`] = `
+exports[`Tags List component snapshot testing should render the component with data 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -2523,7 +2527,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -2845,7 +2849,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -3494,10 +3498,27 @@ exports[`Tags List component should render the component with data 1`] = `
                       "loading": false,
                       "tags": Array [
                         Object {
-                          "description": "description",
+                          "created_at": "2020-09-09T06:49:36.566567Z",
+                          "deleted_at": null,
+                          "description": Object {
+                            "blocks": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "Description",
+                                },
+                                "type": "paragraph",
+                              },
+                            ],
+                            "time": 1613561493761,
+                            "version": "2.19.0",
+                          },
                           "id": 1,
-                          "name": "tag",
-                          "slug": "slug",
+                          "medium_id": 0,
+                          "name": "Election",
+                          "posts": null,
+                          "slug": "election",
+                          "space_id": 1,
+                          "updated_at": "2020-09-09T06:49:36.566567Z",
                         },
                       ],
                       "total": 1,
@@ -3557,10 +3578,27 @@ exports[`Tags List component should render the component with data 1`] = `
                             dataSource={
                               Array [
                                 Object {
-                                  "description": "description",
+                                  "created_at": "2020-09-09T06:49:36.566567Z",
+                                  "deleted_at": null,
+                                  "description": Object {
+                                    "blocks": Array [
+                                      Object {
+                                        "data": Object {
+                                          "text": "Description",
+                                        },
+                                        "type": "paragraph",
+                                      },
+                                    ],
+                                    "time": 1613561493761,
+                                    "version": "2.19.0",
+                                  },
                                   "id": 1,
-                                  "name": "tag",
-                                  "slug": "slug",
+                                  "medium_id": 0,
+                                  "name": "Election",
+                                  "posts": null,
+                                  "slug": "election",
+                                  "space_id": 1,
+                                  "updated_at": "2020-09-09T06:49:36.566567Z",
                                 },
                               ]
                             }
@@ -3618,20 +3656,54 @@ exports[`Tags List component should render the component with data 1`] = `
                                       data={
                                         Array [
                                           Object {
-                                            "description": "description",
+                                            "created_at": "2020-09-09T06:49:36.566567Z",
+                                            "deleted_at": null,
+                                            "description": Object {
+                                              "blocks": Array [
+                                                Object {
+                                                  "data": Object {
+                                                    "text": "Description",
+                                                  },
+                                                  "type": "paragraph",
+                                                },
+                                              ],
+                                              "time": 1613561493761,
+                                              "version": "2.19.0",
+                                            },
                                             "id": 1,
-                                            "name": "tag",
-                                            "slug": "slug",
+                                            "medium_id": 0,
+                                            "name": "Election",
+                                            "posts": null,
+                                            "slug": "election",
+                                            "space_id": 1,
+                                            "updated_at": "2020-09-09T06:49:36.566567Z",
                                           },
                                         ]
                                       }
                                       dataSource={
                                         Array [
                                           Object {
-                                            "description": "description",
+                                            "created_at": "2020-09-09T06:49:36.566567Z",
+                                            "deleted_at": null,
+                                            "description": Object {
+                                              "blocks": Array [
+                                                Object {
+                                                  "data": Object {
+                                                    "text": "Description",
+                                                  },
+                                                  "type": "paragraph",
+                                                },
+                                              ],
+                                              "time": 1613561493761,
+                                              "version": "2.19.0",
+                                            },
                                             "id": 1,
-                                            "name": "tag",
-                                            "slug": "slug",
+                                            "medium_id": 0,
+                                            "name": "Election",
+                                            "posts": null,
+                                            "slug": "election",
+                                            "space_id": 1,
+                                            "updated_at": "2020-09-09T06:49:36.566567Z",
                                           },
                                         ]
                                       }
@@ -3701,12 +3773,12 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     <td
                                                       class="ant-table-cell"
                                                     >
-                                                      tag
+                                                      Election
                                                     </td>
                                                     <td
                                                       class="ant-table-cell"
                                                     >
-                                                      slug
+                                                      election
                                                     </td>
                                                     <td
                                                       class="ant-table-cell"
@@ -3796,18 +3868,52 @@ exports[`Tags List component should render the component with data 1`] = `
                                               ],
                                               "data": Array [
                                                 Object {
-                                                  "description": "description",
+                                                  "created_at": "2020-09-09T06:49:36.566567Z",
+                                                  "deleted_at": null,
+                                                  "description": Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1613561493761,
+                                                    "version": "2.19.0",
+                                                  },
                                                   "id": 1,
-                                                  "name": "tag",
-                                                  "slug": "slug",
+                                                  "medium_id": 0,
+                                                  "name": "Election",
+                                                  "posts": null,
+                                                  "slug": "election",
+                                                  "space_id": 1,
+                                                  "updated_at": "2020-09-09T06:49:36.566567Z",
                                                 },
                                               ],
                                               "dataSource": Array [
                                                 Object {
-                                                  "description": "description",
+                                                  "created_at": "2020-09-09T06:49:36.566567Z",
+                                                  "deleted_at": null,
+                                                  "description": Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "Description",
+                                                        },
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1613561493761,
+                                                    "version": "2.19.0",
+                                                  },
                                                   "id": 1,
-                                                  "name": "tag",
-                                                  "slug": "slug",
+                                                  "medium_id": 0,
+                                                  "name": "Election",
+                                                  "posts": null,
+                                                  "slug": "election",
+                                                  "space_id": 1,
+                                                  "updated_at": "2020-09-09T06:49:36.566567Z",
                                                 },
                                               ],
                                               "direction": undefined,
@@ -3872,12 +3978,12 @@ exports[`Tags List component should render the component with data 1`] = `
                                                           <td
                                                             class="ant-table-cell"
                                                           >
-                                                            tag
+                                                            Election
                                                           </td>
                                                           <td
                                                             class="ant-table-cell"
                                                           >
-                                                            slug
+                                                            election
                                                           </td>
                                                           <td
                                                             class="ant-table-cell"
@@ -4300,10 +4406,27 @@ exports[`Tags List component should render the component with data 1`] = `
                                                   data={
                                                     Array [
                                                       Object {
-                                                        "description": "description",
+                                                        "created_at": "2020-09-09T06:49:36.566567Z",
+                                                        "deleted_at": null,
+                                                        "description": Object {
+                                                          "blocks": Array [
+                                                            Object {
+                                                              "data": Object {
+                                                                "text": "Description",
+                                                              },
+                                                              "type": "paragraph",
+                                                            },
+                                                          ],
+                                                          "time": 1613561493761,
+                                                          "version": "2.19.0",
+                                                        },
                                                         "id": 1,
-                                                        "name": "tag",
-                                                        "slug": "slug",
+                                                        "medium_id": 0,
+                                                        "name": "Election",
+                                                        "posts": null,
+                                                        "slug": "election",
+                                                        "space_id": 1,
+                                                        "updated_at": "2020-09-09T06:49:36.566567Z",
                                                       },
                                                     ]
                                                   }
@@ -4324,10 +4447,27 @@ exports[`Tags List component should render the component with data 1`] = `
                                                       key="1"
                                                       record={
                                                         Object {
-                                                          "description": "description",
+                                                          "created_at": "2020-09-09T06:49:36.566567Z",
+                                                          "deleted_at": null,
+                                                          "description": Object {
+                                                            "blocks": Array [
+                                                              Object {
+                                                                "data": Object {
+                                                                  "text": "Description",
+                                                                },
+                                                                "type": "paragraph",
+                                                              },
+                                                            ],
+                                                            "time": 1613561493761,
+                                                            "version": "2.19.0",
+                                                          },
                                                           "id": 1,
-                                                          "name": "tag",
-                                                          "slug": "slug",
+                                                          "medium_id": 0,
+                                                          "name": "Election",
+                                                          "posts": null,
+                                                          "slug": "election",
+                                                          "space_id": 1,
+                                                          "updated_at": "2020-09-09T06:49:36.566567Z",
                                                         }
                                                       }
                                                       recordKey={1}
@@ -4352,10 +4492,27 @@ exports[`Tags List component should render the component with data 1`] = `
                                                           prefixCls="ant-table"
                                                           record={
                                                             Object {
-                                                              "description": "description",
+                                                              "created_at": "2020-09-09T06:49:36.566567Z",
+                                                              "deleted_at": null,
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1613561493761,
+                                                                "version": "2.19.0",
+                                                              },
                                                               "id": 1,
-                                                              "name": "tag",
-                                                              "slug": "slug",
+                                                              "medium_id": 0,
+                                                              "name": "Election",
+                                                              "posts": null,
+                                                              "slug": "election",
+                                                              "space_id": 1,
+                                                              "updated_at": "2020-09-09T06:49:36.566567Z",
                                                             }
                                                           }
                                                         >
@@ -4365,7 +4522,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                             rowSpan={null}
                                                             style={Object {}}
                                                           >
-                                                            tag
+                                                            Election
                                                           </td>
                                                         </Cell>
                                                         <Cell
@@ -4380,10 +4537,27 @@ exports[`Tags List component should render the component with data 1`] = `
                                                           prefixCls="ant-table"
                                                           record={
                                                             Object {
-                                                              "description": "description",
+                                                              "created_at": "2020-09-09T06:49:36.566567Z",
+                                                              "deleted_at": null,
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1613561493761,
+                                                                "version": "2.19.0",
+                                                              },
                                                               "id": 1,
-                                                              "name": "tag",
-                                                              "slug": "slug",
+                                                              "medium_id": 0,
+                                                              "name": "Election",
+                                                              "posts": null,
+                                                              "slug": "election",
+                                                              "space_id": 1,
+                                                              "updated_at": "2020-09-09T06:49:36.566567Z",
                                                             }
                                                           }
                                                         >
@@ -4393,7 +4567,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                             rowSpan={null}
                                                             style={Object {}}
                                                           >
-                                                            slug
+                                                            election
                                                           </td>
                                                         </Cell>
                                                         <Cell
@@ -4408,10 +4582,27 @@ exports[`Tags List component should render the component with data 1`] = `
                                                           prefixCls="ant-table"
                                                           record={
                                                             Object {
-                                                              "description": "description",
+                                                              "created_at": "2020-09-09T06:49:36.566567Z",
+                                                              "deleted_at": null,
+                                                              "description": Object {
+                                                                "blocks": Array [
+                                                                  Object {
+                                                                    "data": Object {
+                                                                      "text": "Description",
+                                                                    },
+                                                                    "type": "paragraph",
+                                                                  },
+                                                                ],
+                                                                "time": 1613561493761,
+                                                                "version": "2.19.0",
+                                                              },
                                                               "id": 1,
-                                                              "name": "tag",
-                                                              "slug": "slug",
+                                                              "medium_id": 0,
+                                                              "name": "Election",
+                                                              "posts": null,
+                                                              "slug": "election",
+                                                              "space_id": 1,
+                                                              "updated_at": "2020-09-09T06:49:36.566567Z",
                                                             }
                                                           }
                                                           render={[Function]}

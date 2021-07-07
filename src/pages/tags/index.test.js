@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch, useSelector, Provider } from 'react-redux';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 
 import '../../matchMedia.mock';
 import Tags from './index';
@@ -14,7 +15,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -26,7 +26,39 @@ jest.mock('../../actions/tags', () => ({
   getTags: jest.fn(),
   addTag: jest.fn(),
 }));
-
+let state = {
+  tags: {
+    req: [
+      {
+        data: [1],
+        query: {
+          page: 1,
+          limit: 20,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      1: {
+        id: 1,
+        created_at: '2020-09-09T06:49:36.566567Z',
+        updated_at: '2020-09-09T06:49:36.566567Z',
+        deleted_at: null,
+        name: 'Election',
+        slug: 'election',
+        description: {
+          time: 1613561493761,
+          blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+          version: '2.19.0',
+        },
+        medium_id: 0,
+        space_id: 1,
+        posts: null,
+      },
+    },
+    loading: false,
+  },
+};
 describe('Tags List component', () => {
   let store;
   let mockedDispatch;
@@ -37,37 +69,78 @@ describe('Tags List component', () => {
     mockedDispatch = jest.fn();
     useDispatch.mockReturnValue(mockedDispatch);
   });
-  it('should render the component', () => {
-    useSelector.mockImplementationOnce(() => ({}));
-    const tree = mount(
-      <Provider store={store}>
-        <Router>
-          <Tags permission={{ actions: ['create'] }} />
-        </Router>
-      </Provider>,
-    );
-    expect(tree).toMatchSnapshot();
-  });
-  it('should render the component with data', () => {
-    useSelector.mockImplementationOnce(() => ({
-      tags: [
-        {
-          id: 1,
-          name: 'tag',
-          slug: 'slug',
-          description: 'description',
+  describe('snapshot testing', () => {
+    it('should render the component', () => {
+      const state2 = {
+        tags: {
+          req: [],
+          details: {},
+          loading: false,
         },
-      ],
-      total: 1,
-      loading: false,
-    }));
-    const tree = mount(
-      <Provider store={store}>
-        <Router>
-          <Tags permission={{ actions: ['create'] }} />
-        </Router>
-      </Provider>,
-    );
-    expect(tree).toMatchSnapshot();
+      };
+      store = mockStore(state2);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Tags permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the component with data', () => {
+      store = mockStore(state);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Tags permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+  });
+  describe('component testing', () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+      mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
+      useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should submit filters', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <Tags permission={{ actions: ['update', 'delete'] }} />
+            </Router>
+          </Provider>,
+        );
+        wrapper
+          .find('FormItem')
+          .at(0)
+          .find('Input')
+          .simulate('change', { target: { value: 'tag' } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 'asc' } });
+
+        const submitButtom = wrapper.find('Button').at(1);
+        submitButtom.simulate('submit');
+      });
+
+      setTimeout(() => {
+        expect(getPosts).toHaveBeenCalledWith({
+          page: 1,
+          limit: 20,
+          q: 'tag',
+        });
+      }, 0);
+    });
   });
 });

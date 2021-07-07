@@ -5475,6 +5475,13 @@ exports[`Space Edit Form component snapshot testing should match component with 
   <SpaceEditForm
     data={
       Object {
+        "analytics": Object {
+          "plausible": Object {
+            "domain": "domain",
+            "embed_code": "embed-code",
+            "server_url": "url",
+          },
+        },
         "description": Object {
           "blocks": Array [
             Object {
@@ -5803,6 +5810,13 @@ exports[`Space Edit Form component snapshot testing should match component with 
         }
         initialValues={
           Object {
+            "analytics": Object {
+              "plausible": Object {
+                "domain": "domain",
+                "embed_code": "embed-code",
+                "server_url": "url",
+              },
+            },
             "description": Object {
               "blocks": Array [
                 Object {
@@ -5884,6 +5898,13 @@ exports[`Space Edit Form component snapshot testing should match component with 
             id="create-space"
             initialValues={
               Object {
+                "analytics": Object {
+                  "plausible": Object {
+                    "domain": "domain",
+                    "embed_code": "embed-code",
+                    "server_url": "url",
+                  },
+                },
                 "description": Object {
                   "blocks": Array [
                     Object {
@@ -10440,6 +10461,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                   >
                                     <Component
                                       update={1}
+                                      value="url"
                                     >
                                       <Input
                                         id="create-space_analytics_plausible_server_url"
@@ -10450,6 +10472,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                           }
                                         }
                                         type="text"
+                                        value="url"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -10467,6 +10490,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                 }
                                               }
                                               type="text"
+                                              value="url"
                                             />
                                           }
                                           focused={false}
@@ -10482,7 +10506,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                           }
                                           triggerFocus={[Function]}
                                           type="text"
-                                          value=""
+                                          value="url"
                                         >
                                           <input
                                             className="ant-input"
@@ -10497,7 +10521,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                               }
                                             }
                                             type="text"
-                                            value=""
+                                            value="url"
                                           />
                                         </ClearableLabeledInput>
                                       </Input>
@@ -10673,6 +10697,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                   >
                                     <Component
                                       update={1}
+                                      value="domain"
                                     >
                                       <Input
                                         id="create-space_analytics_plausible_domain"
@@ -10683,6 +10708,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                           }
                                         }
                                         type="text"
+                                        value="domain"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -10700,6 +10726,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                 }
                                               }
                                               type="text"
+                                              value="domain"
                                             />
                                           }
                                           focused={false}
@@ -10715,7 +10742,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                           }
                                           triggerFocus={[Function]}
                                           type="text"
-                                          value=""
+                                          value="domain"
                                         >
                                           <input
                                             className="ant-input"
@@ -10730,7 +10757,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                               }
                                             }
                                             type="text"
-                                            value=""
+                                            value="domain"
                                           />
                                         </ClearableLabeledInput>
                                       </Input>
@@ -10906,6 +10933,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                   >
                                     <Component
                                       update={1}
+                                      value="embed-code"
                                     >
                                       <TextArea
                                         id="create-space_analytics_plausible_embed_code"
@@ -10915,6 +10943,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                             "width": "100%",
                                           }
                                         }
+                                        value="embed-code"
                                       >
                                         <ClearableLabeledInput
                                           bordered={true}
@@ -10929,6 +10958,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                   "width": "100%",
                                                 }
                                               }
+                                              value="embed-code"
                                             />
                                           }
                                           handleReset={[Function]}
@@ -10942,7 +10972,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                             }
                                           }
                                           triggerFocus={[Function]}
-                                          value=""
+                                          value="embed-code"
                                         >
                                           <TextArea
                                             className=""
@@ -10954,7 +10984,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                 "width": "100%",
                                               }
                                             }
-                                            value=""
+                                            value="embed-code"
                                           >
                                             <ResizableTextArea
                                               className=""
@@ -10967,7 +10997,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                   "width": "100%",
                                                 }
                                               }
-                                              value=""
+                                              value="embed-code"
                                             >
                                               <ResizeObserver
                                                 disabled={true}
@@ -10983,7 +11013,7 @@ exports[`Space Edit Form component snapshot testing should match component with 
                                                       "width": "100%",
                                                     }
                                                   }
-                                                  value=""
+                                                  value="embed-code"
                                                 />
                                               </ResizeObserver>
                                             </ResizableTextArea>

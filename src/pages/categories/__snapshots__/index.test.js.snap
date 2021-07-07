@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Categories component should render the component 1`] = `
+exports[`Categories component snapshot testing should render the component 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -331,7 +331,7 @@ exports[`Categories component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -653,7 +653,7 @@ exports[`Categories component should render the component 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"
@@ -1299,9 +1299,9 @@ exports[`Categories component should render the component 1`] = `
                   }
                   data={
                     Object {
-                      "categories": undefined,
-                      "loading": undefined,
-                      "total": undefined,
+                      "categories": Array [],
+                      "loading": false,
+                      "total": 0,
                     }
                   }
                   fetchCategories={[Function]}
@@ -1357,12 +1357,14 @@ exports[`Categories component should render the component 1`] = `
                                 },
                               ]
                             }
+                            dataSource={Array []}
+                            loading={false}
                             pagination={
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             rowKey="id"
@@ -1410,6 +1412,7 @@ exports[`Categories component should render the component 1`] = `
                                         ]
                                       }
                                       data={Array []}
+                                      dataSource={Array []}
                                       emptyText={
                                         <Context.Consumer>
                                           [Function]
@@ -1525,12 +1528,13 @@ exports[`Categories component should render the component 1`] = `
                                           },
                                         }
                                       }
+                                      loading={false}
                                       pagination={
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 20,
-                                          "total": undefined,
+                                          "total": 0,
                                         }
                                       }
                                       prefixCls="ant-table"
@@ -1571,7 +1575,7 @@ exports[`Categories component should render the component 1`] = `
                                                 },
                                               ],
                                               "data": Array [],
-                                              "dataSource": undefined,
+                                              "dataSource": Array [],
                                               "direction": undefined,
                                               "emptyText": <Context.Consumer>
                                                 [Function]
@@ -1682,13 +1686,13 @@ exports[`Categories component should render the component 1`] = `
                                                   </div>,
                                                 },
                                               },
-                                              "loading": undefined,
+                                              "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 20,
-                                                "total": undefined,
+                                                "total": 0,
                                               },
                                               "prefixCls": "ant-table",
                                               "rowClassName": [Function],
@@ -2218,12 +2222,12 @@ exports[`Categories component should render the component 1`] = `
 </Provider>
 `;
 
-exports[`Categories component should render the component with data 1`] = `
+exports[`Categories component snapshot testing should render the component with data 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -2549,7 +2553,7 @@ exports[`Categories component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <Input
                                                         id="filters_q"
@@ -2871,7 +2875,7 @@ exports[`Categories component should render the component with data 1`] = `
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={1}
+                                                      update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         id="filters_sort"

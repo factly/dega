@@ -7,6 +7,7 @@ import { act } from '@testing-library/react';
 import { shallow, mount } from 'enzyme';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
+import { Dropdown } from 'antd';
 
 import '../../../matchMedia.mock';
 import PostForm from './PostForm';
@@ -270,7 +271,7 @@ describe('Posts Create Form component', () => {
     it('should submit form with given data', (done) => {
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Save as draft');
+        expect(submitButtom.text()).toBe('Save');
         submitButtom.simulate('submit');
         wrapper.update();
       });
@@ -322,8 +323,10 @@ describe('Posts Create Form component', () => {
       });
 
       act(() => {
+        const dropdown = wrapper.find(Dropdown);
+        dropdown.simulate('mouseover');
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Save as draft');
+        expect(submitButtom.text()).toBe('Save');
         submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
@@ -458,7 +461,7 @@ describe('Posts Create Form component', () => {
       });
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
-        expect(submitButtom.text()).toBe('Save as draft');
+        expect(submitButtom.text()).toBe('Save');
         submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();

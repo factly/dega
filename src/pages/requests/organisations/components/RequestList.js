@@ -51,7 +51,7 @@ function RequestList() {
       title: 'Spaces',
       dataIndex: ['spaces'],
       render: (_, record) => {
-        return record.spaces > 0 ? <p>{record.spaces ? record.spaces : 0}</p> : <p>Unlimited</p>;
+        return record.spaces >= 0 ? <p>{record.spaces}</p> : <p>Unlimited</p>;
       },
     },
     { title: 'Status', dataIndex: 'status', key: 'status' },

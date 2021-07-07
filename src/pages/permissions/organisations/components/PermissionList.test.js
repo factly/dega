@@ -19,12 +19,12 @@ let state = {
   organisations: {
     req: [
       {
-        data: [1, 2, 3],
+        data: [1, 2, 3, 4],
         query: {
           page: 1,
           limit: 20,
         },
-        total: 3,
+        total: 4,
       },
     ],
     details: {
@@ -34,6 +34,7 @@ let state = {
         permission: {
           id: 2,
           organisation_id: 1,
+          spaces: -1,
         },
       },
       2: {
@@ -48,6 +49,14 @@ let state = {
       3: {
         id: 1,
         title: 'Org 3',
+      },
+      4: {
+        id: 4,
+        title: 'Org 4',
+        permission: {
+          id: 5,
+          organisation_id: 4,
+        },
       },
     },
     loading: false,

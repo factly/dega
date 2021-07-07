@@ -32,7 +32,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   const [current, setCurrent] = React.useState(0);
 
   const onSave = (values) => {
-    values.claimant_id = values.claimant || [];
+    values.claimant_id = values.claimant || 0;
     values.rating_id = values.rating || 0;
     values.claim_date = values.claim_date
       ? moment(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')

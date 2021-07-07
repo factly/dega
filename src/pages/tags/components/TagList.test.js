@@ -25,7 +25,50 @@ jest.mock('../../../actions/tags', () => ({
 }));
 
 let mockedDispatch, store;
-
+const filters = {
+  page: 1,
+  limit: 20,
+};
+const fetchTags = jest.fn();
+const setFilters = jest.fn();
+const info = {
+  tags: [
+    {
+      id: 1,
+      created_at: '2020-09-09T06:49:36.566567Z',
+      updated_at: '2020-09-09T06:49:36.566567Z',
+      deleted_at: null,
+      name: 'Election',
+      slug: 'election',
+      description: {
+        time: 1613561493761,
+        blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+        version: '2.19.0',
+      },
+      medium_id: 0,
+      space_id: 1,
+      posts: null,
+    },
+    {
+      id: 2,
+      created_at: '2020-09-09T06:49:54.027402Z',
+      updated_at: '2020-09-09T06:49:54.027402Z',
+      deleted_at: null,
+      name: 'Politics',
+      slug: 'politics',
+      description: {
+        time: 1613561493781,
+        blocks: [{ type: 'paragraph', data: { text: 'Description 2' } }],
+        version: '2.19.0',
+      },
+      medium_id: 0,
+      space_id: 1,
+      posts: null,
+    },
+  ],
+  loading: false,
+  total: 2,
+};
 let state = {
   tags: {
     req: [
@@ -39,7 +82,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-09T06:49:36.566567Z',
         updated_at: '2020-09-09T06:49:36.566567Z',
@@ -55,7 +98,7 @@ let state = {
         space_id: 1,
         posts: null,
       },
-      '2': {
+      2: {
         id: 2,
         created_at: '2020-09-09T06:49:54.027402Z',
         updated_at: '2020-09-09T06:49:54.027402Z',
@@ -89,7 +132,13 @@ describe('Tags List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList actions={['update', 'delete']} />
+            <TagList
+              actions={['update', 'delete']}
+              data={{ tags: [], total: 0, loading: false }}
+              filters={filters}
+              setFilters={setFilters}
+              fetchTags={fetchTags}
+            />
           </Router>
         </Provider>,
       );
@@ -98,10 +147,18 @@ describe('Tags List component', () => {
     it('should match component when loading', () => {
       state.tags.loading = true;
       store = mockStore(state);
+      const info2 = { ...info };
+      info2.loading = true;
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList actions={['update', 'delete']} />
+            <TagList
+              actions={['update', 'delete']}
+              data={info2}
+              filters={filters}
+              setFilters={setFilters}
+              fetchTags={fetchTags}
+            />
           </Router>
         </Provider>,
       );
@@ -113,7 +170,13 @@ describe('Tags List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <TagList actions={['update', 'delete']} />
+            <TagList
+              actions={['update', 'delete']}
+              data={info}
+              filters={filters}
+              setFilters={setFilters}
+              fetchTags={fetchTags}
+            />
           </Router>
         </Provider>,
       );
@@ -133,16 +196,22 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList actions={['update', 'delete']} />
+              <TagList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchTags={fetchTags}
+              />
             </Router>
           </Provider>,
         );
       });
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete tag', () => {
       store = mockStore(state);
@@ -151,12 +220,18 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList actions={['update', 'delete']} />
+              <TagList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchTags={fetchTags}
+              />
             </Router>
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
+      const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -167,7 +242,6 @@ describe('Tags List component', () => {
 
       expect(deleteTag).toHaveBeenCalled();
       expect(deleteTag).toHaveBeenCalledWith(1);
-      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit tag', () => {
       store = mockStore(state);
@@ -176,7 +250,13 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList actions={['update', 'delete']} />
+              <TagList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchTags={fetchTags}
+              />
             </Router>
           </Provider>,
         );
@@ -197,51 +277,20 @@ describe('Tags List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <TagList actions={['update', 'delete']} />
+              <TagList
+                actions={['update', 'delete']}
+                data={{ tags: [], loading: false, total: 0 }}
+                filters={filters}
+                setFilters={setFilters}
+                fetchTags={fetchTags}
+              />
             </Router>
           </Provider>,
         );
       });
 
       const button = wrapper.find(Button);
-      expect(button.length).toEqual(1);
-    });
-
-    it('should submit filters', () => {
-      store = mockStore(state);
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <TagList actions={['update', 'delete']} />
-            </Router>
-          </Provider>,
-        );
-        wrapper
-          .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'tag' } });
-        wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 'asc' } });
-
-        const submitButtom = wrapper.find('Button').at(0);
-        submitButtom.simulate('submit');
-      });
-
-      setTimeout(() => {
-        expect(getPosts).toHaveBeenCalledWith({
-          page: 1,
-          limit: 20,
-          q: 'tag',
-        });
-      }, 0);
+      expect(button.length).toEqual(0);
     });
   });
 });
