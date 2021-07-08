@@ -83,7 +83,7 @@ var categorylist []map[string]interface{} = []map[string]interface{}{
 var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id"}
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
-var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)
+var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "categories" SET "deleted_at"=`)
 
 const path string = "/core/categories/{category_id}"
@@ -155,7 +155,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 }
 
 func categoryPostAssociation(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts" JOIN "post_categories"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" JOIN "post_categories"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

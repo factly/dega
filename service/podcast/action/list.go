@@ -3,6 +3,7 @@ package podcast
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/model"
@@ -31,6 +32,9 @@ type paging struct {
 // @Param limit query string false "limit per page"
 // @Param page query string false "page number"
 // @Param q query string false "Query"
+// @Param category query string false "Category"
+// @Param primary_category query string false "Primary Category"
+// @Param language query string false "Language"
 // @Param sort query string false "Sort"
 // @Success 200 {object} paging
 // @Router /podcast [get]
@@ -46,18 +50,32 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
+	// Filters
+	u, _ := url.Parse(r.URL.String())
+	queryMap := u.Query()
+
+	filters := generateFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
 	filteredPodcastIDs := make([]uint, 0)
+
+	if filters != "" {
+		filters = fmt.Sprint(filters, " AND space_id=", sID)
+	}
 
 	result := paging{}
 	result.Nodes = make([]model.Podcast, 0)
 
-	if searchQuery != "" {
+	if filters != "" || searchQuery != "" {
 
-		filters := fmt.Sprint("space_id=", sID)
 		var hits []interface{}
-
-		hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
-
+		var res map[string]interface{}
+		if searchQuery != "" {
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
+		} else {
+			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "podcast")
+			if _, found := res["hits"]; found {
+				hits = res["hits"].([]interface{})
+			}
+		}
 		if err != nil {
 			loggerx.Error(err)
 			renderx.JSON(w, http.StatusOK, result)
@@ -93,4 +111,25 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
+}
+
+func generateFilters(categoryIDs, primaryCatID, language []string) string {
+	filters := ""
+	if len(categoryIDs) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+	}
+
+	if len(primaryCatID) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
+	}
+
+	if len(language) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(language, "language"), " AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
 }

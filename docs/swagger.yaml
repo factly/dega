@@ -178,11 +178,14 @@ definitions:
     type: object
   event.event:
     properties:
+      event:
+        type: string
       name:
         type: string
       tags:
         type: string
     required:
+    - event
     - name
     type: object
   event.paging:
@@ -606,6 +609,8 @@ definitions:
         type: integer
       deleted_at:
         type: string
+      event:
+        type: string
       id:
         type: integer
       name:
@@ -876,6 +881,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       published_date:
         type: string
+      schemas:
+        type: string
       slug:
         type: string
       space:
@@ -1112,6 +1119,8 @@ definitions:
         type: array
       id:
         type: integer
+      name:
+        type: string
       tags:
         additionalProperties:
           type: string
@@ -1283,6 +1292,8 @@ definitions:
         $ref: '#/definitions/model.Medium'
       published_date:
         type: string
+      schemas:
+        type: string
       slug:
         type: string
       space:
@@ -1421,6 +1432,10 @@ definitions:
         items:
           $ref: '#/definitions/model.Category'
         type: array
+      claim_order:
+        items:
+          type: integer
+        type: array
       claims:
         items:
           $ref: '#/definitions/model.Claim'
@@ -1456,6 +1471,8 @@ definitions:
       medium:
         $ref: '#/definitions/model.Medium'
       published_date:
+        type: string
+      schemas:
         type: string
       slug:
         type: string
@@ -1675,6 +1692,15 @@ definitions:
         type: string
     required:
     - space_id
+    type: object
+  tag.paging:
+    properties:
+      nodes:
+        items:
+          $ref: '#/definitions/model.Tag'
+        type: array
+      total:
+        type: integer
     type: object
   tag.tag:
     properties:
@@ -4261,7 +4287,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/model.Tag'
+              $ref: '#/definitions/tag.paging'
             type: array
       summary: Show all tags
       tags:
@@ -5248,6 +5274,18 @@ paths:
         in: query
         name: q
         type: string
+      - description: Category
+        in: query
+        name: category
+        type: string
+      - description: Primary Category
+        in: query
+        name: primary_category
+        type: string
+      - description: Language
+        in: query
+        name: language
+        type: string
       - description: Sort
         in: query
         name: sort
@@ -5388,6 +5426,10 @@ paths:
       - description: Query
         in: query
         name: q
+        type: string
+      - description: Podcast
+        in: query
+        name: podcast
         type: string
       - description: Sort
         in: query

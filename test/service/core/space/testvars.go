@@ -62,7 +62,7 @@ var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_
 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "spaces"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "spaces" SET "deleted_at"=`)
-var countQuery string = regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)
+var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)
 
 const path string = "/core/spaces/{space_id}"
 const basePath string = "/core/spaces"

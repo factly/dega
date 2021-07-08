@@ -112,7 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Preload("Space").First(&result.Post).Error
+	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -201,8 +201,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		FeaturedMediumID: featuredMediumID,
 	}
 
+	oldStatus := result.Post.Status
 	// Check if post status is changed back to draft from published
-	if result.Post.Status == "publish" && post.Status == "draft" {
+	if oldStatus == "publish" && post.Status == "draft" {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
@@ -248,7 +249,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	} else if post.Status == "ready" {
 		updatedPost.Status = "ready"
-	} else if result.Post.Status == "ready" && post.Status == "draft" {
+	} else if oldStatus == "ready" && post.Status == "draft" {
 		updatedPost.Status = "draft"
 	}
 
@@ -258,7 +259,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsHighlighted: post.IsHighlighted,
 		IsPage:        post.IsPage,
 	})
-	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -272,11 +273,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if result.Post.Format.Slug == "fact-check" {
 		// fetch existing post claims
-		config.DB.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
 			PostID: uint(id),
 		}).Find(&postClaims)
 
-		err = config.DB.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
+		err = tx.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
@@ -452,6 +453,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 		if result.Post.Status == "publish" {
 			if err = util.NC.Publish("post.published", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		}
+		if oldStatus == "publish" && (result.Post.Status == "draft" || result.Post.Status == "ready") {
+			if err = util.NC.Publish("post.unpublished", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		}
+		if (oldStatus == "publish" || oldStatus == "draft") && result.Post.Status == "ready" {
+			if err = util.NC.Publish("post.ready", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 				return

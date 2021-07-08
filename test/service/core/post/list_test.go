@@ -86,8 +86,8 @@ func TestPostList(t *testing.T) {
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
 
 		claim.SelectWithOutSpace(mock, claim.Data)
 

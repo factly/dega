@@ -153,9 +153,6 @@ func TestPodcastUpdate(t *testing.T) {
 		mock.ExpectQuery(`INSERT INTO "categories"`).
 			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, category.Data["name"], category.Data["slug"], category.Data["description"], category.Data["html_description"], category.Data["is_featured"], 1, category.Data["meta_fields"], sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnError(errors.New("cannot update categories"))
-		mock.ExpectExec(`INSERT INTO "podcast_categories"`).
-			WithArgs(1, 1).
-			WillReturnError(errors.New("cannot update categories"))
 
 		mock.ExpectRollback()
 
@@ -203,6 +200,7 @@ func TestPodcastUpdate(t *testing.T) {
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
+		medium.SelectWithOutSpace(mock)
 
 		mock.ExpectCommit()
 		e.PUT(path).
@@ -256,6 +254,7 @@ func TestPodcastUpdate(t *testing.T) {
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
+		medium.SelectWithOutSpace(mock)
 
 		mock.ExpectCommit()
 
@@ -306,6 +305,7 @@ func TestPodcastUpdate(t *testing.T) {
 
 		SelectQuery(mock)
 		PodcastCategorySelect(mock)
+		medium.SelectWithOutSpace(mock)
 
 		mock.ExpectRollback()
 		e.PUT(path).

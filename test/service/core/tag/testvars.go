@@ -63,7 +63,7 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
@@ -77,7 +77,7 @@ func SelectMock(mock sqlmock.Sqlmock, tag map[string]interface{}, args ...driver
 
 // check tag associated with any post before deleting
 func tagPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts" JOIN "post_tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts" JOIN "post_tags"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
@@ -94,6 +94,6 @@ func tagUpdateMock(mock sqlmock.Sqlmock, tag map[string]interface{}) {
 }
 
 func tagCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

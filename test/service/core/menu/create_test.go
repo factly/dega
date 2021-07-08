@@ -54,7 +54,7 @@ func TestMenuCreate(t *testing.T) {
 	t.Run("menu with same name exists", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
 		e.POST(basePath).
@@ -69,7 +69,7 @@ func TestMenuCreate(t *testing.T) {
 	t.Run("create menu", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		slugCheckMock(mock)
@@ -97,7 +97,7 @@ func TestMenuCreate(t *testing.T) {
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		slugCheckMock(mock)

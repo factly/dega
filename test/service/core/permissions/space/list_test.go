@@ -30,7 +30,7 @@ func TestSpacePermissionList(t *testing.T) {
 	t.Run("get empty list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
@@ -52,7 +52,7 @@ func TestSpacePermissionList(t *testing.T) {
 	t.Run("get list of permissions", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "spaces"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "spaces"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
 
 		space.SelectQuery(mock)

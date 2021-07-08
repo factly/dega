@@ -32,7 +32,7 @@ func TestMenuList(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
 
 		mock.ExpectQuery(selectQuery).
@@ -53,7 +53,7 @@ func TestMenuList(t *testing.T) {
 
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(menulist)))
 
 		mock.ExpectQuery(selectQuery).
@@ -80,7 +80,7 @@ func TestMenuList(t *testing.T) {
 	t.Run("get non-empty list of menu with paiganation", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(menulist)))
 
 		mock.ExpectQuery(selectQuery).

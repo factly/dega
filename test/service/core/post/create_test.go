@@ -76,6 +76,7 @@ func TestPostCreate(t *testing.T) {
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
 		postAuthorInsertMock(mock)
+		postSchemaUpdateQuery(mock)
 		mock.ExpectCommit()
 
 		e.POST(basePath).
@@ -153,7 +154,7 @@ func TestPostCreate(t *testing.T) {
 		postInsertMock(mock, Data, false)
 		postSelectWithOutSpace(mock, Data)
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1, 1).
 			WillReturnError(errors.New("cannot create post_claims"))
 
 		mock.ExpectRollback()
@@ -185,6 +186,7 @@ func TestPostCreate(t *testing.T) {
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
 		postAuthorInsertMock(mock)
+		postSchemaUpdateQuery(mock)
 		mock.ExpectCommit()
 
 		Data["slug"] = ""
@@ -259,6 +261,7 @@ func TestPostCreate(t *testing.T) {
 		postClaimInsertMock(mock)
 		postClaimSelectMock(mock)
 		postAuthorInsertMock(mock)
+		postSchemaUpdateQuery(mock)
 		mock.ExpectRollback()
 
 		e.POST(basePath).

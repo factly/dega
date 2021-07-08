@@ -94,7 +94,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template)
+	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&template)
 
 	tagIDs := make([]uint, 0)
 	categoryIDs := make([]uint, 0)

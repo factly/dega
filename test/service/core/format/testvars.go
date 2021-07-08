@@ -64,7 +64,7 @@ func formatInsertMock(mock sqlmock.Sqlmock) {
 }
 
 func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "formats"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
 		WithArgs(1, strings.ToLower(name.(string))).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
@@ -85,7 +85,7 @@ func SelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 
 // check whether format is associated with any post before deleting
 func formatPostExpect(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
@@ -98,7 +98,7 @@ func formatUpdateMock(mock sqlmock.Sqlmock, format map[string]interface{}) {
 }
 
 func formatCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "formats"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

@@ -282,16 +282,16 @@ func TestPostUpdate(t *testing.T) {
 		updateQueryMock(mock, updatePost, false)
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "claim_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 2, 1))
+			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+				AddRow(1, time.Now(), time.Now(), nil, 2, 1, 1))
 
 		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 			WithArgs(test.AnyTime{}, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectQuery(`INSERT INTO "post_claims"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
-			WillReturnError(errors.New("cannot create post_claims"))
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1, 1).
+			WillReturnError(errors.New(`cannot create post claims`))
 
 		mock.ExpectRollback()
 

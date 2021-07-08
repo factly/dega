@@ -53,7 +53,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	postClaims := []factCheckModel.PostClaim{}
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Where(&model.Post{
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).First(&result.Post).Error
 

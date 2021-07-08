@@ -11,8 +11,10 @@ import (
 	"github.com/factly/dega-server/test/service/core/category"
 	"github.com/factly/dega-server/test/service/core/format"
 	"github.com/factly/dega-server/test/service/core/medium"
+	"github.com/factly/dega-server/test/service/core/space"
 	"github.com/factly/dega-server/test/service/core/tag"
 	"github.com/factly/dega-server/test/service/fact-check/claim"
+	"github.com/factly/dega-server/test/service/fact-check/rating"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -136,13 +138,13 @@ func postInsertMock(mock sqlmock.Sqlmock, post map[string]interface{}, isPublish
 
 	if isPublished {
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["is_page"], post["excerpt"], post["description"], post["html_description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, post["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["is_page"], post["excerpt"], post["description"], post["html_description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], test.AnyTime{}, 1, nil, post["featured_medium_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"featured_medium_id", "id"}).
 				AddRow(1, 1))
 	} else {
 		mock.ExpectQuery(`INSERT INTO "posts"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["is_page"], post["excerpt"], post["description"], post["html_description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], nil, 1, post["featured_medium_id"]).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, post["title"], post["subtitle"], post["slug"], post["status"], post["is_page"], post["excerpt"], post["description"], post["html_description"], post["is_featured"], post["is_sticky"], post["is_highlighted"], post["format_id"], nil, 1, nil, post["featured_medium_id"]).
 			WillReturnRows(sqlmock.
 				NewRows([]string{"featured_medium_id", "id"}).
 				AddRow(1, 1))
@@ -186,8 +188,8 @@ func postListMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
 
 	claim.SelectWithOutSpace(mock, claim.Data)
 
@@ -216,6 +218,7 @@ func postListWithFiltersMock(mock sqlmock.Sqlmock) {
 	category.SelectWithOutSpace(mock)
 
 	format.SelectMock(mock, 1)
+	space.SelectQuery(mock)
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
 		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
@@ -224,8 +227,8 @@ func postListWithFiltersMock(mock sqlmock.Sqlmock) {
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
 
 	claim.SelectWithOutSpace(mock, claim.Data)
 
@@ -245,6 +248,7 @@ func preloadMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 
 	format.SelectMock(mock, 1)
 	medium.SelectWithOutSpace(mock)
+	space.SelectQuery(mock)
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
 		WithArgs(args...).
@@ -285,13 +289,13 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 }
 
 func postCountQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
 func postClaimInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(`INSERT INTO "post_claims"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -300,8 +304,8 @@ func postClaimInsertMock(mock sqlmock.Sqlmock) {
 func postClaimSelectMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
 
 	claim.SelectWithOutSpace(mock, claim.Data)
 }
@@ -320,6 +324,18 @@ func postAuthorInsertMock(mock sqlmock.Sqlmock) {
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
+}
+
+func postSchemaUpdateQuery(mock sqlmock.Sqlmock) {
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "ratings"`)).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "background_colour", "text_colour", "medium_id", "description", "html_description", "numeric_value", "space_id"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, rating.Data["name"], rating.Data["slug"], rating.Data["background_colour"], rating.Data["text_colour"], rating.Data["medium_id"], rating.Data["description"], rating.Data["html_description"], rating.Data["numeric_value"], 1))
+
+	medium.SelectWithSpace(mock)
+	format.SelectMock(mock, 1, 1)
+	mock.ExpectExec(`UPDATE \"posts\"`).
+		WithArgs(test.AnyTime{}, sqlmock.AnyArg(), 1).
+		WillReturnResult(driver.ResultNoRows)
 }
 
 func preUpdateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequired bool) {
@@ -457,23 +473,23 @@ func postUpdateQueryMock(mock sqlmock.Sqlmock, post map[string]interface{}) {
 func updatePostClaimsMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 2, 1))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+			AddRow(1, time.Now(), time.Now(), nil, 2, 1, 1))
 
 	mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_claims" SET "deleted_at"=`)).
 		WithArgs(test.AnyTime{}, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 
 	mock.ExpectQuery(`INSERT INTO "post_claims"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, 1, 1, 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
 
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
 		WithArgs(1).
-		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id"}).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
 	claim.SelectWithOutSpace(mock, claim.Data)
 
 }
@@ -502,6 +518,7 @@ func updateMock(mock sqlmock.Sqlmock, post map[string]interface{}, slugCheckRequ
 	updateQueryMock(mock, post, slugCheckRequired)
 	updatePostClaimsMock(mock)
 	updatePostAuthorMock(mock)
+	postSchemaUpdateQuery(mock)
 }
 
 func deleteMock(mock sqlmock.Sqlmock) {
