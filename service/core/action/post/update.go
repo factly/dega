@@ -22,9 +22,11 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/schemax"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -110,7 +112,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).First(&result.Post).Error
+	}).Where("is_page = ?", false).Preload("Space").First(&result.Post).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
@@ -274,45 +276,29 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Find(&postClaims)
 
-		prevClaimIDs := make([]uint, 0)
-		mapperPostClaim := map[uint]factCheckModel.PostClaim{}
-		postClaimIDs := make([]uint, 0)
-
-		for _, postClaim := range postClaims {
-			mapperPostClaim[postClaim.ClaimID] = postClaim
-			prevClaimIDs = append(prevClaimIDs, postClaim.ClaimID)
+		err = config.DB.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
 
-		toCreateIDs, toDeleteIDs = arrays.Difference(prevClaimIDs, post.ClaimIDs)
-
-		// map post claim ids
-		for _, id := range toDeleteIDs {
-			postClaimIDs = append(postClaimIDs, mapperPostClaim[id].ID)
-		}
-
-		// delete post claims
-		if len(postClaimIDs) > 0 {
-			err = tx.Where(&postClaimIDs).Delete(&factCheckModel.PostClaim{}).Error
-			if err != nil {
-				tx.Rollback()
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
-		}
-
-		for _, id := range toCreateIDs {
-			postClaim := &factCheckModel.PostClaim{}
+		toCreatePostClaims := make([]factCheckModel.PostClaim, 0)
+		for i, id := range post.ClaimIDs {
+			postClaim := factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
+			postClaim.Position = uint(i + 1)
+			toCreatePostClaims = append(toCreatePostClaims, postClaim)
+		}
 
-			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
-			if err != nil {
-				tx.Rollback()
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
+		err = tx.Model(&factCheckModel.PostClaim{}).Create(&toCreatePostClaims).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
 		}
 
 		// fetch updated post claims
@@ -321,9 +307,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&updatedPostClaims)
 
+		result.ClaimOrder = make([]uint, len(postClaims))
 		// appending previous post claims to result
 		for _, postClaim := range updatedPostClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 
 	}
@@ -392,6 +380,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 			result.Authors = append(result.Authors, author)
 		}
 	}
+
+	ratings := make([]factCheckModel.Rating, 0)
+	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
+		SpaceID: uint(sID),
+	}).Order("numeric_value asc").Find(&ratings)
+
+	schemas := schemax.GetSchemas(schemax.PostData{
+		Post:    result.Post,
+		Authors: result.Authors,
+		Claims:  result.Claims,
+	}, *result.Space, ratings)
+
+	byteArr, err := json.Marshal(schemas)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	tx.Model(&result.Post).Select("Schemas").Updates(&model.Post{
+		Schemas: postgres.Jsonb{RawMessage: byteArr},
+	})
+
+	result.Post.Schemas = postgres.Jsonb{RawMessage: byteArr}
 
 	// Update into meili index
 	var meiliPublishDate int64

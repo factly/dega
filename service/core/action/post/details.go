@@ -68,9 +68,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
+		result.ClaimOrder = make([]uint, len(postClaims))
+
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 

@@ -20,8 +20,10 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/schemax"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
 )
@@ -225,14 +227,15 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.DBError()
 	}
 
-	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post)
+	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&result.Post)
 
 	if result.Format.Slug == "fact-check" {
 		// create post claim
-		for _, id := range post.ClaimIDs {
+		for i, id := range post.ClaimIDs {
 			postClaim := &factCheckModel.PostClaim{}
 			postClaim.ClaimID = uint(id)
 			postClaim.PostID = result.ID
+			postClaim.Position = uint(i + 1)
 
 			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
 			if err != nil {
@@ -248,9 +251,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 			PostID: result.ID,
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
 
+		result.ClaimOrder = make([]uint, len(postClaims))
 		// appending all post claims
 		for _, postClaim := range postClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)
+			result.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
 		}
 	}
 
@@ -275,6 +280,29 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 			}
 		}
 	}
+
+	ratings := make([]factCheckModel.Rating, 0)
+	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
+		SpaceID: uint(sID),
+	}).Order("numeric_value asc").Find(&ratings)
+
+	schemas := schemax.GetSchemas(schemax.PostData{
+		Post:    result.Post,
+		Authors: result.Authors,
+		Claims:  result.Claims,
+	}, *result.Space, ratings)
+
+	byteArr, err := json.Marshal(schemas)
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
+	tx.Model(&result.Post).Select("Schemas").Updates(&model.Post{
+		Schemas: postgres.Jsonb{RawMessage: byteArr},
+	})
+
+	result.Post.Schemas = postgres.Jsonb{RawMessage: byteArr}
 
 	// Insert into meili index
 	var meiliPublishDate int64

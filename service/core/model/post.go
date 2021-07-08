@@ -30,6 +30,7 @@ type Post struct {
 	Format           *Format        `json:"format"`
 	PublishedDate    *time.Time     `gorm:"column:published_date" json:"published_date"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
+	Schemas          postgres.Jsonb `gorm:"column:schemas" json:"schemas"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
 	Space            *Space         `json:"space,omitempty"`
