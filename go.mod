@@ -7,19 +7,17 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/agnivade/levenshtein v1.1.0 // indirect
 	github.com/dgryski/trifles v0.0.0-20200830180326-aaf60a07f6a3 // indirect
-	github.com/factly/x v0.0.48
+	github.com/factly/x v0.0.63
 	github.com/gavv/httpexpect/v2 v2.2.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.1.1
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/jinzhu/gorm v1.9.16
-	github.com/mitchellh/mapstructure v1.3.3 // indirect
-	github.com/prometheus/client_golang v0.9.3
-	github.com/spf13/viper v1.7.1
-	github.com/tmc/graphql v0.0.0-20170602052103-08ddf3728865
+	github.com/prometheus/client_golang v1.9.0
+	github.com/spf13/viper v1.8.1
 	github.com/vektah/gqlparser/v2 v2.1.0
 	gopkg.in/h2non/gock.v1 v1.0.16
-	gorm.io/driver/postgres v1.0.5
-	gorm.io/gorm v1.20.5
+	gorm.io/driver/postgres v1.0.8
+	gorm.io/gorm v1.21.11
 )

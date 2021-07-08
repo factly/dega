@@ -27,6 +27,7 @@ type Post struct {
 	FeaturedMediumID uint            `gorm:"column:featured_medium_id" json:"featured_medium_id" sql:"DEFAULT:NULL"`
 	FormatID         uint            `gorm:"column:format_id" json:"format_id" sql:"DEFAULT:NULL"`
 	PublishedDate    *time.Time      `gorm:"column:published_date" json:"published_date"`
+	Schemas          postgres.Jsonb  `gorm:"column:schemas" json:"schemas"`
 	Tags             []Tag           `gorm:"many2many:post_tags;" json:"tags,omitempty"`
 	Categories       []Category      `gorm:"many2many:post_categories;" json:"categories,omitempty"`
 	Format           *Format         `gorm:"foreignKey:format_id" json:"format,omitempty"`
