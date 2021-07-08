@@ -126,6 +126,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MediumID:         mediumID,
 		SpaceID:          uint(sID),
 		NumericValue:     rating.NumericValue,
+		MetaFields:       rating.MetaFields,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

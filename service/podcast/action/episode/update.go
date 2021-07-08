@@ -159,7 +159,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		AudioURL:        episode.AudioURL,
 		PodcastID:       podcastID,
 		MediumID:        mediumID,
-		SpaceID:         uint(sID),
+		MetaFields:      episode.MetaFields,
 	}).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
 
 	// fetch old authors

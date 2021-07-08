@@ -16,6 +16,7 @@ type rating struct {
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	NumericValue     int            `json:"numeric_value" validate:"required"`
 	MediumID         uint           `json:"medium_id"`
+	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "rating_user"

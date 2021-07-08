@@ -17,6 +17,9 @@ type podcast struct {
 	SpaceID           uint           `json:"space_id"`
 	PrimaryCategoryID uint           `json:"primary_category_id"`
 	CategoryIDs       []uint         `json:"category_ids"`
+	HeaderCode        string         `json:"header_code"`
+	FooterCode        string         `json:"footer_code"`
+	MetaFields        postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var podcastUser config.ContextKey = "podcast_user"

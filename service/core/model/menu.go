@@ -9,11 +9,12 @@ import (
 // Menu model
 type Menu struct {
 	config.Base
-	Name    string         `gorm:"column:name" json:"name" validate:"required"`
-	Slug    string         `gorm:"column:slug" json:"slug" validate:"required"`
-	Menu    postgres.Jsonb `gorm:"column:menu" json:"menu" swaggertype:"primitive,string"`
-	SpaceID uint           `gorm:"column:space_id" json:"space_id"`
-	Space   *Space         `json:"space,omitempty"`
+	Name       string         `gorm:"column:name" json:"name" validate:"required"`
+	Slug       string         `gorm:"column:slug" json:"slug" validate:"required"`
+	Menu       postgres.Jsonb `gorm:"column:menu" json:"menu" swaggertype:"primitive,string"`
+	SpaceID    uint           `gorm:"column:space_id" json:"space_id"`
+	MetaFields postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
+	Space      *Space         `json:"space,omitempty"`
 }
 
 var menuUser config.ContextKey = "menu_user"

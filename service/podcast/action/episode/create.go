@@ -114,6 +114,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		PodcastID:       podcastID,
 		PublishedDate:   episode.PublishedDate,
 		MediumID:        mediumID,
+		MetaFields:      episode.MetaFields,
 		SpaceID:         uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), episodeUser, uID)).Begin()

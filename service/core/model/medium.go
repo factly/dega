@@ -23,6 +23,7 @@ type Medium struct {
 	FileSize    int64          `gorm:"column:file_size" json:"file_size"`
 	URL         postgres.Jsonb `gorm:"column:url" json:"url" swaggertype:"primitive,string"`
 	Dimensions  string         `gorm:"column:dimensions" json:"dimensions"`
+	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	SpaceID     uint           `gorm:"column:space_id" json:"space_id"`
 }
 

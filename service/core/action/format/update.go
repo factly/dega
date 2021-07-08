@@ -117,6 +117,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Name:        format.Name,
 		Slug:        formatSlug,
 		Description: format.Description,
+		MetaFields:  format.MetaFields,
 	}).First(&result)
 
 	// Update into meili index

@@ -5679,6 +5679,9 @@
                 "fact": {
                     "type": "string"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "rating_id": {
                     "type": "integer"
                 },
@@ -5701,6 +5704,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -5753,6 +5759,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "podcast_id": {
                     "type": "integer"
@@ -5812,6 +5821,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "podcast": {
                     "$ref": "#/definitions/model.Podcast"
@@ -5900,6 +5912,9 @@
                 "description": {
                     "type": "string"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -5977,6 +5992,12 @@
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -5991,6 +6012,9 @@
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -6088,6 +6112,12 @@
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -6102,6 +6132,9 @@
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -6188,6 +6221,9 @@
                 "file_size": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6212,6 +6248,9 @@
             ],
             "properties": {
                 "menu": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "name": {
@@ -6428,6 +6467,9 @@
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "rating": {
                     "$ref": "#/definitions/model.Rating"
                 },
@@ -6480,6 +6522,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -6561,6 +6606,9 @@
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6634,6 +6682,9 @@
                 "id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -6680,6 +6731,9 @@
                     "type": "integer"
                 },
                 "menu": {
+                    "type": "string"
+                },
+                "meta_fields": {
                     "type": "string"
                 },
                 "name": {
@@ -6804,6 +6858,12 @@
                 "description": {
                     "type": "string"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "html_description": {
                     "type": "string"
                 },
@@ -6818,6 +6878,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "primary_category": {
                     "$ref": "#/definitions/model.Category"
@@ -6898,11 +6961,17 @@
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -6924,6 +6993,12 @@
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"
@@ -7007,6 +7082,9 @@
                 "medium_id": {
                     "type": "integer"
                 },
+                "meta_fields": {
+                    "type": "string"
+                },
                 "name": {
                     "type": "string"
                 },
@@ -7060,6 +7138,12 @@
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "id": {
                     "type": "integer"
                 },
@@ -7074,6 +7158,9 @@
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon": {
                     "$ref": "#/definitions/model.Medium"
@@ -7237,6 +7324,9 @@
                 },
                 "is_featured": {
                     "type": "boolean"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -7520,11 +7610,17 @@
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -7546,6 +7642,12 @@
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"
@@ -7615,11 +7717,20 @@
                 "description": {
                     "type": "string"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "language": {
                     "type": "string"
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "primary_category_id": {
                     "type": "integer"
@@ -7706,8 +7817,14 @@
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "is_featured": {
                     "type": "boolean"
@@ -7720,6 +7837,12 @@
                 },
                 "is_sticky": {
                     "type": "boolean"
+                },
+                "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"
@@ -7792,11 +7915,17 @@
                 "featured_medium_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
                 "format": {
                     "$ref": "#/definitions/model.Format"
                 },
                 "format_id": {
                     "type": "integer"
+                },
+                "header_code": {
+                    "type": "string"
                 },
                 "html_description": {
                     "type": "string"
@@ -7818,6 +7947,12 @@
                 },
                 "medium": {
                     "$ref": "#/definitions/model.Medium"
+                },
+                "meta": {
+                    "type": "string"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "published_date": {
                     "type": "string"
@@ -7899,6 +8034,9 @@
                 },
                 "medium_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"
@@ -8064,11 +8202,20 @@
                 "fav_icon_id": {
                     "type": "integer"
                 },
+                "footer_code": {
+                    "type": "string"
+                },
+                "header_code": {
+                    "type": "string"
+                },
                 "logo_id": {
                     "type": "integer"
                 },
                 "logo_mobile_id": {
                     "type": "integer"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "mobile_icon_id": {
                     "type": "integer"
@@ -8182,6 +8329,9 @@
                 },
                 "is_featured": {
                     "type": "boolean"
+                },
+                "meta_fields": {
+                    "type": "string"
                 },
                 "name": {
                     "type": "string"

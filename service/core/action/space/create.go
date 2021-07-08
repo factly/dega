@@ -123,6 +123,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SocialMediaURLs:   space.SocialMediaURLs,
 		OrganisationID:    space.OrganisationID,
 		ContactInfo:       space.ContactInfo,
+		HeaderCode:        space.HeaderCode,
+		FooterCode:        space.FooterCode,
+		MetaFields:        space.MetaFields,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

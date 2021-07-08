@@ -174,7 +174,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Language:          podcast.Language,
 		MediumID:          mediumID,
 		PrimaryCategoryID: primaryCategoryID,
-		SpaceID:           uint(sID),
+		HeaderCode:        podcast.HeaderCode,
+		FooterCode:        podcast.FooterCode,
+		MetaFields:        podcast.MetaFields,
 	}).Preload("Categories").Preload("Medium").First(&result)
 
 	// Update into meili index

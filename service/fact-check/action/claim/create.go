@@ -111,6 +111,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		RatingID:        claim.RatingID,
 		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
+		MetaFields:      claim.MetaFields,
 		SpaceID:         uint(sID),
 	}
 

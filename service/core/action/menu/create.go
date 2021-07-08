@@ -87,10 +87,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Menu{
-		Name:    menu.Name,
-		Menu:    menu.Menu,
-		Slug:    slugx.Approve(&config.DB, menuSlug, sID, tableName),
-		SpaceID: uint(sID),
+		Name:       menu.Name,
+		Menu:       menu.Menu,
+		Slug:       slugx.Approve(&config.DB, menuSlug, sID, tableName),
+		MetaFields: menu.MetaFields,
+		SpaceID:    uint(sID),
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Menu{}).Create(&result).Error

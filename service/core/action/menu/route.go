@@ -9,9 +9,10 @@ import (
 
 // menu request body
 type menu struct {
-	Name string         `json:"name" validate:"required,min=3,max=50"`
-	Slug string         `json:"slug"`
-	Menu postgres.Jsonb `json:"menu" swaggertype:"primitive,string"`
+	Name       string         `json:"name" validate:"required,min=3,max=50"`
+	Slug       string         `json:"slug"`
+	Menu       postgres.Jsonb `json:"menu" swaggertype:"primitive,string"`
+	MetaFields postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 }
 
 var userContext config.ContextKey = "menu_user"

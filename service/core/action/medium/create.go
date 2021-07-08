@@ -119,6 +119,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			FileSize:    medium.FileSize,
 			URL:         medium.URL,
 			Dimensions:  medium.Dimensions,
+			MetaFields:  medium.MetaFields,
 			SpaceID:     uint(sID),
 		}
 

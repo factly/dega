@@ -30,6 +30,9 @@ type Space struct {
 	SocialMediaURLs   postgres.Jsonb `gorm:"column:social_media_urls" json:"social_media_urls" swaggertype:"primitive,string"`
 	ContactInfo       postgres.Jsonb `gorm:"column:contact_info" json:"contact_info" swaggertype:"primitive,string"`
 	Analytics         postgres.Jsonb `gorm:"column:analytics" json:"analytics" swaggertype:"primitive,string"`
+	HeaderCode        string         `gorm:"column:header_code" json:"header_code"`
+	FooterCode        string         `gorm:"column:footer_code" json:"footer_code"`
+	MetaFields        postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
 }
 
