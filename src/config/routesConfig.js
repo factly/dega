@@ -103,10 +103,20 @@ import Menu from '../pages/menu';
 import CreateMenu from '../pages/menu/CreateMenu';
 import EditMenu from '../pages/menu/EditMenu';
 
+//Events
+import Events from '../pages/events';
+import CreateEvent from '../pages/events/CreateEvent';
+import EditEvent from '../pages/events/EditEvent';
+
 //Pages
 import Pages from '../pages/pages';
 import CreatePage from '../pages/pages/CreatePage';
 import EditPage from '../pages/pages/EditPage';
+
+//Webhooks
+import Webhooks from '../pages/webhooks';
+import CreateWebhook from '../pages/webhooks/CreateWebhook';
+import EditWebhook from '../pages/webhooks/EditWebhook';
 
 const routes = {
   dashboard: {
@@ -582,6 +592,51 @@ const routes = {
       action: 'update',
     },
   },
+  events: {
+    path: '/events',
+    Component: Events,
+    title: 'Events',
+    isAdmin: true,
+  },
+  createEvent: {
+    path: '/events/create',
+    Component: CreateEvent,
+    title: 'Create',
+    isAdmin: true,
+  },
+  editEvent: {
+    path: '/events/:id/edit',
+    Component: EditEvent,
+    title: 'Edit',
+    isAdmin: true,
+  },
+  webhooks: {
+    path: '/webhooks',
+    Component: Webhooks,
+    title: 'Webhooks',
+    permission: {
+      resource: 'webhooks',
+      action: 'get',
+    },
+  },
+  createWebhook: {
+    path: '/webhooks/create',
+    Component: CreateWebhook,
+    title: 'Create',
+    permission: {
+      resource: 'webhooks',
+      action: 'create',
+    },
+  },
+  editWebhook: {
+    path: '/webhooks/:id/edit',
+    Component: EditWebhook,
+    title: 'Edit',
+    permission: {
+      resource: 'webhooks',
+      action: 'update',
+    },
+  },
 };
 
 export const sidebarMenu = [
@@ -623,7 +678,7 @@ export const sidebarMenu = [
   {
     title: 'ADMINSTRATION',
     Icon: IdcardOutlined,
-    children: [routes.spaces, routes.policies, routes.users],
+    children: [routes.spaces, routes.policies, routes.users, routes.events, routes.webhooks],
     submenu: [
       {
         isAdmin: true,

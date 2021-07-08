@@ -4,7 +4,7 @@ import { Popconfirm, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrganisations, deleteOrganisationPermission } from '../../../../actions/organisations';
 import { Link, useLocation } from 'react-router-dom';
-function PermissionList() {
+function PermissionList({ admin }) {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
@@ -56,45 +56,41 @@ function PermissionList() {
       title: 'Spaces',
       dataIndex: ['permission', 'spaces'],
       render: (_, record) => {
-        return record.permission.spaces > 0 ? (
-          <p>{record.permission.spaces ? record.permission.spaces : 0}</p>
-        ) : (
-          <p>Unlimited</p>
+        return record.permission.spaces >= 0 ? <p>{record.permission.spaces}</p> : <p>Unlimited</p>;
+      },
+    },
+    {
+      title: 'Action',
+      dataIndex: 'operation',
+      width: '30%',
+      render: (_, record) => {
+        return (
+          <span>
+            <Link
+              className="ant-dropdown-link"
+              style={{
+                marginRight: 8,
+              }}
+              to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
+            >
+              <Button disabled={!admin}>Edit</Button>
+            </Link>
+            <Popconfirm
+              title="Sure to Delete?"
+              onConfirm={() =>
+                dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
+                  fetchOrganisationPermissions(),
+                )
+              }
+            >
+              <Link to="" className="ant-dropdown-link">
+                <Button disabled={!admin}>Delete</Button>
+              </Link>
+            </Popconfirm>
+          </span>
         );
       },
     },
-    // {
-    //   title: 'Action',
-    //   dataIndex: 'operation',
-    //   width: '30%',
-    //   render: (_, record) => {
-    //     return (
-    //       <span>
-    //         <Link
-    //           className="ant-dropdown-link"
-    //           style={{
-    //             marginRight: 8,
-    //           }}
-    //           to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
-    //         >
-    //           <Button>Edit</Button>
-    //         </Link>
-    //         <Popconfirm
-    //           title="Sure to Delete?"
-    //           onConfirm={() =>
-    //             dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
-    //               fetchOrganisationPermissions(),
-    //             )
-    //           }
-    //         >
-    //           <Link to="" className="ant-dropdown-link">
-    //             <Button>Delete</Button>
-    //           </Link>
-    //         </Popconfirm>
-    //       </span>
-    //     );
-    //   },
-    // },
   ];
 
   return (

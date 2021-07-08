@@ -13,7 +13,10 @@ import CategoryEditForm from './components/CategoryForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('@editorjs/editorjs');
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
@@ -79,6 +82,18 @@ describe('Categories Edit component', () => {
       req: [],
       details: {},
       loading: true,
+    },
+    spaces: {
+      orgs: [{ id: 1, title: 'Org 1', spaces: [10] }],
+      details: {
+        10: {
+          id: 10,
+          name: 'Space 10',
+          organisation_id: 1,
+        },
+      },
+      loading: true,
+      selected: 10,
     },
   });
   store.dispatch = jest.fn(() => ({}));

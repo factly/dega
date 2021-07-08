@@ -65,6 +65,7 @@ let state = {
           query: 'factcheck',
         },
         total: 2,
+        nextPage: 'nextpage',
       },
     ],
     loading: false,
@@ -122,7 +123,7 @@ describe('GoogleFactCheck component', () => {
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
-    it('should change the page', () => {
+    it('should handle loadmore', () => {
       store = mockStore(state);
       let wrapper;
       act(() => {
@@ -132,11 +133,28 @@ describe('GoogleFactCheck component', () => {
           </Provider>,
         );
       });
-      const list = wrapper.find(List);
-      list.props().pagination.onChange(3);
-      wrapper.update();
-      const updatedList = wrapper.find(List);
-      expect(updatedList.props().pagination.current).toEqual(3);
+      const nextButton = wrapper.find('Button').at(2);
+      expect(nextButton.text()).toBe('Next');
+      nextButton.simulate('click');
+      expect(getGoogleFactChecks).toHaveBeenCalledWith({ page: 1, query: 'factcheck' });
+    });
+    it('should handle loadPrevious ', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <GoogleFactCheck />
+          </Provider>,
+        );
+      });
+      const nextButton = wrapper.find('Button').at(2);
+      expect(nextButton.text()).toBe('Next');
+      nextButton.simulate('click');
+      const previousButton = wrapper.find('Button').at(1);
+      expect(previousButton.text()).toBe('Back');
+      previousButton.simulate('click');
+      expect(getGoogleFactChecks).toHaveBeenCalledWith({ page: 1, query: 'factcheck' });
     });
     it('should submit filters', () => {
       store = mockStore(state);

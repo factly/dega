@@ -23,27 +23,33 @@ let state = {
   organisationRequests: {
     req: [
       {
-        data: [1, 2],
+        data: [1, 2, 3],
         query: {
           page: 1,
           limit: 20,
         },
-        total: 2,
+        total: 3,
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         title: 'Request',
         spaces: -1,
         organisation_id: 10,
         status: 'pending',
       },
-      '2': {
+      2: {
         id: 2,
         title: 'Request 2',
         spaces: 5,
         organisation_id: 11,
+        status: 'pending',
+      },
+      3: {
+        id: 3,
+        title: 'Request 3',
+        organisation_id: 12,
         status: 'pending',
       },
     },

@@ -47,25 +47,21 @@ function RequestList() {
       title: 'Media',
       dataIndex: 'media',
       render: (_, record) => {
-        return record.media > 0 ? <p>{record.media ? record.media : 0}</p> : <p>Unlimited</p>;
+        return record.media >= 0 ? <p>{record.media}</p> : <p>Unlimited</p>;
       },
     },
     {
       title: 'Posts',
       dataIndex: 'posts',
       render: (_, record) => {
-        return record.posts > 0 ? <p>{record.posts ? record.posts : 0}</p> : <p>Unlimited</p>;
+        return record.posts >= 0 ? <p>{record.posts}</p> : <p>Unlimited</p>;
       },
     },
     {
       title: 'Episodes',
       dataIndex: 'episodes',
       render: (_, record) => {
-        return record.episodes > 0 ? (
-          <p>{record.episodes ? record.episodes : 0}</p>
-        ) : (
-          <p>Unlimited</p>
-        );
+        return record.episodes >= 0 ? <p>{record.episodes}</p> : <p>Unlimited</p>;
       },
     },
     {

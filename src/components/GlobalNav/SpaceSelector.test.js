@@ -92,9 +92,32 @@ describe('SpaceSelector component', () => {
       actions.setSelectedSpace.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
-
+      const state2 = { ...state };
+      state2.spaces = {
+        orgs: [
+          {
+            id: 1,
+            title: 'TOI',
+            spaces: [1],
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            name: 'English',
+            site_address: 'site_address',
+            site_title: 'site_title',
+            tag_line: 'tag_line',
+            logo: {
+              url: { proxy: 'imageproxyurl' },
+            },
+          },
+        },
+        selected: 1,
+      };
+      const store2 = mockStore(state2);
       wrapper = mount(
-        <Provider store={store}>
+        <Provider store={store2}>
           <SpaceSelector />
         </Provider>,
       );

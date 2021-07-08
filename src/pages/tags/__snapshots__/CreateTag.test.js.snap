@@ -936,6 +936,7 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                     update={1}
                                   >
                                     <Editor
+                                      basic={true}
                                       id="create-tag_description"
                                       onChange={[Function]}
                                       placeholder="Enter Description..."

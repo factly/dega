@@ -40,6 +40,30 @@ describe('Episode create component', () => {
       details: {},
       loading: false,
     },
+    podcasts: {
+      req: [
+        {
+          data: [1],
+          query: {
+            page: 1,
+            limit: 5,
+          },
+          total: 1,
+        },
+      ],
+      details: {
+        1: {
+          id: 1,
+          title: 'Podcast-1',
+          slug: 'podcast-1',
+          medium_id: 1,
+          language: 'english',
+          categories: [1],
+          episodes: [1],
+        },
+      },
+      loading: false,
+    },
     media: {
       req: [],
       details: {},

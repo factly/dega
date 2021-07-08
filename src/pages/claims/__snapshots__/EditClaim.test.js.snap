@@ -649,6 +649,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
           }
           labelCol={
             Object {
+              "offset": 2,
               "span": 8,
             }
           }
@@ -665,7 +666,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
           }
           wrapperCol={
             Object {
-              "span": 6,
+              "offset": 2,
+              "span": 20,
             }
           }
         >
@@ -742,20 +744,20 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                 >
                   <FormItem
                     label="Claim"
-                    name="title"
+                    name="claim"
                     rules={
                       Array [
                         Object {
-                          "message": "Please input the title!",
+                          "message": "Please input the Claim!",
                           "required": true,
                         },
                         Object {
-                          "message": "Title must be minimum 3 characters.",
+                          "message": "Claim must be minimum 3 characters.",
                           "min": 3,
                         },
                         Object {
-                          "max": 150,
-                          "message": "Title must be maximum 150 characters.",
+                          "max": 5000,
+                          "message": "Claim must be maximum 5000 characters.",
                         },
                       ]
                     }
@@ -767,21 +769,21 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           "label": "Claim",
                         }
                       }
-                      name="title"
+                      name="claim"
                       onReset={[Function]}
                       rules={
                         Array [
                           Object {
-                            "message": "Please input the title!",
+                            "message": "Please input the Claim!",
                             "required": true,
                           },
                           Object {
-                            "message": "Title must be minimum 3 characters.",
+                            "message": "Claim must be minimum 3 characters.",
                             "min": 3,
                           },
                           Object {
-                            "max": 150,
-                            "message": "Title must be maximum 150 characters.",
+                            "max": 5000,
+                            "message": "Claim must be maximum 5000 characters.",
                           },
                         ]
                       }
@@ -814,7 +816,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             "validateTrigger": "onChange",
                           }
                         }
-                        key="_title"
+                        key="_claim"
                         label="Claim"
                         messageVariables={
                           Object {
@@ -823,23 +825,23 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                         }
                         name={
                           Array [
-                            "title",
+                            "claim",
                           ]
                         }
                         onReset={[Function]}
                         rules={
                           Array [
                             Object {
-                              "message": "Please input the title!",
+                              "message": "Please input the Claim!",
                               "required": true,
                             },
                             Object {
-                              "message": "Title must be minimum 3 characters.",
+                              "message": "Claim must be minimum 3 characters.",
                               "min": 3,
                             },
                             Object {
-                              "max": 150,
-                              "message": "Title must be maximum 150 characters.",
+                              "max": 5000,
+                              "message": "Claim must be maximum 5000 characters.",
                             },
                           ]
                         }
@@ -856,40 +858,41 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             style={Object {}}
                           >
                             <FormItemLabel
-                              htmlFor="create-claim_title"
+                              htmlFor="create-claim_claim"
                               label="Claim"
-                              name="title"
+                              name="claim"
                               prefixCls="ant-form"
                               required={true}
                               requiredMark={true}
                               rules={
                                 Array [
                                   Object {
-                                    "message": "Please input the title!",
+                                    "message": "Please input the Claim!",
                                     "required": true,
                                   },
                                   Object {
-                                    "message": "Title must be minimum 3 characters.",
+                                    "message": "Claim must be minimum 3 characters.",
                                     "min": 3,
                                   },
                                   Object {
-                                    "max": 150,
-                                    "message": "Title must be maximum 150 characters.",
+                                    "max": 5000,
+                                    "message": "Claim must be maximum 5000 characters.",
                                   },
                                 ]
                               }
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
                                     className="ant-form-item-required"
-                                    htmlFor="create-claim_title"
+                                    htmlFor="create-claim_claim"
                                     title="Claim"
                                   >
                                     Claim
@@ -902,7 +905,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               label="Claim"
                               name={
                                 Array [
-                                  "title",
+                                  "claim",
                                 ]
                               }
                               onDomErrorVisibleChange={[Function]}
@@ -910,16 +913,16 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               rules={
                                 Array [
                                   Object {
-                                    "message": "Please input the title!",
+                                    "message": "Please input the Claim!",
                                     "required": true,
                                   },
                                   Object {
-                                    "message": "Title must be minimum 3 characters.",
+                                    "message": "Claim must be minimum 3 characters.",
                                     "min": 3,
                                   },
                                   Object {
-                                    "max": 150,
-                                    "message": "Title must be maximum 150 characters.",
+                                    "max": 5000,
+                                    "message": "Claim must be maximum 5000 characters.",
                                   },
                                 ]
                               }
@@ -930,10 +933,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -945,50 +949,72 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                       <Component
                                         update={1}
                                       >
-                                        <Input
-                                          id="create-claim_title"
+                                        <TextArea
+                                          id="create-claim_claim"
                                           onChange={[Function]}
-                                          placeholder="title"
-                                          type="text"
+                                          placeholder="Enter claim...."
+                                          rows={6}
                                         >
                                           <ClearableLabeledInput
                                             bordered={true}
                                             element={
-                                              <input
-                                                className="ant-input"
-                                                id="create-claim_title"
-                                                onBlur={[Function]}
+                                              <TextArea
+                                                className=""
+                                                id="create-claim_claim"
                                                 onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onKeyDown={[Function]}
-                                                placeholder="title"
-                                                type="text"
+                                                placeholder="Enter claim...."
+                                                prefixCls="ant-input"
+                                                rows={6}
                                               />
                                             }
-                                            focused={false}
                                             handleReset={[Function]}
-                                            id="create-claim_title"
-                                            inputType="input"
+                                            id="create-claim_claim"
+                                            inputType="text"
                                             onChange={[Function]}
-                                            placeholder="title"
+                                            placeholder="Enter claim...."
                                             prefixCls="ant-input"
+                                            rows={6}
                                             triggerFocus={[Function]}
-                                            type="text"
                                             value=""
                                           >
-                                            <input
-                                              className="ant-input"
-                                              id="create-claim_title"
-                                              onBlur={[Function]}
+                                            <TextArea
+                                              className=""
+                                              id="create-claim_claim"
                                               onChange={[Function]}
-                                              onFocus={[Function]}
-                                              onKeyDown={[Function]}
-                                              placeholder="title"
-                                              type="text"
+                                              placeholder="Enter claim...."
+                                              prefixCls="ant-input"
+                                              rows={6}
                                               value=""
-                                            />
+                                            >
+                                              <ResizableTextArea
+                                                className=""
+                                                id="create-claim_claim"
+                                                onChange={[Function]}
+                                                onKeyDown={[Function]}
+                                                placeholder="Enter claim...."
+                                                prefixCls="ant-input"
+                                                rows={6}
+                                                value=""
+                                              >
+                                                <ResizeObserver
+                                                  disabled={true}
+                                                  onResize={[Function]}
+                                                >
+                                                  <textarea
+                                                    className="ant-input"
+                                                    id="create-claim_claim"
+                                                    onChange={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    placeholder="Enter claim...."
+                                                    rows={6}
+                                                    style={Object {}}
+                                                    value=""
+                                                  />
+                                                </ResizeObserver>
+                                              </ResizableTextArea>
+                                            </TextArea>
                                           </ClearableLabeledInput>
-                                        </Input>
+                                        </TextArea>
                                       </Component>
                                     </div>
                                   </div>
@@ -1028,6 +1054,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           "message": "Please enter valid slug!",
                           "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
                         },
+                        Object {
+                          "max": 150,
+                          "message": "Slug must be maximum 150 characters.",
+                        },
                       ]
                     }
                   >
@@ -1049,6 +1079,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           Object {
                             "message": "Please enter valid slug!",
                             "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                          },
+                          Object {
+                            "max": 150,
+                            "message": "Slug must be maximum 150 characters.",
                           },
                         ]
                       }
@@ -1104,6 +1138,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               "message": "Please enter valid slug!",
                               "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
                             },
+                            Object {
+                              "max": 150,
+                              "message": "Slug must be maximum 150 characters.",
+                            },
                           ]
                         }
                         trigger="onChange"
@@ -1135,15 +1173,20 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     "message": "Please enter valid slug!",
                                     "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
                                   },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Slug must be maximum 150 characters.",
+                                  },
                                 ]
                               }
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
@@ -1176,6 +1219,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                     "message": "Please enter valid slug!",
                                     "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
                                   },
+                                  Object {
+                                    "max": 150,
+                                    "message": "Slug must be maximum 150 characters.",
+                                  },
                                 ]
                               }
                               status=""
@@ -1185,10 +1232,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -1270,7 +1318,226 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     </WrapperField>
                   </FormItem>
                   <FormItem
-                    label="Claimants"
+                    label="Fact"
+                    name="fact"
+                  >
+                    <WrapperField
+                      label="Fact"
+                      messageVariables={
+                        Object {
+                          "label": "Fact",
+                        }
+                      }
+                      name="fact"
+                      onReset={[Function]}
+                      trigger="onChange"
+                      validateTrigger="onChange"
+                    >
+                      <Field
+                        fieldContext={
+                          Object {
+                            "__INTERNAL__": Object {
+                              "itemRef": [Function],
+                              "name": "create-claim",
+                            },
+                            "getFieldError": [Function],
+                            "getFieldInstance": [Function],
+                            "getFieldValue": [Function],
+                            "getFieldsError": [Function],
+                            "getFieldsValue": [Function],
+                            "getInternalHooks": [Function],
+                            "isFieldTouched": [Function],
+                            "isFieldValidating": [Function],
+                            "isFieldsTouched": [Function],
+                            "isFieldsValidating": [Function],
+                            "resetFields": [Function],
+                            "scrollToField": [Function],
+                            "setFields": [Function],
+                            "setFieldsValue": [Function],
+                            "submit": [Function],
+                            "validateFields": [Function],
+                            "validateTrigger": "onChange",
+                          }
+                        }
+                        key="_fact"
+                        label="Fact"
+                        messageVariables={
+                          Object {
+                            "label": "Fact",
+                          }
+                        }
+                        name={
+                          Array [
+                            "fact",
+                          ]
+                        }
+                        onReset={[Function]}
+                        trigger="onChange"
+                        validateTrigger="onChange"
+                        valuePropName="value"
+                      >
+                        <Row
+                          className="ant-form-item"
+                          key="row"
+                        >
+                          <div
+                            className="ant-row ant-form-item"
+                            style={Object {}}
+                          >
+                            <FormItemLabel
+                              htmlFor="create-claim_fact"
+                              label="Fact"
+                              name="fact"
+                              prefixCls="ant-form"
+                              required={false}
+                              requiredMark={true}
+                            >
+                              <Col
+                                className="ant-form-item-label"
+                                offset={2}
+                                span={8}
+                              >
+                                <div
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
+                                  style={Object {}}
+                                >
+                                  <label
+                                    className=""
+                                    htmlFor="create-claim_fact"
+                                    title="Fact"
+                                  >
+                                    Fact
+                                  </label>
+                                </div>
+                              </Col>
+                            </FormItemLabel>
+                            <FormItemInput
+                              errors={Array []}
+                              label="Fact"
+                              name={
+                                Array [
+                                  "fact",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
+                              prefixCls="ant-form"
+                              status=""
+                              touched={false}
+                              validateStatus=""
+                              validating={false}
+                            >
+                              <Col
+                                className="ant-form-item-control"
+                                offset={2}
+                                span={20}
+                              >
+                                <div
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
+                                  style={Object {}}
+                                >
+                                  <div
+                                    className="ant-form-item-control-input"
+                                  >
+                                    <div
+                                      className="ant-form-item-control-input-content"
+                                    >
+                                      <Component
+                                        update={1}
+                                      >
+                                        <TextArea
+                                          id="create-claim_fact"
+                                          onChange={[Function]}
+                                          placeholder="Enter Fact ..."
+                                          rows={6}
+                                        >
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
+                                              <TextArea
+                                                className=""
+                                                id="create-claim_fact"
+                                                onChange={[Function]}
+                                                placeholder="Enter Fact ..."
+                                                prefixCls="ant-input"
+                                                rows={6}
+                                              />
+                                            }
+                                            handleReset={[Function]}
+                                            id="create-claim_fact"
+                                            inputType="text"
+                                            onChange={[Function]}
+                                            placeholder="Enter Fact ..."
+                                            prefixCls="ant-input"
+                                            rows={6}
+                                            triggerFocus={[Function]}
+                                            value=""
+                                          >
+                                            <TextArea
+                                              className=""
+                                              id="create-claim_fact"
+                                              onChange={[Function]}
+                                              placeholder="Enter Fact ..."
+                                              prefixCls="ant-input"
+                                              rows={6}
+                                              value=""
+                                            >
+                                              <ResizableTextArea
+                                                className=""
+                                                id="create-claim_fact"
+                                                onChange={[Function]}
+                                                onKeyDown={[Function]}
+                                                placeholder="Enter Fact ..."
+                                                prefixCls="ant-input"
+                                                rows={6}
+                                                value=""
+                                              >
+                                                <ResizeObserver
+                                                  disabled={true}
+                                                  onResize={[Function]}
+                                                >
+                                                  <textarea
+                                                    className="ant-input"
+                                                    id="create-claim_fact"
+                                                    onChange={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    placeholder="Enter Fact ..."
+                                                    rows={6}
+                                                    style={Object {}}
+                                                    value=""
+                                                  />
+                                                </ResizeObserver>
+                                              </ResizableTextArea>
+                                            </TextArea>
+                                          </ClearableLabeledInput>
+                                        </TextArea>
+                                      </Component>
+                                    </div>
+                                  </div>
+                                  <ErrorList
+                                    errors={Array []}
+                                    onDomErrorVisibleChange={[Function]}
+                                  >
+                                    <CSSMotion
+                                      motionAppear={true}
+                                      motionDeadline={500}
+                                      motionName="show-help"
+                                      onLeaveEnd={[Function]}
+                                      removeOnLeave={true}
+                                      visible={false}
+                                    >
+                                      <DomWrapper />
+                                    </CSSMotion>
+                                  </ErrorList>
+                                </div>
+                              </Col>
+                            </FormItemInput>
+                          </div>
+                        </Row>
+                      </Field>
+                    </WrapperField>
+                  </FormItem>
+                  <FormItem
+                    label="Claimant"
                     name="claimant"
                     rules={
                       Array [
@@ -1282,10 +1549,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     }
                   >
                     <WrapperField
-                      label="Claimants"
+                      label="Claimant"
                       messageVariables={
                         Object {
-                          "label": "Claimants",
+                          "label": "Claimant",
                         }
                       }
                       name="claimant"
@@ -1328,10 +1595,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           }
                         }
                         key="_claimant"
-                        label="Claimants"
+                        label="Claimant"
                         messageVariables={
                           Object {
-                            "label": "Claimants",
+                            "label": "Claimant",
                           }
                         }
                         name={
@@ -1362,7 +1629,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           >
                             <FormItemLabel
                               htmlFor="create-claim_claimant"
-                              label="Claimants"
+                              label="Claimant"
                               name="claimant"
                               prefixCls="ant-form"
                               required={true}
@@ -1378,25 +1645,26 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
                                     className="ant-form-item-required"
                                     htmlFor="create-claim_claimant"
-                                    title="Claimants"
+                                    title="Claimant"
                                   >
-                                    Claimants
+                                    Claimant
                                   </label>
                                 </div>
                               </Col>
                             </FormItemLabel>
                             <FormItemInput
                               errors={Array []}
-                              label="Claimants"
+                              label="Claimant"
                               name={
                                 Array [
                                   "claimant",
@@ -1419,10 +1687,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -2159,7 +2428,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     </WrapperField>
                   </FormItem>
                   <FormItem
-                    label="Ratings"
+                    label="Rating"
                     name="rating"
                     rules={
                       Array [
@@ -2171,10 +2440,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     }
                   >
                     <WrapperField
-                      label="Ratings"
+                      label="Rating"
                       messageVariables={
                         Object {
-                          "label": "Ratings",
+                          "label": "Rating",
                         }
                       }
                       name="rating"
@@ -2217,10 +2486,10 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           }
                         }
                         key="_rating"
-                        label="Ratings"
+                        label="Rating"
                         messageVariables={
                           Object {
-                            "label": "Ratings",
+                            "label": "Rating",
                           }
                         }
                         name={
@@ -2251,7 +2520,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                           >
                             <FormItemLabel
                               htmlFor="create-claim_rating"
-                              label="Ratings"
+                              label="Rating"
                               name="rating"
                               prefixCls="ant-form"
                               required={true}
@@ -2267,25 +2536,26 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
                                     className="ant-form-item-required"
                                     htmlFor="create-claim_rating"
-                                    title="Ratings"
+                                    title="Rating"
                                   >
-                                    Ratings
+                                    Rating
                                   </label>
                                 </div>
                               </Col>
                             </FormItemLabel>
                             <FormItemInput
                               errors={Array []}
-                              label="Ratings"
+                              label="Rating"
                               name={
                                 Array [
                                   "rating",
@@ -2308,10 +2578,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3048,173 +3319,8 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                     </WrapperField>
                   </FormItem>
                   <FormItem
-                    label="Fact"
-                    name="review"
-                    wrapperCol={24}
-                  >
-                    <WrapperField
-                      label="Fact"
-                      messageVariables={
-                        Object {
-                          "label": "Fact",
-                        }
-                      }
-                      name="review"
-                      onReset={[Function]}
-                      trigger="onChange"
-                      validateTrigger="onChange"
-                      wrapperCol={24}
-                    >
-                      <Field
-                        fieldContext={
-                          Object {
-                            "__INTERNAL__": Object {
-                              "itemRef": [Function],
-                              "name": "create-claim",
-                            },
-                            "getFieldError": [Function],
-                            "getFieldInstance": [Function],
-                            "getFieldValue": [Function],
-                            "getFieldsError": [Function],
-                            "getFieldsValue": [Function],
-                            "getInternalHooks": [Function],
-                            "isFieldTouched": [Function],
-                            "isFieldValidating": [Function],
-                            "isFieldsTouched": [Function],
-                            "isFieldsValidating": [Function],
-                            "resetFields": [Function],
-                            "scrollToField": [Function],
-                            "setFields": [Function],
-                            "setFieldsValue": [Function],
-                            "submit": [Function],
-                            "validateFields": [Function],
-                            "validateTrigger": "onChange",
-                          }
-                        }
-                        key="_review"
-                        label="Fact"
-                        messageVariables={
-                          Object {
-                            "label": "Fact",
-                          }
-                        }
-                        name={
-                          Array [
-                            "review",
-                          ]
-                        }
-                        onReset={[Function]}
-                        trigger="onChange"
-                        validateTrigger="onChange"
-                        valuePropName="value"
-                        wrapperCol={24}
-                      >
-                        <Row
-                          className="ant-form-item"
-                          key="row"
-                        >
-                          <div
-                            className="ant-row ant-form-item"
-                            style={Object {}}
-                          >
-                            <FormItemLabel
-                              htmlFor="create-claim_review"
-                              label="Fact"
-                              name="review"
-                              prefixCls="ant-form"
-                              required={false}
-                              requiredMark={true}
-                              wrapperCol={24}
-                            >
-                              <Col
-                                className="ant-form-item-label"
-                                span={8}
-                              >
-                                <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
-                                  style={Object {}}
-                                >
-                                  <label
-                                    className=""
-                                    htmlFor="create-claim_review"
-                                    title="Fact"
-                                  >
-                                    Fact
-                                  </label>
-                                </div>
-                              </Col>
-                            </FormItemLabel>
-                            <FormItemInput
-                              errors={Array []}
-                              label="Fact"
-                              name={
-                                Array [
-                                  "review",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
-                              prefixCls="ant-form"
-                              status=""
-                              touched={false}
-                              validateStatus=""
-                              validating={false}
-                              wrapperCol={24}
-                            >
-                              <Col
-                                className="ant-form-item-control"
-                              >
-                                <div
-                                  className="ant-col ant-form-item-control"
-                                  style={Object {}}
-                                >
-                                  <div
-                                    className="ant-form-item-control-input"
-                                  >
-                                    <div
-                                      className="ant-form-item-control-input-content"
-                                    >
-                                      <Component
-                                        update={1}
-                                      >
-                                        <Editor
-                                          id="create-claim_review"
-                                          onChange={[Function]}
-                                          placeholder="Enter Review..."
-                                        >
-                                          <div
-                                            style={null}
-                                          />
-                                        </Editor>
-                                      </Component>
-                                    </div>
-                                  </div>
-                                  <ErrorList
-                                    errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
-                                  >
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    >
-                                      <DomWrapper />
-                                    </CSSMotion>
-                                  </ErrorList>
-                                </div>
-                              </Col>
-                            </FormItemInput>
-                          </div>
-                        </Row>
-                      </Field>
-                    </WrapperField>
-                  </FormItem>
-                  <FormItem
                     label="Description"
                     name="description"
-                    wrapperCol={24}
                   >
                     <WrapperField
                       label="Description"
@@ -3227,7 +3333,6 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       onReset={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
-                      wrapperCol={24}
                     >
                       <Field
                         fieldContext={
@@ -3271,7 +3376,6 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
-                        wrapperCol={24}
                       >
                         <Row
                           className="ant-form-item"
@@ -3288,14 +3392,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               prefixCls="ant-form"
                               required={false}
                               requiredMark={true}
-                              wrapperCol={24}
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
@@ -3322,13 +3426,14 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                               touched={false}
                               validateStatus=""
                               validating={false}
-                              wrapperCol={24}
                             >
                               <Col
                                 className="ant-form-item-control"
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3462,10 +3567,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
@@ -3495,10 +3601,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -3512,6 +3619,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         value={"2020-07-17T10:14:44.251Z"}
                                       >
                                         <Picker
+                                          disabledDate={[Function]}
                                           id="create-claim_claim_date"
                                           onChange={[Function]}
                                           value={"2020-07-17T10:14:44.251Z"}
@@ -3530,6 +3638,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                   "rangeItem": [Function],
                                                 }
                                               }
+                                              disabledDate={[Function]}
                                               generateConfig={
                                                 Object {
                                                   "addDate": [Function],
@@ -3652,6 +3761,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                     "rangeItem": [Function],
                                                   }
                                                 }
+                                                disabledDate={[Function]}
                                                 generateConfig={
                                                   Object {
                                                     "addDate": [Function],
@@ -3788,6 +3898,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                             "rangeItem": [Function],
                                                           }
                                                         }
+                                                        disabledDate={[Function]}
                                                         generateConfig={
                                                           Object {
                                                             "addDate": [Function],
@@ -4008,6 +4119,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                               "rangeItem": [Function],
                                                             }
                                                           }
+                                                          disabledDate={[Function]}
                                                           generateConfig={
                                                             Object {
                                                               "addDate": [Function],
@@ -4429,10 +4541,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-label"
+                                offset={2}
                                 span={8}
                               >
                                 <div
-                                  className="ant-col ant-col-8 ant-form-item-label"
+                                  className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
                                   style={Object {}}
                                 >
                                   <label
@@ -4462,10 +4575,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                             >
                               <Col
                                 className="ant-form-item-control"
-                                span={6}
+                                offset={2}
+                                span={20}
                               >
                                 <div
-                                  className="ant-col ant-col-6 ant-form-item-control"
+                                  className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                                   style={Object {}}
                                 >
                                   <div
@@ -4479,6 +4593,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                         value={"2020-07-17T10:14:44.251Z"}
                                       >
                                         <Picker
+                                          disabledDate={[Function]}
                                           id="create-claim_checked_date"
                                           onChange={[Function]}
                                           value={"2020-07-17T10:14:44.251Z"}
@@ -4497,6 +4612,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                   "rangeItem": [Function],
                                                 }
                                               }
+                                              disabledDate={[Function]}
                                               generateConfig={
                                                 Object {
                                                   "addDate": [Function],
@@ -4619,6 +4735,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                     "rangeItem": [Function],
                                                   }
                                                 }
+                                                disabledDate={[Function]}
                                                 generateConfig={
                                                   Object {
                                                     "addDate": [Function],
@@ -4755,6 +4872,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                             "rangeItem": [Function],
                                                           }
                                                         }
+                                                        disabledDate={[Function]}
                                                         generateConfig={
                                                           Object {
                                                             "addDate": [Function],
@@ -4975,6 +5093,7 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                                                               "rangeItem": [Function],
                                                             }
                                                           }
+                                                          disabledDate={[Function]}
                                                           generateConfig={
                                                             Object {
                                                               "addDate": [Function],
@@ -5319,500 +5438,658 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       </Field>
                     </WrapperField>
                   </FormItem>
-                  <FormList
-                    label="Claim sources"
-                    name="claim_sources"
+                  <FormItem
+                    label="Claim Sources"
                   >
-                    <List
-                      label="Claim sources"
-                      name="claim_sources"
+                    <Row
+                      className="ant-form-item"
+                      key="row"
                     >
-                      <WrapperField
-                        name={Array []}
-                        shouldUpdate={[Function]}
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
                       >
-                        <Field
-                          fieldContext={
-                            Object {
-                              "__INTERNAL__": Object {
-                                "itemRef": [Function],
-                                "name": "create-claim",
-                              },
-                              "getFieldError": [Function],
-                              "getFieldInstance": [Function],
-                              "getFieldValue": [Function],
-                              "getFieldsError": [Function],
-                              "getFieldsValue": [Function],
-                              "getInternalHooks": [Function],
-                              "isFieldTouched": [Function],
-                              "isFieldValidating": [Function],
-                              "isFieldsTouched": [Function],
-                              "isFieldsValidating": [Function],
-                              "prefixName": Array [
-                                "claim_sources",
-                              ],
-                              "resetFields": [Function],
-                              "scrollToField": [Function],
-                              "setFields": [Function],
-                              "setFieldsValue": [Function],
-                              "submit": [Function],
-                              "validateFields": [Function],
-                              "validateTrigger": "onChange",
-                            }
-                          }
-                          key="_"
-                          name={Array []}
-                          shouldUpdate={[Function]}
-                          trigger="onChange"
-                          valuePropName="value"
+                        <FormItemLabel
+                          label="Claim Sources"
+                          prefixCls="ant-form"
+                          requiredMark={true}
                         >
-                          <FormItem>
-                            <Row
-                              className="ant-form-item"
-                              key="row"
+                          <Col
+                            className="ant-form-item-label"
+                            offset={2}
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                title="Claim Sources"
+                              >
+                                Claim Sources
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Claim Sources"
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          validateStatus=""
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            offset={2}
+                            span={20}
+                          >
+                            <div
+                              className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
+                              style={Object {}}
                             >
                               <div
-                                className="ant-row ant-form-item"
-                                style={Object {}}
+                                className="ant-form-item-control-input"
                               >
-                                <FormItemLabel
-                                  prefixCls="ant-form"
-                                  requiredMark={true}
-                                />
-                                <FormItemInput
-                                  errors={Array []}
-                                  onDomErrorVisibleChange={[Function]}
-                                  prefixCls="ant-form"
-                                  status=""
-                                  validateStatus=""
+                                <div
+                                  className="ant-form-item-control-input-content"
                                 >
-                                  <Col
-                                    className="ant-form-item-control"
-                                    span={6}
+                                  <FormList
+                                    label="Claim sources"
+                                    name="claim_sources"
                                   >
-                                    <div
-                                      className="ant-col ant-col-6 ant-form-item-control"
-                                      style={Object {}}
+                                    <List
+                                      label="Claim sources"
+                                      name="claim_sources"
                                     >
-                                      <div
-                                        className="ant-form-item-control-input"
+                                      <WrapperField
+                                        name={Array []}
+                                        shouldUpdate={[Function]}
                                       >
-                                        <div
-                                          className="ant-form-item-control-input-content"
+                                        <Field
+                                          fieldContext={
+                                            Object {
+                                              "__INTERNAL__": Object {
+                                                "itemRef": [Function],
+                                                "name": "create-claim",
+                                              },
+                                              "getFieldError": [Function],
+                                              "getFieldInstance": [Function],
+                                              "getFieldValue": [Function],
+                                              "getFieldsError": [Function],
+                                              "getFieldsValue": [Function],
+                                              "getInternalHooks": [Function],
+                                              "isFieldTouched": [Function],
+                                              "isFieldValidating": [Function],
+                                              "isFieldsTouched": [Function],
+                                              "isFieldsValidating": [Function],
+                                              "prefixName": Array [
+                                                "claim_sources",
+                                              ],
+                                              "resetFields": [Function],
+                                              "scrollToField": [Function],
+                                              "setFields": [Function],
+                                              "setFieldsValue": [Function],
+                                              "submit": [Function],
+                                              "validateFields": [Function],
+                                              "validateTrigger": "onChange",
+                                            }
+                                          }
+                                          key="_"
+                                          name={Array []}
+                                          shouldUpdate={[Function]}
+                                          trigger="onChange"
+                                          valuePropName="value"
                                         >
-                                          <Button
-                                            block={true}
-                                            ghost={false}
-                                            htmlType="button"
-                                            icon={<ForwardRef(PlusOutlined) />}
-                                            loading={false}
-                                            onClick={[Function]}
-                                            type="dashed"
-                                          >
-                                            <Wave>
-                                              <button
-                                                className="ant-btn ant-btn-dashed ant-btn-block"
-                                                onClick={[Function]}
-                                                type="button"
+                                          <FormItem>
+                                            <Row
+                                              className="ant-form-item"
+                                              key="row"
+                                            >
+                                              <div
+                                                className="ant-row ant-form-item"
+                                                style={Object {}}
                                               >
-                                                <ForwardRef(PlusOutlined)>
-                                                  <AntdIcon
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {},
-                                                              "children": Array [
-                                                                Object {
-                                                                  "attrs": Object {},
-                                                                  "tag": "style",
-                                                                },
-                                                              ],
-                                                              "tag": "defs",
-                                                            },
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
-                                                        },
-                                                        "name": "plus",
-                                                        "theme": "outlined",
-                                                      }
-                                                    }
-                                                  >
-                                                    <span
-                                                      aria-label="plus"
-                                                      className="anticon anticon-plus"
-                                                      role="img"
-                                                    >
-                                                      <IconReact
-                                                        className=""
-                                                        icon={
-                                                          Object {
-                                                            "icon": Object {
-                                                              "attrs": Object {
-                                                                "focusable": "false",
-                                                                "viewBox": "64 64 896 896",
-                                                              },
-                                                              "children": Array [
-                                                                Object {
-                                                                  "attrs": Object {},
-                                                                  "children": Array [
-                                                                    Object {
-                                                                      "attrs": Object {},
-                                                                      "tag": "style",
-                                                                    },
-                                                                  ],
-                                                                  "tag": "defs",
-                                                                },
-                                                                Object {
-                                                                  "attrs": Object {
-                                                                    "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
-                                                                  },
-                                                                  "tag": "path",
-                                                                },
-                                                                Object {
-                                                                  "attrs": Object {
-                                                                    "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
-                                                                  },
-                                                                  "tag": "path",
-                                                                },
-                                                              ],
-                                                              "tag": "svg",
-                                                            },
-                                                            "name": "plus",
-                                                            "theme": "outlined",
-                                                          }
-                                                        }
-                                                      >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          className=""
-                                                          data-icon="plus"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          key="svg-plus"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <defs
-                                                            key="svg-plus-svg-0"
-                                                          >
-                                                            <style
-                                                              key="svg-plus-svg-0-defs-0"
-                                                            />
-                                                          </defs>
-                                                          <path
-                                                            d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                                                            key="svg-plus-svg-1"
-                                                          />
-                                                          <path
-                                                            d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                                                            key="svg-plus-svg-2"
-                                                          />
-                                                        </svg>
-                                                      </IconReact>
-                                                    </span>
-                                                  </AntdIcon>
-                                                </ForwardRef(PlusOutlined)>
-                                                <span
-                                                  key=".0"
+                                                <FormItemLabel
+                                                  prefixCls="ant-form"
+                                                  requiredMark={true}
+                                                />
+                                                <FormItemInput
+                                                  errors={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
+                                                  prefixCls="ant-form"
+                                                  status=""
+                                                  validateStatus=""
                                                 >
-                                                  Add Claim sources
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
-                                      </div>
-                                      <ErrorList
-                                        errors={Array []}
-                                        onDomErrorVisibleChange={[Function]}
-                                      >
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
-                                        >
-                                          <DomWrapper />
-                                        </CSSMotion>
-                                      </ErrorList>
-                                    </div>
-                                  </Col>
-                                </FormItemInput>
+                                                  <Col
+                                                    className="ant-form-item-control"
+                                                  >
+                                                    <div
+                                                      className="ant-col ant-form-item-control"
+                                                      style={Object {}}
+                                                    >
+                                                      <div
+                                                        className="ant-form-item-control-input"
+                                                      >
+                                                        <div
+                                                          className="ant-form-item-control-input-content"
+                                                        >
+                                                          <Button
+                                                            block={true}
+                                                            ghost={false}
+                                                            htmlType="button"
+                                                            icon={<ForwardRef(PlusOutlined) />}
+                                                            loading={false}
+                                                            onClick={[Function]}
+                                                            type="dashed"
+                                                          >
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-dashed ant-btn-block"
+                                                                onClick={[Function]}
+                                                                type="button"
+                                                              >
+                                                                <ForwardRef(PlusOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
+                                                                            Object {
+                                                                              "attrs": Object {},
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {},
+                                                                                  "tag": "style",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "defs",
+                                                                            },
+                                                                            Object {
+                                                                              "attrs": Object {
+                                                                                "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                                              },
+                                                                              "tag": "path",
+                                                                            },
+                                                                            Object {
+                                                                              "attrs": Object {
+                                                                                "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                                              },
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "plus",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="plus"
+                                                                      className="anticon anticon-plus"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        className=""
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {},
+                                                                                  "children": Array [
+                                                                                    Object {
+                                                                                      "attrs": Object {},
+                                                                                      "tag": "style",
+                                                                                    },
+                                                                                  ],
+                                                                                  "tag": "defs",
+                                                                                },
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "plus",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          className=""
+                                                                          data-icon="plus"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-plus"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <defs
+                                                                            key="svg-plus-svg-0"
+                                                                          >
+                                                                            <style
+                                                                              key="svg-plus-svg-0-defs-0"
+                                                                            />
+                                                                          </defs>
+                                                                          <path
+                                                                            d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                                                                            key="svg-plus-svg-1"
+                                                                          />
+                                                                          <path
+                                                                            d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                                                                            key="svg-plus-svg-2"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(PlusOutlined)>
+                                                                <span
+                                                                  key=".0"
+                                                                >
+                                                                  Add Claim sources
+                                                                </span>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
+                                                        </div>
+                                                      </div>
+                                                      <ErrorList
+                                                        errors={Array []}
+                                                        onDomErrorVisibleChange={[Function]}
+                                                      >
+                                                        <CSSMotion
+                                                          motionAppear={true}
+                                                          motionDeadline={500}
+                                                          motionName="show-help"
+                                                          onLeaveEnd={[Function]}
+                                                          removeOnLeave={true}
+                                                          visible={false}
+                                                        >
+                                                          <DomWrapper />
+                                                        </CSSMotion>
+                                                      </ErrorList>
+                                                    </div>
+                                                  </Col>
+                                                </FormItemInput>
+                                              </div>
+                                            </Row>
+                                          </FormItem>
+                                        </Field>
+                                      </WrapperField>
+                                    </List>
+                                  </FormList>
+                                </div>
                               </div>
-                            </Row>
-                          </FormItem>
-                        </Field>
-                      </WrapperField>
-                    </List>
-                  </FormList>
-                  <FormList
-                    label="Review sources"
-                    name="review_sources"
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </FormItem>
+                  <FormItem
+                    label="Review Sources"
                   >
-                    <List
-                      label="Review sources"
-                      name="review_sources"
+                    <Row
+                      className="ant-form-item"
+                      key="row"
                     >
-                      <WrapperField
-                        name={Array []}
-                        shouldUpdate={[Function]}
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
                       >
-                        <Field
-                          fieldContext={
-                            Object {
-                              "__INTERNAL__": Object {
-                                "itemRef": [Function],
-                                "name": "create-claim",
-                              },
-                              "getFieldError": [Function],
-                              "getFieldInstance": [Function],
-                              "getFieldValue": [Function],
-                              "getFieldsError": [Function],
-                              "getFieldsValue": [Function],
-                              "getInternalHooks": [Function],
-                              "isFieldTouched": [Function],
-                              "isFieldValidating": [Function],
-                              "isFieldsTouched": [Function],
-                              "isFieldsValidating": [Function],
-                              "prefixName": Array [
-                                "review_sources",
-                              ],
-                              "resetFields": [Function],
-                              "scrollToField": [Function],
-                              "setFields": [Function],
-                              "setFieldsValue": [Function],
-                              "submit": [Function],
-                              "validateFields": [Function],
-                              "validateTrigger": "onChange",
-                            }
-                          }
-                          key="_"
-                          name={Array []}
-                          shouldUpdate={[Function]}
-                          trigger="onChange"
-                          valuePropName="value"
+                        <FormItemLabel
+                          label="Review Sources"
+                          prefixCls="ant-form"
+                          requiredMark={true}
                         >
-                          <FormItem>
-                            <Row
-                              className="ant-form-item"
-                              key="row"
+                          <Col
+                            className="ant-form-item-label"
+                            offset={2}
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-col-offset-2 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                title="Review Sources"
+                              >
+                                Review Sources
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Review Sources"
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          validateStatus=""
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            offset={2}
+                            span={20}
+                          >
+                            <div
+                              className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
+                              style={Object {}}
                             >
                               <div
-                                className="ant-row ant-form-item"
-                                style={Object {}}
+                                className="ant-form-item-control-input"
                               >
-                                <FormItemLabel
-                                  prefixCls="ant-form"
-                                  requiredMark={true}
-                                />
-                                <FormItemInput
-                                  errors={Array []}
-                                  onDomErrorVisibleChange={[Function]}
-                                  prefixCls="ant-form"
-                                  status=""
-                                  validateStatus=""
+                                <div
+                                  className="ant-form-item-control-input-content"
                                 >
-                                  <Col
-                                    className="ant-form-item-control"
-                                    span={6}
+                                  <FormList
+                                    label="Review sources"
+                                    name="review_sources"
                                   >
-                                    <div
-                                      className="ant-col ant-col-6 ant-form-item-control"
-                                      style={Object {}}
+                                    <List
+                                      label="Review sources"
+                                      name="review_sources"
                                     >
-                                      <div
-                                        className="ant-form-item-control-input"
+                                      <WrapperField
+                                        name={Array []}
+                                        shouldUpdate={[Function]}
                                       >
-                                        <div
-                                          className="ant-form-item-control-input-content"
+                                        <Field
+                                          fieldContext={
+                                            Object {
+                                              "__INTERNAL__": Object {
+                                                "itemRef": [Function],
+                                                "name": "create-claim",
+                                              },
+                                              "getFieldError": [Function],
+                                              "getFieldInstance": [Function],
+                                              "getFieldValue": [Function],
+                                              "getFieldsError": [Function],
+                                              "getFieldsValue": [Function],
+                                              "getInternalHooks": [Function],
+                                              "isFieldTouched": [Function],
+                                              "isFieldValidating": [Function],
+                                              "isFieldsTouched": [Function],
+                                              "isFieldsValidating": [Function],
+                                              "prefixName": Array [
+                                                "review_sources",
+                                              ],
+                                              "resetFields": [Function],
+                                              "scrollToField": [Function],
+                                              "setFields": [Function],
+                                              "setFieldsValue": [Function],
+                                              "submit": [Function],
+                                              "validateFields": [Function],
+                                              "validateTrigger": "onChange",
+                                            }
+                                          }
+                                          key="_"
+                                          name={Array []}
+                                          shouldUpdate={[Function]}
+                                          trigger="onChange"
+                                          valuePropName="value"
                                         >
-                                          <Button
-                                            block={true}
-                                            ghost={false}
-                                            htmlType="button"
-                                            icon={<ForwardRef(PlusOutlined) />}
-                                            loading={false}
-                                            onClick={[Function]}
-                                            type="dashed"
-                                          >
-                                            <Wave>
-                                              <button
-                                                className="ant-btn ant-btn-dashed ant-btn-block"
-                                                onClick={[Function]}
-                                                type="button"
+                                          <FormItem>
+                                            <Row
+                                              className="ant-form-item"
+                                              key="row"
+                                            >
+                                              <div
+                                                className="ant-row ant-form-item"
+                                                style={Object {}}
                                               >
-                                                <ForwardRef(PlusOutlined)>
-                                                  <AntdIcon
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {},
-                                                              "children": Array [
-                                                                Object {
-                                                                  "attrs": Object {},
-                                                                  "tag": "style",
-                                                                },
-                                                              ],
-                                                              "tag": "defs",
-                                                            },
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
-                                                        },
-                                                        "name": "plus",
-                                                        "theme": "outlined",
-                                                      }
-                                                    }
-                                                  >
-                                                    <span
-                                                      aria-label="plus"
-                                                      className="anticon anticon-plus"
-                                                      role="img"
-                                                    >
-                                                      <IconReact
-                                                        className=""
-                                                        icon={
-                                                          Object {
-                                                            "icon": Object {
-                                                              "attrs": Object {
-                                                                "focusable": "false",
-                                                                "viewBox": "64 64 896 896",
-                                                              },
-                                                              "children": Array [
-                                                                Object {
-                                                                  "attrs": Object {},
-                                                                  "children": Array [
-                                                                    Object {
-                                                                      "attrs": Object {},
-                                                                      "tag": "style",
-                                                                    },
-                                                                  ],
-                                                                  "tag": "defs",
-                                                                },
-                                                                Object {
-                                                                  "attrs": Object {
-                                                                    "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
-                                                                  },
-                                                                  "tag": "path",
-                                                                },
-                                                                Object {
-                                                                  "attrs": Object {
-                                                                    "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
-                                                                  },
-                                                                  "tag": "path",
-                                                                },
-                                                              ],
-                                                              "tag": "svg",
-                                                            },
-                                                            "name": "plus",
-                                                            "theme": "outlined",
-                                                          }
-                                                        }
-                                                      >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          className=""
-                                                          data-icon="plus"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          key="svg-plus"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <defs
-                                                            key="svg-plus-svg-0"
-                                                          >
-                                                            <style
-                                                              key="svg-plus-svg-0-defs-0"
-                                                            />
-                                                          </defs>
-                                                          <path
-                                                            d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
-                                                            key="svg-plus-svg-1"
-                                                          />
-                                                          <path
-                                                            d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
-                                                            key="svg-plus-svg-2"
-                                                          />
-                                                        </svg>
-                                                      </IconReact>
-                                                    </span>
-                                                  </AntdIcon>
-                                                </ForwardRef(PlusOutlined)>
-                                                <span
-                                                  key=".0"
+                                                <FormItemLabel
+                                                  prefixCls="ant-form"
+                                                  requiredMark={true}
+                                                />
+                                                <FormItemInput
+                                                  errors={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
+                                                  prefixCls="ant-form"
+                                                  status=""
+                                                  validateStatus=""
                                                 >
-                                                  Add Review sources
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
-                                      </div>
-                                      <ErrorList
-                                        errors={Array []}
-                                        onDomErrorVisibleChange={[Function]}
-                                      >
-                                        <CSSMotion
-                                          motionAppear={true}
-                                          motionDeadline={500}
-                                          motionName="show-help"
-                                          onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
-                                          visible={false}
-                                        >
-                                          <DomWrapper />
-                                        </CSSMotion>
-                                      </ErrorList>
-                                    </div>
-                                  </Col>
-                                </FormItemInput>
+                                                  <Col
+                                                    className="ant-form-item-control"
+                                                  >
+                                                    <div
+                                                      className="ant-col ant-form-item-control"
+                                                      style={Object {}}
+                                                    >
+                                                      <div
+                                                        className="ant-form-item-control-input"
+                                                      >
+                                                        <div
+                                                          className="ant-form-item-control-input-content"
+                                                        >
+                                                          <Button
+                                                            block={true}
+                                                            ghost={false}
+                                                            htmlType="button"
+                                                            icon={<ForwardRef(PlusOutlined) />}
+                                                            loading={false}
+                                                            onClick={[Function]}
+                                                            type="dashed"
+                                                          >
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-dashed ant-btn-block"
+                                                                onClick={[Function]}
+                                                                type="button"
+                                                              >
+                                                                <ForwardRef(PlusOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
+                                                                            Object {
+                                                                              "attrs": Object {},
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {},
+                                                                                  "tag": "style",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "defs",
+                                                                            },
+                                                                            Object {
+                                                                              "attrs": Object {
+                                                                                "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                                              },
+                                                                              "tag": "path",
+                                                                            },
+                                                                            Object {
+                                                                              "attrs": Object {
+                                                                                "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                                              },
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "plus",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="plus"
+                                                                      className="anticon anticon-plus"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        className=""
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {},
+                                                                                  "children": Array [
+                                                                                    Object {
+                                                                                      "attrs": Object {},
+                                                                                      "tag": "style",
+                                                                                    },
+                                                                                  ],
+                                                                                  "tag": "defs",
+                                                                                },
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "plus",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          className=""
+                                                                          data-icon="plus"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-plus"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <defs
+                                                                            key="svg-plus-svg-0"
+                                                                          >
+                                                                            <style
+                                                                              key="svg-plus-svg-0-defs-0"
+                                                                            />
+                                                                          </defs>
+                                                                          <path
+                                                                            d="M482 152h60q8 0 8 8v704q0 8-8 8h-60q-8 0-8-8V160q0-8 8-8z"
+                                                                            key="svg-plus-svg-1"
+                                                                          />
+                                                                          <path
+                                                                            d="M176 474h672q8 0 8 8v60q0 8-8 8H176q-8 0-8-8v-60q0-8 8-8z"
+                                                                            key="svg-plus-svg-2"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(PlusOutlined)>
+                                                                <span
+                                                                  key=".0"
+                                                                >
+                                                                  Add Review sources
+                                                                </span>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
+                                                        </div>
+                                                      </div>
+                                                      <ErrorList
+                                                        errors={Array []}
+                                                        onDomErrorVisibleChange={[Function]}
+                                                      >
+                                                        <CSSMotion
+                                                          motionAppear={true}
+                                                          motionDeadline={500}
+                                                          motionName="show-help"
+                                                          onLeaveEnd={[Function]}
+                                                          removeOnLeave={true}
+                                                          visible={false}
+                                                        >
+                                                          <DomWrapper />
+                                                        </CSSMotion>
+                                                      </ErrorList>
+                                                    </div>
+                                                  </Col>
+                                                </FormItemInput>
+                                              </div>
+                                            </Row>
+                                          </FormItem>
+                                        </Field>
+                                      </WrapperField>
+                                    </List>
+                                  </FormList>
+                                </div>
                               </div>
-                            </Row>
-                          </FormItem>
-                        </Field>
-                      </WrapperField>
-                    </List>
-                  </FormList>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </FormItem>
                 </div>
                 <FormItem>
                   <Row
@@ -5836,10 +6113,11 @@ exports[`Claims Edit component snapshot testing should render the component 1`] 
                       >
                         <Col
                           className="ant-form-item-control"
-                          span={6}
+                          offset={2}
+                          span={20}
                         >
                           <div
-                            className="ant-col ant-col-6 ant-form-item-control"
+                            className="ant-col ant-col-20 ant-col-offset-2 ant-form-item-control"
                             style={Object {}}
                           >
                             <div

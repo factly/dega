@@ -1,0 +1,1368 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Webhook edit component snapshot testing should match skeleton while loading 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <EditWebhook>
+        <Skeleton
+          avatar={false}
+          paragraph={true}
+          title={true}
+        >
+          <div
+            className="ant-skeleton"
+          >
+            <div
+              className="ant-skeleton-content"
+            >
+              <Title
+                prefixCls="ant-skeleton-title"
+                width="38%"
+              >
+                <h3
+                  className="ant-skeleton-title"
+                  style={
+                    Object {
+                      "width": "38%",
+                    }
+                  }
+                />
+              </Title>
+              <Paragraph
+                prefixCls="ant-skeleton-paragraph"
+                rows={3}
+                width="61%"
+              >
+                <ul
+                  className="ant-skeleton-paragraph"
+                >
+                  <li
+                    key="0"
+                    style={
+                      Object {
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <li
+                    key="1"
+                    style={
+                      Object {
+                        "width": undefined,
+                      }
+                    }
+                  />
+                  <li
+                    key="2"
+                    style={
+                      Object {
+                        "width": "61%",
+                      }
+                    }
+                  />
+                </ul>
+              </Paragraph>
+            </div>
+          </div>
+        </Skeleton>
+      </EditWebhook>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
+
+exports[`Webhook edit component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [MockFunction],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <EditWebhook>
+    <WebhookForm
+      data={
+        Object {
+          "events": Array [
+            1,
+          ],
+          "id": 1,
+          "name": "webhook-1",
+          "url": "url",
+        }
+      }
+      onCreate={[Function]}
+    >
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+              "name": "create-webhook",
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={
+          Object {
+            "events": Array [
+              1,
+            ],
+            "id": 1,
+            "name": "webhook-1",
+            "url": "url",
+          }
+        }
+        labelCol={
+          Object {
+            "span": 8,
+          }
+        }
+        name="create-webhook"
+        onFinish={[Function]}
+        onValuesChange={[Function]}
+        wrapperCol={
+          Object {
+            "span": 10,
+          }
+        }
+      >
+        <SizeContextProvider>
+          <ForwardRef(Form)
+            className="ant-form ant-form-horizontal"
+            form={
+              Object {
+                "__INTERNAL__": Object {
+                  "itemRef": [Function],
+                  "name": "create-webhook",
+                },
+                "getFieldError": [Function],
+                "getFieldInstance": [Function],
+                "getFieldValue": [Function],
+                "getFieldsError": [Function],
+                "getFieldsValue": [Function],
+                "getInternalHooks": [Function],
+                "isFieldTouched": [Function],
+                "isFieldValidating": [Function],
+                "isFieldsTouched": [Function],
+                "isFieldsValidating": [Function],
+                "resetFields": [Function],
+                "scrollToField": [Function],
+                "setFields": [Function],
+                "setFieldsValue": [Function],
+                "submit": [Function],
+                "validateFields": [Function],
+              }
+            }
+            id="create-webhook"
+            initialValues={
+              Object {
+                "events": Array [
+                  1,
+                ],
+                "id": 1,
+                "name": "webhook-1",
+                "url": "url",
+              }
+            }
+            name="create-webhook"
+            onFinish={[Function]}
+            onFinishFailed={[Function]}
+            onValuesChange={[Function]}
+          >
+            <form
+              className="ant-form ant-form-horizontal"
+              id="create-webhook"
+              onSubmit={[Function]}
+            >
+              <FormItem
+                label="Name"
+                name="name"
+              >
+                <WrapperField
+                  label="Name"
+                  messageVariables={
+                    Object {
+                      "label": "Name",
+                    }
+                  }
+                  name="name"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-webhook",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_name"
+                    label="Name"
+                    messageVariables={
+                      Object {
+                        "label": "Name",
+                      }
+                    }
+                    name={
+                      Array [
+                        "name",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-webhook_name"
+                          label="Name"
+                          name="name"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-webhook_name"
+                                title="Name"
+                              >
+                                Name
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Name"
+                          name={
+                            Array [
+                              "name",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                    value="webhook-1"
+                                  >
+                                    <Input
+                                      id="create-webhook_name"
+                                      onChange={[Function]}
+                                      type="text"
+                                      value="webhook-1"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-webhook_name"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                            value="webhook-1"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-webhook_name"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value="webhook-1"
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="create-webhook_name"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          type="text"
+                                          value="webhook-1"
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Url"
+                name="url"
+              >
+                <WrapperField
+                  label="Url"
+                  messageVariables={
+                    Object {
+                      "label": "Url",
+                    }
+                  }
+                  name="url"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-webhook",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_url"
+                    label="Url"
+                    messageVariables={
+                      Object {
+                        "label": "Url",
+                      }
+                    }
+                    name={
+                      Array [
+                        "url",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-webhook_url"
+                          label="Url"
+                          name="url"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-webhook_url"
+                                title="Url"
+                              >
+                                Url
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Url"
+                          name={
+                            Array [
+                              "url",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                    value="url"
+                                  >
+                                    <Input
+                                      id="create-webhook_url"
+                                      onChange={[Function]}
+                                      type="text"
+                                      value="url"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-webhook_url"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                            value="url"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-webhook_url"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value="url"
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="create-webhook_url"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          type="text"
+                                          value="url"
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Enable"
+                name="enabled"
+                valuePropName="checked"
+              >
+                <WrapperField
+                  label="Enable"
+                  messageVariables={
+                    Object {
+                      "label": "Enable",
+                    }
+                  }
+                  name="enabled"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                  valuePropName="checked"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-webhook",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_enabled"
+                    label="Enable"
+                    messageVariables={
+                      Object {
+                        "label": "Enable",
+                      }
+                    }
+                    name={
+                      Array [
+                        "enabled",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="checked"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-webhook_enabled"
+                          label="Enable"
+                          name="enabled"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-webhook_enabled"
+                                title="Enable"
+                              >
+                                Enable
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Enable"
+                          name={
+                            Array [
+                              "enabled",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                          valuePropName="checked"
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <Switch
+                                      id="create-webhook_enabled"
+                                      onChange={[Function]}
+                                    >
+                                      <Wave
+                                        insertExtraNode={true}
+                                      >
+                                        <Switch
+                                          className=""
+                                          id="create-webhook_enabled"
+                                          loadingIcon={
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                          }
+                                          onChange={[Function]}
+                                          prefixCls="ant-switch"
+                                        >
+                                          <button
+                                            aria-checked={false}
+                                            className="ant-switch"
+                                            id="create-webhook_enabled"
+                                            onClick={[Function]}
+                                            onKeyDown={[Function]}
+                                            role="switch"
+                                            type="button"
+                                          >
+                                            <div
+                                              className="ant-switch-handle"
+                                            />
+                                            <span
+                                              className="ant-switch-inner"
+                                            />
+                                          </button>
+                                        </Switch>
+                                      </Wave>
+                                    </Switch>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Events"
+                name="events"
+              >
+                <WrapperField
+                  label="Events"
+                  messageVariables={
+                    Object {
+                      "label": "Events",
+                    }
+                  }
+                  name="events"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-webhook",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_events"
+                    label="Events"
+                    messageVariables={
+                      Object {
+                        "label": "Events",
+                      }
+                    }
+                    name={
+                      Array [
+                        "events",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="create-webhook_events"
+                          label="Events"
+                          name="events"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="create-webhook_events"
+                                title="Events"
+                              >
+                                Events
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Events"
+                          name={
+                            Array [
+                              "events",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={10}
+                          >
+                            <div
+                              className="ant-col ant-col-10 ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                    value={
+                                      Array [
+                                        1,
+                                      ]
+                                    }
+                                  >
+                                    <Memo(CheckboxGroup)
+                                      id="create-webhook_events"
+                                      onChange={[Function]}
+                                      value={
+                                        Array [
+                                          1,
+                                        ]
+                                      }
+                                    >
+                                      <div
+                                        className="ant-checkbox-group"
+                                        id="create-webhook_events"
+                                      >
+                                        <Row
+                                          gutter={
+                                            Array [
+                                              4,
+                                              16,
+                                            ]
+                                          }
+                                        >
+                                          <div
+                                            className="ant-row"
+                                            style={
+                                              Object {
+                                                "marginBottom": 8,
+                                                "marginLeft": -2,
+                                                "marginRight": -2,
+                                                "marginTop": -8,
+                                              }
+                                            }
+                                          />
+                                        </Row>
+                                      </div>
+                                    </Memo(CheckboxGroup)>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "display": "flex",
+                    "justifyContent": "center",
+                  }
+                }
+                wrapperCol={
+                  Object {
+                    "offset": 2,
+                    "span": 10,
+                  }
+                }
+              >
+                <Row
+                  className="ant-form-item"
+                  key="row"
+                  style={
+                    Object {
+                      "alignItems": "center",
+                      "display": "flex",
+                      "justifyContent": "center",
+                    }
+                  }
+                >
+                  <div
+                    className="ant-row ant-form-item"
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "display": "flex",
+                        "justifyContent": "center",
+                      }
+                    }
+                  >
+                    <FormItemLabel
+                      prefixCls="ant-form"
+                      requiredMark={true}
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "display": "flex",
+                          "justifyContent": "center",
+                        }
+                      }
+                      wrapperCol={
+                        Object {
+                          "offset": 2,
+                          "span": 10,
+                        }
+                      }
+                    />
+                    <FormItemInput
+                      errors={Array []}
+                      onDomErrorVisibleChange={[Function]}
+                      prefixCls="ant-form"
+                      status=""
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "display": "flex",
+                          "justifyContent": "center",
+                        }
+                      }
+                      validateStatus=""
+                      wrapperCol={
+                        Object {
+                          "offset": 2,
+                          "span": 10,
+                        }
+                      }
+                    >
+                      <Col
+                        className="ant-form-item-control"
+                        offset={2}
+                        span={10}
+                      >
+                        <div
+                          className="ant-col ant-col-10 ant-col-offset-2 ant-form-item-control"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-form-item-control-input"
+                          >
+                            <div
+                              className="ant-form-item-control-input-content"
+                            >
+                              <Button
+                                block={false}
+                                ghost={false}
+                                htmlType="button"
+                                loading={false}
+                                onClick={[Function]}
+                                size="small"
+                                style={
+                                  Object {
+                                    "width": "90%",
+                                  }
+                                }
+                              >
+                                <Wave>
+                                  <button
+                                    className="ant-btn ant-btn-sm"
+                                    onClick={[Function]}
+                                    style={
+                                      Object {
+                                        "width": "90%",
+                                      }
+                                    }
+                                    type="button"
+                                  >
+                                    <LoadingIcon
+                                      existIcon={false}
+                                      loading={false}
+                                      prefixCls="ant-btn"
+                                    >
+                                      <CSSMotion
+                                        motionName="ant-btn-loading-icon-motion"
+                                        onAppearActive={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </LoadingIcon>
+                                    <span
+                                      key=".0"
+                                    >
+                                      Load More Events
+                                    </span>
+                                  </button>
+                                </Wave>
+                              </Button>
+                            </div>
+                          </div>
+                          <ErrorList
+                            errors={Array []}
+                            onDomErrorVisibleChange={[Function]}
+                          >
+                            <CSSMotion
+                              motionAppear={true}
+                              motionDeadline={500}
+                              motionName="show-help"
+                              onLeaveEnd={[Function]}
+                              removeOnLeave={true}
+                              visible={false}
+                            >
+                              <DomWrapper />
+                            </CSSMotion>
+                          </ErrorList>
+                        </div>
+                      </Col>
+                    </FormItemInput>
+                  </div>
+                </Row>
+              </FormItem>
+              <FormItem
+                wrapperCol={
+                  Object {
+                    "offset": 10,
+                    "span": 14,
+                  }
+                }
+              >
+                <Row
+                  className="ant-form-item"
+                  key="row"
+                >
+                  <div
+                    className="ant-row ant-form-item"
+                    style={Object {}}
+                  >
+                    <FormItemLabel
+                      prefixCls="ant-form"
+                      requiredMark={true}
+                      wrapperCol={
+                        Object {
+                          "offset": 10,
+                          "span": 14,
+                        }
+                      }
+                    />
+                    <FormItemInput
+                      errors={Array []}
+                      onDomErrorVisibleChange={[Function]}
+                      prefixCls="ant-form"
+                      status=""
+                      validateStatus=""
+                      wrapperCol={
+                        Object {
+                          "offset": 10,
+                          "span": 14,
+                        }
+                      }
+                    >
+                      <Col
+                        className="ant-form-item-control"
+                        offset={10}
+                        span={14}
+                      >
+                        <div
+                          className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-form-item-control-input"
+                          >
+                            <div
+                              className="ant-form-item-control-input-content"
+                            >
+                              <Space>
+                                <div
+                                  className="ant-space ant-space-horizontal ant-space-align-center"
+                                >
+                                  <Item
+                                    className="ant-space-item"
+                                    direction="horizontal"
+                                    index={0}
+                                    key="ant-space-item-0"
+                                    marginDirection="marginRight"
+                                    size="small"
+                                  >
+                                    <div
+                                      className="ant-space-item"
+                                      style={
+                                        Object {
+                                          "marginRight": 8,
+                                        }
+                                      }
+                                    >
+                                      <Button
+                                        block={false}
+                                        disabled={true}
+                                        ghost={false}
+                                        htmlType="submit"
+                                        loading={false}
+                                        type="primary"
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn ant-btn-primary"
+                                            disabled={true}
+                                            onClick={[Function]}
+                                            type="submit"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Update
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </div>
+                                  </Item>
+                                  <Item
+                                    className="ant-space-item"
+                                    direction="horizontal"
+                                    index={1}
+                                    key="ant-space-item-1"
+                                    marginDirection="marginRight"
+                                    size="small"
+                                  >
+                                    <div
+                                      className="ant-space-item"
+                                      style={Object {}}
+                                    >
+                                      <Button
+                                        block={false}
+                                        ghost={false}
+                                        htmlType="button"
+                                        loading={false}
+                                        onClick={[Function]}
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn"
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Reset
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </div>
+                                  </Item>
+                                </div>
+                              </Space>
+                            </div>
+                          </div>
+                          <ErrorList
+                            errors={Array []}
+                            onDomErrorVisibleChange={[Function]}
+                          >
+                            <CSSMotion
+                              motionAppear={true}
+                              motionDeadline={500}
+                              motionName="show-help"
+                              onLeaveEnd={[Function]}
+                              removeOnLeave={true}
+                              visible={false}
+                            >
+                              <DomWrapper />
+                            </CSSMotion>
+                          </ErrorList>
+                        </div>
+                      </Col>
+                    </FormItemInput>
+                  </div>
+                </Row>
+              </FormItem>
+            </form>
+          </ForwardRef(Form)>
+        </SizeContextProvider>
+      </ForwardRef(InternalForm)>
+    </WebhookForm>
+  </EditWebhook>
+</Provider>
+`;

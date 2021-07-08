@@ -57,12 +57,12 @@ const entities = [
   },
   {
     name: 'policies',
-    label: 'policies',
+    label: 'Policies',
     options: options,
   },
   {
-    name: 'podcast',
-    label: 'Podcast',
+    name: 'podcasts',
+    label: 'Podcasts',
     options: options,
   },
   {
@@ -79,7 +79,12 @@ const entities = [
     name: 'pages',
     label: 'Pages',
     options: options,
-  }
+  },
+  {
+    name: 'webhooks',
+    label: 'Webhooks',
+    options: options,
+  },
 ];
 
 function PolicyForm({ data = {}, onCreate }) {

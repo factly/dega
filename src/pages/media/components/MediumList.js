@@ -3,7 +3,7 @@ import { Space, List, Card } from 'antd';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-function MediumList({ data, filters, setFilters, fetchMedia}) {
+function MediumList({ data, filters, setFilters, fetchMedia }) {
   const dispatch = useDispatch();
   return (
     <Space direction={'vertical'}>

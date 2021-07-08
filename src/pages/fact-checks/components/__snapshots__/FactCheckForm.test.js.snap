@@ -98,57 +98,6 @@ exports[`Fact-check form component snapshot testing should match component with 
           message="You have unsaved changes, are you sure you want to leave?"
           when={false}
         />
-        <Modal
-          confirmLoading={false}
-          maskTransitionName="fade"
-          okType="primary"
-          onCancel={[Function]}
-          onOk={[Function]}
-          transitionName="zoom"
-          visible={false}
-          width={520}
-        >
-          <Dialog
-            closeIcon={
-              <span
-                className="ant-modal-close-x"
-              >
-                <ForwardRef(CloseOutlined)
-                  className="ant-modal-close-icon"
-                />
-              </span>
-            }
-            confirmLoading={false}
-            footer={
-              <LocaleReceiver
-                componentName="Modal"
-                defaultLocale={
-                  Object {
-                    "cancelText": "Cancel",
-                    "justOkText": "OK",
-                    "okText": "OK",
-                  }
-                }
-              >
-                [Function]
-              </LocaleReceiver>
-            }
-            maskTransitionName="fade"
-            okType="primary"
-            onCancel={[Function]}
-            onClose={[Function]}
-            onOk={[Function]}
-            prefixCls="ant-modal"
-            transitionName="zoom"
-            visible={false}
-            width={520}
-            wrapClassName=""
-          >
-            <PortalWrapper
-              visible={false}
-            />
-          </Dialog>
-        </Modal>
         <ForwardRef(InternalForm)
           form={
             Object {
@@ -643,53 +592,230 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                       <Component
                                                         update={1}
                                                       >
-                                                        <Button
-                                                          block={false}
-                                                          disabled={true}
-                                                          ghost={false}
-                                                          htmlType="submit"
+                                                        <Dropdown
                                                           id="draft"
-                                                          loading={false}
+                                                          mouseEnterDelay={0.15}
+                                                          mouseLeaveDelay={0.1}
                                                           onChange={[Function]}
-                                                          onClick={[Function]}
-                                                          type="secondary"
+                                                          overlay={
+                                                            <Menu>
+                                                              <MenuItem>
+                                                                Ready to Publish 
+                                                                <ForwardRef
+                                                                  checked={false}
+                                                                  onChange={[Function]}
+                                                                />
+                                                              </MenuItem>
+                                                            </Menu>
+                                                          }
                                                         >
-                                                          <Wave>
-                                                            <button
-                                                              className="ant-btn ant-btn-secondary"
-                                                              disabled={true}
+                                                          <ForwardRef(Dropdown)
+                                                            id="draft"
+                                                            mouseEnterDelay={0.15}
+                                                            mouseLeaveDelay={0.1}
+                                                            onChange={[Function]}
+                                                            overlay={[Function]}
+                                                            overlayClassName=""
+                                                            placement="bottomLeft"
+                                                            prefixCls="ant-dropdown"
+                                                            transitionName="slide-up"
+                                                          >
+                                                            <Trigger
+                                                              action={
+                                                                Array [
+                                                                  "hover",
+                                                                ]
+                                                              }
+                                                              afterPopupVisibleChange={[Function]}
+                                                              autoDestroy={false}
+                                                              blurDelay={0.15}
+                                                              builtinPlacements={
+                                                                Object {
+                                                                  "bottomCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tc",
+                                                                      "bc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tl",
+                                                                      "bl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tr",
+                                                                      "br",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bc",
+                                                                      "tc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bl",
+                                                                      "tl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "br",
+                                                                      "tr",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                }
+                                                              }
+                                                              defaultPopupVisible={false}
+                                                              destroyPopupOnHide={false}
+                                                              focusDelay={0}
+                                                              getDocument={[Function]}
+                                                              getPopupClassNameFromAlign={[Function]}
+                                                              hideAction={Array []}
                                                               id="draft"
+                                                              mask={false}
+                                                              maskClosable={true}
+                                                              mouseEnterDelay={0.15}
+                                                              mouseLeaveDelay={0.1}
                                                               onChange={[Function]}
-                                                              onClick={[Function]}
-                                                              type="submit"
+                                                              onPopupAlign={[Function]}
+                                                              onPopupVisibleChange={[Function]}
+                                                              overlay={[Function]}
+                                                              popup={[Function]}
+                                                              popupAlign={Object {}}
+                                                              popupClassName=""
+                                                              popupPlacement="bottomLeft"
+                                                              popupStyle={Object {}}
+                                                              popupTransitionName="slide-up"
+                                                              prefixCls="ant-dropdown"
+                                                              showAction={Array []}
+                                                              stretch="minWidth"
                                                             >
-                                                              <LoadingIcon
-                                                                existIcon={false}
+                                                              <Button
+                                                                block={false}
+                                                                className="ant-dropdown-trigger"
+                                                                ghost={false}
+                                                                htmlType="submit"
+                                                                key="trigger"
                                                                 loading={false}
-                                                                prefixCls="ant-btn"
+                                                                onClick={[Function]}
+                                                                onMouseEnter={[Function]}
+                                                                onMouseLeave={[Function]}
+                                                                type="secondary"
                                                               >
-                                                                <CSSMotion
-                                                                  motionName="ant-btn-loading-icon-motion"
-                                                                  onAppearActive={[Function]}
-                                                                  onAppearStart={[Function]}
-                                                                  onEnterActive={[Function]}
-                                                                  onEnterStart={[Function]}
-                                                                  onLeaveActive={[Function]}
-                                                                  onLeaveStart={[Function]}
-                                                                  removeOnLeave={true}
-                                                                  visible={false}
-                                                                >
-                                                                  <DomWrapper />
-                                                                </CSSMotion>
-                                                              </LoadingIcon>
-                                                              <span
-                                                                key=".0"
-                                                              >
-                                                                Save as draft
-                                                              </span>
-                                                            </button>
-                                                          </Wave>
-                                                        </Button>
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-secondary ant-dropdown-trigger"
+                                                                    onClick={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onMouseLeave={[Function]}
+                                                                    type="submit"
+                                                                  >
+                                                                    <LoadingIcon
+                                                                      existIcon={false}
+                                                                      loading={false}
+                                                                      prefixCls="ant-btn"
+                                                                    >
+                                                                      <CSSMotion
+                                                                        motionName="ant-btn-loading-icon-motion"
+                                                                        onAppearActive={[Function]}
+                                                                        onAppearStart={[Function]}
+                                                                        onEnterActive={[Function]}
+                                                                        onEnterStart={[Function]}
+                                                                        onLeaveActive={[Function]}
+                                                                        onLeaveStart={[Function]}
+                                                                        removeOnLeave={true}
+                                                                        visible={false}
+                                                                      >
+                                                                        <DomWrapper />
+                                                                      </CSSMotion>
+                                                                    </LoadingIcon>
+                                                                    <span
+                                                                      key=".0"
+                                                                    >
+                                                                      Save
+                                                                    </span>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </Trigger>
+                                                          </ForwardRef(Dropdown)>
+                                                        </Dropdown>
                                                       </Component>
                                                     </div>
                                                   </div>
@@ -1380,6 +1506,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                       value="FactCheck-1"
                                                     >
                                                       <TextArea
+                                                        autoSize={
+                                                          Object {
+                                                            "maxRows": 6,
+                                                            "minRows": 2,
+                                                          }
+                                                        }
                                                         bordered={false}
                                                         id="title"
                                                         onChange={[Function]}
@@ -1394,9 +1526,21 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                         value="FactCheck-1"
                                                       >
                                                         <ClearableLabeledInput
+                                                          autoSize={
+                                                            Object {
+                                                              "maxRows": 6,
+                                                              "minRows": 2,
+                                                            }
+                                                          }
                                                           bordered={false}
                                                           element={
                                                             <TextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -1429,6 +1573,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                           value="FactCheck-1"
                                                         >
                                                           <TextArea
+                                                            autoSize={
+                                                              Object {
+                                                                "maxRows": 6,
+                                                                "minRows": 2,
+                                                              }
+                                                            }
                                                             className="ant-input-borderless"
                                                             id="title"
                                                             onChange={[Function]}
@@ -1444,6 +1594,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                             value="FactCheck-1"
                                                           >
                                                             <ResizableTextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -1460,7 +1616,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                               value="FactCheck-1"
                                                             >
                                                               <ResizeObserver
-                                                                disabled={true}
+                                                                disabled={false}
                                                                 onResize={[Function]}
                                                               >
                                                                 <textarea
@@ -2398,7 +2554,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                         >
                                                                           <Selector
                                                                             action="Claims"
-                                                                            display="title"
+                                                                            display="claim"
                                                                             id="claims"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -7866,57 +8022,6 @@ exports[`Fact-check form component snapshot testing should match component with 
           message="You have unsaved changes, are you sure you want to leave?"
           when={false}
         />
-        <Modal
-          confirmLoading={false}
-          maskTransitionName="fade"
-          okType="primary"
-          onCancel={[Function]}
-          onOk={[Function]}
-          transitionName="zoom"
-          visible={false}
-          width={520}
-        >
-          <Dialog
-            closeIcon={
-              <span
-                className="ant-modal-close-x"
-              >
-                <ForwardRef(CloseOutlined)
-                  className="ant-modal-close-icon"
-                />
-              </span>
-            }
-            confirmLoading={false}
-            footer={
-              <LocaleReceiver
-                componentName="Modal"
-                defaultLocale={
-                  Object {
-                    "cancelText": "Cancel",
-                    "justOkText": "OK",
-                    "okText": "OK",
-                  }
-                }
-              >
-                [Function]
-              </LocaleReceiver>
-            }
-            maskTransitionName="fade"
-            okType="primary"
-            onCancel={[Function]}
-            onClose={[Function]}
-            onOk={[Function]}
-            prefixCls="ant-modal"
-            transitionName="zoom"
-            visible={false}
-            width={520}
-            wrapClassName=""
-          >
-            <PortalWrapper
-              visible={false}
-            />
-          </Dialog>
-        </Modal>
         <ForwardRef(InternalForm)
           form={
             Object {
@@ -8411,53 +8516,230 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                       <Component
                                                         update={1}
                                                       >
-                                                        <Button
-                                                          block={false}
-                                                          disabled={true}
-                                                          ghost={false}
-                                                          htmlType="submit"
+                                                        <Dropdown
                                                           id="draft"
-                                                          loading={false}
+                                                          mouseEnterDelay={0.15}
+                                                          mouseLeaveDelay={0.1}
                                                           onChange={[Function]}
-                                                          onClick={[Function]}
-                                                          type="secondary"
+                                                          overlay={
+                                                            <Menu>
+                                                              <MenuItem>
+                                                                Ready to Publish 
+                                                                <ForwardRef
+                                                                  checked={false}
+                                                                  onChange={[Function]}
+                                                                />
+                                                              </MenuItem>
+                                                            </Menu>
+                                                          }
                                                         >
-                                                          <Wave>
-                                                            <button
-                                                              className="ant-btn ant-btn-secondary"
-                                                              disabled={true}
+                                                          <ForwardRef(Dropdown)
+                                                            id="draft"
+                                                            mouseEnterDelay={0.15}
+                                                            mouseLeaveDelay={0.1}
+                                                            onChange={[Function]}
+                                                            overlay={[Function]}
+                                                            overlayClassName=""
+                                                            placement="bottomLeft"
+                                                            prefixCls="ant-dropdown"
+                                                            transitionName="slide-up"
+                                                          >
+                                                            <Trigger
+                                                              action={
+                                                                Array [
+                                                                  "hover",
+                                                                ]
+                                                              }
+                                                              afterPopupVisibleChange={[Function]}
+                                                              autoDestroy={false}
+                                                              blurDelay={0.15}
+                                                              builtinPlacements={
+                                                                Object {
+                                                                  "bottomCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tc",
+                                                                      "bc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tl",
+                                                                      "bl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tr",
+                                                                      "br",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bc",
+                                                                      "tc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bl",
+                                                                      "tl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "br",
+                                                                      "tr",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                }
+                                                              }
+                                                              defaultPopupVisible={false}
+                                                              destroyPopupOnHide={false}
+                                                              focusDelay={0}
+                                                              getDocument={[Function]}
+                                                              getPopupClassNameFromAlign={[Function]}
+                                                              hideAction={Array []}
                                                               id="draft"
+                                                              mask={false}
+                                                              maskClosable={true}
+                                                              mouseEnterDelay={0.15}
+                                                              mouseLeaveDelay={0.1}
                                                               onChange={[Function]}
-                                                              onClick={[Function]}
-                                                              type="submit"
+                                                              onPopupAlign={[Function]}
+                                                              onPopupVisibleChange={[Function]}
+                                                              overlay={[Function]}
+                                                              popup={[Function]}
+                                                              popupAlign={Object {}}
+                                                              popupClassName=""
+                                                              popupPlacement="bottomLeft"
+                                                              popupStyle={Object {}}
+                                                              popupTransitionName="slide-up"
+                                                              prefixCls="ant-dropdown"
+                                                              showAction={Array []}
+                                                              stretch="minWidth"
                                                             >
-                                                              <LoadingIcon
-                                                                existIcon={false}
+                                                              <Button
+                                                                block={false}
+                                                                className="ant-dropdown-trigger"
+                                                                ghost={false}
+                                                                htmlType="submit"
+                                                                key="trigger"
                                                                 loading={false}
-                                                                prefixCls="ant-btn"
+                                                                onClick={[Function]}
+                                                                onMouseEnter={[Function]}
+                                                                onMouseLeave={[Function]}
+                                                                type="secondary"
                                                               >
-                                                                <CSSMotion
-                                                                  motionName="ant-btn-loading-icon-motion"
-                                                                  onAppearActive={[Function]}
-                                                                  onAppearStart={[Function]}
-                                                                  onEnterActive={[Function]}
-                                                                  onEnterStart={[Function]}
-                                                                  onLeaveActive={[Function]}
-                                                                  onLeaveStart={[Function]}
-                                                                  removeOnLeave={true}
-                                                                  visible={false}
-                                                                >
-                                                                  <DomWrapper />
-                                                                </CSSMotion>
-                                                              </LoadingIcon>
-                                                              <span
-                                                                key=".0"
-                                                              >
-                                                                Save as draft
-                                                              </span>
-                                                            </button>
-                                                          </Wave>
-                                                        </Button>
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-secondary ant-dropdown-trigger"
+                                                                    onClick={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onMouseLeave={[Function]}
+                                                                    type="submit"
+                                                                  >
+                                                                    <LoadingIcon
+                                                                      existIcon={false}
+                                                                      loading={false}
+                                                                      prefixCls="ant-btn"
+                                                                    >
+                                                                      <CSSMotion
+                                                                        motionName="ant-btn-loading-icon-motion"
+                                                                        onAppearActive={[Function]}
+                                                                        onAppearStart={[Function]}
+                                                                        onEnterActive={[Function]}
+                                                                        onEnterStart={[Function]}
+                                                                        onLeaveActive={[Function]}
+                                                                        onLeaveStart={[Function]}
+                                                                        removeOnLeave={true}
+                                                                        visible={false}
+                                                                      >
+                                                                        <DomWrapper />
+                                                                      </CSSMotion>
+                                                                    </LoadingIcon>
+                                                                    <span
+                                                                      key=".0"
+                                                                    >
+                                                                      Save
+                                                                    </span>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </Trigger>
+                                                          </ForwardRef(Dropdown)>
+                                                        </Dropdown>
                                                       </Component>
                                                     </div>
                                                   </div>
@@ -9148,6 +9430,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                       value="FactCheck-1"
                                                     >
                                                       <TextArea
+                                                        autoSize={
+                                                          Object {
+                                                            "maxRows": 6,
+                                                            "minRows": 2,
+                                                          }
+                                                        }
                                                         bordered={false}
                                                         id="title"
                                                         onChange={[Function]}
@@ -9162,9 +9450,21 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                         value="FactCheck-1"
                                                       >
                                                         <ClearableLabeledInput
+                                                          autoSize={
+                                                            Object {
+                                                              "maxRows": 6,
+                                                              "minRows": 2,
+                                                            }
+                                                          }
                                                           bordered={false}
                                                           element={
                                                             <TextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -9197,6 +9497,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                           value="FactCheck-1"
                                                         >
                                                           <TextArea
+                                                            autoSize={
+                                                              Object {
+                                                                "maxRows": 6,
+                                                                "minRows": 2,
+                                                              }
+                                                            }
                                                             className="ant-input-borderless"
                                                             id="title"
                                                             onChange={[Function]}
@@ -9212,6 +9518,12 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                             value="FactCheck-1"
                                                           >
                                                             <ResizableTextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -9228,7 +9540,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                               value="FactCheck-1"
                                                             >
                                                               <ResizeObserver
-                                                                disabled={true}
+                                                                disabled={false}
                                                                 onResize={[Function]}
                                                               >
                                                                 <textarea
@@ -9241,6 +9553,11 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                     Object {
                                                                       "fontSize": "2.5rem",
                                                                       "fontWeight": "bold",
+                                                                      "height": -24,
+                                                                      "maxHeight": -24,
+                                                                      "minHeight": -8,
+                                                                      "overflowX": "hidden",
+                                                                      "overflowY": "hidden",
                                                                       "textAlign": "center",
                                                                     }
                                                                   }
@@ -10166,7 +10483,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                         >
                                                                           <Selector
                                                                             action="Claims"
-                                                                            display="title"
+                                                                            display="claim"
                                                                             id="claims"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -15658,57 +15975,6 @@ exports[`Fact-check form component snapshot testing should match with different 
           message="You have unsaved changes, are you sure you want to leave?"
           when={false}
         />
-        <Modal
-          confirmLoading={false}
-          maskTransitionName="fade"
-          okType="primary"
-          onCancel={[Function]}
-          onOk={[Function]}
-          transitionName="zoom"
-          visible={false}
-          width={520}
-        >
-          <Dialog
-            closeIcon={
-              <span
-                className="ant-modal-close-x"
-              >
-                <ForwardRef(CloseOutlined)
-                  className="ant-modal-close-icon"
-                />
-              </span>
-            }
-            confirmLoading={false}
-            footer={
-              <LocaleReceiver
-                componentName="Modal"
-                defaultLocale={
-                  Object {
-                    "cancelText": "Cancel",
-                    "justOkText": "OK",
-                    "okText": "OK",
-                  }
-                }
-              >
-                [Function]
-              </LocaleReceiver>
-            }
-            maskTransitionName="fade"
-            okType="primary"
-            onCancel={[Function]}
-            onClose={[Function]}
-            onOk={[Function]}
-            prefixCls="ant-modal"
-            transitionName="zoom"
-            visible={false}
-            width={520}
-            wrapClassName=""
-          >
-            <PortalWrapper
-              visible={false}
-            />
-          </Dialog>
-        </Modal>
         <ForwardRef(InternalForm)
           form={
             Object {
@@ -16203,53 +16469,230 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                       <Component
                                                         update={1}
                                                       >
-                                                        <Button
-                                                          block={false}
-                                                          disabled={true}
-                                                          ghost={false}
-                                                          htmlType="submit"
+                                                        <Dropdown
                                                           id="draft"
-                                                          loading={false}
+                                                          mouseEnterDelay={0.15}
+                                                          mouseLeaveDelay={0.1}
                                                           onChange={[Function]}
-                                                          onClick={[Function]}
-                                                          type="secondary"
+                                                          overlay={
+                                                            <Menu>
+                                                              <MenuItem>
+                                                                Ready to Publish 
+                                                                <ForwardRef
+                                                                  checked={false}
+                                                                  onChange={[Function]}
+                                                                />
+                                                              </MenuItem>
+                                                            </Menu>
+                                                          }
                                                         >
-                                                          <Wave>
-                                                            <button
-                                                              className="ant-btn ant-btn-secondary"
-                                                              disabled={true}
+                                                          <ForwardRef(Dropdown)
+                                                            id="draft"
+                                                            mouseEnterDelay={0.15}
+                                                            mouseLeaveDelay={0.1}
+                                                            onChange={[Function]}
+                                                            overlay={[Function]}
+                                                            overlayClassName=""
+                                                            placement="bottomLeft"
+                                                            prefixCls="ant-dropdown"
+                                                            transitionName="slide-up"
+                                                          >
+                                                            <Trigger
+                                                              action={
+                                                                Array [
+                                                                  "hover",
+                                                                ]
+                                                              }
+                                                              afterPopupVisibleChange={[Function]}
+                                                              autoDestroy={false}
+                                                              blurDelay={0.15}
+                                                              builtinPlacements={
+                                                                Object {
+                                                                  "bottomCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tc",
+                                                                      "bc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tl",
+                                                                      "bl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tr",
+                                                                      "br",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bc",
+                                                                      "tc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bl",
+                                                                      "tl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "br",
+                                                                      "tr",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                }
+                                                              }
+                                                              defaultPopupVisible={false}
+                                                              destroyPopupOnHide={false}
+                                                              focusDelay={0}
+                                                              getDocument={[Function]}
+                                                              getPopupClassNameFromAlign={[Function]}
+                                                              hideAction={Array []}
                                                               id="draft"
+                                                              mask={false}
+                                                              maskClosable={true}
+                                                              mouseEnterDelay={0.15}
+                                                              mouseLeaveDelay={0.1}
                                                               onChange={[Function]}
-                                                              onClick={[Function]}
-                                                              type="submit"
+                                                              onPopupAlign={[Function]}
+                                                              onPopupVisibleChange={[Function]}
+                                                              overlay={[Function]}
+                                                              popup={[Function]}
+                                                              popupAlign={Object {}}
+                                                              popupClassName=""
+                                                              popupPlacement="bottomLeft"
+                                                              popupStyle={Object {}}
+                                                              popupTransitionName="slide-up"
+                                                              prefixCls="ant-dropdown"
+                                                              showAction={Array []}
+                                                              stretch="minWidth"
                                                             >
-                                                              <LoadingIcon
-                                                                existIcon={false}
+                                                              <Button
+                                                                block={false}
+                                                                className="ant-dropdown-trigger"
+                                                                ghost={false}
+                                                                htmlType="submit"
+                                                                key="trigger"
                                                                 loading={false}
-                                                                prefixCls="ant-btn"
+                                                                onClick={[Function]}
+                                                                onMouseEnter={[Function]}
+                                                                onMouseLeave={[Function]}
+                                                                type="secondary"
                                                               >
-                                                                <CSSMotion
-                                                                  motionName="ant-btn-loading-icon-motion"
-                                                                  onAppearActive={[Function]}
-                                                                  onAppearStart={[Function]}
-                                                                  onEnterActive={[Function]}
-                                                                  onEnterStart={[Function]}
-                                                                  onLeaveActive={[Function]}
-                                                                  onLeaveStart={[Function]}
-                                                                  removeOnLeave={true}
-                                                                  visible={false}
-                                                                >
-                                                                  <DomWrapper />
-                                                                </CSSMotion>
-                                                              </LoadingIcon>
-                                                              <span
-                                                                key=".0"
-                                                              >
-                                                                Save as draft
-                                                              </span>
-                                                            </button>
-                                                          </Wave>
-                                                        </Button>
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-secondary ant-dropdown-trigger"
+                                                                    onClick={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onMouseLeave={[Function]}
+                                                                    type="submit"
+                                                                  >
+                                                                    <LoadingIcon
+                                                                      existIcon={false}
+                                                                      loading={false}
+                                                                      prefixCls="ant-btn"
+                                                                    >
+                                                                      <CSSMotion
+                                                                        motionName="ant-btn-loading-icon-motion"
+                                                                        onAppearActive={[Function]}
+                                                                        onAppearStart={[Function]}
+                                                                        onEnterActive={[Function]}
+                                                                        onEnterStart={[Function]}
+                                                                        onLeaveActive={[Function]}
+                                                                        onLeaveStart={[Function]}
+                                                                        removeOnLeave={true}
+                                                                        visible={false}
+                                                                      >
+                                                                        <DomWrapper />
+                                                                      </CSSMotion>
+                                                                    </LoadingIcon>
+                                                                    <span
+                                                                      key=".0"
+                                                                    >
+                                                                      Save
+                                                                    </span>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </Trigger>
+                                                          </ForwardRef(Dropdown)>
+                                                        </Dropdown>
                                                       </Component>
                                                     </div>
                                                   </div>
@@ -16766,6 +17209,12 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                       value="FactCheck-1"
                                                     >
                                                       <TextArea
+                                                        autoSize={
+                                                          Object {
+                                                            "maxRows": 6,
+                                                            "minRows": 2,
+                                                          }
+                                                        }
                                                         bordered={false}
                                                         id="title"
                                                         onChange={[Function]}
@@ -16780,9 +17229,21 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                         value="FactCheck-1"
                                                       >
                                                         <ClearableLabeledInput
+                                                          autoSize={
+                                                            Object {
+                                                              "maxRows": 6,
+                                                              "minRows": 2,
+                                                            }
+                                                          }
                                                           bordered={false}
                                                           element={
                                                             <TextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -16815,6 +17276,12 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                           value="FactCheck-1"
                                                         >
                                                           <TextArea
+                                                            autoSize={
+                                                              Object {
+                                                                "maxRows": 6,
+                                                                "minRows": 2,
+                                                              }
+                                                            }
                                                             className="ant-input-borderless"
                                                             id="title"
                                                             onChange={[Function]}
@@ -16830,6 +17297,12 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                             value="FactCheck-1"
                                                           >
                                                             <ResizableTextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -16846,7 +17319,7 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                               value="FactCheck-1"
                                                             >
                                                               <ResizeObserver
-                                                                disabled={true}
+                                                                disabled={false}
                                                                 onResize={[Function]}
                                                               >
                                                                 <textarea
@@ -17784,7 +18257,7 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                                         >
                                                                           <Selector
                                                                             action="Claims"
-                                                                            display="title"
+                                                                            display="claim"
                                                                             id="claims"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -23201,57 +23674,6 @@ exports[`Fact-check form component snapshot testing should render the component 
           message="You have unsaved changes, are you sure you want to leave?"
           when={false}
         />
-        <Modal
-          confirmLoading={false}
-          maskTransitionName="fade"
-          okType="primary"
-          onCancel={[Function]}
-          onOk={[Function]}
-          transitionName="zoom"
-          visible={false}
-          width={520}
-        >
-          <Dialog
-            closeIcon={
-              <span
-                className="ant-modal-close-x"
-              >
-                <ForwardRef(CloseOutlined)
-                  className="ant-modal-close-icon"
-                />
-              </span>
-            }
-            confirmLoading={false}
-            footer={
-              <LocaleReceiver
-                componentName="Modal"
-                defaultLocale={
-                  Object {
-                    "cancelText": "Cancel",
-                    "justOkText": "OK",
-                    "okText": "OK",
-                  }
-                }
-              >
-                [Function]
-              </LocaleReceiver>
-            }
-            maskTransitionName="fade"
-            okType="primary"
-            onCancel={[Function]}
-            onClose={[Function]}
-            onOk={[Function]}
-            prefixCls="ant-modal"
-            transitionName="zoom"
-            visible={false}
-            width={520}
-            wrapClassName=""
-          >
-            <PortalWrapper
-              visible={false}
-            />
-          </Dialog>
-        </Modal>
         <ForwardRef(InternalForm)
           form={
             Object {
@@ -23496,53 +23918,230 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                       <Component
                                                         update={1}
                                                       >
-                                                        <Button
-                                                          block={false}
-                                                          disabled={true}
-                                                          ghost={false}
-                                                          htmlType="submit"
+                                                        <Dropdown
                                                           id="draft"
-                                                          loading={false}
+                                                          mouseEnterDelay={0.15}
+                                                          mouseLeaveDelay={0.1}
                                                           onChange={[Function]}
-                                                          onClick={[Function]}
-                                                          type="secondary"
+                                                          overlay={
+                                                            <Menu>
+                                                              <MenuItem>
+                                                                Ready to Publish 
+                                                                <ForwardRef
+                                                                  checked={false}
+                                                                  onChange={[Function]}
+                                                                />
+                                                              </MenuItem>
+                                                            </Menu>
+                                                          }
                                                         >
-                                                          <Wave>
-                                                            <button
-                                                              className="ant-btn ant-btn-secondary"
-                                                              disabled={true}
+                                                          <ForwardRef(Dropdown)
+                                                            id="draft"
+                                                            mouseEnterDelay={0.15}
+                                                            mouseLeaveDelay={0.1}
+                                                            onChange={[Function]}
+                                                            overlay={[Function]}
+                                                            overlayClassName=""
+                                                            placement="bottomLeft"
+                                                            prefixCls="ant-dropdown"
+                                                            transitionName="slide-up"
+                                                          >
+                                                            <Trigger
+                                                              action={
+                                                                Array [
+                                                                  "hover",
+                                                                ]
+                                                              }
+                                                              afterPopupVisibleChange={[Function]}
+                                                              autoDestroy={false}
+                                                              blurDelay={0.15}
+                                                              builtinPlacements={
+                                                                Object {
+                                                                  "bottomCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tc",
+                                                                      "bc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tl",
+                                                                      "bl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "bottomRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "tr",
+                                                                      "br",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topCenter": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bc",
+                                                                      "tc",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topLeft": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "bl",
+                                                                      "tl",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                  "topRight": Object {
+                                                                    "offset": Array [
+                                                                      0,
+                                                                      -4,
+                                                                    ],
+                                                                    "overflow": Object {
+                                                                      "adjustX": 1,
+                                                                      "adjustY": 1,
+                                                                    },
+                                                                    "points": Array [
+                                                                      "br",
+                                                                      "tr",
+                                                                    ],
+                                                                    "targetOffset": Array [
+                                                                      0,
+                                                                      0,
+                                                                    ],
+                                                                  },
+                                                                }
+                                                              }
+                                                              defaultPopupVisible={false}
+                                                              destroyPopupOnHide={false}
+                                                              focusDelay={0}
+                                                              getDocument={[Function]}
+                                                              getPopupClassNameFromAlign={[Function]}
+                                                              hideAction={Array []}
                                                               id="draft"
+                                                              mask={false}
+                                                              maskClosable={true}
+                                                              mouseEnterDelay={0.15}
+                                                              mouseLeaveDelay={0.1}
                                                               onChange={[Function]}
-                                                              onClick={[Function]}
-                                                              type="submit"
+                                                              onPopupAlign={[Function]}
+                                                              onPopupVisibleChange={[Function]}
+                                                              overlay={[Function]}
+                                                              popup={[Function]}
+                                                              popupAlign={Object {}}
+                                                              popupClassName=""
+                                                              popupPlacement="bottomLeft"
+                                                              popupStyle={Object {}}
+                                                              popupTransitionName="slide-up"
+                                                              prefixCls="ant-dropdown"
+                                                              showAction={Array []}
+                                                              stretch="minWidth"
                                                             >
-                                                              <LoadingIcon
-                                                                existIcon={false}
+                                                              <Button
+                                                                block={false}
+                                                                className="ant-dropdown-trigger"
+                                                                ghost={false}
+                                                                htmlType="submit"
+                                                                key="trigger"
                                                                 loading={false}
-                                                                prefixCls="ant-btn"
+                                                                onClick={[Function]}
+                                                                onMouseEnter={[Function]}
+                                                                onMouseLeave={[Function]}
+                                                                type="secondary"
                                                               >
-                                                                <CSSMotion
-                                                                  motionName="ant-btn-loading-icon-motion"
-                                                                  onAppearActive={[Function]}
-                                                                  onAppearStart={[Function]}
-                                                                  onEnterActive={[Function]}
-                                                                  onEnterStart={[Function]}
-                                                                  onLeaveActive={[Function]}
-                                                                  onLeaveStart={[Function]}
-                                                                  removeOnLeave={true}
-                                                                  visible={false}
-                                                                >
-                                                                  <DomWrapper />
-                                                                </CSSMotion>
-                                                              </LoadingIcon>
-                                                              <span
-                                                                key=".0"
-                                                              >
-                                                                Save as draft
-                                                              </span>
-                                                            </button>
-                                                          </Wave>
-                                                        </Button>
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-secondary ant-dropdown-trigger"
+                                                                    onClick={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onMouseLeave={[Function]}
+                                                                    type="submit"
+                                                                  >
+                                                                    <LoadingIcon
+                                                                      existIcon={false}
+                                                                      loading={false}
+                                                                      prefixCls="ant-btn"
+                                                                    >
+                                                                      <CSSMotion
+                                                                        motionName="ant-btn-loading-icon-motion"
+                                                                        onAppearActive={[Function]}
+                                                                        onAppearStart={[Function]}
+                                                                        onEnterActive={[Function]}
+                                                                        onEnterStart={[Function]}
+                                                                        onLeaveActive={[Function]}
+                                                                        onLeaveStart={[Function]}
+                                                                        removeOnLeave={true}
+                                                                        visible={false}
+                                                                      >
+                                                                        <DomWrapper />
+                                                                      </CSSMotion>
+                                                                    </LoadingIcon>
+                                                                    <span
+                                                                      key=".0"
+                                                                    >
+                                                                      Save
+                                                                    </span>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </Trigger>
+                                                          </ForwardRef(Dropdown)>
+                                                        </Dropdown>
                                                       </Component>
                                                     </div>
                                                   </div>
@@ -24232,6 +24831,12 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                       update={1}
                                                     >
                                                       <TextArea
+                                                        autoSize={
+                                                          Object {
+                                                            "maxRows": 6,
+                                                            "minRows": 2,
+                                                          }
+                                                        }
                                                         bordered={false}
                                                         id="title"
                                                         onChange={[Function]}
@@ -24245,9 +24850,21 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                         }
                                                       >
                                                         <ClearableLabeledInput
+                                                          autoSize={
+                                                            Object {
+                                                              "maxRows": 6,
+                                                              "minRows": 2,
+                                                            }
+                                                          }
                                                           bordered={false}
                                                           element={
                                                             <TextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -24279,6 +24896,12 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                           value=""
                                                         >
                                                           <TextArea
+                                                            autoSize={
+                                                              Object {
+                                                                "maxRows": 6,
+                                                                "minRows": 2,
+                                                              }
+                                                            }
                                                             className="ant-input-borderless"
                                                             id="title"
                                                             onChange={[Function]}
@@ -24294,6 +24917,12 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                             value=""
                                                           >
                                                             <ResizableTextArea
+                                                              autoSize={
+                                                                Object {
+                                                                  "maxRows": 6,
+                                                                  "minRows": 2,
+                                                                }
+                                                              }
                                                               className="ant-input-borderless"
                                                               id="title"
                                                               onChange={[Function]}
@@ -24310,7 +24939,7 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                               value=""
                                                             >
                                                               <ResizeObserver
-                                                                disabled={true}
+                                                                disabled={false}
                                                                 onResize={[Function]}
                                                               >
                                                                 <textarea
@@ -25199,7 +25828,7 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                                         >
                                                                           <Selector
                                                                             action="Claims"
-                                                                            display="title"
+                                                                            display="claim"
                                                                             id="claims"
                                                                             mode="multiple"
                                                                             onChange={[Function]}

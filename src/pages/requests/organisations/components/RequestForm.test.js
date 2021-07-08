@@ -125,19 +125,19 @@ describe('Organisation Request Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('InputNumber')
           .props()
           .onChange({ target: { value: 5 } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(1)
           .find('Select')
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(3)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'New Description' } });

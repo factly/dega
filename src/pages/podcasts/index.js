@@ -4,12 +4,13 @@ import PodcastList from './components/PodcastList';
 import { Space, Button, Form, Row, Col, Input, Select } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import getUserPermission from '../../utils/getUserPermission';
 import { getPodcasts } from '../../actions/podcasts';
 import deepEqual from 'deep-equal';
 
 function Podcasts({ permission }) {
-  //const { actions } = permission;
-  const actions = ['admin'];
+  const spaces = useSelector(({ spaces }) => spaces);
+  const actions = getUserPermission({ resource: 'podcasts', action: 'get', spaces });
   const dispatch = useDispatch();
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
