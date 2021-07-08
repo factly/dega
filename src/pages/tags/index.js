@@ -72,16 +72,20 @@ function Tags({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) =>
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
               setFilters({
                 ...filters,
-                ...values,
-              })
-            }
+                ...filterValue,
+              });
+            }}
             style={{ width: '100%' }}
             onValuesChange={(changedValues, allValues) => {
-              let changedKey = Object.keys(changedValues)[0];
-              query.set(changedKey, changedValues[changedKey]);
               if (!changedValues.q) {
                 setFilters({ ...filters, ...changedValues });
               }
