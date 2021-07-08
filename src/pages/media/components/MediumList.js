@@ -20,7 +20,7 @@ function MediumList({ data, filters, setFilters, fetchMedia}) {
         pagination={{
           total: data.total,
           current: filters.page,
-          pageSize: filters.limit,
+          pageSize: filters.limit ? filters.limit : 10,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}

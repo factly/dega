@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
@@ -16,33 +17,51 @@ function Pages({ formats }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: query.get('page') ? query.get('page') : 1,
-    limit: 20,
-    status: query.get('status'),
-    sort: query.get('sort'),
-    q: query.get('q'),
-    tag: query.getAll('tag').map((t) => parseInt(t)),
-    category: query.getAll('category').map((c) => parseInt(c)),
-    author: query.getAll('author').map((a) => parseInt(a)),
-  });
-  Object.keys(filters).forEach(function (key) {
-    if (filters[key] && key !== 'limit')
-      if (filters[key].length !== 0 && (key === 'tag' || key === 'category' || key === 'author')) {
-        query.delete(key);
-        filters[key].map((each) => {
-          query.append(key, each);
-        });
-      } else if (filters[key].length === 0) {
-        query.delete(key);
+  const history = useHistory();
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (key === 'tag' || key === 'category' || key === 'author') {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'status' || key === 'q') {
+        params[key] = query.get(key);
       } else {
-        query.set(key, filters[key]);
+        params[key] = parseInt(query.get(key));
       }
+    }
   });
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+  const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
+
+  React.useEffect(() => {
+    keys.forEach((key) => {
+      searchFilter.has(key) ? searchFilter.delete(key) : null;
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'tag' || key === 'category' || key === 'author') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
+    history.push({
+      pathName: pathName,
+      search: '?' + searchFilter.toString(),
+    });
+  }, [history, filters]);
+
   const { pages, total, loading, tags, categories } = useSelector((state) => {
     const node = state.pages.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -71,15 +90,22 @@ function Pages({ formats }) {
   };
 
   const onSave = (values) => {
-    let filterValue = {
-      tag: values.tag,
-      category: values.category,
-      sort: values.sort,
-      q: values.q,
-      author: values.author,
-      status: values.status !== 'all' ? values.status : null,
-    };
-    setFilters({ ...filters, ...filterValue });
+    let filterValue = {};
+    if (values.status === 'all') {
+      values.status = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'tag' || key === 'author' || key === 'category') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    setFilters(filterValue);
   };
   if (!formats.loading && formats.article)
     return (
@@ -92,16 +118,6 @@ function Pages({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            let changedKey = Object.keys(changedValues)[0];
-            if (
-              (changedValues[changedKey].length !== 0 && changedKey === 'tag') ||
-              changedKey === 'category' ||
-              changedKey === 'author'
-            ) {
-              query.append(changedKey, changedValues[changedKey]);
-            } else {
-              query.set(changedKey, changedValues[changedKey]);
-            }
             if (!changedValues.q) {
               onSave(allValues);
             }

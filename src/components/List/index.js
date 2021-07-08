@@ -30,7 +30,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
         pagination={{
           total: data.total,
           current: filters.page,
-          pageSize: filters.limit,
+          pageSize: filters.limit ? filters.limit : 10,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}

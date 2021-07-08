@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CategoryList from './components/CategoryList';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
@@ -12,43 +12,30 @@ function Categories({ permission }) {
   const location = useLocation();
   const history = useHistory();
   const query = new URLSearchParams(location.search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
+  });
   const [filters, setFilters] = React.useState({
-    page: query.get('page') ? query.get('page') : 1,
-    limit: 20,
-    sort: query.get('sort'),
-    q: query.get('q'),
+    ...params,
   });
-  React.useEffect(() => {
-    if (history.action === 'POP') {
-      //window.location.reload(false);
-      //  setFilters({
-      //         page: query.get('page'),
-      //         limit: 10,
-      //         sort: query.get('sort'),
-      //         q: query.get('q'),
-      //       });
-      console.log('------pop------');
-    }
-  }, [location.search]);
 
-  console.log('location', location, 'pageNo', query.get('page'), 'filter page', filters);
-  Object.keys(filters).forEach(function (key) {
-    if (filters[key] && key !== 'limit') query.set(key, filters[key]);
-  });
-  React.useEffect(() => {
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
     history.push({
-      pathname: location.pathname,
-      search: '?' + query.toString(),
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
     });
-  }, [filters]);
+  }, [history, filters]);
 
-  //window.history.pushState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  //window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { Option } = Select;
   const [form] = Form.useForm();
   const { categories, total, loading } = useSelector((state) => {
     const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -84,11 +71,20 @@ function Categories({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) => setFilters({ ...filters, ...values })}
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
+              setFilters({
+                ...filters,
+                ...filterValue,
+              });
+            }}
             style={{ width: '100%' }}
             onValuesChange={(changedValues, allValues) => {
-              let changedKey = Object.keys(changedValues)[0];
-              query.set(changedKey, changedValues[changedKey]);
               if (!changedValues.q) {
                 setFilters({ ...filters, ...changedValues });
               }

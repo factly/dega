@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Space, Button, Row, Col, Form, Input, Select } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
@@ -11,35 +12,54 @@ function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const query = new URLSearchParams(location.search);
-  const [filters, setFilters] = React.useState({
-    page: query.get('page') ? query.get('page') : 1,
-    limit: 20,
-    sort: query.get('sort'),
-    q: query.get('q'),
-    rating: query.getAll('rating').map((r) => parseInt(r)),
-    claimant: query.getAll('claimant').map((c) => parseInt(c)),
-  });
-  Object.keys(filters).forEach(function (key) {
-    if (filters[key] && key !== 'limit')
-      if (filters[key].length !== 0 && (key === 'claimant' || key === 'rating')) {
-        query.delete(key);
-        filters[key].map((each) => {
-          query.append(key, each);
-        });
-      } else if (filters[key].length === 0) {
-        query.delete(key);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort', 'rating', 'claimant'];
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (key === 'claimant' || key === 'rating') {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'q') {
+        params[key] = query.get(key);
       } else {
-        query.set(key, filters[key]);
+        params[key] = parseInt(query.get(key));
       }
+    }
   });
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${location.pathname}?${query}`);
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+  const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
+
+  React.useEffect(() => {
+    keys.forEach((key) => {
+      searchFilter.has(key) ? searchFilter.delete(key) : null;
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'claimant' || key === 'rating') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
+    history.push({
+      pathName: pathName,
+      search: '?' + searchFilter.toString(),
+    });
+  }, [history, filters]);
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { claims, total, loading } = useSelector((state) => {
     const node = state.claims.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node) {
@@ -68,14 +88,22 @@ function Claims({ permission }) {
   };
 
   const onSave = (values) => {
-    let filterValue = {
-      claimant: values.claimant,
-      rating: values.rating,
-      sort: values.sort,
-      q: values.q,
-    };
-
-    setFilters({ ...filters, ...filterValue });
+    let filterValue = {};
+    if (values.status === 'all') {
+      values.status = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'rating' || key === 'claimant') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    setFilters(filterValue);
   };
 
   return (
@@ -87,15 +115,6 @@ function Claims({ permission }) {
         onFinish={(values) => onSave(values)}
         style={{ maxWidth: '100%' }}
         onValuesChange={(changedValues, allValues) => {
-          let changedKey = Object.keys(changedValues)[0];
-          if (
-            (changedValues[changedKey].length !== 0 && changedKey === 'rating') ||
-            changedKey === 'claimant'
-          ) {
-            query.append(changedKey, changedValues[changedKey]);
-          } else {
-            query.set(changedKey, changedValues[changedKey]);
-          }
           if (!changedValues.q) {
             onSave(allValues);
           }

@@ -1,6 +1,7 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
 import FactCheckList from '../../components/List';
@@ -18,38 +19,57 @@ function FactCheck({ formats }) {
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const history = useHistory();
   const [formatFlag, setFormatFlag] = React.useState(false);
-  const [filters, setFilters] = React.useState({
-    page: query.get('page') ? query.get('page') : 1,
-    limit: 20,
-    status: query.get('status'),
-    sort: query.get('sort'),
-    q: query.get('q'),
-    tag: query.getAll('tag').map((t) => parseInt(t)),
-    category: query.getAll('category').map((c) => parseInt(c)),
-    author: query.getAll('author').map((a) => parseInt(a)),
-  });
-  Object.keys(filters).forEach(function (key) {
-    if (filters[key] && key !== 'limit')
-      if (filters[key].length !== 0 && (key === 'tag' || key === 'category' || key === 'author')) {
-        query.delete(key);
-        filters[key].map((each) => {
-          query.append(key, each);
-        });
-      } else if (filters[key].length === 0) {
-        query.delete(key);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'status' || key === 'q') {
+        params[key] = query.get(key);
       } else {
-        query.set(key, filters[key]);
+        params[key] = parseInt(query.get(key));
       }
+    }
   });
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+
+  const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
+
+  React.useEffect(() => {
+    keys.forEach((key) => {
+      searchFilter.has(key) ? searchFilter.delete(key) : null;
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
+    history.push({
+      pathName: pathName,
+      search: '?' + searchFilter.toString(),
+    });
+  }, [history, filters]);
+
   if (!formatFlag && !formats.loading && formats.factcheck) {
     setFilters({ ...filters, format: [formats.factcheck.id] });
     setFormatFlag(true);
   }
   const { posts, total, loading, tags, categories } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -76,16 +96,23 @@ function FactCheck({ formats }) {
     dispatch(getPosts(filters));
   };
   const onSave = (values) => {
-    let filterValue = {
-      tag: values.tag,
-      category: values.category,
-      sort: values.sort,
-      q: values.q,
-      author: values.author,
-      status: values.status !== 'all' ? values.status : null,
-    };
-
-    setFilters({ ...filters, ...filterValue });
+    let filterValue = {};
+    if (values.status === 'all') {
+      values.status = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'format' || key === 'tag' || key === 'author' || key === 'category') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    filterValue['format'] = filters.format;
+    setFilters(filterValue);
   };
   if (!formats.loading && formats.factcheck)
     return (
@@ -99,16 +126,6 @@ function FactCheck({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            let changedKey = Object.keys(changedValues)[0];
-            if (
-              (changedValues[changedKey].length !== 0 && changedKey === 'tag') ||
-              changedKey === 'category' ||
-              changedKey === 'author'
-            ) {
-              query.append(changedKey, changedValues[changedKey]);
-            } else {
-              query.set(changedKey, changedValues[changedKey]);
-            }
             if (!changedValues.q) {
               onSave(allValues);
             }

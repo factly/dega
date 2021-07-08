@@ -1,7 +1,8 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import EpisodeList from './components/EpisodeList';
 import { Space, Button, Form, Col, Row, Select, Input } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
 import { getEpisodes } from '../../actions/episodes';
@@ -10,23 +11,33 @@ function Episodes({ permission }) {
   //const { actions } = permission;
   const actions = ['admin'];
   const dispatch = useDispatch();
+  const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
+  });
   const [filters, setFilters] = React.useState({
-    page: query.get('page') ? query.get('page') : 1,
-    limit: 20,
-    sort: query.get('sort'),
-    q: query.get('q'),
+    ...params,
   });
-  Object.keys(filters).forEach(function (key) {
-    if (filters[key] && key !== 'limit') query.set(key, filters[key]);
-  });
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
+
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
+    history.push({
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
+    });
+  }, [history, filters]);
+
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { episodes, total, loading } = useSelector((state) => {
     const node = state.episodes.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -62,11 +73,20 @@ function Episodes({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) => setFilters({ ...filters, ...values })}
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
+              setFilters({
+                ...filters,
+                ...filterValue,
+              });
+            }}
             style={{ maxWidth: '100%' }}
             onValuesChange={(changedValues, allValues) => {
-              let changedKey = Object.keys(changedValues)[0];
-              query.set(changedKey, changedValues[changedKey]);
               if (!changedValues.q) {
                 setFilters({ ...filters, ...changedValues });
               }
