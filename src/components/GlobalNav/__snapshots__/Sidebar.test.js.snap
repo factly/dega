@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sidebar component snapshot testing should not render the component when no space 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
+      },
+    }
+  }
+>
+  <BrowserRouter>
+    <Sidebar
+      orgs={
+        Array [
+          Object {
+            "id": 1,
+            "permission": Object {
+              "role": "owner",
+            },
+            "spaces": Array [],
+          },
+        ]
+      }
+      permission={
+        Array [
+          Object {
+            "actions": Array [
+              "create",
+            ],
+            "resource": "posts",
+          },
+        ]
+      }
+      superOrg={
+        Object {
+          "id": 1,
+          "is_admin": true,
+        }
+      }
+    />
+  </BrowserRouter>
+</ContextProvider>
+`;
+
+exports[`Sidebar component snapshot testing should render the component 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [MockFunction],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [MockFunction],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
+      },
+    }
+  }
+>
+  <BrowserRouter>
+    <Sidebar
+      orgs={
+        Array [
+          Object {
+            "id": 1,
+            "permission": Object {
+              "role": "owner",
+            },
+            "spaces": Array [
+              1,
+            ],
+          },
+        ]
+      }
+      permission={
+        Array [
+          Object {
+            "actions": Array [
+              "create",
+            ],
+            "resource": "posts",
+          },
+        ]
+      }
+      superOrg={
+        Object {
+          "id": 1,
+          "is_admin": true,
+        }
+      }
+    />
+  </BrowserRouter>
+</ContextProvider>
+`;

@@ -1,0 +1,94 @@
+.embed-tool {
+  position: relative;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.embed-tool__input {
+  padding-left: 38px;
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.567 13.629c.728.464 1.581.65 2.41.558l-.873.873A3.722 3.722 0 1 1 4.84 9.794L6.694 7.94a3.722 3.722 0 0 1 5.256-.008L10.484 9.4a5.209 5.209 0 0 1-.017.016 1.625 1.625 0 0 0-2.29.009l-1.854 1.854a1.626 1.626 0 0 0 2.244 2.35zm2.766-7.358a3.722 3.722 0 0 0-2.41-.558l.873-.873a3.722 3.722 0 1 1 5.264 5.266l-1.854 1.854a3.722 3.722 0 0 1-5.256.008L9.416 10.5a5.2 5.2 0 0 1 .017-.016 1.625 1.625 0 0 0 2.29-.009l1.854-1.854a1.626 1.626 0 0 0-2.244-2.35z' fill='rgba(0, 0, 0, 0.6)' transform='translate(-3.667 -2.7)'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-position: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.embed-tool__input-holder {
+  position: relative;
+  width: 100%;
+}
+.embed-tool__caption-holder {
+  margin-top: 1rem;
+  width: 100%;
+  font-size: 0.75rem;
+}
+.embed-tool__caption {
+  padding-left: 39px;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 32 32' width='14' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23101820;%7D%3C/style%3E%3C/defs%3E%3Ctitle/%3E%3Cg data-name='Layer 42' id='Layer_42'%3E%3Cpath class='cls-1' d='M2,29a1,1,0,0,1-1-1.11l.77-7a1,1,0,0,1,.29-.59L18.42,3.94a3.2,3.2,0,0,1,4.53,0l3.11,3.11a3.2,3.2,0,0,1,0,4.53L9.71,27.93a1,1,0,0,1-.59.29l-7,.77Zm7-1.78H9ZM3.73,21.45l-.6,5.42,5.42-.6,16.1-16.1a1.2,1.2,0,0,0,0-1.7L21.53,5.35a1.2,1.2,0,0,0-1.7,0Z'/%3E%3Cpath class='cls-1' d='M23,14.21a1,1,0,0,1-.71-.29L16.08,7.69A1,1,0,0,1,17.5,6.27l6.23,6.23a1,1,0,0,1,0,1.42A1,1,0,0,1,23,14.21Z'/%3E%3Crect class='cls-1' height='2' transform='translate(-8.31 14.13) rotate(-45)' width='11.01' x='7.39' y='16.1'/%3E%3Cpath class='cls-1' d='M30,29H14a1,1,0,0,1,0-2H30a1,1,0,0,1,0,2Z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 15px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.embed-tool__input-holder--error .embed-tool__input {
+  background-image: url("data:image/svg+xml,%3Csvg width='13' height='14' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.567 13.629c.728.464 1.581.65 2.41.558l-.873.873A3.722 3.722 0 1 1 4.84 9.794L6.694 7.94a3.722 3.722 0 0 1 5.256-.008L10.484 9.4a5.209 5.209 0 0 1-.017.016 1.625 1.625 0 0 0-2.29.009l-1.854 1.854a1.626 1.626 0 0 0 2.244 2.35zm2.766-7.358a3.722 3.722 0 0 0-2.41-.558l.873-.873a3.722 3.722 0 1 1 5.264 5.266l-1.854 1.854a3.722 3.722 0 0 1-5.256.008L9.416 10.5a5.2 5.2 0 0 1 .017-.016 1.625 1.625 0 0 0 2.29-.009l1.854-1.854a1.626 1.626 0 0 0-2.244-2.35z' fill='rgb(224, 147, 147)' transform='translate(-3.667 -2.7)'/%3E%3C/svg%3E%0A");
+  background-color: #fff3f6;
+  border-color: #f3e0e0;
+  color: #a95a5a;
+  box-shadow: inset 0 1px 3px 0 rgba(146, 62, 62, 0.05);
+}
+
+.embed-tool__input[contentEditable='true'][data-placeholder]::before,
+.embed-tool__caption[contentEditable='true'][data-placeholder]::before {
+  position: absolute;
+  content: attr(data-placeholder);
+  color: #707684;
+  font-weight: normal;
+  opacity: 0;
+}
+
+.embed-tool__input[contentEditable='true'][data-placeholder]:empty::before,
+.embed-tool__caption[contentEditable='true'][data-placeholder]:empty::before {
+  opacity: 1;
+}
+
+.embed-tool__input[contentEditable='true'][data-placeholder]:empty:focus::before,
+.embed-tool__caption[contentEditable='true'][data-placeholder]:empty:focus::before {
+  opacity: 0;
+}
+
+.embed-tool__progress {
+  position: absolute;
+  box-shadow: inset 0 1px 3px 0 rgba(102, 85, 107, 0.04);
+  height: 100%;
+  width: 0;
+  background-color: #f4f5f7;
+  z-index: -1;
+}
+
+.embed-tool__progress.embed-tool__progress--loading {
+  animation: progress 500ms ease-in;
+  animation-fill-mode: forwards;
+}
+
+.embed-tool__progress--loaded {
+  width: 100%;
+}
+
+/* .codex-editor--narrow .embed-tool__image {
+  display: none;
+} */
+
+@keyframes progress {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 85%;
+  }
+}

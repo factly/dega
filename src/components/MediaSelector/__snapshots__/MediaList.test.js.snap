@@ -1,0 +1,1305 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Media List component snapshot testing should match component with data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MediaList
+    selected={
+      Object {
+        "id": 1,
+      }
+    }
+  >
+    <Space
+      direction="vertical"
+    >
+      <div
+        className="ant-space ant-space-vertical"
+      >
+        <Item
+          className="ant-space-item"
+          direction="vertical"
+          index={0}
+          key="ant-space-item-0"
+          marginDirection="marginRight"
+          size="small"
+        >
+          <div
+            className="ant-space-item"
+            style={
+              Object {
+                "marginBottom": 8,
+              }
+            }
+          >
+            <Input
+              onChange={[Function]}
+              placeholder="Search Media"
+              type="text"
+            >
+              <ClearableLabeledInput
+                bordered={true}
+                element={
+                  <input
+                    className="ant-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    placeholder="Search Media"
+                    type="text"
+                  />
+                }
+                focused={false}
+                handleReset={[Function]}
+                inputType="input"
+                onChange={[Function]}
+                placeholder="Search Media"
+                prefixCls="ant-input"
+                triggerFocus={[Function]}
+                type="text"
+                value=""
+              >
+                <input
+                  className="ant-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Search Media"
+                  type="text"
+                  value=""
+                />
+              </ClearableLabeledInput>
+            </Input>
+          </div>
+        </Item>
+        <Item
+          className="ant-space-item"
+          direction="vertical"
+          index={1}
+          key="ant-space-item-1"
+          marginDirection="marginRight"
+          size="small"
+        >
+          <div
+            className="ant-space-item"
+            style={Object {}}
+          >
+            <List
+              dataSource={
+                Array [
+                  Object {
+                    "caption": "caption",
+                    "description": "description",
+                    "file_size": "file_size",
+                    "id": 1,
+                    "name": "Medium -1",
+                    "url": "some-url",
+                  },
+                ]
+              }
+              grid={
+                Object {
+                  "gutter": 16,
+                  "md": 4,
+                }
+              }
+              pagination={
+                Object {
+                  "current": 1,
+                  "onChange": [Function],
+                  "pageSize": 8,
+                  "total": 1,
+                }
+              }
+              renderItem={[Function]}
+            >
+              <div
+                className="ant-list ant-list-split ant-list-grid ant-list-something-after-last-item"
+              >
+                <Spin
+                  size="default"
+                  spinning={false}
+                  wrapperClassName=""
+                >
+                  <div
+                    className="ant-spin-nested-loading"
+                  >
+                    <div
+                      className="ant-spin-container"
+                      key="container"
+                    >
+                      <Row
+                        gutter={16}
+                      >
+                        <div
+                          className="ant-row"
+                          style={
+                            Object {
+                              "marginLeft": -8,
+                              "marginRight": -8,
+                            }
+                          }
+                        >
+                          <div
+                            key="list-item-0/.0"
+                          >
+                            <Item>
+                              <Col
+                                flex={1}
+                              >
+                                <div
+                                  className="ant-col"
+                                  style={
+                                    Object {
+                                      "flex": "1 1 auto",
+                                      "paddingLeft": 8,
+                                      "paddingRight": 8,
+                                    }
+                                  }
+                                >
+                                  <div
+                                    className="ant-list-item"
+                                  >
+                                    <div
+                                      style={
+                                        Object {
+                                          "position": "relative",
+                                        }
+                                      }
+                                    >
+                                      <Avatar
+                                        onClick={[Function]}
+                                        shape="square"
+                                        size={174}
+                                        style={
+                                          Object {
+                                            "border": "2px solid #1890ff",
+                                            "opacity": "0.7",
+                                            "padding": "0.5rem",
+                                          }
+                                        }
+                                      >
+                                        <span
+                                          className="ant-avatar ant-avatar-square"
+                                          onClick={[Function]}
+                                          style={
+                                            Object {
+                                              "border": "2px solid #1890ff",
+                                              "fontSize": 18,
+                                              "height": 174,
+                                              "lineHeight": "174px",
+                                              "opacity": "0.7",
+                                              "padding": "0.5rem",
+                                              "width": 174,
+                                            }
+                                          }
+                                        >
+                                          <ResizeObserver
+                                            onResize={[Function]}
+                                          >
+                                            <span
+                                              className="ant-avatar-string"
+                                              style={
+                                                Object {
+                                                  "WebkitTransform": "scale(1) translateX(-50%)",
+                                                  "lineHeight": "174px",
+                                                  "msTransform": "scale(1) translateX(-50%)",
+                                                  "transform": "scale(1) translateX(-50%)",
+                                                }
+                                              }
+                                            />
+                                          </ResizeObserver>
+                                        </span>
+                                      </Avatar>
+                                      <ForwardRef(CheckCircleTwoTone)
+                                        style={
+                                          Object {
+                                            "fontSize": "2.5rem",
+                                            "position": "absolute",
+                                            "right": 8,
+                                            "top": 8,
+                                          }
+                                        }
+                                        twoToneColor="#52c41a"
+                                      >
+                                        <AntdIcon
+                                          icon={
+                                            Object {
+                                              "icon": [Function],
+                                              "name": "check-circle",
+                                              "theme": "twotone",
+                                            }
+                                          }
+                                          style={
+                                            Object {
+                                              "fontSize": "2.5rem",
+                                              "position": "absolute",
+                                              "right": 8,
+                                              "top": 8,
+                                            }
+                                          }
+                                          twoToneColor="#52c41a"
+                                        >
+                                          <span
+                                            aria-label="check-circle"
+                                            className="anticon anticon-check-circle"
+                                            role="img"
+                                            style={
+                                              Object {
+                                                "fontSize": "2.5rem",
+                                                "position": "absolute",
+                                                "right": 8,
+                                                "top": 8,
+                                              }
+                                            }
+                                          >
+                                            <IconReact
+                                              className=""
+                                              icon={
+                                                Object {
+                                                  "icon": [Function],
+                                                  "name": "check-circle",
+                                                  "theme": "twotone",
+                                                }
+                                              }
+                                              primaryColor="#52c41a"
+                                            >
+                                              <svg
+                                                aria-hidden="true"
+                                                className=""
+                                                data-icon="check-circle"
+                                                fill="currentColor"
+                                                focusable="false"
+                                                height="1em"
+                                                key="svg-check-circle"
+                                                viewBox="64 64 896 896"
+                                                width="1em"
+                                              >
+                                                <path
+                                                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                                                  fill="#52c41a"
+                                                  key="svg-check-circle-svg-0"
+                                                />
+                                                <path
+                                                  d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372zm193.4 225.7l-210.6 292a31.8 31.8 0 01-51.7 0L318.5 484.9c-3.8-5.3 0-12.7 6.5-12.7h46.9c10.3 0 19.9 5 25.9 13.3l71.2 98.8 157.2-218c6-8.4 15.7-13.3 25.9-13.3H699c6.5 0 10.3 7.4 6.4 12.7z"
+                                                  fill="#f6ffed"
+                                                  key="svg-check-circle-svg-1"
+                                                />
+                                                <path
+                                                  d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"
+                                                  fill="#52c41a"
+                                                  key="svg-check-circle-svg-2"
+                                                />
+                                              </svg>
+                                            </IconReact>
+                                          </span>
+                                        </AntdIcon>
+                                      </ForwardRef(CheckCircleTwoTone)>
+                                    </div>
+                                  </div>
+                                </div>
+                              </Col>
+                            </Item>
+                          </div>
+                        </div>
+                      </Row>
+                    </div>
+                  </div>
+                </Spin>
+                <div
+                  className="ant-list-pagination"
+                >
+                  <Pagination
+                    current={1}
+                    onChange={[Function]}
+                    onShowSizeChange={[Function]}
+                    pageSize={8}
+                    total={1}
+                  >
+                    <LocaleReceiver
+                      componentName="Pagination"
+                      defaultLocale={
+                        Object {
+                          "items_per_page": "/ page",
+                          "jump_to": "Go to",
+                          "jump_to_confirm": "confirm",
+                          "next_3": "Next 3 Pages",
+                          "next_5": "Next 5 Pages",
+                          "next_page": "Next Page",
+                          "page": "",
+                          "prev_3": "Previous 3 Pages",
+                          "prev_5": "Previous 5 Pages",
+                          "prev_page": "Previous Page",
+                        }
+                      }
+                    >
+                      <Pagination
+                        className=""
+                        current={1}
+                        defaultCurrent={1}
+                        defaultPageSize={10}
+                        hideOnSinglePage={false}
+                        itemRender={[Function]}
+                        jumpNextIcon={
+                          <a
+                            className="ant-pagination-item-link"
+                          >
+                            <div
+                              className="ant-pagination-item-container"
+                            >
+                              <ForwardRef(DoubleRightOutlined)
+                                className="ant-pagination-item-link-icon"
+                              />
+                              <span
+                                className="ant-pagination-item-ellipsis"
+                              >
+                                •••
+                              </span>
+                            </div>
+                          </a>
+                        }
+                        jumpPrevIcon={
+                          <a
+                            className="ant-pagination-item-link"
+                          >
+                            <div
+                              className="ant-pagination-item-container"
+                            >
+                              <ForwardRef(DoubleLeftOutlined)
+                                className="ant-pagination-item-link-icon"
+                              />
+                              <span
+                                className="ant-pagination-item-ellipsis"
+                              >
+                                •••
+                              </span>
+                            </div>
+                          </a>
+                        }
+                        locale={
+                          Object {
+                            "items_per_page": "/ page",
+                            "jump_to": "Go to",
+                            "jump_to_confirm": "confirm",
+                            "next_3": "Next 3 Pages",
+                            "next_5": "Next 5 Pages",
+                            "next_page": "Next Page",
+                            "page": "",
+                            "prev_3": "Previous 3 Pages",
+                            "prev_5": "Previous 5 Pages",
+                            "prev_page": "Previous Page",
+                          }
+                        }
+                        nextIcon={
+                          <button
+                            className="ant-pagination-item-link"
+                            tabIndex={-1}
+                            type="button"
+                          >
+                            <ForwardRef(RightOutlined) />
+                          </button>
+                        }
+                        onChange={[Function]}
+                        onShowSizeChange={[Function]}
+                        pageSize={8}
+                        prefixCls="ant-pagination"
+                        prevIcon={
+                          <button
+                            className="ant-pagination-item-link"
+                            tabIndex={-1}
+                            type="button"
+                          >
+                            <ForwardRef(LeftOutlined) />
+                          </button>
+                        }
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
+                        selectPrefixCls="ant-select"
+                        showLessItems={false}
+                        showPrevNextJumpers={true}
+                        showQuickJumper={false}
+                        showTitle={true}
+                        style={Object {}}
+                        total={1}
+                        totalBoundaryShowSizeChanger={50}
+                      >
+                        <ul
+                          className="ant-pagination"
+                          style={Object {}}
+                          unselectable="unselectable"
+                        >
+                          <li
+                            aria-disabled={true}
+                            className="ant-pagination-prev ant-pagination-disabled"
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            tabIndex={null}
+                            title="Previous Page"
+                          >
+                            <button
+                              className="ant-pagination-item-link"
+                              disabled={true}
+                              tabIndex={-1}
+                              type="button"
+                            >
+                              <ForwardRef(LeftOutlined)>
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "left",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="left"
+                                    className="anticon anticon-left"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "left",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="left"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-left"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                                          key="svg-left-svg-0"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(LeftOutlined)>
+                            </button>
+                          </li>
+                          <Pager
+                            active={true}
+                            itemRender={[Function]}
+                            key="1"
+                            locale={
+                              Object {
+                                "items_per_page": "/ page",
+                                "jump_to": "Go to",
+                                "jump_to_confirm": "confirm",
+                                "next_3": "Next 3 Pages",
+                                "next_5": "Next 5 Pages",
+                                "next_page": "Next Page",
+                                "page": "",
+                                "prev_3": "Previous 3 Pages",
+                                "prev_5": "Previous 5 Pages",
+                                "prev_page": "Previous Page",
+                              }
+                            }
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            page={1}
+                            rootPrefixCls="ant-pagination"
+                            showTitle={true}
+                          >
+                            <li
+                              className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                              onClick={[Function]}
+                              onKeyPress={[Function]}
+                              tabIndex="0"
+                              title={1}
+                            >
+                              <a
+                                rel="nofollow"
+                              >
+                                1
+                              </a>
+                            </li>
+                          </Pager>
+                          <li
+                            aria-disabled={true}
+                            className="ant-pagination-next ant-pagination-disabled"
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            tabIndex={null}
+                            title="Next Page"
+                          >
+                            <button
+                              className="ant-pagination-item-link"
+                              disabled={true}
+                              tabIndex={-1}
+                              type="button"
+                            >
+                              <ForwardRef(RightOutlined)>
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "right",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="right"
+                                    className="anticon anticon-right"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "right",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="right"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-right"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                                          key="svg-right-svg-0"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(RightOutlined)>
+                            </button>
+                          </li>
+                          <Options
+                            changeSize={null}
+                            current={1}
+                            goButton={false}
+                            locale={
+                              Object {
+                                "items_per_page": "/ page",
+                                "jump_to": "Go to",
+                                "jump_to_confirm": "confirm",
+                                "next_3": "Next 3 Pages",
+                                "next_5": "Next 5 Pages",
+                                "next_page": "Next Page",
+                                "page": "",
+                                "prev_3": "Previous 3 Pages",
+                                "prev_5": "Previous 5 Pages",
+                                "prev_page": "Previous Page",
+                              }
+                            }
+                            pageSize={8}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "20",
+                                "50",
+                                "100",
+                              ]
+                            }
+                            quickGo={null}
+                            rootPrefixCls="ant-pagination"
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
+                            selectPrefixCls="ant-select"
+                          />
+                        </ul>
+                      </Pagination>
+                    </LocaleReceiver>
+                  </Pagination>
+                </div>
+              </div>
+            </List>
+          </div>
+        </Item>
+      </div>
+    </Space>
+  </MediaList>
+</Provider>
+`;
+
+exports[`Media List component snapshot testing should render the component with empty data 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <MediaList>
+    <Space
+      direction="vertical"
+    >
+      <div
+        className="ant-space ant-space-vertical"
+      >
+        <Item
+          className="ant-space-item"
+          direction="vertical"
+          index={0}
+          key="ant-space-item-0"
+          marginDirection="marginRight"
+          size="small"
+        >
+          <div
+            className="ant-space-item"
+            style={
+              Object {
+                "marginBottom": 8,
+              }
+            }
+          >
+            <Input
+              onChange={[Function]}
+              placeholder="Search Media"
+              type="text"
+            >
+              <ClearableLabeledInput
+                bordered={true}
+                element={
+                  <input
+                    className="ant-input"
+                    onBlur={[Function]}
+                    onChange={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    placeholder="Search Media"
+                    type="text"
+                  />
+                }
+                focused={false}
+                handleReset={[Function]}
+                inputType="input"
+                onChange={[Function]}
+                placeholder="Search Media"
+                prefixCls="ant-input"
+                triggerFocus={[Function]}
+                type="text"
+                value=""
+              >
+                <input
+                  className="ant-input"
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  onKeyDown={[Function]}
+                  placeholder="Search Media"
+                  type="text"
+                  value=""
+                />
+              </ClearableLabeledInput>
+            </Input>
+          </div>
+        </Item>
+        <Item
+          className="ant-space-item"
+          direction="vertical"
+          index={1}
+          key="ant-space-item-1"
+          marginDirection="marginRight"
+          size="small"
+        >
+          <div
+            className="ant-space-item"
+            style={Object {}}
+          >
+            <List
+              dataSource={Array []}
+              grid={
+                Object {
+                  "gutter": 16,
+                  "md": 4,
+                }
+              }
+              pagination={
+                Object {
+                  "current": 1,
+                  "onChange": [Function],
+                  "pageSize": 8,
+                  "total": 0,
+                }
+              }
+              renderItem={[Function]}
+            >
+              <div
+                className="ant-list ant-list-split ant-list-grid ant-list-something-after-last-item"
+              >
+                <Spin
+                  size="default"
+                  spinning={false}
+                  wrapperClassName=""
+                >
+                  <div
+                    className="ant-spin-nested-loading"
+                  >
+                    <div
+                      className="ant-spin-container"
+                      key="container"
+                    >
+                      <div
+                        className="ant-list-empty-text"
+                      >
+                        <Empty
+                          image={<Simple />}
+                        >
+                          <LocaleReceiver
+                            componentName="Empty"
+                          >
+                            <div
+                              className="ant-empty ant-empty-normal"
+                            >
+                              <div
+                                className="ant-empty-image"
+                              >
+                                <Simple>
+                                  <svg
+                                    className="ant-empty-img-simple"
+                                    height="41"
+                                    viewBox="0 0 64 41"
+                                    width="64"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <g
+                                      fill="none"
+                                      fillRule="evenodd"
+                                      transform="translate(0 1)"
+                                    >
+                                      <ellipse
+                                        className="ant-empty-img-simple-ellipse"
+                                        cx="32"
+                                        cy="33"
+                                        rx="32"
+                                        ry="7"
+                                      />
+                                      <g
+                                        className="ant-empty-img-simple-g"
+                                        fillRule="nonzero"
+                                      >
+                                        <path
+                                          d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
+                                        />
+                                        <path
+                                          className="ant-empty-img-simple-path"
+                                          d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                        />
+                                      </g>
+                                    </g>
+                                  </svg>
+                                </Simple>
+                              </div>
+                              <p
+                                className="ant-empty-description"
+                              >
+                                No Data
+                              </p>
+                            </div>
+                          </LocaleReceiver>
+                        </Empty>
+                      </div>
+                    </div>
+                  </div>
+                </Spin>
+                <div
+                  className="ant-list-pagination"
+                >
+                  <Pagination
+                    current={0}
+                    onChange={[Function]}
+                    onShowSizeChange={[Function]}
+                    pageSize={8}
+                    total={0}
+                  >
+                    <LocaleReceiver
+                      componentName="Pagination"
+                      defaultLocale={
+                        Object {
+                          "items_per_page": "/ page",
+                          "jump_to": "Go to",
+                          "jump_to_confirm": "confirm",
+                          "next_3": "Next 3 Pages",
+                          "next_5": "Next 5 Pages",
+                          "next_page": "Next Page",
+                          "page": "",
+                          "prev_3": "Previous 3 Pages",
+                          "prev_5": "Previous 5 Pages",
+                          "prev_page": "Previous Page",
+                        }
+                      }
+                    >
+                      <Pagination
+                        className=""
+                        current={0}
+                        defaultCurrent={1}
+                        defaultPageSize={10}
+                        hideOnSinglePage={false}
+                        itemRender={[Function]}
+                        jumpNextIcon={
+                          <a
+                            className="ant-pagination-item-link"
+                          >
+                            <div
+                              className="ant-pagination-item-container"
+                            >
+                              <ForwardRef(DoubleRightOutlined)
+                                className="ant-pagination-item-link-icon"
+                              />
+                              <span
+                                className="ant-pagination-item-ellipsis"
+                              >
+                                •••
+                              </span>
+                            </div>
+                          </a>
+                        }
+                        jumpPrevIcon={
+                          <a
+                            className="ant-pagination-item-link"
+                          >
+                            <div
+                              className="ant-pagination-item-container"
+                            >
+                              <ForwardRef(DoubleLeftOutlined)
+                                className="ant-pagination-item-link-icon"
+                              />
+                              <span
+                                className="ant-pagination-item-ellipsis"
+                              >
+                                •••
+                              </span>
+                            </div>
+                          </a>
+                        }
+                        locale={
+                          Object {
+                            "items_per_page": "/ page",
+                            "jump_to": "Go to",
+                            "jump_to_confirm": "confirm",
+                            "next_3": "Next 3 Pages",
+                            "next_5": "Next 5 Pages",
+                            "next_page": "Next Page",
+                            "page": "",
+                            "prev_3": "Previous 3 Pages",
+                            "prev_5": "Previous 5 Pages",
+                            "prev_page": "Previous Page",
+                          }
+                        }
+                        nextIcon={
+                          <button
+                            className="ant-pagination-item-link"
+                            tabIndex={-1}
+                            type="button"
+                          >
+                            <ForwardRef(RightOutlined) />
+                          </button>
+                        }
+                        onChange={[Function]}
+                        onShowSizeChange={[Function]}
+                        pageSize={8}
+                        prefixCls="ant-pagination"
+                        prevIcon={
+                          <button
+                            className="ant-pagination-item-link"
+                            tabIndex={-1}
+                            type="button"
+                          >
+                            <ForwardRef(LeftOutlined) />
+                          </button>
+                        }
+                        selectComponentClass={
+                          Object {
+                            "$$typeof": Symbol(react.forward_ref),
+                            "OptGroup": [Function],
+                            "Option": [Function],
+                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                            "render": [Function],
+                          }
+                        }
+                        selectPrefixCls="ant-select"
+                        showLessItems={false}
+                        showPrevNextJumpers={true}
+                        showQuickJumper={false}
+                        showTitle={true}
+                        style={Object {}}
+                        total={0}
+                        totalBoundaryShowSizeChanger={50}
+                      >
+                        <ul
+                          className="ant-pagination"
+                          style={Object {}}
+                          unselectable="unselectable"
+                        >
+                          <li
+                            aria-disabled={true}
+                            className="ant-pagination-prev ant-pagination-disabled"
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            tabIndex={null}
+                            title="Previous Page"
+                          >
+                            <button
+                              className="ant-pagination-item-link"
+                              disabled={true}
+                              tabIndex={-1}
+                              type="button"
+                            >
+                              <ForwardRef(LeftOutlined)>
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "left",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="left"
+                                    className="anticon anticon-left"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "left",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="left"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-left"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                                          key="svg-left-svg-0"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(LeftOutlined)>
+                            </button>
+                          </li>
+                          <Pager
+                            className="ant-pagination-disabled"
+                            itemRender={[Function]}
+                            key="noPager"
+                            locale={
+                              Object {
+                                "items_per_page": "/ page",
+                                "jump_to": "Go to",
+                                "jump_to_confirm": "confirm",
+                                "next_3": "Next 3 Pages",
+                                "next_5": "Next 5 Pages",
+                                "next_page": "Next Page",
+                                "page": "",
+                                "prev_3": "Previous 3 Pages",
+                                "prev_5": "Previous 5 Pages",
+                                "prev_page": "Previous Page",
+                              }
+                            }
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            page={0}
+                            rootPrefixCls="ant-pagination"
+                            showTitle={true}
+                          >
+                            <li
+                              className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+                              onClick={[Function]}
+                              onKeyPress={[Function]}
+                              tabIndex="0"
+                              title={0}
+                            >
+                              <a
+                                rel="nofollow"
+                              >
+                                0
+                              </a>
+                            </li>
+                          </Pager>
+                          <li
+                            aria-disabled={true}
+                            className="ant-pagination-next ant-pagination-disabled"
+                            onClick={[Function]}
+                            onKeyPress={[Function]}
+                            tabIndex={null}
+                            title="Next Page"
+                          >
+                            <button
+                              className="ant-pagination-item-link"
+                              disabled={true}
+                              tabIndex={-1}
+                              type="button"
+                            >
+                              <ForwardRef(RightOutlined)>
+                                <AntdIcon
+                                  icon={
+                                    Object {
+                                      "icon": Object {
+                                        "attrs": Object {
+                                          "focusable": "false",
+                                          "viewBox": "64 64 896 896",
+                                        },
+                                        "children": Array [
+                                          Object {
+                                            "attrs": Object {
+                                              "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
+                                            },
+                                            "tag": "path",
+                                          },
+                                        ],
+                                        "tag": "svg",
+                                      },
+                                      "name": "right",
+                                      "theme": "outlined",
+                                    }
+                                  }
+                                >
+                                  <span
+                                    aria-label="right"
+                                    className="anticon anticon-right"
+                                    role="img"
+                                  >
+                                    <IconReact
+                                      className=""
+                                      icon={
+                                        Object {
+                                          "icon": Object {
+                                            "attrs": Object {
+                                              "focusable": "false",
+                                              "viewBox": "64 64 896 896",
+                                            },
+                                            "children": Array [
+                                              Object {
+                                                "attrs": Object {
+                                                  "d": "M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z",
+                                                },
+                                                "tag": "path",
+                                              },
+                                            ],
+                                            "tag": "svg",
+                                          },
+                                          "name": "right",
+                                          "theme": "outlined",
+                                        }
+                                      }
+                                    >
+                                      <svg
+                                        aria-hidden="true"
+                                        className=""
+                                        data-icon="right"
+                                        fill="currentColor"
+                                        focusable="false"
+                                        height="1em"
+                                        key="svg-right"
+                                        viewBox="64 64 896 896"
+                                        width="1em"
+                                      >
+                                        <path
+                                          d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"
+                                          key="svg-right-svg-0"
+                                        />
+                                      </svg>
+                                    </IconReact>
+                                  </span>
+                                </AntdIcon>
+                              </ForwardRef(RightOutlined)>
+                            </button>
+                          </li>
+                          <Options
+                            changeSize={null}
+                            current={0}
+                            goButton={false}
+                            locale={
+                              Object {
+                                "items_per_page": "/ page",
+                                "jump_to": "Go to",
+                                "jump_to_confirm": "confirm",
+                                "next_3": "Next 3 Pages",
+                                "next_5": "Next 5 Pages",
+                                "next_page": "Next Page",
+                                "page": "",
+                                "prev_3": "Previous 3 Pages",
+                                "prev_5": "Previous 5 Pages",
+                                "prev_page": "Previous Page",
+                              }
+                            }
+                            pageSize={8}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "20",
+                                "50",
+                                "100",
+                              ]
+                            }
+                            quickGo={null}
+                            rootPrefixCls="ant-pagination"
+                            selectComponentClass={
+                              Object {
+                                "$$typeof": Symbol(react.forward_ref),
+                                "OptGroup": [Function],
+                                "Option": [Function],
+                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                "render": [Function],
+                              }
+                            }
+                            selectPrefixCls="ant-select"
+                          />
+                        </ul>
+                      </Pagination>
+                    </LocaleReceiver>
+                  </Pagination>
+                </div>
+              </div>
+            </List>
+          </div>
+        </Item>
+      </div>
+    </Space>
+  </MediaList>
+</Provider>
+`;
