@@ -6,16 +6,18 @@ import {
   getOrganisations,
   approveOrganisationRequest,
 } from '../../../../actions/organisationRequests';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function RequestList() {
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
-
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { organisationRequests, total, loading } = useSelector((state) => {
     const node = state.organisationRequests.req.find((item) => {
       return deepEqual(item.query, filters);

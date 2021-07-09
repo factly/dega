@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,24 +15,61 @@ import { useLocation } from 'react-router-dom';
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
-  let query = new URLSearchParams(useLocation().search);
+  const query = new URLSearchParams(useLocation().search);
   const status = query.get('status');
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [formatFlag, setFormatFlag] = React.useState(false);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-    status: status,
+  const history = useHistory();
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'status' || key === 'q') {
+        params[key] = query.get(key);
+      } else {
+        params[key] = parseInt(query.get(key));
+      }
+    }
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+  const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
+
+  React.useEffect(() => {
+    keys.forEach((key) => {
+      searchFilter.has(key) ? searchFilter.delete(key) : null;
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
+    history.push({
+      pathName: pathName,
+      search: '?' + searchFilter.toString(),
+    });
+  }, [history, filters]);
+
   if (!formatFlag && !formats.loading && formats.article) {
     setFilters({ ...filters, format: [formats.article.id] });
     setFormatFlag(true);
   }
   const { posts, total, loading, tags, categories } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -58,16 +96,23 @@ function Posts({ formats }) {
     dispatch(getPosts(filters));
   };
   const onSave = (values) => {
-    let filterValue = {
-      tag: values.tags,
-      category: values.categories,
-      sort: values.sort,
-      q: values.q,
-      author: values.authors,
-      status: values.status !== 'all' ? values.status : null,
-    };
-
-    setFilters({ ...filters, ...filterValue });
+    let filterValue = {};
+    if (values.status === 'all') {
+      values.status = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'format' || key === 'tag' || key === 'author' || key === 'category') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    filterValue['format'] = filters.format;
+    setFilters(filterValue);
   };
   if (!formats.loading && formats.article)
     return (
@@ -82,7 +127,6 @@ function Posts({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            console.log('changedValues', changedValues, 'all', allValues);
             if (!changedValues.q) {
               onSave(allValues);
             }
@@ -126,17 +170,17 @@ function Posts({ formats }) {
               </Form.Item>
             </Col>
             <Col span={6} key={5}>
-              <Form.Item name="tags" label="Tags">
+              <Form.Item name="tag" label="Tags">
                 <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
               </Form.Item>
             </Col>
             <Col span={6} key={6}>
-              <Form.Item name="categories" label="Categories">
+              <Form.Item name="category" label="Categories">
                 <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
               </Form.Item>
             </Col>
             <Col span={6} key={7}>
-              <Form.Item name="authors" label="Authors">
+              <Form.Item name="author" label="Authors">
                 <Selector
                   mode="multiple"
                   action="Authors"

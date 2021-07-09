@@ -1,24 +1,42 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import TagList from './components/TagList';
 import { Space, Button, Form, Select, Row, Col, Input } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function Tags({ permission }) {
   const { actions } = permission;
+  const history = useHistory();
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
+  const query = new URLSearchParams(useLocation().search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
+    history.push({
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
+    });
+  }, [history, filters]);
+
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { tags, total, loading } = useSelector((state) => {
     const node = state.tags.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -54,12 +72,18 @@ function Tags({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) =>
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
               setFilters({
                 ...filters,
-                ...values,
-              })
-            }
+                ...filterValue,
+              });
+            }}
             style={{ width: '100%' }}
             onValuesChange={(changedValues, allValues) => {
               if (!changedValues.q) {

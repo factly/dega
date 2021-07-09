@@ -1,7 +1,8 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import ClaimantList from './components/ClaimantList';
 import { Space, Button, Form, Row, Col, Select, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
@@ -9,16 +10,32 @@ import deepEqual from 'deep-equal';
 function Claimants({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
+  const history = useHistory();
+  const query = new URLSearchParams(useLocation().search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
+    history.push({
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
+    });
+  }, [history, filters]);
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { claimants, total, loading } = useSelector((state) => {
     const node = state.claimants.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -54,13 +71,18 @@ function Claimants({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) =>
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
               setFilters({
                 ...filters,
-                sort_by: values.sort,
-                q: values.q,
-              })
-            }
+                ...filterValue,
+              });
+            }}
             style={{ maxWidth: '100%' }}
             onValuesChange={(changedValues, allValues) => {
               if (!changedValues.q) {

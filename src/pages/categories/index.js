@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CategoryList from './components/CategoryList';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
 import deepEqual from 'deep-equal';
@@ -9,15 +9,33 @@ import deepEqual from 'deep-equal';
 function Categories({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
+  const location = useLocation();
+  const history = useHistory();
+  const query = new URLSearchParams(location.search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
+    history.push({
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
+    });
+  }, [history, filters]);
+
   const { Option } = Select;
   const [form] = Form.useForm();
   const { categories, total, loading } = useSelector((state) => {
     const node = state.categories.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -53,7 +71,18 @@ function Categories({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) => setFilters({ ...filters, ...values })}
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
+              setFilters({
+                ...filters,
+                ...filterValue,
+              });
+            }}
             style={{ width: '100%' }}
             onValuesChange={(changedValues, allValues) => {
               if (!changedValues.q) {

@@ -3,14 +3,16 @@ import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrganisations, deleteOrganisationPermission } from '../../../../actions/organisations';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 function PermissionList({ admin }) {
   const dispatch = useDispatch();
+  const query = new URLSearchParams(useLocation().search);
   const [filters, setFilters] = React.useState({
     page: 1,
     limit: 20,
   });
-
+  query.set('page',filters.page);
+  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { organisation_permissions, total, loading } = useSelector((state) => {
     const req = state.organisations.req;
 

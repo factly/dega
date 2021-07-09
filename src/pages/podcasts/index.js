@@ -1,7 +1,8 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import PodcastList from './components/PodcastList';
 import { Space, Button, Form, Row, Col, Input, Select } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
 import { getPodcasts } from '../../actions/podcasts';
@@ -11,16 +12,33 @@ function Podcasts({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'podcasts', action: 'get', spaces });
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
+  const history = useHistory();
+  const query = new URLSearchParams(useLocation().search);
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort'];
+  keys.forEach((key) => {
+    if (query.get(key)) params[key] = query.get(key);
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+
+  const pathName = useLocation().pathname;
+
+  useEffect(() => {
+    history.push({
+      pathname: pathName,
+      search: new URLSearchParams(filters).toString(),
+    });
+  }, [history, filters]);
+
   const [form] = Form.useForm();
   const { Option } = Select;
 
   const { podcasts, total, loading } = useSelector((state) => {
     const node = state.podcasts.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -56,7 +74,18 @@ function Podcasts({ permission }) {
             form={form}
             name="filters"
             layout="inline"
-            onFinish={(values) => setFilters({ ...filters, ...values })}
+            onFinish={(values) => {
+              let filterValue = {};
+              Object.keys(values).forEach(function (key) {
+                if (values[key]) {
+                  filterValue[key] = values[key];
+                }
+              });
+              setFilters({
+                ...filters,
+                ...filterValue,
+              });
+            }}
             style={{ maxWidth: '100%' }}
             onValuesChange={(changedValues, allValues) => {
               if (!changedValues.q) {

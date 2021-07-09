@@ -1,6 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
@@ -15,13 +16,52 @@ function Pages({ formats }) {
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
+  const query = new URLSearchParams(useLocation().search);
+  const history = useHistory();
+
+  const params = {};
+  const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (key === 'tag' || key === 'category' || key === 'author') {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'status' || key === 'q') {
+        params[key] = query.get(key);
+      } else {
+        params[key] = parseInt(query.get(key));
+      }
+    }
   });
+  const [filters, setFilters] = React.useState({
+    ...params,
+  });
+  const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
+
+  React.useEffect(() => {
+    keys.forEach((key) => {
+      searchFilter.has(key) ? searchFilter.delete(key) : null;
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'tag' || key === 'category' || key === 'author') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
+    history.push({
+      pathName: pathName,
+      search: '?' + searchFilter.toString(),
+    });
+  }, [history, filters]);
+
   const { pages, total, loading, tags, categories } = useSelector((state) => {
     const node = state.pages.req.find((item) => {
-      return deepEqual(item.query, filters);
+      return deepEqual(item.query, params);
     });
 
     if (node)
@@ -50,15 +90,22 @@ function Pages({ formats }) {
   };
 
   const onSave = (values) => {
-    let filterValue = {
-      tag: values.tags,
-      category: values.categories,
-      sort: values.sort,
-      q: values.q,
-      author: values.authors,
-      status: values.status !== 'all' ? values.status : null,
-    };
-    setFilters({ ...filters, ...filterValue });
+    let filterValue = {};
+    if (values.status === 'all') {
+      values.status = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'tag' || key === 'author' || key === 'category') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    setFilters(filterValue);
   };
   if (!formats.loading && formats.article)
     return (
@@ -71,7 +118,6 @@ function Pages({ formats }) {
           style={{ maxWidth: '100%' }}
           className="ant-advanced-search-form"
           onValuesChange={(changedValues, allValues) => {
-            console.log('changedValues', changedValues, 'all', allValues);
             if (!changedValues.q) {
               onSave(allValues);
             }
@@ -115,17 +161,17 @@ function Pages({ formats }) {
               </Form.Item>
             </Col>
             <Col span={6} key={5}>
-              <Form.Item name="tags" label="Tags">
+              <Form.Item name="tag" label="Tags">
                 <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
               </Form.Item>
             </Col>
             <Col span={6} key={6}>
-              <Form.Item name="categories" label="Categories">
+              <Form.Item name="category" label="Categories">
                 <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
               </Form.Item>
             </Col>
             <Col span={6} key={7}>
-              <Form.Item name="authors" label="Authors">
+              <Form.Item name="author" label="Authors">
                 <Selector
                   mode="multiple"
                   action="Authors"

@@ -30,7 +30,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
         pagination={{
           total: data.total,
           current: filters.page,
-          pageSize: filters.limit,
+          pageSize: filters.limit ? filters.limit : 10,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
         }}
