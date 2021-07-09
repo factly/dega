@@ -36,6 +36,10 @@ func (r *ratingResolver) HTMLDescription(ctx context.Context, obj *models.Rating
 	return &obj.HTMLDescription, nil
 }
 
+func (r *ratingResolver) MetaFields(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil

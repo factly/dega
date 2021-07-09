@@ -22,6 +22,10 @@ func (r *menuResolver) Menu(ctx context.Context, obj *models.Menu) (interface{},
 	return obj.Menu, nil
 }
 
+func (r *menuResolver) MetaFields(ctx context.Context, obj *models.Menu) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Menu(ctx context.Context) (*models.MenusPaging, error) {
 
 	sID, err := validator.GetSpace(ctx)

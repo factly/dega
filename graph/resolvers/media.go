@@ -22,6 +22,10 @@ func (r *mediumResolver) URL(ctx context.Context, obj *models.Medium) (interface
 	return obj.URL, nil
 }
 
+func (r *mediumResolver) MetaFields(ctx context.Context, obj *models.Medium) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Media(ctx context.Context) ([]*models.Medium, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

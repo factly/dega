@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -16,6 +17,7 @@ type Tag struct {
 	Slug            string          `gorm:"column:slug" json:"slug" validate:"required"`
 	Description     string          `gorm:"column:description" json:"description"`
 	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
+	MetaFields      postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }
 

@@ -25,6 +25,11 @@ func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error) {
 	return &obj.HTMLDescription, nil
 }
+
+func (r *tagResolver) MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

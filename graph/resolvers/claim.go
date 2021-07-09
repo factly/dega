@@ -42,6 +42,10 @@ func (r *claimResolver) ReviewSources(ctx context.Context, obj *models.Claim) (i
 	return obj.ReviewSources, nil
 }
 
+func (r *claimResolver) MetaFields(ctx context.Context, obj *models.Claim) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *claimResolver) ClaimDate(ctx context.Context, obj *models.Claim) (*time.Time, error) {
 	return obj.ClaimDate, nil
 }

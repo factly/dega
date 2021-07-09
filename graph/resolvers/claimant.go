@@ -28,6 +28,10 @@ func (r *claimantResolver) HTMLDescription(ctx context.Context, obj *models.Clai
 	return &obj.HTMLDescription, nil
 }
 
+func (r *claimantResolver) MetaFields(ctx context.Context, obj *models.Claimant) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil
