@@ -162,6 +162,7 @@ fabric.properties
 
 .env
 
+<<<<<<< HEAD
 #logs
 *.log
 
@@ -174,3 +175,12 @@ config.*
 
 # Coverage
 coverage
+=======
+server
+
+#logs
+*.log
+
+#Dega config
+config.*
+>>>>>>> api/develop
