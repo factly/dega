@@ -54,7 +54,7 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <p
                     style={{
-                      width: '90%',
+                      width: '500px',
                       textOverflow: 'ellipsis',
                       overflow: 'hidden',
                     }}
@@ -104,6 +104,9 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
 
   if (claimOrder && updateData) setTreeData(dig(claimOrder, ids));
   React.useEffect(() => {}, [treeData]);
+  React.useEffect(() => {
+    setTreeData(dig(claimOrder, ids));
+  }, [claimOrder]);
 
   return (
     <Collapse

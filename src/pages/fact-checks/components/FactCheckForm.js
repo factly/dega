@@ -56,35 +56,17 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { claims, claimLoading } = useSelector((state) => {
-    return { claims: state.claims, claimLoading: state.claims.loading };
-  });
-  const updateClaims = (fetchedClaimId) => {
-    const claimList = form.getFieldValue('claims');
-    if (claimList.length === data.claims.length) {
-      data.claims.push(fetchedClaimId);
+  if (claimCreatedFlag) {
+    if (data && data.id) {
+      data.claims.push(newClaim.id);
     } else {
+      const claimList = form.getFieldValue('claims') ? form.getFieldValue('claims') : [];
       form.setFieldsValue({
-        claims: [...claimList, fetchedClaimId],
+        claims: [...claimList, newClaim.id],
       });
-      data.claims = form.getFieldValue('claims');
     }
     setClaimCreatedFlag(false);
-  };
-  if (!claimLoading && claimCreatedFlag) {
-    const fetchedClaimId = claims.req[0].data[0];
-    const fetchedClaim = claims.details[fetchedClaimId];
-    if (newClaim.title === fetchedClaim.title) {
-      updateClaims(fetchedClaimId);
-    }
   }
-
-  const fetchAddedClaim = () => {
-    dispatch(getClaims({}));
-  };
-  useEffect(() => {
-    fetchAddedClaim();
-  }, [newClaim]);
 
   useEffect(() => {}, [details, loading]);
 
@@ -148,11 +130,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => {
+    dispatch(addClaim(values)).then((claim) => {
       setVisible(false);
-      setClaimCreatedFlag(true);
-      setNewClaim(values);
+      setNewClaim(claim);
       setClaimID(0);
+      setClaimCreatedFlag(true);
     });
   };
   const onClaimEdit = (values) => {

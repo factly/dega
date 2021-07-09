@@ -102,6 +102,7 @@ export const addClaim = (data) => {
 
         dispatch(resetClaims());
         dispatch(addSuccessNotification('Claim added'));
+        return claim;
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
