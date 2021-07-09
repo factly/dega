@@ -38,6 +38,14 @@ func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*
 	return &obj.HTMLDescription, nil
 }
 
+func (r *postResolver) HeaderCode(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *postResolver) FooterCode(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
 func (r *postResolver) PublishedDate(ctx context.Context, obj *models.Post) (*time.Time, error) {
 	return obj.PublishedDate, nil
 }

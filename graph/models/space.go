@@ -30,5 +30,7 @@ type Space struct {
 	VerificationCodes postgres.Jsonb  `gorm:"column:verification_codes" json:"verification_codes"`
 	SocialMediaURLs   postgres.Jsonb  `gorm:"column:social_media_urls" json:"social_media_urls"`
 	ContactInfo       postgres.Jsonb  `gorm:"column:contact_info" json:"contact_info"`
+	HeaderCode        string          `gorm:"column:header_code" json:"header_code"`
+	FooterCode        string          `gorm:"column:footer_code" json:"footer_code"`
 	OrganisationID    int             `gorm:"column:organisation_id" json:"organisation_id"`
 }

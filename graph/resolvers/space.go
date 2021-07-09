@@ -55,8 +55,17 @@ func (r *spaceResolver) VerificationCodes(ctx context.Context, obj *models.Space
 func (r *spaceResolver) SocialMediaUrls(ctx context.Context, obj *models.Space) (interface{}, error) {
 	return obj.SocialMediaURLs, nil
 }
+
 func (r *spaceResolver) ContactInfo(ctx context.Context, obj *models.Space) (interface{}, error) {
 	return obj.ContactInfo, nil
+}
+
+func (r *spaceResolver) HeaderCode(ctx context.Context, obj *models.Space) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *spaceResolver) FooterCode(ctx context.Context, obj *models.Space) (*string, error) {
+	return &obj.FooterCode, nil
 }
 
 func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {

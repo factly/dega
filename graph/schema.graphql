@@ -15,6 +15,8 @@ type Space {
   verification_codes: Any
   social_media_urls: Any
   contact_info: Any
+  header_code: String
+  footer_code: String
 }
 
 type Category {
@@ -94,6 +96,8 @@ type Post {
   schemas: Any
   meta: Any
   space_id: Int!
+  header_code: String
+  footer_code: String
 }
 
 type User {
