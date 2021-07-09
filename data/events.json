@@ -1,0 +1,170 @@
+[
+    {
+        "name": "Create Category",
+        "event": "category.created"
+    },
+    {
+        "name": "Update Category",
+        "event": "category.updated"
+    },
+    {
+        "name": "Delete Category",
+        "event": "category.deleted"
+    },
+    {
+        "name": "Create Format",
+        "event": "format.created"
+    },
+    {
+        "name": "Update Format",
+        "event": "format.updated"
+    },
+    {
+        "name": "Delete Format",
+        "event": "format.deleted"
+    },
+    {
+        "name": "Create Media",
+        "event": "media.created"
+    },
+    {
+        "name": "Update Media",
+        "event": "media.updated"
+    },
+    {
+        "name": "Delete Media",
+        "event": "media.deleted"
+    },
+    {
+        "name": "Create Menu",
+        "event": "menu.created"
+    },
+    {
+        "name": "Update Menu",
+        "event": "menu.updated"
+    },
+    {
+        "name": "Delete Menu",
+        "event": "menu.deleted"
+    },
+    {
+        "name": "Create Post",
+        "event": "post.created"
+    },
+    {
+        "name": "Update Post",
+        "event": "post.updated"
+    },
+    {
+        "name": "Delete Post",
+        "event": "post.deleted"
+    },
+    {
+        "name": "Create Template",
+        "event": "post.template.created"
+    },
+    {
+        "name": "Publish Post",
+        "event": "post.published"
+    },
+    {
+        "name": "Unpublish Post",
+        "event": "post.unpublished"
+    },
+    {
+        "name": "Ready Post",
+        "event": "post.ready"
+    },
+    {
+        "name": "Create Space",
+        "event": "space.created"
+    },
+    {
+        "name": "Update Space",
+        "event": "space.updated"
+    },
+    {
+        "name": "Delete Space",
+        "event": "space.deleted"
+    },
+    {
+        "name": "Create Tag",
+        "event": "tag.created"
+    },
+    {
+        "name": "Update Tag",
+        "event": "tag.updated"
+    },
+    {
+        "name": "Delete Tag",
+        "event": "tag.deleted"
+    },
+    {
+        "name": "Create Claim",
+        "event": "claim.created"
+    },
+    {
+        "name": "Update Claim",
+        "event": "claim.updated"
+    },
+    {
+        "name": "Delete Claim",
+        "event": "claim.deleted"
+    },
+    {
+        "name": "Create Claimant",
+        "event": "claimant.created"
+    },
+    {
+        "name": "Update Claimant",
+        "event": "claimant.updated"
+    },
+    {
+        "name": "Delete Claimant",
+        "event": "claimant.deleted"
+    },
+    {
+        "name": "Create Rating",
+        "event": "rating.created"
+    },
+    {
+        "name": "Update Rating",
+        "event": "rating.updated"
+    },
+    {
+        "name": "Delete Rating",
+        "event": "rating.deleted"
+    },
+    {
+        "name": "Create Podcast",
+        "event": "podcast.created"
+    },
+    {
+        "name": "Update Podcast",
+        "event": "podcast.updated"
+    },
+    {
+        "name": "Delete Podcast",
+        "event": "podcast.deleted"
+    },
+    {
+        "name": "Create Episode",
+        "event": "episode.created"
+    },
+    {
+        "name": "Update Episode",
+        "event": "episode.updated"
+    },
+    {
+        "name": "Delete Episode",
+        "event": "episode.deleted"
+    },
+    {
+        "name": "Create Policy",
+        "event": "policy.created"
+    },
+    {
+        "name": "Update Policy",
+        "event": "policy.updated"
+    }
+]
