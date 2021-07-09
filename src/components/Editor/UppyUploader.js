@@ -1,3 +1,4 @@
+import React from 'react';
 import { MEDIA_API } from '../../constants/media';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
@@ -5,13 +6,28 @@ import '@uppy/url/dist/style.css';
 import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
-import React from 'react';
+import Tunes from './Tunes';
+import { make } from './utils';
+
 const Uppy = require('@uppy/core');
 const Dashboard = require('@uppy/dashboard');
 const GoogleDrive = require('@uppy/google-drive');
 const Url = require('@uppy/url');
 const AwsS3 = require('@uppy/aws-s3');
 const axios = require('axios');
+
+const style = {
+  imgContainer: 'border-radius: 3px;  overflow: hidden; margin-bottom:10px;',
+  img: 'max-width: 100%; vertical-align:bottom; display:block;',
+  container: {
+    stretched: ' ',
+    withBackground: 'padding: 15px; background: white;',
+    withBorder: 'border: 1px solid #e8e8eb;',
+  },
+  withBorder: '',
+  withBackground: 'max-width:60%; margin:0 auto;',
+  stretched: 'width:100%;',
+};
 
 class UppyUploader {
   constructor({ data, api, config }) {
@@ -24,22 +40,31 @@ class UppyUploader {
       page: 1,
       limit: 8,
     };
+
+    this.tunes = new Tunes({
+      api,
+      actions: this.config.actions,
+      onChange: (tuneName) => this.tuneToggled(tuneName),
+    });
+    Tunes.tunes.forEach(({ name: tune }) => {
+      const value =
+        typeof data[tune] !== 'undefined' ? data[tune] === true || data[tune] === 'true' : false;
+      this.setTune(tune, value);
+    });
     this.total = 0;
     this.mediaData = [];
     this.nodes.wrapper = document.createElement('div');
-    this.nodes.wrapper.className = 'ant-card ant-card-bordered';
-    this.nodes.wrapper.setAttribute('style', 'width:800px');
+    this.nodes.wrapper.setAttribute('style', style.imgContainer);
     this.nodes.wrapper.id = 'Uploader-' + this.blockIndex;
 
     var uploader = document.createElement('div');
     uploader.id = 'DashboardContainer-' + this.blockIndex;
 
-    var imageContainer = document.createElement('img');
-    imageContainer.setAttribute('style', 'padding:8px');
-    imageContainer.id = 'ImageContainer';
-    imageContainer.style.width = '100%';
+    var image = document.createElement('img');
+    image.setAttribute('style', style.img);
+    image.id = 'Image-' + this.blockIndex;
 
-    this.nodes.wrapper.appendChild(imageContainer);
+    this.nodes.wrapper.appendChild(image);
     if (!this.data.url) {
       this.getMediaList(this.query);
       this.createRadioButtons();
@@ -47,37 +72,76 @@ class UppyUploader {
     this.nodes.wrapper.appendChild(uploader);
   }
 
-  make(tagName, className = null, attributes = {}) {
-    const el = document.createElement(tagName);
-    if (className) {
-      el.className = className;
-    }
-    for (const attrName in attributes) {
-      el[attrName] = attributes[attrName];
-    }
-    return el;
+  tuneToggled(tuneName) {
+    Tunes.tunes.forEach(({ name: tune }) => {
+      if (this.data[tune] === true && tune !== tuneName) {
+        this.data[tune] = false;
+        const button = this.tunes.buttons.find((el) => el.dataset.tune === tune);
+        button.classList.toggle(
+          this.tunes.CSS.buttonActive,
+          !button.classList.contains(this.tunes.CSS.buttonActive),
+        );
+      }
+    });
+    this.setTune(tuneName, !this.data[tuneName]);
   }
+  setTune(tuneName, value) {
+    this.data[tuneName] = value;
+    this.applyTune(tuneName, value);
+    if (tuneName === 'stretched') {
+      /**
+       * Wait until the API is ready
+       */
+      Promise.resolve()
+        .then(() => {
+          const blockId = this.api.blocks.getCurrentBlockIndex();
 
+          this.api.blocks.stretchBlock(blockId, value);
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    }
+  }
+  applyTune(tuneName, status) {
+    if (document.getElementById(`Image-${this.blockIndex}`) && status === false) {
+      document.getElementById(`Image-${this.blockIndex}`).setAttribute('style', style.img);
+      document
+        .getElementById(`Uploader-${this.blockIndex}`)
+        .setAttribute('style', style.imgContainer);
+    }
+    if (document.getElementById(`Image-${this.blockIndex}`) && status) {
+      document
+        .getElementById(`Image-${this.blockIndex}`)
+        .setAttribute('style', `${style.img} ${style[tuneName]}`);
+      document
+        .getElementById(`Uploader-${this.blockIndex}`)
+        .setAttribute('style', `${style.imgContainer} ${style.container[tuneName]}`);
+    }
+  }
+  renderSettings() {
+    return this.tunes.render(this.data);
+  }
   createRadioButtons() {
-    const radioGroup = this.make('div', 'ant-radio-group ant-radio-group-solid', {
+    const radioGroup = make('div', ['ant-radio-group', 'ant-radio-group-solid'], {
       style: 'margin-bottom: 8px;width:750px;margin-left:8px',
     });
-    const list = this.make('input', 'ant-radio-button-input', {
+    const list = make('input', 'ant-radio-button-input', {
       type: 'radio',
       id: 'opt1',
       value: 'list',
       name: 'tabOption',
       checked: true,
     });
-    const label1 = this.make('label', 'ant-radio-button-wrapper ant-radio-button-wrapper-checked');
-    const label2 = this.make('label', 'ant-radio-button-wrapper');
-    const uploader = this.make('input', 'ant-radio-button-input', {
+    const label1 = make('label', ['ant-radio-button-wrapper', 'ant-radio-button-wrapper-checked']);
+    const label2 = make('label', 'ant-radio-button-wrapper');
+    const uploader = make('input', 'ant-radio-button-input', {
       type: 'radio',
       id: 'opt2',
       value: 'uploader',
       name: 'tabOption',
     });
-    const searchInput = this.make('input', 'ant-input', {
+    const searchInput = make('input', 'ant-input', {
       placeholder: 'Search Media',
       style: 'margin-bottom: 8px;margin-top: 8px',
       type: 'text',
@@ -123,6 +187,15 @@ class UppyUploader {
   }
   render() {
     if (this.data.url) {
+      Tunes.tunes.forEach(({ name: tune }) => {
+        if (this.data[tune] === true) {
+          this.nodes.wrapper.setAttribute(
+            'style',
+            `${style.imgContainer} ${style.container[tune]}`,
+          );
+          this.nodes.wrapper.children[0].setAttribute('style', `${style.img} ${style[tune]}`);
+        }
+      });
       this.nodes.wrapper.children[0].src = this.data.url.proxy;
     }
     return this.nodes.wrapper;
@@ -145,10 +218,10 @@ class UppyUploader {
       obj.getMediaList(newQuery);
     }
 
-    const ul = this.make('ul', 'ant-pagination', { style: 'margin-bottom:8px' });
+    const ul = make('ul', 'ant-pagination', { style: 'margin-bottom:8px' });
     ul.unselectable = 'unselectable';
-    const previous = this.make('li', 'ant-pagination-prev');
-    const prevButton = this.make('button', 'ant-pagination-item-link', { type: 'button' });
+    const previous = make('li', 'ant-pagination-prev');
+    const prevButton = make('button', 'ant-pagination-item-link', { type: 'button' });
     prevButton.tabindex = '-1';
     previous.addEventListener('click', () => {
       if (query.page > 1) {
@@ -186,8 +259,8 @@ class UppyUploader {
         ul.appendChild(li);
       })(query, this);
     }
-    const next = this.make('li', 'ant-pagination-next');
-    const nextButton = this.make('button', 'ant-pagination-item-link', { type: 'button' });
+    const next = make('li', 'ant-pagination-next');
+    const nextButton = make('button', 'ant-pagination-item-link', { type: 'button' });
     nextButton.addEventListener('click', () => {
       if (query.page < last) {
         this.handlePaginationButtonCLick(1, query);
@@ -206,17 +279,17 @@ class UppyUploader {
   }
 
   createDisplayList(data, query, total) {
-    function handleCLick(imageDetails, obj) {
+    function handleClick(imageDetails, obj) {
       obj.data = imageDetails;
       obj.nodes.wrapper.children[0].src = imageDetails.url.proxy;
       obj.nodes.wrapper.children[2].style.display = 'none';
       obj.nodes.wrapper.children[1].style.display = 'none';
     }
-    const listDiv = this.make('div', 'ant-list ant-list-split ant-list-grid', {
+    const listDiv = make('div', ['ant-list', 'ant-list-split', 'ant-list-grid'], {
       style: 'width:750px',
       id: 'DashboardContainer-' + this.blockIndex,
     });
-    const rowDiv = this.make('div', 'ant-row', {
+    const rowDiv = make('div', 'ant-row', {
       style: 'margin-left:-18px;margin-right:-18px',
     });
 
@@ -230,7 +303,7 @@ class UppyUploader {
         image.addEventListener(
           'click',
           function () {
-            handleCLick(imageDetails, obj);
+            handleClick(imageDetails, obj);
           },
           false,
         );
@@ -260,7 +333,7 @@ class UppyUploader {
     const noDataFound = ReactDOMServer.renderToString(
       <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />,
     );
-    const emptyDataDiv = this.make('div', null, {
+    const emptyDataDiv = make('div', null, {
       id: 'DashboardContainer-' + this.blockIndex,
     });
     emptyDataDiv.innerHTML = noDataFound;

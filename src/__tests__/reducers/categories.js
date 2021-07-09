@@ -37,7 +37,11 @@ describe('categories reducer', () => {
           payload: {},
         },
       ),
-    ).toEqual(initialState);
+    ).toEqual({
+      req: [],
+      loading: true,
+      details: [{ id: 1, name: 'category' }],
+    });
   });
   it('should handle SET_CATEGORIES_LOADING', () => {
     expect(

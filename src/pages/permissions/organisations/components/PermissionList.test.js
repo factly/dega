@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch, Provider } from 'react-redux';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { Table } from 'antd';
+import { Table, Button, Popconfirm } from 'antd';
 
 import '../../../../matchMedia.mock';
 import PermissionList from './PermissionList';
-import { getOrganisations } from '../../../../actions/organisations';
+import { getOrganisations, deleteOrganisationPermission } from '../../../../actions/organisations';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,24 +19,25 @@ let state = {
   organisations: {
     req: [
       {
-        data: [1, 2],
+        data: [1, 2, 3, 4],
         query: {
           page: 1,
           limit: 20,
         },
-        total: 2,
+        total: 4,
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         title: 'Org 1',
         permission: {
           id: 2,
           organisation_id: 1,
+          spaces: -1,
         },
       },
-      '2': {
+      2: {
         id: 2,
         title: 'Org 2',
         permission: {
@@ -44,9 +46,17 @@ let state = {
           spaces: 4,
         },
       },
-      '3': {
+      3: {
         id: 1,
         title: 'Org 3',
+      },
+      4: {
+        id: 4,
+        title: 'Org 4',
+        permission: {
+          id: 5,
+          organisation_id: 4,
+        },
       },
     },
     loading: false,
@@ -59,6 +69,7 @@ jest.mock('react-redux', () => ({
 }));
 jest.mock('../../../../actions/organisations', () => ({
   getOrganisations: jest.fn(),
+  deleteOrganisationPermission: jest.fn(),
 }));
 
 describe('Organisation Permission List component ', () => {
@@ -73,7 +84,9 @@ describe('Organisation Permission List component ', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -88,7 +101,9 @@ describe('Organisation Permission List component ', () => {
       });
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -98,7 +113,9 @@ describe('Organisation Permission List component ', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -108,7 +125,9 @@ describe('Organisation Permission List component ', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -128,7 +147,9 @@ describe('Organisation Permission List component ', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PermissionList />
+            <Router>
+              <PermissionList />
+            </Router>
           </Provider>,
         );
       });
@@ -142,6 +163,30 @@ describe('Organisation Permission List component ', () => {
         expect(mockedDispatch).toHaveBeenCalledTimes(1);
         expect(getOrganisations).toHaveBeenCalledWith({ page: 3, limit: 20 });
       }, 0);
+    });
+    it('should delete organisation permission', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PermissionList />
+            </Router>
+          </Provider>,
+        );
+      });
+      const button = wrapper.find(Button).at(1);
+      expect(button.text()).toEqual('Delete');
+
+      button.simulate('click');
+      const popconfirm = wrapper.find(Popconfirm);
+      popconfirm
+        .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
+        .simulate('click');
+      expect(deleteOrganisationPermission).toHaveBeenCalled();
+      expect(deleteOrganisationPermission).toHaveBeenCalledWith(2);
+      expect(getOrganisations).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
 });

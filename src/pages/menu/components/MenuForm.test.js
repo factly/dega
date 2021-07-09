@@ -132,10 +132,20 @@ describe('Menu Create Form component', () => {
       }, 0);
     });
     it('should submit form with new title', (done) => {
+      const data2 = { ...data };
+      data2.id = 1;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <MenuForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'New menu name' } });
-        const submitButton = wrapper.find('Button').at(0);
+        const submitButton = wrapper.find('Button').at(4);
+        expect(submitButton.text()).toBe('Update');
         submitButton.simulate('submit');
       });
       setTimeout(() => {

@@ -5,7 +5,7 @@ exports[`Menu component should render the component 1`] = `
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -36,7 +36,15 @@ exports[`Menu component should render the component 1`] = `
         }
       }
     >
-      <Menu>
+      <Menu
+        permission={
+          Object {
+            "actions": Array [
+              "admin",
+            ],
+          }
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -60,18 +68,19 @@ exports[`Menu component should render the component 1`] = `
                 }
               >
                 <Link
-                  to="/menu/create"
+                  to="/menus/create"
                 >
                   <LinkAnchor
-                    href="/menu/create"
+                    href="/menus/create"
                     navigate={[Function]}
                   >
                     <a
-                      href="/menu/create"
+                      href="/menus/create"
                       onClick={[Function]}
                     >
                       <Button
                         block={false}
+                        disabled={true}
                         ghost={false}
                         htmlType="button"
                         loading={false}
@@ -79,6 +88,7 @@ exports[`Menu component should render the component 1`] = `
                         <Wave>
                           <button
                             className="ant-btn"
+                            disabled={true}
                             onClick={[Function]}
                             type="button"
                           >
@@ -126,7 +136,9 @@ exports[`Menu component should render the component 1`] = `
                 className="ant-space-item"
                 style={Object {}}
               >
-                <MenuList>
+                <MenuList
+                  actions={Array []}
+                >
                   <Space
                     direction="vertical"
                   >
@@ -161,12 +173,14 @@ exports[`Menu component should render the component 1`] = `
                                 },
                               ]
                             }
+                            dataSource={Array []}
+                            loading={false}
                             pagination={
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             rowKey="id"
@@ -204,6 +218,7 @@ exports[`Menu component should render the component 1`] = `
                                         ]
                                       }
                                       data={Array []}
+                                      dataSource={Array []}
                                       emptyText={
                                         <Context.Consumer>
                                           [Function]
@@ -309,12 +324,13 @@ exports[`Menu component should render the component 1`] = `
                                           },
                                         }
                                       }
+                                      loading={false}
                                       pagination={
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 20,
-                                          "total": undefined,
+                                          "total": 0,
                                         }
                                       }
                                       prefixCls="ant-table"
@@ -345,7 +361,7 @@ exports[`Menu component should render the component 1`] = `
                                                 },
                                               ],
                                               "data": Array [],
-                                              "dataSource": undefined,
+                                              "dataSource": Array [],
                                               "direction": undefined,
                                               "emptyText": <Context.Consumer>
                                                 [Function]
@@ -446,13 +462,13 @@ exports[`Menu component should render the component 1`] = `
                                                   </div>,
                                                 },
                                               },
-                                              "loading": undefined,
+                                              "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 20,
-                                                "total": undefined,
+                                                "total": 0,
                                               },
                                               "prefixCls": "ant-table",
                                               "rowClassName": [Function],
@@ -835,7 +851,7 @@ exports[`Menu component should render the component with data 1`] = `
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -866,7 +882,15 @@ exports[`Menu component should render the component with data 1`] = `
         }
       }
     >
-      <Menu>
+      <Menu
+        permission={
+          Object {
+            "actions": Array [
+              "admin",
+            ],
+          }
+        }
+      >
         <Space
           direction="vertical"
         >
@@ -890,18 +914,19 @@ exports[`Menu component should render the component with data 1`] = `
                 }
               >
                 <Link
-                  to="/menu/create"
+                  to="/menus/create"
                 >
                   <LinkAnchor
-                    href="/menu/create"
+                    href="/menus/create"
                     navigate={[Function]}
                   >
                     <a
-                      href="/menu/create"
+                      href="/menus/create"
                       onClick={[Function]}
                     >
                       <Button
                         block={false}
+                        disabled={true}
                         ghost={false}
                         htmlType="button"
                         loading={false}
@@ -909,6 +934,7 @@ exports[`Menu component should render the component with data 1`] = `
                         <Wave>
                           <button
                             className="ant-btn"
+                            disabled={true}
                             onClick={[Function]}
                             type="button"
                           >
@@ -956,7 +982,9 @@ exports[`Menu component should render the component with data 1`] = `
                 className="ant-space-item"
                 style={Object {}}
               >
-                <MenuList>
+                <MenuList
+                  actions={Array []}
+                >
                   <Space
                     direction="vertical"
                   >
@@ -991,12 +1019,14 @@ exports[`Menu component should render the component with data 1`] = `
                                 },
                               ]
                             }
+                            dataSource={Array []}
+                            loading={false}
                             pagination={
                               Object {
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
-                                "total": undefined,
+                                "total": 0,
                               }
                             }
                             rowKey="id"
@@ -1034,6 +1064,7 @@ exports[`Menu component should render the component with data 1`] = `
                                         ]
                                       }
                                       data={Array []}
+                                      dataSource={Array []}
                                       emptyText={
                                         <Context.Consumer>
                                           [Function]
@@ -1139,12 +1170,13 @@ exports[`Menu component should render the component with data 1`] = `
                                           },
                                         }
                                       }
+                                      loading={false}
                                       pagination={
                                         Object {
                                           "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 20,
-                                          "total": undefined,
+                                          "total": 0,
                                         }
                                       }
                                       prefixCls="ant-table"
@@ -1175,7 +1207,7 @@ exports[`Menu component should render the component with data 1`] = `
                                                 },
                                               ],
                                               "data": Array [],
-                                              "dataSource": undefined,
+                                              "dataSource": Array [],
                                               "direction": undefined,
                                               "emptyText": <Context.Consumer>
                                                 [Function]
@@ -1276,13 +1308,13 @@ exports[`Menu component should render the component with data 1`] = `
                                                   </div>,
                                                 },
                                               },
-                                              "loading": undefined,
+                                              "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
                                                 "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 20,
-                                                "total": undefined,
+                                                "total": 0,
                                               },
                                               "prefixCls": "ant-table",
                                               "rowClassName": [Function],

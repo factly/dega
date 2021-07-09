@@ -1,5 +1,5 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import renderer from 'react-test-renderer';
 import { useDispatch, Provider } from 'react-redux';
@@ -22,9 +22,17 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }));
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn(),
+  useLocation: () => ({
+    pathname: '/posts',
+  }),
 }));
 
 jest.mock('../../actions/sidebar', () => ({
@@ -49,7 +57,7 @@ describe('Sidebar component', () => {
     spaces: {
       orgs: [{ id: 1, spaces: [1] }],
       details: {
-        '1': {
+        1: {
           id: 1,
           created_at: '2020-09-23T06:11:32.986694Z',
           updated_at: '2020-09-23T06:11:32.986694Z',
@@ -152,6 +160,30 @@ describe('Sidebar component', () => {
               permission={[{ resource: 'admin' }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
               superOrg={{ id: 1, is_admin: true }}
+            />
+          </Router>
+        </Provider>,
+      );
+
+      wrapper.find(Sider).props().onCollapse();
+      wrapper.update();
+
+      expect(actions.setCollapse).toHaveBeenCalled();
+      done();
+    });
+    it('should work alos when resource is not admin', (done) => {
+      actions.setCollapse.mockReset();
+      const push = jest.fn();
+      useHistory.mockReturnValueOnce({ push });
+      store = mockStore(state);
+
+      wrapper = mount(
+        <Provider store={store}>
+          <Router>
+            <Sidebar
+              permission={[{ resource: 'posts', actions: ['update'] }]}
+              orgs={[{ id: 1, spaces: [1], permission: { role: 'member' } }]}
+              superOrg={{ id: 1 }}
             />
           </Router>
         </Provider>,

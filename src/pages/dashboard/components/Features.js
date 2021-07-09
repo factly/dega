@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addDefaultFormats, getFormats } from '../../../actions/formats';
 import { addDefaultPolicies, getPolicies } from '../../../actions/policies';
 import { addDefaultRatings, getRatings } from '../../../actions/ratings';
+import { addDefaultEvents, getEvents } from '../../../actions/events';
 import { useHistory } from 'react-router-dom';
 
 function Features() {
@@ -16,18 +17,22 @@ function Features() {
       dispatch(getRatings());
       dispatch(getFormats());
       dispatch(getPolicies());
+      dispatch(getEvents());
     };
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { ratings, formats, policies } = useSelector(({ ratings, formats, policies }) => {
-    return {
-      ratings: Object.keys(ratings.details).length,
-      formats: Object.keys(formats.details).length,
-      policies: Object.keys(policies.details).length,
-    };
-  });
+  const { ratings, formats, policies, events } = useSelector(
+    ({ ratings, formats, policies, events }) => {
+      return {
+        ratings: Object.keys(ratings.details).length,
+        formats: Object.keys(formats.details).length,
+        policies: Object.keys(policies.details).length,
+        events: Object.keys(events.details).length,
+      };
+    },
+  );
 
   return (
     <>
@@ -88,6 +93,24 @@ function Features() {
           >
             Three policies will be created Editor, Author and Contributor. Click below Button to
             create
+          </Card>
+        )}
+        {events > 0 ? null : (
+          <Card
+            title="Events"
+            actions={[
+              <Button
+                onClick={() => {
+                  dispatch(addDefaultEvents()).then(() => history.push('/events'));
+                }}
+              >
+                <PlusOutlined /> CREATE EVENTS
+              </Button>,
+            ]}
+            style={{ width: 300 }}
+          >
+            Events for Create, Update and Delete for all entities will be created. Click below
+            Button to create
           </Card>
         )}
       </Space>

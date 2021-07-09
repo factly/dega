@@ -26,8 +26,10 @@ import sidebar from './sidebarReducer';
 import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
 import redirect from './redirectReducer';
+import events from './eventsReducer';
 import info from './infoReducer';
 import pages from './pagesReducer';
+import webhooks from './webhooksReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -58,6 +60,8 @@ const appReducer = combineReducers({
   users,
   menu,
   sidebar,
+  events,
+  webhooks,
 });
 
 const rootReducer = (state, action) => {

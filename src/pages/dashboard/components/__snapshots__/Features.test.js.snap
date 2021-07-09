@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard feature component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Features>
+        <Space>
+          <div
+            className="ant-space ant-space-horizontal ant-space-align-center"
+          >
+            <Item
+              className="ant-space-item"
+              direction="horizontal"
+              index={0}
+              key="ant-space-item-0"
+              marginDirection="marginRight"
+              size="small"
+            />
+            <Item
+              className="ant-space-item"
+              direction="horizontal"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              size="small"
+            />
+            <Item
+              className="ant-space-item"
+              direction="horizontal"
+              index={2}
+              key="ant-space-item-2"
+              marginDirection="marginRight"
+              size="small"
+            />
+            <Item
+              className="ant-space-item"
+              direction="horizontal"
+              index={3}
+              key="ant-space-item-3"
+              marginDirection="marginRight"
+              size="small"
+            />
+          </div>
+        </Space>
+      </Features>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;

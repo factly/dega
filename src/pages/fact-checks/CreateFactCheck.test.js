@@ -139,27 +139,6 @@ describe('Fact check create component', () => {
       wrapper.find(FactCheckForm).props().onCreate({ title: 'test', status: 'draft' });
       setTimeout(() => {
         expect(actions.addPost).toHaveBeenCalledWith({ title: 'test', status: 'draft' });
-        expect(push).toHaveBeenCalledWith('/fact-checks');
-        done();
-      }, 0);
-    });
-    it('should call publish', (done) => {
-      actions.publish.mockReset();
-      const push = jest.fn();
-      useHistory.mockReturnValueOnce({ push });
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <CreateFactCheck formats={formats} />
-            </Router>
-          </Provider>,
-        );
-      });
-      wrapper.find(FactCheckForm).props().onCreate({ title: 'test', status: 'publish' });
-      setTimeout(() => {
-        expect(actions.publish).toHaveBeenCalledWith({ title: 'test', status: 'publish' });
-        expect(push).toHaveBeenCalledWith('/fact-checks');
         done();
       }, 0);
     });

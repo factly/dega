@@ -31,6 +31,13 @@ const data = {
     pintrest: 'pinterest.com',
     instagram: 'instagram.com',
   },
+  analytics: {
+    plausible: {
+      domain: 'domain',
+      embed_code: 'embed-code',
+      server_url: 'url',
+    },
+  },
 };
 
 jest.mock('@editorjs/editorjs');
@@ -93,7 +100,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(19).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1);
@@ -105,7 +112,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(16).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(19).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1);
@@ -179,6 +186,13 @@ describe('Space Edit Form component', () => {
             twitter: 'twitter.com',
             pintrest: 'pinterest.com',
             instagram: 'instagram.com',
+          },
+          analytics: {
+            plausible: {
+              domain: 'domain',
+              embed_code: 'embed-code',
+              server_url: 'url',
+            },
           },
         });
         done();
@@ -298,6 +312,13 @@ describe('Space Edit Form component', () => {
             pintrest: 'm.pin.com',
             instagram: 'm.insta.com',
           },
+          analytics: {
+            plausible: {
+              domain: 'domain',
+              embed_code: 'embed-code',
+              server_url: 'url',
+            },
+          },
         });
         done();
       }, 0);
@@ -320,10 +341,18 @@ describe('Space Edit Form component', () => {
     });
     it('should handle steps change', () => {
       act(() => {
+        wrapper.find('Steps').at(0).props().onChange(3);
+      });
+      wrapper.update();
+      expect(wrapper.find(Steps).props().current).toEqual(3);
+    });
+    it('should handle step 2', () => {
+      act(() => {
         wrapper.find('Steps').at(0).props().onChange(2);
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(2);
+      expect(wrapper.find('FormItem').at(12).props().name[0]).toBe('social_media_urls');
     });
   });
 });

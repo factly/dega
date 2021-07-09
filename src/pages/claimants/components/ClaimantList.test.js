@@ -16,6 +16,42 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
 
+const filters = {
+  page: 1,
+  limit: 20,
+};
+const setFilters = jest.fn();
+const fetchClaimants = jest.fn();
+const info = {
+  claimants: [
+    {
+      id: 1,
+      created_at: '2020-09-09T06:51:15.770644Z',
+      updated_at: '2020-09-09T06:51:15.770644Z',
+      deleted_at: null,
+      name: 'Whatsapp',
+      slug: 'whatsapp',
+      description: '',
+      tag_line: '',
+      medium_id: 0,
+      space_id: 1,
+    },
+    {
+      id: 2,
+      created_at: '2020-09-09T06:51:22.237778Z',
+      updated_at: '2020-09-09T06:51:22.237778Z',
+      deleted_at: null,
+      name: 'Facebook',
+      slug: 'facebook',
+      description: '',
+      tag_line: '',
+      medium_id: 0,
+      space_id: 1,
+    },
+  ],
+  total: 2,
+  loading: false,
+};
 let state = {
   claimants: {
     req: [
@@ -29,7 +65,7 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         created_at: '2020-09-09T06:51:15.770644Z',
         updated_at: '2020-09-09T06:51:15.770644Z',
@@ -41,7 +77,7 @@ let state = {
         medium_id: 0,
         space_id: 1,
       },
-      '2': {
+      2: {
         id: 2,
         created_at: '2020-09-09T06:51:22.237778Z',
         updated_at: '2020-09-09T06:51:22.237778Z',
@@ -80,7 +116,13 @@ describe('Claimants List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList actions={['update', 'delete']} />
+            <ClaimantList
+              actions={['update', 'delete']}
+              data={{ claimants: [], total: 0, loading: false }}
+              filters={filters}
+              setFilters={setFilters}
+              fetchClaimants={fetchClaimants}
+            />
           </Router>
         </Provider>,
       );
@@ -88,11 +130,47 @@ describe('Claimants List component', () => {
     });
     it('should match component when loading', () => {
       state.claimants.loading = true;
+      const info2 = {
+        claimants: [
+          {
+            id: 1,
+            created_at: '2020-09-09T06:51:15.770644Z',
+            updated_at: '2020-09-09T06:51:15.770644Z',
+            deleted_at: null,
+            name: 'Whatsapp',
+            slug: 'whatsapp',
+            description: '',
+            tag_line: '',
+            medium_id: 0,
+            space_id: 1,
+          },
+          {
+            id: 2,
+            created_at: '2020-09-09T06:51:22.237778Z',
+            updated_at: '2020-09-09T06:51:22.237778Z',
+            deleted_at: null,
+            name: 'Facebook',
+            slug: 'facebook',
+            description: '',
+            tag_line: '',
+            medium_id: 0,
+            space_id: 1,
+          },
+        ],
+        total: 2,
+        loading: true,
+      };
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList actions={['update', 'delete']} />
+            <ClaimantList
+              actions={['update', 'delete']}
+              data={info2}
+              filters={filters}
+              setFilters={setFilters}
+              fetchClaimants={fetchClaimants}
+            />
           </Router>
         </Provider>,
       );
@@ -104,14 +182,17 @@ describe('Claimants List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <ClaimantList actions={['update', 'delete']} />
+            <ClaimantList
+              actions={['update', 'delete']}
+              data={info}
+              filters={filters}
+              setFilters={setFilters}
+              fetchClaimants={fetchClaimants}
+            />
           </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-
-      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -127,16 +208,22 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList actions={['update', 'delete']} />
+              <ClaimantList
+                actions={['update', 'delete']}
+                data={info}
+                filters={{ page: 1, limit: 1 }}
+                setFilters={setFilters}
+                fetchClaimants={fetchClaimants}
+              />
             </Router>
           </Provider>,
         );
       });
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete claimant', () => {
       store = mockStore(state);
@@ -145,12 +232,18 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList actions={['update', 'delete']} />
+              <ClaimantList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchClaimants={fetchClaimants}
+              />
             </Router>
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
+      const button = wrapper.find(Button).at(3);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -171,7 +264,13 @@ describe('Claimants List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList actions={['update', 'delete']} />
+              <ClaimantList
+                actions={['update', 'delete']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchClaimants={fetchClaimants}
+              />
             </Router>
           </Provider>,
         );
@@ -187,55 +286,29 @@ describe('Claimants List component', () => {
           req: [],
         },
       });
+      const info2 = {
+        claimants: [],
+        total: 0,
+        loading: false,
+      };
       let wrapper;
       act(() => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <ClaimantList actions={['update', 'delete']} />
+              <ClaimantList
+                actions={['update', 'delete']}
+                data={info2}
+                filters={filters}
+                setFilters={setFilters}
+                fetchClaimants={fetchClaimants}
+              />
             </Router>
           </Provider>,
         );
       });
       const button = wrapper.find(Button);
-      expect(button.length).toEqual(1);
-    });
-    it('should submit filters', () => {
-      store = mockStore(state);
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <ClaimantList actions={['update', 'delete']} />
-            </Router>
-          </Provider>,
-        );
-        wrapper
-          .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'claimant' } });
-        wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 'asc' } });
-
-        const submitButtom = wrapper.find('Button').at(0);
-        submitButtom.simulate('submit');
-      });
-
-      setTimeout(() => {
-        expect(getPosts).toHaveBeenCalledWith({
-          page: 1,
-          limit: 5,
-          q: 'claimant',
-          sort_by: 'asc',
-        });
-      }, 0);
+      expect(button.length).toEqual(0);
     });
   });
 });

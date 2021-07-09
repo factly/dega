@@ -5,7 +5,6 @@ import thunk from 'redux-thunk';
 import * as actions from '../../actions/podcasts';
 import * as types from '../../constants/podcasts';
 import { ADD_NOTIFICATION } from '../../constants/notifications';
-import { ADD_EPISODES } from '../../constants/episodes';
 import { ADD_CATEGORIES } from '../../constants/categories';
 import { ADD_MEDIA } from '../../constants/media';
 
@@ -95,12 +94,8 @@ describe('Podcast actions', () => {
         payload: [{ id: 1, medium: 1 }],
       },
       {
-        type: ADD_EPISODES,
-        payload: [{ id: 1 }],
-      },
-      {
         type: types.ADD_PODCASTS,
-        payload: [{ id: 1, title: 'Podcast', episodes: [1], categories: [1] }],
+        payload: [{ id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1] }],
       },
       {
         type: types.ADD_PODCASTS_REQUEST,
@@ -174,10 +169,6 @@ describe('Podcast actions', () => {
         payload: true,
       },
       {
-        type: ADD_EPISODES,
-        payload: [{ id: 1 }],
-      },
-      {
         type: ADD_MEDIA,
         payload: [{ id: 1 }],
       },
@@ -190,7 +181,7 @@ describe('Podcast actions', () => {
         payload: {
           id,
           title: 'Podcast',
-          episodes: [1],
+          episodes: [{ id: 1 }],
           categories: [1],
         },
       },
@@ -310,10 +301,6 @@ describe('Podcast actions', () => {
         payload: true,
       },
       {
-        type: ADD_EPISODES,
-        payload: [{ id: 1 }],
-      },
-      {
         type: ADD_MEDIA,
         payload: [{ id: 1 }],
       },
@@ -323,7 +310,7 @@ describe('Podcast actions', () => {
       },
       {
         type: types.ADD_PODCAST,
-        payload: { id: 1, title: 'Podcast', episodes: [1], categories: [1] },
+        payload: { id: 1, title: 'Podcast', episodes: [{ id: 1 }], categories: [1] },
       },
       {
         type: ADD_NOTIFICATION,

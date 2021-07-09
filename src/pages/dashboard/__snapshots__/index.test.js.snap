@@ -1,0 +1,794 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Dashboard>
+        <Space
+          direction="vertical"
+        >
+          <div
+            className="ant-space ant-space-vertical"
+          >
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={0}
+              key="ant-space-item-0"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <Title>
+                  <Base
+                    component="h1"
+                  >
+                    <LocaleReceiver
+                      componentName="Text"
+                    >
+                      <ResizeObserver
+                        disabled={true}
+                        onResize={[Function]}
+                      >
+                        <Typography
+                          className=""
+                          component="h1"
+                          style={
+                            Object {
+                              "WebkitLineClamp": null,
+                            }
+                          }
+                        >
+                          <h1
+                            className="ant-typography"
+                            style={
+                              Object {
+                                "WebkitLineClamp": null,
+                              }
+                            }
+                          >
+                            Dashboard
+                          </h1>
+                        </Typography>
+                      </ResizeObserver>
+                    </LocaleReceiver>
+                  </Base>
+                </Title>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <Row
+                  gutter={16}
+                >
+                  <div
+                    className="ant-row"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
+                  >
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/posts"
+                        >
+                          <LinkAnchor
+                            href="/posts"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/posts"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Total Posts"
+                                value={72}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Total Posts"
+                                  value={72}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Total Posts
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Total Posts"
+                                        value={72}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            72
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/posts?status=publish"
+                        >
+                          <LinkAnchor
+                            href="/posts?status=publish"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/posts?status=publish"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Published Posts"
+                                value={21}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Published Posts"
+                                  value={21}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Published Posts
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Published Posts"
+                                        value={21}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            21
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/posts?status=draft"
+                        >
+                          <LinkAnchor
+                            href="/posts?status=draft"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/posts?status=draft"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Draft Posts"
+                                value={38}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Draft Posts"
+                                  value={38}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Draft Posts
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Draft Posts"
+                                        value={38}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            38
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/posts?status=ready"
+                        >
+                          <LinkAnchor
+                            href="/posts?status=ready"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/posts?status=ready"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Ready to publish Posts"
+                                value={13}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Ready to publish Posts"
+                                  value={13}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Ready to publish Posts
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Ready to publish Posts"
+                                        value={13}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            13
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                  </div>
+                </Row>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={2}
+              key="ant-space-item-2"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <Row
+                  gutter={16}
+                >
+                  <div
+                    className="ant-row"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
+                  >
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/fact-checks"
+                        >
+                          <LinkAnchor
+                            href="/fact-checks"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/fact-checks"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Total Fact Checks"
+                                value={40}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Total Fact Checks"
+                                  value={40}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Total Fact Checks
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Total Fact Checks"
+                                        value={40}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            40
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/fact-checks?status=publish"
+                        >
+                          <LinkAnchor
+                            href="/fact-checks?status=publish"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/fact-checks?status=publish"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Published Fact Checks"
+                                value={5}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Published Fact Checks"
+                                  value={5}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Published Fact Checks
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Published Fact Checks"
+                                        value={5}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            5
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/fact-checks?status=draft"
+                        >
+                          <LinkAnchor
+                            href="/fact-checks?status=draft"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/fact-checks?status=draft"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Draft Fact Checks"
+                                value={31}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Draft Fact Checks"
+                                  value={31}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Draft Fact Checks
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Draft Fact Checks"
+                                        value={31}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            31
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                    <Col
+                      span={6}
+                    >
+                      <div
+                        className="ant-col ant-col-6"
+                        style={
+                          Object {
+                            "paddingLeft": 8,
+                            "paddingRight": 8,
+                          }
+                        }
+                      >
+                        <Link
+                          to="/fact-checks?status=ready"
+                        >
+                          <LinkAnchor
+                            href="/fact-checks?status=ready"
+                            navigate={[Function]}
+                          >
+                            <a
+                              href="/fact-checks?status=ready"
+                              onClick={[Function]}
+                            >
+                              <withConfigConsumer(Statistic)
+                                title="Ready to publish Fact Checks"
+                                value={4}
+                              >
+                                <Statistic
+                                  decimalSeparator="."
+                                  getPrefixCls={[Function]}
+                                  groupSeparator=","
+                                  prefixCls="ant-statistic"
+                                  renderEmpty={[Function]}
+                                  title="Ready to publish Fact Checks"
+                                  value={4}
+                                >
+                                  <div
+                                    className="ant-statistic"
+                                  >
+                                    <div
+                                      className="ant-statistic-title"
+                                    >
+                                      Ready to publish Fact Checks
+                                    </div>
+                                    <div
+                                      className="ant-statistic-content"
+                                    >
+                                      <StatisticNumber
+                                        decimalSeparator="."
+                                        getPrefixCls={[Function]}
+                                        groupSeparator=","
+                                        prefixCls="ant-statistic"
+                                        renderEmpty={[Function]}
+                                        title="Ready to publish Fact Checks"
+                                        value={4}
+                                      >
+                                        <span
+                                          className="ant-statistic-content-value"
+                                        >
+                                          <span
+                                            className="ant-statistic-content-value-int"
+                                            key="int"
+                                          >
+                                            4
+                                          </span>
+                                        </span>
+                                      </StatisticNumber>
+                                    </div>
+                                  </div>
+                                </Statistic>
+                              </withConfigConsumer(Statistic)>
+                            </a>
+                          </LinkAnchor>
+                        </Link>
+                      </div>
+                    </Col>
+                  </div>
+                </Row>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={3}
+              key="ant-space-item-3"
+              marginDirection="marginRight"
+              size="small"
+            >
+              <div
+                className="ant-space-item"
+                style={Object {}}
+              >
+                <Features>
+                  <div />
+                </Features>
+              </div>
+            </Item>
+          </div>
+        </Space>
+      </Dashboard>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;

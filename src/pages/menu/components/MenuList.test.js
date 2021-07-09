@@ -30,11 +30,11 @@ let state = {
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         name: 'Menu 1',
       },
-      '2': {
+      2: {
         id: 2,
         name: 'Menu 2',
       },
@@ -64,7 +64,7 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList />
+            <MenuList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -76,7 +76,7 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList />
+            <MenuList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -88,7 +88,7 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList />
+            <MenuList actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -111,7 +111,7 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList />
+              <MenuList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -127,7 +127,7 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList />
+              <MenuList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -150,7 +150,7 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList />
+              <MenuList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
@@ -158,7 +158,7 @@ describe('Menu List component', () => {
       const link = wrapper.find(Link).at(0);
       const button = link.find(Button).at(0);
       expect(button.text(0)).toEqual('Edit');
-      expect(link.prop('to')).toEqual('/menu/1/edit');
+      expect(link.prop('to')).toEqual('/menus/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -173,7 +173,7 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList />
+              <MenuList actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );

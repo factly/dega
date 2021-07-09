@@ -9,12 +9,41 @@ import { Popconfirm, Button, Table } from 'antd';
 
 import '../../../matchMedia.mock';
 import PodcastList from './PodcastList';
-import { getPodcasts, deletePodcast } from '../../../actions/podcasts';
+import { deletePodcast } from '../../../actions/podcasts';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
-
+const filters = {
+  page: 1,
+  limit: 20,
+};
+const setFilters = jest.fn();
+const fetchPodcasts = jest.fn();
+const info = {
+  podcasts: [
+    {
+      id: 1,
+      title: 'Podcast-1',
+      slug: 'podcast-1',
+      medium_id: 1,
+      language: 'english',
+      categories: [1],
+      episodes: [1],
+    },
+    {
+      id: 2,
+      title: 'Podcast-2',
+      slug: 'podcast-2',
+      medium_id: 1,
+      language: 'english',
+      categories: [1],
+      episodes: [1],
+    },
+  ],
+  total: 2,
+  loading: false,
+};
 let state = {
   podcasts: {
     req: [
@@ -101,7 +130,13 @@ describe('Podcast List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <PodcastList actions={['admin']} />
+            <PodcastList
+              actions={['admin']}
+              data={info}
+              filters={filters}
+              setFilters={setFilters}
+              fetchPodcasts={fetchPodcasts}
+            />
           </Router>
         </Provider>,
       );
@@ -110,10 +145,18 @@ describe('Podcast List component', () => {
     it('should match component when loading', () => {
       state.podcasts.loading = true;
       store = mockStore(state);
+      const info2 = { ...info };
+      info2.loading = true;
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <PodcastList actions={['admin']} />
+            <PodcastList
+              actions={['admin']}
+              data={info2}
+              filters={filters}
+              setFilters={setFilters}
+              fetchPodcasts={fetchPodcasts}
+            />
           </Router>
         </Provider>,
       );
@@ -133,16 +176,22 @@ describe('Podcast List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PodcastList actions={['admin']} />
+              <PodcastList
+                actions={['admin']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchPodcasts={fetchPodcasts}
+              />
             </Router>
           </Provider>,
         );
       });
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(3);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(3);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete podcast', () => {
       store = mockStore(state);
@@ -151,12 +200,18 @@ describe('Podcast List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PodcastList actions={['admin']} />
+              <PodcastList
+                actions={['admin']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchPodcasts={fetchPodcasts}
+              />
             </Router>
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
+      const button = wrapper.find(Button).at(1);
       expect(button.text()).toEqual('Delete');
 
       button.simulate('click');
@@ -166,7 +221,6 @@ describe('Podcast List component', () => {
         .simulate('click');
       expect(deletePodcast).toHaveBeenCalled();
       expect(deletePodcast).toHaveBeenCalledWith(1);
-      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit podcast', () => {
       store = mockStore(state);
@@ -175,7 +229,13 @@ describe('Podcast List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PodcastList actions={['admin']} />
+              <PodcastList
+                actions={['admin']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchPodcasts={fetchPodcasts}
+              />
             </Router>
           </Provider>,
         );
@@ -185,43 +245,6 @@ describe('Podcast List component', () => {
       expect(button.text()).toEqual('Edit');
       expect(link.prop('to')).toEqual('/podcasts/1/edit');
     });
-    it('should submit filters', () => {
-      store = mockStore(state);
-      let wrapper;
-      act(() => {
-        wrapper = mount(
-          <Provider store={store}>
-            <Router>
-              <PodcastList actions={['admin']} />
-            </Router>
-          </Provider>,
-        );
-        wrapper
-          .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'podcast' } });
-        wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 'desc' } });
-
-        const submitButtom = wrapper.find('Button').at(0);
-        submitButtom.simulate('submit');
-      });
-
-      setTimeout(() => {
-        expect(getPodcasts).toHaveBeenCalledWith({
-          page: 1,
-          limit: 5,
-          q: 'podcast',
-          sort: 'desc',
-        });
-      }, 0);
-    });
     it('should disable edit delete button if no permission', () => {
       store = mockStore(state);
       let wrapper;
@@ -229,13 +252,19 @@ describe('Podcast List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PodcastList actions={['create']} />
+              <PodcastList
+                actions={['create']}
+                data={info}
+                filters={filters}
+                setFilters={setFilters}
+                fetchPodcasts={fetchPodcasts}
+              />
             </Router>
           </Provider>,
         );
       });
-      const editButton = wrapper.find('Button').at(1);
-      const deleteButton = wrapper.find('Button').at(2);
+      const editButton = wrapper.find('Button').at(0);
+      const deleteButton = wrapper.find('Button').at(1);
       expect(editButton.props().disabled).toBe(true);
       expect(deleteButton.props().disabled).toBe(true);
     });

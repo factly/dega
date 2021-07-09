@@ -64,6 +64,8 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'fact-checks',
     'episodes',
     'podcasts',
+    'events',
+    'webhooks',
   ];
 
   permission.forEach((each) => {
@@ -85,17 +87,19 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
-          {
-            ((key = `${title}.${route.title}.${index}.${childIndex}`),
-            enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key
-              ? setSelectedMenu(key)
-              : null)
-          }
-          <Link to={route.path}>
-            <span>{route.title}</span>
-          </Link>
-        </Menu.Item>
+        route.title === 'Events' && route.isAdmin !== superOrg.is_admin ? null : (
+          <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
+            {
+              ((key = `${title}.${route.title}.${index}.${childIndex}`),
+              enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key
+                ? setSelectedMenu(key)
+                : null)
+            }
+            <Link to={route.path}>
+              <span>{route.title}</span>
+            </Link>
+          </Menu.Item>
+        )
       ) : null;
     });
 

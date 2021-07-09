@@ -1,14 +1,15 @@
 import React from 'react';
 import { useDispatch, Provider } from 'react-redux';
+import { BrowserRouter as Router, Link } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { Table } from 'antd';
+import { Table, Popconfirm, Button } from 'antd';
 
 import '../../../../matchMedia.mock';
 import PermissionList from './PermissionList';
-import { getSpaces } from '../../../../actions/spacePermissions';
+import { deleteSpacePermission, getSpaces } from '../../../../actions/spacePermissions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -18,16 +19,16 @@ let state = {
   spacePermissions: {
     req: [
       {
-        data: [1, 2, 3],
+        data: [1, 2, 3, 4],
         query: {
           page: 1,
           limit: 20,
         },
-        total: 2,
+        total: 4,
       },
     ],
     details: {
-      '1': {
+      1: {
         id: 1,
         name: 'Space 1',
         organisation_id: 9,
@@ -36,9 +37,10 @@ let state = {
           fact_check: true,
           media: -1,
           posts: -1,
+          episodes: -1,
         },
       },
-      '2': {
+      2: {
         id: 2,
         name: 'Space 2',
         organisation_id: 4,
@@ -51,10 +53,20 @@ let state = {
           posts: 20,
         },
       },
-      '3': {
-        id: 1,
+      3: {
+        id: 3,
         name: 'Space 3',
         organisation_id: 9,
+      },
+      4: {
+        id: 4,
+        name: 'Space 4',
+        organisation_id: 5,
+        permission: {
+          id: 3,
+          fact_check: false,
+          podcast: true,
+        },
       },
     },
     loading: false,
@@ -67,6 +79,7 @@ jest.mock('react-redux', () => ({
 }));
 jest.mock('../../../../actions/spacePermissions', () => ({
   getSpaces: jest.fn(),
+  deleteSpacePermission: jest.fn(),
 }));
 
 describe('Space Permission List component', () => {
@@ -81,7 +94,9 @@ describe('Space Permission List component', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -96,7 +111,9 @@ describe('Space Permission List component', () => {
       });
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -106,7 +123,9 @@ describe('Space Permission List component', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -116,7 +135,9 @@ describe('Space Permission List component', () => {
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
-          <PermissionList />
+          <Router>
+            <PermissionList />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -136,7 +157,9 @@ describe('Space Permission List component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <PermissionList />
+            <Router>
+              <PermissionList />
+            </Router>
           </Provider>,
         );
       });
@@ -146,6 +169,30 @@ describe('Space Permission List component', () => {
       const updatedTable = wrapper.find(Table);
       expect(updatedTable.props().pagination.current).toEqual(3);
       expect(mockedDispatch).toHaveBeenCalledTimes(1);
+    });
+    it('should delete organisation permission', () => {
+      store = mockStore(state);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PermissionList />
+            </Router>
+          </Provider>,
+        );
+      });
+      const button = wrapper.find(Button).at(3);
+      expect(button.text()).toEqual('Delete');
+
+      button.simulate('click');
+      const popconfirm = wrapper.find(Popconfirm);
+      popconfirm
+        .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
+        .simulate('click');
+      expect(deleteSpacePermission).toHaveBeenCalled();
+      expect(deleteSpacePermission).toHaveBeenCalledWith(2);
+      expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
 });

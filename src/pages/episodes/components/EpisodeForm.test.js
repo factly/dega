@@ -58,6 +58,7 @@ describe('Episode Form component', () => {
           slug: 'episode-1',
           season: 1,
           episode: 1,
+          podcast: [1],
           type: 'full',
           description: {
             time: 1595747741807,
@@ -73,6 +74,30 @@ describe('Episode Form component', () => {
           },
           audio_url: 'audioUrl',
           medium_id: 1,
+        },
+      },
+      loading: false,
+    },
+    podcasts: {
+      req: [
+        {
+          data: [1],
+          query: {
+            page: 1,
+            limit: 5,
+          },
+          total: 1,
+        },
+      ],
+      details: {
+        1: {
+          id: 1,
+          title: 'Podcast-1',
+          slug: 'podcast-1',
+          medium_id: 1,
+          language: 'english',
+          categories: [1],
+          episodes: [1],
         },
       },
       loading: false,
@@ -131,6 +156,7 @@ describe('Episode Form component', () => {
           slug: 'episode-1',
           season: 1,
           episode: 1,
+          podcast: [1],
           type: 'full',
           description: {
             time: 1595747741807,
@@ -188,7 +214,7 @@ describe('Episode Form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
-        expect(props.onCreate).toHaveBeenCalledWith(props.data);
+        expect(props.onCreate).toHaveBeenCalledWith({ ...props.data, podcast_id: [1] });
         done();
       }, 0);
     });
@@ -208,6 +234,8 @@ describe('Episode Form component', () => {
           slug: 'new-episode-name',
           season: 1,
           episode: 1,
+          podcast: [1],
+          podcast_id: [1],
           type: 'full',
           description: {
             time: 1595747741807,
@@ -240,7 +268,7 @@ describe('Episode Form component', () => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'New Episode' } });
 
-        wrapper.find('FormItem').at(9).find('Audio').props().onUpload('newAudioUrl');
+        wrapper.find('FormItem').at(10).find('Audio').props().onUpload('newAudioUrl');
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');

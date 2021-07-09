@@ -164,9 +164,9 @@ exports[`Ratings List component should render the component 1`] = `
                           "title": "Rating Value",
                         },
                         Object {
-                          "dataIndex": "color",
+                          "dataIndex": "preview",
                           "render": [Function],
-                          "title": "Colour",
+                          "title": "Preview",
                         },
                         Object {
                           "dataIndex": "operation",
@@ -221,9 +221,9 @@ exports[`Ratings List component should render the component 1`] = `
                                     "title": "Rating Value",
                                   },
                                   Object {
-                                    "dataIndex": "color",
+                                    "dataIndex": "preview",
                                     "render": [Function],
-                                    "title": "Colour",
+                                    "title": "Preview",
                                   },
                                   Object {
                                     "dataIndex": "operation",
@@ -280,7 +280,7 @@ exports[`Ratings List component should render the component 1`] = `
                                             <th
                                               class="ant-table-cell"
                                             >
-                                              Colour
+                                              Preview
                                             </th>
                                             <th
                                               class="ant-table-cell"
@@ -393,9 +393,9 @@ exports[`Ratings List component should render the component 1`] = `
                                           "title": "Rating Value",
                                         },
                                         Object {
-                                          "dataIndex": "color",
+                                          "dataIndex": "preview",
                                           "render": [Function],
-                                          "title": "Colour",
+                                          "title": "Preview",
                                         },
                                         Object {
                                           "dataIndex": "operation",
@@ -448,7 +448,7 @@ exports[`Ratings List component should render the component 1`] = `
                                                   <th
                                                     class="ant-table-cell"
                                                   >
-                                                    Colour
+                                                    Preview
                                                   </th>
                                                   <th
                                                     class="ant-table-cell"
@@ -597,10 +597,10 @@ exports[`Ratings List component should render the component 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -642,9 +642,9 @@ exports[`Ratings List component should render the component 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -674,10 +674,10 @@ exports[`Ratings List component should render the component 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -756,15 +756,15 @@ exports[`Ratings List component should render the component 1`] = `
                                                     "rowSpan": 1,
                                                   },
                                                   Object {
-                                                    "children": "Colour",
+                                                    "children": "Preview",
                                                     "className": "",
                                                     "colEnd": 3,
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
-                                                      "dataIndex": "color",
+                                                      "dataIndex": "preview",
                                                       "render": [Function],
-                                                      "title": "Colour",
+                                                      "title": "Preview",
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -806,10 +806,10 @@ exports[`Ratings List component should render the component 1`] = `
                                                     "title": "Rating Value",
                                                   },
                                                   Object {
-                                                    "dataIndex": "color",
+                                                    "dataIndex": "preview",
                                                     "fixed": undefined,
                                                     "render": [Function],
-                                                    "title": "Colour",
+                                                    "title": "Preview",
                                                   },
                                                   Object {
                                                     "dataIndex": "operation",
@@ -942,15 +942,15 @@ exports[`Ratings List component should render the component 1`] = `
                                                   colStart={3}
                                                   column={
                                                     Object {
-                                                      "dataIndex": "color",
+                                                      "dataIndex": "preview",
                                                       "render": [Function],
-                                                      "title": "Colour",
+                                                      "title": "Preview",
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
                                                   firstFixRight={false}
-                                                  key="color"
+                                                  key="preview"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
                                                   prefixCls="ant-table"
@@ -963,7 +963,7 @@ exports[`Ratings List component should render the component 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    Colour
+                                                    Preview
                                                   </th>
                                                 </Cell>
                                                 <Cell
@@ -1292,9 +1292,9 @@ exports[`Ratings List component should render the component with data 1`] = `
                           "title": "Rating Value",
                         },
                         Object {
-                          "dataIndex": "color",
+                          "dataIndex": "preview",
                           "render": [Function],
-                          "title": "Colour",
+                          "title": "Preview",
                         },
                         Object {
                           "dataIndex": "operation",
@@ -1361,9 +1361,9 @@ exports[`Ratings List component should render the component with data 1`] = `
                                     "title": "Rating Value",
                                   },
                                   Object {
-                                    "dataIndex": "color",
+                                    "dataIndex": "preview",
                                     "render": [Function],
-                                    "title": "Colour",
+                                    "title": "Preview",
                                   },
                                   Object {
                                     "dataIndex": "operation",
@@ -1441,7 +1441,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                             <th
                                               class="ant-table-cell"
                                             >
-                                              Colour
+                                              Preview
                                             </th>
                                             <th
                                               class="ant-table-cell"
@@ -1475,11 +1475,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                                             <td
                                               class="ant-table-cell"
                                             >
-                                              <span
-                                                class="ant-tag"
+                                              <div
+                                                style="width: 100px; border: 1px solid black; padding: 0.5rem; text-align: center;"
                                               >
                                                 rating
-                                              </span>
+                                              </div>
                                             </td>
                                             <td
                                               class="ant-table-cell"
@@ -1564,9 +1564,9 @@ exports[`Ratings List component should render the component with data 1`] = `
                                           "title": "Rating Value",
                                         },
                                         Object {
-                                          "dataIndex": "color",
+                                          "dataIndex": "preview",
                                           "render": [Function],
-                                          "title": "Colour",
+                                          "title": "Preview",
                                         },
                                         Object {
                                           "dataIndex": "operation",
@@ -1635,7 +1635,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   <th
                                                     class="ant-table-cell"
                                                   >
-                                                    Colour
+                                                    Preview
                                                   </th>
                                                   <th
                                                     class="ant-table-cell"
@@ -1669,11 +1669,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   <td
                                                     class="ant-table-cell"
                                                   >
-                                                    <span
-                                                      class="ant-tag"
+                                                    <div
+                                                      style="width: 100px; border: 1px solid black; padding: 0.5rem; text-align: center;"
                                                     >
                                                       rating
-                                                    </span>
+                                                    </div>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
@@ -1793,10 +1793,10 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -1838,9 +1838,9 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -1870,10 +1870,10 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                 "title": "Rating Value",
                                               },
                                               Object {
-                                                "dataIndex": "color",
+                                                "dataIndex": "preview",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "Colour",
+                                                "title": "Preview",
                                               },
                                               Object {
                                                 "dataIndex": "operation",
@@ -1952,15 +1952,15 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     "rowSpan": 1,
                                                   },
                                                   Object {
-                                                    "children": "Colour",
+                                                    "children": "Preview",
                                                     "className": "",
                                                     "colEnd": 3,
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
-                                                      "dataIndex": "color",
+                                                      "dataIndex": "preview",
                                                       "render": [Function],
-                                                      "title": "Colour",
+                                                      "title": "Preview",
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -2002,10 +2002,10 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     "title": "Rating Value",
                                                   },
                                                   Object {
-                                                    "dataIndex": "color",
+                                                    "dataIndex": "preview",
                                                     "fixed": undefined,
                                                     "render": [Function],
-                                                    "title": "Colour",
+                                                    "title": "Preview",
                                                   },
                                                   Object {
                                                     "dataIndex": "operation",
@@ -2138,15 +2138,15 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   colStart={3}
                                                   column={
                                                     Object {
-                                                      "dataIndex": "color",
+                                                      "dataIndex": "preview",
                                                       "render": [Function],
-                                                      "title": "Colour",
+                                                      "title": "Preview",
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
                                                   firstFixRight={false}
-                                                  key="color"
+                                                  key="preview"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
                                                   prefixCls="ant-table"
@@ -2159,7 +2159,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    Colour
+                                                    Preview
                                                   </th>
                                                 </Cell>
                                                 <Cell
@@ -2333,11 +2333,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                 </Cell>
                                                 <Cell
                                                   component="td"
-                                                  dataIndex="color"
+                                                  dataIndex="preview"
                                                   firstFixLeft={false}
                                                   firstFixRight={false}
                                                   index={0}
-                                                  key="color"
+                                                  key="preview"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
                                                   prefixCls="ant-table"
@@ -2358,20 +2358,20 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    <Tag
-                                                      color=""
-                                                    >
-                                                      <span
-                                                        className="ant-tag"
-                                                        style={
-                                                          Object {
-                                                            "backgroundColor": undefined,
-                                                          }
+                                                    <div
+                                                      style={
+                                                        Object {
+                                                          "backgroundColor": undefined,
+                                                          "border": "1px solid black",
+                                                          "color": undefined,
+                                                          "padding": "0.5rem",
+                                                          "textAlign": "center",
+                                                          "width": "100px",
                                                         }
-                                                      >
-                                                        rating
-                                                      </span>
-                                                    </Tag>
+                                                      }
+                                                    >
+                                                      rating
+                                                    </div>
                                                   </td>
                                                 </Cell>
                                                 <Cell
