@@ -106,6 +106,7 @@ function Selector({
       mode={mode}
       defaultValue={value}
       style={style}
+      value={value}
       placeholder={placeholder}
       onChange={(values) => onChange(values)}
       onSearch={(value) => onSearch(value)}

@@ -42,7 +42,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     details,
     loading,
   }));
-
+  const [claimOrder, setClaimOrder] = useState(
+    data.claims && data.claims.length > 0 ? data.claim_order : [],
+  );
   useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
@@ -54,35 +56,17 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { claims, claimLoading } = useSelector((state) => {
-    return { claims: state.claims, claimLoading: state.claims.loading };
-  });
-  const updateClaims = (fetchedClaimId) => {
-    const claimList = form.getFieldValue('claims');
-    if (claimList.length === data.claims.length) {
-      data.claims.push(fetchedClaimId);
+  if (claimCreatedFlag) {
+    if (data && data.id) {
+      data.claims.push(newClaim.id);
     } else {
+      const claimList = form.getFieldValue('claims') ? form.getFieldValue('claims') : [];
       form.setFieldsValue({
-        claims: [...claimList, fetchedClaimId],
+        claims: [...claimList, newClaim.id],
       });
-      data.claims = form.getFieldValue('claims');
     }
     setClaimCreatedFlag(false);
-  };
-  if (!claimLoading && claimCreatedFlag) {
-    const fetchedClaimId = claims.req[0].data[0];
-    const fetchedClaim = claims.details[fetchedClaimId];
-    if (newClaim.title === fetchedClaim.title) {
-      updateClaims(fetchedClaimId);
-    }
   }
-
-  const fetchAddedClaim = () => {
-    dispatch(getClaims({}));
-  };
-  useEffect(() => {
-    fetchAddedClaim();
-  }, [newClaim]);
 
   useEffect(() => {}, [details, loading]);
 
@@ -108,7 +92,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
     values.author_ids = values.authors || [];
-    values.claim_ids = values.claims || [];
+    values.claim_ids = values.claims ? claimOrder : [];
+    values.claim_order = values.claim_ids;
     values.status = status;
     values.status === 'publish'
       ? (values.published_date = values.published_date
@@ -145,11 +130,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then(() => {
+    dispatch(addClaim(values)).then((claim) => {
       setVisible(false);
-      setClaimCreatedFlag(true);
-      setNewClaim(values);
+      setNewClaim(claim);
       setClaimID(0);
+      setClaimCreatedFlag(true);
     });
   };
   const onClaimEdit = (values) => {
@@ -206,9 +191,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         initialValues={{ ...data }}
         style={{ maxWidth: '100%', width: '100%' }}
         onFinish={(values) => onSave(values)}
-        onValuesChange={() => {
+        onValuesChange={(changedValues) => {
           setShouldBlockNavigation(true);
           setValueChange(true);
+          if (changedValues.claims) {
+            if (claimOrder.length < changedValues.claims.length) {
+              setClaimOrder(
+                claimOrder.concat(changedValues.claims.filter((x) => !claimOrder.includes(x))),
+              );
+            } else setClaimOrder(claimOrder.filter((x) => changedValues.claims.includes(x)));
+          }
         }}
         layout="vertical"
       >
@@ -269,18 +261,20 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
-
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
               !loading ? (
-                <ClaimList
-                  ids={form.getFieldValue('claims')}
-                  setClaimID={setClaimID}
-                  showModal={showModal}
-                  details={details}
-                />
+                <Form.Item name="claimOrder">
+                  <ClaimList
+                    ids={form.getFieldValue('claims')}
+                    setClaimID={setClaimID}
+                    showModal={showModal}
+                    details={details}
+                    claimOrder={claimOrder}
+                    setClaimOrder={setClaimOrder}
+                  />
+                </Form.Item>
               ) : null}
-
               <Form.Item name="description" className="post-description">
                 <Editor />
               </Form.Item>
