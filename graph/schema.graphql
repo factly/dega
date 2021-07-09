@@ -92,6 +92,7 @@ type Post {
   users: [User!]!
   claims: [Claim!]!
   schemas: Any
+  meta: Any
   space_id: Int!
 }
 

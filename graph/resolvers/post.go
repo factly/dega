@@ -42,6 +42,10 @@ func (r *postResolver) PublishedDate(ctx context.Context, obj *models.Post) (*ti
 	return obj.PublishedDate, nil
 }
 
+func (r *postResolver) Meta(ctx context.Context, obj *models.Post) (interface{}, error) {
+	return obj.Meta, nil
+}
+
 func (r *postResolver) Format(ctx context.Context, obj *models.Post) (*models.Format, error) {
 	return loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
 }

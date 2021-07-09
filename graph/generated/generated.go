@@ -176,6 +176,7 @@ type ComplexityRoot struct {
 		IsPage          func(childComplexity int) int
 		IsSticky        func(childComplexity int) int
 		Medium          func(childComplexity int) int
+		Meta            func(childComplexity int) int
 		PublishedDate   func(childComplexity int) int
 		Schemas         func(childComplexity int) int
 		Slug            func(childComplexity int) int
@@ -369,6 +370,7 @@ type PostResolver interface {
 	Users(ctx context.Context, obj *models.Post) ([]*models.User, error)
 	Claims(ctx context.Context, obj *models.Post) ([]*models.Claim, error)
 	Schemas(ctx context.Context, obj *models.Post) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Post) (interface{}, error)
 	SpaceID(ctx context.Context, obj *models.Post) (int, error)
 }
 type QueryResolver interface {
@@ -1055,6 +1057,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Post.Medium(childComplexity), true
+
+	case "Post.meta":
+		if e.complexity.Post.Meta == nil {
+			break
+		}
+
+		return e.complexity.Post.Meta(childComplexity), true
 
 	case "Post.published_date":
 		if e.complexity.Post.PublishedDate == nil {
@@ -1935,6 +1944,7 @@ type Post {
   users: [User!]!
   claims: [Claim!]!
   schemas: Any
+  meta: Any
   space_id: Int!
 }
 
@@ -5985,6 +5995,38 @@ func (ec *executionContext) _Post_schemas(ctx context.Context, field graphql.Col
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Post().Schemas(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Post_meta(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Post",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Post().Meta(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11037,6 +11079,17 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 					}
 				}()
 				res = ec._Post_schemas(ctx, field, obj)
+				return res
+			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Post_meta(ctx, field, obj)
 				return res
 			})
 		case "space_id":
