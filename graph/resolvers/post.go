@@ -42,6 +42,10 @@ func (r *postResolver) HeaderCode(ctx context.Context, obj *models.Post) (*strin
 	return &obj.HeaderCode, nil
 }
 
+func (r *postResolver) MetaFields(ctx context.Context, obj *models.Post) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *postResolver) FooterCode(ctx context.Context, obj *models.Post) (*string, error) {
 	return &obj.FooterCode, nil
 }

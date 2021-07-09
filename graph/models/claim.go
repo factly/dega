@@ -26,6 +26,7 @@ type Claim struct {
 	Rating          *Rating         `gorm:"foreignKey:rating_id" json:"rating,omitempty"`
 	Fact            string          `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb  `gorm:"column:review_sources" json:"review_sources"`
+	MetaFields      postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }
 

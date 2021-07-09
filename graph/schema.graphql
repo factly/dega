@@ -17,6 +17,7 @@ type Space {
   contact_info: Any
   header_code: String
   footer_code: String
+  meta_fields: Any
 }
 
 type Category {
@@ -41,6 +42,7 @@ type Tag {
   slug: String!
   description: String
   html_description: String
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -51,6 +53,7 @@ type Format {
   name: String!
   slug: String!
   description: String
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -68,6 +71,7 @@ type Medium {
   alt_text: String!
   url: Any!
   dimensions: String!
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -98,6 +102,7 @@ type Post {
   space_id: Int!
   header_code: String
   footer_code: String
+  meta_fields: Any
 }
 
 type User {
@@ -128,6 +133,7 @@ type Rating {
   html_description: String
   numeric_value: Int!
   medium: Medium
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -141,6 +147,7 @@ type Claimant {
   html_description: String
   tag_line: String
   medium: Medium
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -159,6 +166,7 @@ type Claim {
   review_sources: Any
   rating: Rating!
   claimant: Claimant!
+  meta_fields: Any
   space_id: Int!
 }
 
@@ -169,6 +177,7 @@ type Menu {
   name: String!
   slug: String!
   menu: Any
+  meta_fields: Any
   space_id: Int!
 }
 

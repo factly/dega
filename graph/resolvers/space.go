@@ -68,6 +68,10 @@ func (r *spaceResolver) FooterCode(ctx context.Context, obj *models.Space) (*str
 	return &obj.FooterCode, nil
 }
 
+func (r *spaceResolver) MetaFields(ctx context.Context, obj *models.Space) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 
 	sID, err := validator.GetSpace(ctx)

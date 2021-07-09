@@ -18,6 +18,10 @@ func (r *formatResolver) SpaceID(ctx context.Context, obj *models.Format) (int, 
 	return int(obj.SpaceID), nil
 }
 
+func (r *formatResolver) MetaFields(ctx context.Context, obj *models.Format) (interface{}, error) {
+	return obj.MetaFields, nil
+}
+
 func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
