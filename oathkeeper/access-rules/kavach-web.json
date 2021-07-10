@@ -1,0 +1,63 @@
+[
+  {
+    "id": "kavach:web:anonymous",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://kavach-web:3000"
+    },
+    "match": {
+      "url": "http://127.0.0.1:4455/.factly/kavach/web/<(auth/login|auth/registration|manifest.json|static/.*|config.js)(|/)>",
+      "methods": [
+        "GET"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "anonymous"
+      }
+    ],
+    "authorizer": {
+      "handler": "allow"
+    },
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ]
+  },
+  {
+    "id": "kavach:web:protected",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://kavach-web:3000"
+    },
+    "match": {
+      "url": "http://127.0.0.1:4455/.factly/kavach/web<(/(organisation|settings|password|profile|users|applications(/(create|\\d+/edit|\\d+/detail))?))?/?>",
+      "methods": [
+        "GET"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "cookie_session"
+      }
+    ],
+    "authorizer": {
+      "handler": "allow"
+    },
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ],
+    "errors": [
+      {
+        "handler": "redirect",
+        "config": {
+          "to": "http://127.0.0.1:4455/.factly/kavach/web/auth/login",
+          "return_to_query_param": "return_to"
+        }
+      }
+    ]
+  }
+]
