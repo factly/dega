@@ -1,0 +1,76 @@
+version: v0.5.0-alpha.1
+
+dsn: postgres://postgres:postgres@postgres:5432/kratos?sslmode=disable
+
+serve:
+  public:
+    base_url: http://127.0.0.1:4455/.ory/kratos/public/
+    cors:
+      enabled: true
+  admin:
+    base_url: http://kratos:4434/
+
+selfservice:
+  default_browser_return_url: http://127.0.0.1:4455/.factly/kavach/web/organisation
+  whitelisted_return_urls:
+    - http://127.0.0.1:4455
+    - http://127.0.0.1:4455/.factly/dega/studio/
+    - http://127.0.0.1:4455/.factly/kavach/web/
+    - http://127.0.0.1:4455/.factly/data-portal/admin/
+    - http://127.0.0.1:4455/.factly/bindu/studio/
+
+  methods:
+    password:
+      enabled: true
+
+  flows:
+    error:
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/error
+
+    settings:
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/password
+      privileged_session_max_age: 15m
+
+    logout:
+      after:
+        default_browser_return_url: http://127.0.0.1:4455/.factly/kavach/web/auth/login
+
+    login:
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/login
+      lifespan: 10m
+
+    registration:
+      lifespan: 10m
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/registration
+      after:
+        password:
+          hooks:
+            -
+              hook: session
+        oidc:
+          hooks:
+            - hook: session
+
+log:
+  level: debug
+  format: text
+  leak_sensitive_values: true
+
+secrets:
+  cookie:
+    - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
+
+hashers:
+  argon2:
+    parallelism: 1
+    memory: 131072
+    iterations: 2
+    salt_length: 16
+    key_length: 16
+
+identity:
+  default_schema_url: file:///etc/config/kratos/identity.schema.json
+
+courier:
+  smtp:
+    connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true

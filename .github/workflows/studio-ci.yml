@@ -1,0 +1,58 @@
+name: Studio CI
+on:
+  pull_request:
+    branches: [develop, master]
+    paths: 
+    - 'studio/**'
+  push:
+    branches: [develop, master]
+    paths: 
+    - 'studio/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./studio
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Cache node-modules
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Use NodeJS
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.x'
+      - run: npm ci
+        working-directory: ${{env.working-directory}}
+      - run: npm run format:check
+        working-directory: ${{env.working-directory}}
+      - run: npm run test:coverage
+        working-directory: ${{env.working-directory}}
+        env:
+          CI: true
+      - name: Upload Test Coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: coverage
+      - run: sed -i 's|SF:/home/runner/work/dega-studio/dega-studio/|SF:|g' coverage/lcov.info
+        working-directory: ${{env.working-directory}}
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ${{env.working-directory}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Create a Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,29 @@
+[
+  {
+    "id": "dega:vito:anonymous",
+    "upstream": {
+      "preserve_host": true,
+      "url": "http://dega-templates:8000",
+      "strip_path": ".factly/dega/templates"
+    },
+    "match": {
+      "url": "http://127.0.0.1:4455/.factly/dega/templates/<.*>",
+      "methods": [
+        "GET"
+      ]
+    },
+    "authenticators": [
+      {
+        "handler": "anonymous"
+      }
+    ],
+    "authorizer": {
+      "handler": "allow"
+    },
+    "mutators": [
+      {
+        "handler": "noop"
+      }
+    ]
+  }
+]

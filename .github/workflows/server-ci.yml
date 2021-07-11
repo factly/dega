@@ -1,0 +1,43 @@
+name: Server CI
+on:
+  pull_request:
+    branches: [develop, master]
+    paths: 
+    - 'server/**'
+  push:
+    branches: [develop, master]
+    paths: 
+    - 'server/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./server
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Go
+        uses: actions/setup-go@v2
+        id: setup_go
+        with:
+          go-version: '1.13'
+      - name: Cache go-modules
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+      - run: go mod download
+        working-directory: ${{env.working-directory}}
+      - run: go get github.com/golangci/golangci-lint/cmd/golangci-lint@v1.30.0
+        working-directory: ${{env.working-directory}}
+      - run: golangci-lint run  ./...
+        working-directory: ${{env.working-directory}}
+      - run: go test ./test/... -coverpkg ./service/... -coverprofile=cov.out
+        working-directory: ${{env.working-directory}}
+      - name: Analyze with SonarCloud
+        uses: sonarsource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: ${{env.working-directory}}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
