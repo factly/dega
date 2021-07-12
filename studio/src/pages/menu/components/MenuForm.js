@@ -3,20 +3,35 @@ import { Form, Input, Button, Space } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import MenuField from './MenuField';
 import Submenu from './Submenu';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 function MenuForm({ onCreate, data = {} }) {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
   const onReset = () => {
     form.resetFields();
   };
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
+
   return (
     <div>
       <Form
         form={form}
         initialValues={{ ...data }}
         onFinish={(values) => {
+          if (values.meta_fields) {
+            values.meta_fields = getJsonVal(values.meta_fields);
+          }
           onCreate(values);
           onReset();
         }}
@@ -64,13 +79,18 @@ function MenuForm({ onCreate, data = {} }) {
                 >
                   <PlusOutlined /> Add menu
                 </Button>
-                <Button disabled={!valueChange} htmlType="submit">
-                  {data && data.id ? 'Update' : 'Submit'}
-                </Button>
               </div>
             );
           }}
         </Form.List>
+        <Form.Item style={{ marginTop: '20px' }} name="meta_fields" label="Metafields">
+          <MonacoEditor />
+        </Form.Item>
+        <Form.Item>
+          <Button disabled={!valueChange} htmlType="submit">
+            {data && data.id ? 'Update' : 'Submit'}
+          </Button>
+        </Form.Item>
       </Form>
     </div>
   );

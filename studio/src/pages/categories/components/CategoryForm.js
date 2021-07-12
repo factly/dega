@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
@@ -30,14 +30,6 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
-  const [json, setJson] = useState(
-    data.meta_fields && Object.keys(data.meta_fields).length > 0
-      ? data.meta_fields
-      : {
-          sample: 'testing',
-        },
-  );
-
   const onReset = () => {
     form.resetFields();
   };
@@ -49,7 +41,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   };
 
   const getJsonVal = (val) => {
-    let regex = /\,(?!\s*?[\{\[\"\'\w])/;
+    let regex = /,(?!\s*?[{["'\w])/;
     let formattedJson = val.replace(regex, '');
     return JSON.parse(formattedJson);
   };

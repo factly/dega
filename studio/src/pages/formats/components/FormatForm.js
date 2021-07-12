@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 const { TextArea } = Input;
 
@@ -20,6 +21,11 @@ const tailLayout = {
 };
 
 const FormatForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -33,6 +39,12 @@ const FormatForm = ({ onCreate, data = {} }) => {
     });
   };
 
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
+
   return (
     <Form
       {...layout}
@@ -40,6 +52,9 @@ const FormatForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-format"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         onCreate(values);
         onReset();
       }}
@@ -79,6 +94,9 @@ const FormatForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="description" label="Description">
         <TextArea />
+      </Form.Item>
+      <Form.Item name="meta_fields" label="Metafields">
+        <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

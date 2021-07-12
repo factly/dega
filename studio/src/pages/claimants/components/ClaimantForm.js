@@ -3,6 +3,7 @@ import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 const { TextArea } = Input;
 
@@ -22,6 +23,11 @@ const tailLayout = {
 };
 
 const ClaimantForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -35,6 +41,12 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
     });
   };
 
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
+
   return (
     <Form
       {...layout}
@@ -42,6 +54,9 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="creat-claimant"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         onCreate(values);
         onReset();
       }}
@@ -88,6 +103,9 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+      </Form.Item>
+      <Form.Item name="meta_fields" label="Metafields">
+        <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

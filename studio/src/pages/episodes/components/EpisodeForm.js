@@ -5,6 +5,7 @@ import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import Audio from './Audio';
 import Selector from '../../../components/Selector';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 const layout = {
   labelCol: {
@@ -22,6 +23,11 @@ const tailLayout = {
 };
 
 const EpisodeForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -44,6 +50,12 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
     });
   };
 
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
+
   return (
     <Form
       {...layout}
@@ -52,6 +64,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-category"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         onSave(values);
         onReset();
       }}
@@ -114,6 +129,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
 
           <Form.Item name="description" label="Description">
             <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+          </Form.Item>
+          <Form.Item name="meta_fields" label="Metafields">
+            <MonacoEditor />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>

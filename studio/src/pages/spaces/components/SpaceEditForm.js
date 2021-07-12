@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -16,11 +17,12 @@ const layout = {
   },
 };
 
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
-};
-
 const SpaceEditForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
 
@@ -30,6 +32,12 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
 
   const [current, setCurrent] = React.useState(0);
   const [valueChange, setValueChange] = React.useState(false);
+
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
 
   return (
     <div>
@@ -45,6 +53,9 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         initialValues={data}
         name="create-space"
         onFinish={(values) => {
+          if (values.meta_fields) {
+            values.meta_fields = getJsonVal(values.meta_fields);
+          }
           onCreate(values);
           onReset();
         }}
@@ -115,6 +126,9 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <Form.Item name="description" label="Description">
             <TextArea placeholder="Enter Description..." />
+          </Form.Item>
+          <Form.Item name="meta_fields" label="Metafields">
+            <MonacoEditor />
           </Form.Item>
         </div>
         <div style={current === 1 ? { display: 'block' } : { display: 'none' }}>

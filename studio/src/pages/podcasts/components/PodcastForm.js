@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 const layout = {
   labelCol: {
@@ -23,6 +24,11 @@ const tailLayout = {
 const { Option } = Select;
 
 const PodcastForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -35,6 +41,11 @@ const PodcastForm = ({ onCreate, data = {} }) => {
       slug: maker(string),
     });
   };
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
 
   return (
     <Form
@@ -44,6 +55,9 @@ const PodcastForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data, language: 'english' }}
       name="create-category"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         onCreate({
           ...values,
           category_ids: values.categories || [],
@@ -99,6 +113,9 @@ const PodcastForm = ({ onCreate, data = {} }) => {
 
           <Form.Item name="description" label="Description">
             <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
+          </Form.Item>
+          <Form.Item name="meta_fields" label="Metafields">
+            <MonacoEditor />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>

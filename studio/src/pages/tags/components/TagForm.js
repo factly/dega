@@ -2,6 +2,8 @@ import React from 'react';
 import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import Editor from '../../../components/Editor';
+import MonacoEditor from '../../../components/MonacoEditor';
+
 const layout = {
   labelCol: {
     span: 10,
@@ -18,6 +20,11 @@ const tailLayout = {
 };
 
 const TagForm = ({ onCreate, data = {} }) => {
+  if (data && data.meta_fields) {
+    if (typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
+  }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -30,6 +37,11 @@ const TagForm = ({ onCreate, data = {} }) => {
       slug: maker(string),
     });
   };
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
 
   return (
     <Form
@@ -38,6 +50,9 @@ const TagForm = ({ onCreate, data = {} }) => {
       initialValues={{ ...data }}
       name="create-tag"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonVal(values.meta_fields);
+        }
         onCreate(values);
         onReset();
       }}
@@ -80,6 +95,9 @@ const TagForm = ({ onCreate, data = {} }) => {
       </Form.Item>
       <Form.Item name="description" label="Description">
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
+      </Form.Item>
+      <Form.Item name="meta_fields" label="Metafields">
+        <MonacoEditor />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

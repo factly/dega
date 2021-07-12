@@ -19,13 +19,14 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim, getClaims, updateClaim } from '../../../actions/claims';
+import { addClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
-import { SettingFilled } from '@ant-design/icons';
+import { SettingFilled, LeftOutlined } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -37,6 +38,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [claimCreatedFlag, setClaimCreatedFlag] = React.useState(false);
   const [newClaim, setNewClaim] = React.useState(null);
   const [valueChange, setValueChange] = useState(false);
+  const [metaDrawer, setMetaDrawer] = React.useState(false);
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
     details,
@@ -76,6 +78,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
   const onClose = () => {
     setDrawerVisible(false);
+    setMetaDrawer(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -86,8 +89,20 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
   };
 
+  const getJsonVal = (val) => {
+    let regex = /,(?!\s*?[{["'\w])/;
+    let formattedJson = val.replace(regex, '');
+    return JSON.parse(formattedJson);
+  };
+
   const onSave = (values) => {
     setShouldBlockNavigation(false);
+    if (values.meta) {
+      values.meta = getJsonVal(values.meta);
+    }
+    if (values.meta_fields) {
+      values.meta_fields = getJsonVal(values.meta_fields);
+    }
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
@@ -113,6 +128,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   if (data && data.id) {
     data.published_date = data.published_date ? moment(data.published_date) : null;
+    if (data.meta && typeof data.meta !== 'string') {
+      data.meta = JSON.stringify(data.meta);
+    }
+    if (data.meta_fields && typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
   }
 
   const showModal = () => {
@@ -336,6 +357,36 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
+                </Form.Item>
+                <Form.Item>
+                  <Button onClick={() => setMetaDrawer(true)}>Add Meta Data</Button>
+                </Form.Item>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={metaDrawer}
+                getContainer={false}
+                width={366}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button
+                    type="text"
+                    style={{ fontSize: '150%' }}
+                    onClick={() => setMetaDrawer(false)}
+                  >
+                    <LeftOutlined />
+                  </Button>
+                </Form.Item>
+                <Form.Item name="meta_fields" label="Meta Fields">
+                  <MonacoEditor />
+                </Form.Item>
+                <Form.Item name="meta" label="Meta">
+                  <MonacoEditor />
                 </Form.Item>
               </Drawer>
             </Col>
