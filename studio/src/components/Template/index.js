@@ -14,7 +14,7 @@ function Template({ format }) {
   const { Panel } = Collapse;
   const page = 1;
   const [show, setShow] = React.useState(false);
-  const { posts, loading, media } = useSelector((state) => {
+  const { posts, loading } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       let query = {
         page,
@@ -94,9 +94,9 @@ function Template({ format }) {
                       onClick={() => handleAddPost(item)}
                     />
                   ) : (
-                    <a onClick={() => handleAddPost(item)}>
+                    <button style={{ border: 'none' }} onClick={() => handleAddPost(item)}>
                       <PlaceholderImage />
-                    </a>
+                    </button>
                   )
                 }
                 actions={[

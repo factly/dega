@@ -24,8 +24,6 @@ function EditCategory() {
     dispatch(getCategory(id));
   }, [dispatch, id]);
 
-  //if (loading) return <Skeleton />;
-
   if (!category) {
     return <RecordNotFound />;
   }
@@ -36,6 +34,8 @@ function EditCategory() {
     );
   };
   if (category) return <CategoryEditForm data={category} onCreate={onUpdate} />;
+
+  if (loading) return <Skeleton />;
 }
 
 export default EditCategory;

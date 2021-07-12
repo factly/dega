@@ -16,7 +16,6 @@ function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
   const query = new URLSearchParams(useLocation().search);
-  const status = query.get('status');
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
@@ -45,13 +44,15 @@ function Posts({ formats }) {
 
   React.useEffect(() => {
     keys.forEach((key) => {
-      searchFilter.has(key) ? searchFilter.delete(key) : null;
+      if (searchFilter.has(key)) {
+        searchFilter.delete(key);
+      }
     });
     Object.keys(filters).forEach(function (key) {
       if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
         searchFilter.delete(key);
         filters[key].map((each) => {
-          searchFilter.append(key, each);
+          return searchFilter.append(key, each);
         });
       } else {
         searchFilter.set(key, filters[key]);

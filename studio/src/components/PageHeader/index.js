@@ -52,16 +52,7 @@ function PageHeader() {
         breadcrumbName: 'Home',
       },
     ].concat(_.filter(urlBreadcrumbItems));
-  }, [pathSnippets]);
-
-  const lastItem = useMemo(() => {
-    return (
-      _.find(routes, { path: breadcrumbItems[breadcrumbItems.length - 1].path }) || {
-        path: '/',
-        breadcrumbName: 'Home',
-      }
-    );
-  }, [breadcrumbItems]);
+  }, [pathSnippets, location.pathname]);
 
   const itemRender = (route, params, routes, paths) => {
     const last = routes.indexOf(route) === routes.length - 1;

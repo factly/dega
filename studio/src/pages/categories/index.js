@@ -29,7 +29,7 @@ function Categories({ permission }) {
       pathname: pathName,
       search: new URLSearchParams(filters).toString(),
     });
-  }, [history, filters]);
+  }, [pathName, history, filters]);
 
   const { Option } = Select;
   const [form] = Form.useForm();

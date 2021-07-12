@@ -33,7 +33,7 @@ const WebhookForm = ({ onCreate, data = {} }) => {
     page: 1,
     limit: 20,
   });
-  const { events, total, loading } = useSelector((state) => {
+  const { events } = useSelector((state) => {
     let details = [];
     let ids = [];
     let total = 0;
