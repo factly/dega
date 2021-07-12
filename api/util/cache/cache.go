@@ -6,7 +6,6 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"time"
 
@@ -24,20 +23,14 @@ type Cache struct {
 
 const AppPrefix = "dega:"
 
-func SetupCache(redisAddress string, password string, ttl time.Duration, db int) error {
+func SetupCache(redisAddress string, password string, ttl time.Duration, db int) {
 	client := redis.NewClient(&redis.Options{
 		Addr:     redisAddress,
 		Password: password,
 		DB:       db,
 	})
 
-	err := client.Ping().Err()
-	if err != nil {
-		return fmt.Errorf("could not create cache: %w", err)
-	}
-
 	GlobalCache = &Cache{client: client, ttl: ttl}
-	return nil
 }
 
 func (c *Cache) Set(ctx context.Context, key string, value interface{}) error {

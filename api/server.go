@@ -66,10 +66,7 @@ func main() {
 			cacheExpiration = viper.GetInt("redis_cache_expiration")
 		}
 
-		err := cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), time.Duration(cacheExpiration)*time.Second, 0)
-		if err != nil {
-			log.Fatal(err)
-		}
+		cache.SetupCache(viper.GetString("redis_url"), viper.GetString("redis_password"), time.Duration(cacheExpiration)*time.Second, 0)
 	}
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
