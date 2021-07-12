@@ -169,8 +169,15 @@ main
 
 .DS_Store
 
-config.*
 .env
+
+# dega server config
+server/config.*
+
+!server/config.env.example
 
 # Coverage
 coverage
+
+# Companion
+/companion
