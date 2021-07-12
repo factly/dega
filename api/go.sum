@@ -149,6 +149,7 @@ github.com/envoyproxy/go-control-plane v0.9.9-0.20201210154907-fd9021fe5dad/go.m
 github.com/envoyproxy/go-control-plane v0.9.9-0.20210217033140-668b12f5399d/go.mod h1:cXg6YxExXjJnVBQHBLXeUAgxn2UodCpnH306RInaBQk=
 github.com/envoyproxy/protoc-gen-validate v0.1.0/go.mod h1:iSmxcyjqTsJpI2R4NaDN7+kN2VEUnK/pcBlmesArF7c=
 github.com/erikstmartin/go-testdb v0.0.0-20160219214506-8d10e4a1bae5/go.mod h1:a2zkGnVExMxdzMo3M0Hi/3sEU+cWnZpSni0O6/Yb/P0=
+github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4 h1:LVMdWmNc5fWhaF7nekYSdQnCS0RiG7SJ5xeCWhyESxk=
 github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4/go.mod h1:gDnZ9IwWKI5Zfo2hi6debHZ7QDuZH7ghqucfF+gdze8=
 github.com/factly/hukz v0.0.0-20210513184540-cb49caf5c3d1/go.mod h1:JnwNJ/nQ4Y+qpW44k2Ap/vL0mZHQFstZlrIGPbd77nQ=
 github.com/factly/x v0.0.23/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=

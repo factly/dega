@@ -3,6 +3,7 @@ package models
 import (
 	"time"
 
+	"github.com/factly/dega-server/config"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
@@ -65,7 +66,9 @@ type PostAuthor struct {
 
 // PostClaim model
 type PostClaim struct {
-	ClaimID uint   `gorm:"column:claim_id" json:"claim_id"`
-	PostID  uint   `gorm:"column:post_id" json:"post_id"`
-	Claim   *Claim `json:"claim"`
+	config.Base
+	ClaimID  uint   `gorm:"column:claim_id" json:"claim_id"`
+	PostID   uint   `gorm:"column:post_id" json:"post_id"`
+	Position int    `gorm:"column:position" json:"position"`
+	Claim    *Claim `json:"claim"`
 }
