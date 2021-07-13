@@ -2238,7 +2238,7 @@ type Query {
   posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: PostFilter, status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
-  pages(spaces:[Int!]page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  pages(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int, slug: String): User
   ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
