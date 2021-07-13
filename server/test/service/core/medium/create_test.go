@@ -157,22 +157,4 @@ func TestMediumCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create medium when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		countQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		mediumInsertMock(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(createArr).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

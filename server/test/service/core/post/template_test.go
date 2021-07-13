@@ -139,38 +139,4 @@ func TestPostTemplateCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create template when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		postSelectWithSpace(mock)
-
-		// preload tags & categories
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
-				AddRow(1, 1))
-		category.SelectWithOutSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
-				AddRow(1, 1))
-		tag.SelectMock(mock, tag.Data, 1)
-
-		postInsertMock(mock, Data, false)
-
-		postSelectWithOutSpace(mock, Data)
-
-		mock.ExpectRollback()
-
-		e.POST(templatePath).
-			WithHeaders(headers).
-			WithJSON(templateData).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-	Data["status"] = "draft"
 }

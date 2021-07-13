@@ -184,24 +184,4 @@ func TestMediumUpdate(t *testing.T) {
 
 	})
 
-	t.Run("update medium when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		updatedMedium["slug"] = "image"
-		test.CheckSpaceMock(mock)
-
-		SelectWithSpace(mock)
-
-		mediumUpdateMock(mock, updatedMedium, nil)
-		SelectWithSpace(mock)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("medium_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedMedium).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

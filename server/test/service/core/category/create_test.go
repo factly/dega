@@ -177,24 +177,4 @@ func TestCategoryCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create category when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock, Data)
-
-		insertMock(mock)
-		SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
-	})
 }

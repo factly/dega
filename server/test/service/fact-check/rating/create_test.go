@@ -171,25 +171,4 @@ func TestRatingCreate(t *testing.T) {
 		}
 	})
 
-	t.Run("create rating when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		sameNameCount(mock, 0, Data["name"])
-		ratingCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		ratingInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
-	})
 }

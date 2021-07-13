@@ -93,32 +93,4 @@ func TestMenuCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("meili server fails", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
-
-		slugCheckMock(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "menus"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["menu"], 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		SelectQuery(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithJSON(Data).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-
 }

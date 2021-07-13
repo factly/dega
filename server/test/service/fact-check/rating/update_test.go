@@ -253,24 +253,4 @@ func TestRatingUpdate(t *testing.T) {
 		updatedRating["numeric_value"] = 5
 	})
 
-	t.Run("update rating when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		updatedRating["slug"] = "true"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		ratingUpdateMock(mock, updatedRating, nil)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("rating_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedRating).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

@@ -281,44 +281,4 @@ func TestEpisodeUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update episode meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		SelectQuery(mock, 1, 1)
-
-		mock.ExpectBegin()
-		medium.SelectWithSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectExec(`UPDATE "episodes" SET`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, 1).WillReturnResult(driver.ResultNoRows)
-
-		slugCheckMock(mock, Data)
-		medium.SelectWithSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectExec(`UPDATE "episodes" SET`).
-			WithArgs(test.AnyTime{}, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], Data["medium_id"], 1, 1).WillReturnResult(driver.ResultNoRows)
-
-		SelectQuery(mock)
-		medium.SelectWithOutSpace(mock)
-		podcast.SelectQuery(mock)
-		medium.SelectWithOutSpace(mock)
-		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"episode_id", "author_id"}).AddRow(1, 1))
-
-		mock.ExpectQuery(`SELECT \* FROM "episode_authors"`).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"episode_id", "author_id"}).AddRow(1, 1))
-
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("episode_id", "1").
-			WithJSON(Data).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

@@ -146,23 +146,4 @@ func TestFormatCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create format when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock)
-
-		formatInsertMock(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
-	})
 }

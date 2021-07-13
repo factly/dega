@@ -77,30 +77,4 @@ func TestPostDelete(t *testing.T) {
 			Status(http.StatusOK)
 	})
 
-	t.Run("delete when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		postSelectWithSpace(mock)
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
-				AddRow(1, 1))
-		category.SelectWithOutSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
-				AddRow(1, 1))
-		tag.SelectMock(mock, tag.Data, 1)
-
-		deleteMock(mock)
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
-
 }

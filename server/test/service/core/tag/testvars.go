@@ -31,7 +31,7 @@ var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "meta_fields", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "tags"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "tags" SET "deleted_at"=`)

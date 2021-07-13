@@ -79,30 +79,4 @@ func TestPodcastDelete(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("delete podcast when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectQuery(mock)
-		PodcastCategorySelect(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(`DELETE FROM "podcast_categories"`).
-			WithArgs(1, 1).
-			WillReturnResult(driver.ResultNoRows)
-
-		mock.ExpectExec(`UPDATE \"podcasts\"`).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectRollback()
-		e.DELETE(path).
-			WithPath("podcast_id", "1").
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

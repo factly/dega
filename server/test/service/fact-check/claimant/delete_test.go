@@ -85,24 +85,4 @@ func TestClaimantDelete(t *testing.T) {
 			Status(http.StatusOK)
 	})
 
-	t.Run("delete when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
-
-		claimantClaimExpect(mock, 0)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
 }

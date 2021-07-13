@@ -71,23 +71,4 @@ func TestMenuDelete(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		SelectQuery(mock, 1, 1)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("menu_id", "1").
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

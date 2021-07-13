@@ -160,17 +160,4 @@ func TestSpaceCreate(t *testing.T) {
 			Status(http.StatusUnauthorized)
 	})
 
-	t.Run("create a space when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		insertMock(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeader("X-User", "1").
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
 }
