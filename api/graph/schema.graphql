@@ -103,6 +103,7 @@ type Post {
   header_code: String
   footer_code: String
   meta_fields: Any
+  claim_order: [Int]
 }
 
 type User {

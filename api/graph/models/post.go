@@ -65,7 +65,12 @@ type PostAuthor struct {
 
 // PostClaim model
 type PostClaim struct {
-	ClaimID uint   `gorm:"column:claim_id" json:"claim_id"`
-	PostID  uint   `gorm:"column:post_id" json:"post_id"`
-	Claim   *Claim `json:"claim"`
+	ID        uint            `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time       `json:"created_at"`
+	UpdatedAt time.Time       `json:"updated_at"`
+	DeletedAt *gorm.DeletedAt `sql:"index" json:"deleted_at"`
+	ClaimID   uint            `gorm:"column:claim_id" json:"claim_id"`
+	PostID    uint            `gorm:"column:post_id" json:"post_id"`
+	Position  int             `gorm:"column:position" json:"position"`
+	Claim     *Claim          `json:"claim"`
 }
