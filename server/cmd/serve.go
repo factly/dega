@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -27,7 +28,10 @@ var serveCmd = &cobra.Command{
 		// db setup
 		config.SetupDB()
 
-		meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "site_title", "site_address", "tag_line", "review", "review_tag_line"})
+		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "site_title", "site_address", "tag_line", "review", "review_tag_line"})
+		if err != nil {
+			fmt.Println(err)
+		}
 
 		if util.CheckNats() {
 			util.ConnectNats()

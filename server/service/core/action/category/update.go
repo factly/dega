@@ -201,13 +201,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"meta_fields": result.MetaFields,
 	}
 
-	err = meilisearchx.UpdateDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	_ = meilisearchx.UpdateDocument("dega", meiliObj)
 
 	tx.Commit()
 

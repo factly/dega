@@ -150,13 +150,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			"space_id":    result.Nodes[i].SpaceID,
 		}
 
-		err = meilisearchx.AddDocument("dega", meiliObj)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
+		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
 
 	result.Total = int64(len(result.Nodes))

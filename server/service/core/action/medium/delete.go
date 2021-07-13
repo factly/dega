@@ -127,13 +127,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Delete(&result)
 
-	err = meilisearchx.DeleteDocument("dega", result.ID, "medium")
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	_ = meilisearchx.DeleteDocument("dega", result.ID, "medium")
 
 	tx.Commit()
 

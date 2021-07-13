@@ -155,7 +155,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Insert into meili index
 	var meiliPublishDate int64
-	if result.Post.Status == "publish" {
+	if result.Post.PublishedDate != nil {
 		meiliPublishDate = result.Post.PublishedDate.Unix()
 	}
 	meiliObj := map[string]interface{}{
@@ -179,13 +179,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     page.AuthorIDs,
 	}
 
-	err = meilisearchx.AddDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	_ = meilisearchx.AddDocument("dega", meiliObj)
 
 	tx.Commit()
 

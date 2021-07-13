@@ -152,13 +152,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"space_id":       result.SpaceID,
 	}
 
-	err = meilisearchx.AddDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
+	_ = meilisearchx.AddDocument("dega", meiliObj)
 
 	tx.Commit()
 
