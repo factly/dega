@@ -7,7 +7,6 @@ require (
 	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/agnivade/levenshtein v1.1.0 // indirect
 	github.com/dgryski/trifles v0.0.0-20200830180326-aaf60a07f6a3 // indirect
-	github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4
 	github.com/factly/x v0.0.63
 	github.com/gavv/httpexpect/v2 v2.2.0
 	github.com/go-chi/chi v4.1.2+incompatible
