@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -53,42 +54,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(queryMap["rating"], queryMap["claimant"])
-	filteredClaimIDs := make([]uint, 0)
-
-	if filters != "" {
-		filters = fmt.Sprint(filters, " AND space_id=", sID)
-	}
-
 	result := paging{}
 	result.Nodes = make([]model.Claim, 0)
-
-	if filters != "" || searchQuery != "" {
-		// Search claims with filter
-		var hits []interface{}
-		var res map[string]interface{}
-
-		if searchQuery != "" {
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
-		} else {
-			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "claim")
-			if _, found := res["hits"]; found {
-				hits = res["hits"].([]interface{})
-			}
-		}
-
-		if err != nil {
-			loggerx.Error(err)
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-
-		filteredClaimIDs = meilisearchx.GetIDArray(hits)
-		if len(filteredClaimIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
@@ -100,16 +67,59 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
-	if len(filteredClaimIDs) > 0 {
-		err = tx.Where(filteredClaimIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-	} else {
-		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-	}
+	filters := generateFilters(queryMap["rating"], queryMap["claimant"])
+	if filters != "" || searchQuery != "" {
+		if config.SearchEnabled() {
+			// search claims with filter
+			var hits []interface{}
+			var res map[string]interface{}
+			if filters != "" {
+				filters = fmt.Sprint(filters, " AND space_id=", sID)
+			}
+			if searchQuery != "" {
+				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
+			} else {
+				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "claim")
+				if _, found := res["hits"]; found {
+					hits = res["hits"].([]interface{})
+				}
+			}
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
+				return
+			}
 
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+			filteredClaimIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredClaimIDs) == 0 {
+				renderx.JSON(w, http.StatusOK, result)
+				return
+			} else {
+				err = tx.Where(filteredClaimIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.DBError()))
+					return
+				}
+			}
+		} else {
+			// search index is disabled
+			filters = generateSQLFilters(queryMap["rating"], queryMap["claimant"])
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+	} else {
+		// no search parameters
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)
@@ -124,6 +134,32 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	if len(claimantIDs) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
+}
+
+func generateSQLFilters(ratingsIDs, claimantIDs []string) string {
+	filters := ""
+
+	if len(ratingsIDs) > 0 {
+		filters = filters + " rating_id IN ("
+		for _, id := range ratingsIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(claimantIDs) > 0 {
+		filters = filters + " claimant_id IN ("
+		for _, id := range claimantIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}

@@ -47,8 +47,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filteredClaimantIDs := make([]uint, 0)
-
 	result := paging{}
 	result.Nodes = make([]model.Claimant, 0)
 
@@ -75,7 +73,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			filteredClaimantIDs = meilisearchx.GetIDArray(hits)
+			filteredClaimantIDs := meilisearchx.GetIDArray(hits)
 			if len(filteredClaimantIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
