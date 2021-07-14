@@ -294,7 +294,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     page.AuthorIDs,
 	}
 
-	_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	}
 	tx.Commit()
 
 	if util.CheckNats() {

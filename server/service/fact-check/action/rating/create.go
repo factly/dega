@@ -141,7 +141,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Rating{}).Preload("Medium").First(&result)
 
-	_ = insertIntoMeili(*result)
+	if config.SearchEnabled() {
+		_ = insertIntoMeili(*result)
+	}
 
 	tx.Commit()
 

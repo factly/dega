@@ -151,7 +151,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"space_id":    result.SpaceID,
 	}
 
-	_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	}
 	tx.Commit()
 
 	if util.CheckNats() {

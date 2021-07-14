@@ -127,7 +127,9 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		"category_ids":   categoryIDs,
 	}
 
-	_ = meilisearchx.AddDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
+	}
 
 	tx.Commit()
 

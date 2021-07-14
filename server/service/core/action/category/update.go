@@ -201,7 +201,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"meta_fields": result.MetaFields,
 	}
 
-	_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+	}
 
 	tx.Commit()
 

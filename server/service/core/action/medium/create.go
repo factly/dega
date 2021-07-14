@@ -150,7 +150,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 			"space_id":    result.Nodes[i].SpaceID,
 		}
 
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		if config.SearchEnabled() {
+			_ = meilisearchx.AddDocument("dega", meiliObj)
+		}
 	}
 
 	result.Total = int64(len(result.Nodes))

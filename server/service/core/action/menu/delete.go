@@ -69,7 +69,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_ = meilisearchx.DeleteDocument("dega", result.ID, "menu")
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "menu")
+	}
 
 	tx.Commit()
 

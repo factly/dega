@@ -152,7 +152,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"space_id":       result.SpaceID,
 	}
 
-	_ = meilisearchx.AddDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
+	}
 
 	tx.Commit()
 

@@ -179,7 +179,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"author_ids":     page.AuthorIDs,
 	}
 
-	_ = meilisearchx.AddDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
+	}
 
 	tx.Commit()
 

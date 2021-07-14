@@ -74,7 +74,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Model(&model.Claimant{}).Delete(&result)
 
-	_ = meilisearchx.DeleteDocument("dega", result.ID, "claimant")
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "claimant")
+	}
 
 	tx.Commit()
 

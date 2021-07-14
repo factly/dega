@@ -68,7 +68,9 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 	for i := range formats {
 		formats[i].SpaceID = uint(sID)
 		tx.Model(&model.Format{}).FirstOrCreate(&formats[i], &formats[i])
-		_ = insertIntoMeili(formats[i])
+		if config.SearchEnabled() {
+			_ = insertIntoMeili(formats[i])
+		}
 	}
 
 	result := paging{}
