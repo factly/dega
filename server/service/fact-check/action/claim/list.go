@@ -104,7 +104,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			// search index is disabled
-			filters = generateSQLFilters(queryMap["rating"], queryMap["claimant"])
+			filters = generateSQLFilters(searchQuery, queryMap["rating"], queryMap["claimant"])
 			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 			if err != nil {
 				loggerx.Error(err)
@@ -141,8 +141,12 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	return filters
 }
 
-func generateSQLFilters(ratingsIDs, claimantIDs []string) string {
+func generateSQLFilters(searchQuery string, ratingsIDs, claimantIDs []string) string {
 	filters := ""
+
+	if searchQuery != "" {
+		filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	}
 
 	if len(ratingsIDs) > 0 {
 		filters = filters + " rating_id IN ("

@@ -180,7 +180,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"medium_id":      result.MediumID,
 	}
 
-	_ = meilisearchx.AddDocument("dega", meiliObj)
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
+	}
 
 	tx.Commit()
 	if util.CheckNats() {

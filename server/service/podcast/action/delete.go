@@ -67,7 +67,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Podcast{}).Delete(&result)
 
-	_ = meilisearchx.DeleteDocument("dega", result.ID, "podcast")
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "podcast")
+	}
 
 	tx.Commit()
 	if util.CheckNats() {

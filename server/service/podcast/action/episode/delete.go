@@ -66,7 +66,9 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		EpisodeID: uint(id),
 	}).Delete(&model.EpisodeAuthor{})
 
-	_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
+	}
 
 	tx.Commit()
 	if util.CheckNats() {
