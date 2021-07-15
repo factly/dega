@@ -20,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/media', () => ({
@@ -32,10 +34,7 @@ let state = {
     req: [
       {
         data: [1],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 1,
       },
     ],
@@ -90,7 +89,7 @@ describe('Media List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getMedia).toHaveBeenCalledWith({ page: 1, limit: 20 });
+      expect(getMedia).toHaveBeenCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -99,6 +98,22 @@ describe('Media List component', () => {
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
+    it('should handle url search params', () => {
+      store = mockStore(state);
+      let wrapper;
+      window.history.pushState({}, '', '/media?limit=20&page=1&q=desc');
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <Media permission={{ actions: ['create'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getMedia).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+    });
+
     it('should submit filters', () => {
       store = mockStore(state);
       let wrapper;
@@ -121,7 +136,7 @@ describe('Media List component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'asc' } });
+          .onChange({ target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
