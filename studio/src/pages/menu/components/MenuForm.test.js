@@ -13,6 +13,11 @@ import { MinusCircleOutlined } from '@ant-design/icons';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 let onCreate, store;
 const data = {
   name: 'Menu',
@@ -134,6 +139,9 @@ describe('Menu Create Form component', () => {
     it('should submit form with new title', (done) => {
       const data2 = { ...data };
       data2.id = 1;
+      data2.meta_fields = {
+        sample: 'testing',
+      };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -165,6 +173,9 @@ describe('Menu Create Form component', () => {
               name: 'Menu 2',
             },
           ],
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);

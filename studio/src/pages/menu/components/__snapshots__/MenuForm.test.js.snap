@@ -69,6 +69,28 @@ exports[`Menu Create Form component snapshot testing should match component with
     >
       <Component />
     </FormList>
+    <FormItem
+      label="Metafields"
+      name="meta_fields"
+      style={
+        Object {
+          "marginTop": "20px",
+        }
+      }
+    >
+      <MONACOEditor />
+    </FormItem>
+    <FormItem>
+      <Button
+        block={false}
+        disabled={true}
+        ghost={false}
+        htmlType="submit"
+        loading={false}
+      >
+        Submit
+      </Button>
+    </FormItem>
   </ForwardRef(InternalForm)>
 </div>
 `;
@@ -592,52 +614,318 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                             </button>
                           </Wave>
                         </Button>
-                        <Button
-                          block={false}
-                          disabled={true}
-                          ghost={false}
-                          htmlType="submit"
-                          loading={false}
-                        >
-                          <Wave>
-                            <button
-                              className="ant-btn"
-                              disabled={true}
-                              onClick={[Function]}
-                              type="submit"
-                            >
-                              <LoadingIcon
-                                existIcon={false}
-                                loading={false}
-                                prefixCls="ant-btn"
-                              >
-                                <CSSMotion
-                                  motionName="ant-btn-loading-icon-motion"
-                                  onAppearActive={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
-                                  onLeaveStart={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                >
-                                  <DomWrapper />
-                                </CSSMotion>
-                              </LoadingIcon>
-                              <span
-                                key=".0"
-                              >
-                                Submit
-                              </span>
-                            </button>
-                          </Wave>
-                        </Button>
                       </div>
                     </Field>
                   </WrapperField>
                 </List>
               </FormList>
+              <FormItem
+                label="Metafields"
+                name="meta_fields"
+                style={
+                  Object {
+                    "marginTop": "20px",
+                  }
+                }
+              >
+                <WrapperField
+                  label="Metafields"
+                  messageVariables={
+                    Object {
+                      "label": "Metafields",
+                    }
+                  }
+                  name="meta_fields"
+                  onReset={[Function]}
+                  style={
+                    Object {
+                      "marginTop": "20px",
+                    }
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": undefined,
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_meta_fields"
+                    label="Metafields"
+                    messageVariables={
+                      Object {
+                        "label": "Metafields",
+                      }
+                    }
+                    name={
+                      Array [
+                        "meta_fields",
+                      ]
+                    }
+                    onReset={[Function]}
+                    style={
+                      Object {
+                        "marginTop": "20px",
+                      }
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                      style={
+                        Object {
+                          "marginTop": "20px",
+                        }
+                      }
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={
+                          Object {
+                            "marginTop": "20px",
+                          }
+                        }
+                      >
+                        <FormItemLabel
+                          htmlFor="meta_fields"
+                          label="Metafields"
+                          name="meta_fields"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                          style={
+                            Object {
+                              "marginTop": "20px",
+                            }
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="meta_fields"
+                                title="Metafields"
+                              >
+                                Metafields
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Metafields"
+                          name={
+                            Array [
+                              "meta_fields",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          style={
+                            Object {
+                              "marginTop": "20px",
+                            }
+                          }
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <MONACOEditor
+                                      id="meta_fields"
+                                      onChange={[Function]}
+                                    >
+                                      <MonacoEditor
+                                        height="240"
+                                        language="json"
+                                        onChange={[Function]}
+                                        options={
+                                          Object {
+                                            "autoClosingBrackets": "never",
+                                            "autoClosingQuotes": "never",
+                                            "cursorBlinking": "smooth",
+                                            "folding": true,
+                                            "lineNumbersMinChars": 4,
+                                            "minimap": Object {
+                                              "enabled": false,
+                                            },
+                                            "scrollBeyondLastLine": false,
+                                            "theme": "vs-dark",
+                                            "wordWrap": "on",
+                                          }
+                                        }
+                                      >
+                                        <div />
+                                      </MonacoEditor>
+                                    </MONACOEditor>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem>
+                <Row
+                  className="ant-form-item"
+                  key="row"
+                >
+                  <div
+                    className="ant-row ant-form-item"
+                    style={Object {}}
+                  >
+                    <FormItemLabel
+                      prefixCls="ant-form"
+                      requiredMark={true}
+                    />
+                    <FormItemInput
+                      errors={Array []}
+                      onDomErrorVisibleChange={[Function]}
+                      prefixCls="ant-form"
+                      status=""
+                      validateStatus=""
+                    >
+                      <Col
+                        className="ant-form-item-control"
+                      >
+                        <div
+                          className="ant-col ant-form-item-control"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-form-item-control-input"
+                          >
+                            <div
+                              className="ant-form-item-control-input-content"
+                            >
+                              <Button
+                                block={false}
+                                disabled={true}
+                                ghost={false}
+                                htmlType="submit"
+                                loading={false}
+                              >
+                                <Wave>
+                                  <button
+                                    className="ant-btn"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                    type="submit"
+                                  >
+                                    <LoadingIcon
+                                      existIcon={false}
+                                      loading={false}
+                                      prefixCls="ant-btn"
+                                    >
+                                      <CSSMotion
+                                        motionName="ant-btn-loading-icon-motion"
+                                        onAppearActive={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </LoadingIcon>
+                                    <span
+                                      key=".0"
+                                    >
+                                      Submit
+                                    </span>
+                                  </button>
+                                </Wave>
+                              </Button>
+                            </div>
+                          </div>
+                          <ErrorList
+                            errors={Array []}
+                            onDomErrorVisibleChange={[Function]}
+                          >
+                            <CSSMotion
+                              motionAppear={true}
+                              motionDeadline={500}
+                              motionName="show-help"
+                              onLeaveEnd={[Function]}
+                              removeOnLeave={true}
+                              visible={false}
+                            >
+                              <DomWrapper />
+                            </CSSMotion>
+                          </ErrorList>
+                        </div>
+                      </Col>
+                    </FormItemInput>
+                  </div>
+                </Row>
+              </FormItem>
             </form>
           </ForwardRef(Form)>
         </SizeContextProvider>
@@ -1164,52 +1452,318 @@ exports[`Menu Create Form component snapshot testing should render the component
                             </button>
                           </Wave>
                         </Button>
-                        <Button
-                          block={false}
-                          disabled={true}
-                          ghost={false}
-                          htmlType="submit"
-                          loading={false}
-                        >
-                          <Wave>
-                            <button
-                              className="ant-btn"
-                              disabled={true}
-                              onClick={[Function]}
-                              type="submit"
-                            >
-                              <LoadingIcon
-                                existIcon={false}
-                                loading={false}
-                                prefixCls="ant-btn"
-                              >
-                                <CSSMotion
-                                  motionName="ant-btn-loading-icon-motion"
-                                  onAppearActive={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
-                                  onLeaveStart={[Function]}
-                                  removeOnLeave={true}
-                                  visible={false}
-                                >
-                                  <DomWrapper />
-                                </CSSMotion>
-                              </LoadingIcon>
-                              <span
-                                key=".0"
-                              >
-                                Submit
-                              </span>
-                            </button>
-                          </Wave>
-                        </Button>
                       </div>
                     </Field>
                   </WrapperField>
                 </List>
               </FormList>
+              <FormItem
+                label="Metafields"
+                name="meta_fields"
+                style={
+                  Object {
+                    "marginTop": "20px",
+                  }
+                }
+              >
+                <WrapperField
+                  label="Metafields"
+                  messageVariables={
+                    Object {
+                      "label": "Metafields",
+                    }
+                  }
+                  name="meta_fields"
+                  onReset={[Function]}
+                  style={
+                    Object {
+                      "marginTop": "20px",
+                    }
+                  }
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": undefined,
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_meta_fields"
+                    label="Metafields"
+                    messageVariables={
+                      Object {
+                        "label": "Metafields",
+                      }
+                    }
+                    name={
+                      Array [
+                        "meta_fields",
+                      ]
+                    }
+                    onReset={[Function]}
+                    style={
+                      Object {
+                        "marginTop": "20px",
+                      }
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                      style={
+                        Object {
+                          "marginTop": "20px",
+                        }
+                      }
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={
+                          Object {
+                            "marginTop": "20px",
+                          }
+                        }
+                      >
+                        <FormItemLabel
+                          htmlFor="meta_fields"
+                          label="Metafields"
+                          name="meta_fields"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                          style={
+                            Object {
+                              "marginTop": "20px",
+                            }
+                          }
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="meta_fields"
+                                title="Metafields"
+                              >
+                                Metafields
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Metafields"
+                          name={
+                            Array [
+                              "meta_fields",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          style={
+                            Object {
+                              "marginTop": "20px",
+                            }
+                          }
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={1}
+                                  >
+                                    <MONACOEditor
+                                      id="meta_fields"
+                                      onChange={[Function]}
+                                    >
+                                      <MonacoEditor
+                                        height="240"
+                                        language="json"
+                                        onChange={[Function]}
+                                        options={
+                                          Object {
+                                            "autoClosingBrackets": "never",
+                                            "autoClosingQuotes": "never",
+                                            "cursorBlinking": "smooth",
+                                            "folding": true,
+                                            "lineNumbersMinChars": 4,
+                                            "minimap": Object {
+                                              "enabled": false,
+                                            },
+                                            "scrollBeyondLastLine": false,
+                                            "theme": "vs-dark",
+                                            "wordWrap": "on",
+                                          }
+                                        }
+                                      >
+                                        <div />
+                                      </MonacoEditor>
+                                    </MONACOEditor>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem>
+                <Row
+                  className="ant-form-item"
+                  key="row"
+                >
+                  <div
+                    className="ant-row ant-form-item"
+                    style={Object {}}
+                  >
+                    <FormItemLabel
+                      prefixCls="ant-form"
+                      requiredMark={true}
+                    />
+                    <FormItemInput
+                      errors={Array []}
+                      onDomErrorVisibleChange={[Function]}
+                      prefixCls="ant-form"
+                      status=""
+                      validateStatus=""
+                    >
+                      <Col
+                        className="ant-form-item-control"
+                      >
+                        <div
+                          className="ant-col ant-form-item-control"
+                          style={Object {}}
+                        >
+                          <div
+                            className="ant-form-item-control-input"
+                          >
+                            <div
+                              className="ant-form-item-control-input-content"
+                            >
+                              <Button
+                                block={false}
+                                disabled={true}
+                                ghost={false}
+                                htmlType="submit"
+                                loading={false}
+                              >
+                                <Wave>
+                                  <button
+                                    className="ant-btn"
+                                    disabled={true}
+                                    onClick={[Function]}
+                                    type="submit"
+                                  >
+                                    <LoadingIcon
+                                      existIcon={false}
+                                      loading={false}
+                                      prefixCls="ant-btn"
+                                    >
+                                      <CSSMotion
+                                        motionName="ant-btn-loading-icon-motion"
+                                        onAppearActive={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </LoadingIcon>
+                                    <span
+                                      key=".0"
+                                    >
+                                      Submit
+                                    </span>
+                                  </button>
+                                </Wave>
+                              </Button>
+                            </div>
+                          </div>
+                          <ErrorList
+                            errors={Array []}
+                            onDomErrorVisibleChange={[Function]}
+                          >
+                            <CSSMotion
+                              motionAppear={true}
+                              motionDeadline={500}
+                              motionName="show-help"
+                              onLeaveEnd={[Function]}
+                              removeOnLeave={true}
+                              visible={false}
+                            >
+                              <DomWrapper />
+                            </CSSMotion>
+                          </ErrorList>
+                        </div>
+                      </Col>
+                    </FormItemInput>
+                  </div>
+                </Row>
+              </FormItem>
             </form>
           </ForwardRef(Form)>
         </SizeContextProvider>

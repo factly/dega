@@ -27,8 +27,8 @@ exports[`Menu List component snapshot testing should match component when loadin
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -2787,8 +2787,8 @@ exports[`Menu List component snapshot testing should match component with menus 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
