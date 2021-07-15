@@ -60,4 +60,18 @@ func SetupVars() {
 			log.Fatal("please provide redis_password config param")
 		}
 	}
+
+	if SearchEnabled() {
+		if !viper.IsSet("meili_url") {
+			log.Fatal("please provide meili_url config param")
+		}
+
+		if !viper.IsSet("meili_key") {
+			log.Fatal("please provide meili_key config param")
+		}
+	}
+}
+
+func SearchEnabled() bool {
+	return viper.IsSet("enable_search_indexing") && viper.GetBool("enable_search_indexing")
 }

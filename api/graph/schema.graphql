@@ -246,6 +246,16 @@ type Sitemaps {
   ratings: [Sitemap] 
 }
 
+type SearchResult {
+  posts: [Post]
+  categories: [Category]
+  tags: [Tag]
+  claims: [Claim]
+  claimants: [Claimant]
+  ratings: [Rating]
+  media: [Medium]
+}
+
 input PostFilter {
   slugs: [String!]
   ids: [Int!]
@@ -269,6 +279,7 @@ type Query {
   claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
   claims(spaces:[Int!], ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
   sitemap: Sitemaps
+  search(q: String!): SearchResult
 }
 
 scalar Time
