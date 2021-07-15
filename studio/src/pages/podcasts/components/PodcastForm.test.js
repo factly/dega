@@ -9,7 +9,10 @@ import '../../../matchMedia.mock';
 import PodcastForm from './PodcastForm';
 
 jest.mock('@editorjs/editorjs');
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 const data = {
   id: 1,
   title: 'Podcast-1',
@@ -239,6 +242,9 @@ describe('Podcast form component', () => {
         slug: 'podcast-1',
         medium_id: 1,
         language: 'english',
+        meta_fields: {
+          sample: 'testing',
+        },
         description: {
           time: 1595747741807,
           blocks: [
@@ -280,6 +286,9 @@ describe('Podcast form component', () => {
           medium_id: 1,
           language: 'english',
           category_ids: [],
+          meta_fields: {
+            sample: 'testing',
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -305,6 +314,15 @@ describe('Podcast form component', () => {
       }, 0);
     });
     it('should submit form with new title', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = '{"sample":"testing"}';
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <PodcastForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
@@ -322,6 +340,9 @@ describe('Podcast form component', () => {
           categories: [1],
           category_ids: [1],
           medium_id: 1,
+          meta_fields: {
+            sample: 'testing',
+          },
           description: {
             time: 1595747741807,
             blocks: [
