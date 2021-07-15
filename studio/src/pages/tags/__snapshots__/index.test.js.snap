@@ -170,12 +170,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -214,12 +209,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -1305,12 +1295,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                     }
                   }
                   fetchTags={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -1359,9 +1344,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 0,
                               }
                             }
@@ -1532,9 +1517,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 0,
                                         }
                                       }
@@ -1693,9 +1678,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -2366,12 +2351,7 @@ exports[`Tags List component snapshot testing should render the component with d
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -2410,12 +2390,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -3525,12 +3500,7 @@ exports[`Tags List component snapshot testing should render the component with d
                     }
                   }
                   fetchTags={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -3605,9 +3575,9 @@ exports[`Tags List component snapshot testing should render the component with d
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 1,
                               }
                             }
@@ -3825,9 +3795,9 @@ exports[`Tags List component snapshot testing should render the component with d
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 1,
                                         }
                                       }
@@ -4029,9 +3999,9 @@ exports[`Tags List component snapshot testing should render the component with d
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 1,
                                               },
                                               "prefixCls": "ant-table",
@@ -5369,7 +5339,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                       className="ant-table-pagination ant-table-pagination-right"
                                       current={1}
                                       onChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       total={1}
                                     >
                                       <LocaleReceiver
@@ -5457,7 +5427,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                           }
                                           onChange={[Function]}
                                           onShowSizeChange={[Function]}
-                                          pageSize={20}
+                                          pageSize={10}
                                           prefixCls="ant-pagination"
                                           prevIcon={
                                             <button
@@ -5725,7 +5695,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                   "prev_page": "Previous Page",
                                                 }
                                               }
-                                              pageSize={20}
+                                              pageSize={10}
                                               pageSizeOptions={
                                                 Array [
                                                   "10",
