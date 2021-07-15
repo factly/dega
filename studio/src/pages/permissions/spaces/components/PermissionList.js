@@ -12,7 +12,7 @@ function PermissionList({ admin }) {
     page: 1,
     limit: 20,
   });
-  query.set('page',filters.page);
+  query.set('page', filters.page);
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { space_permissions, total, loading } = useSelector((state) => {
     const req = state.spacePermissions.req;
