@@ -278,6 +278,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      value={
+                                        Array [
+                                          9,
+                                        ]
+                                      }
                                     >
                                       <Select
                                         allowClear={true}
@@ -304,6 +309,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                         transitionName="slide-up"
+                                        value={
+                                          Array [
+                                            9,
+                                          ]
+                                        }
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
@@ -330,6 +340,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                           transitionName="slide-up"
+                                          value={
+                                            Array [
+                                              9,
+                                            ]
+                                          }
                                         >
                                           <div
                                             className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
@@ -569,6 +584,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                   showSearch={false}
                                                   tokenWithEnter={false}
                                                   transitionName="slide-up"
+                                                  value={
+                                                    Array [
+                                                      9,
+                                                    ]
+                                                  }
                                                   values={
                                                     Array [
                                                       Object {
@@ -681,6 +701,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                       showSearch={false}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          9,
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
@@ -1858,6 +1883,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      value={
+                                        Array [
+                                          Array [],
+                                        ]
+                                      }
                                     >
                                       <Select
                                         allowClear={true}
@@ -1884,6 +1914,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                         transitionName="slide-up"
+                                        value={
+                                          Array [
+                                            Array [],
+                                          ]
+                                        }
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
@@ -1910,6 +1945,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                           transitionName="slide-up"
+                                          value={
+                                            Array [
+                                              Array [],
+                                            ]
+                                          }
                                         >
                                           <div
                                             className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
@@ -2146,6 +2186,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                   showSearch={false}
                                                   tokenWithEnter={false}
                                                   transitionName="slide-up"
+                                                  value={
+                                                    Array [
+                                                      Array [],
+                                                    ]
+                                                  }
                                                   values={
                                                     Array [
                                                       Object {
@@ -2255,6 +2300,11 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                       showSearch={false}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          Array [],
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
@@ -3425,6 +3475,11 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      value={
+                                        Array [
+                                          Array [],
+                                        ]
+                                      }
                                     >
                                       <Select
                                         allowClear={true}
@@ -3451,6 +3506,11 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                         transitionName="slide-up"
+                                        value={
+                                          Array [
+                                            Array [],
+                                          ]
+                                        }
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
@@ -3477,6 +3537,11 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                           transitionName="slide-up"
+                                          value={
+                                            Array [
+                                              Array [],
+                                            ]
+                                          }
                                         >
                                           <div
                                             className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
@@ -3713,6 +3778,11 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                                   showSearch={false}
                                                   tokenWithEnter={false}
                                                   transitionName="slide-up"
+                                                  value={
+                                                    Array [
+                                                      Array [],
+                                                    ]
+                                                  }
                                                   values={
                                                     Array [
                                                       Object {
@@ -3822,6 +3892,11 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                                       showSearch={false}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          Array [],
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
