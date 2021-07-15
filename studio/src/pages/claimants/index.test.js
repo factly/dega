@@ -18,10 +18,7 @@ let state = {
     req: [
       {
         data: [1, 2],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 2,
       },
     ],
@@ -61,7 +58,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/claimants', () => ({
@@ -105,7 +104,7 @@ describe('Claimants List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getClaimants).toBeCalledWith({ page: 1, limit: 20 });
+      expect(getClaimants).toBeCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -113,6 +112,58 @@ describe('Claimants List component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/claimants?limit=20&page=1&q=descri');
+      const store2 = mockStore({
+        claimants: {
+          req: [
+            {
+              data: [1, 2],
+              query: { page: 1, limit: 20 },
+              total: 2,
+            },
+          ],
+          details: {
+            1: {
+              id: 1,
+              created_at: '2020-09-09T06:51:15.770644Z',
+              updated_at: '2020-09-09T06:51:15.770644Z',
+              deleted_at: null,
+              name: 'Whatsapp',
+              slug: 'whatsapp',
+              description: 'description',
+              tag_line: '',
+              medium_id: 0,
+              space_id: 1,
+            },
+            2: {
+              id: 2,
+              created_at: '2020-09-09T06:51:22.237778Z',
+              updated_at: '2020-09-09T06:51:22.237778Z',
+              deleted_at: null,
+              name: 'Facebook',
+              slug: 'facebook',
+              description: 'description',
+              tag_line: '',
+              medium_id: 0,
+              space_id: 1,
+            },
+          },
+          loading: false,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Claimants permission={{ actions: ['create'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getClaimants).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'descri' });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -136,7 +187,7 @@ describe('Claimants List component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'asc' } });
+          .onChange({ target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
@@ -148,7 +199,7 @@ describe('Claimants List component', () => {
           page: 1,
           limit: 5,
           q: 'claimant',
-          sort_by: 'asc',
+          sort: '',
         });
       }, 0);
     });
