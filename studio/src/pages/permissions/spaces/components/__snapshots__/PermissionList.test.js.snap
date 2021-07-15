@@ -27,8 +27,8 @@ exports[`Space Permission List component snapshot testing should match component
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -5793,8 +5793,8 @@ exports[`Space Permission List component snapshot testing should match component
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -17277,8 +17277,8 @@ exports[`Space Permission List component snapshot testing should render componen
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
