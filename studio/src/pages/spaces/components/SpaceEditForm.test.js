@@ -41,6 +41,10 @@ const data = {
 };
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -100,7 +104,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(19).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(20).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1);
@@ -112,7 +116,7 @@ describe('Space Edit Form component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      const nextButton = tree.find('FormItem').at(19).find('Button').at(1);
+      const nextButton = tree.find('FormItem').at(20).find('Button').at(1);
       expect(nextButton.text()).toBe('Next');
       nextButton.simulate('click');
       expect(tree.find('Steps').at(0).props().current).toEqual(1);
@@ -199,6 +203,15 @@ describe('Space Edit Form component', () => {
       }, 0);
     });
     it('should submit form with updated data', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = { sample: 'testing' };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <SpaceEditForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         wrapper
           .find('FormItem')
@@ -235,55 +248,62 @@ describe('Space Edit Form component', () => {
           .simulate('change', { target: { value: 'New Description' } });
         wrapper
           .find('FormItem')
+          .at(8)
+          .find('MonacoEditor')
+          .at(0)
+          .props()
+          .onChange({ target: { value: '{"sample":"testing"}' } });
+        wrapper
+          .find('FormItem')
           .at(6)
           .find('Input')
           .simulate('change', { target: { value: 'new site address' } });
-        wrapper
-          .find('FormItem')
-          .at(8)
-          .find('MediaSelector')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
           .at(9)
           .find('MediaSelector')
           .at(0)
           .props()
-          .onChange({ target: { value: 3 } });
+          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
           .at(10)
           .find('MediaSelector')
           .at(0)
           .props()
-          .onChange({ target: { value: 4 } });
+          .onChange({ target: { value: 3 } });
         wrapper
           .find('FormItem')
           .at(11)
           .find('MediaSelector')
           .at(0)
           .props()
-          .onChange({ target: { value: 5 } });
+          .onChange({ target: { value: 4 } });
         wrapper
           .find('FormItem')
           .at(12)
-          .find('Input')
-          .simulate('change', { target: { value: 'm.fb.com' } });
+          .find('MediaSelector')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 5 } });
         wrapper
           .find('FormItem')
           .at(13)
           .find('Input')
-          .simulate('change', { target: { value: 'm.twitter.com' } });
+          .simulate('change', { target: { value: 'm.fb.com' } });
         wrapper
           .find('FormItem')
           .at(14)
           .find('Input')
-          .simulate('change', { target: { value: 'm.pin.com' } });
+          .simulate('change', { target: { value: 'm.twitter.com' } });
         wrapper
           .find('FormItem')
           .at(15)
+          .find('Input')
+          .simulate('change', { target: { value: 'm.pin.com' } });
+        wrapper
+          .find('FormItem')
+          .at(16)
           .find('Input')
           .simulate('change', { target: { value: 'm.insta.com' } });
 
@@ -301,6 +321,9 @@ describe('Space Edit Form component', () => {
           site_title: 'new site title',
           tag_line: 'new tag line',
           description: 'New Description',
+          meta_fields: {
+            sample: 'testing',
+          },
           site_address: 'new site address',
           logo_id: 2,
           logo_mobile_id: 3,
@@ -352,7 +375,7 @@ describe('Space Edit Form component', () => {
       });
       wrapper.update();
       expect(wrapper.find(Steps).props().current).toEqual(2);
-      expect(wrapper.find('FormItem').at(12).props().name[0]).toBe('social_media_urls');
+      expect(wrapper.find('FormItem').at(13).props().name[0]).toBe('social_media_urls');
     });
   });
 });
