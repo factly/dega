@@ -91,9 +91,6 @@ function Claims({ permission }) {
 
   const onSave = (values) => {
     let filterValue = {};
-    if (values.status === 'all') {
-      values.status = null;
-    }
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'rating' || key === 'claimant') {
