@@ -140,9 +140,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                       "format": Array [
                         2,
                       ],
-                      "limit": 20,
-                      "page": 1,
-                      "status": null,
                     }
                   }
                   name="filters"
@@ -187,9 +184,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                           "format": Array [
                             2,
                           ],
-                          "limit": 20,
-                          "page": 1,
-                          "status": null,
                         }
                       }
                       name="filters"
@@ -1581,13 +1575,11 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                   >
                                                     <Component
                                                       update={2}
-                                                      value={null}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="all"
                                                         id="filters_status"
                                                         onChange={[Function]}
-                                                        value={null}
                                                       >
                                                         <Select
                                                           className=""
@@ -1608,7 +1600,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="slide-up"
-                                                          value={null}
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -1629,7 +1620,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
-                                                            value={null}
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -1730,7 +1720,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     searchValue=""
                                                                     values={
                                                                       Set {
-                                                                        null,
+                                                                        "all",
                                                                       }
                                                                     }
                                                                     virtual={true}
@@ -1904,7 +1894,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         searchValue=""
                                                                         values={
                                                                           Set {
-                                                                            null,
+                                                                            "all",
                                                                           }
                                                                         }
                                                                         virtual={true}
@@ -1956,8 +1946,11 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             />
                                                                           </span>
                                                                           <span
-                                                                            class="ant-select-selection-placeholder"
-                                                                          />
+                                                                            class="ant-select-selection-item"
+                                                                            title="All"
+                                                                          >
+                                                                            All
+                                                                          </span>
                                                                         </div>,
                                                                       }
                                                                     }
@@ -1986,8 +1979,16 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="slide-up"
-                                                                    value={null}
-                                                                    values={Array []}
+                                                                    values={
+                                                                      Array [
+                                                                        Object {
+                                                                          "disabled": undefined,
+                                                                          "key": "all",
+                                                                          "label": "All",
+                                                                          "value": "all",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <div
                                                                       className="ant-select-selector"
@@ -2026,8 +2027,11 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                                 />
                                                                               </span>
                                                                               <span
-                                                                                class="ant-select-selection-placeholder"
-                                                                              />
+                                                                                class="ant-select-selection-item"
+                                                                                title="All"
+                                                                              >
+                                                                                All
+                                                                              </span>
                                                                             </div>,
                                                                           }
                                                                         }
@@ -2081,8 +2085,16 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="slide-up"
-                                                                        value={null}
-                                                                        values={Array []}
+                                                                        values={
+                                                                          Array [
+                                                                            Object {
+                                                                              "disabled": undefined,
+                                                                              "key": "all",
+                                                                              "label": "All",
+                                                                              "value": "all",
+                                                                            },
+                                                                          ]
+                                                                        }
                                                                       >
                                                                         <span
                                                                           className="ant-select-selection-search"
@@ -2131,8 +2143,11 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           </Input>
                                                                         </span>
                                                                         <span
-                                                                          className="ant-select-selection-placeholder"
-                                                                        />
+                                                                          className="ant-select-selection-item"
+                                                                          title="All"
+                                                                        >
+                                                                          All
+                                                                        </span>
                                                                       </SingleSelector>
                                                                     </div>
                                                                   </Selector>
@@ -2288,7 +2303,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                               >
                                 <FormItem
                                   label="Tags"
-                                  name="tags"
+                                  name="tag"
                                 >
                                   <WrapperField
                                     label="Tags"
@@ -2297,7 +2312,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         "label": "Tags",
                                       }
                                     }
-                                    name="tags"
+                                    name="tag"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -2328,7 +2343,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_tags"
+                                      key="_tag"
                                       label="Tags"
                                       messageVariables={
                                         Object {
@@ -2337,7 +2352,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                       }
                                       name={
                                         Array [
-                                          "tags",
+                                          "tag",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -2354,9 +2369,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_tags"
+                                            htmlFor="filters_tag"
                                             label="Tags"
-                                            name="tags"
+                                            name="tag"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -2370,7 +2385,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_tags"
+                                                  htmlFor="filters_tag"
                                                   title="Tags"
                                                 >
                                                   Tags
@@ -2383,7 +2398,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                             label="Tags"
                                             name={
                                               Array [
-                                                "tags",
+                                                "tag",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -2411,7 +2426,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                     >
                                                       <Selector
                                                         action="Tags"
-                                                        id="filters_tags"
+                                                        id="filters_tag"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Tags"
@@ -2430,6 +2445,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Tags"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -2457,6 +2473,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -2484,6 +2501,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -2723,6 +2741,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -2834,6 +2853,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -3062,7 +3082,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                               >
                                 <FormItem
                                   label="Categories"
-                                  name="categories"
+                                  name="category"
                                 >
                                   <WrapperField
                                     label="Categories"
@@ -3071,7 +3091,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         "label": "Categories",
                                       }
                                     }
-                                    name="categories"
+                                    name="category"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -3102,7 +3122,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_categories"
+                                      key="_category"
                                       label="Categories"
                                       messageVariables={
                                         Object {
@@ -3111,7 +3131,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                       }
                                       name={
                                         Array [
-                                          "categories",
+                                          "category",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -3128,9 +3148,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_categories"
+                                            htmlFor="filters_category"
                                             label="Categories"
-                                            name="categories"
+                                            name="category"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -3144,7 +3164,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_categories"
+                                                  htmlFor="filters_category"
                                                   title="Categories"
                                                 >
                                                   Categories
@@ -3157,7 +3177,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                             label="Categories"
                                             name={
                                               Array [
-                                                "categories",
+                                                "category",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -3185,7 +3205,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                     >
                                                       <Selector
                                                         action="Categories"
-                                                        id="filters_categories"
+                                                        id="filters_category"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Categories"
@@ -3204,6 +3224,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Categories"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -3231,6 +3252,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -3258,6 +3280,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -3497,6 +3520,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -3608,6 +3632,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -3836,7 +3861,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                               >
                                 <FormItem
                                   label="Authors"
-                                  name="authors"
+                                  name="author"
                                 >
                                   <WrapperField
                                     label="Authors"
@@ -3845,7 +3870,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         "label": "Authors",
                                       }
                                     }
-                                    name="authors"
+                                    name="author"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -3876,7 +3901,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_authors"
+                                      key="_author"
                                       label="Authors"
                                       messageVariables={
                                         Object {
@@ -3885,7 +3910,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                       }
                                       name={
                                         Array [
-                                          "authors",
+                                          "author",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -3902,9 +3927,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_authors"
+                                            htmlFor="filters_author"
                                             label="Authors"
-                                            name="authors"
+                                            name="author"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -3918,7 +3943,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_authors"
+                                                  htmlFor="filters_author"
                                                   title="Authors"
                                                 >
                                                   Authors
@@ -3931,7 +3956,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                             label="Authors"
                                             name={
                                               Array [
-                                                "authors",
+                                                "author",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -3960,7 +3985,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                       <Selector
                                                         action="Authors"
                                                         display="email"
-                                                        id="filters_authors"
+                                                        id="filters_author"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Authors"
@@ -3979,6 +4004,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Authors"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -4006,6 +4032,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -4033,6 +4060,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -4272,6 +4300,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -4383,6 +4412,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -4633,9 +4663,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                       "format": Array [
                         2,
                       ],
-                      "limit": 20,
-                      "page": 1,
-                      "status": null,
                     }
                   }
                   format={
@@ -4673,9 +4700,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": 10,
                                 "total": 0,
                               }
                             }
@@ -4763,10 +4790,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={20}
+                                  pageSize={10}
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -4788,7 +4814,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                   >
                                     <Pagination
                                       className=""
-                                      current={0}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -4854,7 +4879,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -5106,7 +5131,6 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={0}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -5122,7 +5146,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={20}
+                                          pageSize={10}
                                           pageSizeOptions={
                                             Array [
                                               "10",
@@ -5306,9 +5330,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                       "format": Array [
                         2,
                       ],
-                      "limit": 20,
-                      "page": 1,
-                      "status": null,
                     }
                   }
                   name="filters"
@@ -5353,9 +5374,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                           "format": Array [
                             2,
                           ],
-                          "limit": 20,
-                          "page": 1,
-                          "status": null,
                         }
                       }
                       name="filters"
@@ -6747,13 +6765,11 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                   >
                                                     <Component
                                                       update={2}
-                                                      value={null}
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="all"
                                                         id="filters_status"
                                                         onChange={[Function]}
-                                                        value={null}
                                                       >
                                                         <Select
                                                           className=""
@@ -6774,7 +6790,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="slide-up"
-                                                          value={null}
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -6795,7 +6810,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
-                                                            value={null}
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -6896,7 +6910,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     searchValue=""
                                                                     values={
                                                                       Set {
-                                                                        null,
+                                                                        "all",
                                                                       }
                                                                     }
                                                                     virtual={true}
@@ -7070,7 +7084,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         searchValue=""
                                                                         values={
                                                                           Set {
-                                                                            null,
+                                                                            "all",
                                                                           }
                                                                         }
                                                                         virtual={true}
@@ -7122,8 +7136,11 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             />
                                                                           </span>
                                                                           <span
-                                                                            class="ant-select-selection-placeholder"
-                                                                          />
+                                                                            class="ant-select-selection-item"
+                                                                            title="All"
+                                                                          >
+                                                                            All
+                                                                          </span>
                                                                         </div>,
                                                                       }
                                                                     }
@@ -7152,8 +7169,16 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="slide-up"
-                                                                    value={null}
-                                                                    values={Array []}
+                                                                    values={
+                                                                      Array [
+                                                                        Object {
+                                                                          "disabled": undefined,
+                                                                          "key": "all",
+                                                                          "label": "All",
+                                                                          "value": "all",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <div
                                                                       className="ant-select-selector"
@@ -7192,8 +7217,11 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                                 />
                                                                               </span>
                                                                               <span
-                                                                                class="ant-select-selection-placeholder"
-                                                                              />
+                                                                                class="ant-select-selection-item"
+                                                                                title="All"
+                                                                              >
+                                                                                All
+                                                                              </span>
                                                                             </div>,
                                                                           }
                                                                         }
@@ -7247,8 +7275,16 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="slide-up"
-                                                                        value={null}
-                                                                        values={Array []}
+                                                                        values={
+                                                                          Array [
+                                                                            Object {
+                                                                              "disabled": undefined,
+                                                                              "key": "all",
+                                                                              "label": "All",
+                                                                              "value": "all",
+                                                                            },
+                                                                          ]
+                                                                        }
                                                                       >
                                                                         <span
                                                                           className="ant-select-selection-search"
@@ -7297,8 +7333,11 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           </Input>
                                                                         </span>
                                                                         <span
-                                                                          className="ant-select-selection-placeholder"
-                                                                        />
+                                                                          className="ant-select-selection-item"
+                                                                          title="All"
+                                                                        >
+                                                                          All
+                                                                        </span>
                                                                       </SingleSelector>
                                                                     </div>
                                                                   </Selector>
@@ -7454,7 +7493,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                               >
                                 <FormItem
                                   label="Tags"
-                                  name="tags"
+                                  name="tag"
                                 >
                                   <WrapperField
                                     label="Tags"
@@ -7463,7 +7502,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         "label": "Tags",
                                       }
                                     }
-                                    name="tags"
+                                    name="tag"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -7494,7 +7533,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_tags"
+                                      key="_tag"
                                       label="Tags"
                                       messageVariables={
                                         Object {
@@ -7503,7 +7542,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                       }
                                       name={
                                         Array [
-                                          "tags",
+                                          "tag",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -7520,9 +7559,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_tags"
+                                            htmlFor="filters_tag"
                                             label="Tags"
-                                            name="tags"
+                                            name="tag"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -7536,7 +7575,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_tags"
+                                                  htmlFor="filters_tag"
                                                   title="Tags"
                                                 >
                                                   Tags
@@ -7549,7 +7588,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                             label="Tags"
                                             name={
                                               Array [
-                                                "tags",
+                                                "tag",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -7577,7 +7616,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                     >
                                                       <Selector
                                                         action="Tags"
-                                                        id="filters_tags"
+                                                        id="filters_tag"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Tags"
@@ -7596,6 +7635,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Tags"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -7623,6 +7663,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -7650,6 +7691,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -7889,6 +7931,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -8000,6 +8043,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -8228,7 +8272,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                               >
                                 <FormItem
                                   label="Categories"
-                                  name="categories"
+                                  name="category"
                                 >
                                   <WrapperField
                                     label="Categories"
@@ -8237,7 +8281,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         "label": "Categories",
                                       }
                                     }
-                                    name="categories"
+                                    name="category"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -8268,7 +8312,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_categories"
+                                      key="_category"
                                       label="Categories"
                                       messageVariables={
                                         Object {
@@ -8277,7 +8321,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                       }
                                       name={
                                         Array [
-                                          "categories",
+                                          "category",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -8294,9 +8338,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_categories"
+                                            htmlFor="filters_category"
                                             label="Categories"
-                                            name="categories"
+                                            name="category"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -8310,7 +8354,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_categories"
+                                                  htmlFor="filters_category"
                                                   title="Categories"
                                                 >
                                                   Categories
@@ -8323,7 +8367,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                             label="Categories"
                                             name={
                                               Array [
-                                                "categories",
+                                                "category",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -8351,7 +8395,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                     >
                                                       <Selector
                                                         action="Categories"
-                                                        id="filters_categories"
+                                                        id="filters_category"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Categories"
@@ -8370,6 +8414,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Categories"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -8397,6 +8442,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -8424,6 +8470,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -8663,6 +8710,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -8774,6 +8822,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -9002,7 +9051,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                               >
                                 <FormItem
                                   label="Authors"
-                                  name="authors"
+                                  name="author"
                                 >
                                   <WrapperField
                                     label="Authors"
@@ -9011,7 +9060,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         "label": "Authors",
                                       }
                                     }
-                                    name="authors"
+                                    name="author"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -9042,7 +9091,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_authors"
+                                      key="_author"
                                       label="Authors"
                                       messageVariables={
                                         Object {
@@ -9051,7 +9100,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                       }
                                       name={
                                         Array [
-                                          "authors",
+                                          "author",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -9068,9 +9117,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_authors"
+                                            htmlFor="filters_author"
                                             label="Authors"
-                                            name="authors"
+                                            name="author"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -9084,7 +9133,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_authors"
+                                                  htmlFor="filters_author"
                                                   title="Authors"
                                                 >
                                                   Authors
@@ -9097,7 +9146,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                             label="Authors"
                                             name={
                                               Array [
-                                                "authors",
+                                                "author",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -9126,7 +9175,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                       <Selector
                                                         action="Authors"
                                                         display="email"
-                                                        id="filters_authors"
+                                                        id="filters_author"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Authors"
@@ -9145,6 +9194,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Authors"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -9172,6 +9222,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -9199,6 +9250,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -9438,6 +9490,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -9549,6 +9602,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -9809,9 +9863,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                       "format": Array [
                         2,
                       ],
-                      "limit": 20,
-                      "page": 1,
-                      "status": null,
                     }
                   }
                   format={
@@ -9861,9 +9912,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": 10,
                                 "total": 1,
                               }
                             }
@@ -11081,10 +11132,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={1}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={20}
+                                  pageSize={10}
                                   total={1}
                                 >
                                   <LocaleReceiver
@@ -11106,7 +11156,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                                   >
                                     <Pagination
                                       className=""
-                                      current={1}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -11172,7 +11221,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -11296,7 +11345,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           </button>
                                         </li>
                                         <Pager
-                                          active={true}
+                                          active={false}
                                           itemRender={[Function]}
                                           key="1"
                                           locale={
@@ -11320,7 +11369,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                           showTitle={true}
                                         >
                                           <li
-                                            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                                            className="ant-pagination-item ant-pagination-item-1"
                                             onClick={[Function]}
                                             onKeyPress={[Function]}
                                             tabIndex="0"
@@ -11424,7 +11473,6 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={1}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -11440,7 +11488,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={20}
+                                          pageSize={10}
                                           pageSizeOptions={
                                             Array [
                                               "10",
