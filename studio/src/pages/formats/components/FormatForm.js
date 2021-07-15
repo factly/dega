@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Form, Input, Space } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const { TextArea } = Input;
 
@@ -39,12 +40,6 @@ const FormatForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
-
   return (
     <Form
       {...layout}
@@ -53,7 +48,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
       name="create-format"
       onFinish={(values) => {
         if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
+          values.meta_fields = getJsonValue(values.meta_fields);
         }
         onCreate(values);
         onReset();

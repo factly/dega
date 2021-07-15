@@ -3,6 +3,7 @@ import { Button, Form, Input, Space, Switch } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import Editor from '../../../components/Editor';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const layout = {
   labelCol: {
@@ -37,11 +38,6 @@ const TagForm = ({ onCreate, data = {} }) => {
       slug: maker(string),
     });
   };
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
 
   return (
     <Form
@@ -51,7 +47,7 @@ const TagForm = ({ onCreate, data = {} }) => {
       name="create-tag"
       onFinish={(values) => {
         if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
+          values.meta_fields = getJsonValue(values.meta_fields);
         }
         onCreate(values);
         onReset();

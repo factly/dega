@@ -34,9 +34,8 @@ function Template({ format }) {
         }),
         total: node.total,
         loading: state.posts.loading,
-        media: state.media.details,
       };
-    return { posts: [], loading: state.posts.loading, media: [] };
+    return { posts: [], loading: state.posts.loading };
   });
 
   React.useEffect(() => {

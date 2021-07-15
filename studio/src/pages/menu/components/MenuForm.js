@@ -4,6 +4,7 @@ import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import MenuField from './MenuField';
 import Submenu from './Submenu';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 function MenuForm({ onCreate, data = {} }) {
   if (data && data.meta_fields) {
@@ -17,11 +18,6 @@ function MenuForm({ onCreate, data = {} }) {
   const onReset = () => {
     form.resetFields();
   };
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
 
   return (
     <div>
@@ -30,7 +26,7 @@ function MenuForm({ onCreate, data = {} }) {
         initialValues={{ ...data }}
         onFinish={(values) => {
           if (values.meta_fields) {
-            values.meta_fields = getJsonVal(values.meta_fields);
+            values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
           onReset();

@@ -27,6 +27,7 @@ import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -89,19 +90,13 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     return moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
   };
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
-
   const onSave = (values) => {
     setShouldBlockNavigation(false);
     if (values.meta) {
-      values.meta = getJsonVal(values.meta);
+      values.meta = getJsonValue(values.meta);
     }
     if (values.meta_fields) {
-      values.meta_fields = getJsonVal(values.meta_fields);
+      values.meta_fields = getJsonValue(values.meta_fields);
     }
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];

@@ -5,6 +5,7 @@ import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const layout = {
   labelCol: {
@@ -40,11 +41,6 @@ const CategoryForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
   return (
     <Form
       {...layout}
@@ -53,7 +49,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
       name="create-category"
       onFinish={(values) => {
         if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
+          values.meta_fields = getJsonValue(values.meta_fields);
         }
         onCreate(values);
         onReset();

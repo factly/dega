@@ -6,6 +6,7 @@ import { maker, checker } from '../../../utils/sluger';
 import moment from 'moment';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const layout = {
   labelCol: {
@@ -68,11 +69,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     data.claim_date = data.claim_date ? moment(data.claim_date) : null;
     data.checked_date = data.checked_date ? moment(data.checked_date) : null;
   }
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
+
   const handleSourceCollapse = () => {
     sourcePanel === null ? setSourcePanel('2') : setSourcePanel(null);
   };
@@ -89,7 +86,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         name="create-claim"
         onFinish={(values) => {
           if (values.meta_fields) {
-            values.meta_fields = getJsonVal(values.meta_fields);
+            values.meta_fields = getJsonValue(values.meta_fields);
           }
           onSave(values);
           onReset();

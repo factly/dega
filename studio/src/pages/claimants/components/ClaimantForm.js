@@ -4,6 +4,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const { TextArea } = Input;
 
@@ -41,12 +42,6 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
-
   return (
     <Form
       {...layout}
@@ -55,7 +50,7 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
       name="creat-claimant"
       onFinish={(values) => {
         if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
+          values.meta_fields = getJsonValue(values.meta_fields);
         }
         onCreate(values);
         onReset();

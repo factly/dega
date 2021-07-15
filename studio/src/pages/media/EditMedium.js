@@ -8,6 +8,7 @@ import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
 import { useHistory } from 'react-router-dom';
 import MonacoEditor from '../../components/MonacoEditor';
+import getJsonValue from '../../utils/getJsonValue';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -49,11 +50,6 @@ function EditMedium() {
       media.meta_fields = JSON.stringify(media.meta_fields);
     }
   }
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
 
   return (
     <Row gutter={['20', '20']}>
@@ -78,7 +74,7 @@ function EditMedium() {
           name="create-space"
           onFinish={(values) => {
             if (values.meta_fields) {
-              values.meta_fields = getJsonVal(values.meta_fields);
+              values.meta_fields = getJsonValue(values.meta_fields);
             }
             updateMedia(values);
           }}

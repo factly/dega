@@ -4,6 +4,7 @@ import { Button, Form, Input, Steps, Select } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -33,12 +34,6 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   const [current, setCurrent] = React.useState(0);
   const [valueChange, setValueChange] = React.useState(false);
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
-
   return (
     <div>
       <Steps current={current} onChange={(value) => setCurrent(value)}>
@@ -54,7 +49,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         name="create-space"
         onFinish={(values) => {
           if (values.meta_fields) {
-            values.meta_fields = getJsonVal(values.meta_fields);
+            values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
           onReset();

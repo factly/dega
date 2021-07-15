@@ -5,6 +5,7 @@ import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
 import { ChromePicker } from 'react-color';
 import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const layout = {
   labelCol: {
@@ -44,12 +45,6 @@ const RatingForm = ({ onCreate, data = {} }) => {
     });
   };
 
-  const getJsonVal = (val) => {
-    let regex = /,(?!\s*?[{["'\w])/;
-    let formattedJson = val.replace(regex, '');
-    return JSON.parse(formattedJson);
-  };
-
   return (
     <Form
       {...layout}
@@ -58,7 +53,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
       name="creat-rating"
       onFinish={(values) => {
         if (values.meta_fields) {
-          values.meta_fields = getJsonVal(values.meta_fields);
+          values.meta_fields = getJsonValue(values.meta_fields);
         }
         onCreate(values);
         onReset();
