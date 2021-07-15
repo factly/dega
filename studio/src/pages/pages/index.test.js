@@ -21,7 +21,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/pages', () => ({
@@ -98,10 +100,7 @@ describe('Page component', () => {
           req: [
             {
               data: [1],
-              query: {
-                page: 1,
-                limit: 20,
-              },
+              query: {},
               total: 1,
             },
           ],
@@ -137,7 +136,7 @@ describe('Page component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPages).toHaveBeenCalledWith({ page: 1, limit: 20 });
+      expect(getPages).toHaveBeenCalledWith({});
     });
     it('should display FormatNotFound if format not found', () => {
       const tree = mount(
@@ -160,6 +159,48 @@ describe('Page component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/pages?limit=20&page=1&q=desc&author=1');
+      const state2 = { ...state };
+      state2.pages = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+              q: 'desc',
+              author: [1],
+            },
+            total: 1,
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            title: 'Page-1',
+            slug: 'page-1',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 1,
+            author_id: 1,
+          },
+        },
+        loading: false,
+      };
+      const store2 = mockStore(state2);
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Pages permission={{ actions: ['create'] }} formats={formats} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getPages).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', author: [1] });
     });
     it('should submit filters', () => {
       store = mockStore({
@@ -268,7 +309,7 @@ describe('Page component', () => {
           .find('Selector')
           .at(0)
           .props()
-          .onChange({ target: { value: [2] } });
+          .onChange({ target: { value: [] } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
@@ -282,7 +323,7 @@ describe('Page component', () => {
           format: [1],
           q: 'Explainer',
           tag: [2],
-          category: [2],
+          category: [],
         });
       }, 0);
     });
