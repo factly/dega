@@ -11,6 +11,10 @@ import TagForm from './TagForm';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 let onCreate, store;
 const data = {
   name: 'name',
@@ -153,6 +157,17 @@ describe('Tags Create Form component', () => {
       }, 0);
     });
     it('should submit form with updated data', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = {
+        sample: 'testing',
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <TagForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         wrapper
           .find('FormItem')
@@ -193,6 +208,9 @@ describe('Tags Create Form component', () => {
             time: 1613561493761,
             blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
             version: '2.19.0',
+          },
+          meta_fields: {
+            sample: 'testing',
           },
         });
         done();

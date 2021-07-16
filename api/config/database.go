@@ -36,11 +36,11 @@ func SetupDB() {
 		}),
 	})
 
-	sqlDB, err := DB.DB()
-
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	sqlDB, _ := DB.DB()
 
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)

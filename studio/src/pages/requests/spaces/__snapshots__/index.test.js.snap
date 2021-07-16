@@ -1357,8 +1357,8 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],

@@ -1072,8 +1072,8 @@ exports[`Organisation Request list should render the component with data 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],

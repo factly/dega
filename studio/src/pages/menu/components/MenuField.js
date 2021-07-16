@@ -13,7 +13,7 @@ function MenuField({ field }) {
     if (inputRef) {
       setPanelHeader(inputRef.props.value);
     }
-  });
+  }, [inputRef]);
   return (
     <Collapse defaultActiveKey={['1']}>
       <Panel header={panelHeader} key={['1']}>

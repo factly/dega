@@ -2,6 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select } from 'antd';
 import { maker, checker } from './../../../utils/sluger';
+import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -39,6 +41,9 @@ const SpaceCreateForm = ({ onCreate }) => {
       form={form}
       name="create-space"
       onFinish={(values) => {
+        if (values.meta_fields) {
+          values.meta_fields = getJsonValue(values.meta_fields);
+        }
         onCreate(values);
         onReset();
       }}
@@ -106,7 +111,9 @@ const SpaceCreateForm = ({ onCreate }) => {
       <Form.Item name="description" label="Description">
         <TextArea placeholder="Enter Description..." />
       </Form.Item>
-
+      <Form.Item name="meta_fields" label="Metafields">
+        <MonacoEditor />
+      </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">
           Submit

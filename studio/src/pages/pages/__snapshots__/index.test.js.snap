@@ -108,12 +108,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  initialValues={Object {}}
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -151,12 +146,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                         }
                       }
                       id="filters"
-                      initialValues={
-                        Object {
-                          "limit": 20,
-                          "page": 1,
-                        }
-                      }
+                      initialValues={Object {}}
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -2274,7 +2264,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                               >
                                 <FormItem
                                   label="Tags"
-                                  name="tags"
+                                  name="tag"
                                 >
                                   <WrapperField
                                     label="Tags"
@@ -2283,7 +2273,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         "label": "Tags",
                                       }
                                     }
-                                    name="tags"
+                                    name="tag"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -2314,7 +2304,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_tags"
+                                      key="_tag"
                                       label="Tags"
                                       messageVariables={
                                         Object {
@@ -2323,7 +2313,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       }
                                       name={
                                         Array [
-                                          "tags",
+                                          "tag",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -2340,9 +2330,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_tags"
+                                            htmlFor="filters_tag"
                                             label="Tags"
-                                            name="tags"
+                                            name="tag"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -2356,7 +2346,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_tags"
+                                                  htmlFor="filters_tag"
                                                   title="Tags"
                                                 >
                                                   Tags
@@ -2369,7 +2359,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                             label="Tags"
                                             name={
                                               Array [
-                                                "tags",
+                                                "tag",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -2397,7 +2387,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                     >
                                                       <Selector
                                                         action="Tags"
-                                                        id="filters_tags"
+                                                        id="filters_tag"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Tags"
@@ -2416,6 +2406,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Tags"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -2443,6 +2434,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -2470,6 +2462,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -2709,6 +2702,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -2820,6 +2814,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -3048,7 +3043,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                               >
                                 <FormItem
                                   label="Categories"
-                                  name="categories"
+                                  name="category"
                                 >
                                   <WrapperField
                                     label="Categories"
@@ -3057,7 +3052,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         "label": "Categories",
                                       }
                                     }
-                                    name="categories"
+                                    name="category"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -3088,7 +3083,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_categories"
+                                      key="_category"
                                       label="Categories"
                                       messageVariables={
                                         Object {
@@ -3097,7 +3092,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       }
                                       name={
                                         Array [
-                                          "categories",
+                                          "category",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -3114,9 +3109,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_categories"
+                                            htmlFor="filters_category"
                                             label="Categories"
-                                            name="categories"
+                                            name="category"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -3130,7 +3125,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_categories"
+                                                  htmlFor="filters_category"
                                                   title="Categories"
                                                 >
                                                   Categories
@@ -3143,7 +3138,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                             label="Categories"
                                             name={
                                               Array [
-                                                "categories",
+                                                "category",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -3171,7 +3166,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                     >
                                                       <Selector
                                                         action="Categories"
-                                                        id="filters_categories"
+                                                        id="filters_category"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Categories"
@@ -3190,6 +3185,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Categories"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -3217,6 +3213,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -3244,6 +3241,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -3483,6 +3481,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -3594,6 +3593,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -3822,7 +3822,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                               >
                                 <FormItem
                                   label="Authors"
-                                  name="authors"
+                                  name="author"
                                 >
                                   <WrapperField
                                     label="Authors"
@@ -3831,7 +3831,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         "label": "Authors",
                                       }
                                     }
-                                    name="authors"
+                                    name="author"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -3862,7 +3862,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_authors"
+                                      key="_author"
                                       label="Authors"
                                       messageVariables={
                                         Object {
@@ -3871,7 +3871,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       }
                                       name={
                                         Array [
-                                          "authors",
+                                          "author",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -3888,9 +3888,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_authors"
+                                            htmlFor="filters_author"
                                             label="Authors"
-                                            name="authors"
+                                            name="author"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -3904,7 +3904,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_authors"
+                                                  htmlFor="filters_author"
                                                   title="Authors"
                                                 >
                                                   Authors
@@ -3917,7 +3917,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                             label="Authors"
                                             name={
                                               Array [
-                                                "authors",
+                                                "author",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -3946,7 +3946,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                       <Selector
                                                         action="Authors"
                                                         display="email"
-                                                        id="filters_authors"
+                                                        id="filters_author"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                         placeholder="Filter Authors"
@@ -3965,6 +3965,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Filter Authors"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -3992,6 +3993,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -4019,6 +4021,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -4258,6 +4261,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -4369,6 +4373,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -4614,12 +4619,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                     }
                   }
                   fetchPages={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   format={
                     Object {
                       "id": 1,
@@ -4655,9 +4655,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                             loading={true}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": 10,
                                 "total": 0,
                               }
                             }
@@ -4716,10 +4716,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={20}
+                                  pageSize={10}
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -4741,7 +4740,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                   >
                                     <Pagination
                                       className=""
-                                      current={0}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -4807,7 +4805,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -5059,7 +5057,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={0}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -5075,7 +5072,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={20}
+                                          pageSize={10}
                                           pageSizeOptions={
                                             Array [
                                               "10",

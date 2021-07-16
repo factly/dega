@@ -312,7 +312,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&updatedPostClaims)
 
-		result.ClaimOrder = make([]uint, len(postClaims))
+		result.ClaimOrder = make([]uint, len(updatedPostClaims))
 		// appending previous post claims to result
 		for _, postClaim := range updatedPostClaims {
 			result.Claims = append(result.Claims, postClaim.Claim)

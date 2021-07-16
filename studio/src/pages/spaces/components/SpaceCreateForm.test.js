@@ -9,6 +9,10 @@ import '../../../matchMedia.mock';
 import SpaceCreateForm from './SpaceCreateForm';
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -106,7 +110,79 @@ describe('Spaces Create Form component', () => {
         done();
       }, 0);
     });
+
     it('should submit form with added data', (done) => {
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(1)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 2 } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Input')
+          .simulate('change', { target: { value: 'new name' } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Input')
+          .simulate('change', { target: { value: 'slug' } });
+        wrapper
+          .find('FormItem')
+          .at(4)
+          .find('Input')
+          .simulate('change', { target: { value: 'site title' } });
+        wrapper
+          .find('FormItem')
+          .at(5)
+          .find('Input')
+          .simulate('change', { target: { value: 'tag line' } });
+        wrapper
+          .find('FormItem')
+          .at(7)
+          .find('TextArea')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 'New Description' } });
+        wrapper
+          .find('FormItem')
+          .at(8)
+          .find('MonacoEditor')
+          .at(0)
+          .props()
+          .onChange({ target: { value: '{"sample":"testing"}' } });
+        wrapper
+          .find('FormItem')
+          .at(6)
+          .find('Input')
+          .simulate('change', { target: { value: 'site address' } });
+
+        const submitButtom = wrapper.find('Button').at(0);
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'new name',
+          organisation_id: 2,
+          slug: 'slug',
+          site_title: 'site title',
+          tag_line: 'tag line',
+          description: 'New Description',
+          site_address: 'site address',
+          meta_fields: {
+            sample: 'testing',
+          },
+        });
+        done();
+      }, 0);
+    });
+    it('should submit form without meta data', (done) => {
       act(() => {
         wrapper
           .find('FormItem')

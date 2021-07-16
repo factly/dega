@@ -2724,6 +2724,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select categories"
+                                          value={
+                                            Array [
+                                              1,
+                                            ]
+                                          }
                                         >
                                           <Select
                                             allowClear={true}
@@ -2756,6 +2761,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             transitionName="slide-up"
+                                            value={
+                                              Array [
+                                                1,
+                                              ]
+                                            }
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
@@ -2788,6 +2798,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                               transitionName="slide-up"
+                                              value={
+                                                Array [
+                                                  1,
+                                                ]
+                                              }
                                             >
                                               <div
                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -3119,6 +3134,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       showSearch={true}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          1,
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
@@ -3275,6 +3295,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={
+                                                            Array [
+                                                              1,
+                                                            ]
+                                                          }
                                                           values={
                                                             Array [
                                                               Object {
@@ -3771,6 +3796,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select tags"
+                                          value={
+                                            Array [
+                                              1,
+                                            ]
+                                          }
                                         >
                                           <Select
                                             allowClear={true}
@@ -3803,6 +3833,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             transitionName="slide-up"
+                                            value={
+                                              Array [
+                                                1,
+                                              ]
+                                            }
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
@@ -3835,6 +3870,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                               transitionName="slide-up"
+                                              value={
+                                                Array [
+                                                  1,
+                                                ]
+                                              }
                                             >
                                               <div
                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -4166,6 +4206,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       showSearch={true}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          1,
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
@@ -4322,6 +4367,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={
+                                                            Array [
+                                                              1,
+                                                            ]
+                                                          }
                                                           values={
                                                             Array [
                                                               Object {
@@ -4813,6 +4863,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select authors"
+                                          value={
+                                            Array [
+                                              1,
+                                            ]
+                                          }
                                         >
                                           <Select
                                             allowClear={true}
@@ -4840,6 +4895,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             transitionName="slide-up"
+                                            value={
+                                              Array [
+                                                1,
+                                              ]
+                                            }
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
@@ -4867,6 +4927,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                               transitionName="slide-up"
+                                              value={
+                                                Array [
+                                                  1,
+                                                ]
+                                              }
                                             >
                                               <div
                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -5181,6 +5246,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       showSearch={true}
                                                       tokenWithEnter={false}
                                                       transitionName="slide-up"
+                                                      value={
+                                                        Array [
+                                                          1,
+                                                        ]
+                                                      }
                                                       values={
                                                         Array [
                                                           Object {
@@ -5330,6 +5400,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={
+                                                            Array [
+                                                              1,
+                                                            ]
+                                                          }
                                                           values={
                                                             Array [
                                                               Object {

@@ -169,12 +169,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -213,12 +208,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -1304,12 +1294,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                     }
                   }
                   fetchClaimants={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -1369,9 +1354,9 @@ exports[`Claimants List component snapshot testing should render the component 1
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 0,
                               }
                             }
@@ -1562,9 +1547,9 @@ exports[`Claimants List component snapshot testing should render the component 1
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 0,
                                         }
                                       }
@@ -1743,9 +1728,9 @@ exports[`Claimants List component snapshot testing should render the component 1
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -2582,12 +2567,7 @@ exports[`Claimants List component snapshot testing should render the component w
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -2626,12 +2606,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -3742,12 +3717,7 @@ exports[`Claimants List component snapshot testing should render the component w
                     }
                   }
                   fetchClaimants={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -3834,9 +3804,9 @@ exports[`Claimants List component snapshot testing should render the component w
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 2,
                               }
                             }
@@ -4162,9 +4132,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 2,
                                         }
                                       }
@@ -4474,9 +4444,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 2,
                                               },
                                               "prefixCls": "ant-table",
@@ -7125,7 +7095,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                       className="ant-table-pagination ant-table-pagination-right"
                                       current={1}
                                       onChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       total={2}
                                     >
                                       <LocaleReceiver
@@ -7213,7 +7183,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                           }
                                           onChange={[Function]}
                                           onShowSizeChange={[Function]}
-                                          pageSize={20}
+                                          pageSize={10}
                                           prefixCls="ant-pagination"
                                           prevIcon={
                                             <button
@@ -7481,7 +7451,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                   "prev_page": "Previous Page",
                                                 }
                                               }
-                                              pageSize={20}
+                                              pageSize={10}
                                               pageSizeOptions={
                                                 Array [
                                                   "10",

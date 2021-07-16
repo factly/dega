@@ -21,6 +21,10 @@ const data = {
 };
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -85,7 +89,20 @@ describe('Claimants Create Form component', () => {
     beforeEach(() => {
       props = {
         onCreate: jest.fn(),
-        data: data,
+        data: {
+          name: 'name',
+          slug: 'slug',
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
+          tag_line: 'tag_line',
+          medium_id: 1,
+          meta_fields: {
+            sample: 'testing',
+          },
+        },
       };
       act(() => {
         wrapper = mount(
@@ -127,7 +144,20 @@ describe('Claimants Create Form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
-        expect(props.onCreate).toHaveBeenCalledWith(props.data);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'name',
+          slug: 'slug',
+          description: {
+            time: 1613544901542,
+            blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
+            version: '2.19.0',
+          },
+          tag_line: 'tag_line',
+          medium_id: 1,
+          meta_fields: {
+            sample: 'testing',
+          },
+        });
         done();
       }, 0);
     });
@@ -143,6 +173,13 @@ describe('Claimants Create Form component', () => {
       expect(submitButtom.text()).toBe('Update');
     });
     it('should submit form with new name', (done) => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <ClaimantCreateForm onCreate={props.onCreate} data={data} />
+          </Provider>,
+        );
+      });
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
@@ -216,6 +253,9 @@ describe('Claimants Create Form component', () => {
           slug: 'new-slug',
           medium_id: 1,
           tag_line: 'new tag line',
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);

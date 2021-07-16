@@ -92,12 +92,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  initialValues={Object {}}
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -135,12 +130,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                         }
                       }
                       id="filters"
-                      initialValues={
-                        Object {
-                          "limit": 20,
-                          "page": 1,
-                        }
-                      }
+                      initialValues={Object {}}
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -1413,7 +1403,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                               >
                                 <FormItem
                                   label="Claimants"
-                                  name="claimants"
+                                  name="claimant"
                                 >
                                   <WrapperField
                                     label="Claimants"
@@ -1422,7 +1412,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         "label": "Claimants",
                                       }
                                     }
-                                    name="claimants"
+                                    name="claimant"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -1453,7 +1443,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_claimants"
+                                      key="_claimant"
                                       label="Claimants"
                                       messageVariables={
                                         Object {
@@ -1462,7 +1452,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                       }
                                       name={
                                         Array [
-                                          "claimants",
+                                          "claimant",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -1479,9 +1469,9 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_claimants"
+                                            htmlFor="filters_claimant"
                                             label="Claimants"
-                                            name="claimants"
+                                            name="claimant"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -1495,7 +1485,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_claimants"
+                                                  htmlFor="filters_claimant"
                                                   title="Claimants"
                                                 >
                                                   Claimants
@@ -1508,7 +1498,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             label="Claimants"
                                             name={
                                               Array [
-                                                "claimants",
+                                                "claimant",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -1536,7 +1526,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     >
                                                       <Selector
                                                         action="Claimants"
-                                                        id="filters_claimants"
+                                                        id="filters_claimant"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                       >
@@ -1554,6 +1544,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Select claimants"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -1577,6 +1568,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -1600,6 +1592,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -1835,6 +1828,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -1942,6 +1936,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -2063,7 +2058,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                               >
                                 <FormItem
                                   label="Ratings"
-                                  name="ratings"
+                                  name="rating"
                                 >
                                   <WrapperField
                                     label="Ratings"
@@ -2072,7 +2067,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                         "label": "Ratings",
                                       }
                                     }
-                                    name="ratings"
+                                    name="rating"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -2103,7 +2098,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_ratings"
+                                      key="_rating"
                                       label="Ratings"
                                       messageVariables={
                                         Object {
@@ -2112,7 +2107,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                       }
                                       name={
                                         Array [
-                                          "ratings",
+                                          "rating",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -2129,9 +2124,9 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_ratings"
+                                            htmlFor="filters_rating"
                                             label="Ratings"
-                                            name="ratings"
+                                            name="rating"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -2145,7 +2140,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_ratings"
+                                                  htmlFor="filters_rating"
                                                   title="Ratings"
                                                 >
                                                   Ratings
@@ -2158,7 +2153,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             label="Ratings"
                                             name={
                                               Array [
-                                                "ratings",
+                                                "rating",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -2186,7 +2181,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                     >
                                                       <Selector
                                                         action="Ratings"
-                                                        id="filters_ratings"
+                                                        id="filters_rating"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                       >
@@ -2204,6 +2199,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Select ratings"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -2231,6 +2227,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -2258,6 +2255,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -2497,6 +2495,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -2608,6 +2607,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -2855,12 +2855,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                     }
                   }
                   fetchClaims={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -2921,9 +2916,9 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 0,
                               }
                             }
@@ -3122,9 +3117,9 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 0,
                                         }
                                       }
@@ -3311,9 +3306,9 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -4088,12 +4083,7 @@ exports[`Claims List component snapshot testing should render the component with
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  initialValues={Object {}}
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -4131,12 +4121,7 @@ exports[`Claims List component snapshot testing should render the component with
                         }
                       }
                       id="filters"
-                      initialValues={
-                        Object {
-                          "limit": 20,
-                          "page": 1,
-                        }
-                      }
+                      initialValues={Object {}}
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -5409,7 +5394,7 @@ exports[`Claims List component snapshot testing should render the component with
                               >
                                 <FormItem
                                   label="Claimants"
-                                  name="claimants"
+                                  name="claimant"
                                 >
                                   <WrapperField
                                     label="Claimants"
@@ -5418,7 +5403,7 @@ exports[`Claims List component snapshot testing should render the component with
                                         "label": "Claimants",
                                       }
                                     }
-                                    name="claimants"
+                                    name="claimant"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -5449,7 +5434,7 @@ exports[`Claims List component snapshot testing should render the component with
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_claimants"
+                                      key="_claimant"
                                       label="Claimants"
                                       messageVariables={
                                         Object {
@@ -5458,7 +5443,7 @@ exports[`Claims List component snapshot testing should render the component with
                                       }
                                       name={
                                         Array [
-                                          "claimants",
+                                          "claimant",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -5475,9 +5460,9 @@ exports[`Claims List component snapshot testing should render the component with
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_claimants"
+                                            htmlFor="filters_claimant"
                                             label="Claimants"
-                                            name="claimants"
+                                            name="claimant"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -5491,7 +5476,7 @@ exports[`Claims List component snapshot testing should render the component with
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_claimants"
+                                                  htmlFor="filters_claimant"
                                                   title="Claimants"
                                                 >
                                                   Claimants
@@ -5504,7 +5489,7 @@ exports[`Claims List component snapshot testing should render the component with
                                             label="Claimants"
                                             name={
                                               Array [
-                                                "claimants",
+                                                "claimant",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -5532,7 +5517,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                     >
                                                       <Selector
                                                         action="Claimants"
-                                                        id="filters_claimants"
+                                                        id="filters_claimant"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                       >
@@ -5550,6 +5535,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Select claimants"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -5573,6 +5559,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -5596,6 +5583,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -5831,6 +5819,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -5938,6 +5927,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -6059,7 +6049,7 @@ exports[`Claims List component snapshot testing should render the component with
                               >
                                 <FormItem
                                   label="Ratings"
-                                  name="ratings"
+                                  name="rating"
                                 >
                                   <WrapperField
                                     label="Ratings"
@@ -6068,7 +6058,7 @@ exports[`Claims List component snapshot testing should render the component with
                                         "label": "Ratings",
                                       }
                                     }
-                                    name="ratings"
+                                    name="rating"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
@@ -6099,7 +6089,7 @@ exports[`Claims List component snapshot testing should render the component with
                                           "validateTrigger": "onChange",
                                         }
                                       }
-                                      key="_ratings"
+                                      key="_rating"
                                       label="Ratings"
                                       messageVariables={
                                         Object {
@@ -6108,7 +6098,7 @@ exports[`Claims List component snapshot testing should render the component with
                                       }
                                       name={
                                         Array [
-                                          "ratings",
+                                          "rating",
                                         ]
                                       }
                                       onReset={[Function]}
@@ -6125,9 +6115,9 @@ exports[`Claims List component snapshot testing should render the component with
                                           style={Object {}}
                                         >
                                           <FormItemLabel
-                                            htmlFor="filters_ratings"
+                                            htmlFor="filters_rating"
                                             label="Ratings"
-                                            name="ratings"
+                                            name="rating"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
@@ -6141,7 +6131,7 @@ exports[`Claims List component snapshot testing should render the component with
                                               >
                                                 <label
                                                   className=""
-                                                  htmlFor="filters_ratings"
+                                                  htmlFor="filters_rating"
                                                   title="Ratings"
                                                 >
                                                   Ratings
@@ -6154,7 +6144,7 @@ exports[`Claims List component snapshot testing should render the component with
                                             label="Ratings"
                                             name={
                                               Array [
-                                                "ratings",
+                                                "rating",
                                               ]
                                             }
                                             onDomErrorVisibleChange={[Function]}
@@ -6182,7 +6172,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                     >
                                                       <Selector
                                                         action="Ratings"
-                                                        id="filters_ratings"
+                                                        id="filters_rating"
                                                         mode="multiple"
                                                         onChange={[Function]}
                                                       >
@@ -6200,6 +6190,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                           onPopupScroll={[Function]}
                                                           onSearch={[Function]}
                                                           placeholder="Select ratings"
+                                                          value={Array []}
                                                         >
                                                           <Select
                                                             allowClear={true}
@@ -6227,6 +6218,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="slide-up"
+                                                            value={Array []}
                                                           >
                                                             <ForwardRef(Select)
                                                               allowClear={true}
@@ -6254,6 +6246,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                             >
                                                               <div
                                                                 className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-arrow ant-select-loading ant-select-show-search"
@@ -6493,6 +6486,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
                                                                       transitionName="slide-up"
+                                                                      value={Array []}
                                                                       values={Array []}
                                                                     >
                                                                       <div
@@ -6604,6 +6598,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
                                                                           transitionName="slide-up"
+                                                                          value={Array []}
                                                                           values={Array []}
                                                                         >
                                                                           <CSSMotionList
@@ -6868,12 +6863,7 @@ exports[`Claims List component snapshot testing should render the component with
                     }
                   }
                   fetchClaims={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -6953,9 +6943,9 @@ exports[`Claims List component snapshot testing should render the component with
                             loading={false}
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": undefined,
                                 "total": 1,
                               }
                             }
@@ -7199,9 +7189,9 @@ exports[`Claims List component snapshot testing should render the component with
                                       loading={false}
                                       pagination={
                                         Object {
-                                          "current": 1,
+                                          "current": undefined,
                                           "onChange": [Function],
-                                          "pageSize": 20,
+                                          "pageSize": undefined,
                                           "total": 1,
                                         }
                                       }
@@ -7429,9 +7419,9 @@ exports[`Claims List component snapshot testing should render the component with
                                               "loading": false,
                                               "mergedExpandedKeys": Set {},
                                               "pagination": Object {
-                                                "current": 1,
+                                                "current": undefined,
                                                 "onChange": [Function],
-                                                "pageSize": 20,
+                                                "pageSize": undefined,
                                                 "total": 1,
                                               },
                                               "prefixCls": "ant-table",
@@ -8995,7 +8985,7 @@ exports[`Claims List component snapshot testing should render the component with
                                       className="ant-table-pagination ant-table-pagination-right"
                                       current={1}
                                       onChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       total={1}
                                     >
                                       <LocaleReceiver
@@ -9083,7 +9073,7 @@ exports[`Claims List component snapshot testing should render the component with
                                           }
                                           onChange={[Function]}
                                           onShowSizeChange={[Function]}
-                                          pageSize={20}
+                                          pageSize={10}
                                           prefixCls="ant-pagination"
                                           prevIcon={
                                             <button
@@ -9351,7 +9341,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                   "prev_page": "Previous Page",
                                                 }
                                               }
-                                              pageSize={20}
+                                              pageSize={10}
                                               pageSizeOptions={
                                                 Array [
                                                   "10",

@@ -121,6 +121,30 @@ func (r *postResolver) Claims(ctx context.Context, obj *models.Post) ([]*models.
 	return claims, nil
 }
 
+func (r *postResolver) ClaimOrder(ctx context.Context, obj *models.Post) ([]*int, error) {
+	var claimOrder []*int
+
+	format, err := loaders.GetFormatLoader(ctx).Load(fmt.Sprint(obj.FormatID))
+	if err != nil {
+		return nil, err
+	}
+
+	if format.Slug == "fact-check" {
+		postClaims := make([]models.PostClaim, 0)
+		config.DB.Model(&models.PostClaim{}).Where(&models.PostClaim{
+			PostID: uint(obj.ID),
+		}).Find(&postClaims)
+
+		claimOrder = make([]*int, len(postClaims))
+		for _, pc := range postClaims {
+			claimID := int(pc.ClaimID)
+			claimOrder[pc.Position-1] = &claimID
+		}
+	}
+
+	return claimOrder, nil
+}
+
 func (r *postResolver) Users(ctx context.Context, obj *models.Post) ([]*models.User, error) {
 	postUsers := []models.PostAuthor{}
 
@@ -205,7 +229,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		pageSortBy = *sortBy
 	}
 
-	order := pageSortBy + " " + pageSortOrder
+	order := "posts." + pageSortBy + " " + pageSortOrder
 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
@@ -318,7 +342,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	var total int64
 	tx.Where(&models.Post{
 		SpaceID: uint(sID),
-	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Find(&result.Nodes)
+	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Select("posts.*").Find(&result.Nodes)
 
 	result.Total = int(total)
 

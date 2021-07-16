@@ -12,7 +12,7 @@ function FormatList({ actions }) {
     page: 1,
     limit: 20,
   });
-  query.set('page',filters.page);
+  query.set('page', filters.page);
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { formats, total, loading } = useSelector((state) => {
     const node = state.formats.req.find((item) => {

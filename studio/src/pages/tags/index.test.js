@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 
 import '../../matchMedia.mock';
 import Tags from './index';
+import { getTags } from '../../actions/tags';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -19,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/tags', () => ({
@@ -31,10 +34,7 @@ let state = {
     req: [
       {
         data: [1],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 1,
       },
     ],
@@ -106,6 +106,22 @@ describe('Tags List component', () => {
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
+    it('should handle url search params', () => {
+      store = mockStore(state);
+      let wrapper;
+      window.history.pushState({}, '', '/tags?limit=20&page=1&q=desc');
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <Tags permission={{ actions: ['update', 'delete'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getTags).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+    });
+
     it('should submit filters', () => {
       store = mockStore(state);
       let wrapper;
@@ -128,14 +144,14 @@ describe('Tags List component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'asc' } });
+          .onChange({ target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
       });
 
       setTimeout(() => {
-        expect(getPosts).toHaveBeenCalledWith({
+        expect(getTags).toHaveBeenCalledWith({
           page: 1,
           limit: 20,
           q: 'tag',

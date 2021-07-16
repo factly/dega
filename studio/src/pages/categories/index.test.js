@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 
 import '../../matchMedia.mock';
 import Categories from './index';
+import * as actions from '../../actions/categories';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -19,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/categories', () => ({
@@ -71,10 +74,7 @@ describe('Categories component', () => {
           req: [
             {
               data: [1],
-              query: {
-                page: 1,
-                limit: 20,
-              },
+              query: {},
               total: 1,
             },
           ],
@@ -108,6 +108,7 @@ describe('Categories component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
+      expect(actions.getCategories).toHaveBeenCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -115,6 +116,47 @@ describe('Categories component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/categories?limit=20&page=1&q=desc');
+      const store2 = mockStore({
+        categories: {
+          req: [
+            {
+              data: [1],
+              query: { page: 1, limit: 20 },
+              total: 1,
+            },
+          ],
+          details: {
+            1: {
+              id: 1,
+              name: 'category',
+              slug: 'slug',
+              description: 'description',
+              parent_id: 1,
+              category_date: '2017-12-12',
+            },
+          },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      });
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Categories permission={{ actions: ['create'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(actions.getCategories).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore({
@@ -166,16 +208,16 @@ describe('Categories component', () => {
           .at(2)
           .find('Select')
           .props()
-          .onChange({ target: { value: 'asc' } });
+          .onChange({ target: { value: '' } });
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });
       setTimeout(() => {
-        expect(getCategories).toHaveBeenCalledWith({
+        expect(actions.getCategories).toHaveBeenCalledWith({
           page: 1,
           limit: 20,
-          sort: 'asc',
+          sort: '',
           format: [1],
           q: 'Explainer',
           tag: [2],

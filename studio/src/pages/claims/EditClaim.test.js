@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { act } from '@testing-library/react';
 
 import '../../matchMedia.mock';
@@ -15,6 +15,10 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -125,7 +129,7 @@ describe('Claims Edit component', () => {
     it('should render the component', () => {
       let tree;
       act(() => {
-        tree = mount(
+        tree = shallow(
           <Provider store={store}>
             <EditClaim />
           </Provider>,

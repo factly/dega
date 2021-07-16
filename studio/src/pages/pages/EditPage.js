@@ -40,7 +40,13 @@ function EditPage({ formats }) {
     });
   };
   return (
-    <PageEditForm data={page} onCreate={onUpdate} actions={actions} format={formats.article} />
+    <PageEditForm
+      data={page}
+      onCreate={onUpdate}
+      actions={actions}
+      format={formats.article}
+      page={true}
+    />
   );
 }
 

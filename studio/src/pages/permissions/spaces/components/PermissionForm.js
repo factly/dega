@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, InputNumber, Space, Switch } from 'antd';
-import Selector from '../../../../components/Selector';
 
 const layout = {
   labelCol: {

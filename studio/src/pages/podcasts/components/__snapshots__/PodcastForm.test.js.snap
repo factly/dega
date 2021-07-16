@@ -1707,6 +1707,11 @@ exports[`Podcast form component snapshot testing should match component with dat
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select categories"
+                                              value={
+                                                Array [
+                                                  1,
+                                                ]
+                                              }
                                             >
                                               <Select
                                                 allowClear={true}
@@ -1739,6 +1744,11 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
+                                                value={
+                                                  Array [
+                                                    1,
+                                                  ]
+                                                }
                                               >
                                                 <ForwardRef(Select)
                                                   allowClear={true}
@@ -1771,6 +1781,11 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
+                                                  value={
+                                                    Array [
+                                                      1,
+                                                    ]
+                                                  }
                                                 >
                                                   <div
                                                     className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -2059,6 +2074,11 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={
+                                                            Array [
+                                                              1,
+                                                            ]
+                                                          }
                                                           values={
                                                             Array [
                                                               Object {
@@ -2214,6 +2234,11 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                               showSearch={true}
                                                               tokenWithEnter={false}
                                                               transitionName="slide-up"
+                                                              value={
+                                                                Array [
+                                                                  1,
+                                                                ]
+                                                              }
                                                               values={
                                                                 Array [
                                                                   Object {
@@ -2728,6 +2753,184 @@ exports[`Podcast form component snapshot testing should match component with dat
                                               }
                                             />
                                           </Editor>
+                                        </Component>
+                                      </div>
+                                    </div>
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
+                                    >
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
+                                  </div>
+                                </Col>
+                              </FormItemInput>
+                            </div>
+                          </Row>
+                        </Field>
+                      </WrapperField>
+                    </FormItem>
+                    <FormItem
+                      label="Metafields"
+                      name="meta_fields"
+                    >
+                      <WrapperField
+                        label="Metafields"
+                        messageVariables={
+                          Object {
+                            "label": "Metafields",
+                          }
+                        }
+                        name="meta_fields"
+                        onReset={[Function]}
+                        trigger="onChange"
+                        validateTrigger="onChange"
+                      >
+                        <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-category",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
+                          key="_meta_fields"
+                          label="Metafields"
+                          messageVariables={
+                            Object {
+                              "label": "Metafields",
+                            }
+                          }
+                          name={
+                            Array [
+                              "meta_fields",
+                            ]
+                          }
+                          onReset={[Function]}
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                          valuePropName="value"
+                        >
+                          <Row
+                            className="ant-form-item"
+                            key="row"
+                          >
+                            <div
+                              className="ant-row ant-form-item"
+                              style={Object {}}
+                            >
+                              <FormItemLabel
+                                htmlFor="create-category_meta_fields"
+                                label="Metafields"
+                                name="meta_fields"
+                                prefixCls="ant-form"
+                                required={false}
+                                requiredMark={true}
+                              >
+                                <Col
+                                  className="ant-form-item-label"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-label"
+                                    style={Object {}}
+                                  >
+                                    <label
+                                      className=""
+                                      htmlFor="create-category_meta_fields"
+                                      title="Metafields"
+                                    >
+                                      Metafields
+                                    </label>
+                                  </div>
+                                </Col>
+                              </FormItemLabel>
+                              <FormItemInput
+                                errors={Array []}
+                                label="Metafields"
+                                name={
+                                  Array [
+                                    "meta_fields",
+                                  ]
+                                }
+                                onDomErrorVisibleChange={[Function]}
+                                prefixCls="ant-form"
+                                status=""
+                                touched={false}
+                                validateStatus=""
+                                validating={false}
+                              >
+                                <Col
+                                  className="ant-form-item-control"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-control"
+                                    style={Object {}}
+                                  >
+                                    <div
+                                      className="ant-form-item-control-input"
+                                    >
+                                      <div
+                                        className="ant-form-item-control-input-content"
+                                      >
+                                        <Component
+                                          update={1}
+                                        >
+                                          <MONACOEditor
+                                            id="create-category_meta_fields"
+                                            onChange={[Function]}
+                                          >
+                                            <MonacoEditor
+                                              height="240"
+                                              language="json"
+                                              onChange={[Function]}
+                                              options={
+                                                Object {
+                                                  "autoClosingBrackets": "never",
+                                                  "autoClosingQuotes": "never",
+                                                  "cursorBlinking": "smooth",
+                                                  "folding": true,
+                                                  "lineNumbersMinChars": 4,
+                                                  "minimap": Object {
+                                                    "enabled": false,
+                                                  },
+                                                  "scrollBeyondLastLine": false,
+                                                  "theme": "vs-dark",
+                                                  "wordWrap": "on",
+                                                }
+                                              }
+                                            >
+                                              <div />
+                                            </MonacoEditor>
+                                          </MONACOEditor>
                                         </Component>
                                       </div>
                                     </div>
@@ -4905,6 +5108,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select categories"
+                                              value={Array []}
                                             >
                                               <Select
                                                 allowClear={true}
@@ -4933,6 +5137,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
+                                                value={Array []}
                                               >
                                                 <ForwardRef(Select)
                                                   allowClear={true}
@@ -4961,6 +5166,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
+                                                  value={Array []}
                                                 >
                                                   <div
                                                     className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -5206,6 +5412,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={Array []}
                                                           values={Array []}
                                                         >
                                                           <div
@@ -5317,6 +5524,7 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                                               showSearch={true}
                                                               tokenWithEnter={false}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                               values={Array []}
                                                             >
                                                               <CSSMotionList
@@ -5562,6 +5770,184 @@ exports[`Podcast form component snapshot testing should render the component 1`]
                                               }
                                             />
                                           </Editor>
+                                        </Component>
+                                      </div>
+                                    </div>
+                                    <ErrorList
+                                      errors={Array []}
+                                      onDomErrorVisibleChange={[Function]}
+                                    >
+                                      <CSSMotion
+                                        motionAppear={true}
+                                        motionDeadline={500}
+                                        motionName="show-help"
+                                        onLeaveEnd={[Function]}
+                                        removeOnLeave={true}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
+                                  </div>
+                                </Col>
+                              </FormItemInput>
+                            </div>
+                          </Row>
+                        </Field>
+                      </WrapperField>
+                    </FormItem>
+                    <FormItem
+                      label="Metafields"
+                      name="meta_fields"
+                    >
+                      <WrapperField
+                        label="Metafields"
+                        messageVariables={
+                          Object {
+                            "label": "Metafields",
+                          }
+                        }
+                        name="meta_fields"
+                        onReset={[Function]}
+                        trigger="onChange"
+                        validateTrigger="onChange"
+                      >
+                        <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-category",
+                              },
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
+                          key="_meta_fields"
+                          label="Metafields"
+                          messageVariables={
+                            Object {
+                              "label": "Metafields",
+                            }
+                          }
+                          name={
+                            Array [
+                              "meta_fields",
+                            ]
+                          }
+                          onReset={[Function]}
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                          valuePropName="value"
+                        >
+                          <Row
+                            className="ant-form-item"
+                            key="row"
+                          >
+                            <div
+                              className="ant-row ant-form-item"
+                              style={Object {}}
+                            >
+                              <FormItemLabel
+                                htmlFor="create-category_meta_fields"
+                                label="Metafields"
+                                name="meta_fields"
+                                prefixCls="ant-form"
+                                required={false}
+                                requiredMark={true}
+                              >
+                                <Col
+                                  className="ant-form-item-label"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-label"
+                                    style={Object {}}
+                                  >
+                                    <label
+                                      className=""
+                                      htmlFor="create-category_meta_fields"
+                                      title="Metafields"
+                                    >
+                                      Metafields
+                                    </label>
+                                  </div>
+                                </Col>
+                              </FormItemLabel>
+                              <FormItemInput
+                                errors={Array []}
+                                label="Metafields"
+                                name={
+                                  Array [
+                                    "meta_fields",
+                                  ]
+                                }
+                                onDomErrorVisibleChange={[Function]}
+                                prefixCls="ant-form"
+                                status=""
+                                touched={false}
+                                validateStatus=""
+                                validating={false}
+                              >
+                                <Col
+                                  className="ant-form-item-control"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-control"
+                                    style={Object {}}
+                                  >
+                                    <div
+                                      className="ant-form-item-control-input"
+                                    >
+                                      <div
+                                        className="ant-form-item-control-input-content"
+                                      >
+                                        <Component
+                                          update={1}
+                                        >
+                                          <MONACOEditor
+                                            id="create-category_meta_fields"
+                                            onChange={[Function]}
+                                          >
+                                            <MonacoEditor
+                                              height="240"
+                                              language="json"
+                                              onChange={[Function]}
+                                              options={
+                                                Object {
+                                                  "autoClosingBrackets": "never",
+                                                  "autoClosingQuotes": "never",
+                                                  "cursorBlinking": "smooth",
+                                                  "folding": true,
+                                                  "lineNumbersMinChars": 4,
+                                                  "minimap": Object {
+                                                    "enabled": false,
+                                                  },
+                                                  "scrollBeyondLastLine": false,
+                                                  "theme": "vs-dark",
+                                                  "wordWrap": "on",
+                                                }
+                                              }
+                                            >
+                                              <div />
+                                            </MonacoEditor>
+                                          </MONACOEditor>
                                         </Component>
                                       </div>
                                     </div>

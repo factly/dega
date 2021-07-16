@@ -1,7 +1,6 @@
 import React from 'react';
 import SpacePermissionList from './components/PermissionList';
-import { Space, Button } from 'antd';
-import { Link } from 'react-router-dom';
+import { Space } from 'antd';
 import { useSelector } from 'react-redux';
 
 function SpacePermissions() {
