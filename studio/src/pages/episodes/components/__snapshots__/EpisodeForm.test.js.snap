@@ -3121,6 +3121,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                     >
                                       <MONACOEditor
                                         id="create-category_meta_fields"
+                                        language="json"
                                         onChange={[Function]}
                                       >
                                         <MonacoEditor
@@ -7212,6 +7213,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                     >
                                       <MONACOEditor
                                         id="create-category_meta_fields"
+                                        language="json"
                                         onChange={[Function]}
                                       >
                                         <MonacoEditor

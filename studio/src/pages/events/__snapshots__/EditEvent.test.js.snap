@@ -539,6 +539,7 @@ exports[`Event edit component snapshot testing should render the component 1`] =
                                   >
                                     <MONACOEditor
                                       id="create-event_tags"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor

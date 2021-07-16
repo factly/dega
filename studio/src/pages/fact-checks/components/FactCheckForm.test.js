@@ -901,19 +901,19 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(18).find('MonacoEditor');
+        const metaFieldData = wrapper.find('FormItem').at(19).find('MonacoEditor');
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
-        const metaData = wrapper.find('FormItem').at(19).find('MonacoEditor');
+        const metaData = wrapper.find('FormItem').at(20).find('MonacoEditor');
         metaData.props().onChange({
           target: { value: '{"meta":"data"}' },
         });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(17).find('Button').at(0);
-        expect(backBtn.text()).toBe('');
+        const backBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
         const submitButtom = wrapper.find('Button').at(1);
@@ -967,6 +967,120 @@ describe('Fact-check form component', () => {
           meta_fields: {
             sample: 'testing',
           },
+        });
+        done();
+      }, 0);
+    });
+    it('should add header and footer code', (done) => {
+      const data2 = { ...data };
+      data2.header_code = `""use strict";↵↵class Chuck {↵    greet() {↵        var a,b;↵        a=5;↵        b=6;↵        return 'Hello'+ (a+b).toString();↵    }↵}"`;
+      data2.footer_code = `{↵    "info":"data",↵    "extra":"pqrstuv"↵}`;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const settingButton = wrapper.find('Button').at(3);
+        expect(settingButton.text()).toBe('');
+        settingButton.simulate('click');
+        expect(wrapper.find('Drawer').length).not.toBe(0);
+      });
+      wrapper.update();
+      act(() => {
+        const addMetaDataBtn = wrapper.find('FormItem').at(17).find('Button').at(0);
+        expect(addMetaDataBtn.text()).toBe('Code Injection');
+        addMetaDataBtn.simulate('click');
+      });
+
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(22)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'typescript' } });
+
+        const headerData = wrapper.find('FormItem').at(23).find('MonacoEditor');
+        headerData.props().onChange({
+          target: {
+            value: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+          },
+        });
+
+        wrapper
+          .find('FormItem')
+          .at(24)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'json' } });
+
+        const footerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        footerData.props().onChange({
+          target: { value: '{↵    "info":"data",↵}' },
+        });
+      });
+      act(() => {
+        const backBtn = wrapper.find('FormItem').at(21).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
+        backBtn.simulate('click');
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Save');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'FactCheck-1',
+          excerpt: 'excerpt of factcheck',
+          slug: 'factcheck-1',
+          featured_medium_id: 1,
+          status: 'draft',
+          format_id: 1,
+          author_ids: [1],
+          authors: [1],
+          categories: [1],
+          category_ids: [1],
+          published_date: null,
+          tag_ids: [1],
+          tags: [1],
+          claims: [1, undefined],
+          claim_ids: [1],
+          claim_order: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+          header_code: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+          footer_code: '{↵    "info":"data",↵}',
         });
         done();
       }, 0);

@@ -1121,6 +1121,7 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
                                     >
                                       <MONACOEditor
                                         id="meta_fields"
+                                        language="json"
                                         onChange={[Function]}
                                       >
                                         <MonacoEditor

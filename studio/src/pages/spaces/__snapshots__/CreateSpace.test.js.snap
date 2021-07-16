@@ -2168,6 +2168,7 @@ exports[`Spaces create component snapshot testing should render the component 1`
                                   >
                                     <MONACOEditor
                                       id="create-space_meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor

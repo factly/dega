@@ -324,6 +324,32 @@ describe('Podcast form component', () => {
         );
       });
       act(() => {
+        wrapper
+          .find('FormItem')
+          .at(6)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'typescript' } });
+
+        const headerData = wrapper.find('FormItem').at(7).find('MonacoEditor');
+        headerData.props().onChange({
+          target: {
+            value: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+          },
+        });
+        wrapper
+          .find('FormItem')
+          .at(8)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'json' } });
+
+        const footerData = wrapper.find('FormItem').at(9).find('MonacoEditor');
+        footerData.props().onChange({
+          target: { value: '{↵    "info":"data",↵}' },
+        });
+      });
+      act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
@@ -343,6 +369,8 @@ describe('Podcast form component', () => {
           meta_fields: {
             sample: 'testing',
           },
+          header_code: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+          footer_code: '{↵    "info":"data",↵}',
           description: {
             time: 1595747741807,
             blocks: [

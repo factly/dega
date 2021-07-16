@@ -2374,6 +2374,7 @@ exports[`Categories create component snapshot testing should render the componen
                                   >
                                     <MONACOEditor
                                       id="create-category_meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor

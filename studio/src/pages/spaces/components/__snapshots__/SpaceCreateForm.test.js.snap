@@ -2205,6 +2205,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 >
                                   <MONACOEditor
                                     id="create-space_meta_fields"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -4588,6 +4589,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 >
                                   <MONACOEditor
                                     id="create-space_meta_fields"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor

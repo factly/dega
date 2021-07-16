@@ -431,6 +431,7 @@ exports[`Event form component snapshot testing should match component with data 
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -1100,6 +1101,7 @@ exports[`Event form component snapshot testing should match component with empty
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -1767,6 +1769,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
