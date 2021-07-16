@@ -45,7 +45,6 @@ export default function setupMonaco() {
   }
 
   addNewEditor(null, 'html');
-  addNewEditor(null, 'javascript');
 
   Monaco.languages.json.jsonDefaults.setDiagnosticsOptions({
     allowComments: false,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Steps, Select, Collapse } from 'antd';
+import { Button, Form, Input, Select, Collapse } from 'antd';
 import MediaSelector from '../../../components/MediaSelector';
 import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
@@ -33,8 +33,6 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   };
 
   const [valueChange, setValueChange] = React.useState(false);
-  const [headerLang, setHeaderLang] = React.useState('html');
-  const [footerLang, setFooterLang] = React.useState('html');
   const [basicPanel, setBasicPanel] = React.useState(null);
 
   const handleBasicCollapse = () => {
@@ -183,37 +181,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         </Collapse>
         <Collapse style={{ width: '95%', marginBottom: '15px' }}>
           <Panel header="Code Injection" key="5">
-            <Form.Item label="Select language">
-              <Select
-                defaultValue="html"
-                onChange={(value) => {
-                  setHeaderLang(value);
-                }}
-              >
-                <Option value="html">HTML</Option>
-                <Option value="json">JSON</Option>
-                <Option value="css">CSS</Option>
-                <Option value="typescript">JavaScript</Option>
-              </Select>
-            </Form.Item>
             <Form.Item name="header_code" label="Header Code">
-              <MonacoEditor language={headerLang} />
-            </Form.Item>
-            <Form.Item label="Select language">
-              <Select
-                defaultValue="html"
-                onChange={(value) => {
-                  setFooterLang(value);
-                }}
-              >
-                <Option value="html">HTML</Option>
-                <Option value="json">JSON</Option>
-                <Option value="css">CSS</Option>
-                <Option value="typescript">JavaScript</Option>
-              </Select>
+              <MonacoEditor language="html" width={650} />
             </Form.Item>
             <Form.Item name="footer_code" label="Footer Code">
-              <MonacoEditor language={footerLang} />
+              <MonacoEditor language="html" width={650} />
             </Form.Item>
           </Panel>
         </Collapse>

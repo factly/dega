@@ -10,7 +10,6 @@ import {
   DatePicker,
   Dropdown,
   Menu,
-  Select,
   Switch,
 } from 'antd';
 import Editor from '../../../components/Editor';
@@ -41,11 +40,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [newClaim, setNewClaim] = React.useState(null);
   const [valueChange, setValueChange] = useState(false);
   const [metaDrawer, setMetaDrawer] = React.useState(false);
-  const [headerLang, setHeaderLang] = React.useState('html');
-  const [footerLang, setFooterLang] = React.useState('html');
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
-
-  const { Option } = Select;
 
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
@@ -379,7 +374,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 onClose={onClose}
                 visible={metaDrawer}
                 getContainer={false}
-                width={366}
+                width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -403,7 +398,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 onClose={onClose}
                 visible={codeDrawer}
                 getContainer={false}
-                width={366}
+                width={710}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -413,37 +408,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     Back
                   </Button>
                 </Form.Item>
-                <Form.Item style={{ width: '100px' }} label="Header Code">
-                  <Select
-                    defaultValue="html"
-                    onChange={(value) => {
-                      setHeaderLang(value);
-                    }}
-                  >
-                    <Option value="html">HTML</Option>
-                    <Option value="json">JSON</Option>
-                    <Option value="css">CSS</Option>
-                    <Option value="typescript">JavaScript</Option>
-                  </Select>
+                <Form.Item name="header_code" label="Header Code">
+                  <MonacoEditor language="html" width={650} />
                 </Form.Item>
-                <Form.Item name="header_code">
-                  <MonacoEditor language={headerLang} />
-                </Form.Item>
-                <Form.Item style={{ width: '100px' }} label="Footer Code">
-                  <Select
-                    defaultValue="html"
-                    onChange={(value) => {
-                      setFooterLang(value);
-                    }}
-                  >
-                    <Option value="html">HTML</Option>
-                    <Option value="json">JSON</Option>
-                    <Option value="css">CSS</Option>
-                    <Option value="typescript">JavaScript</Option>
-                  </Select>
-                </Form.Item>
-                <Form.Item name="footer_code">
-                  <MonacoEditor language={footerLang} />
+                <Form.Item name="footer_code" label="Footer Code">
+                  <MonacoEditor language="html" width={650} />
                 </Form.Item>
               </Drawer>
             </Col>
