@@ -2395,6 +2395,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -4940,6 +4941,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -7483,6 +7485,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

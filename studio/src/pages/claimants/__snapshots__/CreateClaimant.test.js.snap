@@ -1528,6 +1528,7 @@ exports[`Claimants create component snapshot testing should render the component
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

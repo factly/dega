@@ -2227,6 +2227,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -4611,6 +4612,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

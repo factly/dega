@@ -324,29 +324,15 @@ describe('Podcast form component', () => {
         );
       });
       act(() => {
-        wrapper
-          .find('FormItem')
-          .at(6)
-          .find('Select')
-          .props()
-          .onChange({ target: { value: 'typescript' } });
-
-        const headerData = wrapper.find('FormItem').at(7).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(6).find('MonacoEditor');
         headerData.props().onChange({
           target: {
-            value: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+            value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-        wrapper
-          .find('FormItem')
-          .at(8)
-          .find('Select')
-          .props()
-          .onChange({ target: { value: 'json' } });
-
-        const footerData = wrapper.find('FormItem').at(9).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(7).find('MonacoEditor');
         footerData.props().onChange({
-          target: { value: '{↵    "info":"data",↵}' },
+          target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
@@ -369,8 +355,8 @@ describe('Podcast form component', () => {
           meta_fields: {
             sample: 'testing',
           },
-          header_code: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
-          footer_code: '{↵    "info":"data",↵}',
+          header_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          footer_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           description: {
             time: 1595747741807,
             blocks: [

@@ -707,6 +707,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                                 "wordWrap": "on",
                                               }
                                             }
+                                            width={440}
                                           >
                                             <div />
                                           </MonacoEditor>

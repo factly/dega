@@ -999,6 +999,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -2205,6 +2206,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -3409,6 +3411,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

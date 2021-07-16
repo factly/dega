@@ -453,6 +453,7 @@ exports[`Event form component snapshot testing should match component with data 
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -1123,6 +1124,7 @@ exports[`Event form component snapshot testing should match component with empty
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -1791,6 +1793,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

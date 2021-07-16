@@ -1559,6 +1559,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -3256,6 +3257,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -4953,6 +4955,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

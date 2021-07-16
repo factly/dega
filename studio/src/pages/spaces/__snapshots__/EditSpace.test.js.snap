@@ -447,7 +447,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                     "leave": [Function],
                                   }
                                 }
-                                key="rc_animate_1626439460119"
+                                key="rc_animate_1626450906740"
                                 transitionAppear={false}
                                 transitionEnter={true}
                                 transitionLeave={true}
@@ -456,7 +456,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                   destroyInactivePanel={false}
                                   forceRender={false}
                                   isActive={false}
-                                  key="rc_animate_1626439460119"
+                                  key="rc_animate_1626450906740"
                                   prefixCls="ant-collapse"
                                   role={null}
                                 />
@@ -665,7 +665,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                     "leave": [Function],
                                   }
                                 }
-                                key="rc_animate_1626439460119"
+                                key="rc_animate_1626450906740"
                                 transitionAppear={false}
                                 transitionEnter={true}
                                 transitionLeave={true}
@@ -674,7 +674,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                   destroyInactivePanel={false}
                                   forceRender={false}
                                   isActive={false}
-                                  key="rc_animate_1626439460119"
+                                  key="rc_animate_1626450906740"
                                   prefixCls="ant-collapse"
                                   role={null}
                                 />
@@ -883,7 +883,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                     "leave": [Function],
                                   }
                                 }
-                                key="rc_animate_1626439460119"
+                                key="rc_animate_1626450906740"
                                 transitionAppear={false}
                                 transitionEnter={true}
                                 transitionLeave={true}
@@ -892,7 +892,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                   destroyInactivePanel={false}
                                   forceRender={false}
                                   isActive={false}
-                                  key="rc_animate_1626439460119"
+                                  key="rc_animate_1626450906740"
                                   prefixCls="ant-collapse"
                                   role={null}
                                 />
@@ -1101,7 +1101,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                     "leave": [Function],
                                   }
                                 }
-                                key="rc_animate_1626439460119"
+                                key="rc_animate_1626450906740"
                                 transitionAppear={false}
                                 transitionEnter={true}
                                 transitionLeave={true}
@@ -1110,7 +1110,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                   destroyInactivePanel={false}
                                   forceRender={false}
                                   isActive={false}
-                                  key="rc_animate_1626439460119"
+                                  key="rc_animate_1626450906740"
                                   prefixCls="ant-collapse"
                                   role={null}
                                 />
@@ -1319,7 +1319,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                     "leave": [Function],
                                   }
                                 }
-                                key="rc_animate_1626439460119"
+                                key="rc_animate_1626450906740"
                                 transitionAppear={false}
                                 transitionEnter={true}
                                 transitionLeave={true}
@@ -1328,7 +1328,7 @@ exports[`Spaces Edit component snapshot testing should render the component 1`] 
                                   destroyInactivePanel={false}
                                   forceRender={false}
                                   isActive={false}
-                                  key="rc_animate_1626439460119"
+                                  key="rc_animate_1626450906740"
                                   prefixCls="ant-collapse"
                                   role={null}
                                 />

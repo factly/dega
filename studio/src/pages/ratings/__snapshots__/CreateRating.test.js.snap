@@ -3911,6 +3911,7 @@ exports[`Ratings create component snapshot component should render the component
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

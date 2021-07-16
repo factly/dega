@@ -1003,30 +1003,15 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        wrapper
-          .find('FormItem')
-          .at(22)
-          .find('Select')
-          .props()
-          .onChange({ target: { value: 'typescript' } });
-
-        const headerData = wrapper.find('FormItem').at(23).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(22).find('MonacoEditor');
         headerData.props().onChange({
           target: {
-            value: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
+            value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-
-        wrapper
-          .find('FormItem')
-          .at(24)
-          .find('Select')
-          .props()
-          .onChange({ target: { value: 'json' } });
-
-        const footerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(23).find('MonacoEditor');
         footerData.props().onChange({
-          target: { value: '{↵    "info":"data",↵}' },
+          target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
@@ -1079,8 +1064,8 @@ describe('Fact-check form component', () => {
             ],
             version: '2.18.0',
           },
-          header_code: `""use strict";↵↵class Chuck {↵    greet() {↵        return 'Hello';↵    }↵}"`,
-          footer_code: '{↵    "info":"data",↵}',
+          header_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          footer_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
         });
         done();
       }, 0);

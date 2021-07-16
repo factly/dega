@@ -438,6 +438,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>
