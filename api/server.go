@@ -79,7 +79,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation))
+	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("X-Dega-API-Key", "dega", validator.GetOrganisation))
 
 	if cache.IsEnabled() {
 		r = r.With(cache.CachingMiddleware(), cache.RespMiddleware)
