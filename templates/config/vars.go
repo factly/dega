@@ -43,4 +43,12 @@ func SetupVars() {
 		log.Fatal("please provide database_ssl_mode config param")
 	}
 
+	if !viper.IsSet("kavach_url") {
+		log.Fatal("please provide kavach_url config param")
+	}
+
+	if !viper.IsSet("public_prefix") {
+		log.Fatal("please provide public_prefix config param")
+	}
+
 }
