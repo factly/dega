@@ -1,10 +1,10 @@
 import React from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
-const MONACOEditor = ({ value, onChange }) => {
+const MONACOEditor = ({ value, onChange, language }) => {
   return (
     <MonacoEditor
-      language="json"
+      language={language}
       options={{
         autoClosingBrackets: 'never',
         autoClosingQuotes: 'never',
