@@ -20,9 +20,10 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
-import { SettingFilled } from '@ant-design/icons';
+import { SettingFilled, LeftOutlined } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
+import MonacoEditor from '../../../components/MonacoEditor';
 
 function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -31,6 +32,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
+  const [headerLang, setHeaderLang] = React.useState('html');
+  const [footerLang, setFooterLang] = React.useState('html');
 
   useEffect(() => {
     const prev = sidebar.collapsed;
@@ -46,11 +49,14 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
   const { Option } = Select;
 
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [codeDrawer, setCodeDrawerVisible] = useState(false);
+
   const showDrawer = () => {
     setDrawerVisible(true);
   };
   const onClose = () => {
     setDrawerVisible(false);
+    setCodeDrawerVisible(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -254,6 +260,61 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
+                </Form.Item>
+                <Form.Item>
+                  <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                    Code Injection
+                  </Button>
+                </Form.Item>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={codeDrawer}
+                getContainer={false}
+                width={366}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
+                    <LeftOutlined />
+                    Back
+                  </Button>
+                </Form.Item>
+                <Form.Item style={{ width: '100px' }} label="Header Code">
+                  <Select
+                    defaultValue="html"
+                    onChange={(value) => {
+                      setHeaderLang(value);
+                    }}
+                  >
+                    <Option value="html">HTML</Option>
+                    <Option value="json">JSON</Option>
+                    <Option value="css">CSS</Option>
+                    <Option value="typescript">JavaScript</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="header_code">
+                  <MonacoEditor language={headerLang} />
+                </Form.Item>
+                <Form.Item style={{ width: '100px' }} label="Footer Code">
+                  <Select
+                    defaultValue="html"
+                    onChange={(value) => {
+                      setFooterLang(value);
+                    }}
+                  >
+                    <Option value="html">HTML</Option>
+                    <Option value="json">JSON</Option>
+                    <Option value="css">CSS</Option>
+                    <Option value="javascript">JavaScript</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="footer_code">
+                  <MonacoEditor language={footerLang} />
                 </Form.Item>
               </Drawer>
             </Col>
