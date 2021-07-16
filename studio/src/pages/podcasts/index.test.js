@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 
 import '../../matchMedia.mock';
 import Podcast from './index';
+import { getPodcasts } from '../../actions/podcasts';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -19,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/podcasts', () => ({
@@ -32,10 +35,7 @@ let state = {
     req: [
       {
         data: [1, 2],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 2,
       },
     ],
@@ -149,6 +149,7 @@ describe('Podcast component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
+      expect(getPodcasts).toHaveBeenCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -156,6 +157,20 @@ describe('Podcast component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/podcasts?limit=20&page=1&q=desc');
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <Podcast permission={{ actions: ['admin'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getPodcasts).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -183,7 +198,7 @@ describe('Podcast component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'desc' } });
+          .onChange({ target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
@@ -195,7 +210,7 @@ describe('Podcast component', () => {
           page: 1,
           limit: 5,
           q: 'podcast',
-          sort: 'desc',
+          sort: '',
         });
       }, 0);
     });

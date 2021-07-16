@@ -27,8 +27,8 @@ exports[`Space Request List component snapshot testing should match the componen
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -6842,8 +6842,8 @@ exports[`Space Request List component snapshot testing should match the componen
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -20424,8 +20424,8 @@ exports[`Space Request List component snapshot testing should render the compone
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],

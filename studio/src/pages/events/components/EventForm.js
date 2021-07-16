@@ -23,18 +23,12 @@ const EventForm = ({ onCreate, data = {} }) => {
       data.tags = JSON.stringify(data.tags);
     }
   }
-  const [json, setJson] = React.useState(
-    data.tags && Object.keys(data.tags).length > 0
-      ? data.tags
-      : {
-          app: 'dega',
-        },
-  );
+
   const onReset = () => {
     form.resetFields();
   };
   const getJsonVal = (val) => {
-    let regex = /\,(?!\s*?[\{\[\"\'\w])/;
+    let regex = /,(?!\s*?[{["'\w])/;
     let formattedJson = val.replace(regex, '');
     return JSON.parse(formattedJson);
   };

@@ -777,6 +777,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select authors"
+                                              value={Array []}
                                             >
                                               <Select
                                                 allowClear={true}
@@ -800,6 +801,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
+                                                value={Array []}
                                               >
                                                 <ForwardRef(Select)
                                                   allowClear={true}
@@ -823,6 +825,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
+                                                  value={Array []}
                                                 >
                                                   <div
                                                     className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -1055,6 +1058,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={Array []}
                                                           values={Array []}
                                                         >
                                                           <div
@@ -1161,6 +1165,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                                               showSearch={true}
                                                               tokenWithEnter={false}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                               values={Array []}
                                                             >
                                                               <CSSMotionList
@@ -7838,6 +7843,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select authors"
+                                              value={Array []}
                                             >
                                               <Select
                                                 allowClear={true}
@@ -7861,6 +7867,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 transitionName="slide-up"
+                                                value={Array []}
                                               >
                                                 <ForwardRef(Select)
                                                   allowClear={true}
@@ -7884,6 +7891,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
                                                   transitionName="slide-up"
+                                                  value={Array []}
                                                 >
                                                   <div
                                                     className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -8116,6 +8124,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                           showSearch={true}
                                                           tokenWithEnter={false}
                                                           transitionName="slide-up"
+                                                          value={Array []}
                                                           values={Array []}
                                                         >
                                                           <div
@@ -8222,6 +8231,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                                               showSearch={true}
                                                               tokenWithEnter={false}
                                                               transitionName="slide-up"
+                                                              value={Array []}
                                                               values={Array []}
                                                             >
                                                               <CSSMotionList

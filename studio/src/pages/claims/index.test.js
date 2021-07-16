@@ -7,7 +7,7 @@ import { act } from 'react-dom/test-utils';
 
 import '../../matchMedia.mock';
 import Claims from './index';
-import { shallow, mount } from 'enzyme';
+import { mount } from 'enzyme';
 import { getClaims } from '../../actions/claims';
 
 const middlewares = [thunk];
@@ -20,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/claims', () => ({
@@ -32,10 +34,7 @@ let state = {
     req: [
       {
         data: [1],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 1,
       },
     ],
@@ -213,7 +212,7 @@ describe('Claims List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 20 });
+      expect(getClaims).toHaveBeenCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -221,6 +220,48 @@ describe('Claims List component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/claims?limit=20&page=1&q=desc&claimant=1');
+      const state2 = { ...state };
+      state2.claims = {
+        req: [
+          {
+            data: [1],
+            query: {},
+            total: 1,
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            created_at: '2020-07-17T10:14:44.251814Z',
+            updated_at: '2020-07-17T10:14:44.251814Z',
+            checked_date: '2020-07-17T10:14:44.251814Z',
+            claim_date: '2020-07-17T10:14:44.251814Z',
+            deleted_at: null,
+            name: 'claim-1',
+            slug: 'claim-1',
+            description: '',
+            claimant_id: 1,
+            rating_id: 1,
+            space_id: 1,
+          },
+        },
+        loading: false,
+      };
+      const store2 = mockStore(state2);
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Claims permission={{ actions: ['create'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getClaims).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', claimant: [1] });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -258,14 +299,14 @@ describe('Claims List component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: [1] } });
+          .onChange({ target: { value: [] } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
 
       setTimeout(() => {
-        expect(getPosts).toHaveBeenCalledWith({
+        expect(getClaims).toHaveBeenCalledWith({
           page: 1,
           limit: 5,
           q: 'fact check',

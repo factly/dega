@@ -15,6 +15,10 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),

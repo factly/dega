@@ -169,12 +169,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -214,12 +209,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -1308,12 +1298,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                     }
                   }
                   fetchMedia={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -1349,9 +1334,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             }
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": 10,
                                 "total": 0,
                               }
                             }
@@ -1439,10 +1424,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={20}
+                                  pageSize={10}
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -1464,7 +1448,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                   >
                                     <Pagination
                                       className=""
-                                      current={0}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -1530,7 +1513,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -1782,7 +1765,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={0}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -1798,7 +1780,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={20}
+                                          pageSize={10}
                                           pageSizeOptions={
                                             Array [
                                               "10",
@@ -2011,12 +1993,7 @@ exports[`Media List component snapshot testing should render the component with 
                               "validateFields": [Function],
                             }
                           }
-                          initialValues={
-                            Object {
-                              "limit": 20,
-                              "page": 1,
-                            }
-                          }
+                          initialValues={Object {}}
                           layout="inline"
                           name="filters"
                           onFinish={[Function]}
@@ -2056,12 +2033,7 @@ exports[`Media List component snapshot testing should render the component with 
                                 }
                               }
                               id="filters"
-                              initialValues={
-                                Object {
-                                  "limit": 20,
-                                  "page": 1,
-                                }
-                              }
+                              initialValues={Object {}}
                               name="filters"
                               onFinish={[Function]}
                               onFinishFailed={[Function]}
@@ -3159,12 +3131,7 @@ exports[`Media List component snapshot testing should render the component with 
                     }
                   }
                   fetchMedia={[Function]}
-                  filters={
-                    Object {
-                      "limit": 20,
-                      "page": 1,
-                    }
-                  }
+                  filters={Object {}}
                   setFilters={[Function]}
                 >
                   <Space
@@ -3211,9 +3178,9 @@ exports[`Media List component snapshot testing should render the component with 
                             }
                             pagination={
                               Object {
-                                "current": 1,
+                                "current": undefined,
                                 "onChange": [Function],
-                                "pageSize": 20,
+                                "pageSize": 10,
                                 "total": 1,
                               }
                             }
@@ -3370,10 +3337,9 @@ exports[`Media List component snapshot testing should render the component with 
                                 className="ant-list-pagination"
                               >
                                 <Pagination
-                                  current={1}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
-                                  pageSize={20}
+                                  pageSize={10}
                                   total={1}
                                 >
                                   <LocaleReceiver
@@ -3395,7 +3361,6 @@ exports[`Media List component snapshot testing should render the component with 
                                   >
                                     <Pagination
                                       className=""
-                                      current={1}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -3461,7 +3426,7 @@ exports[`Media List component snapshot testing should render the component with 
                                       }
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
-                                      pageSize={20}
+                                      pageSize={10}
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -3585,7 +3550,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           </button>
                                         </li>
                                         <Pager
-                                          active={true}
+                                          active={false}
                                           itemRender={[Function]}
                                           key="1"
                                           locale={
@@ -3609,7 +3574,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           showTitle={true}
                                         >
                                           <li
-                                            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
+                                            className="ant-pagination-item ant-pagination-item-1"
                                             onClick={[Function]}
                                             onKeyPress={[Function]}
                                             tabIndex="0"
@@ -3713,7 +3678,6 @@ exports[`Media List component snapshot testing should render the component with 
                                         </li>
                                         <Options
                                           changeSize={null}
-                                          current={1}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -3729,7 +3693,7 @@ exports[`Media List component snapshot testing should render the component with 
                                               "prev_page": "Previous Page",
                                             }
                                           }
-                                          pageSize={20}
+                                          pageSize={10}
                                           pageSizeOptions={
                                             Array [
                                               "10",

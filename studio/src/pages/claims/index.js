@@ -37,13 +37,15 @@ function Claims({ permission }) {
 
   React.useEffect(() => {
     keys.forEach((key) => {
-      searchFilter.has(key) ? searchFilter.delete(key) : null;
+      if (searchFilter.has(key)) {
+        searchFilter.delete(key);
+      }
     });
     Object.keys(filters).forEach(function (key) {
       if (key === 'claimant' || key === 'rating') {
         searchFilter.delete(key);
         filters[key].map((each) => {
-          searchFilter.append(key, each);
+          return searchFilter.append(key, each);
         });
       } else {
         searchFilter.set(key, filters[key]);
@@ -89,9 +91,6 @@ function Claims({ permission }) {
 
   const onSave = (values) => {
     let filterValue = {};
-    if (values.status === 'all') {
-      values.status = null;
-    }
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'rating' || key === 'claimant') {

@@ -9,6 +9,10 @@ import '../../../matchMedia.mock';
 import EpisodeForm from './EpisodeForm';
 
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 
 const data = {
   id: 1,
@@ -170,6 +174,9 @@ describe('Episode Form component', () => {
             ],
             version: '2.18.0',
           },
+          meta_fields: {
+            sample: 'testing',
+          },
           audio_url: 'audioUrl',
           medium_id: 1,
         },
@@ -214,7 +221,13 @@ describe('Episode Form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
-        expect(props.onCreate).toHaveBeenCalledWith({ ...props.data, podcast_id: [1] });
+        expect(props.onCreate).toHaveBeenCalledWith({
+          ...props.data,
+          podcast_id: [1],
+          meta_fields: {
+            sample: 'testing',
+          },
+        });
         done();
       }, 0);
     });
@@ -249,6 +262,9 @@ describe('Episode Form component', () => {
             ],
             version: '2.18.0',
           },
+          meta_fields: {
+            sample: 'testing',
+          },
           audio_url: 'audioUrl',
           medium_id: 1,
         });
@@ -268,7 +284,7 @@ describe('Episode Form component', () => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'New Episode' } });
 
-        wrapper.find('FormItem').at(10).find('Audio').props().onUpload('newAudioUrl');
+        wrapper.find('FormItem').at(11).find('Audio').props().onUpload('newAudioUrl');
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');

@@ -17,6 +17,10 @@ import { setCollapse } from './../../../actions/sidebar';
 
 Date.now = jest.fn(() => 1487076708000);
 jest.mock('@editorjs/editorjs');
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('../../../actions/tags', () => ({
   ...jest.requireActual('../../../actions/tags'),
   addTag: jest.fn(),
@@ -198,7 +202,7 @@ describe('Posts Create Form component', () => {
         const settingButton = tree.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
-        expect(tree.find('Drawer').length).toBe(1);
+        expect(tree.find('Drawer').length).not.toBe(0);
       });
       expect(tree).toMatchSnapshot();
     });
@@ -325,13 +329,16 @@ describe('Posts Create Form component', () => {
       act(() => {
         const dropdown = wrapper.find(Dropdown);
         dropdown.simulate('mouseover');
+        const overlay = dropdown.props().overlay;
+        overlay.props.children.props.children[1].props.onChange(true);
+      });
+      act(() => {
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Save');
         submitButtom.simulate('click');
         submitButtom.simulate('submit');
         wrapper.update();
       });
-
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
         expect(props.onCreate).toHaveBeenCalledWith({
@@ -339,7 +346,7 @@ describe('Posts Create Form component', () => {
           excerpt: 'excerpt of post',
           slug: 'post-test',
           featured_medium_id: 1,
-          status: 'draft',
+          status: 'ready',
           published_date: null,
           format_id: 1,
           author_ids: [1],
@@ -409,10 +416,27 @@ describe('Posts Create Form component', () => {
         const settingButton = wrapper.find('Button').at(3);
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
-        expect(wrapper.find('Drawer').length).toBe(1);
+        expect(wrapper.find('Drawer').length).not.toBe(0);
         const closeButtonn = wrapper.find('DrawerChild').find('button').at(0);
         closeButtonn.simulate('click');
       });
+    });
+    it('should hide meta data drawer for page is true', () => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                page={true}
+                actions={['publish']}
+                {...props}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('Drawer').at(1).props().visible).toBe(false);
     });
     it('should submit form with no categories, no tags, no authors data', (done) => {
       const data2 = {
@@ -421,7 +445,7 @@ describe('Posts Create Form component', () => {
         excerpt: 'excerpt of post',
         slug: 'post-1',
         featured_medium_id: 1,
-        status: 'draft',
+        status: 'ready',
         format: 1,
         published_date: null,
         description: {
@@ -458,6 +482,12 @@ describe('Posts Create Form component', () => {
             </Router>
           </Provider>,
         );
+      });
+      act(() => {
+        const dropdown = wrapper.find(Dropdown);
+        dropdown.simulate('mouseover');
+        const overlay = dropdown.props().overlay;
+        overlay.props.children.props.children[1].props.onChange(true);
       });
       act(() => {
         const submitButtom = wrapper.find('Button').at(1);
@@ -661,6 +691,106 @@ describe('Posts Create Form component', () => {
               },
             ],
             version: '2.18.0',
+          },
+        });
+        done();
+      }, 0);
+    });
+    it('should add meta data', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = {
+        sample: 'testing1',
+      };
+      data2.meta = {
+        meta: 'data1',
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const settingButton = wrapper.find('Button').at(3);
+        expect(settingButton.text()).toBe('');
+        settingButton.simulate('click');
+        expect(wrapper.find('Drawer').length).not.toBe(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(13).find('Button').at(0);
+        expect(addMetaDataBtn.text()).toBe('Add Meta Data');
+        addMetaDataBtn.simulate('click');
+      });
+
+      act(() => {
+        const metaFieldData = wrapper.find('FormItem').at(15).find('MonacoEditor');
+        metaFieldData.props().onChange({
+          target: { value: '{"sample":"testing"}' },
+        });
+        const metaData = wrapper.find('FormItem').at(16).find('MonacoEditor');
+        metaData.props().onChange({
+          target: { value: '{"meta":"data"}' },
+        });
+      });
+
+      act(() => {
+        const backBtn = wrapper.find('FormItem').at(14).find('Button').at(0);
+        expect(backBtn.text()).toBe('');
+        backBtn.simulate('click');
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Save');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Post-1',
+          excerpt: 'excerpt of post',
+          slug: 'post-1',
+          featured_medium_id: 1,
+          status: 'draft',
+          published_date: null,
+          format_id: 1,
+          author_ids: [1],
+          authors: [1],
+          categories: [1],
+          category_ids: [1],
+          tag_ids: [1],
+          tags: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+          meta: {
+            meta: 'data',
+          },
+          meta_fields: {
+            sample: 'testing',
           },
         });
         done();

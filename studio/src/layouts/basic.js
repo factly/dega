@@ -1,6 +1,6 @@
 import React from 'react';
 import { Layout, Card, notification } from 'antd';
-import { withRouter, useHistory } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,7 +11,6 @@ import PageHeader from '../components/PageHeader';
 
 function BasicLayout(props) {
   const { location } = props;
-  const history = useHistory();
   const { Footer, Content } = Layout;
   const { children } = props;
   const dispatch = useDispatch();

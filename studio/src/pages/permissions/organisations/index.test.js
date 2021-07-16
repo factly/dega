@@ -1,6 +1,6 @@
 import React from 'react';
-import { useDispatch, useSelector, Provider } from 'react-redux';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { useDispatch, Provider } from 'react-redux';
+import { BrowserRouter as Router } from 'react-router-dom';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
@@ -100,7 +100,9 @@ describe('Organisation Permission component', () => {
       store = mockStore(state2);
       const tree = mount(
         <Provider store={store}>
-          <OrganisationPermission />
+          <Router>
+            <OrganisationPermission />
+          </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();

@@ -13,7 +13,10 @@ jest.mock('react-redux', () => ({
   useSelector: jest.fn(),
   useDispatch: jest.fn(),
 }));
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -143,6 +146,7 @@ describe('Ratings Create Form component', () => {
     });
     it('should submit form with new name', (done) => {
       const data2 = { ...data };
+      data2.id = 1;
       data2.text_colour = {
         hex: '#f9f9fa',
         hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
@@ -150,6 +154,9 @@ describe('Ratings Create Form component', () => {
         oldHue: 240,
         rgb: { r: 249, g: 249, b: 250, a: 1 },
         source: 'hsv',
+      };
+      data2.meta_fields = {
+        sample: 'testing',
       };
       act(() => {
         wrapper = mount(
@@ -173,6 +180,9 @@ describe('Ratings Create Form component', () => {
           slug: 'new-name',
           numeric_value: 3,
           medium_id: 1,
+          meta_fields: {
+            sample: 'testing',
+          },
           background_colour: {
             hex: '#f9f9fa',
             hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },

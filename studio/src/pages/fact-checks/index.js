@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import getUserPermission from '../../utils/getUserPermission';
@@ -45,13 +45,15 @@ function FactCheck({ formats }) {
 
   React.useEffect(() => {
     keys.forEach((key) => {
-      searchFilter.has(key) ? searchFilter.delete(key) : null;
+      if (searchFilter.has(key)) {
+        searchFilter.delete(key);
+      }
     });
     Object.keys(filters).forEach(function (key) {
       if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
         searchFilter.delete(key);
         filters[key].map((each) => {
-          searchFilter.append(key, each);
+          return searchFilter.append(key, each);
         });
       } else {
         searchFilter.set(key, filters[key]);

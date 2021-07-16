@@ -963,6 +963,11 @@ exports[`Categories Edit component snapshot testing should render the component 
                                         onPopupScroll={[Function]}
                                         onSearch={[Function]}
                                         placeholder="Select categories"
+                                        value={
+                                          Array [
+                                            Array [],
+                                          ]
+                                        }
                                       >
                                         <Select
                                           allowClear={true}
@@ -993,6 +998,11 @@ exports[`Categories Edit component snapshot testing should render the component 
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                           transitionName="slide-up"
+                                          value={
+                                            Array [
+                                              Array [],
+                                            ]
+                                          }
                                         >
                                           <ForwardRef(Select)
                                             allowClear={true}
@@ -1023,6 +1033,11 @@ exports[`Categories Edit component snapshot testing should render the component 
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             transitionName="slide-up"
+                                            value={
+                                              Array [
+                                                Array [],
+                                              ]
+                                            }
                                           >
                                             <div
                                               className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow ant-select-loading"
@@ -1263,6 +1278,11 @@ exports[`Categories Edit component snapshot testing should render the component 
                                                     showSearch={false}
                                                     tokenWithEnter={false}
                                                     transitionName="slide-up"
+                                                    value={
+                                                      Array [
+                                                        Array [],
+                                                      ]
+                                                    }
                                                     values={
                                                       Array [
                                                         Object {
@@ -1376,6 +1396,11 @@ exports[`Categories Edit component snapshot testing should render the component 
                                                         showSearch={false}
                                                         tokenWithEnter={false}
                                                         transitionName="slide-up"
+                                                        value={
+                                                          Array [
+                                                            Array [],
+                                                          ]
+                                                        }
                                                         values={
                                                           Array [
                                                             Object {

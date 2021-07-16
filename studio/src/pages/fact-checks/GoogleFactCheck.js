@@ -18,7 +18,7 @@ function GoogleFactCheck() {
   const [paginationStack, setPaginationStack] = React.useState([]);
   const [indexPointer, setIndexPointer] = React.useState(null);
 
-  const { factChecks, total, loading, nextPage } = useSelector(({ googleFactChecks }) => {
+  const { factChecks, loading, nextPage } = useSelector(({ googleFactChecks }) => {
     const node = googleFactChecks.req.find((item) => {
       return deepEqual(item.query, filters);
     });
@@ -56,7 +56,7 @@ function GoogleFactCheck() {
   React.useEffect(() => {
     if (!paginationStack.includes(currPageToken))
       setPaginationStack((paginationStack) => [...paginationStack, currPageToken]);
-  }, [currPageToken]);
+  }, [paginationStack, currPageToken]);
 
   const onLoadMore = () => {
     indexPointer + 1 === paginationStack.length

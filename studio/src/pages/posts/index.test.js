@@ -21,7 +21,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 
 jest.mock('../../actions/posts', () => ({
@@ -98,12 +100,7 @@ describe('Posts List component', () => {
         req: [
           {
             data: [1],
-            query: {
-              page: 1,
-              limit: 20,
-              format: [1],
-              status: null,
-            },
+            query: {},
             total: 1,
           },
         ],
@@ -128,7 +125,7 @@ describe('Posts List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPosts).toHaveBeenCalledWith({ page: 1, limit: 20, format: [1], status: null });
+      expect(getPosts).toHaveBeenCalledWith({ format: [1] });
       expect(getPosts).toHaveBeenCalledWith({
         page: 1,
         format: [1],
@@ -156,6 +153,59 @@ describe('Posts List component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/posts?limit=20&page=1&q=desc&category=1');
+      const state2 = { ...state };
+      state2.posts = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+              format: [1],
+              status: null,
+            },
+            total: 1,
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            title: 'Post-1',
+            slug: 'post-1',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 1,
+            category_id: 1,
+          },
+        },
+        loading: false,
+      };
+      const store2 = mockStore(state2);
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Posts permission={{ actions: ['create'] }} formats={formats} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getPosts).toHaveBeenCalledWith({
+        page: 1,
+        format: [1],
+        status: 'template',
+      });
+      expect(getPosts).toHaveBeenCalledWith({
+        page: 1,
+        limit: 20,
+        q: 'desc',
+        category: [1],
+        format: [1],
+      });
     });
     it('should submit filters', () => {
       store = mockStore({
@@ -264,7 +314,7 @@ describe('Posts List component', () => {
           .find('Selector')
           .at(0)
           .props()
-          .onChange({ target: { value: [2] } });
+          .onChange({ target: { value: [] } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');
@@ -278,7 +328,7 @@ describe('Posts List component', () => {
           format: [1],
           q: 'Explainer',
           tag: [2],
-          category: [2],
+          category: [],
         });
       }, 0);
     });
