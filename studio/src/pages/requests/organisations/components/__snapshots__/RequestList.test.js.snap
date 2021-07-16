@@ -27,8 +27,8 @@ exports[`Organisation Request List component snapshot testing should match the c
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -5951,8 +5951,8 @@ exports[`Organisation Request List component snapshot testing should match the c
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -17751,8 +17751,8 @@ exports[`Organisation Request List component snapshot testing should render the 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],

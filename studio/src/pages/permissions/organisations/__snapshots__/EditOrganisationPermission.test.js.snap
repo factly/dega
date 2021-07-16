@@ -942,6 +942,11 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                         onPopupScroll={[Function]}
                                         onSearch={[Function]}
                                         placeholder="Select organisation"
+                                        value={
+                                          Array [
+                                            1,
+                                          ]
+                                        }
                                       >
                                         <Select
                                           allowClear={true}
@@ -968,6 +973,11 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                           transitionName="slide-up"
+                                          value={
+                                            Array [
+                                              1,
+                                            ]
+                                          }
                                         >
                                           <ForwardRef(Select)
                                             allowClear={true}
@@ -994,6 +1004,11 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             transitionName="slide-up"
+                                            value={
+                                              Array [
+                                                1,
+                                              ]
+                                            }
                                           >
                                             <div
                                               className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
@@ -1233,6 +1248,11 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                                     showSearch={false}
                                                     tokenWithEnter={false}
                                                     transitionName="slide-up"
+                                                    value={
+                                                      Array [
+                                                        1,
+                                                      ]
+                                                    }
                                                     values={
                                                       Array [
                                                         Object {
@@ -1345,6 +1365,11 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                                         showSearch={false}
                                                         tokenWithEnter={false}
                                                         transitionName="slide-up"
+                                                        value={
+                                                          Array [
+                                                            1,
+                                                          ]
+                                                        }
                                                         values={
                                                           Array [
                                                             Object {

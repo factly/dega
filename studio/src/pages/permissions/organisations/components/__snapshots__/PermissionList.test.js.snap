@@ -27,8 +27,8 @@ exports[`Organisation Permission List component  snapshot testing should match c
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -4229,8 +4229,8 @@ exports[`Organisation Permission List component  snapshot testing should match c
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],
@@ -12585,8 +12585,8 @@ exports[`Organisation Permission List component  snapshot testing should render 
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/",
-            "search": "",
+            "pathname": "/undefined/undefined/",
+            "search": "?page=1",
             "state": undefined,
           },
           "push": [Function],

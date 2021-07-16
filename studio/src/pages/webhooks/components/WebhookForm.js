@@ -33,20 +33,18 @@ const WebhookForm = ({ onCreate, data = {} }) => {
     page: 1,
     limit: 20,
   });
-  const { events, total, loading } = useSelector((state) => {
+  const { events } = useSelector((state) => {
     let details = [];
     let ids = [];
-    let total = 0;
 
     for (var i = 1; i <= filters.page; i++) {
       let j = state.events.req.findIndex((item) => deepEqual(item.query, { ...filters, page: i }));
       if (j > -1) {
-        total = state.events.req[j].total;
         ids = ids.concat(state.events.req[j].data);
       }
     }
     details = ids.map((element) => state.events.details[element]);
-    return { events: details, total: total, loading: state.events.loading };
+    return { events: details };
   });
 
   const onReset = () => {

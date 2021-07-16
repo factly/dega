@@ -18,7 +18,10 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: () => ({
@@ -255,6 +258,9 @@ describe('Media edit component', () => {
               file_size: 'file_size',
               caption: 'caption',
               description: 'description',
+              meta_fields: {
+                sample: 'testing',
+              },
             },
           },
           loading: false,
@@ -301,6 +307,7 @@ describe('Media edit component', () => {
         caption: 'caption',
         description: 'description',
         test: 'test',
+        meta_fields: '{"sample":"testing"}',
       });
     });
     it('should call deleteMedia', (done) => {

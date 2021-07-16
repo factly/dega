@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +16,7 @@ function RequestList() {
     page: 1,
     limit: 20,
   });
-  query.set('page',filters.page);
+  query.set('page', filters.page);
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { organisationRequests, total, loading } = useSelector((state) => {
     const node = state.organisationRequests.req.find((item) => {

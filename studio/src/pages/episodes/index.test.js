@@ -20,7 +20,9 @@ jest.mock('react-redux', () => ({
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useHistory: jest.fn(),
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
 }));
 jest.mock('../../actions/episodes', () => ({
   getEpisodes: jest.fn(),
@@ -30,10 +32,7 @@ let state = {
     req: [
       {
         data: [1],
-        query: {
-          page: 1,
-          limit: 20,
-        },
+        query: {},
         total: 1,
       },
     ],
@@ -164,7 +163,7 @@ describe('Episode Component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getEpisodes).toBeCalledWith({ page: 1, limit: 20 });
+      expect(getEpisodes).toBeCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -172,6 +171,20 @@ describe('Episode Component', () => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
+    });
+    it('should handle url search params', () => {
+      let wrapper;
+      window.history.pushState({}, '', '/episodes?limit=20&page=1&q=desc');
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <Episode permission={{ actions: ['create'] }} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(getEpisodes).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -195,7 +208,7 @@ describe('Episode Component', () => {
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 'desc' } });
+          .onChange({ target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');
@@ -206,7 +219,7 @@ describe('Episode Component', () => {
           page: 1,
           limit: 5,
           q: 'episode',
-          sort: 'desc',
+          sort: '',
         });
       }, 0);
     });

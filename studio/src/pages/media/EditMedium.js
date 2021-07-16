@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { Row, Col, Skeleton, Form, Input, Button, Space, Popconfirm } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
@@ -7,6 +7,8 @@ import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
 import { useHistory } from 'react-router-dom';
+import MonacoEditor from '../../components/MonacoEditor';
+import getJsonValue from '../../utils/getJsonValue';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -43,6 +45,12 @@ function EditMedium() {
     return <RecordNotFound />;
   }
 
+  if (media && media.meta_fields) {
+    if (typeof media.meta_fields !== 'string') {
+      media.meta_fields = JSON.stringify(media.meta_fields);
+    }
+  }
+
   return (
     <Row gutter={['20', '20']}>
       <Col span={'24'}>
@@ -65,6 +73,9 @@ function EditMedium() {
           form={form}
           name="create-space"
           onFinish={(values) => {
+            if (values.meta_fields) {
+              values.meta_fields = getJsonValue(values.meta_fields);
+            }
             updateMedia(values);
           }}
           onValuesChange={() => {
@@ -83,6 +94,9 @@ function EditMedium() {
           </Form.Item>
           <Form.Item name="description" label="Description">
             <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
+          </Form.Item>
+          <Form.Item name="meta_fields" label="Metafields">
+            <MonacoEditor />
           </Form.Item>
           <Form.Item>
             <Space>

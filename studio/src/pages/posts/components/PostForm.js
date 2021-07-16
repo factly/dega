@@ -6,7 +6,6 @@ import {
   Input,
   Button,
   Space,
-  Select,
   Drawer,
   DatePicker,
   Dropdown,
@@ -20,18 +19,20 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
-import { SettingFilled } from '@ant-design/icons';
+import { SettingFilled, LeftOutlined } from '@ant-design/icons';
 import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
+import MonacoEditor from '../../../components/MonacoEditor';
+import getJsonValue from '../../../utils/getJsonValue';
 
-function PostForm({ onCreate, data = {}, actions = {}, format }) {
+function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
   const [form] = Form.useForm();
   const sidebar = useSelector((state) => state.sidebar);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
-
+  const [metaDrawer, setMetaDrawer] = React.useState(false);
   useEffect(() => {
     const prev = sidebar.collapsed;
     if (!sidebar.collapsed) {
@@ -43,14 +44,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { Option } = Select;
-
   const [drawerVisible, setDrawerVisible] = useState(false);
   const showDrawer = () => {
     setDrawerVisible(true);
   };
   const onClose = () => {
     setDrawerVisible(false);
+    setMetaDrawer(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -63,6 +63,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   const onSave = (values) => {
     setShouldBlockNavigation(false);
+    if (values.meta) {
+      values.meta = getJsonValue(values.meta);
+    }
+    if (values.meta_fields) {
+      values.meta_fields = getJsonValue(values.meta_fields);
+    }
     values.category_ids = values.categories || [];
     values.tag_ids = values.tags || [];
     values.format_id = format.id;
@@ -86,6 +92,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
 
   if (data && data.id) {
     data.published_date = data.published_date ? moment(data.published_date) : null;
+    if (data.meta && typeof data.meta !== 'string') {
+      data.meta = JSON.stringify(data.meta);
+    }
+    if (data.meta_fields && typeof data.meta_fields !== 'string') {
+      data.meta_fields = JSON.stringify(data.meta_fields);
+    }
   }
 
   const createTemplate = () => {
@@ -183,7 +195,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
               >
                 <Input.TextArea
                   bordered={false}
-                  autoSize
                   placeholder="Add title for the post"
                   onChange={(e) => onTitleChange(e.target.value)}
                   style={{
@@ -254,6 +265,38 @@ function PostForm({ onCreate, data = {}, actions = {}, format }) {
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
+                </Form.Item>
+                {!page ? (
+                  <Form.Item>
+                    <Button onClick={() => setMetaDrawer(true)}>Add Meta Data</Button>
+                  </Form.Item>
+                ) : null}
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={metaDrawer}
+                getContainer={false}
+                width={366}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button
+                    type="text"
+                    style={{ fontSize: '150%' }}
+                    onClick={() => setMetaDrawer(false)}
+                  >
+                    <LeftOutlined />
+                  </Button>
+                </Form.Item>
+                <Form.Item name="meta_fields" label="Meta Fields">
+                  <MonacoEditor />
+                </Form.Item>
+                <Form.Item name="meta" label="Meta">
+                  <MonacoEditor />
                 </Form.Item>
               </Drawer>
             </Col>

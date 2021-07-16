@@ -31,6 +31,7 @@ exports[`Categories List component Snapshot testing should render the component 
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
+      value={Array []}
     >
       <Select
         allowClear={true}
@@ -54,6 +55,7 @@ exports[`Categories List component Snapshot testing should render the component 
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
         transitionName="slide-up"
+        value={Array []}
       >
         <ForwardRef(Select)
           allowClear={true}
@@ -77,6 +79,7 @@ exports[`Categories List component Snapshot testing should render the component 
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
           transitionName="slide-up"
+          value={Array []}
         >
           <div
             className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -309,6 +312,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   showSearch={true}
                   tokenWithEnter={false}
                   transitionName="slide-up"
+                  value={Array []}
                   values={Array []}
                 >
                   <div
@@ -415,6 +419,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       showSearch={true}
                       tokenWithEnter={false}
                       transitionName="slide-up"
+                      value={Array []}
                       values={Array []}
                     >
                       <CSSMotionList
@@ -525,6 +530,7 @@ exports[`Categories List component Snapshot testing should render the component 
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
+      value={Array []}
     >
       <Select
         allowClear={true}
@@ -548,6 +554,7 @@ exports[`Categories List component Snapshot testing should render the component 
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
         transitionName="slide-up"
+        value={Array []}
       >
         <ForwardRef(Select)
           allowClear={true}
@@ -571,6 +578,7 @@ exports[`Categories List component Snapshot testing should render the component 
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
           transitionName="slide-up"
+          value={Array []}
         >
           <div
             className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -803,6 +811,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   showSearch={true}
                   tokenWithEnter={false}
                   transitionName="slide-up"
+                  value={Array []}
                   values={Array []}
                 >
                   <div
@@ -909,6 +918,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       showSearch={true}
                       tokenWithEnter={false}
                       transitionName="slide-up"
+                      value={Array []}
                       values={Array []}
                     >
                       <CSSMotionList

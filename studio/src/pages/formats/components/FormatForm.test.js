@@ -8,6 +8,10 @@ import { mount } from 'enzyme';
 import '../../../matchMedia.mock';
 import FormatsCreateForm from './FormatForm';
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
@@ -120,6 +124,18 @@ describe('Formats Create Form component', () => {
       }, 0);
     });
     it('should submit form with new name', (done) => {
+      const data2 = { ...data };
+      data2.id = 1;
+      data2.meta_fields = {
+        sample: 'testing',
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <FormatsCreateForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
       act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
@@ -135,6 +151,9 @@ describe('Formats Create Form component', () => {
           name: 'new name',
           slug: 'new-name',
           description: 'description',
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);
