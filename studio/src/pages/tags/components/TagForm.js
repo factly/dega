@@ -93,7 +93,7 @@ const TagForm = ({ onCreate, data = {} }) => {
         <Editor style={{ width: '600px' }} placeholder="Enter Description..." basic={true} />
       </Form.Item>
       <Form.Item name="meta_fields" label="Metafields">
-        <MonacoEditor />
+        <MonacoEditor language="json" />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

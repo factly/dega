@@ -96,7 +96,7 @@ function EditMedium() {
             <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
           </Form.Item>
           <Form.Item name="meta_fields" label="Metafields">
-            <MonacoEditor />
+            <MonacoEditor language="json" />
           </Form.Item>
           <Form.Item>
             <Space>

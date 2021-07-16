@@ -32,6 +32,8 @@ const PodcastForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [headerLang, setHeaderLang] = React.useState('html');
+  const [footerLang, setFooterLang] = React.useState('html');
 
   const onReset = () => {
     form.resetFields();
@@ -111,7 +113,39 @@ const PodcastForm = ({ onCreate, data = {} }) => {
             <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
           </Form.Item>
           <Form.Item name="meta_fields" label="Metafields">
-            <MonacoEditor />
+            <MonacoEditor language="json" />
+          </Form.Item>
+          <Form.Item style={{ width: '100px' }} label="Header Code">
+            <Select
+              defaultValue="html"
+              onChange={(value) => {
+                setHeaderLang(value);
+              }}
+            >
+              <Option value="html">HTML</Option>
+              <Option value="json">JSON</Option>
+              <Option value="css">CSS</Option>
+              <Option value="typescript">JavaScript</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="header_code">
+            <MonacoEditor language={headerLang} />
+          </Form.Item>
+          <Form.Item style={{ width: '100px' }} label="Footer Code">
+            <Select
+              defaultValue="html"
+              onChange={(value) => {
+                setFooterLang(value);
+              }}
+            >
+              <Option value="html">HTML</Option>
+              <Option value="json">JSON</Option>
+              <Option value="css">CSS</Option>
+              <Option value="typescript">JavaScript</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item name="footer_code">
+            <MonacoEditor language={footerLang} />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>

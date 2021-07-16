@@ -10,6 +10,7 @@ import {
   DatePicker,
   Dropdown,
   Menu,
+  Select,
   Switch,
 } from 'antd';
 import Editor from '../../../components/Editor';
@@ -40,6 +41,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [newClaim, setNewClaim] = React.useState(null);
   const [valueChange, setValueChange] = useState(false);
   const [metaDrawer, setMetaDrawer] = React.useState(false);
+  const [headerLang, setHeaderLang] = React.useState('html');
+  const [footerLang, setFooterLang] = React.useState('html');
+  const [codeDrawer, setCodeDrawerVisible] = useState(false);
+
+  const { Option } = Select;
+
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
     details,
@@ -80,6 +87,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const onClose = () => {
     setDrawerVisible(false);
     setMetaDrawer(false);
+    setCodeDrawerVisible(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -354,7 +362,14 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
                 <Form.Item>
-                  <Button onClick={() => setMetaDrawer(true)}>Add Meta Data</Button>
+                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                    Add Meta Data
+                  </Button>
+                </Form.Item>
+                <Form.Item>
+                  <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                    Code Injection
+                  </Button>
                 </Form.Item>
               </Drawer>
               <Drawer
@@ -369,19 +384,66 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button
-                    type="text"
-                    style={{ fontSize: '150%' }}
-                    onClick={() => setMetaDrawer(false)}
-                  >
+                  <Button type="text" onClick={() => setMetaDrawer(false)}>
                     <LeftOutlined />
+                    Back
                   </Button>
                 </Form.Item>
                 <Form.Item name="meta_fields" label="Meta Fields">
-                  <MonacoEditor />
+                  <MonacoEditor language="json" />
                 </Form.Item>
                 <Form.Item name="meta" label="Meta">
-                  <MonacoEditor />
+                  <MonacoEditor language="json" />
+                </Form.Item>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={codeDrawer}
+                getContainer={false}
+                width={366}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
+                    <LeftOutlined />
+                    Back
+                  </Button>
+                </Form.Item>
+                <Form.Item style={{ width: '100px' }} label="Header Code">
+                  <Select
+                    defaultValue="html"
+                    onChange={(value) => {
+                      setHeaderLang(value);
+                    }}
+                  >
+                    <Option value="html">HTML</Option>
+                    <Option value="json">JSON</Option>
+                    <Option value="css">CSS</Option>
+                    <Option value="typescript">JavaScript</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="header_code">
+                  <MonacoEditor language={headerLang} />
+                </Form.Item>
+                <Form.Item style={{ width: '100px' }} label="Footer Code">
+                  <Select
+                    defaultValue="html"
+                    onChange={(value) => {
+                      setFooterLang(value);
+                    }}
+                  >
+                    <Option value="html">HTML</Option>
+                    <Option value="json">JSON</Option>
+                    <Option value="css">CSS</Option>
+                    <Option value="typescript">JavaScript</Option>
+                  </Select>
+                </Form.Item>
+                <Form.Item name="footer_code">
+                  <MonacoEditor language={footerLang} />
                 </Form.Item>
               </Drawer>
             </Col>

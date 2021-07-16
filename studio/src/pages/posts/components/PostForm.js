@@ -355,7 +355,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     <Option value="html">HTML</Option>
                     <Option value="json">JSON</Option>
                     <Option value="css">CSS</Option>
-                    <Option value="javascript">JavaScript</Option>
+                    <Option value="typescript">JavaScript</Option>
                   </Select>
                 </Form.Item>
                 <Form.Item name="footer_code">
