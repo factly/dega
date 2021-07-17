@@ -40,6 +40,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [newClaim, setNewClaim] = React.useState(null);
   const [valueChange, setValueChange] = useState(false);
   const [metaDrawer, setMetaDrawer] = React.useState(false);
+  const [codeDrawer, setCodeDrawerVisible] = useState(false);
+
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
     details,
@@ -80,6 +82,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const onClose = () => {
     setDrawerVisible(false);
     setMetaDrawer(false);
+    setCodeDrawerVisible(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -354,7 +357,14 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
                 <Form.Item>
-                  <Button onClick={() => setMetaDrawer(true)}>Add Meta Data</Button>
+                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                    Add Meta Data
+                  </Button>
+                </Form.Item>
+                <Form.Item>
+                  <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                    Code Injection
+                  </Button>
                 </Form.Item>
               </Drawer>
               <Drawer
@@ -364,24 +374,45 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 onClose={onClose}
                 visible={metaDrawer}
                 getContainer={false}
-                width={366}
+                width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button
-                    type="text"
-                    style={{ fontSize: '150%' }}
-                    onClick={() => setMetaDrawer(false)}
-                  >
+                  <Button type="text" onClick={() => setMetaDrawer(false)}>
                     <LeftOutlined />
+                    Back
                   </Button>
                 </Form.Item>
                 <Form.Item name="meta_fields" label="Meta Fields">
-                  <MonacoEditor />
+                  <MonacoEditor language="json" />
                 </Form.Item>
                 <Form.Item name="meta" label="Meta">
-                  <MonacoEditor />
+                  <MonacoEditor language="json" />
+                </Form.Item>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={codeDrawer}
+                getContainer={false}
+                width={710}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
+                    <LeftOutlined />
+                    Back
+                  </Button>
+                </Form.Item>
+                <Form.Item name="header_code" label="Header Code">
+                  <MonacoEditor language="html" width={650} />
+                </Form.Item>
+                <Form.Item name="footer_code" label="Footer Code">
+                  <MonacoEditor language="html" width={650} />
                 </Form.Item>
               </Drawer>
             </Col>

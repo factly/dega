@@ -279,7 +279,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               </Form.List>
             </Form.Item>
             <Form.Item name="meta_fields" label="Metafields">
-              <MonacoEditor />
+              <MonacoEditor language="json" />
             </Form.Item>
           </Panel>
         </Collapse>

@@ -3104,6 +3104,7 @@ exports[`Categories Edit component snapshot testing should render the component 
                                   >
                                     <MONACOEditor
                                       id="create-category_meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -3125,6 +3126,7 @@ exports[`Categories Edit component snapshot testing should render the component 
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

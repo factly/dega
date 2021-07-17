@@ -416,6 +416,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                   >
                                     <MONACOEditor
                                       id="create-event_tags"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -437,6 +438,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

@@ -111,7 +111,13 @@ const PodcastForm = ({ onCreate, data = {} }) => {
             <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
           </Form.Item>
           <Form.Item name="meta_fields" label="Metafields">
-            <MonacoEditor />
+            <MonacoEditor language="json" />
+          </Form.Item>
+          <Form.Item name="header_code" label="Header Code">
+            <MonacoEditor language="html" />
+          </Form.Item>
+          <Form.Item name="footer_code" label="Footer Code">
+            <MonacoEditor language="html" />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Space>

@@ -112,7 +112,7 @@ const SpaceCreateForm = ({ onCreate }) => {
         <TextArea placeholder="Enter Description..." />
       </Form.Item>
       <Form.Item name="meta_fields" label="Metafields">
-        <MonacoEditor />
+        <MonacoEditor language="json" />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Button type="primary" htmlType="submit">

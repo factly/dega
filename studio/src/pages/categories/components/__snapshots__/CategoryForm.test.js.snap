@@ -2373,6 +2373,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <MONACOEditor
                                     id="create-category_meta_fields"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -2394,6 +2395,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -4917,6 +4919,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <MONACOEditor
                                     id="create-category_meta_fields"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -4938,6 +4941,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>
@@ -7459,6 +7463,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                 >
                                   <MONACOEditor
                                     id="create-category_meta_fields"
+                                    language="json"
                                     onChange={[Function]}
                                   >
                                     <MonacoEditor
@@ -7480,6 +7485,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           "wordWrap": "on",
                                         }
                                       }
+                                      width={440}
                                     >
                                       <div />
                                     </MonacoEditor>

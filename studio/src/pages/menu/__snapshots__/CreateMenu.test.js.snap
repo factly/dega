@@ -685,6 +685,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                       >
                                         <MONACOEditor
                                           id="meta_fields"
+                                          language="json"
                                           onChange={[Function]}
                                         >
                                           <MonacoEditor
@@ -706,6 +707,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                                 "wordWrap": "on",
                                               }
                                             }
+                                            width={440}
                                           >
                                             <div />
                                           </MonacoEditor>

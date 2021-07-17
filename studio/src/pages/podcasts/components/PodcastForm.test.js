@@ -324,6 +324,18 @@ describe('Podcast form component', () => {
         );
       });
       act(() => {
+        const headerData = wrapper.find('FormItem').at(6).find('MonacoEditor');
+        headerData.props().onChange({
+          target: {
+            value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          },
+        });
+        const footerData = wrapper.find('FormItem').at(7).find('MonacoEditor');
+        footerData.props().onChange({
+          target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
+        });
+      });
+      act(() => {
         const input = wrapper.find('FormItem').at(0).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
@@ -343,6 +355,8 @@ describe('Podcast form component', () => {
           meta_fields: {
             sample: 'testing',
           },
+          header_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          footer_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           description: {
             time: 1595747741807,
             blocks: [

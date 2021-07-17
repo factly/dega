@@ -80,7 +80,7 @@ function MenuForm({ onCreate, data = {} }) {
           }}
         </Form.List>
         <Form.Item style={{ marginTop: '20px' }} name="meta_fields" label="Metafields">
-          <MonacoEditor />
+          <MonacoEditor language="json" />
         </Form.Item>
         <Form.Item>
           <Button disabled={!valueChange} htmlType="submit">

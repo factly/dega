@@ -50,7 +50,7 @@ const EventForm = ({ onCreate, data = {} }) => {
         <Input placeholder="Enter name" />
       </Form.Item>
       <Form.Item name="tags" label="Tags">
-        <MonacoEditor />
+        <MonacoEditor language="json" />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>

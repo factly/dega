@@ -950,6 +950,7 @@ exports[`Formats create component snapshot testing should render the component 1
                                   >
                                     <MONACOEditor
                                       id="create-format_meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -971,6 +972,7 @@ exports[`Formats create component snapshot testing should render the component 1
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

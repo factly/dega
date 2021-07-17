@@ -1107,6 +1107,7 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                   >
                                     <MONACOEditor
                                       id="create-tag_meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -1128,6 +1129,7 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

@@ -6987,11 +6987,21 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                         htmlType="button"
                                                                         loading={false}
                                                                         onClick={[Function]}
+                                                                        style={
+                                                                          Object {
+                                                                            "width": "100%",
+                                                                          }
+                                                                        }
                                                                       >
                                                                         <Wave>
                                                                           <button
                                                                             className="ant-btn"
                                                                             onClick={[Function]}
+                                                                            style={
+                                                                              Object {
+                                                                                "width": "100%",
+                                                                              }
+                                                                            }
                                                                             type="button"
                                                                           >
                                                                             <LoadingIcon
@@ -7017,6 +7027,112 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                               key=".0"
                                                                             >
                                                                               Add Meta Data
+                                                                            </span>
+                                                                          </button>
+                                                                        </Wave>
+                                                                      </Button>
+                                                                    </div>
+                                                                  </div>
+                                                                  <ErrorList
+                                                                    errors={Array []}
+                                                                    onDomErrorVisibleChange={[Function]}
+                                                                  >
+                                                                    <CSSMotion
+                                                                      motionAppear={true}
+                                                                      motionDeadline={500}
+                                                                      motionName="show-help"
+                                                                      onLeaveEnd={[Function]}
+                                                                      removeOnLeave={true}
+                                                                      visible={false}
+                                                                    >
+                                                                      <DomWrapper />
+                                                                    </CSSMotion>
+                                                                  </ErrorList>
+                                                                </div>
+                                                              </Col>
+                                                            </FormItemInput>
+                                                          </div>
+                                                        </Row>
+                                                      </FormItem>
+                                                      <FormItem>
+                                                        <Row
+                                                          className="ant-form-item"
+                                                          key="row"
+                                                        >
+                                                          <div
+                                                            className="ant-row ant-form-item"
+                                                            style={Object {}}
+                                                          >
+                                                            <FormItemLabel
+                                                              prefixCls="ant-form"
+                                                              requiredMark={true}
+                                                            />
+                                                            <FormItemInput
+                                                              errors={Array []}
+                                                              onDomErrorVisibleChange={[Function]}
+                                                              prefixCls="ant-form"
+                                                              status=""
+                                                              validateStatus=""
+                                                            >
+                                                              <Col
+                                                                className="ant-form-item-control"
+                                                              >
+                                                                <div
+                                                                  className="ant-col ant-form-item-control"
+                                                                  style={Object {}}
+                                                                >
+                                                                  <div
+                                                                    className="ant-form-item-control-input"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-form-item-control-input-content"
+                                                                    >
+                                                                      <Button
+                                                                        block={false}
+                                                                        ghost={false}
+                                                                        htmlType="button"
+                                                                        loading={false}
+                                                                        onClick={[Function]}
+                                                                        style={
+                                                                          Object {
+                                                                            "width": "100%",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <Wave>
+                                                                          <button
+                                                                            className="ant-btn"
+                                                                            onClick={[Function]}
+                                                                            style={
+                                                                              Object {
+                                                                                "width": "100%",
+                                                                              }
+                                                                            }
+                                                                            type="button"
+                                                                          >
+                                                                            <LoadingIcon
+                                                                              existIcon={false}
+                                                                              loading={false}
+                                                                              prefixCls="ant-btn"
+                                                                            >
+                                                                              <CSSMotion
+                                                                                motionName="ant-btn-loading-icon-motion"
+                                                                                onAppearActive={[Function]}
+                                                                                onAppearStart={[Function]}
+                                                                                onEnterActive={[Function]}
+                                                                                onEnterStart={[Function]}
+                                                                                onLeaveActive={[Function]}
+                                                                                onLeaveStart={[Function]}
+                                                                                removeOnLeave={true}
+                                                                                visible={false}
+                                                                              >
+                                                                                <DomWrapper />
+                                                                              </CSSMotion>
+                                                                            </LoadingIcon>
+                                                                            <span
+                                                                              key=".0"
+                                                                            >
+                                                                              Code Injection
                                                                             </span>
                                                                           </button>
                                                                         </Wave>
@@ -7081,7 +7197,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                       </h4>
                                     }
                                     visible={false}
-                                    width={366}
+                                    width={480}
                                   >
                                     <Drawer
                                       bodyStyle={
@@ -7121,7 +7237,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                         </h4>
                                       }
                                       visible={false}
-                                      width={366}
+                                      width={480}
                                     >
                                       <DrawerWrapper
                                         afterVisibleChange={[Function]}
@@ -7148,7 +7264,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                             "zIndex": undefined,
                                           }
                                         }
-                                        width={366}
+                                        width={480}
                                         wrapperClassName=""
                                       >
                                         <div
@@ -7179,7 +7295,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                               }
                                             }
                                             switchScrollingEffect={[Function]}
-                                            width={366}
+                                            width={480}
                                           >
                                             <div
                                               className="ant-drawer ant-drawer-right"
@@ -7204,7 +7320,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                     "height": undefined,
                                                     "msTransform": "translateX(100%)",
                                                     "transform": "translateX(100%)",
-                                                    "width": "366px",
+                                                    "width": "480px",
                                                   }
                                                 }
                                               >
@@ -7395,21 +7511,11 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                         htmlType="button"
                                                                         loading={false}
                                                                         onClick={[Function]}
-                                                                        style={
-                                                                          Object {
-                                                                            "fontSize": "150%",
-                                                                          }
-                                                                        }
                                                                         type="text"
                                                                       >
                                                                         <button
                                                                           className="ant-btn ant-btn-text"
                                                                           onClick={[Function]}
-                                                                          style={
-                                                                            Object {
-                                                                              "fontSize": "150%",
-                                                                            }
-                                                                          }
                                                                           type="button"
                                                                         >
                                                                           <LoadingIcon
@@ -7506,6 +7612,11 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                               </span>
                                                                             </AntdIcon>
                                                                           </ForwardRef(LeftOutlined)>
+                                                                          <span
+                                                                            key=".1"
+                                                                          >
+                                                                            Back
+                                                                          </span>
                                                                         </button>
                                                                       </Button>
                                                                     </div>
@@ -7656,6 +7767,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                           >
                                                                             <MONACOEditor
                                                                               id="meta_fields"
+                                                                              language="json"
                                                                               onChange={[Function]}
                                                                             >
                                                                               <MonacoEditor
@@ -7677,6 +7789,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     "wordWrap": "on",
                                                                                   }
                                                                                 }
+                                                                                width={440}
                                                                               >
                                                                                 <div />
                                                                               </MonacoEditor>
@@ -7832,6 +7945,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                           >
                                                                             <MONACOEditor
                                                                               id="meta"
+                                                                              language="json"
                                                                               onChange={[Function]}
                                                                             >
                                                                               <MonacoEditor
@@ -7853,6 +7967,847 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     "wordWrap": "on",
                                                                                   }
                                                                                 }
+                                                                                width={440}
+                                                                              >
+                                                                                <div />
+                                                                              </MonacoEditor>
+                                                                            </MONACOEditor>
+                                                                          </Component>
+                                                                        </div>
+                                                                      </div>
+                                                                      <ErrorList
+                                                                        errors={Array []}
+                                                                        onDomErrorVisibleChange={[Function]}
+                                                                      >
+                                                                        <CSSMotion
+                                                                          motionAppear={true}
+                                                                          motionDeadline={500}
+                                                                          motionName="show-help"
+                                                                          onLeaveEnd={[Function]}
+                                                                          removeOnLeave={true}
+                                                                          visible={false}
+                                                                        >
+                                                                          <DomWrapper />
+                                                                        </CSSMotion>
+                                                                      </ErrorList>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemInput>
+                                                              </div>
+                                                            </Row>
+                                                          </Field>
+                                                        </WrapperField>
+                                                      </FormItem>
+                                                    </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </DrawerChild>
+                                        </div>
+                                      </DrawerWrapper>
+                                    </Drawer>
+                                  </DrawerWrapper>
+                                  <DrawerWrapper
+                                    bodyStyle={
+                                      Object {
+                                        "paddingBottom": 40,
+                                      }
+                                    }
+                                    closable={true}
+                                    getContainer={false}
+                                    headerStyle={
+                                      Object {
+                                        "fontWeight": "bold",
+                                      }
+                                    }
+                                    onClose={[Function]}
+                                    placement="right"
+                                    title={
+                                      <h4
+                                        style={
+                                          Object {
+                                            "fontWeight": "bold",
+                                          }
+                                        }
+                                      >
+                                        Code Injection
+                                      </h4>
+                                    }
+                                    visible={false}
+                                    width={710}
+                                  >
+                                    <Drawer
+                                      bodyStyle={
+                                        Object {
+                                          "paddingBottom": 40,
+                                        }
+                                      }
+                                      closable={true}
+                                      getContainer={false}
+                                      headerStyle={
+                                        Object {
+                                          "fontWeight": "bold",
+                                        }
+                                      }
+                                      height={256}
+                                      keyboard={true}
+                                      level={null}
+                                      mask={true}
+                                      maskClosable={true}
+                                      onClose={[Function]}
+                                      placement="right"
+                                      prefixCls="ant-drawer"
+                                      push={
+                                        Object {
+                                          "distance": 180,
+                                        }
+                                      }
+                                      title={
+                                        <h4
+                                          style={
+                                            Object {
+                                              "fontWeight": "bold",
+                                            }
+                                          }
+                                        >
+                                          Code Injection
+                                        </h4>
+                                      }
+                                      visible={false}
+                                      width={710}
+                                    >
+                                      <DrawerWrapper
+                                        afterVisibleChange={[Function]}
+                                        className=""
+                                        defaultOpen={false}
+                                        duration=".3s"
+                                        ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+                                        forceRender={false}
+                                        getContainer={false}
+                                        handler={false}
+                                        keyboard={true}
+                                        level={null}
+                                        maskClosable={true}
+                                        maskStyle={Object {}}
+                                        onChange={[Function]}
+                                        onClose={[Function]}
+                                        open={false}
+                                        placement="right"
+                                        prefixCls="ant-drawer"
+                                        showMask={true}
+                                        style={
+                                          Object {
+                                            "transform": undefined,
+                                            "zIndex": undefined,
+                                          }
+                                        }
+                                        width={710}
+                                        wrapperClassName=""
+                                      >
+                                        <div
+                                          className=""
+                                        >
+                                          <DrawerChild
+                                            afterVisibleChange={[Function]}
+                                            className=""
+                                            duration=".3s"
+                                            ease="cubic-bezier(0.78, 0.14, 0.15, 0.86)"
+                                            getContainer={[Function]}
+                                            handler={false}
+                                            keyboard={true}
+                                            level={null}
+                                            maskClosable={true}
+                                            maskStyle={Object {}}
+                                            onChange={[Function]}
+                                            onClose={[Function]}
+                                            onHandleClick={[Function]}
+                                            open={false}
+                                            placement="right"
+                                            prefixCls="ant-drawer"
+                                            showMask={true}
+                                            style={
+                                              Object {
+                                                "transform": undefined,
+                                                "zIndex": undefined,
+                                              }
+                                            }
+                                            switchScrollingEffect={[Function]}
+                                            width={710}
+                                          >
+                                            <div
+                                              className="ant-drawer ant-drawer-right"
+                                              onTransitionEnd={[Function]}
+                                              style={
+                                                Object {
+                                                  "transform": undefined,
+                                                  "zIndex": undefined,
+                                                }
+                                              }
+                                              tabIndex={-1}
+                                            >
+                                              <div
+                                                className="ant-drawer-mask"
+                                                onClick={[Function]}
+                                                style={Object {}}
+                                              />
+                                              <div
+                                                className="ant-drawer-content-wrapper"
+                                                style={
+                                                  Object {
+                                                    "height": undefined,
+                                                    "msTransform": "translateX(100%)",
+                                                    "transform": "translateX(100%)",
+                                                    "width": "710px",
+                                                  }
+                                                }
+                                              >
+                                                <div
+                                                  className="ant-drawer-content"
+                                                >
+                                                  <div
+                                                    className="ant-drawer-wrapper-body"
+                                                    onTransitionEnd={[Function]}
+                                                    style={Object {}}
+                                                  >
+                                                    <div
+                                                      className="ant-drawer-header"
+                                                      style={
+                                                        Object {
+                                                          "fontWeight": "bold",
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        className="ant-drawer-title"
+                                                      >
+                                                        <h4
+                                                          style={
+                                                            Object {
+                                                              "fontWeight": "bold",
+                                                            }
+                                                          }
+                                                        >
+                                                          Code Injection
+                                                        </h4>
+                                                      </div>
+                                                      <button
+                                                        aria-label="Close"
+                                                        className="ant-drawer-close"
+                                                        onClick={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "--scroll-bar": "0px",
+                                                          }
+                                                        }
+                                                        type="button"
+                                                      >
+                                                        <ForwardRef(CloseOutlined)>
+                                                          <AntdIcon
+                                                            icon={
+                                                              Object {
+                                                                "icon": Object {
+                                                                  "attrs": Object {
+                                                                    "focusable": "false",
+                                                                    "viewBox": "64 64 896 896",
+                                                                  },
+                                                                  "children": Array [
+                                                                    Object {
+                                                                      "attrs": Object {
+                                                                        "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z",
+                                                                      },
+                                                                      "tag": "path",
+                                                                    },
+                                                                  ],
+                                                                  "tag": "svg",
+                                                                },
+                                                                "name": "close",
+                                                                "theme": "outlined",
+                                                              }
+                                                            }
+                                                          >
+                                                            <span
+                                                              aria-label="close"
+                                                              className="anticon anticon-close"
+                                                              role="img"
+                                                            >
+                                                              <IconReact
+                                                                className=""
+                                                                icon={
+                                                                  Object {
+                                                                    "icon": Object {
+                                                                      "attrs": Object {
+                                                                        "focusable": "false",
+                                                                        "viewBox": "64 64 896 896",
+                                                                      },
+                                                                      "children": Array [
+                                                                        Object {
+                                                                          "attrs": Object {
+                                                                            "d": "M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z",
+                                                                          },
+                                                                          "tag": "path",
+                                                                        },
+                                                                      ],
+                                                                      "tag": "svg",
+                                                                    },
+                                                                    "name": "close",
+                                                                    "theme": "outlined",
+                                                                  }
+                                                                }
+                                                              >
+                                                                <svg
+                                                                  aria-hidden="true"
+                                                                  className=""
+                                                                  data-icon="close"
+                                                                  fill="currentColor"
+                                                                  focusable="false"
+                                                                  height="1em"
+                                                                  key="svg-close"
+                                                                  viewBox="64 64 896 896"
+                                                                  width="1em"
+                                                                >
+                                                                  <path
+                                                                    d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 00203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z"
+                                                                    key="svg-close-svg-0"
+                                                                  />
+                                                                </svg>
+                                                              </IconReact>
+                                                            </span>
+                                                          </AntdIcon>
+                                                        </ForwardRef(CloseOutlined)>
+                                                      </button>
+                                                    </div>
+                                                    <div
+                                                      className="ant-drawer-body"
+                                                      style={
+                                                        Object {
+                                                          "paddingBottom": 40,
+                                                        }
+                                                      }
+                                                    >
+                                                      <FormItem
+                                                        style={
+                                                          Object {
+                                                            "marginLeft": "-20px",
+                                                          }
+                                                        }
+                                                      >
+                                                        <Row
+                                                          className="ant-form-item"
+                                                          key="row"
+                                                          style={
+                                                            Object {
+                                                              "marginLeft": "-20px",
+                                                            }
+                                                          }
+                                                        >
+                                                          <div
+                                                            className="ant-row ant-form-item"
+                                                            style={
+                                                              Object {
+                                                                "marginLeft": "-20px",
+                                                              }
+                                                            }
+                                                          >
+                                                            <FormItemLabel
+                                                              prefixCls="ant-form"
+                                                              requiredMark={true}
+                                                              style={
+                                                                Object {
+                                                                  "marginLeft": "-20px",
+                                                                }
+                                                              }
+                                                            />
+                                                            <FormItemInput
+                                                              errors={Array []}
+                                                              onDomErrorVisibleChange={[Function]}
+                                                              prefixCls="ant-form"
+                                                              status=""
+                                                              style={
+                                                                Object {
+                                                                  "marginLeft": "-20px",
+                                                                }
+                                                              }
+                                                              validateStatus=""
+                                                            >
+                                                              <Col
+                                                                className="ant-form-item-control"
+                                                              >
+                                                                <div
+                                                                  className="ant-col ant-form-item-control"
+                                                                  style={Object {}}
+                                                                >
+                                                                  <div
+                                                                    className="ant-form-item-control-input"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-form-item-control-input-content"
+                                                                    >
+                                                                      <Button
+                                                                        block={false}
+                                                                        ghost={false}
+                                                                        htmlType="button"
+                                                                        loading={false}
+                                                                        onClick={[Function]}
+                                                                        type="text"
+                                                                      >
+                                                                        <button
+                                                                          className="ant-btn ant-btn-text"
+                                                                          onClick={[Function]}
+                                                                          type="button"
+                                                                        >
+                                                                          <LoadingIcon
+                                                                            existIcon={false}
+                                                                            loading={false}
+                                                                            prefixCls="ant-btn"
+                                                                          >
+                                                                            <CSSMotion
+                                                                              motionName="ant-btn-loading-icon-motion"
+                                                                              onAppearActive={[Function]}
+                                                                              onAppearStart={[Function]}
+                                                                              onEnterActive={[Function]}
+                                                                              onEnterStart={[Function]}
+                                                                              onLeaveActive={[Function]}
+                                                                              onLeaveStart={[Function]}
+                                                                              removeOnLeave={true}
+                                                                              visible={false}
+                                                                            >
+                                                                              <DomWrapper />
+                                                                            </CSSMotion>
+                                                                          </LoadingIcon>
+                                                                          <ForwardRef(LeftOutlined)
+                                                                            key=".0"
+                                                                          >
+                                                                            <AntdIcon
+                                                                              icon={
+                                                                                Object {
+                                                                                  "icon": Object {
+                                                                                    "attrs": Object {
+                                                                                      "focusable": "false",
+                                                                                      "viewBox": "64 64 896 896",
+                                                                                    },
+                                                                                    "children": Array [
+                                                                                      Object {
+                                                                                        "attrs": Object {
+                                                                                          "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                                                                        },
+                                                                                        "tag": "path",
+                                                                                      },
+                                                                                    ],
+                                                                                    "tag": "svg",
+                                                                                  },
+                                                                                  "name": "left",
+                                                                                  "theme": "outlined",
+                                                                                }
+                                                                              }
+                                                                            >
+                                                                              <span
+                                                                                aria-label="left"
+                                                                                className="anticon anticon-left"
+                                                                                role="img"
+                                                                              >
+                                                                                <IconReact
+                                                                                  className=""
+                                                                                  icon={
+                                                                                    Object {
+                                                                                      "icon": Object {
+                                                                                        "attrs": Object {
+                                                                                          "focusable": "false",
+                                                                                          "viewBox": "64 64 896 896",
+                                                                                        },
+                                                                                        "children": Array [
+                                                                                          Object {
+                                                                                            "attrs": Object {
+                                                                                              "d": "M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z",
+                                                                                            },
+                                                                                            "tag": "path",
+                                                                                          },
+                                                                                        ],
+                                                                                        "tag": "svg",
+                                                                                      },
+                                                                                      "name": "left",
+                                                                                      "theme": "outlined",
+                                                                                    }
+                                                                                  }
+                                                                                >
+                                                                                  <svg
+                                                                                    aria-hidden="true"
+                                                                                    className=""
+                                                                                    data-icon="left"
+                                                                                    fill="currentColor"
+                                                                                    focusable="false"
+                                                                                    height="1em"
+                                                                                    key="svg-left"
+                                                                                    viewBox="64 64 896 896"
+                                                                                    width="1em"
+                                                                                  >
+                                                                                    <path
+                                                                                      d="M724 218.3V141c0-6.7-7.7-10.4-12.9-6.3L260.3 486.8a31.86 31.86 0 000 50.3l450.8 352.1c5.3 4.1 12.9.4 12.9-6.3v-77.3c0-4.9-2.3-9.6-6.1-12.6l-360-281 360-281.1c3.8-3 6.1-7.7 6.1-12.6z"
+                                                                                      key="svg-left-svg-0"
+                                                                                    />
+                                                                                  </svg>
+                                                                                </IconReact>
+                                                                              </span>
+                                                                            </AntdIcon>
+                                                                          </ForwardRef(LeftOutlined)>
+                                                                          <span
+                                                                            key=".1"
+                                                                          >
+                                                                            Back
+                                                                          </span>
+                                                                        </button>
+                                                                      </Button>
+                                                                    </div>
+                                                                  </div>
+                                                                  <ErrorList
+                                                                    errors={Array []}
+                                                                    onDomErrorVisibleChange={[Function]}
+                                                                  >
+                                                                    <CSSMotion
+                                                                      motionAppear={true}
+                                                                      motionDeadline={500}
+                                                                      motionName="show-help"
+                                                                      onLeaveEnd={[Function]}
+                                                                      removeOnLeave={true}
+                                                                      visible={false}
+                                                                    >
+                                                                      <DomWrapper />
+                                                                    </CSSMotion>
+                                                                  </ErrorList>
+                                                                </div>
+                                                              </Col>
+                                                            </FormItemInput>
+                                                          </div>
+                                                        </Row>
+                                                      </FormItem>
+                                                      <FormItem
+                                                        label="Header Code"
+                                                        name="header_code"
+                                                      >
+                                                        <WrapperField
+                                                          label="Header Code"
+                                                          messageVariables={
+                                                            Object {
+                                                              "label": "Header Code",
+                                                            }
+                                                          }
+                                                          name="header_code"
+                                                          onReset={[Function]}
+                                                          trigger="onChange"
+                                                          validateTrigger="onChange"
+                                                        >
+                                                          <Field
+                                                            fieldContext={
+                                                              Object {
+                                                                "__INTERNAL__": Object {
+                                                                  "itemRef": [Function],
+                                                                  "name": undefined,
+                                                                },
+                                                                "getFieldError": [Function],
+                                                                "getFieldInstance": [Function],
+                                                                "getFieldValue": [Function],
+                                                                "getFieldsError": [Function],
+                                                                "getFieldsValue": [Function],
+                                                                "getInternalHooks": [Function],
+                                                                "isFieldTouched": [Function],
+                                                                "isFieldValidating": [Function],
+                                                                "isFieldsTouched": [Function],
+                                                                "isFieldsValidating": [Function],
+                                                                "resetFields": [Function],
+                                                                "scrollToField": [Function],
+                                                                "setFields": [Function],
+                                                                "setFieldsValue": [Function],
+                                                                "submit": [Function],
+                                                                "validateFields": [Function],
+                                                                "validateTrigger": "onChange",
+                                                              }
+                                                            }
+                                                            key="_header_code"
+                                                            label="Header Code"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Header Code",
+                                                              }
+                                                            }
+                                                            name={
+                                                              Array [
+                                                                "header_code",
+                                                              ]
+                                                            }
+                                                            onReset={[Function]}
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                            valuePropName="value"
+                                                          >
+                                                            <Row
+                                                              className="ant-form-item"
+                                                              key="row"
+                                                            >
+                                                              <div
+                                                                className="ant-row ant-form-item"
+                                                                style={Object {}}
+                                                              >
+                                                                <FormItemLabel
+                                                                  htmlFor="header_code"
+                                                                  label="Header Code"
+                                                                  name="header_code"
+                                                                  prefixCls="ant-form"
+                                                                  required={false}
+                                                                  requiredMark={true}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-label"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-label"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <label
+                                                                        className=""
+                                                                        htmlFor="header_code"
+                                                                        title="Header Code"
+                                                                      >
+                                                                        Header Code
+                                                                      </label>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemLabel>
+                                                                <FormItemInput
+                                                                  errors={Array []}
+                                                                  label="Header Code"
+                                                                  name={
+                                                                    Array [
+                                                                      "header_code",
+                                                                    ]
+                                                                  }
+                                                                  onDomErrorVisibleChange={[Function]}
+                                                                  prefixCls="ant-form"
+                                                                  status=""
+                                                                  touched={false}
+                                                                  validateStatus=""
+                                                                  validating={false}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-control"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-control"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-form-item-control-input"
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input-content"
+                                                                        >
+                                                                          <Component
+                                                                            update={1}
+                                                                          >
+                                                                            <MONACOEditor
+                                                                              id="header_code"
+                                                                              language="html"
+                                                                              onChange={[Function]}
+                                                                              width={650}
+                                                                            >
+                                                                              <MonacoEditor
+                                                                                height="240"
+                                                                                language="html"
+                                                                                onChange={[Function]}
+                                                                                options={
+                                                                                  Object {
+                                                                                    "autoClosingBrackets": "never",
+                                                                                    "autoClosingQuotes": "never",
+                                                                                    "cursorBlinking": "smooth",
+                                                                                    "folding": true,
+                                                                                    "lineNumbersMinChars": 4,
+                                                                                    "minimap": Object {
+                                                                                      "enabled": false,
+                                                                                    },
+                                                                                    "scrollBeyondLastLine": false,
+                                                                                    "theme": "vs-dark",
+                                                                                    "wordWrap": "on",
+                                                                                  }
+                                                                                }
+                                                                                width={650}
+                                                                              >
+                                                                                <div />
+                                                                              </MonacoEditor>
+                                                                            </MONACOEditor>
+                                                                          </Component>
+                                                                        </div>
+                                                                      </div>
+                                                                      <ErrorList
+                                                                        errors={Array []}
+                                                                        onDomErrorVisibleChange={[Function]}
+                                                                      >
+                                                                        <CSSMotion
+                                                                          motionAppear={true}
+                                                                          motionDeadline={500}
+                                                                          motionName="show-help"
+                                                                          onLeaveEnd={[Function]}
+                                                                          removeOnLeave={true}
+                                                                          visible={false}
+                                                                        >
+                                                                          <DomWrapper />
+                                                                        </CSSMotion>
+                                                                      </ErrorList>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemInput>
+                                                              </div>
+                                                            </Row>
+                                                          </Field>
+                                                        </WrapperField>
+                                                      </FormItem>
+                                                      <FormItem
+                                                        label="Footer Code"
+                                                        name="footer_code"
+                                                      >
+                                                        <WrapperField
+                                                          label="Footer Code"
+                                                          messageVariables={
+                                                            Object {
+                                                              "label": "Footer Code",
+                                                            }
+                                                          }
+                                                          name="footer_code"
+                                                          onReset={[Function]}
+                                                          trigger="onChange"
+                                                          validateTrigger="onChange"
+                                                        >
+                                                          <Field
+                                                            fieldContext={
+                                                              Object {
+                                                                "__INTERNAL__": Object {
+                                                                  "itemRef": [Function],
+                                                                  "name": undefined,
+                                                                },
+                                                                "getFieldError": [Function],
+                                                                "getFieldInstance": [Function],
+                                                                "getFieldValue": [Function],
+                                                                "getFieldsError": [Function],
+                                                                "getFieldsValue": [Function],
+                                                                "getInternalHooks": [Function],
+                                                                "isFieldTouched": [Function],
+                                                                "isFieldValidating": [Function],
+                                                                "isFieldsTouched": [Function],
+                                                                "isFieldsValidating": [Function],
+                                                                "resetFields": [Function],
+                                                                "scrollToField": [Function],
+                                                                "setFields": [Function],
+                                                                "setFieldsValue": [Function],
+                                                                "submit": [Function],
+                                                                "validateFields": [Function],
+                                                                "validateTrigger": "onChange",
+                                                              }
+                                                            }
+                                                            key="_footer_code"
+                                                            label="Footer Code"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Footer Code",
+                                                              }
+                                                            }
+                                                            name={
+                                                              Array [
+                                                                "footer_code",
+                                                              ]
+                                                            }
+                                                            onReset={[Function]}
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                            valuePropName="value"
+                                                          >
+                                                            <Row
+                                                              className="ant-form-item"
+                                                              key="row"
+                                                            >
+                                                              <div
+                                                                className="ant-row ant-form-item"
+                                                                style={Object {}}
+                                                              >
+                                                                <FormItemLabel
+                                                                  htmlFor="footer_code"
+                                                                  label="Footer Code"
+                                                                  name="footer_code"
+                                                                  prefixCls="ant-form"
+                                                                  required={false}
+                                                                  requiredMark={true}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-label"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-label"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <label
+                                                                        className=""
+                                                                        htmlFor="footer_code"
+                                                                        title="Footer Code"
+                                                                      >
+                                                                        Footer Code
+                                                                      </label>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemLabel>
+                                                                <FormItemInput
+                                                                  errors={Array []}
+                                                                  label="Footer Code"
+                                                                  name={
+                                                                    Array [
+                                                                      "footer_code",
+                                                                    ]
+                                                                  }
+                                                                  onDomErrorVisibleChange={[Function]}
+                                                                  prefixCls="ant-form"
+                                                                  status=""
+                                                                  touched={false}
+                                                                  validateStatus=""
+                                                                  validating={false}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-control"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-control"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-form-item-control-input"
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input-content"
+                                                                        >
+                                                                          <Component
+                                                                            update={1}
+                                                                          >
+                                                                            <MONACOEditor
+                                                                              id="footer_code"
+                                                                              language="html"
+                                                                              onChange={[Function]}
+                                                                              width={650}
+                                                                            >
+                                                                              <MonacoEditor
+                                                                                height="240"
+                                                                                language="html"
+                                                                                onChange={[Function]}
+                                                                                options={
+                                                                                  Object {
+                                                                                    "autoClosingBrackets": "never",
+                                                                                    "autoClosingQuotes": "never",
+                                                                                    "cursorBlinking": "smooth",
+                                                                                    "folding": true,
+                                                                                    "lineNumbersMinChars": 4,
+                                                                                    "minimap": Object {
+                                                                                      "enabled": false,
+                                                                                    },
+                                                                                    "scrollBeyondLastLine": false,
+                                                                                    "theme": "vs-dark",
+                                                                                    "wordWrap": "on",
+                                                                                  }
+                                                                                }
+                                                                                width={650}
                                                                               >
                                                                                 <div />
                                                                               </MonacoEditor>

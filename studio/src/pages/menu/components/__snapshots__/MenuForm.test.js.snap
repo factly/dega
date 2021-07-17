@@ -78,7 +78,9 @@ exports[`Menu Create Form component snapshot testing should match component with
         }
       }
     >
-      <MONACOEditor />
+      <MONACOEditor
+        language="json"
+      />
     </FormItem>
     <FormItem>
       <Button
@@ -778,6 +780,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                   >
                                     <MONACOEditor
                                       id="meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -799,6 +802,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>
@@ -1616,6 +1620,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                                   >
                                     <MONACOEditor
                                       id="meta_fields"
+                                      language="json"
                                       onChange={[Function]}
                                     >
                                       <MonacoEditor
@@ -1637,6 +1642,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                                             "wordWrap": "on",
                                           }
                                         }
+                                        width={440}
                                       >
                                         <div />
                                       </MonacoEditor>

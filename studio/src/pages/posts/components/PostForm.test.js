@@ -729,19 +729,19 @@ describe('Posts Create Form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(15).find('MonacoEditor');
+        const metaFieldData = wrapper.find('FormItem').at(16).find('MonacoEditor');
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
-        const metaData = wrapper.find('FormItem').at(16).find('MonacoEditor');
+        const metaData = wrapper.find('FormItem').at(17).find('MonacoEditor');
         metaData.props().onChange({
           target: { value: '{"meta":"data"}' },
         });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(14).find('Button').at(0);
-        expect(backBtn.text()).toBe('');
+        const backBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
         const submitButtom = wrapper.find('Button').at(1);
@@ -792,6 +792,100 @@ describe('Posts Create Form component', () => {
           meta_fields: {
             sample: 'testing',
           },
+        });
+        done();
+      }, 0);
+    });
+    it('should add header and footer code', (done) => {
+      const data2 = { ...data };
+      data2.header_code = `""use strict";↵↵class Chuck {↵    greet() {↵        var a,b;↵        a=5;↵        b=6;↵        return 'Hello'+ (a+b).toString();↵    }↵}"`;
+      data2.footer_code = `{↵    "info":"data",↵    "extra":"pqrstuv"↵}`;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const settingButton = wrapper.find('Button').at(3);
+        expect(settingButton.text()).toBe('');
+        settingButton.simulate('click');
+        expect(wrapper.find('Drawer').length).not.toBe(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(14).find('Button').at(0);
+        expect(addMetaDataBtn.text()).toBe('Code Injection');
+        addMetaDataBtn.simulate('click');
+      });
+
+      act(() => {
+        const headerData = wrapper.find('FormItem').at(19).find('MonacoEditor');
+        headerData.props().onChange({
+          target: {
+            value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          },
+        });
+
+        const footerData = wrapper.find('FormItem').at(20).find('MonacoEditor');
+        footerData.props().onChange({
+          target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
+        });
+      });
+      act(() => {
+        const backBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
+        backBtn.simulate('click');
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Save');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Post-1',
+          excerpt: 'excerpt of post',
+          slug: 'post-1',
+          featured_medium_id: 1,
+          status: 'draft',
+          published_date: null,
+          format_id: 1,
+          author_ids: [1],
+          authors: [1],
+          categories: [1],
+          category_ids: [1],
+          tag_ids: [1],
+          tags: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+          header_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
+          footer_code: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
         });
         done();
       }, 0);

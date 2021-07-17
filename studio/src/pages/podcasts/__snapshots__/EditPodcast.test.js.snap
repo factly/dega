@@ -3241,6 +3241,7 @@ exports[`Podcast Edit component snapshot testing should render the component 1`]
                                           >
                                             <MONACOEditor
                                               id="create-category_meta_fields"
+                                              language="json"
                                               onChange={[Function]}
                                             >
                                               <MonacoEditor
@@ -3262,6 +3263,367 @@ exports[`Podcast Edit component snapshot testing should render the component 1`]
                                                     "wordWrap": "on",
                                                   }
                                                 }
+                                                width={440}
+                                              >
+                                                <div />
+                                              </MonacoEditor>
+                                            </MONACOEditor>
+                                          </Component>
+                                        </div>
+                                      </div>
+                                      <ErrorList
+                                        errors={Array []}
+                                        onDomErrorVisibleChange={[Function]}
+                                      >
+                                        <CSSMotion
+                                          motionAppear={true}
+                                          motionDeadline={500}
+                                          motionName="show-help"
+                                          onLeaveEnd={[Function]}
+                                          removeOnLeave={true}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
+                                      </ErrorList>
+                                    </div>
+                                  </Col>
+                                </FormItemInput>
+                              </div>
+                            </Row>
+                          </Field>
+                        </WrapperField>
+                      </FormItem>
+                      <FormItem
+                        label="Header Code"
+                        name="header_code"
+                      >
+                        <WrapperField
+                          label="Header Code"
+                          messageVariables={
+                            Object {
+                              "label": "Header Code",
+                            }
+                          }
+                          name="header_code"
+                          onReset={[Function]}
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                        >
+                          <Field
+                            fieldContext={
+                              Object {
+                                "__INTERNAL__": Object {
+                                  "itemRef": [Function],
+                                  "name": "create-category",
+                                },
+                                "getFieldError": [Function],
+                                "getFieldInstance": [Function],
+                                "getFieldValue": [Function],
+                                "getFieldsError": [Function],
+                                "getFieldsValue": [Function],
+                                "getInternalHooks": [Function],
+                                "isFieldTouched": [Function],
+                                "isFieldValidating": [Function],
+                                "isFieldsTouched": [Function],
+                                "isFieldsValidating": [Function],
+                                "resetFields": [Function],
+                                "scrollToField": [Function],
+                                "setFields": [Function],
+                                "setFieldsValue": [Function],
+                                "submit": [Function],
+                                "validateFields": [Function],
+                                "validateTrigger": "onChange",
+                              }
+                            }
+                            key="_header_code"
+                            label="Header Code"
+                            messageVariables={
+                              Object {
+                                "label": "Header Code",
+                              }
+                            }
+                            name={
+                              Array [
+                                "header_code",
+                              ]
+                            }
+                            onReset={[Function]}
+                            trigger="onChange"
+                            validateTrigger="onChange"
+                            valuePropName="value"
+                          >
+                            <Row
+                              className="ant-form-item"
+                              key="row"
+                            >
+                              <div
+                                className="ant-row ant-form-item"
+                                style={Object {}}
+                              >
+                                <FormItemLabel
+                                  htmlFor="create-category_header_code"
+                                  label="Header Code"
+                                  name="header_code"
+                                  prefixCls="ant-form"
+                                  required={false}
+                                  requiredMark={true}
+                                >
+                                  <Col
+                                    className="ant-form-item-label"
+                                    span={24}
+                                  >
+                                    <div
+                                      className="ant-col ant-col-24 ant-form-item-label"
+                                      style={Object {}}
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="create-category_header_code"
+                                        title="Header Code"
+                                      >
+                                        Header Code
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </FormItemLabel>
+                                <FormItemInput
+                                  errors={Array []}
+                                  label="Header Code"
+                                  name={
+                                    Array [
+                                      "header_code",
+                                    ]
+                                  }
+                                  onDomErrorVisibleChange={[Function]}
+                                  prefixCls="ant-form"
+                                  status=""
+                                  touched={false}
+                                  validateStatus=""
+                                  validating={false}
+                                >
+                                  <Col
+                                    className="ant-form-item-control"
+                                    span={24}
+                                  >
+                                    <div
+                                      className="ant-col ant-col-24 ant-form-item-control"
+                                      style={Object {}}
+                                    >
+                                      <div
+                                        className="ant-form-item-control-input"
+                                      >
+                                        <div
+                                          className="ant-form-item-control-input-content"
+                                        >
+                                          <Component
+                                            update={2}
+                                          >
+                                            <MONACOEditor
+                                              id="create-category_header_code"
+                                              language="html"
+                                              onChange={[Function]}
+                                            >
+                                              <MonacoEditor
+                                                height="240"
+                                                language="html"
+                                                onChange={[Function]}
+                                                options={
+                                                  Object {
+                                                    "autoClosingBrackets": "never",
+                                                    "autoClosingQuotes": "never",
+                                                    "cursorBlinking": "smooth",
+                                                    "folding": true,
+                                                    "lineNumbersMinChars": 4,
+                                                    "minimap": Object {
+                                                      "enabled": false,
+                                                    },
+                                                    "scrollBeyondLastLine": false,
+                                                    "theme": "vs-dark",
+                                                    "wordWrap": "on",
+                                                  }
+                                                }
+                                                width={440}
+                                              >
+                                                <div />
+                                              </MonacoEditor>
+                                            </MONACOEditor>
+                                          </Component>
+                                        </div>
+                                      </div>
+                                      <ErrorList
+                                        errors={Array []}
+                                        onDomErrorVisibleChange={[Function]}
+                                      >
+                                        <CSSMotion
+                                          motionAppear={true}
+                                          motionDeadline={500}
+                                          motionName="show-help"
+                                          onLeaveEnd={[Function]}
+                                          removeOnLeave={true}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
+                                      </ErrorList>
+                                    </div>
+                                  </Col>
+                                </FormItemInput>
+                              </div>
+                            </Row>
+                          </Field>
+                        </WrapperField>
+                      </FormItem>
+                      <FormItem
+                        label="Footer Code"
+                        name="footer_code"
+                      >
+                        <WrapperField
+                          label="Footer Code"
+                          messageVariables={
+                            Object {
+                              "label": "Footer Code",
+                            }
+                          }
+                          name="footer_code"
+                          onReset={[Function]}
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                        >
+                          <Field
+                            fieldContext={
+                              Object {
+                                "__INTERNAL__": Object {
+                                  "itemRef": [Function],
+                                  "name": "create-category",
+                                },
+                                "getFieldError": [Function],
+                                "getFieldInstance": [Function],
+                                "getFieldValue": [Function],
+                                "getFieldsError": [Function],
+                                "getFieldsValue": [Function],
+                                "getInternalHooks": [Function],
+                                "isFieldTouched": [Function],
+                                "isFieldValidating": [Function],
+                                "isFieldsTouched": [Function],
+                                "isFieldsValidating": [Function],
+                                "resetFields": [Function],
+                                "scrollToField": [Function],
+                                "setFields": [Function],
+                                "setFieldsValue": [Function],
+                                "submit": [Function],
+                                "validateFields": [Function],
+                                "validateTrigger": "onChange",
+                              }
+                            }
+                            key="_footer_code"
+                            label="Footer Code"
+                            messageVariables={
+                              Object {
+                                "label": "Footer Code",
+                              }
+                            }
+                            name={
+                              Array [
+                                "footer_code",
+                              ]
+                            }
+                            onReset={[Function]}
+                            trigger="onChange"
+                            validateTrigger="onChange"
+                            valuePropName="value"
+                          >
+                            <Row
+                              className="ant-form-item"
+                              key="row"
+                            >
+                              <div
+                                className="ant-row ant-form-item"
+                                style={Object {}}
+                              >
+                                <FormItemLabel
+                                  htmlFor="create-category_footer_code"
+                                  label="Footer Code"
+                                  name="footer_code"
+                                  prefixCls="ant-form"
+                                  required={false}
+                                  requiredMark={true}
+                                >
+                                  <Col
+                                    className="ant-form-item-label"
+                                    span={24}
+                                  >
+                                    <div
+                                      className="ant-col ant-col-24 ant-form-item-label"
+                                      style={Object {}}
+                                    >
+                                      <label
+                                        className=""
+                                        htmlFor="create-category_footer_code"
+                                        title="Footer Code"
+                                      >
+                                        Footer Code
+                                      </label>
+                                    </div>
+                                  </Col>
+                                </FormItemLabel>
+                                <FormItemInput
+                                  errors={Array []}
+                                  label="Footer Code"
+                                  name={
+                                    Array [
+                                      "footer_code",
+                                    ]
+                                  }
+                                  onDomErrorVisibleChange={[Function]}
+                                  prefixCls="ant-form"
+                                  status=""
+                                  touched={false}
+                                  validateStatus=""
+                                  validating={false}
+                                >
+                                  <Col
+                                    className="ant-form-item-control"
+                                    span={24}
+                                  >
+                                    <div
+                                      className="ant-col ant-col-24 ant-form-item-control"
+                                      style={Object {}}
+                                    >
+                                      <div
+                                        className="ant-form-item-control-input"
+                                      >
+                                        <div
+                                          className="ant-form-item-control-input-content"
+                                        >
+                                          <Component
+                                            update={2}
+                                          >
+                                            <MONACOEditor
+                                              id="create-category_footer_code"
+                                              language="html"
+                                              onChange={[Function]}
+                                            >
+                                              <MonacoEditor
+                                                height="240"
+                                                language="html"
+                                                onChange={[Function]}
+                                                options={
+                                                  Object {
+                                                    "autoClosingBrackets": "never",
+                                                    "autoClosingQuotes": "never",
+                                                    "cursorBlinking": "smooth",
+                                                    "folding": true,
+                                                    "lineNumbersMinChars": 4,
+                                                    "minimap": Object {
+                                                      "enabled": false,
+                                                    },
+                                                    "scrollBeyondLastLine": false,
+                                                    "theme": "vs-dark",
+                                                    "wordWrap": "on",
+                                                  }
+                                                }
+                                                width={440}
                                               >
                                                 <div />
                                               </MonacoEditor>
