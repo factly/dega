@@ -181,5 +181,6 @@ coverage
 
 # Companion
 /companion
-*server
+
+api/server
 server/server

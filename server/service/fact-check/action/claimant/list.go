@@ -46,6 +46,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
+	all := r.URL.Query().Get("all")
 
 	result := paging{}
 	result.Nodes = make([]model.Claimant, 0)
@@ -60,7 +61,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
-	if searchQuery != "" {
+	if all == "true" {
+		err = tx.Find(&result.Nodes).Error
+	} else if searchQuery != "" {
 
 		if config.SearchEnabled() {
 			filters := fmt.Sprint("space_id=", sID)
