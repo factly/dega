@@ -37,6 +37,7 @@ func Router() chi.Router {
 	r.Post("/", create)
 	r.Get("/", my)
 	r.Route("/{space_id}", func(r chi.Router) {
+		r.Get("/", details)
 		r.Put("/", update)
 		r.Delete("/", delete)
 	})
