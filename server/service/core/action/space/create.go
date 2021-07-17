@@ -184,12 +184,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"analytics":       result.Analytics,
 	}
 
-	err = meilisearchx.AddDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
 
 	tx.Commit()

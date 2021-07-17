@@ -245,32 +245,4 @@ func TestPostCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create post when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		postCountQuery(mock, 0)
-		slugCheckMock(mock, Data)
-
-		tag.SelectMock(mock, tag.Data, 1)
-		category.SelectWithOutSpace(mock)
-
-		postInsertMock(mock, Data, false)
-		postSelectWithOutSpace(mock, Data)
-		postClaimInsertMock(mock)
-		postClaimSelectMock(mock)
-		postAuthorInsertMock(mock)
-		postSchemaUpdateQuery(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
-
 }

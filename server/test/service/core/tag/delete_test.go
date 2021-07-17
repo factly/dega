@@ -80,23 +80,4 @@ func TestTagDelete(t *testing.T) {
 			Status(http.StatusOK)
 	})
 
-	t.Run("delete when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		SelectMock(mock, Data, 1, 1)
-
-		tagPostExpect(mock, 0)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("tag_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
 }

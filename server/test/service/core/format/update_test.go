@@ -167,29 +167,4 @@ func TestFormatUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("update format when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		updatedFormat := map[string]interface{}{
-			"name": "Fact Check",
-			"slug": "article",
-		}
-
-		SelectMock(mock, 1, 1)
-		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
-			WithArgs(fmt.Sprint(updatedFormat["slug"], "%"), 1).
-			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
-
-		formatUpdateMock(mock, updatedFormat)
-
-		selectAfterUpdate(mock, updatedFormat)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("format_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedFormat).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
 }

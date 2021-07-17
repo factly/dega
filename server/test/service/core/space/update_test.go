@@ -249,18 +249,4 @@ func TestSpaceUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update a space when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		updateMock(mock)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("space_id", "1").
-			WithHeader("X-User", "1").
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-	})
 }

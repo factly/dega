@@ -281,12 +281,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 			PostID: uint(id),
 		}).Find(&postClaims)
 
-		err = tx.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
+		if len(postClaims) > 0 {
+			err = tx.Model(&factCheckModel.PostClaim{}).Delete(&postClaims).Error
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 
 		toCreatePostClaims := make([]factCheckModel.PostClaim, 0)
@@ -298,12 +300,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 			toCreatePostClaims = append(toCreatePostClaims, postClaim)
 		}
 
-		err = tx.Model(&factCheckModel.PostClaim{}).Create(&toCreatePostClaims).Error
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
+		if len(toCreatePostClaims) > 0 {
+			err = tx.Model(&factCheckModel.PostClaim{}).Create(&toCreatePostClaims).Error
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 
 		// fetch updated post claims
@@ -440,12 +444,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 
-	err = meilisearchx.UpdateDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if config.SearchEnabled() {
+		_ = meilisearchx.UpdateDocument("dega", meiliObj)
 	}
 	tx.Commit()
 

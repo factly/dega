@@ -3,6 +3,7 @@ package core
 import (
 	"net/http"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/event"
 	"github.com/factly/dega-server/service/core/action/info"
 	"github.com/factly/dega-server/service/core/action/menu"
@@ -40,11 +41,13 @@ func Router() http.Handler {
 	r.Mount("/pages", page.Router())
 	r.Mount("/policies", policy.Router())
 	r.Mount("/authors", author.Router())
-	r.Mount("/search", search.Router())
 	r.Mount("/users", user.Router())
 	r.Mount("/permissions", permissions.Router())
 	r.Mount("/requests", request.Router())
 	r.Mount("/info", info.Router())
+	if config.SearchEnabled() {
+		r.Mount("/search", search.Router())
+	}
 	if util.CheckNats() {
 		r.Mount("/webhooks", webhook.Router())
 		r.Mount("/events", event.Router())

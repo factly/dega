@@ -114,26 +114,4 @@ func TestMenuUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("meili server fails", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		SelectQuery(mock, 1, 1)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"menus\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["menu"], 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		SelectQuery(mock, 1, 1)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("menu_id", "1").
-			WithJSON(Data).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

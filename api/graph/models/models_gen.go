@@ -6,3 +6,13 @@ type PostFilter struct {
 	Slugs []string `json:"slugs"`
 	Ids   []int    `json:"ids"`
 }
+
+type SearchResult struct {
+	Posts      []*Post     `json:"posts"`
+	Categories []*Category `json:"categories"`
+	Tags       []*Tag      `json:"tags"`
+	Claims     []*Claim    `json:"claims"`
+	Claimants  []*Claimant `json:"claimants"`
+	Ratings    []*Rating   `json:"ratings"`
+	Media      []*Medium   `json:"media"`
+}

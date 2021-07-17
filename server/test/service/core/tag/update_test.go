@@ -218,29 +218,4 @@ func TestTagUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update tag when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		updatedTag := map[string]interface{}{
-			"name":        "Elections",
-			"slug":        "elections",
-			"is_featured": true,
-			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-			},
-			"html_description": "<p>Test Description</p>",
-		}
-
-		SelectMock(mock, Data, 1, 1)
-
-		tagUpdateMock(mock, updatedTag)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("tag_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedTag).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
 }

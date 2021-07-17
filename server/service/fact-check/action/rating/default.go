@@ -78,12 +78,8 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		}
 
 		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
-		err = insertIntoMeili(ratings[i])
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if config.SearchEnabled() {
+			_ = insertIntoMeili(ratings[i])
 		}
 	}
 

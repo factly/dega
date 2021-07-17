@@ -220,23 +220,4 @@ func TestClaimantUpdate(t *testing.T) {
 
 	})
 
-	t.Run("update claimant when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		updatedClaimant["slug"] = "toi"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		claimantUpdateMock(mock, updatedClaimant, nil)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaimant).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

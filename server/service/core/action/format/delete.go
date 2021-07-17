@@ -74,12 +74,8 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 	tx.Delete(&result)
 
-	err = meilisearchx.DeleteDocument("dega", result.ID, "format")
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "format")
 	}
 
 	tx.Commit()

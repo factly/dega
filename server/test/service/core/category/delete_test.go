@@ -88,25 +88,6 @@ func TestCategoryDelete(t *testing.T) {
 
 	})
 
-	t.Run("delete a category when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		selectWithSpace(mock)
-
-		categoryPostAssociation(mock, 0)
-
-		deleteMock(mock)
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("category_id", "1").
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 	t.Run("updating children categories fail", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 

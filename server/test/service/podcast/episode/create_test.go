@@ -108,38 +108,4 @@ func TestEpisodeCreate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("create episode when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		slugCheckMock(mock, Data)
-
-		mock.ExpectBegin()
-		medium.SelectWithSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectQuery(`INSERT INTO "episodes"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["title"], Data["slug"], Data["season"], Data["episode"], Data["audio_url"], Data["podcast_id"], Data["description"], Data["html_description"], test.AnyTime{}, 1, Data["medium_id"]).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"medium_id", "id"}).
-				AddRow(1, 1))
-
-		mock.ExpectQuery(`INSERT INTO "episode_authors"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 0, 0, 1, 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		SelectQuery(mock)
-		medium.SelectWithOutSpace(mock)
-		podcast.SelectQuery(mock)
-		mock.ExpectRollback()
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

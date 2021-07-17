@@ -295,21 +295,4 @@ func TestCategoryUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update category when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		selectWithSpace(mock)
-
-		updateMock(mock)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("category_id", 1).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

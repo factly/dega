@@ -338,11 +338,8 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		meiliObj["claim_ids"] = post.ClaimIDs
 	}
 
-	err = meilisearchx.AddDocument("dega", meiliObj)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		return nil, errorx.InternalServerError()
+	if config.SearchEnabled() {
+		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
 
 	tx.Commit()

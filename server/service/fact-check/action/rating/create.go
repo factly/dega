@@ -141,12 +141,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&model.Rating{}).Preload("Medium").First(&result)
 
-	err = insertIntoMeili(*result)
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if config.SearchEnabled() {
+		_ = insertIntoMeili(*result)
 	}
 
 	tx.Commit()

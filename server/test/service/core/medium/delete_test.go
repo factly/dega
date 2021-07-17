@@ -131,18 +131,4 @@ func TestMediumDelete(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("delete when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		SelectWithSpace(mock)
-
-		mediumDeleteMock(mock)
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("medium_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
 }

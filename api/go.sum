@@ -152,8 +152,8 @@ github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4/go.mod h1:gDnZ9
 github.com/factly/hukz v0.0.0-20210513184540-cb49caf5c3d1/go.mod h1:JnwNJ/nQ4Y+qpW44k2Ap/vL0mZHQFstZlrIGPbd77nQ=
 github.com/factly/x v0.0.23/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
 github.com/factly/x v0.0.46/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
-github.com/factly/x v0.0.63 h1:JfxN49pxFexdffFsoBpwbjPiPRNaaKWdun4UWJ9Y13w=
-github.com/factly/x v0.0.63/go.mod h1:1POoXVW1/KChY+RFpLH9aRd61jDrZEheUBp0pRKiMIg=
+github.com/factly/x v0.0.71 h1:Y+3VFk9cIft/sIg1ZrvHnNt8VmKpW9uCzf7RQZIyR/c=
+github.com/factly/x v0.0.71/go.mod h1:0OKvu90gUJBjBwJ0OYXvXPNxWJ2KqimeehHNI+5KOjA=
 github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072/go.mod h1:duJ4Jxv5lDcvg4QuQr0oowTf7dz4/CR8NtyCooz9HL8=
 github.com/fasthttp/websocket v1.4.2 h1:AU/zSiIIAuJjBMf5o+vO0syGOnEfvZRu40xIhW/3RuM=
 github.com/fasthttp/websocket v1.4.2/go.mod h1:smsv/h4PBEBaU0XDTY5UwJTpZv69fQ0FfcLJr21mA6Y=
@@ -441,6 +441,7 @@ github.com/julienschmidt/httprouter v1.2.0/go.mod h1:SYymIcj16QtmaHHD7aYtjjsJG7V
 github.com/julienschmidt/httprouter v1.3.0/go.mod h1:JR6WtHb+2LUe8TCKY3cZOxFyyO8IZAc4RVcycCCAKdM=
 github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88 h1:uC1QfSlInpQF+M0ao65imhwqKnz3Q2z/d8PWZRMQvDM=
 github.com/k0kubun/colorstring v0.0.0-20150214042306-9440f1994b88/go.mod h1:3w7q1U84EfirKl04SVQ/s7nPm1ZPhiXd34z40TNz36k=
+github.com/k3a/html2text v1.0.8/go.mod h1:ieEXykM67iT8lTvEWBh6fhpH4B23kB9OMKPdIBmgUqA=
 github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvWXihfKN4Q=
 github.com/kisielk/errcheck v1.5.0/go.mod h1:pFxgyoBC7bSaBwPgfKdkLd5X25qrDl4LWUI2bnpBCr8=
 github.com/kisielk/gotool v1.0.0/go.mod h1:XhKaO+MFFWcvkIS/tQcRk01m1F5IRFswLeQ+oQHNcck=
@@ -498,6 +499,7 @@ github.com/mattn/go-sqlite3 v1.14.0/go.mod h1:JIl7NbARA7phWnGvh0LKTyg7S9BA+6gx71
 github.com/mattn/go-sqlite3 v1.14.6/go.mod h1:NyWgC/yNuGj7Q9rpYnZvas74GogHl5/Z4A/KQRfk6bU=
 github.com/matttproud/golang_protobuf_extensions v1.0.1 h1:4hp9jkHxhMHkqkrB3Ix0jegS5sx/RkqARlsWZ6pIwiU=
 github.com/matttproud/golang_protobuf_extensions v1.0.1/go.mod h1:D8He9yQNgCq6Z5Ld7szi9bcBfOoFv/3dc6xSMkL2PC0=
+github.com/meilisearch/meilisearch-go v0.12.0 h1:5H7i2GLPvrMuZ7nlvVi6EHTp+n7JUObFo/J+/3YDU2A=
 github.com/meilisearch/meilisearch-go v0.12.0/go.mod h1:aqiJBd7zGUPzN2mnd0ZjVm//CfzeHCKSaYpqVNgujlE=
 github.com/miekg/dns v1.0.14/go.mod h1:W1PPwlIAgtquWBMBEV9nkV9Cazfe8ScdGz/Lj7v3Nrg=
 github.com/mitchellh/cli v1.0.0/go.mod h1:hNIlj7HEI86fIcpObd7a0FcrxTWetlwJDGcceTlRvqc=

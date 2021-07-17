@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -53,41 +54,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	// Filters
 	u, _ := url.Parse(r.URL.String())
 	queryMap := u.Query()
-	filters := generateFilters(queryMap["podcast"])
-
-	filteredEpisodeIDs := make([]uint, 0)
-
-	if filters != "" {
-		filters = fmt.Sprint(filters, " AND space_id=", sID)
-	}
 
 	result := paging{}
 	result.Nodes = make([]episodeData, 0)
-
-	if filters != "" || searchQuery != "" {
-		var hits []interface{}
-		var res map[string]interface{}
-
-		if searchQuery != "" {
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
-		} else {
-			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "episode")
-			if _, found := res["hits"]; found {
-				hits = res["hits"].([]interface{})
-			}
-		}
-		if err != nil {
-			loggerx.Error(err)
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-
-		filteredEpisodeIDs = meilisearchx.GetIDArray(hits)
-		if len(filteredEpisodeIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-	}
 
 	if sort != "asc" {
 		sort = "desc"
@@ -100,15 +69,58 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}).Order("created_at " + sort)
 
 	episodes := make([]model.Episode, 0)
-	if len(filteredEpisodeIDs) > 0 {
-		err = tx.Where(filteredEpisodeIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
+	filters := generateFilters(queryMap["podcast"])
+	if filters != "" || searchQuery != "" {
+
+		if config.SearchEnabled() {
+			if filters != "" {
+				filters = fmt.Sprint(filters, " AND space_id=", sID)
+			}
+			var hits []interface{}
+			var res map[string]interface{}
+
+			if searchQuery != "" {
+				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
+			} else {
+				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "episode")
+				if _, found := res["hits"]; found {
+					hits = res["hits"].([]interface{})
+				}
+			}
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
+				return
+			}
+
+			filteredEpisodeIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredEpisodeIDs) == 0 {
+				renderx.JSON(w, http.StatusOK, result)
+				return
+			} else {
+				err = tx.Where(filteredEpisodeIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.DBError()))
+					return
+				}
+			}
+		} else {
+			filters = generateSQLFilters(searchQuery, queryMap["podcast"])
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
 	} else {
 		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&episodes).Error
-	}
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	if len(episodes) == 0 {
@@ -154,6 +166,28 @@ func generateFilters(podcast []string) string {
 	filters := ""
 	if len(podcast) > 0 {
 		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
+}
+
+func generateSQLFilters(searchQuery string, podcasts []string) string {
+	filters := ""
+
+	if searchQuery != "" {
+		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	}
+
+	if len(podcasts) > 0 {
+		filters = filters + " podcast_id IN ("
+		for _, id := range podcasts {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

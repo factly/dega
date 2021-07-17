@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/url"
 	"strconv"
+	"strings"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -15,6 +16,7 @@ import (
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"gorm.io/gorm"
 )
 
 type paging struct {
@@ -49,42 +51,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 	searchQuery := r.URL.Query().Get("q")
 	sort := r.URL.Query().Get("sort")
 
-	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["status"])
-	filteredPageIDs := make([]uint, 0)
-
-	if filters != "" {
-		filters = fmt.Sprint(filters, " AND space_id=", sID)
-	}
-
 	result := paging{}
 	result.Nodes = make([]pageData, 0)
-
-	if filters != "" || searchQuery != "" {
-		// Search pages with filter
-		var hits []interface{}
-		var res map[string]interface{}
-
-		if searchQuery != "" {
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "page")
-		} else {
-			res, err = meilisearchx.SearchWithoutQuery("dega", filters, "page")
-			if _, found := res["hits"]; found {
-				hits = res["hits"].([]interface{})
-			}
-		}
-		if err != nil {
-			loggerx.Error(err)
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-
-		filteredPageIDs = meilisearchx.GetIDArray(hits)
-		if len(filteredPageIDs) == 0 {
-			renderx.JSON(w, http.StatusOK, result)
-			return
-		}
-	}
-
 	posts := make([]model.Post, 0)
 	offset, limit := paginationx.Parse(r.URL.Query())
 
@@ -94,7 +62,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", true).Order("created_at " + sort)
+	}).Where("is_page = ?", true).Order("posts.created_at " + sort)
 
 	formatIDs := make([]uint, 0)
 	for _, fid := range queryMap["format"] {
@@ -106,16 +74,62 @@ func list(w http.ResponseWriter, r *http.Request) {
 		tx.Where("format_id IN (?)", formatIDs)
 	}
 
-	if len(filteredPageIDs) > 0 {
-		err = tx.Where(filteredPageIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
-	} else {
-		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
-	}
+	filters := generateFilters(queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["status"])
+	if filters != "" || searchQuery != "" {
 
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		if config.SearchEnabled() {
+			if filters != "" {
+				filters = fmt.Sprint(filters, " AND space_id=", sID)
+			}
+			// Search pages with filter
+			var hits []interface{}
+			var res map[string]interface{}
+
+			if searchQuery != "" {
+				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "page")
+			} else {
+				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "page")
+				if _, found := res["hits"]; found {
+					hits = res["hits"].([]interface{})
+				}
+			}
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
+				return
+			}
+
+			filteredPageIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredPageIDs) == 0 {
+				renderx.JSON(w, http.StatusOK, result)
+				return
+			} else {
+				// filter from meili
+				err = tx.Where(filteredPageIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.DBError()))
+					return
+				}
+			}
+		} else {
+			// generate sql filters
+			filters = generateSQLFilters(tx, searchQuery, queryMap["tag"], queryMap["category"], queryMap["author"], queryMap["status"])
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Select("posts.*").Find(&posts).Error
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
+		}
+	} else {
+		// return all
+		err = tx.Where("status != ?", "template").Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	var postIDs []uint
@@ -185,6 +199,57 @@ func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
+
+	return filters
+}
+
+func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, authorIDs, status []string) string {
+	filters := ""
+
+	if searchQuery != "" {
+		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	}
+
+	if len(categoryIDs) > 0 {
+		tx.Joins("INNER JOIN post_categories ON posts.id = post_categories.post_id")
+		filters = filters + " post_categories.category_id IN ("
+		for _, id := range categoryIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(tagIDs) > 0 {
+		tx.Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id")
+		filters = filters + " post_tags.tag_id IN ("
+		for _, id := range tagIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(authorIDs) > 0 {
+		tx.Joins("INNER JOIN post_authors ON posts.id = post_authors.post_id")
+		filters = filters + " post_authors.author_id IN ("
+		for _, id := range authorIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(status) > 0 {
+		filters = filters + " posts.status IN ("
+		for _, sts := range status {
+			filters = fmt.Sprint(filters, "'", sts, "'", ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	tx.Group("posts.id")
 
 	return filters
 }

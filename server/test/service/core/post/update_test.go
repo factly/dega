@@ -364,25 +364,6 @@ func TestPostUpdate(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("update post when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		updatePost["slug"] = "post"
-		test.CheckSpaceMock(mock)
-
-		updateMock(mock, updatePost, false)
-		mock.ExpectRollback()
-
-		e.PUT(path).
-			WithPath("post_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatePost).
-			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
-		test.MockServer()
-	})
-
 	t.Run("update post by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatePost["slug"] = "post"

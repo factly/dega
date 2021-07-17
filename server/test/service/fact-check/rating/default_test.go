@@ -113,28 +113,4 @@ func TestDefaultRatingCreate(t *testing.T) {
 		rating.DataFile = "./testDefault.json"
 	})
 
-	t.Run("when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		mock.ExpectBegin()
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
-
-		mock.ExpectQuery(`INSERT INTO "ratings"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[0]["name"], defaultData[0]["slug"], defaultData[0]["background_colour"], defaultData[0]["text_colour"], defaultData[0]["description"], defaultData[0]["html_description"], defaultData[0]["numeric_value"], nil, 1).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		mock.ExpectRollback()
-
-		e.POST(defaultsPath).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }

@@ -96,44 +96,4 @@ func TestPageDelete(t *testing.T) {
 		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("delete page when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		SelectMock(mock, true, 1, 1)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_categories"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "category_id"}).
-				AddRow(1, 1))
-		category.SelectWithOutSpace(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_tags"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "tag_id"}).
-				AddRow(1, 1))
-		tag.SelectMock(mock, tag.Data, 1)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_tags"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "post_categories"`)).
-			WillReturnResult(sqlmock.NewResult(0, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "post_authors" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectExec(regexp.QuoteMeta(`UPDATE "posts" SET "deleted_at"=`)).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectRollback()
-
-		e.DELETE(path).
-			WithPath("page_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-	})
 }
