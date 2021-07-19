@@ -9,5 +9,7 @@ func Migration() {
 		&Rating{},
 		&Claim{},
 		&PostClaim{},
+		&Video{},
+		&VideoAuthor{},
 	)
 }
