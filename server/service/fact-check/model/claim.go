@@ -31,6 +31,10 @@ type Claim struct {
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
 	Space           *model.Space   `json:"space,omitempty"`
+	VideoID         *uint          `gorm:"column:video_id" json:"video_id"`
+	Video           *Video         `json:"video"`
+	EndTime         int            `gorm:"column:end_time" json:"end_time"`
+	StartTime       int            `gorm:"column:start_time" json:"start_time"`
 }
 
 // PostClaim model

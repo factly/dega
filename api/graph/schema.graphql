@@ -115,7 +115,7 @@ type User {
   slug: String
   email: String!
   birth_date: String
-  gender:  String
+  gender: String
   description: String
   display_name: String
   social_media_urls: Any
@@ -168,6 +168,8 @@ type Claim {
   rating: Rating!
   claimant: Claimant!
   meta_fields: Any
+  end_time: Int
+  start_time: Int
   space_id: Int!
 }
 
@@ -181,7 +183,6 @@ type Menu {
   meta_fields: Any
   space_id: Int!
 }
-
 
 type CategoriesPaging {
   nodes: [Category!]!
@@ -197,7 +198,6 @@ type PostsPaging {
   nodes: [Post!]!
   total: Int!
 }
-
 
 type UsersPaging {
   nodes: [User!]!
@@ -243,7 +243,7 @@ type Sitemaps {
   posts: [Sitemap]
   claims: [Sitemap]
   claimants: [Sitemap]
-  ratings: [Sitemap] 
+  ratings: [Sitemap]
 }
 
 type SearchResult {
@@ -264,20 +264,71 @@ input PostFilter {
 type Query {
   space: Space
   menu: MenusPaging
-  categories(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
+  categories(
+    ids: [Int!]
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): CategoriesPaging
   category(id: Int, slug: String): Category
-  tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
+  tags(
+    ids: [Int!]
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): TagsPaging
   tag(id: Int, slug: String): Tag
-  formats(spaces:[Int!], slugs:[String!]): FormatsPaging
-  posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: PostFilter, status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  formats(spaces: [Int!], slugs: [String!]): FormatsPaging
+  posts(
+    spaces: [Int!]
+    formats: PostFilter
+    categories: PostFilter
+    tags: PostFilter
+    users: PostFilter
+    status: String
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
-  pages(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  pages(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int, slug: String): User
-  ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
-  claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(spaces:[Int!], ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
+  ratings(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): RatingsPaging
+  claimants(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimantsPaging
+  claims(
+    spaces: [Int!]
+    ratings: [Int!]
+    claimants: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimsPaging
   sitemap: Sitemaps
   search(q: String!): SearchResult
 }

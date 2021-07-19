@@ -82,6 +82,7 @@ type ComplexityRoot struct {
 		Claimant        func(childComplexity int) int
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		EndTime         func(childComplexity int) int
 		Fact            func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
 		ID              func(childComplexity int) int
@@ -90,6 +91,7 @@ type ComplexityRoot struct {
 		ReviewSources   func(childComplexity int) int
 		Slug            func(childComplexity int) int
 		SpaceID         func(childComplexity int) int
+		StartTime       func(childComplexity int) int
 		UpdatedAt       func(childComplexity int) int
 	}
 
@@ -355,6 +357,7 @@ type ClaimResolver interface {
 	Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error)
 	Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error)
 	MetaFields(ctx context.Context, obj *models.Claim) (interface{}, error)
+
 	SpaceID(ctx context.Context, obj *models.Claim) (int, error)
 }
 type ClaimantResolver interface {
@@ -627,6 +630,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Description(childComplexity), true
 
+	case "Claim.end_time":
+		if e.complexity.Claim.EndTime == nil {
+			break
+		}
+
+		return e.complexity.Claim.EndTime(childComplexity), true
+
 	case "Claim.fact":
 		if e.complexity.Claim.Fact == nil {
 			break
@@ -682,6 +692,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claim.SpaceID(childComplexity), true
+
+	case "Claim.start_time":
+		if e.complexity.Claim.StartTime == nil {
+			break
+		}
+
+		return e.complexity.Claim.StartTime(childComplexity), true
 
 	case "Claim.updated_at":
 		if e.complexity.Claim.UpdatedAt == nil {
@@ -2217,6 +2234,8 @@ type Claim {
   rating: Rating!
   claimant: Claimant!
   meta_fields: Any
+  end_time: Int            
+	start_time: Int        
   space_id: Int!
 }
 
@@ -3950,6 +3969,70 @@ func (ec *executionContext) _Claim_meta_fields(ctx context.Context, field graphq
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claim_end_time(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EndTime, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claim_start_time(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StartTime, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -11380,6 +11463,10 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				res = ec._Claim_meta_fields(ctx, field, obj)
 				return res
 			})
+		case "end_time":
+			out.Values[i] = ec._Claim_end_time(ctx, field, obj)
+		case "start_time":
+			out.Values[i] = ec._Claim_start_time(ctx, field, obj)
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -14323,6 +14410,15 @@ func (ec *executionContext) marshalOFormatsPaging2ᚖgithubᚗcomᚋfactlyᚋdeg
 		return graphql.Null
 	}
 	return ec._FormatsPaging(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
+	res, err := graphql.UnmarshalInt(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
+	return graphql.MarshalInt(v)
 }
 
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {
