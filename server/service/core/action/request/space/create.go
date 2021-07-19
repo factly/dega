@@ -88,6 +88,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		Episodes:  request.Episodes,
 		Media:     request.Media,
 		FactCheck: request.FactCheck,
+		Videos:    request.Videos,
 	}
 
 	err = config.DB.WithContext(context.WithValue(r.Context(), permissionContext, uID)).Model(&model.SpacePermissionRequest{}).Create(&result).Error

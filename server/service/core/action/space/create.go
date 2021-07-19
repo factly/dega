@@ -149,6 +149,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 				Podcast:   true,
 				Episodes:  -1,
 				FactCheck: true,
+				Videos:    -1,
 			}
 		} else {
 			spacePermission = model.SpacePermission{
@@ -156,6 +157,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 				Media:     viper.GetInt64("default_number_of_media"),
 				Posts:     viper.GetInt64("default_number_of_posts"),
 				Episodes:  viper.GetInt64("default_number_of_episodes"),
+				Videos:    viper.GetInt64("default_number_of_videos"),
 				Podcast:   false,
 				FactCheck: false,
 			}

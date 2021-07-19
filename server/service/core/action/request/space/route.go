@@ -18,6 +18,7 @@ type spacePermissionRequest struct {
 	FactCheck   bool           `json:"fact_check"`
 	Media       int64          `json:"media"`
 	Posts       int64          `json:"posts"`
+	Videos      int64          `json:"videos"`
 	Episodes    int64          `json:"episodes"`
 	Podcast     bool           `json:"podcast"`
 	SpaceID     int64          `json:"space_id" validate:"required"`

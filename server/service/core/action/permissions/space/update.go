@@ -94,6 +94,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Posts:    permission.Posts,
 		Media:    permission.Media,
 		Episodes: permission.Episodes,
+		Videos:   permission.Videos,
 	}).First(&result).Error
 
 	if err != nil {
