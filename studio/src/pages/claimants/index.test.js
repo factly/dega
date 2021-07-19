@@ -163,7 +163,7 @@ describe('Claimants List component', () => {
           </Provider>,
         );
       });
-      expect(getClaimants).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'descri' });
+      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'descri' });
     });
     it('should submit filters', () => {
       store = mockStore(state);

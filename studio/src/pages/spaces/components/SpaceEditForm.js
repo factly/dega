@@ -34,9 +34,25 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
 
   const [valueChange, setValueChange] = React.useState(false);
   const [basicPanel, setBasicPanel] = React.useState(null);
+  const [mediaPanel, setMediaPanel] = React.useState(null);
+  const [contactPanel, setContactPanel] = React.useState(null);
+  const [analyticsPanel, setAnalyticsPanel] = React.useState(null);
+  const [codePanel, setCodePanel] = React.useState(null);
 
   const handleBasicCollapse = () => {
     basicPanel === null ? setBasicPanel('1') : setBasicPanel(null);
+  };
+  const handleMediaCollapse = () => {
+    mediaPanel === null ? setMediaPanel('2') : setMediaPanel(null);
+  };
+  const handleContactCollapse = () => {
+    contactPanel === null ? setContactPanel('3') : setContactPanel(null);
+  };
+  const handleAnalyticsCollapse = () => {
+    analyticsPanel === null ? setAnalyticsPanel('4') : setAnalyticsPanel(null);
+  };
+  const handleCodeCollapse = () => {
+    codePanel === null ? setCodePanel('5') : setCodePanel(null);
   };
 
   return (
@@ -56,9 +72,9 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
           let name = errors.errorFields[0].name[0];
-          if (['name', 'slug'].includes(name)) {
-            setBasicPanel('1');
-          }
+          // if (['name', 'slug'].includes(name)) {
+          setBasicPanel('1');
+          // }
         }}
         onValuesChange={() => {
           setValueChange(true);
@@ -134,7 +150,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Panel>
         </Collapse>
-        <Collapse style={{ width: '95%', marginBottom: '15px' }}>
+        <Collapse
+          style={{ width: '95%', marginBottom: '15px' }}
+          activeKey={mediaPanel}
+          onChange={handleMediaCollapse}
+        >
           <Panel header="Media" key="2">
             <Form.Item label="Logo" name="logo_id">
               <MediaSelector />
@@ -150,7 +170,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Panel>
         </Collapse>
-        <Collapse style={{ width: '95%', marginBottom: '15px' }}>
+        <Collapse
+          style={{ width: '95%', marginBottom: '15px' }}
+          activeKey={contactPanel}
+          onChange={handleContactCollapse}
+        >
           <Panel header="Contact" key="3">
             <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
               <Input style={{ width: '100%' }} />
@@ -166,7 +190,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Panel>
         </Collapse>
-        <Collapse style={{ width: '95%', marginBottom: '15px' }}>
+        <Collapse
+          style={{ width: '95%', marginBottom: '15px' }}
+          activeKey={analyticsPanel}
+          onChange={handleAnalyticsCollapse}
+        >
           <Panel header="Analytics" key="4">
             <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
               <Input style={{ width: '100%' }} />
@@ -179,7 +207,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Panel>
         </Collapse>
-        <Collapse style={{ width: '95%', marginBottom: '15px' }}>
+        <Collapse
+          style={{ width: '95%', marginBottom: '15px' }}
+          activeKey={codePanel}
+          onChange={handleCodeCollapse}
+        >
           <Panel header="Code Injection" key="5">
             <Form.Item name="header_code" label="Header Code">
               <MonacoEditor language="html" width={650} />

@@ -99,7 +99,7 @@ describe('Spaces Edit component', () => {
     it('should render the component', () => {
       let component;
       act(() => {
-        component = mount(
+        component = shallow(
           <Provider store={store}>
             <EditSpace />
           </Provider>,

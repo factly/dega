@@ -111,7 +111,7 @@ describe('Media List component', () => {
           </Provider>,
         );
       });
-      expect(getMedia).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+      expect(getMedia).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
     });
 
     it('should submit filters', () => {

@@ -184,7 +184,7 @@ describe('Episode Component', () => {
           </Provider>,
         );
       });
-      expect(getEpisodes).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore(state);
