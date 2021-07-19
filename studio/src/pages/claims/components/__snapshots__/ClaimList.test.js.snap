@@ -126,6 +126,7 @@ exports[`Claims List component snapshot testing should match component when load
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -133,7 +134,7 @@ exports[`Claims List component snapshot testing should match component when load
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -483,19 +484,19 @@ exports[`Claims List component snapshot testing should match component when load
                                     >
                                       <colgroup>
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                       </colgroup>
                                       <thead
@@ -858,19 +859,19 @@ exports[`Claims List component snapshot testing should match component when load
                                           >
                                             <colgroup>
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                             </colgroup>
                                             <thead
@@ -1129,7 +1130,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             key="0"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -1138,7 +1138,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             key="1"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -1147,7 +1146,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             key="2"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -1156,7 +1154,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             key="3"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -1165,7 +1162,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             key="4"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -2007,11 +2003,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -2057,7 +2049,6 @@ exports[`Claims List component snapshot testing should match component when load
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -2087,8 +2078,9 @@ exports[`Claims List component snapshot testing should match component when load
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -2332,6 +2324,12 @@ exports[`Claims List component snapshot testing should match component when load
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -2355,8 +2353,9 @@ exports[`Claims List component snapshot testing should match component when load
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -2634,12 +2633,20 @@ exports[`Claims List component snapshot testing should match component when load
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -2668,11 +2675,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -3057,11 +3060,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -3107,7 +3106,6 @@ exports[`Claims List component snapshot testing should match component when load
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -3137,8 +3135,9 @@ exports[`Claims List component snapshot testing should match component when load
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -3382,6 +3381,12 @@ exports[`Claims List component snapshot testing should match component when load
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -3405,8 +3410,9 @@ exports[`Claims List component snapshot testing should match component when load
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -3684,12 +3690,20 @@ exports[`Claims List component snapshot testing should match component when load
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -3718,11 +3732,7 @@ exports[`Claims List component snapshot testing should match component when load
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -3948,7 +3958,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -3973,7 +3982,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="left"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -4075,7 +4083,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -4100,7 +4107,6 @@ exports[`Claims List component snapshot testing should match component when load
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="right"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -4305,6 +4311,7 @@ exports[`Claims List component snapshot testing should match component with clai
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -4312,7 +4319,7 @@ exports[`Claims List component snapshot testing should match component with clai
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -4638,19 +4645,19 @@ exports[`Claims List component snapshot testing should match component with clai
                                     >
                                       <colgroup>
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                       </colgroup>
                                       <thead
@@ -5013,19 +5020,19 @@ exports[`Claims List component snapshot testing should match component with clai
                                           >
                                             <colgroup>
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                             </colgroup>
                                             <thead
@@ -5284,7 +5291,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             key="0"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -5293,7 +5299,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             key="1"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -5302,7 +5307,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             key="2"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -5311,7 +5315,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             key="3"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -5320,7 +5323,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             key="4"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -6162,11 +6164,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -6212,7 +6210,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -6242,8 +6239,9 @@ exports[`Claims List component snapshot testing should match component with clai
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -6487,6 +6485,12 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -6510,8 +6514,9 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -6789,12 +6794,20 @@ exports[`Claims List component snapshot testing should match component with clai
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -6823,11 +6836,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -7212,11 +7221,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -7262,7 +7267,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -7292,8 +7296,9 @@ exports[`Claims List component snapshot testing should match component with clai
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -7537,6 +7542,12 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -7560,8 +7571,9 @@ exports[`Claims List component snapshot testing should match component with clai
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -7839,12 +7851,20 @@ exports[`Claims List component snapshot testing should match component with clai
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -7873,11 +7893,7 @@ exports[`Claims List component snapshot testing should match component with clai
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -8103,7 +8119,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -8128,7 +8143,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="left"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -8230,7 +8244,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -8255,7 +8268,6 @@ exports[`Claims List component snapshot testing should match component with clai
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="right"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -8398,6 +8410,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -8405,7 +8418,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -8537,19 +8550,19 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                     >
                                       <colgroup>
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                         <col
-                                          style="width: 20%; min-width: 20%;"
+                                          style="width: 20%;"
                                         />
                                       </colgroup>
                                       <thead
@@ -8633,11 +8646,11 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   </g>
                                                 </svg>
                                               </div>
-                                              <p
+                                              <div
                                                 class="ant-empty-description"
                                               >
                                                 No Data
-                                              </p>
+                                              </div>
                                             </div>
                                           </td>
                                         </tr>
@@ -8727,19 +8740,19 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                           >
                                             <colgroup>
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                               <col
-                                                style="width: 20%; min-width: 20%;"
+                                                style="width: 20%;"
                                               />
                                             </colgroup>
                                             <thead
@@ -8823,11 +8836,11 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                         </g>
                                                       </svg>
                                                     </div>
-                                                    <p
+                                                    <div
                                                       class="ant-empty-description"
                                                     >
                                                       No Data
-                                                    </p>
+                                                    </div>
                                                   </div>
                                                 </td>
                                               </tr>
@@ -8937,7 +8950,6 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             key="0"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -8946,7 +8958,6 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             key="1"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -8955,7 +8966,6 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             key="2"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -8964,7 +8974,6 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             key="3"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -8973,7 +8982,6 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             key="4"
                                             style={
                                               Object {
-                                                "minWidth": "20%",
                                                 "width": "20%",
                                               }
                                             }
@@ -9415,6 +9423,8 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             component="tr"
                                             componentWidth={0}
                                             expanded={true}
+                                            fixColumn={false}
+                                            horizonScroll={false}
                                             prefixCls="ant-table"
                                           >
                                             <tr
@@ -9484,11 +9494,11 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                             </svg>
                                                           </Simple>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           className="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </LocaleReceiver>
                                                   </Empty>

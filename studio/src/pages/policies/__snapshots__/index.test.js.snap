@@ -50,6 +50,7 @@ exports[`Policies List component should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -57,7 +58,7 @@ exports[`Policies List component should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -79,11 +80,7 @@ exports[`Policies List component should render the component 1`] = `
                       onClick={[Function]}
                     >
                       <Button
-                        block={false}
                         disabled={true}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                       >
                         <Wave>
                           <button
@@ -130,7 +127,7 @@ exports[`Policies List component should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -257,14 +254,14 @@ exports[`Policies List component should render the component 1`] = `
                                       >
                                         <colgroup>
                                           <col
-                                            style="width: 20%; min-width: 20%;"
+                                            style="width: 20%;"
                                           />
                                           <col />
                                           <col
-                                            style="width: 25%; min-width: 25%;"
+                                            style="width: 25%;"
                                           />
                                           <col
-                                            style="width: 15%; min-width: 15%;"
+                                            style="width: 15%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -343,11 +340,11 @@ exports[`Policies List component should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -432,14 +429,14 @@ exports[`Policies List component should render the component 1`] = `
                                             >
                                               <colgroup>
                                                 <col
-                                                  style="width: 20%; min-width: 20%;"
+                                                  style="width: 20%;"
                                                 />
                                                 <col />
                                                 <col
-                                                  style="width: 25%; min-width: 25%;"
+                                                  style="width: 25%;"
                                                 />
                                                 <col
-                                                  style="width: 15%; min-width: 15%;"
+                                                  style="width: 15%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -518,11 +515,11 @@ exports[`Policies List component should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -623,7 +620,6 @@ exports[`Policies List component should render the component 1`] = `
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": "20%",
                                                   "width": "20%",
                                                 }
                                               }
@@ -632,7 +628,6 @@ exports[`Policies List component should render the component 1`] = `
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -641,7 +636,6 @@ exports[`Policies List component should render the component 1`] = `
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "25%",
                                                   "width": "25%",
                                                 }
                                               }
@@ -650,7 +644,6 @@ exports[`Policies List component should render the component 1`] = `
                                               key="3"
                                               style={
                                                 Object {
-                                                  "minWidth": "15%",
                                                   "width": "15%",
                                                 }
                                               }
@@ -1025,6 +1018,8 @@ exports[`Policies List component should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -1094,11 +1089,11 @@ exports[`Policies List component should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>

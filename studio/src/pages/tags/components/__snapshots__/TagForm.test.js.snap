@@ -145,6 +145,7 @@ exports[`Tags Create Form component snapshot testing should match component with
           <form
             className="ant-form ant-form-horizontal"
             id="create-tag"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -405,7 +406,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -659,7 +660,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -851,7 +852,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1049,7 +1050,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1229,7 +1230,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1302,6 +1303,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -1309,7 +1311,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -1320,11 +1322,8 @@ exports[`Tags Create Form component snapshot testing should match component with
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -1369,17 +1368,14 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -1428,7 +1424,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -1543,6 +1539,7 @@ exports[`Tags Create Form component snapshot testing should match component with
           <form
             className="ant-form ant-form-horizontal"
             id="create-tag"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -1800,7 +1797,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2051,7 +2048,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2243,7 +2240,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2413,7 +2410,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2593,7 +2590,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2666,6 +2663,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -2673,7 +2671,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -2684,11 +2682,8 @@ exports[`Tags Create Form component snapshot testing should match component with
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -2733,17 +2728,14 @@ exports[`Tags Create Form component snapshot testing should match component with
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -2792,7 +2784,7 @@ exports[`Tags Create Form component snapshot testing should match component with
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -2905,6 +2897,7 @@ exports[`Tags Create Form component snapshot testing should render the component
           <form
             className="ant-form ant-form-horizontal"
             id="create-tag"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -3162,7 +3155,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3413,7 +3406,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3605,7 +3598,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3775,7 +3768,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3955,7 +3948,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4028,6 +4021,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -4035,7 +4029,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -4046,11 +4040,8 @@ exports[`Tags Create Form component snapshot testing should render the component
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -4095,17 +4086,14 @@ exports[`Tags Create Form component snapshot testing should render the component
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -4154,7 +4142,7 @@ exports[`Tags Create Form component snapshot testing should render the component
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}

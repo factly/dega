@@ -65,6 +65,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -72,7 +73,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -160,6 +161,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                       <form
                         className="ant-form ant-form-horizontal ant-advanced-search-form"
                         id="filters"
+                        onReset={[Function]}
                         onSubmit={[Function]}
                         style={
                           Object {
@@ -203,11 +205,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       onClick={[Function]}
                                     >
                                       <Button
-                                        block={false}
                                         disabled={true}
-                                        ghost={false}
-                                        htmlType="button"
-                                        loading={false}
                                       >
                                         <Wave>
                                           <button
@@ -267,6 +265,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                 >
                                   <div
                                     className="ant-space ant-space-horizontal ant-space-align-center"
+                                    style={Object {}}
                                   >
                                     <Item
                                       className="ant-space-item"
@@ -274,7 +273,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       index={0}
                                       key="ant-space-item-0"
                                       marginDirection="marginRight"
-                                      size="small"
+                                      wrap={false}
                                     >
                                       <div
                                         className="ant-space-item"
@@ -288,7 +287,11 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                           name="q"
                                         >
                                           <WrapperField
-                                            messageVariables={Object {}}
+                                            messageVariables={
+                                              Object {
+                                                "label": "q",
+                                              }
+                                            }
                                             name="q"
                                             onReset={[Function]}
                                             trigger="onChange"
@@ -321,7 +324,11 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                 }
                                               }
                                               key="_q"
-                                              messageVariables={Object {}}
+                                              messageVariables={
+                                                Object {
+                                                  "label": "q",
+                                                }
+                                              }
                                               name={
                                                 Array [
                                                   "q",
@@ -431,7 +438,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           <CSSMotion
                                                             motionAppear={true}
                                                             motionDeadline={500}
-                                                            motionName="show-help"
+                                                            motionName="ant-show-help"
                                                             onLeaveEnd={[Function]}
                                                             removeOnLeave={true}
                                                             visible={false}
@@ -455,7 +462,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       index={1}
                                       key="ant-space-item-1"
                                       marginDirection="marginRight"
-                                      size="small"
+                                      wrap={false}
                                     >
                                       <div
                                         className="ant-space-item"
@@ -499,10 +506,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                         className="ant-form-item-control-input-content"
                                                       >
                                                         <Button
-                                                          block={false}
-                                                          ghost={false}
                                                           htmlType="submit"
-                                                          loading={false}
                                                         >
                                                           <Wave>
                                                             <button
@@ -546,7 +550,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                       <CSSMotion
                                                         motionAppear={true}
                                                         motionDeadline={500}
-                                                        motionName="show-help"
+                                                        motionName="ant-show-help"
                                                         onLeaveEnd={[Function]}
                                                         removeOnLeave={true}
                                                         visible={false}
@@ -568,7 +572,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       index={2}
                                       key="ant-space-item-2"
                                       marginDirection="marginRight"
-                                      size="small"
+                                      wrap={false}
                                     >
                                       <div
                                         className="ant-space-item"
@@ -730,7 +734,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       "width": "100%",
                                                                     }
                                                                   }
-                                                                  transitionName="slide-up"
+                                                                  transitionName="ant-slide-up"
                                                                 >
                                                                   <ForwardRef(Select)
                                                                     className=""
@@ -755,7 +759,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         "width": "100%",
                                                                       }
                                                                     }
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                   >
                                                                     <div
                                                                       className="ant-select ant-select-single ant-select-show-arrow"
@@ -840,7 +844,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           />
                                                                         }
                                                                         prefixCls="ant-select"
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                       >
                                                                         <Trigger
                                                                           action={Array []}
@@ -995,7 +999,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               "width": null,
                                                                             }
                                                                           }
-                                                                          popupTransitionName="slide-up"
+                                                                          popupTransitionName="ant-slide-up"
                                                                           prefixCls="ant-select-dropdown"
                                                                           showAction={Array []}
                                                                         >
@@ -1068,7 +1072,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               }
                                                                             }
                                                                             tokenWithEnter={false}
-                                                                            transitionName="slide-up"
+                                                                            transitionName="ant-slide-up"
                                                                             values={
                                                                               Array [
                                                                                 Object {
@@ -1179,7 +1183,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                                   }
                                                                                 }
                                                                                 tokenWithEnter={false}
-                                                                                transitionName="slide-up"
+                                                                                transitionName="ant-slide-up"
                                                                                 values={
                                                                                   Array [
                                                                                     Object {
@@ -1306,7 +1310,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                                 role="img"
                                                                               >
                                                                                 <IconReact
-                                                                                  className=""
                                                                                   icon={
                                                                                     Object {
                                                                                       "icon": Object {
@@ -1331,7 +1334,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                                 >
                                                                                   <svg
                                                                                     aria-hidden="true"
-                                                                                    className=""
                                                                                     data-icon="down"
                                                                                     fill="currentColor"
                                                                                     focusable="false"
@@ -1365,7 +1367,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           <CSSMotion
                                                             motionAppear={true}
                                                             motionDeadline={500}
-                                                            motionName="show-help"
+                                                            motionName="ant-show-help"
                                                             onLeaveEnd={[Function]}
                                                             removeOnLeave={true}
                                                             visible={false}
@@ -1560,7 +1562,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                           onChange={[Function]}
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -1580,7 +1582,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -1688,7 +1690,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                   />
                                                                 }
                                                                 prefixCls="ant-select"
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                               >
                                                                 <Trigger
                                                                   action={Array []}
@@ -1871,7 +1873,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       "width": null,
                                                                     }
                                                                   }
-                                                                  popupTransitionName="slide-up"
+                                                                  popupTransitionName="ant-slide-up"
                                                                   prefixCls="ant-select-dropdown"
                                                                   showAction={Array []}
                                                                 >
@@ -1939,7 +1941,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -2045,7 +2047,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -2172,7 +2174,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         role="img"
                                                                       >
                                                                         <IconReact
-                                                                          className=""
                                                                           icon={
                                                                             Object {
                                                                               "icon": Object {
@@ -2197,7 +2198,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         >
                                                                           <svg
                                                                             aria-hidden="true"
-                                                                            className=""
                                                                             data-icon="down"
                                                                             fill="currentColor"
                                                                             focusable="false"
@@ -2231,7 +2231,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -2433,7 +2433,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             placeholder="Filter Tags"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             value={Array []}
                                                           >
                                                             <ForwardRef(Select)
@@ -2461,7 +2461,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               placeholder="Filter Tags"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                                              transitionName="slide-up"
+                                                              transitionName="ant-slide-up"
                                                               value={Array []}
                                                             >
                                                               <div
@@ -2502,7 +2502,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     />
                                                                   }
                                                                   prefixCls="ant-select"
-                                                                  transitionName="slide-up"
+                                                                  transitionName="ant-slide-up"
                                                                   visible={false}
                                                                 >
                                                                   <Trigger
@@ -2618,7 +2618,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         "width": null,
                                                                       }
                                                                     }
-                                                                    popupTransitionName="slide-up"
+                                                                    popupTransitionName="ant-slide-up"
                                                                     popupVisible={false}
                                                                     prefixCls="ant-select-dropdown"
                                                                     showAction={Array []}
@@ -2635,34 +2635,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           "current": <div
                                                                             class="ant-select-selector"
                                                                           >
-                                                                            <span
-                                                                              class="ant-select-selection-search"
-                                                                              style="width: 0px;"
+                                                                            <div
+                                                                              class="ant-select-selection-overflow"
                                                                             >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autocomplete="off"
-                                                                                class="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                readonly=""
-                                                                                role="combobox"
-                                                                                style="opacity: 0;"
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                              <span
-                                                                                aria-hidden="true"
-                                                                                class="ant-select-selection-search-mirror"
+                                                                              <div
+                                                                                class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                style="opacity: 1;"
                                                                               >
-                                                                                
-                                                                                 
-                                                                              </span>
-                                                                            </span>
+                                                                                <div
+                                                                                  class="ant-select-selection-search"
+                                                                                  style="width: 0px;"
+                                                                                >
+                                                                                  <input
+                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                    aria-haspopup="listbox"
+                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                    autocomplete="off"
+                                                                                    class="ant-select-selection-search-input"
+                                                                                    id="rc_select_TEST_OR_SSR"
+                                                                                    readonly=""
+                                                                                    role="combobox"
+                                                                                    style="opacity: 0;"
+                                                                                    type="search"
+                                                                                    unselectable="on"
+                                                                                    value=""
+                                                                                  />
+                                                                                  <span
+                                                                                    aria-hidden="true"
+                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  >
+                                                                                    
+                                                                                     
+                                                                                  </span>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
                                                                             <span
                                                                               class="ant-select-selection-placeholder"
                                                                             >
@@ -2701,7 +2710,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       searchValue=""
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
-                                                                      transitionName="slide-up"
+                                                                      transitionName="ant-slide-up"
                                                                       value={Array []}
                                                                       values={Array []}
                                                                     >
@@ -2722,34 +2731,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               "current": <div
                                                                                 class="ant-select-selector"
                                                                               >
-                                                                                <span
-                                                                                  class="ant-select-selection-search"
-                                                                                  style="width: 0px;"
+                                                                                <div
+                                                                                  class="ant-select-selection-overflow"
                                                                                 >
-                                                                                  <input
-                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                    aria-autocomplete="list"
-                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                    aria-haspopup="listbox"
-                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                    autocomplete="off"
-                                                                                    class="ant-select-selection-search-input"
-                                                                                    id="rc_select_TEST_OR_SSR"
-                                                                                    readonly=""
-                                                                                    role="combobox"
-                                                                                    style="opacity: 0;"
-                                                                                    type="search"
-                                                                                    unselectable="on"
-                                                                                    value=""
-                                                                                  />
-                                                                                  <span
-                                                                                    aria-hidden="true"
-                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  <div
+                                                                                    class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                    style="opacity: 1;"
                                                                                   >
-                                                                                    
-                                                                                     
-                                                                                  </span>
-                                                                                </span>
+                                                                                    <div
+                                                                                      class="ant-select-selection-search"
+                                                                                      style="width: 0px;"
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autocomplete="off"
+                                                                                        class="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        readonly=""
+                                                                                        role="combobox"
+                                                                                        style="opacity: 0;"
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                      <span
+                                                                                        aria-hidden="true"
+                                                                                        class="ant-select-selection-search-mirror"
+                                                                                      >
+                                                                                        
+                                                                                         
+                                                                                      </span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
                                                                                 <span
                                                                                   class="ant-select-selection-placeholder"
                                                                                 >
@@ -2813,71 +2831,141 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           searchValue=""
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
-                                                                          transitionName="slide-up"
+                                                                          transitionName="ant-slide-up"
                                                                           value={Array []}
                                                                           values={Array []}
                                                                         >
-                                                                          <CSSMotionList
-                                                                            component={false}
-                                                                            keys={Array []}
-                                                                            motionAppear={true}
-                                                                          />
-                                                                          <span
-                                                                            className="ant-select-selection-search"
-                                                                            style={
-                                                                              Object {
-                                                                                "width": 0,
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <Input
-                                                                              accessibilityIndex={0}
-                                                                              attrs={Object {}}
-                                                                              id="rc_select_TEST_OR_SSR"
-                                                                              inputElement={null}
-                                                                              onChange={[Function]}
-                                                                              onCompositionEnd={[Function]}
-                                                                              onCompositionStart={[Function]}
-                                                                              onKeyDown={[Function]}
-                                                                              onMouseDown={[Function]}
-                                                                              onPaste={[Function]}
-                                                                              prefixCls="ant-select"
-                                                                              value=""
-                                                                            >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autoComplete="off"
-                                                                                className="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                onChange={[Function]}
-                                                                                onCompositionEnd={[Function]}
-                                                                                onCompositionStart={[Function]}
-                                                                                onKeyDown={[Function]}
-                                                                                onMouseDown={[Function]}
-                                                                                onPaste={[Function]}
-                                                                                readOnly={true}
-                                                                                role="combobox"
+                                                                          <Overflow
+                                                                            data={Array []}
+                                                                            itemKey="key"
+                                                                            prefixCls="ant-select-selection-overflow"
+                                                                            renderItem={[Function]}
+                                                                            renderRest={[Function]}
+                                                                            suffix={
+                                                                              <div
+                                                                                className="ant-select-selection-search"
+                                                                                onBlur={[Function]}
+                                                                                onFocus={[Function]}
                                                                                 style={
                                                                                   Object {
-                                                                                    "opacity": 0,
+                                                                                    "width": 0,
                                                                                   }
                                                                                 }
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                            </Input>
-                                                                            <span
-                                                                              aria-hidden={true}
-                                                                              className="ant-select-selection-search-mirror"
+                                                                              >
+                                                                                <ForwardRef(Input)
+                                                                                  accessibilityIndex={0}
+                                                                                  attrs={Object {}}
+                                                                                  editable={false}
+                                                                                  id="rc_select_TEST_OR_SSR"
+                                                                                  inputElement={null}
+                                                                                  onChange={[Function]}
+                                                                                  onCompositionEnd={[Function]}
+                                                                                  onCompositionStart={[Function]}
+                                                                                  onKeyDown={[Function]}
+                                                                                  onMouseDown={[Function]}
+                                                                                  onPaste={[Function]}
+                                                                                  prefixCls="ant-select"
+                                                                                  value=""
+                                                                                />
+                                                                                <span
+                                                                                  aria-hidden={true}
+                                                                                  className="ant-select-selection-search-mirror"
+                                                                                >
+                                                                                  
+                                                                                   
+                                                                                </span>
+                                                                              </div>
+                                                                            }
+                                                                          >
+                                                                            <div
+                                                                              className="ant-select-selection-overflow"
                                                                             >
-                                                                               
-                                                                            </span>
-                                                                          </span>
+                                                                              <Item
+                                                                                className="ant-select-selection-overflow-item-suffix"
+                                                                                display={true}
+                                                                                invalidate={false}
+                                                                                order={0}
+                                                                                prefixCls="ant-select-selection-overflow-item"
+                                                                                registerSize={[Function]}
+                                                                                responsive={0}
+                                                                                style={Object {}}
+                                                                              >
+                                                                                <div
+                                                                                  className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                  style={
+                                                                                    Object {
+                                                                                      "height": undefined,
+                                                                                      "opacity": 1,
+                                                                                      "order": undefined,
+                                                                                      "overflowY": undefined,
+                                                                                      "pointerEvents": undefined,
+                                                                                      "position": undefined,
+                                                                                    }
+                                                                                  }
+                                                                                >
+                                                                                  <div
+                                                                                    className="ant-select-selection-search"
+                                                                                    onBlur={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    style={
+                                                                                      Object {
+                                                                                        "width": 0,
+                                                                                      }
+                                                                                    }
+                                                                                  >
+                                                                                    <Input
+                                                                                      accessibilityIndex={0}
+                                                                                      attrs={Object {}}
+                                                                                      editable={false}
+                                                                                      id="rc_select_TEST_OR_SSR"
+                                                                                      inputElement={null}
+                                                                                      onChange={[Function]}
+                                                                                      onCompositionEnd={[Function]}
+                                                                                      onCompositionStart={[Function]}
+                                                                                      onKeyDown={[Function]}
+                                                                                      onMouseDown={[Function]}
+                                                                                      onPaste={[Function]}
+                                                                                      prefixCls="ant-select"
+                                                                                      value=""
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autoComplete="off"
+                                                                                        className="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        onChange={[Function]}
+                                                                                        onCompositionEnd={[Function]}
+                                                                                        onCompositionStart={[Function]}
+                                                                                        onKeyDown={[Function]}
+                                                                                        onMouseDown={[Function]}
+                                                                                        onPaste={[Function]}
+                                                                                        readOnly={true}
+                                                                                        role="combobox"
+                                                                                        style={
+                                                                                          Object {
+                                                                                            "opacity": 0,
+                                                                                          }
+                                                                                        }
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                    </Input>
+                                                                                    <span
+                                                                                      aria-hidden={true}
+                                                                                      className="ant-select-selection-search-mirror"
+                                                                                    >
+                                                                                       
+                                                                                    </span>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </Item>
+                                                                            </div>
+                                                                          </Overflow>
                                                                           <span
                                                                             className="ant-select-selection-placeholder"
                                                                           >
@@ -2946,11 +3034,10 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       >
                                                                         <span
                                                                           aria-label="loading"
-                                                                          className="anticon anticon-loading"
+                                                                          className="anticon anticon-loading anticon-spin"
                                                                           role="img"
                                                                         >
                                                                           <IconReact
-                                                                            className="anticon-spin"
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -2975,7 +3062,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           >
                                                                             <svg
                                                                               aria-hidden="true"
-                                                                              className="anticon-spin"
                                                                               data-icon="loading"
                                                                               fill="currentColor"
                                                                               focusable="false"
@@ -3010,7 +3096,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -3212,7 +3298,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             placeholder="Filter Categories"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             value={Array []}
                                                           >
                                                             <ForwardRef(Select)
@@ -3240,7 +3326,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               placeholder="Filter Categories"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                                              transitionName="slide-up"
+                                                              transitionName="ant-slide-up"
                                                               value={Array []}
                                                             >
                                                               <div
@@ -3281,7 +3367,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     />
                                                                   }
                                                                   prefixCls="ant-select"
-                                                                  transitionName="slide-up"
+                                                                  transitionName="ant-slide-up"
                                                                   visible={false}
                                                                 >
                                                                   <Trigger
@@ -3397,7 +3483,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         "width": null,
                                                                       }
                                                                     }
-                                                                    popupTransitionName="slide-up"
+                                                                    popupTransitionName="ant-slide-up"
                                                                     popupVisible={false}
                                                                     prefixCls="ant-select-dropdown"
                                                                     showAction={Array []}
@@ -3414,34 +3500,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           "current": <div
                                                                             class="ant-select-selector"
                                                                           >
-                                                                            <span
-                                                                              class="ant-select-selection-search"
-                                                                              style="width: 0px;"
+                                                                            <div
+                                                                              class="ant-select-selection-overflow"
                                                                             >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autocomplete="off"
-                                                                                class="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                readonly=""
-                                                                                role="combobox"
-                                                                                style="opacity: 0;"
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                              <span
-                                                                                aria-hidden="true"
-                                                                                class="ant-select-selection-search-mirror"
+                                                                              <div
+                                                                                class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                style="opacity: 1;"
                                                                               >
-                                                                                
-                                                                                 
-                                                                              </span>
-                                                                            </span>
+                                                                                <div
+                                                                                  class="ant-select-selection-search"
+                                                                                  style="width: 0px;"
+                                                                                >
+                                                                                  <input
+                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                    aria-haspopup="listbox"
+                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                    autocomplete="off"
+                                                                                    class="ant-select-selection-search-input"
+                                                                                    id="rc_select_TEST_OR_SSR"
+                                                                                    readonly=""
+                                                                                    role="combobox"
+                                                                                    style="opacity: 0;"
+                                                                                    type="search"
+                                                                                    unselectable="on"
+                                                                                    value=""
+                                                                                  />
+                                                                                  <span
+                                                                                    aria-hidden="true"
+                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  >
+                                                                                    
+                                                                                     
+                                                                                  </span>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
                                                                             <span
                                                                               class="ant-select-selection-placeholder"
                                                                             >
@@ -3480,7 +3575,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       searchValue=""
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
-                                                                      transitionName="slide-up"
+                                                                      transitionName="ant-slide-up"
                                                                       value={Array []}
                                                                       values={Array []}
                                                                     >
@@ -3501,34 +3596,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               "current": <div
                                                                                 class="ant-select-selector"
                                                                               >
-                                                                                <span
-                                                                                  class="ant-select-selection-search"
-                                                                                  style="width: 0px;"
+                                                                                <div
+                                                                                  class="ant-select-selection-overflow"
                                                                                 >
-                                                                                  <input
-                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                    aria-autocomplete="list"
-                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                    aria-haspopup="listbox"
-                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                    autocomplete="off"
-                                                                                    class="ant-select-selection-search-input"
-                                                                                    id="rc_select_TEST_OR_SSR"
-                                                                                    readonly=""
-                                                                                    role="combobox"
-                                                                                    style="opacity: 0;"
-                                                                                    type="search"
-                                                                                    unselectable="on"
-                                                                                    value=""
-                                                                                  />
-                                                                                  <span
-                                                                                    aria-hidden="true"
-                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  <div
+                                                                                    class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                    style="opacity: 1;"
                                                                                   >
-                                                                                    
-                                                                                     
-                                                                                  </span>
-                                                                                </span>
+                                                                                    <div
+                                                                                      class="ant-select-selection-search"
+                                                                                      style="width: 0px;"
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autocomplete="off"
+                                                                                        class="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        readonly=""
+                                                                                        role="combobox"
+                                                                                        style="opacity: 0;"
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                      <span
+                                                                                        aria-hidden="true"
+                                                                                        class="ant-select-selection-search-mirror"
+                                                                                      >
+                                                                                        
+                                                                                         
+                                                                                      </span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
                                                                                 <span
                                                                                   class="ant-select-selection-placeholder"
                                                                                 >
@@ -3592,71 +3696,141 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           searchValue=""
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
-                                                                          transitionName="slide-up"
+                                                                          transitionName="ant-slide-up"
                                                                           value={Array []}
                                                                           values={Array []}
                                                                         >
-                                                                          <CSSMotionList
-                                                                            component={false}
-                                                                            keys={Array []}
-                                                                            motionAppear={true}
-                                                                          />
-                                                                          <span
-                                                                            className="ant-select-selection-search"
-                                                                            style={
-                                                                              Object {
-                                                                                "width": 0,
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <Input
-                                                                              accessibilityIndex={0}
-                                                                              attrs={Object {}}
-                                                                              id="rc_select_TEST_OR_SSR"
-                                                                              inputElement={null}
-                                                                              onChange={[Function]}
-                                                                              onCompositionEnd={[Function]}
-                                                                              onCompositionStart={[Function]}
-                                                                              onKeyDown={[Function]}
-                                                                              onMouseDown={[Function]}
-                                                                              onPaste={[Function]}
-                                                                              prefixCls="ant-select"
-                                                                              value=""
-                                                                            >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autoComplete="off"
-                                                                                className="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                onChange={[Function]}
-                                                                                onCompositionEnd={[Function]}
-                                                                                onCompositionStart={[Function]}
-                                                                                onKeyDown={[Function]}
-                                                                                onMouseDown={[Function]}
-                                                                                onPaste={[Function]}
-                                                                                readOnly={true}
-                                                                                role="combobox"
+                                                                          <Overflow
+                                                                            data={Array []}
+                                                                            itemKey="key"
+                                                                            prefixCls="ant-select-selection-overflow"
+                                                                            renderItem={[Function]}
+                                                                            renderRest={[Function]}
+                                                                            suffix={
+                                                                              <div
+                                                                                className="ant-select-selection-search"
+                                                                                onBlur={[Function]}
+                                                                                onFocus={[Function]}
                                                                                 style={
                                                                                   Object {
-                                                                                    "opacity": 0,
+                                                                                    "width": 0,
                                                                                   }
                                                                                 }
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                            </Input>
-                                                                            <span
-                                                                              aria-hidden={true}
-                                                                              className="ant-select-selection-search-mirror"
+                                                                              >
+                                                                                <ForwardRef(Input)
+                                                                                  accessibilityIndex={0}
+                                                                                  attrs={Object {}}
+                                                                                  editable={false}
+                                                                                  id="rc_select_TEST_OR_SSR"
+                                                                                  inputElement={null}
+                                                                                  onChange={[Function]}
+                                                                                  onCompositionEnd={[Function]}
+                                                                                  onCompositionStart={[Function]}
+                                                                                  onKeyDown={[Function]}
+                                                                                  onMouseDown={[Function]}
+                                                                                  onPaste={[Function]}
+                                                                                  prefixCls="ant-select"
+                                                                                  value=""
+                                                                                />
+                                                                                <span
+                                                                                  aria-hidden={true}
+                                                                                  className="ant-select-selection-search-mirror"
+                                                                                >
+                                                                                  
+                                                                                   
+                                                                                </span>
+                                                                              </div>
+                                                                            }
+                                                                          >
+                                                                            <div
+                                                                              className="ant-select-selection-overflow"
                                                                             >
-                                                                               
-                                                                            </span>
-                                                                          </span>
+                                                                              <Item
+                                                                                className="ant-select-selection-overflow-item-suffix"
+                                                                                display={true}
+                                                                                invalidate={false}
+                                                                                order={0}
+                                                                                prefixCls="ant-select-selection-overflow-item"
+                                                                                registerSize={[Function]}
+                                                                                responsive={0}
+                                                                                style={Object {}}
+                                                                              >
+                                                                                <div
+                                                                                  className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                  style={
+                                                                                    Object {
+                                                                                      "height": undefined,
+                                                                                      "opacity": 1,
+                                                                                      "order": undefined,
+                                                                                      "overflowY": undefined,
+                                                                                      "pointerEvents": undefined,
+                                                                                      "position": undefined,
+                                                                                    }
+                                                                                  }
+                                                                                >
+                                                                                  <div
+                                                                                    className="ant-select-selection-search"
+                                                                                    onBlur={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    style={
+                                                                                      Object {
+                                                                                        "width": 0,
+                                                                                      }
+                                                                                    }
+                                                                                  >
+                                                                                    <Input
+                                                                                      accessibilityIndex={0}
+                                                                                      attrs={Object {}}
+                                                                                      editable={false}
+                                                                                      id="rc_select_TEST_OR_SSR"
+                                                                                      inputElement={null}
+                                                                                      onChange={[Function]}
+                                                                                      onCompositionEnd={[Function]}
+                                                                                      onCompositionStart={[Function]}
+                                                                                      onKeyDown={[Function]}
+                                                                                      onMouseDown={[Function]}
+                                                                                      onPaste={[Function]}
+                                                                                      prefixCls="ant-select"
+                                                                                      value=""
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autoComplete="off"
+                                                                                        className="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        onChange={[Function]}
+                                                                                        onCompositionEnd={[Function]}
+                                                                                        onCompositionStart={[Function]}
+                                                                                        onKeyDown={[Function]}
+                                                                                        onMouseDown={[Function]}
+                                                                                        onPaste={[Function]}
+                                                                                        readOnly={true}
+                                                                                        role="combobox"
+                                                                                        style={
+                                                                                          Object {
+                                                                                            "opacity": 0,
+                                                                                          }
+                                                                                        }
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                    </Input>
+                                                                                    <span
+                                                                                      aria-hidden={true}
+                                                                                      className="ant-select-selection-search-mirror"
+                                                                                    >
+                                                                                       
+                                                                                    </span>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </Item>
+                                                                            </div>
+                                                                          </Overflow>
                                                                           <span
                                                                             className="ant-select-selection-placeholder"
                                                                           >
@@ -3725,11 +3899,10 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       >
                                                                         <span
                                                                           aria-label="loading"
-                                                                          className="anticon anticon-loading"
+                                                                          className="anticon anticon-loading anticon-spin"
                                                                           role="img"
                                                                         >
                                                                           <IconReact
-                                                                            className="anticon-spin"
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -3754,7 +3927,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           >
                                                                             <svg
                                                                               aria-hidden="true"
-                                                                              className="anticon-spin"
                                                                               data-icon="loading"
                                                                               fill="currentColor"
                                                                               focusable="false"
@@ -3789,7 +3961,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -3992,7 +4164,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             placeholder="Filter Authors"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             value={Array []}
                                                           >
                                                             <ForwardRef(Select)
@@ -4020,7 +4192,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               placeholder="Filter Authors"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                                              transitionName="slide-up"
+                                                              transitionName="ant-slide-up"
                                                               value={Array []}
                                                             >
                                                               <div
@@ -4061,7 +4233,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     />
                                                                   }
                                                                   prefixCls="ant-select"
-                                                                  transitionName="slide-up"
+                                                                  transitionName="ant-slide-up"
                                                                   visible={false}
                                                                 >
                                                                   <Trigger
@@ -4177,7 +4349,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         "width": null,
                                                                       }
                                                                     }
-                                                                    popupTransitionName="slide-up"
+                                                                    popupTransitionName="ant-slide-up"
                                                                     popupVisible={false}
                                                                     prefixCls="ant-select-dropdown"
                                                                     showAction={Array []}
@@ -4194,34 +4366,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           "current": <div
                                                                             class="ant-select-selector"
                                                                           >
-                                                                            <span
-                                                                              class="ant-select-selection-search"
-                                                                              style="width: 0px;"
+                                                                            <div
+                                                                              class="ant-select-selection-overflow"
                                                                             >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autocomplete="off"
-                                                                                class="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                readonly=""
-                                                                                role="combobox"
-                                                                                style="opacity: 0;"
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                              <span
-                                                                                aria-hidden="true"
-                                                                                class="ant-select-selection-search-mirror"
+                                                                              <div
+                                                                                class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                style="opacity: 1;"
                                                                               >
-                                                                                
-                                                                                 
-                                                                              </span>
-                                                                            </span>
+                                                                                <div
+                                                                                  class="ant-select-selection-search"
+                                                                                  style="width: 0px;"
+                                                                                >
+                                                                                  <input
+                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                    aria-autocomplete="list"
+                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                    aria-haspopup="listbox"
+                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                    autocomplete="off"
+                                                                                    class="ant-select-selection-search-input"
+                                                                                    id="rc_select_TEST_OR_SSR"
+                                                                                    readonly=""
+                                                                                    role="combobox"
+                                                                                    style="opacity: 0;"
+                                                                                    type="search"
+                                                                                    unselectable="on"
+                                                                                    value=""
+                                                                                  />
+                                                                                  <span
+                                                                                    aria-hidden="true"
+                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  >
+                                                                                    
+                                                                                     
+                                                                                  </span>
+                                                                                </div>
+                                                                              </div>
+                                                                            </div>
                                                                             <span
                                                                               class="ant-select-selection-placeholder"
                                                                             >
@@ -4260,7 +4441,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       searchValue=""
                                                                       showSearch={true}
                                                                       tokenWithEnter={false}
-                                                                      transitionName="slide-up"
+                                                                      transitionName="ant-slide-up"
                                                                       value={Array []}
                                                                       values={Array []}
                                                                     >
@@ -4281,34 +4462,43 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               "current": <div
                                                                                 class="ant-select-selector"
                                                                               >
-                                                                                <span
-                                                                                  class="ant-select-selection-search"
-                                                                                  style="width: 0px;"
+                                                                                <div
+                                                                                  class="ant-select-selection-overflow"
                                                                                 >
-                                                                                  <input
-                                                                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                    aria-autocomplete="list"
-                                                                                    aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                    aria-haspopup="listbox"
-                                                                                    aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                    autocomplete="off"
-                                                                                    class="ant-select-selection-search-input"
-                                                                                    id="rc_select_TEST_OR_SSR"
-                                                                                    readonly=""
-                                                                                    role="combobox"
-                                                                                    style="opacity: 0;"
-                                                                                    type="search"
-                                                                                    unselectable="on"
-                                                                                    value=""
-                                                                                  />
-                                                                                  <span
-                                                                                    aria-hidden="true"
-                                                                                    class="ant-select-selection-search-mirror"
+                                                                                  <div
+                                                                                    class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                    style="opacity: 1;"
                                                                                   >
-                                                                                    
-                                                                                     
-                                                                                  </span>
-                                                                                </span>
+                                                                                    <div
+                                                                                      class="ant-select-selection-search"
+                                                                                      style="width: 0px;"
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autocomplete="off"
+                                                                                        class="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        readonly=""
+                                                                                        role="combobox"
+                                                                                        style="opacity: 0;"
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                      <span
+                                                                                        aria-hidden="true"
+                                                                                        class="ant-select-selection-search-mirror"
+                                                                                      >
+                                                                                        
+                                                                                         
+                                                                                      </span>
+                                                                                    </div>
+                                                                                  </div>
+                                                                                </div>
                                                                                 <span
                                                                                   class="ant-select-selection-placeholder"
                                                                                 >
@@ -4372,71 +4562,141 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           searchValue=""
                                                                           showSearch={true}
                                                                           tokenWithEnter={false}
-                                                                          transitionName="slide-up"
+                                                                          transitionName="ant-slide-up"
                                                                           value={Array []}
                                                                           values={Array []}
                                                                         >
-                                                                          <CSSMotionList
-                                                                            component={false}
-                                                                            keys={Array []}
-                                                                            motionAppear={true}
-                                                                          />
-                                                                          <span
-                                                                            className="ant-select-selection-search"
-                                                                            style={
-                                                                              Object {
-                                                                                "width": 0,
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <Input
-                                                                              accessibilityIndex={0}
-                                                                              attrs={Object {}}
-                                                                              id="rc_select_TEST_OR_SSR"
-                                                                              inputElement={null}
-                                                                              onChange={[Function]}
-                                                                              onCompositionEnd={[Function]}
-                                                                              onCompositionStart={[Function]}
-                                                                              onKeyDown={[Function]}
-                                                                              onMouseDown={[Function]}
-                                                                              onPaste={[Function]}
-                                                                              prefixCls="ant-select"
-                                                                              value=""
-                                                                            >
-                                                                              <input
-                                                                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                                aria-autocomplete="list"
-                                                                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                                aria-haspopup="listbox"
-                                                                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                                autoComplete="off"
-                                                                                className="ant-select-selection-search-input"
-                                                                                id="rc_select_TEST_OR_SSR"
-                                                                                onChange={[Function]}
-                                                                                onCompositionEnd={[Function]}
-                                                                                onCompositionStart={[Function]}
-                                                                                onKeyDown={[Function]}
-                                                                                onMouseDown={[Function]}
-                                                                                onPaste={[Function]}
-                                                                                readOnly={true}
-                                                                                role="combobox"
+                                                                          <Overflow
+                                                                            data={Array []}
+                                                                            itemKey="key"
+                                                                            prefixCls="ant-select-selection-overflow"
+                                                                            renderItem={[Function]}
+                                                                            renderRest={[Function]}
+                                                                            suffix={
+                                                                              <div
+                                                                                className="ant-select-selection-search"
+                                                                                onBlur={[Function]}
+                                                                                onFocus={[Function]}
                                                                                 style={
                                                                                   Object {
-                                                                                    "opacity": 0,
+                                                                                    "width": 0,
                                                                                   }
                                                                                 }
-                                                                                type="search"
-                                                                                unselectable="on"
-                                                                                value=""
-                                                                              />
-                                                                            </Input>
-                                                                            <span
-                                                                              aria-hidden={true}
-                                                                              className="ant-select-selection-search-mirror"
+                                                                              >
+                                                                                <ForwardRef(Input)
+                                                                                  accessibilityIndex={0}
+                                                                                  attrs={Object {}}
+                                                                                  editable={false}
+                                                                                  id="rc_select_TEST_OR_SSR"
+                                                                                  inputElement={null}
+                                                                                  onChange={[Function]}
+                                                                                  onCompositionEnd={[Function]}
+                                                                                  onCompositionStart={[Function]}
+                                                                                  onKeyDown={[Function]}
+                                                                                  onMouseDown={[Function]}
+                                                                                  onPaste={[Function]}
+                                                                                  prefixCls="ant-select"
+                                                                                  value=""
+                                                                                />
+                                                                                <span
+                                                                                  aria-hidden={true}
+                                                                                  className="ant-select-selection-search-mirror"
+                                                                                >
+                                                                                  
+                                                                                   
+                                                                                </span>
+                                                                              </div>
+                                                                            }
+                                                                          >
+                                                                            <div
+                                                                              className="ant-select-selection-overflow"
                                                                             >
-                                                                               
-                                                                            </span>
-                                                                          </span>
+                                                                              <Item
+                                                                                className="ant-select-selection-overflow-item-suffix"
+                                                                                display={true}
+                                                                                invalidate={false}
+                                                                                order={0}
+                                                                                prefixCls="ant-select-selection-overflow-item"
+                                                                                registerSize={[Function]}
+                                                                                responsive={0}
+                                                                                style={Object {}}
+                                                                              >
+                                                                                <div
+                                                                                  className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                                  style={
+                                                                                    Object {
+                                                                                      "height": undefined,
+                                                                                      "opacity": 1,
+                                                                                      "order": undefined,
+                                                                                      "overflowY": undefined,
+                                                                                      "pointerEvents": undefined,
+                                                                                      "position": undefined,
+                                                                                    }
+                                                                                  }
+                                                                                >
+                                                                                  <div
+                                                                                    className="ant-select-selection-search"
+                                                                                    onBlur={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    style={
+                                                                                      Object {
+                                                                                        "width": 0,
+                                                                                      }
+                                                                                    }
+                                                                                  >
+                                                                                    <Input
+                                                                                      accessibilityIndex={0}
+                                                                                      attrs={Object {}}
+                                                                                      editable={false}
+                                                                                      id="rc_select_TEST_OR_SSR"
+                                                                                      inputElement={null}
+                                                                                      onChange={[Function]}
+                                                                                      onCompositionEnd={[Function]}
+                                                                                      onCompositionStart={[Function]}
+                                                                                      onKeyDown={[Function]}
+                                                                                      onMouseDown={[Function]}
+                                                                                      onPaste={[Function]}
+                                                                                      prefixCls="ant-select"
+                                                                                      value=""
+                                                                                    >
+                                                                                      <input
+                                                                                        aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                                        aria-autocomplete="list"
+                                                                                        aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                                        aria-haspopup="listbox"
+                                                                                        aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                                        autoComplete="off"
+                                                                                        className="ant-select-selection-search-input"
+                                                                                        id="rc_select_TEST_OR_SSR"
+                                                                                        onChange={[Function]}
+                                                                                        onCompositionEnd={[Function]}
+                                                                                        onCompositionStart={[Function]}
+                                                                                        onKeyDown={[Function]}
+                                                                                        onMouseDown={[Function]}
+                                                                                        onPaste={[Function]}
+                                                                                        readOnly={true}
+                                                                                        role="combobox"
+                                                                                        style={
+                                                                                          Object {
+                                                                                            "opacity": 0,
+                                                                                          }
+                                                                                        }
+                                                                                        type="search"
+                                                                                        unselectable="on"
+                                                                                        value=""
+                                                                                      />
+                                                                                    </Input>
+                                                                                    <span
+                                                                                      aria-hidden={true}
+                                                                                      className="ant-select-selection-search-mirror"
+                                                                                    >
+                                                                                       
+                                                                                    </span>
+                                                                                  </div>
+                                                                                </div>
+                                                                              </Item>
+                                                                            </div>
+                                                                          </Overflow>
                                                                           <span
                                                                             className="ant-select-selection-placeholder"
                                                                           >
@@ -4505,11 +4765,10 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       >
                                                                         <span
                                                                           aria-label="loading"
-                                                                          className="anticon anticon-loading"
+                                                                          className="anticon anticon-loading anticon-spin"
                                                                           role="img"
                                                                         >
                                                                           <IconReact
-                                                                            className="anticon-spin"
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -4534,7 +4793,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           >
                                                                             <svg
                                                                               aria-hidden="true"
-                                                                              className="anticon-spin"
                                                                               data-icon="loading"
                                                                               fill="currentColor"
                                                                               focusable="false"
@@ -4569,7 +4827,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -4601,7 +4859,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -4634,6 +4892,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -4641,7 +4900,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -4883,7 +5142,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   role="img"
                                                 >
                                                   <IconReact
-                                                    className=""
                                                     icon={
                                                       Object {
                                                         "icon": Object {
@@ -4908,7 +5166,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   >
                                                     <svg
                                                       aria-hidden="true"
-                                                      className=""
                                                       data-icon="left"
                                                       fill="currentColor"
                                                       focusable="false"
@@ -5010,7 +5267,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   role="img"
                                                 >
                                                   <IconReact
-                                                    className=""
                                                     icon={
                                                       Object {
                                                         "icon": Object {
@@ -5035,7 +5291,6 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   >
                                                     <svg
                                                       aria-hidden="true"
-                                                      className=""
                                                       data-icon="right"
                                                       fill="currentColor"
                                                       focusable="false"

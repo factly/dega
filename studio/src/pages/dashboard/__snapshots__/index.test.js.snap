@@ -42,6 +42,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -49,7 +50,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -75,7 +76,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                           component="h1"
                           style={
                             Object {
-                              "WebkitLineClamp": null,
+                              "WebkitLineClamp": undefined,
                             }
                           }
                         >
@@ -83,7 +84,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                             className="ant-typography"
                             style={
                               Object {
-                                "WebkitLineClamp": null,
+                                "WebkitLineClamp": undefined,
                               }
                             }
                           >
@@ -102,7 +103,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -155,6 +156,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Total Posts"
@@ -168,30 +170,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Total Posts
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Total Posts"
-                                        value={72}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Total Posts"
+                                          value={72}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            72
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              72
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -231,6 +241,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Published Posts"
@@ -244,30 +255,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Published Posts
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Published Posts"
-                                        value={21}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Published Posts"
+                                          value={21}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            21
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              21
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -307,6 +326,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Draft Posts"
@@ -320,30 +340,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Draft Posts
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Draft Posts"
-                                        value={38}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Draft Posts"
+                                          value={38}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            38
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              38
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -383,6 +411,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Ready to publish Posts"
@@ -396,30 +425,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Ready to publish Posts
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Ready to publish Posts"
-                                        value={13}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Ready to publish Posts"
+                                          value={13}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            13
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              13
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -438,7 +475,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
               index={2}
               key="ant-space-item-2"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -491,6 +528,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Total Fact Checks"
@@ -504,30 +542,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Total Fact Checks
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Total Fact Checks"
-                                        value={40}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Total Fact Checks"
+                                          value={40}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            40
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              40
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -567,6 +613,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Published Fact Checks"
@@ -580,30 +627,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Published Fact Checks
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Published Fact Checks"
-                                        value={5}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Published Fact Checks"
+                                          value={5}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            5
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              5
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -643,6 +698,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Draft Fact Checks"
@@ -656,30 +712,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Draft Fact Checks
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Draft Fact Checks"
-                                        value={31}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Draft Fact Checks"
+                                          value={31}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            31
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              31
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -719,6 +783,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                   decimalSeparator="."
                                   getPrefixCls={[Function]}
                                   groupSeparator=","
+                                  loading={false}
                                   prefixCls="ant-statistic"
                                   renderEmpty={[Function]}
                                   title="Ready to publish Fact Checks"
@@ -732,30 +797,38 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                                     >
                                       Ready to publish Fact Checks
                                     </div>
-                                    <div
-                                      className="ant-statistic-content"
+                                    <Skeleton
+                                      avatar={false}
+                                      loading={false}
+                                      paragraph={false}
+                                      title={true}
                                     >
-                                      <StatisticNumber
-                                        decimalSeparator="."
-                                        getPrefixCls={[Function]}
-                                        groupSeparator=","
-                                        prefixCls="ant-statistic"
-                                        renderEmpty={[Function]}
-                                        title="Ready to publish Fact Checks"
-                                        value={4}
+                                      <div
+                                        className="ant-statistic-content"
                                       >
-                                        <span
-                                          className="ant-statistic-content-value"
+                                        <StatisticNumber
+                                          decimalSeparator="."
+                                          getPrefixCls={[Function]}
+                                          groupSeparator=","
+                                          loading={false}
+                                          prefixCls="ant-statistic"
+                                          renderEmpty={[Function]}
+                                          title="Ready to publish Fact Checks"
+                                          value={4}
                                         >
                                           <span
-                                            className="ant-statistic-content-value-int"
-                                            key="int"
+                                            className="ant-statistic-content-value"
                                           >
-                                            4
+                                            <span
+                                              className="ant-statistic-content-value-int"
+                                              key="int"
+                                            >
+                                              4
+                                            </span>
                                           </span>
-                                        </span>
-                                      </StatisticNumber>
-                                    </div>
+                                        </StatisticNumber>
+                                      </div>
+                                    </Skeleton>
                                   </div>
                                 </Statistic>
                               </withConfigConsumer(Statistic)>
@@ -774,7 +847,7 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
               index={3}
               key="ant-space-item-3"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"

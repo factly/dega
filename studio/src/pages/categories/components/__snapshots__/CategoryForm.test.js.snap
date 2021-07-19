@@ -145,6 +145,7 @@ exports[`Categories Create Form component snapshot testing should match componen
           <form
             className="ant-form ant-form-horizontal"
             id="create-category"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -324,7 +325,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         placeholder="Select categories"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
-                                        transitionName="slide-up"
+                                        transitionName="ant-slide-up"
                                         value={
                                           Array [
                                             Array [],
@@ -355,7 +356,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           placeholder="Select categories"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                          transitionName="slide-up"
+                                          transitionName="ant-slide-up"
                                           value={
                                             Array [
                                               Array [],
@@ -404,7 +405,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 />
                                               }
                                               prefixCls="ant-select"
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                               visible={false}
                                             >
                                               <Trigger
@@ -524,7 +525,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                     "width": null,
                                                   }
                                                 }
-                                                popupTransitionName="slide-up"
+                                                popupTransitionName="ant-slide-up"
                                                 popupVisible={false}
                                                 prefixCls="ant-select-dropdown"
                                                 showAction={Array []}
@@ -596,7 +597,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                   searchValue=""
                                                   showSearch={false}
                                                   tokenWithEnter={false}
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                   value={
                                                     Array [
                                                       Array [],
@@ -606,6 +607,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                     Array [
                                                       Object {
                                                         "disabled": undefined,
+                                                        "isCacheable": true,
                                                         "key": Array [],
                                                         "label": Array [],
                                                         "value": Array [],
@@ -710,7 +712,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       searchValue=""
                                                       showSearch={false}
                                                       tokenWithEnter={false}
-                                                      transitionName="slide-up"
+                                                      transitionName="ant-slide-up"
                                                       value={
                                                         Array [
                                                           Array [],
@@ -720,6 +722,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                         Array [
                                                           Object {
                                                             "disabled": undefined,
+                                                            "isCacheable": true,
                                                             "key": Array [],
                                                             "label": Array [],
                                                             "value": Array [],
@@ -839,7 +842,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -864,7 +866,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="down"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -931,7 +932,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -956,7 +956,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="close-circle"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -991,7 +990,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1265,7 +1264,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1516,7 +1515,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1669,19 +1668,11 @@ exports[`Categories Create Form component snapshot testing should match componen
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -1689,10 +1680,8 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -1708,22 +1697,15 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -1731,12 +1713,12 @@ exports[`Categories Create Form component snapshot testing should match componen
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -1751,6 +1733,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -1758,7 +1741,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -1779,17 +1762,13 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -1840,7 +1819,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2032,7 +2011,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2230,7 +2209,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2410,7 +2389,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2483,6 +2462,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -2490,7 +2470,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -2501,11 +2481,8 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -2550,17 +2527,14 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -2609,7 +2583,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -2724,6 +2698,7 @@ exports[`Categories Create Form component snapshot testing should match componen
           <form
             className="ant-form ant-form-horizontal"
             id="create-category"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -2903,7 +2878,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         placeholder="Select categories"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
-                                        transitionName="slide-up"
+                                        transitionName="ant-slide-up"
                                         value={
                                           Array [
                                             Array [],
@@ -2934,7 +2909,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           placeholder="Select categories"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                          transitionName="slide-up"
+                                          transitionName="ant-slide-up"
                                           value={
                                             Array [
                                               Array [],
@@ -2983,7 +2958,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 />
                                               }
                                               prefixCls="ant-select"
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                               visible={false}
                                             >
                                               <Trigger
@@ -3103,7 +3078,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                     "width": null,
                                                   }
                                                 }
-                                                popupTransitionName="slide-up"
+                                                popupTransitionName="ant-slide-up"
                                                 popupVisible={false}
                                                 prefixCls="ant-select-dropdown"
                                                 showAction={Array []}
@@ -3175,7 +3150,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                   searchValue=""
                                                   showSearch={false}
                                                   tokenWithEnter={false}
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                   value={
                                                     Array [
                                                       Array [],
@@ -3185,6 +3160,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                     Array [
                                                       Object {
                                                         "disabled": undefined,
+                                                        "isCacheable": true,
                                                         "key": Array [],
                                                         "label": Array [],
                                                         "value": Array [],
@@ -3289,7 +3265,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       searchValue=""
                                                       showSearch={false}
                                                       tokenWithEnter={false}
-                                                      transitionName="slide-up"
+                                                      transitionName="ant-slide-up"
                                                       value={
                                                         Array [
                                                           Array [],
@@ -3299,6 +3275,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                         Array [
                                                           Object {
                                                             "disabled": undefined,
+                                                            "isCacheable": true,
                                                             "key": Array [],
                                                             "label": Array [],
                                                             "value": Array [],
@@ -3418,7 +3395,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -3443,7 +3419,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="down"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -3510,7 +3485,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -3535,7 +3509,6 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="close-circle"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -3570,7 +3543,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3841,7 +3814,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4092,7 +4065,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4243,19 +4216,11 @@ exports[`Categories Create Form component snapshot testing should match componen
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -4263,10 +4228,8 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -4282,22 +4245,15 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -4305,12 +4261,12 @@ exports[`Categories Create Form component snapshot testing should match componen
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -4325,6 +4281,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -4332,7 +4289,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -4353,17 +4310,13 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -4414,7 +4367,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4606,7 +4559,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4776,7 +4729,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4956,7 +4909,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -5029,6 +4982,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -5036,7 +4990,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -5047,11 +5001,8 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -5096,17 +5047,14 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -5155,7 +5103,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -5268,6 +5216,7 @@ exports[`Categories Create Form component snapshot testing should render the com
           <form
             className="ant-form ant-form-horizontal"
             id="create-category"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -5447,7 +5396,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         placeholder="Select categories"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
-                                        transitionName="slide-up"
+                                        transitionName="ant-slide-up"
                                         value={
                                           Array [
                                             Array [],
@@ -5478,7 +5427,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           placeholder="Select categories"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                          transitionName="slide-up"
+                                          transitionName="ant-slide-up"
                                           value={
                                             Array [
                                               Array [],
@@ -5527,7 +5476,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 />
                                               }
                                               prefixCls="ant-select"
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                               visible={false}
                                             >
                                               <Trigger
@@ -5647,7 +5596,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                     "width": null,
                                                   }
                                                 }
-                                                popupTransitionName="slide-up"
+                                                popupTransitionName="ant-slide-up"
                                                 popupVisible={false}
                                                 prefixCls="ant-select-dropdown"
                                                 showAction={Array []}
@@ -5719,7 +5668,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                   searchValue=""
                                                   showSearch={false}
                                                   tokenWithEnter={false}
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                   value={
                                                     Array [
                                                       Array [],
@@ -5729,6 +5678,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                     Array [
                                                       Object {
                                                         "disabled": undefined,
+                                                        "isCacheable": true,
                                                         "key": Array [],
                                                         "label": Array [],
                                                         "value": Array [],
@@ -5833,7 +5783,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                       searchValue=""
                                                       showSearch={false}
                                                       tokenWithEnter={false}
-                                                      transitionName="slide-up"
+                                                      transitionName="ant-slide-up"
                                                       value={
                                                         Array [
                                                           Array [],
@@ -5843,6 +5793,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                         Array [
                                                           Object {
                                                             "disabled": undefined,
+                                                            "isCacheable": true,
                                                             "key": Array [],
                                                             "label": Array [],
                                                             "value": Array [],
@@ -5962,7 +5913,6 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -5987,7 +5937,6 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="down"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -6054,7 +6003,6 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -6079,7 +6027,6 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="close-circle"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -6114,7 +6061,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -6385,7 +6332,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -6636,7 +6583,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -6787,19 +6734,11 @@ exports[`Categories Create Form component snapshot testing should render the com
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -6807,10 +6746,8 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -6826,22 +6763,15 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -6849,12 +6779,12 @@ exports[`Categories Create Form component snapshot testing should render the com
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -6869,6 +6799,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -6876,7 +6807,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -6897,17 +6828,13 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -6958,7 +6885,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -7150,7 +7077,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -7320,7 +7247,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -7500,7 +7427,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -7573,6 +7500,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -7580,7 +7508,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -7591,11 +7519,8 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -7640,17 +7565,14 @@ exports[`Categories Create Form component snapshot testing should render the com
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -7699,7 +7621,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}

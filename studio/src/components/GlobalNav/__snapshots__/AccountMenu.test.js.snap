@@ -38,7 +38,7 @@ exports[`Account Menu component should render the component 1`] = `
         overlayClassName=""
         placement="topRight"
         prefixCls="ant-dropdown"
-        transitionName="slide-down"
+        transitionName="ant-slide-down"
       >
         <Trigger
           action={
@@ -179,7 +179,7 @@ exports[`Account Menu component should render the component 1`] = `
           popupClassName=""
           popupPlacement="topRight"
           popupStyle={Object {}}
-          popupTransitionName="slide-down"
+          popupTransitionName="ant-slide-down"
           prefixCls="ant-dropdown"
           showAction={Array []}
           stretch="minWidth"
@@ -224,7 +224,6 @@ exports[`Account Menu component should render the component 1`] = `
                   title="Spaces"
                 >
                   <IconReact
-                    className=""
                     icon={
                       Object {
                         "icon": Object {
@@ -249,7 +248,6 @@ exports[`Account Menu component should render the component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      className=""
                       data-icon="user"
                       fill="currentColor"
                       focusable="false"
@@ -297,7 +295,6 @@ exports[`Account Menu component should render the component 1`] = `
                   role="img"
                 >
                   <IconReact
-                    className=""
                     icon={
                       Object {
                         "icon": Object {
@@ -322,7 +319,6 @@ exports[`Account Menu component should render the component 1`] = `
                   >
                     <svg
                       aria-hidden="true"
-                      className=""
                       data-icon="down"
                       fill="currentColor"
                       focusable="false"

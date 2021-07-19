@@ -86,6 +86,7 @@ exports[`Episode List component snapshot testing should match component when loa
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -93,7 +94,7 @@ exports[`Episode List component snapshot testing should match component when loa
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1437,11 +1438,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -1487,7 +1484,6 @@ exports[`Episode List component snapshot testing should match component when loa
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -1517,8 +1513,9 @@ exports[`Episode List component snapshot testing should match component when loa
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -1762,6 +1759,12 @@ exports[`Episode List component snapshot testing should match component when loa
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -1785,8 +1788,9 @@ exports[`Episode List component snapshot testing should match component when loa
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -2064,12 +2068,20 @@ exports[`Episode List component snapshot testing should match component when loa
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -2098,11 +2110,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -2328,7 +2336,6 @@ exports[`Episode List component snapshot testing should match component when loa
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -2353,7 +2360,6 @@ exports[`Episode List component snapshot testing should match component when loa
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="left"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -2455,7 +2461,6 @@ exports[`Episode List component snapshot testing should match component when loa
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -2480,7 +2485,6 @@ exports[`Episode List component snapshot testing should match component when loa
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="right"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -2645,6 +2649,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -2652,7 +2657,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -3972,11 +3977,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -4022,7 +4023,6 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                       onConfirm={[Function]}
                                                       placement="top"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
                                                       trigger="click"
                                                     >
                                                       <Tooltip
@@ -4052,8 +4052,9 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                         placement="top"
                                                         prefixCls="ant-popover"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
                                                         <ForwardRef(Tooltip)
                                                           arrowContent={
@@ -4297,6 +4298,12 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                           }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
@@ -4320,8 +4327,9 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <Trigger
                                                             action="click"
@@ -4599,12 +4607,20 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                             popup={[Function]}
                                                             popupAlign={Object {}}
                                                             popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             popupPlacement="top"
                                                             popupStyle={Object {}}
-                                                            popupTransitionName="zoom-big"
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
                                                             showAction={Array []}
                                                             title="Sure to Delete?"
+                                                            visible={false}
                                                           >
                                                             <Link
                                                               className="ant-dropdown-link"
@@ -4633,11 +4649,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                                                   onTouchStart={[Function]}
                                                                 >
                                                                   <Button
-                                                                    block={false}
                                                                     disabled={false}
-                                                                    ghost={false}
-                                                                    htmlType="button"
-                                                                    loading={false}
                                                                   >
                                                                     <Wave>
                                                                       <button
@@ -4863,7 +4875,6 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -4888,7 +4899,6 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="left"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -4990,7 +5000,6 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -5015,7 +5024,6 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="right"
                                                 fill="currentColor"
                                                 focusable="false"

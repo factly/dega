@@ -84,11 +84,8 @@ exports[`Menu Create Form component snapshot testing should match component with
     </FormItem>
     <FormItem>
       <Button
-        block={false}
         disabled={true}
-        ghost={false}
         htmlType="submit"
-        loading={false}
       >
         Submit
       </Button>
@@ -177,6 +174,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
           >
             <form
               className="ant-form ant-form-horizontal"
+              onReset={[Function]}
               onSubmit={[Function]}
             >
               <FormItem
@@ -396,7 +394,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -419,6 +417,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                   name="menu"
                 >
                   <WrapperField
+                    isList={true}
                     name={Array []}
                     shouldUpdate={[Function]}
                   >
@@ -451,6 +450,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                           "validateTrigger": "onChange",
                         }
                       }
+                      isList={true}
                       key="_"
                       name={Array []}
                       shouldUpdate={[Function]}
@@ -459,10 +459,6 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                     >
                       <div>
                         <Button
-                          block={false}
-                          ghost={false}
-                          htmlType="button"
-                          loading={false}
                           onClick={[Function]}
                         >
                           <Wave>
@@ -538,7 +534,6 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -579,7 +574,6 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="plus"
                                         fill="currentColor"
                                         focusable="false"
@@ -817,7 +811,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -867,11 +861,8 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                               className="ant-form-item-control-input-content"
                             >
                               <Button
-                                block={false}
                                 disabled={true}
-                                ghost={false}
                                 htmlType="submit"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -916,7 +907,7 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                             <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
-                              motionName="show-help"
+                              motionName="ant-show-help"
                               onLeaveEnd={[Function]}
                               removeOnLeave={true}
                               visible={false}
@@ -1017,6 +1008,7 @@ exports[`Menu Create Form component snapshot testing should render the component
           >
             <form
               className="ant-form ant-form-horizontal"
+              onReset={[Function]}
               onSubmit={[Function]}
             >
               <FormItem
@@ -1236,7 +1228,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1259,6 +1251,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                   name="menu"
                 >
                   <WrapperField
+                    isList={true}
                     name={Array []}
                     shouldUpdate={[Function]}
                   >
@@ -1291,6 +1284,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                           "validateTrigger": "onChange",
                         }
                       }
+                      isList={true}
                       key="_"
                       name={Array []}
                       shouldUpdate={[Function]}
@@ -1299,10 +1293,6 @@ exports[`Menu Create Form component snapshot testing should render the component
                     >
                       <div>
                         <Button
-                          block={false}
-                          ghost={false}
-                          htmlType="button"
-                          loading={false}
                           onClick={[Function]}
                         >
                           <Wave>
@@ -1378,7 +1368,6 @@ exports[`Menu Create Form component snapshot testing should render the component
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -1419,7 +1408,6 @@ exports[`Menu Create Form component snapshot testing should render the component
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="plus"
                                         fill="currentColor"
                                         focusable="false"
@@ -1657,7 +1645,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1707,11 +1695,8 @@ exports[`Menu Create Form component snapshot testing should render the component
                               className="ant-form-item-control-input-content"
                             >
                               <Button
-                                block={false}
                                 disabled={true}
-                                ghost={false}
                                 htmlType="submit"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -1756,7 +1741,7 @@ exports[`Menu Create Form component snapshot testing should render the component
                             <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
-                              motionName="show-help"
+                              motionName="ant-show-help"
                               onLeaveEnd={[Function]}
                               removeOnLeave={true}
                               visible={false}

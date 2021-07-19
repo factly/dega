@@ -112,6 +112,7 @@ describe('Spaces Create Form component', () => {
     });
 
     it('should submit form with added data', (done) => {
+      console.log(wrapper.debug());
       act(() => {
         wrapper
           .find('FormItem')
@@ -145,8 +146,7 @@ describe('Spaces Create Form component', () => {
           .at(7)
           .find('TextArea')
           .at(0)
-          .props()
-          .onChange({ target: { value: 'New Description' } });
+          .simulate('change', { target: { value: 'New Description' } });
         wrapper
           .find('FormItem')
           .at(8)
@@ -216,8 +216,7 @@ describe('Spaces Create Form component', () => {
           .at(7)
           .find('TextArea')
           .at(0)
-          .props()
-          .onChange({ target: { value: 'New Description' } });
+          .simulate('change', { target: { value: 'New Description' } });
         wrapper
           .find('FormItem')
           .at(6)

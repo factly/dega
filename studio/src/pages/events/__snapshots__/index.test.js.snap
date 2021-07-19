@@ -42,6 +42,7 @@ exports[`Event component snapshot testing should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -49,7 +50,7 @@ exports[`Event component snapshot testing should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -71,12 +72,7 @@ exports[`Event component snapshot testing should render the component 1`] = `
                       href="/events/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -121,7 +117,7 @@ exports[`Event component snapshot testing should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -307,11 +303,11 @@ exports[`Event component snapshot testing should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -447,11 +443,11 @@ exports[`Event component snapshot testing should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -741,6 +737,8 @@ exports[`Event component snapshot testing should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -810,11 +808,11 @@ exports[`Event component snapshot testing should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -888,6 +886,7 @@ exports[`Event component snapshot testing should render the component with data 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -895,7 +894,7 @@ exports[`Event component snapshot testing should render the component with data 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -917,12 +916,7 @@ exports[`Event component snapshot testing should render the component with data 
                       href="/events/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -967,7 +961,7 @@ exports[`Event component snapshot testing should render the component with data 
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1676,12 +1670,7 @@ exports[`Event component snapshot testing should render the component with data 
                                                               }
                                                             }
                                                           >
-                                                            <Button
-                                                              block={false}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
-                                                            >
+                                                            <Button>
                                                               <Wave>
                                                                 <button
                                                                   className="ant-btn"
@@ -1725,7 +1714,6 @@ exports[`Event component snapshot testing should render the component with data 
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -1755,8 +1743,9 @@ exports[`Event component snapshot testing should render the component with data 
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -2000,6 +1989,12 @@ exports[`Event component snapshot testing should render the component with data 
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -2023,8 +2018,9 @@ exports[`Event component snapshot testing should render the component with data 
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -2302,12 +2298,20 @@ exports[`Event component snapshot testing should render the component with data 
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -2335,12 +2339,7 @@ exports[`Event component snapshot testing should render the component with data 
                                                                     onMouseDown={[Function]}
                                                                     onTouchStart={[Function]}
                                                                   >
-                                                                    <Button
-                                                                      block={false}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
-                                                                    >
+                                                                    <Button>
                                                                       <Wave>
                                                                         <button
                                                                           className="ant-btn"
@@ -2564,7 +2563,6 @@ exports[`Event component snapshot testing should render the component with data 
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -2589,7 +2587,6 @@ exports[`Event component snapshot testing should render the component with data 
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -2691,7 +2688,6 @@ exports[`Event component snapshot testing should render the component with data 
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -2716,7 +2712,6 @@ exports[`Event component snapshot testing should render the component with data 
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"

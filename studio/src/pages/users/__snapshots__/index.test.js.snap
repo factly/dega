@@ -80,6 +80,7 @@ exports[`Tags List component should render the component with data 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -87,7 +88,7 @@ exports[`Tags List component should render the component with data 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1673,7 +1674,6 @@ exports[`Tags List component should render the component with data 1`] = `
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -1698,7 +1698,6 @@ exports[`Tags List component should render the component with data 1`] = `
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="left"
                                                 fill="currentColor"
                                                 focusable="false"
@@ -1800,7 +1799,6 @@ exports[`Tags List component should render the component with data 1`] = `
                                             role="img"
                                           >
                                             <IconReact
-                                              className=""
                                               icon={
                                                 Object {
                                                   "icon": Object {
@@ -1825,7 +1823,6 @@ exports[`Tags List component should render the component with data 1`] = `
                                             >
                                               <svg
                                                 aria-hidden="true"
-                                                className=""
                                                 data-icon="right"
                                                 fill="currentColor"
                                                 focusable="false"

@@ -50,6 +50,7 @@ exports[`Formats List component should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -57,7 +58,7 @@ exports[`Formats List component should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -80,11 +81,7 @@ exports[`Formats List component should render the component 1`] = `
                       onClick={[Function]}
                     >
                       <Button
-                        block={false}
                         disabled={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                       >
                         <Wave>
                           <button
@@ -131,7 +128,7 @@ exports[`Formats List component should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -255,7 +252,7 @@ exports[`Formats List component should render the component 1`] = `
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 50%; min-width: 50%;"
+                                            style="width: 50%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -334,11 +331,11 @@ exports[`Formats List component should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -421,7 +418,7 @@ exports[`Formats List component should render the component 1`] = `
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 50%; min-width: 50%;"
+                                                  style="width: 50%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -500,11 +497,11 @@ exports[`Formats List component should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -602,7 +599,6 @@ exports[`Formats List component should render the component 1`] = `
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -611,7 +607,6 @@ exports[`Formats List component should render the component 1`] = `
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -620,7 +615,6 @@ exports[`Formats List component should render the component 1`] = `
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "50%",
                                                   "width": "50%",
                                                 }
                                               }
@@ -980,6 +974,8 @@ exports[`Formats List component should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -1049,11 +1045,11 @@ exports[`Formats List component should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -1135,6 +1131,7 @@ exports[`Formats List component should render the component with data 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -1142,7 +1139,7 @@ exports[`Formats List component should render the component with data 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1165,11 +1162,7 @@ exports[`Formats List component should render the component with data 1`] = `
                       onClick={[Function]}
                     >
                       <Button
-                        block={false}
                         disabled={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                       >
                         <Wave>
                           <button
@@ -1216,7 +1209,7 @@ exports[`Formats List component should render the component with data 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1370,7 +1363,7 @@ exports[`Formats List component should render the component with data 1`] = `
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 50%; min-width: 50%;"
+                                            style="width: 50%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -1555,7 +1548,7 @@ exports[`Formats List component should render the component with data 1`] = `
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 50%; min-width: 50%;"
+                                                  style="width: 50%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -1740,7 +1733,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -1749,7 +1741,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -1758,7 +1749,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "50%",
                                                   "width": "50%",
                                                 }
                                               }
@@ -2242,7 +2232,7 @@ exports[`Formats List component should render the component with data 1`] = `
                                                           componentName="Text"
                                                         >
                                                           <ResizeObserver
-                                                            disabled={false}
+                                                            disabled={true}
                                                             onResize={[Function]}
                                                           >
                                                             <Typography
@@ -2328,11 +2318,7 @@ exports[`Formats List component should render the component with data 1`] = `
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={true}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -2378,7 +2364,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -2408,8 +2393,9 @@ exports[`Formats List component should render the component with data 1`] = `
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -2653,6 +2639,12 @@ exports[`Formats List component should render the component with data 1`] = `
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -2676,8 +2668,9 @@ exports[`Formats List component should render the component with data 1`] = `
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -2955,12 +2948,20 @@ exports[`Formats List component should render the component with data 1`] = `
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -2989,11 +2990,7 @@ exports[`Formats List component should render the component with data 1`] = `
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -3219,7 +3216,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -3244,7 +3240,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -3346,7 +3341,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -3371,7 +3365,6 @@ exports[`Formats List component should render the component with data 1`] = `
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"

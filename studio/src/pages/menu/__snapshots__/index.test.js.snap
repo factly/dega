@@ -50,6 +50,7 @@ exports[`Menu component should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -57,7 +58,7 @@ exports[`Menu component should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -79,11 +80,7 @@ exports[`Menu component should render the component 1`] = `
                       onClick={[Function]}
                     >
                       <Button
-                        block={false}
                         disabled={true}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                       >
                         <Wave>
                           <button
@@ -130,7 +127,7 @@ exports[`Menu component should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -144,6 +141,7 @@ exports[`Menu component should render the component 1`] = `
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -151,7 +149,7 @@ exports[`Menu component should render the component 1`] = `
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -310,11 +308,11 @@ exports[`Menu component should render the component 1`] = `
                                                             </g>
                                                           </svg>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           class="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </td>
                                                   </tr>
@@ -449,11 +447,11 @@ exports[`Menu component should render the component 1`] = `
                                                                   </g>
                                                                 </svg>
                                                               </div>
-                                                              <p
+                                                              <div
                                                                 class="ant-empty-description"
                                                               >
                                                                 No Data
-                                                              </p>
+                                                              </div>
                                                             </div>
                                                           </td>
                                                         </tr>
@@ -737,6 +735,8 @@ exports[`Menu component should render the component 1`] = `
                                                       component="tr"
                                                       componentWidth={0}
                                                       expanded={true}
+                                                      fixColumn={false}
+                                                      horizonScroll={false}
                                                       prefixCls="ant-table"
                                                     >
                                                       <tr
@@ -806,11 +806,11 @@ exports[`Menu component should render the component 1`] = `
                                                                       </svg>
                                                                     </Simple>
                                                                   </div>
-                                                                  <p
+                                                                  <div
                                                                     className="ant-empty-description"
                                                                   >
                                                                     No Data
-                                                                  </p>
+                                                                  </div>
                                                                 </div>
                                                               </LocaleReceiver>
                                                             </Empty>
@@ -896,6 +896,7 @@ exports[`Menu component should render the component with data 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -903,7 +904,7 @@ exports[`Menu component should render the component with data 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -925,11 +926,7 @@ exports[`Menu component should render the component with data 1`] = `
                       onClick={[Function]}
                     >
                       <Button
-                        block={false}
                         disabled={true}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
                       >
                         <Wave>
                           <button
@@ -976,7 +973,7 @@ exports[`Menu component should render the component with data 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -990,6 +987,7 @@ exports[`Menu component should render the component with data 1`] = `
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -997,7 +995,7 @@ exports[`Menu component should render the component with data 1`] = `
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -1156,11 +1154,11 @@ exports[`Menu component should render the component with data 1`] = `
                                                             </g>
                                                           </svg>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           class="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </td>
                                                   </tr>
@@ -1295,11 +1293,11 @@ exports[`Menu component should render the component with data 1`] = `
                                                                   </g>
                                                                 </svg>
                                                               </div>
-                                                              <p
+                                                              <div
                                                                 class="ant-empty-description"
                                                               >
                                                                 No Data
-                                                              </p>
+                                                              </div>
                                                             </div>
                                                           </td>
                                                         </tr>
@@ -1583,6 +1581,8 @@ exports[`Menu component should render the component with data 1`] = `
                                                       component="tr"
                                                       componentWidth={0}
                                                       expanded={true}
+                                                      fixColumn={false}
+                                                      horizonScroll={false}
                                                       prefixCls="ant-table"
                                                     >
                                                       <tr
@@ -1652,11 +1652,11 @@ exports[`Menu component should render the component with data 1`] = `
                                                                       </svg>
                                                                     </Simple>
                                                                   </div>
-                                                                  <p
+                                                                  <div
                                                                     className="ant-empty-description"
                                                                   >
                                                                     No Data
-                                                                  </p>
+                                                                  </div>
                                                                 </div>
                                                               </LocaleReceiver>
                                                             </Empty>

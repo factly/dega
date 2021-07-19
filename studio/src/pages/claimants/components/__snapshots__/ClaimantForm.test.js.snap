@@ -151,6 +151,7 @@ exports[`Claimants Create Form component snapshot testing should match component
           <form
             className="ant-form ant-form-horizontal"
             id="creat-claimant"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -411,7 +412,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -665,7 +666,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -807,7 +808,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   update={1}
                                   value="tag_line"
                                 >
-                                  <TextArea
+                                  <ForwardRef
                                     id="creat-claimant_tag_line"
                                     onChange={[Function]}
                                     value="tag_line"
@@ -819,6 +820,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           prefixCls="ant-input"
                                           value="tag_line"
                                         />
@@ -826,15 +829,15 @@ exports[`Claimants Create Form component snapshot testing should match component
                                       handleReset={[Function]}
                                       id="creat-claimant_tag_line"
                                       inputType="text"
-                                      onChange={[Function]}
                                       prefixCls="ant-input"
-                                      triggerFocus={[Function]}
                                       value="tag_line"
                                     >
                                       <TextArea
                                         className=""
                                         id="creat-claimant_tag_line"
                                         onChange={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         prefixCls="ant-input"
                                         value="tag_line"
                                       >
@@ -842,6 +845,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           onKeyDown={[Function]}
                                           prefixCls="ant-input"
                                           value="tag_line"
@@ -854,6 +859,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                               className="ant-input"
                                               id="creat-claimant_tag_line"
                                               onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
                                               onKeyDown={[Function]}
                                               style={Object {}}
                                               value="tag_line"
@@ -862,7 +869,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                         </ResizableTextArea>
                                       </TextArea>
                                     </ClearableLabeledInput>
-                                  </TextArea>
+                                  </ForwardRef>
                                 </Component>
                               </div>
                             </div>
@@ -873,7 +880,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1026,19 +1033,11 @@ exports[`Claimants Create Form component snapshot testing should match component
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -1046,10 +1045,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -1065,22 +1062,15 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -1088,12 +1078,12 @@ exports[`Claimants Create Form component snapshot testing should match component
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -1108,6 +1098,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -1115,7 +1106,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -1136,17 +1127,13 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -1197,7 +1184,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1394,7 +1381,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1574,7 +1561,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1647,6 +1634,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -1654,7 +1642,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -1665,11 +1653,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -1714,17 +1699,14 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -1773,7 +1755,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -1888,6 +1870,7 @@ exports[`Claimants Create Form component snapshot testing should match component
           <form
             className="ant-form ant-form-horizontal"
             id="creat-claimant"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -2145,7 +2128,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2396,7 +2379,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2537,7 +2520,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                 <Component
                                   update={1}
                                 >
-                                  <TextArea
+                                  <ForwardRef
                                     id="creat-claimant_tag_line"
                                     onChange={[Function]}
                                   >
@@ -2548,21 +2531,23 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           prefixCls="ant-input"
                                         />
                                       }
                                       handleReset={[Function]}
                                       id="creat-claimant_tag_line"
                                       inputType="text"
-                                      onChange={[Function]}
                                       prefixCls="ant-input"
-                                      triggerFocus={[Function]}
                                       value=""
                                     >
                                       <TextArea
                                         className=""
                                         id="creat-claimant_tag_line"
                                         onChange={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         prefixCls="ant-input"
                                         value=""
                                       >
@@ -2570,6 +2555,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           onKeyDown={[Function]}
                                           prefixCls="ant-input"
                                           value=""
@@ -2582,6 +2569,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                               className="ant-input"
                                               id="creat-claimant_tag_line"
                                               onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
                                               onKeyDown={[Function]}
                                               style={Object {}}
                                               value=""
@@ -2590,7 +2579,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                         </ResizableTextArea>
                                       </TextArea>
                                     </ClearableLabeledInput>
-                                  </TextArea>
+                                  </ForwardRef>
                                 </Component>
                               </div>
                             </div>
@@ -2601,7 +2590,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2752,19 +2741,11 @@ exports[`Claimants Create Form component snapshot testing should match component
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -2772,10 +2753,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -2791,22 +2770,15 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -2814,12 +2786,12 @@ exports[`Claimants Create Form component snapshot testing should match component
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -2834,6 +2806,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -2841,7 +2814,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -2862,17 +2835,13 @@ exports[`Claimants Create Form component snapshot testing should match component
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -2923,7 +2892,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3092,7 +3061,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3272,7 +3241,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3345,6 +3314,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -3352,7 +3322,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -3363,11 +3333,8 @@ exports[`Claimants Create Form component snapshot testing should match component
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -3412,17 +3379,14 @@ exports[`Claimants Create Form component snapshot testing should match component
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -3471,7 +3435,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -3586,6 +3550,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
           <form
             className="ant-form ant-form-horizontal"
             id="creat-claimant"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -3843,7 +3808,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4094,7 +4059,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4235,7 +4200,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                 <Component
                                   update={1}
                                 >
-                                  <TextArea
+                                  <ForwardRef
                                     id="creat-claimant_tag_line"
                                     onChange={[Function]}
                                   >
@@ -4246,21 +4211,23 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           prefixCls="ant-input"
                                         />
                                       }
                                       handleReset={[Function]}
                                       id="creat-claimant_tag_line"
                                       inputType="text"
-                                      onChange={[Function]}
                                       prefixCls="ant-input"
-                                      triggerFocus={[Function]}
                                       value=""
                                     >
                                       <TextArea
                                         className=""
                                         id="creat-claimant_tag_line"
                                         onChange={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         prefixCls="ant-input"
                                         value=""
                                       >
@@ -4268,6 +4235,8 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           className=""
                                           id="creat-claimant_tag_line"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           onKeyDown={[Function]}
                                           prefixCls="ant-input"
                                           value=""
@@ -4280,6 +4249,8 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                               className="ant-input"
                                               id="creat-claimant_tag_line"
                                               onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
                                               onKeyDown={[Function]}
                                               style={Object {}}
                                               value=""
@@ -4288,7 +4259,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                         </ResizableTextArea>
                                       </TextArea>
                                     </ClearableLabeledInput>
-                                  </TextArea>
+                                  </ForwardRef>
                                 </Component>
                               </div>
                             </div>
@@ -4299,7 +4270,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4450,19 +4421,11 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -4470,10 +4433,8 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -4489,22 +4450,15 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -4512,12 +4466,12 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -4532,6 +4486,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -4539,7 +4494,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -4560,17 +4515,13 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -4621,7 +4572,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4790,7 +4741,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4970,7 +4921,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -5043,6 +4994,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -5050,7 +5002,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -5061,11 +5013,8 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -5110,17 +5059,14 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -5169,7 +5115,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}

@@ -42,6 +42,7 @@ exports[`Space Permission component should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -49,7 +50,7 @@ exports[`Space Permission component should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -241,7 +242,7 @@ exports[`Space Permission component should render the component 1`] = `
                                         <colgroup>
                                           <col />
                                           <col
-                                            style="width: 10%; min-width: 10%;"
+                                            style="width: 10%;"
                                           />
                                           <col />
                                           <col />
@@ -249,7 +250,7 @@ exports[`Space Permission component should render the component 1`] = `
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 20%; min-width: 20%;"
+                                            style="width: 20%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -348,11 +349,11 @@ exports[`Space Permission component should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -470,7 +471,7 @@ exports[`Space Permission component should render the component 1`] = `
                                               <colgroup>
                                                 <col />
                                                 <col
-                                                  style="width: 10%; min-width: 10%;"
+                                                  style="width: 10%;"
                                                 />
                                                 <col />
                                                 <col />
@@ -478,7 +479,7 @@ exports[`Space Permission component should render the component 1`] = `
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 20%; min-width: 20%;"
+                                                  style="width: 20%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -577,11 +578,11 @@ exports[`Space Permission component should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -730,7 +731,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -739,7 +739,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": "10%",
                                                   "width": "10%",
                                                 }
                                               }
@@ -748,7 +747,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -757,7 +755,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="3"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -766,7 +763,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="4"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -775,7 +771,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="5"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -784,7 +779,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="6"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -793,7 +787,6 @@ exports[`Space Permission component should render the component 1`] = `
                                               key="7"
                                               style={
                                                 Object {
-                                                  "minWidth": "20%",
                                                   "width": "20%",
                                                 }
                                               }
@@ -1496,6 +1489,8 @@ exports[`Space Permission component should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -1565,11 +1560,11 @@ exports[`Space Permission component should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -1643,6 +1638,7 @@ exports[`Space Permission component should render the component with data 1`] = 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -1650,7 +1646,7 @@ exports[`Space Permission component should render the component with data 1`] = 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1917,7 +1913,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                         <colgroup>
                                           <col />
                                           <col
-                                            style="width: 10%; min-width: 10%;"
+                                            style="width: 10%;"
                                           />
                                           <col />
                                           <col />
@@ -1925,7 +1921,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 20%; min-width: 20%;"
+                                            style="width: 20%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -2304,7 +2300,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               <colgroup>
                                                 <col />
                                                 <col
-                                                  style="width: 10%; min-width: 10%;"
+                                                  style="width: 10%;"
                                                 />
                                                 <col />
                                                 <col />
@@ -2312,7 +2308,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 20%; min-width: 20%;"
+                                                  style="width: 20%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -2676,7 +2672,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2685,7 +2680,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": "10%",
                                                   "width": "10%",
                                                 }
                                               }
@@ -2694,7 +2688,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2703,7 +2696,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="3"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2712,7 +2704,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="4"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2721,7 +2712,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="5"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2730,7 +2720,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="6"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -2739,7 +2728,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               key="7"
                                               style={
                                                 Object {
-                                                  "minWidth": "20%",
                                                   "width": "20%",
                                                 }
                                               }
@@ -3819,11 +3807,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={false}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -3869,7 +3853,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -3899,8 +3882,9 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -4144,6 +4128,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -4167,8 +4157,9 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -4446,12 +4437,20 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -4480,11 +4479,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={false}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -4896,11 +4891,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={false}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -4946,7 +4937,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -4976,8 +4966,9 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -5221,6 +5212,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -5244,8 +5241,9 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -5523,12 +5521,20 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -5557,11 +5563,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={false}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -5787,7 +5789,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -5812,7 +5813,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -5914,7 +5914,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -5939,7 +5938,6 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -6061,6 +6059,7 @@ exports[`Space Permission component should render the component with not admin 1
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -6068,7 +6067,7 @@ exports[`Space Permission component should render the component with not admin 1
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -6335,7 +6334,7 @@ exports[`Space Permission component should render the component with not admin 1
                                         <colgroup>
                                           <col />
                                           <col
-                                            style="width: 10%; min-width: 10%;"
+                                            style="width: 10%;"
                                           />
                                           <col />
                                           <col />
@@ -6343,7 +6342,7 @@ exports[`Space Permission component should render the component with not admin 1
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 20%; min-width: 20%;"
+                                            style="width: 20%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -6726,7 +6725,7 @@ exports[`Space Permission component should render the component with not admin 1
                                               <colgroup>
                                                 <col />
                                                 <col
-                                                  style="width: 10%; min-width: 10%;"
+                                                  style="width: 10%;"
                                                 />
                                                 <col />
                                                 <col />
@@ -6734,7 +6733,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 20%; min-width: 20%;"
+                                                  style="width: 20%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -7102,7 +7101,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7111,7 +7109,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": "10%",
                                                   "width": "10%",
                                                 }
                                               }
@@ -7120,7 +7117,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7129,7 +7125,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="3"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7138,7 +7133,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="4"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7147,7 +7141,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="5"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7156,7 +7149,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="6"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -7165,7 +7157,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               key="7"
                                               style={
                                                 Object {
-                                                  "minWidth": "20%",
                                                   "width": "20%",
                                                 }
                                               }
@@ -8245,11 +8236,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={true}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -8295,7 +8282,6 @@ exports[`Space Permission component should render the component with not admin 1
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -8325,8 +8311,9 @@ exports[`Space Permission component should render the component with not admin 1
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -8570,6 +8557,12 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -8593,8 +8586,9 @@ exports[`Space Permission component should render the component with not admin 1
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -8872,12 +8866,20 @@ exports[`Space Permission component should render the component with not admin 1
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -8906,11 +8908,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -9322,11 +9320,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={true}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -9372,7 +9366,6 @@ exports[`Space Permission component should render the component with not admin 1
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -9402,8 +9395,9 @@ exports[`Space Permission component should render the component with not admin 1
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -9647,6 +9641,12 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -9670,8 +9670,9 @@ exports[`Space Permission component should render the component with not admin 1
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -9949,12 +9950,20 @@ exports[`Space Permission component should render the component with not admin 1
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -9983,11 +9992,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -10213,7 +10218,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -10238,7 +10242,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -10340,7 +10343,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -10365,7 +10367,6 @@ exports[`Space Permission component should render the component with not admin 1
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"

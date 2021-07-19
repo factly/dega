@@ -220,6 +220,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
           <form
             className="ant-form ant-form-horizontal"
             id="creat-rating"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -480,7 +481,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -734,7 +735,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -920,240 +921,236 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     id="creat-rating_numeric_value"
                                     min={1}
                                     onChange={[Function]}
-                                    step={1}
                                     value={3}
                                   >
                                     <InputNumber
-                                      autoComplete="off"
                                       className=""
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
                                         />
                                       }
-                                      focusOnUpDown={true}
                                       id="creat-rating_numeric_value"
-                                      max={9007199254740991}
                                       min={1}
-                                      onBlur={[Function]}
                                       onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onKeyDown={[Function]}
-                                      onPressEnter={[Function]}
-                                      parser={[Function]}
                                       prefixCls="ant-input-number"
-                                      required={false}
-                                      step={1}
-                                      style={Object {}}
                                       upHandler={
                                         <ForwardRef(UpOutlined)
                                           className="ant-input-number-handler-up-inner"
                                         />
                                       }
-                                      useTouch={false}
                                       value={3}
                                     >
                                       <div
                                         className="ant-input-number"
                                         onBlur={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         onFocus={[Function]}
-                                        style={Object {}}
+                                        onKeyDown={[Function]}
+                                        onKeyUp={[Function]}
                                       >
-                                        <div
-                                          className="ant-input-number-handler-wrap"
-                                        >
-                                          <span
-                                            aria-label="Increase Value"
-                                            className="ant-input-number-handler ant-input-number-handler-up"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
-                                            <ForwardRef(UpOutlined)
-                                              className="ant-input-number-handler-up-inner"
-                                            >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-up-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "up",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
-                                              >
-                                                <span
-                                                  aria-label="up"
-                                                  className="anticon anticon-up ant-input-number-handler-up-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
-                                                        },
-                                                        "name": "up",
-                                                        "theme": "outlined",
-                                                      }
-                                                    }
-                                                  >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="up"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-up"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
-                                                    >
-                                                      <path
-                                                        d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
-                                                        key="svg-up-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(UpOutlined)>
-                                          </span>
-                                          <span
-                                            aria-label="Decrease Value"
-                                            className="ant-input-number-handler ant-input-number-handler-down"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
+                                        <StepHandler
+                                          downDisabled={false}
+                                          downNode={
                                             <ForwardRef(DownOutlined)
                                               className="ant-input-number-handler-down-inner"
+                                            />
+                                          }
+                                          onStep={[Function]}
+                                          prefixCls="ant-input-number"
+                                          upDisabled={false}
+                                          upNode={
+                                            <ForwardRef(UpOutlined)
+                                              className="ant-input-number-handler-up-inner"
+                                            />
+                                          }
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
                                             >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-down-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "down",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
                                               >
-                                                <span
-                                                  aria-label="down"
-                                                  className="anticon anticon-down ant-input-number-handler-down-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
                                                         },
-                                                        "name": "down",
-                                                        "theme": "outlined",
-                                                      }
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
                                                     }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
                                                   >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="down"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-down"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
                                                     >
-                                                      <path
-                                                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                                                        key="svg-down-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(DownOutlined)>
-                                          </span>
-                                        </div>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                        </StepHandler>
                                         <div
                                           className="ant-input-number-input-wrap"
                                         >
                                           <input
-                                            aria-valuemax={9007199254740991}
                                             aria-valuemin={1}
-                                            aria-valuenow={3}
+                                            aria-valuenow="3"
                                             autoComplete="off"
                                             className="ant-input-number-input"
                                             id="creat-rating_numeric_value"
-                                            max={9007199254740991}
-                                            min={1}
-                                            onBlur={[Function]}
                                             onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onKeyUp={[Function]}
-                                            onMouseUp={[Function]}
-                                            required={false}
                                             role="spinbutton"
                                             step={1}
                                             value="3"
@@ -1172,7 +1169,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1325,19 +1322,11 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -1345,10 +1334,8 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -1364,22 +1351,15 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -1387,12 +1367,12 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -1407,6 +1387,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -1414,7 +1395,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -1435,17 +1416,13 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -1496,7 +1473,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2612,7 +2589,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3653,7 +3630,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3922,7 +3899,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4102,7 +4079,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4175,6 +4152,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -4182,7 +4160,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -4193,11 +4171,8 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -4242,17 +4217,14 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -4301,7 +4273,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -4416,6 +4388,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
           <form
             className="ant-form ant-form-horizontal"
             id="creat-rating"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -4673,7 +4646,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4924,7 +4897,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -5109,237 +5082,234 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     id="creat-rating_numeric_value"
                                     min={1}
                                     onChange={[Function]}
-                                    step={1}
                                   >
                                     <InputNumber
-                                      autoComplete="off"
                                       className=""
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
                                         />
                                       }
-                                      focusOnUpDown={true}
                                       id="creat-rating_numeric_value"
-                                      max={9007199254740991}
                                       min={1}
-                                      onBlur={[Function]}
                                       onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onKeyDown={[Function]}
-                                      onPressEnter={[Function]}
-                                      parser={[Function]}
                                       prefixCls="ant-input-number"
-                                      required={false}
-                                      step={1}
-                                      style={Object {}}
                                       upHandler={
                                         <ForwardRef(UpOutlined)
                                           className="ant-input-number-handler-up-inner"
                                         />
                                       }
-                                      useTouch={false}
                                     >
                                       <div
                                         className="ant-input-number"
                                         onBlur={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         onFocus={[Function]}
-                                        style={Object {}}
+                                        onKeyDown={[Function]}
+                                        onKeyUp={[Function]}
                                       >
-                                        <div
-                                          className="ant-input-number-handler-wrap"
-                                        >
-                                          <span
-                                            aria-label="Increase Value"
-                                            className="ant-input-number-handler ant-input-number-handler-up"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
-                                            <ForwardRef(UpOutlined)
-                                              className="ant-input-number-handler-up-inner"
-                                            >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-up-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "up",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
-                                              >
-                                                <span
-                                                  aria-label="up"
-                                                  className="anticon anticon-up ant-input-number-handler-up-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
-                                                        },
-                                                        "name": "up",
-                                                        "theme": "outlined",
-                                                      }
-                                                    }
-                                                  >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="up"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-up"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
-                                                    >
-                                                      <path
-                                                        d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
-                                                        key="svg-up-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(UpOutlined)>
-                                          </span>
-                                          <span
-                                            aria-label="Decrease Value"
-                                            className="ant-input-number-handler ant-input-number-handler-down"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
+                                        <StepHandler
+                                          downDisabled={false}
+                                          downNode={
                                             <ForwardRef(DownOutlined)
                                               className="ant-input-number-handler-down-inner"
+                                            />
+                                          }
+                                          onStep={[Function]}
+                                          prefixCls="ant-input-number"
+                                          upDisabled={false}
+                                          upNode={
+                                            <ForwardRef(UpOutlined)
+                                              className="ant-input-number-handler-up-inner"
+                                            />
+                                          }
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
                                             >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-down-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "down",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
                                               >
-                                                <span
-                                                  aria-label="down"
-                                                  className="anticon anticon-down ant-input-number-handler-down-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
                                                         },
-                                                        "name": "down",
-                                                        "theme": "outlined",
-                                                      }
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
                                                     }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
                                                   >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="down"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-down"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
                                                     >
-                                                      <path
-                                                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                                                        key="svg-down-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(DownOutlined)>
-                                          </span>
-                                        </div>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                        </StepHandler>
                                         <div
                                           className="ant-input-number-input-wrap"
                                         >
                                           <input
-                                            aria-valuemax={9007199254740991}
                                             aria-valuemin={1}
+                                            aria-valuenow={null}
                                             autoComplete="off"
                                             className="ant-input-number-input"
                                             id="creat-rating_numeric_value"
-                                            max={9007199254740991}
-                                            min={1}
-                                            onBlur={[Function]}
                                             onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onKeyUp={[Function]}
-                                            onMouseUp={[Function]}
-                                            required={false}
                                             role="spinbutton"
                                             step={1}
                                             value=""
@@ -5358,7 +5328,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -5509,19 +5479,11 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -5529,10 +5491,8 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -5548,22 +5508,15 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -5571,12 +5524,12 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -5591,6 +5544,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -5598,7 +5552,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -5619,17 +5573,13 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -5680,7 +5630,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -6721,7 +6671,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -7762,7 +7712,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -8003,7 +7953,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -8183,7 +8133,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -8256,6 +8206,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -8263,7 +8214,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -8274,11 +8225,8 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -8323,17 +8271,14 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -8382,7 +8327,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -8495,6 +8440,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
           <form
             className="ant-form ant-form-horizontal"
             id="creat-rating"
+            onReset={[Function]}
             onSubmit={[Function]}
           >
             <FormItem
@@ -8752,7 +8698,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -9003,7 +8949,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -9188,237 +9134,234 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     id="creat-rating_numeric_value"
                                     min={1}
                                     onChange={[Function]}
-                                    step={1}
                                   >
                                     <InputNumber
-                                      autoComplete="off"
                                       className=""
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
                                         />
                                       }
-                                      focusOnUpDown={true}
                                       id="creat-rating_numeric_value"
-                                      max={9007199254740991}
                                       min={1}
-                                      onBlur={[Function]}
                                       onChange={[Function]}
-                                      onFocus={[Function]}
-                                      onKeyDown={[Function]}
-                                      onPressEnter={[Function]}
-                                      parser={[Function]}
                                       prefixCls="ant-input-number"
-                                      required={false}
-                                      step={1}
-                                      style={Object {}}
                                       upHandler={
                                         <ForwardRef(UpOutlined)
                                           className="ant-input-number-handler-up-inner"
                                         />
                                       }
-                                      useTouch={false}
                                     >
                                       <div
                                         className="ant-input-number"
                                         onBlur={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         onFocus={[Function]}
-                                        style={Object {}}
+                                        onKeyDown={[Function]}
+                                        onKeyUp={[Function]}
                                       >
-                                        <div
-                                          className="ant-input-number-handler-wrap"
-                                        >
-                                          <span
-                                            aria-label="Increase Value"
-                                            className="ant-input-number-handler ant-input-number-handler-up"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
-                                            <ForwardRef(UpOutlined)
-                                              className="ant-input-number-handler-up-inner"
-                                            >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-up-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "up",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
-                                              >
-                                                <span
-                                                  aria-label="up"
-                                                  className="anticon anticon-up ant-input-number-handler-up-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
-                                                        },
-                                                        "name": "up",
-                                                        "theme": "outlined",
-                                                      }
-                                                    }
-                                                  >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="up"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-up"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
-                                                    >
-                                                      <path
-                                                        d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
-                                                        key="svg-up-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(UpOutlined)>
-                                          </span>
-                                          <span
-                                            aria-label="Decrease Value"
-                                            className="ant-input-number-handler ant-input-number-handler-down"
-                                            onMouseDown={[Function]}
-                                            onMouseLeave={[Function]}
-                                            onMouseUp={[Function]}
-                                            role="button"
-                                            unselectable="on"
-                                          >
+                                        <StepHandler
+                                          downDisabled={false}
+                                          downNode={
                                             <ForwardRef(DownOutlined)
                                               className="ant-input-number-handler-down-inner"
+                                            />
+                                          }
+                                          onStep={[Function]}
+                                          prefixCls="ant-input-number"
+                                          upDisabled={false}
+                                          upNode={
+                                            <ForwardRef(UpOutlined)
+                                              className="ant-input-number-handler-up-inner"
+                                            />
+                                          }
+                                        >
+                                          <div
+                                            className="ant-input-number-handler-wrap"
+                                          >
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Increase Value"
+                                              className="ant-input-number-handler ant-input-number-handler-up"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
                                             >
-                                              <AntdIcon
-                                                className="ant-input-number-handler-down-inner"
-                                                icon={
-                                                  Object {
-                                                    "icon": Object {
-                                                      "attrs": Object {
-                                                        "focusable": "false",
-                                                        "viewBox": "64 64 896 896",
-                                                      },
-                                                      "children": Array [
-                                                        Object {
-                                                          "attrs": Object {
-                                                            "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                          },
-                                                          "tag": "path",
-                                                        },
-                                                      ],
-                                                      "tag": "svg",
-                                                    },
-                                                    "name": "down",
-                                                    "theme": "outlined",
-                                                  }
-                                                }
+                                              <ForwardRef(UpOutlined)
+                                                className="ant-input-number-handler-up-inner"
                                               >
-                                                <span
-                                                  aria-label="down"
-                                                  className="anticon anticon-down ant-input-number-handler-down-inner"
-                                                  role="img"
-                                                >
-                                                  <IconReact
-                                                    className=""
-                                                    icon={
-                                                      Object {
-                                                        "icon": Object {
-                                                          "attrs": Object {
-                                                            "focusable": "false",
-                                                            "viewBox": "64 64 896 896",
-                                                          },
-                                                          "children": Array [
-                                                            Object {
-                                                              "attrs": Object {
-                                                                "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
-                                                              },
-                                                              "tag": "path",
-                                                            },
-                                                          ],
-                                                          "tag": "svg",
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-up-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
                                                         },
-                                                        "name": "down",
-                                                        "theme": "outlined",
-                                                      }
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "up",
+                                                      "theme": "outlined",
                                                     }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="up"
+                                                    className="anticon anticon-up ant-input-number-handler-up-inner"
+                                                    role="img"
                                                   >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      className=""
-                                                      data-icon="down"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      key="svg-down"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "up",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
                                                     >
-                                                      <path
-                                                        d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
-                                                        key="svg-down-svg-0"
-                                                      />
-                                                    </svg>
-                                                  </IconReact>
-                                                </span>
-                                              </AntdIcon>
-                                            </ForwardRef(DownOutlined)>
-                                          </span>
-                                        </div>
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="up"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-up"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M890.5 755.3L537.9 269.2c-12.8-17.6-39-17.6-51.7 0L133.5 755.3A8 8 0 00140 768h75c5.1 0 9.9-2.5 12.9-6.6L512 369.8l284.1 391.6c3 4.1 7.8 6.6 12.9 6.6h75c6.5 0 10.3-7.4 6.5-12.7z"
+                                                          key="svg-up-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(UpOutlined)>
+                                            </span>
+                                            <span
+                                              aria-disabled={false}
+                                              aria-label="Decrease Value"
+                                              className="ant-input-number-handler ant-input-number-handler-down"
+                                              onMouseDown={[Function]}
+                                              onMouseLeave={[Function]}
+                                              onMouseUp={[Function]}
+                                              role="button"
+                                              unselectable="on"
+                                            >
+                                              <ForwardRef(DownOutlined)
+                                                className="ant-input-number-handler-down-inner"
+                                              >
+                                                <AntdIcon
+                                                  className="ant-input-number-handler-down-inner"
+                                                  icon={
+                                                    Object {
+                                                      "icon": Object {
+                                                        "attrs": Object {
+                                                          "focusable": "false",
+                                                          "viewBox": "64 64 896 896",
+                                                        },
+                                                        "children": Array [
+                                                          Object {
+                                                            "attrs": Object {
+                                                              "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                            },
+                                                            "tag": "path",
+                                                          },
+                                                        ],
+                                                        "tag": "svg",
+                                                      },
+                                                      "name": "down",
+                                                      "theme": "outlined",
+                                                    }
+                                                  }
+                                                >
+                                                  <span
+                                                    aria-label="down"
+                                                    className="anticon anticon-down ant-input-number-handler-down-inner"
+                                                    role="img"
+                                                  >
+                                                    <IconReact
+                                                      icon={
+                                                        Object {
+                                                          "icon": Object {
+                                                            "attrs": Object {
+                                                              "focusable": "false",
+                                                              "viewBox": "64 64 896 896",
+                                                            },
+                                                            "children": Array [
+                                                              Object {
+                                                                "attrs": Object {
+                                                                  "d": "M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z",
+                                                                },
+                                                                "tag": "path",
+                                                              },
+                                                            ],
+                                                            "tag": "svg",
+                                                          },
+                                                          "name": "down",
+                                                          "theme": "outlined",
+                                                        }
+                                                      }
+                                                    >
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="down"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        key="svg-down"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
+                                                      >
+                                                        <path
+                                                          d="M884 256h-75c-5.1 0-9.9 2.5-12.9 6.6L512 654.2 227.9 262.6c-3-4.1-7.8-6.6-12.9-6.6h-75c-6.5 0-10.3 7.4-6.5 12.7l352.6 486.1c12.8 17.6 39 17.6 51.7 0l352.6-486.1c3.9-5.3.1-12.7-6.4-12.7z"
+                                                          key="svg-down-svg-0"
+                                                        />
+                                                      </svg>
+                                                    </IconReact>
+                                                  </span>
+                                                </AntdIcon>
+                                              </ForwardRef(DownOutlined)>
+                                            </span>
+                                          </div>
+                                        </StepHandler>
                                         <div
                                           className="ant-input-number-input-wrap"
                                         >
                                           <input
-                                            aria-valuemax={9007199254740991}
                                             aria-valuemin={1}
+                                            aria-valuenow={null}
                                             autoComplete="off"
                                             className="ant-input-number-input"
                                             id="creat-rating_numeric_value"
-                                            max={9007199254740991}
-                                            min={1}
-                                            onBlur={[Function]}
                                             onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            onKeyUp={[Function]}
-                                            onMouseUp={[Function]}
-                                            required={false}
                                             role="spinbutton"
                                             step={1}
                                             value=""
@@ -9437,7 +9380,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -9588,19 +9531,11 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                       footer={
                                         Array [
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                           >
                                             Return
                                           </ForwardRef(InternalButton)>,
                                           <ForwardRef(InternalButton)
-                                            block={false}
-                                            ghost={false}
-                                            htmlType="button"
-                                            loading={false}
                                             onClick={[Function]}
                                             type="primary"
                                           >
@@ -9608,10 +9543,8 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           </ForwardRef(InternalButton)>,
                                         ]
                                       }
-                                      maskTransitionName="fade"
                                       okType="primary"
                                       onCancel={[Function]}
-                                      transitionName="zoom"
                                       visible={false}
                                       width="800px"
                                     >
@@ -9627,22 +9560,15 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           </span>
                                         }
                                         confirmLoading={false}
+                                        focusTriggerAfterClose={true}
                                         footer={
                                           Array [
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               Return
                                             </ForwardRef(InternalButton)>,
                                             <ForwardRef(InternalButton)
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                               type="primary"
                                             >
@@ -9650,12 +9576,12 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                             </ForwardRef(InternalButton)>,
                                           ]
                                         }
-                                        maskTransitionName="fade"
+                                        maskTransitionName="ant-fade"
                                         okType="primary"
                                         onCancel={[Function]}
                                         onClose={[Function]}
                                         prefixCls="ant-modal"
-                                        transitionName="zoom"
+                                        transitionName="ant-zoom"
                                         visible={false}
                                         width="800px"
                                         wrapClassName=""
@@ -9670,6 +9596,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-space ant-space-vertical"
+                                        style={Object {}}
                                       >
                                         <Item
                                           className="ant-space-item"
@@ -9677,7 +9604,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           index={0}
                                           key="ant-space-item-0"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
@@ -9698,17 +9625,13 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           index={1}
                                           key="ant-space-item-1"
                                           marginDirection="marginRight"
-                                          size="small"
+                                          wrap={false}
                                         >
                                           <div
                                             className="ant-space-item"
                                             style={Object {}}
                                           >
                                             <Button
-                                              block={false}
-                                              ghost={false}
-                                              htmlType="button"
-                                              loading={false}
                                               onClick={[Function]}
                                             >
                                               <Wave>
@@ -9759,7 +9682,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -10800,7 +10723,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -11841,7 +11764,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -12082,7 +12005,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -12262,7 +12185,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -12335,6 +12258,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                             <Space>
                               <div
                                 className="ant-space ant-space-horizontal ant-space-align-center"
+                                style={Object {}}
                               >
                                 <Item
                                   className="ant-space-item"
@@ -12342,7 +12266,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   index={0}
                                   key="ant-space-item-0"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
@@ -12353,11 +12277,8 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     }
                                   >
                                     <Button
-                                      block={false}
                                       disabled={true}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -12402,17 +12323,14 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   index={1}
                                   key="ant-space-item-1"
                                   marginDirection="marginRight"
-                                  size="small"
+                                  wrap={false}
                                 >
                                   <div
                                     className="ant-space-item"
                                     style={Object {}}
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="button"
-                                      loading={false}
                                       onClick={[Function]}
                                     >
                                       <Wave>
@@ -12461,7 +12379,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}

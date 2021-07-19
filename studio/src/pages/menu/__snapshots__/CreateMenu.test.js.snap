@@ -82,6 +82,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
               >
                 <form
                   className="ant-form ant-form-horizontal"
+                  onReset={[Function]}
                   onSubmit={[Function]}
                 >
                   <FormItem
@@ -301,7 +302,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                     <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
-                                      motionName="show-help"
+                                      motionName="ant-show-help"
                                       onLeaveEnd={[Function]}
                                       removeOnLeave={true}
                                       visible={false}
@@ -324,6 +325,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                       name="menu"
                     >
                       <WrapperField
+                        isList={true}
                         name={Array []}
                         shouldUpdate={[Function]}
                       >
@@ -356,6 +358,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               "validateTrigger": "onChange",
                             }
                           }
+                          isList={true}
                           key="_"
                           name={Array []}
                           shouldUpdate={[Function]}
@@ -364,10 +367,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         >
                           <div>
                             <Button
-                              block={false}
-                              ghost={false}
-                              htmlType="button"
-                              loading={false}
                               onClick={[Function]}
                             >
                               <Wave>
@@ -443,7 +442,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -484,7 +482,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="plus"
                                             fill="currentColor"
                                             focusable="false"
@@ -722,7 +719,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                     <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
-                                      motionName="show-help"
+                                      motionName="ant-show-help"
                                       onLeaveEnd={[Function]}
                                       removeOnLeave={true}
                                       visible={false}
@@ -772,11 +769,8 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Button
-                                    block={false}
                                     disabled={true}
-                                    ghost={false}
                                     htmlType="submit"
-                                    loading={false}
                                   >
                                     <Wave>
                                       <button
@@ -821,7 +815,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}

@@ -84,7 +84,6 @@ exports[`SpaceSelector component snapshot testing should render the component wi
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="down"
         fill="currentColor"
         focusable="false"
@@ -175,7 +174,6 @@ exports[`SpaceSelector component snapshot testing should render the component wi
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="down"
         fill="currentColor"
         focusable="false"

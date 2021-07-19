@@ -42,6 +42,7 @@ exports[`Organisation Request list should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -49,7 +50,7 @@ exports[`Organisation Request list should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -71,12 +72,7 @@ exports[`Organisation Request list should render the component 1`] = `
                       href="/requests/organisations/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -121,7 +117,7 @@ exports[`Organisation Request list should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -315,11 +311,11 @@ exports[`Organisation Request list should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -476,11 +472,11 @@ exports[`Organisation Request list should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -928,6 +924,8 @@ exports[`Organisation Request list should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -997,11 +995,11 @@ exports[`Organisation Request list should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -1087,6 +1085,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -1094,7 +1093,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1116,12 +1115,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
                       href="/requests/organisations/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -1166,7 +1160,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1360,11 +1354,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -1521,11 +1515,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -1973,6 +1967,8 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -2042,11 +2038,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>

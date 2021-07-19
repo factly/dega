@@ -101,6 +101,7 @@ exports[`Media List component snapshot testing should match component when loadi
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -108,7 +109,7 @@ exports[`Media List component snapshot testing should match component when loadi
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -611,7 +612,6 @@ exports[`Media List component snapshot testing should match component when loadi
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -636,7 +636,6 @@ exports[`Media List component snapshot testing should match component when loadi
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="left"
                                             fill="currentColor"
                                             focusable="false"
@@ -738,7 +737,6 @@ exports[`Media List component snapshot testing should match component when loadi
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -763,7 +761,6 @@ exports[`Media List component snapshot testing should match component when loadi
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="right"
                                             fill="currentColor"
                                             focusable="false"
@@ -941,6 +938,7 @@ exports[`Media List component snapshot testing should match component with media
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -948,7 +946,7 @@ exports[`Media List component snapshot testing should match component with media
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1451,7 +1449,6 @@ exports[`Media List component snapshot testing should match component with media
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -1476,7 +1473,6 @@ exports[`Media List component snapshot testing should match component with media
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="left"
                                             fill="currentColor"
                                             focusable="false"
@@ -1578,7 +1574,6 @@ exports[`Media List component snapshot testing should match component with media
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -1603,7 +1598,6 @@ exports[`Media List component snapshot testing should match component with media
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="right"
                                             fill="currentColor"
                                             focusable="false"
@@ -1744,6 +1738,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -1751,7 +1746,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1846,11 +1841,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       </svg>
                                     </Simple>
                                   </div>
-                                  <p
+                                  <div
                                     className="ant-empty-description"
                                   >
                                     No Data
-                                  </p>
+                                  </div>
                                 </div>
                               </LocaleReceiver>
                             </Empty>
@@ -2031,7 +2026,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -2056,7 +2050,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="left"
                                             fill="currentColor"
                                             focusable="false"
@@ -2158,7 +2151,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         role="img"
                                       >
                                         <IconReact
-                                          className=""
                                           icon={
                                             Object {
                                               "icon": Object {
@@ -2183,7 +2175,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         >
                                           <svg
                                             aria-hidden="true"
-                                            className=""
                                             data-icon="right"
                                             fill="currentColor"
                                             focusable="false"
