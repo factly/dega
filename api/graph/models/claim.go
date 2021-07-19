@@ -27,6 +27,8 @@ type Claim struct {
 	Fact            string          `gorm:"column:fact" json:"fact"`
 	ReviewSources   postgres.Jsonb  `gorm:"column:review_sources" json:"review_sources"`
 	MetaFields      postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
+	EndTime         int             `gorm:"column:end_time" json:"end_time"`
+	StartTime       int             `gorm:"column:start_time" json:"start_time"`
 	SpaceID         uint            `gorm:"column:space_id" json:"space_id"`
 }
 

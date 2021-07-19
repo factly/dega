@@ -168,6 +168,8 @@ type Claim {
   rating: Rating!
   claimant: Claimant!
   meta_fields: Any
+  end_time: Int            
+	start_time: Int        
   space_id: Int!
 }
 
