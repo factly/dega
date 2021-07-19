@@ -5,6 +5,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCategories } from '../../actions/categories';
 import deepEqual from 'deep-equal';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Categories({ permission }) {
   const { actions } = permission;
@@ -13,11 +14,7 @@ function Categories({ permission }) {
   const history = useHistory();
   const query = new URLSearchParams(location.search);
 
-  const params = {};
-  const keys = ['page', 'limit', 'q', 'sort'];
-  keys.forEach((key) => {
-    if (query.get(key)) params[key] = query.get(key);
-  });
+  const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });

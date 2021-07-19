@@ -9,6 +9,7 @@ import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import deepEqual from 'deep-equal';
 import { getPages } from '../../actions/pages';
 import Selector from '../../components/Selector';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -19,20 +20,8 @@ function Pages({ formats }) {
   const query = new URLSearchParams(useLocation().search);
   const history = useHistory();
 
-  const params = {};
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
-  keys.forEach((key) => {
-    if (query.get(key)) {
-      if (key === 'tag' || key === 'category' || key === 'author') {
-        const val = query.getAll(key).map((v) => parseInt(v));
-        params[key] = val;
-      } else if (key === 'sort' || key === 'status' || key === 'q') {
-        params[key] = query.get(key);
-      } else {
-        params[key] = parseInt(query.get(key));
-      }
-    }
-  });
+  const params = getUrlParams(query, keys);
   const [filters, setFilters] = React.useState({
     ...params,
   });
