@@ -10,6 +10,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 )
 
 // DB - gorm DB
@@ -29,6 +30,9 @@ func SetupDB() {
 
 	var err error
 	DB, err = gorm.Open(postgres.Open(dbString), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix: "de_",
+		},
 		Logger: loggerx.NewGormLogger(logger.Config{
 			SlowThreshold: 200 * time.Millisecond,
 			LogLevel:      logger.Info,

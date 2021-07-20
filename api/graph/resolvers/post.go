@@ -229,7 +229,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		pageSortBy = *sortBy
 	}
 
-	order := "posts." + pageSortBy + " " + pageSortOrder
+	order := "de_posts." + pageSortBy + " " + pageSortOrder
 
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
@@ -303,46 +303,46 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 
 	filterStr := ""
 	if categories != nil {
-		tx.Joins("INNER JOIN post_categories ON post_categories.post_id = posts.id")
+		tx.Joins("INNER JOIN de_post_categories ON de_post_categories.post_id = de_posts.id")
 		if len(categories.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_post_categories.category_id IN (", strings.Trim(strings.Replace(fmt.Sprint(categories.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(categories.Slugs) > 0 {
-			tx.Joins("INNER JOIN categories ON post_categories.category_id = categories.id")
-			filterStr = filterStr + fmt.Sprint("categories.slug IN (", createFilters(categories.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_categories ON de_post_categories.category_id = de_categories.id")
+			filterStr = filterStr + fmt.Sprint("de_categories.slug IN (", createFilters(categories.Slugs), ") AND ")
 		}
 	}
 
 	if len(userIDs) > 0 {
-		tx.Joins("INNER JOIN post_authors ON post_authors.post_id = posts.id")
-		filterStr = filterStr + fmt.Sprint("post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
+		tx.Joins("INNER JOIN de_post_authors ON de_post_authors.post_id = de_posts.id")
+		filterStr = filterStr + fmt.Sprint("de_post_authors.author_id IN (", strings.Trim(strings.Replace(fmt.Sprint(userIDs), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if tags != nil {
-		tx.Joins("INNER JOIN post_tags ON post_tags.post_id = posts.id")
+		tx.Joins("INNER JOIN de_post_tags ON de_post_tags.post_id = de_posts.id")
 		if len(tags.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_post_tags.tag_id IN (", strings.Trim(strings.Replace(fmt.Sprint(tags.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(tags.Slugs) > 0 {
-			tx.Joins("INNER JOIN tags ON post_tags.tag_id = tags.id")
-			filterStr = filterStr + fmt.Sprint("tags.slug IN (", createFilters(tags.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_tags ON de_post_tags.tag_id = de_tags.id")
+			filterStr = filterStr + fmt.Sprint("de_tags.slug IN (", createFilters(tags.Slugs), ") AND ")
 		}
 	}
 
 	if formats != nil {
 		if len(formats.Ids) > 0 {
-			filterStr = filterStr + fmt.Sprint("posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats.Ids), " ", ",", -1), "[]"), ") AND ")
+			filterStr = filterStr + fmt.Sprint("de_posts.format_id IN (", strings.Trim(strings.Replace(fmt.Sprint(formats.Ids), " ", ",", -1), "[]"), ") AND ")
 		} else if len(formats.Slugs) > 0 {
-			tx.Joins("INNER JOIN formats ON posts.format_id = formats.id")
-			filterStr = filterStr + fmt.Sprint("formats.slug IN (", createFilters(formats.Slugs), ") AND ")
+			tx.Joins("INNER JOIN de_formats ON de_posts.format_id = de_formats.id")
+			filterStr = filterStr + fmt.Sprint("de_formats.slug IN (", createFilters(formats.Slugs), ") AND ")
 		}
 	}
 
-	tx.Group("posts.id")
+	tx.Group("de_posts.id")
 
 	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(&models.Post{
 		SpaceID: uint(sID),
-	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Select("posts.*").Find(&result.Nodes)
+	}).Where(filterStr).Count(&total).Order(order).Offset(offset).Limit(pageLimit).Select("de_posts.*").Find(&result.Nodes)
 
 	result.Total = int(total)
 

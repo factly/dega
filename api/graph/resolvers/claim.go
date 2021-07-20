@@ -91,11 +91,11 @@ func (r *queryResolver) Claims(ctx context.Context, spaces []int, ratings []int,
 	filterStr := ""
 
 	if len(ratings) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("de_claims.rating_id IN (", strings.Trim(strings.Replace(fmt.Sprint(ratings), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	if len(claimants) > 0 {
-		filterStr = filterStr + fmt.Sprint("claims.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
+		filterStr = filterStr + fmt.Sprint("de_claims.claimant_id IN (", strings.Trim(strings.Replace(fmt.Sprint(claimants), " ", ",", -1), "[]"), ") AND ")
 	}
 
 	filterStr = strings.Trim(filterStr, " AND")
