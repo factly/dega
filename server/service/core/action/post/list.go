@@ -72,7 +72,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Order("posts.created_at " + sort)
+	}).Where("is_page = ?", false).Order("de_posts.created_at " + sort)
 	var statusTemplate bool = false
 	for _, status := range queryMap["status"] {
 		if status == "template" {

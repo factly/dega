@@ -28,7 +28,7 @@ type Medium struct {
 }
 
 func (Medium) TableName() string {
-	return "media"
+	return "de_media"
 }
 
 var mediumUser config.ContextKey = "medium_user"

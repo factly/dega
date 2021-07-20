@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"gorm.io/gorm/logger"
+	"gorm.io/gorm/schema"
 
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
@@ -30,6 +31,9 @@ func SetupDB() {
 
 	var err error
 	DB, err = gorm.Open(postgres.Open(dbString), &gorm.Config{
+		NamingStrategy: schema.NamingStrategy{
+			TablePrefix: "de_",
+		},
 		Logger: loggerx.NewGormLogger(logger.Config{
 			SlowThreshold: 200 * time.Millisecond,
 			LogLevel:      logger.Info,
