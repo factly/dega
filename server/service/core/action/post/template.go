@@ -107,6 +107,10 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		categoryIDs = append(categoryIDs, category.ID)
 	}
 
+	var meiliPublishDate int64
+	if template.PublishedDate != nil {
+		meiliPublishDate = template.PublishedDate.Unix()
+	}
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":             template.ID,
@@ -121,7 +125,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		"is_sticky":      template.IsSticky,
 		"is_highlighted": template.IsHighlighted,
 		"format_id":      template.FormatID,
-		"published_date": template.PublishedDate.Unix(),
+		"published_date": meiliPublishDate,
 		"space_id":       template.SpaceID,
 		"tag_ids":        tagIDs,
 		"category_ids":   categoryIDs,
