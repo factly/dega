@@ -14,6 +14,7 @@ import InlineCode from '@editorjs/inline-code';
 import { useSelector } from 'react-redux';
 import Embed from './Embed';
 import './index.css';
+import Shortcut from '@codexteam/shortcuts';
 
 function Editor({
   value,
@@ -30,27 +31,40 @@ function Editor({
     header: {
       class: Header,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+1',
     },
     list: {
       class: List,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+6',
     },
     paragraph: {
       class: Paragraph,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+0',
     },
     quote: {
       class: Quote,
       inlineToolbar: true,
+      shortcut: 'CMD+X',
     },
   };
   const editorTools = {
     ...basicTools,
     raw: RawTool,
     table: Table,
-    code: CodeTool,
-    delimiter: Delimiter,
-    inlineCode: InlineCode,
+    code: {
+      class: CodeTool,
+      shortcut: 'CMD+OPTION+8',
+    },
+    delimiter: {
+      class: Delimiter,
+      shortcut: 'CMD+D',
+    },
+    inlineCode: {
+      class: InlineCode,
+      shortcut: 'CMD+E',
+    },
     marker: {
       class: Marker,
     },
@@ -64,6 +78,18 @@ function Editor({
       },
     },
   };
+
+  new Shortcut({
+    name: 'CMD+OPTION+3',
+    on: document.body,
+    callback: function () {
+      console.log('CMD+OPTION+3');
+      basicTools.header.config = {
+        levels: [3],
+        defaultLevel: 3,
+      };
+    },
+  });
 
   React.useEffect(() => {
     const editor = new EditorJS({
