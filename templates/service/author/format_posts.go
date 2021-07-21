@@ -42,7 +42,7 @@ func postList(w http.ResponseWriter, r *http.Request) {
 
 	postAuthor := model.PostAuthor{}
 	// get user id for kavach
-	if err = config.DB.Model(&model.PostAuthor{}).Joins("INNER JOIN posts ON posts.id = post_authors.post_id").Where("posts.space_id = ?", sID).First(&postAuthor).Error; err != nil {
+	if err = config.DB.Model(&model.PostAuthor{}).Joins("INNER JOIN de_posts ON de_posts.id = de_post_authors.post_id").Where("de_posts.space_id = ?", sID).First(&postAuthor).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
@@ -59,9 +59,9 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_authors ON posts.id = post_authors.post_id").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN de_formats ON de_formats.id = de_posts.format_id").Joins("INNER JOIN de_post_authors ON de_posts.id = de_post_authors.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("author_id = ?", id).Where("formats.slug = ?", formatSlug).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("author_id = ?", id).Where("de_formats.slug = ?", formatSlug).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

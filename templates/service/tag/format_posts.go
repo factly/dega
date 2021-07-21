@@ -52,9 +52,9 @@ func postList(w http.ResponseWriter, r *http.Request) {
 	postList := make([]model.Post, 0)
 	result := make([]post.PostData, 0)
 	// get posts
-	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN formats ON formats.id = posts.format_id").Joins("INNER JOIN post_tags ON posts.id = post_tags.post_id").Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN de_formats ON de_formats.id = de_posts.format_id").Joins("INNER JOIN de_post_tags ON de_posts.id = de_post_tags.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Where("formats.slug = ?", formatSlug).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Where("de_formats.slug = ?", formatSlug).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))

@@ -299,6 +299,9 @@ services:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466, kavach-server:8000
     volumes:
       - type: bind
+        source: ./dega.db
+        target: /app/dega.db
+      - type: bind
         source: ./server
         target: /app
     restart: unless-stopped
@@ -320,6 +323,9 @@ services:
       - type: bind
         source: ./server
         target: /app
+      - type: bind
+        source: ./dega.db
+        target: /app/dega.db
     networks:
       - dega
 
@@ -413,6 +419,9 @@ services:
       - WAIT_HOSTS=postgres:5432
     volumes:
       - type: bind
+        source: ./dega.db
+        target: /app/dega.db
+      - type: bind
         source: ./api
         target: /app
     restart: unless-stopped
@@ -430,6 +439,9 @@ services:
     environment:
       - WAIT_HOSTS=postgres:5432
     volumes:
+      - type: bind
+        source: ./dega.db
+        target: /app/dega.db
       - type: bind
         source: ./templates
         target: /app
