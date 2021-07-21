@@ -29,7 +29,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	offset, limit := paginationx.Parse(r.URL.Query())
 	err = config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Order("created_at").Where("status != ?", "template").Where("is_page = ?", false).Count(&totalPosts).Offset(offset).Limit(limit).Find(&posts).Error
+	}).Order("de_posts.created_at").Where("status != ?", "template").Where("is_page = ?", false).Count(&totalPosts).Offset(offset).Limit(limit).Find(&posts).Error
 
 	if err != nil {
 		loggerx.Error(err)

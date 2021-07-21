@@ -48,7 +48,7 @@ func allPosts(w http.ResponseWriter, r *http.Request) {
 	// get posts
 	err = config.DB.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Joins("INNER JOIN de_post_tags ON de_posts.id = de_post_tags.post_id").Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Count(&totalPosts).Order("created_at").Offset(offset).Limit(limit).Find(&postList).Error
+	}).Where("is_page = ?", false).Where("tag_id = ?", tag.ID).Count(&totalPosts).Order("de_posts.created_at").Offset(offset).Limit(limit).Find(&postList).Error
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
