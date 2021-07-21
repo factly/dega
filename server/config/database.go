@@ -10,6 +10,7 @@ import (
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -29,7 +30,15 @@ func SetupDB() {
 		"sslmode=", viper.GetString("database_ssl_mode"))
 
 	var err error
-	DB, err = gorm.Open(postgres.Open(dbString), &gorm.Config{
+
+	var dialector gorm.Dialector
+	if Sqlite() {
+		dialector = sqlite.Open(viper.GetString("sqlite_db_path"))
+	} else {
+		dialector = postgres.Open(dbString)
+	}
+
+	DB, err = gorm.Open(dialector, &gorm.Config{
 		Logger: loggerx.NewGormLogger(logger.Config{
 			SlowThreshold: 200 * time.Millisecond,
 			LogLevel:      logger.Info,
