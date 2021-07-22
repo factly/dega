@@ -339,6 +339,11 @@ describe('Fact-check form component', () => {
           claims: [3],
           claim_ids: [],
           claim_order: [],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -417,6 +422,11 @@ describe('Fact-check form component', () => {
           claims: [1, 3],
           claim_order: [1, 3],
           claim_ids: [1, 3],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -616,6 +626,7 @@ describe('Fact-check form component', () => {
         authors: [1],
         claims: [1],
         claim_order: [1],
+        meta: {},
         description: {
           time: 1595747741807,
           blocks: [
@@ -686,6 +697,7 @@ describe('Fact-check form component', () => {
           claims: [1],
           claim_order: [1],
           claim_ids: [1],
+          meta: {},
           description: {
             time: 1595747741807,
             blocks: [
@@ -719,6 +731,7 @@ describe('Fact-check form component', () => {
         featured_medium_id: 1,
         status: 'draft',
         format: 2,
+        meta: {},
         description: {
           time: 1595747741807,
           blocks: [
@@ -776,6 +789,7 @@ describe('Fact-check form component', () => {
           published_date: null,
           claim_ids: [],
           claim_order: [],
+          meta: {},
           description: {
             time: 1595747741807,
             blocks: [
@@ -841,6 +855,11 @@ describe('Fact-check form component', () => {
           claims: [1, undefined],
           claim_ids: [1],
           claim_order: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -871,7 +890,9 @@ describe('Fact-check form component', () => {
         sample: 'testing1',
       };
       data2.meta = {
-        meta: 'data1',
+        canonical_URL: undefined,
+        description: undefined,
+        title: undefined,
       };
       act(() => {
         wrapper = mount(
@@ -901,14 +922,16 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(19).find('MonacoEditor');
+        const metaFieldData = wrapper.find('FormItem').at(22).find('MonacoEditor');
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
-        const metaData = wrapper.find('FormItem').at(20).find('MonacoEditor');
-        metaData.props().onChange({
-          target: { value: '{"meta":"data"}' },
-        });
+        const metaTitle = wrapper.find('FormItem').at(19).find('Input');
+        metaTitle.simulate('change', { target: { value: 'Meta title' } });
+        const metaDesc = wrapper.find('FormItem').at(20).find('TextArea');
+        metaDesc.simulate('change', { target: { value: 'Meta Description' } });
+        const metaUrl = wrapper.find('FormItem').at(21).find('Input');
+        metaUrl.simulate('change', { target: { value: 'Canonical url' } });
       });
 
       act(() => {
@@ -962,7 +985,9 @@ describe('Fact-check form component', () => {
             version: '2.18.0',
           },
           meta: {
-            meta: 'data',
+            canonical_URL: 'Canonical url',
+            description: 'Meta Description',
+            title: 'Meta title',
           },
           meta_fields: {
             sample: 'testing',
@@ -1003,19 +1028,19 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const headerData = wrapper.find('FormItem').at(22).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(24).find('MonacoEditor');
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-        const footerData = wrapper.find('FormItem').at(23).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(21).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(23).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -1044,6 +1069,11 @@ describe('Fact-check form component', () => {
           claims: [1, undefined],
           claim_ids: [1],
           claim_order: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
