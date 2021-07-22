@@ -119,7 +119,7 @@ describe('Tags List component', () => {
           </Provider>,
         );
       });
-      expect(getTags).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
     });
 
     it('should submit filters', () => {

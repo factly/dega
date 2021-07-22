@@ -95,7 +95,6 @@ exports[`Header component snapshot testing should render the component 1`] = `
         >
           <svg
             aria-hidden="true"
-            className=""
             data-icon="down"
             fill="currentColor"
             focusable="false"
@@ -125,7 +124,6 @@ exports[`Header component snapshot testing should render the component 1`] = `
     >
       <svg
         aria-hidden="true"
-        className=""
         data-icon="appstore"
         fill="currentColor"
         focusable="false"
@@ -155,7 +153,6 @@ exports[`Header component snapshot testing should render the component 1`] = `
       >
         <svg
           aria-hidden="true"
-          className=""
           data-icon="user"
           fill="currentColor"
           focusable="false"
@@ -175,7 +172,6 @@ exports[`Header component snapshot testing should render the component 1`] = `
       >
         <svg
           aria-hidden="true"
-          className=""
           data-icon="down"
           fill="currentColor"
           focusable="false"
@@ -289,7 +285,6 @@ exports[`Header component snapshot testing should render the component with no a
         >
           <svg
             aria-hidden="true"
-            className=""
             data-icon="down"
             fill="currentColor"
             focusable="false"
@@ -321,7 +316,6 @@ exports[`Header component snapshot testing should render the component with no a
       >
         <svg
           aria-hidden="true"
-          className=""
           data-icon="user"
           fill="currentColor"
           focusable="false"
@@ -341,7 +335,6 @@ exports[`Header component snapshot testing should render the component with no a
       >
         <svg
           aria-hidden="true"
-          className=""
           data-icon="down"
           fill="currentColor"
           focusable="false"

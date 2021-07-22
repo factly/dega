@@ -156,7 +156,7 @@ describe('Categories component', () => {
           </Provider>,
         );
       });
-      expect(actions.getCategories).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+      expect(actions.getCategories).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore({

@@ -97,6 +97,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
           <form
             className="ant-form ant-form-horizontal"
             id="create-space"
+            onReset={[Function]}
             onSubmit={[Function]}
             style={
               Object {
@@ -178,7 +179,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   }
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "organisation_id",
+                                      }
+                                    }
                                     name="organisation_id"
                                     noStyle={true}
                                     onReset={[Function]}
@@ -220,7 +225,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         }
                                       }
                                       key="_organisation_id"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "organisation_id",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "organisation_id",
@@ -276,7 +285,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                 "width": "40%",
                                               }
                                             }
-                                            transitionName="slide-up"
+                                            transitionName="ant-slide-up"
                                           >
                                             <ForwardRef(Select)
                                               className=""
@@ -301,7 +310,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   "width": "40%",
                                                 }
                                               }
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                             >
                                               <div
                                                 className="ant-select ant-select-single ant-select-show-arrow"
@@ -368,7 +377,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     />
                                                   }
                                                   prefixCls="ant-select"
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                 >
                                                   <Trigger
                                                     action={Array []}
@@ -505,7 +514,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         "width": null,
                                                       }
                                                     }
-                                                    popupTransitionName="slide-up"
+                                                    popupTransitionName="ant-slide-up"
                                                     prefixCls="ant-select-dropdown"
                                                     showAction={Array []}
                                                   >
@@ -577,7 +586,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         }
                                                       }
                                                       tokenWithEnter={false}
-                                                      transitionName="slide-up"
+                                                      transitionName="ant-slide-up"
                                                       values={Array []}
                                                     >
                                                       <div
@@ -678,7 +687,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             }
                                                           }
                                                           tokenWithEnter={false}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                           values={Array []}
                                                         >
                                                           <span
@@ -795,7 +804,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                           role="img"
                                                         >
                                                           <IconReact
-                                                            className=""
                                                             icon={
                                                               Object {
                                                                 "icon": Object {
@@ -820,7 +828,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                           >
                                                             <svg
                                                               aria-hidden="true"
-                                                              className=""
                                                               data-icon="down"
                                                               fill="currentColor"
                                                               focusable="false"
@@ -869,7 +876,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   }
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "name",
+                                      }
+                                    }
                                     name="name"
                                     noStyle={true}
                                     onReset={[Function]}
@@ -919,7 +930,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         }
                                       }
                                       key="_name"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "name",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "name",
@@ -1029,7 +1044,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -1278,7 +1293,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1469,7 +1484,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1660,7 +1675,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1851,7 +1866,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -1992,7 +2007,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <TextArea
+                                  <ForwardRef
                                     id="create-space_description"
                                     onChange={[Function]}
                                     placeholder="Enter Description..."
@@ -2004,6 +2019,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           className=""
                                           id="create-space_description"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           placeholder="Enter Description..."
                                           prefixCls="ant-input"
                                         />
@@ -2011,16 +2028,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       handleReset={[Function]}
                                       id="create-space_description"
                                       inputType="text"
-                                      onChange={[Function]}
                                       placeholder="Enter Description..."
                                       prefixCls="ant-input"
-                                      triggerFocus={[Function]}
                                       value=""
                                     >
                                       <TextArea
                                         className=""
                                         id="create-space_description"
                                         onChange={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         placeholder="Enter Description..."
                                         prefixCls="ant-input"
                                         value=""
@@ -2029,6 +2046,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           className=""
                                           id="create-space_description"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           onKeyDown={[Function]}
                                           placeholder="Enter Description..."
                                           prefixCls="ant-input"
@@ -2042,6 +2061,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                               className="ant-input"
                                               id="create-space_description"
                                               onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
                                               onKeyDown={[Function]}
                                               placeholder="Enter Description..."
                                               style={Object {}}
@@ -2051,7 +2072,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         </ResizableTextArea>
                                       </TextArea>
                                     </ClearableLabeledInput>
-                                  </TextArea>
+                                  </ForwardRef>
                                 </Component>
                               </div>
                             </div>
@@ -2062,7 +2083,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2242,7 +2263,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -2313,10 +2334,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                             className="ant-form-item-control-input-content"
                           >
                             <Button
-                              block={false}
-                              ghost={false}
                               htmlType="submit"
-                              loading={false}
                               type="primary"
                             >
                               <Wave>
@@ -2361,7 +2379,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -2482,6 +2500,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
           <form
             className="ant-form ant-form-horizontal"
             id="create-space"
+            onReset={[Function]}
             onSubmit={[Function]}
             style={
               Object {
@@ -2563,7 +2582,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   }
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "organisation_id",
+                                      }
+                                    }
                                     name="organisation_id"
                                     noStyle={true}
                                     onReset={[Function]}
@@ -2605,7 +2628,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         }
                                       }
                                       key="_organisation_id"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "organisation_id",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "organisation_id",
@@ -2661,7 +2688,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                 "width": "40%",
                                               }
                                             }
-                                            transitionName="slide-up"
+                                            transitionName="ant-slide-up"
                                           >
                                             <ForwardRef(Select)
                                               className=""
@@ -2686,7 +2713,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   "width": "40%",
                                                 }
                                               }
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                             >
                                               <div
                                                 className="ant-select ant-select-single ant-select-show-arrow"
@@ -2753,7 +2780,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     />
                                                   }
                                                   prefixCls="ant-select"
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                 >
                                                   <Trigger
                                                     action={Array []}
@@ -2890,7 +2917,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         "width": null,
                                                       }
                                                     }
-                                                    popupTransitionName="slide-up"
+                                                    popupTransitionName="ant-slide-up"
                                                     prefixCls="ant-select-dropdown"
                                                     showAction={Array []}
                                                   >
@@ -2962,7 +2989,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         }
                                                       }
                                                       tokenWithEnter={false}
-                                                      transitionName="slide-up"
+                                                      transitionName="ant-slide-up"
                                                       values={Array []}
                                                     >
                                                       <div
@@ -3063,7 +3090,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             }
                                                           }
                                                           tokenWithEnter={false}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                           values={Array []}
                                                         >
                                                           <span
@@ -3180,7 +3207,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                           role="img"
                                                         >
                                                           <IconReact
-                                                            className=""
                                                             icon={
                                                               Object {
                                                                 "icon": Object {
@@ -3205,7 +3231,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                           >
                                                             <svg
                                                               aria-hidden="true"
-                                                              className=""
                                                               data-icon="down"
                                                               fill="currentColor"
                                                               focusable="false"
@@ -3254,7 +3279,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   }
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "name",
+                                      }
+                                    }
                                     name="name"
                                     noStyle={true}
                                     onReset={[Function]}
@@ -3304,7 +3333,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         }
                                       }
                                       key="_name"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "name",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "name",
@@ -3414,7 +3447,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}
@@ -3663,7 +3696,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -3854,7 +3887,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4045,7 +4078,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4236,7 +4269,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4377,7 +4410,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 <Component
                                   update={1}
                                 >
-                                  <TextArea
+                                  <ForwardRef
                                     id="create-space_description"
                                     onChange={[Function]}
                                     placeholder="Enter Description..."
@@ -4389,6 +4422,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           className=""
                                           id="create-space_description"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           placeholder="Enter Description..."
                                           prefixCls="ant-input"
                                         />
@@ -4396,16 +4431,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       handleReset={[Function]}
                                       id="create-space_description"
                                       inputType="text"
-                                      onChange={[Function]}
                                       placeholder="Enter Description..."
                                       prefixCls="ant-input"
-                                      triggerFocus={[Function]}
                                       value=""
                                     >
                                       <TextArea
                                         className=""
                                         id="create-space_description"
                                         onChange={[Function]}
+                                        onCompositionEnd={[Function]}
+                                        onCompositionStart={[Function]}
                                         placeholder="Enter Description..."
                                         prefixCls="ant-input"
                                         value=""
@@ -4414,6 +4449,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           className=""
                                           id="create-space_description"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           onKeyDown={[Function]}
                                           placeholder="Enter Description..."
                                           prefixCls="ant-input"
@@ -4427,6 +4464,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                               className="ant-input"
                                               id="create-space_description"
                                               onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
                                               onKeyDown={[Function]}
                                               placeholder="Enter Description..."
                                               style={Object {}}
@@ -4436,7 +4475,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         </ResizableTextArea>
                                       </TextArea>
                                     </ClearableLabeledInput>
-                                  </TextArea>
+                                  </ForwardRef>
                                 </Component>
                               </div>
                             </div>
@@ -4447,7 +4486,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4627,7 +4666,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               <CSSMotion
                                 motionAppear={true}
                                 motionDeadline={500}
-                                motionName="show-help"
+                                motionName="ant-show-help"
                                 onLeaveEnd={[Function]}
                                 removeOnLeave={true}
                                 visible={false}
@@ -4698,10 +4737,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                             className="ant-form-item-control-input-content"
                           >
                             <Button
-                              block={false}
-                              ghost={false}
                               htmlType="submit"
-                              loading={false}
                               type="primary"
                             >
                               <Wave>
@@ -4746,7 +4782,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           <CSSMotion
                             motionAppear={true}
                             motionDeadline={500}
-                            motionName="show-help"
+                            motionName="ant-show-help"
                             onLeaveEnd={[Function]}
                             removeOnLeave={true}
                             visible={false}

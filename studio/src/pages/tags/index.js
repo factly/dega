@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Tags({ permission }) {
   const { actions } = permission;
@@ -13,11 +14,7 @@ function Tags({ permission }) {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
 
-  const params = {};
-  const keys = ['page', 'limit', 'q', 'sort'];
-  keys.forEach((key) => {
-    if (query.get(key)) params[key] = query.get(key);
-  });
+  const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });

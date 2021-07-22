@@ -42,6 +42,7 @@ exports[`Organisation Permission component snapshot testing should render the co
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -49,7 +50,7 @@ exports[`Organisation Permission component snapshot testing should render the co
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -168,7 +169,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 30%; min-width: 30%;"
+                                            style="width: 30%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -242,11 +243,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -328,7 +329,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 30%; min-width: 30%;"
+                                                  style="width: 30%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -402,11 +403,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -498,7 +499,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": "",
                                                   "width": "",
                                                 }
                                               }
@@ -507,7 +507,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -516,7 +515,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "30%",
                                                   "width": "30%",
                                                 }
                                               }
@@ -824,6 +822,8 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -893,11 +893,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -971,6 +971,7 @@ exports[`Organisation Permission component snapshot testing should render the co
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -978,7 +979,7 @@ exports[`Organisation Permission component snapshot testing should render the co
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1136,7 +1137,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 30%; min-width: 30%;"
+                                            style="width: 30%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -1313,7 +1314,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 30%; min-width: 30%;"
+                                                  style="width: 30%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -1478,7 +1479,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": "",
                                                   "width": "",
                                                 }
                                               }
@@ -1487,7 +1487,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -1496,7 +1495,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "30%",
                                                   "width": "30%",
                                                 }
                                               }
@@ -1968,11 +1966,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={false}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -2018,7 +2012,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -2048,8 +2041,9 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -2293,6 +2287,12 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -2316,8 +2316,9 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -2595,12 +2596,20 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -2629,11 +2638,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={false}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -2859,7 +2864,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -2884,7 +2888,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -2986,7 +2989,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -3011,7 +3013,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -3133,6 +3134,7 @@ exports[`Organisation Permission component snapshot testing should render the co
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -3140,7 +3142,7 @@ exports[`Organisation Permission component snapshot testing should render the co
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -3298,7 +3300,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           <col />
                                           <col />
                                           <col
-                                            style="width: 30%; min-width: 30%;"
+                                            style="width: 30%;"
                                           />
                                         </colgroup>
                                         <thead
@@ -3477,7 +3479,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                 <col />
                                                 <col />
                                                 <col
-                                                  style="width: 30%; min-width: 30%;"
+                                                  style="width: 30%;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -3644,7 +3646,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="0"
                                               style={
                                                 Object {
-                                                  "minWidth": "",
                                                   "width": "",
                                                 }
                                               }
@@ -3653,7 +3654,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="1"
                                               style={
                                                 Object {
-                                                  "minWidth": undefined,
                                                   "width": undefined,
                                                 }
                                               }
@@ -3662,7 +3662,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               key="2"
                                               style={
                                                 Object {
-                                                  "minWidth": "30%",
                                                   "width": "30%",
                                                 }
                                               }
@@ -4134,11 +4133,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             }
                                                           >
                                                             <Button
-                                                              block={false}
                                                               disabled={true}
-                                                              ghost={false}
-                                                              htmlType="button"
-                                                              loading={false}
                                                             >
                                                               <Wave>
                                                                 <button
@@ -4184,7 +4179,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                         onConfirm={[Function]}
                                                         placement="top"
                                                         title="Sure to Delete?"
-                                                        transitionName="zoom-big"
                                                         trigger="click"
                                                       >
                                                         <Tooltip
@@ -4214,8 +4208,9 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                           placement="top"
                                                           prefixCls="ant-popover"
                                                           title="Sure to Delete?"
-                                                          transitionName="zoom-big"
+                                                          transitionName="ant-zoom-big"
                                                           trigger="click"
+                                                          visible={false}
                                                         >
                                                           <ForwardRef(Tooltip)
                                                             arrowContent={
@@ -4459,6 +4454,12 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             }
                                                             disabled={false}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                            motion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
@@ -4482,8 +4483,9 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                             placement="top"
                                                             prefixCls="ant-popover"
                                                             title="Sure to Delete?"
-                                                            transitionName="zoom-big"
+                                                            transitionName="ant-zoom-big"
                                                             trigger="click"
+                                                            visible={false}
                                                           >
                                                             <Trigger
                                                               action="click"
@@ -4761,12 +4763,20 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                               popup={[Function]}
                                                               popupAlign={Object {}}
                                                               popupClassName="ant-popconfirm"
+                                                              popupMotion={
+                                                                Object {
+                                                                  "motionDeadline": 1000,
+                                                                  "motionName": "ant-zoom-big",
+                                                                }
+                                                              }
                                                               popupPlacement="top"
                                                               popupStyle={Object {}}
-                                                              popupTransitionName="zoom-big"
+                                                              popupTransitionName="ant-zoom-big"
+                                                              popupVisible={false}
                                                               prefixCls="ant-popover"
                                                               showAction={Array []}
                                                               title="Sure to Delete?"
+                                                              visible={false}
                                                             >
                                                               <Link
                                                                 className="ant-dropdown-link"
@@ -4795,11 +4805,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                                     onTouchStart={[Function]}
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -5025,7 +5031,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -5050,7 +5055,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="left"
                                                   fill="currentColor"
                                                   focusable="false"
@@ -5152,7 +5156,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               role="img"
                                             >
                                               <IconReact
-                                                className=""
                                                 icon={
                                                   Object {
                                                     "icon": Object {
@@ -5177,7 +5180,6 @@ exports[`Organisation Permission component snapshot testing should render the co
                                               >
                                                 <svg
                                                   aria-hidden="true"
-                                                  className=""
                                                   data-icon="right"
                                                   fill="currentColor"
                                                   focusable="false"

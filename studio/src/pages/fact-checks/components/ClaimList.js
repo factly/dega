@@ -10,21 +10,17 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
 
   const moveUp = (id) => {
     const index = claimOrder.indexOf(id);
-    if (index > 0) {
-      let temp = claimOrder[index - 1];
-      claimOrder[index - 1] = id;
-      claimOrder[index] = temp;
-    }
+    let temp = claimOrder[index - 1];
+    claimOrder[index - 1] = id;
+    claimOrder[index] = temp;
     setClaimOrder(claimOrder);
     setTreeData(dig(claimOrder, ids));
   };
   const moveDown = (id) => {
     const index = claimOrder.indexOf(id);
-    if (index < claimOrder.length - 1) {
-      let temp = claimOrder[index + 1];
-      claimOrder[index + 1] = id;
-      claimOrder[index] = temp;
-    }
+    let temp = claimOrder[index + 1];
+    claimOrder[index + 1] = id;
+    claimOrder[index] = temp;
     setClaimOrder(claimOrder);
     setTreeData(dig(claimOrder, ids));
   };

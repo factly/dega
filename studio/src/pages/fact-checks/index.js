@@ -11,6 +11,7 @@ import { getPosts } from '../../actions/posts';
 import Selector from '../../components/Selector';
 import deepEqual from 'deep-equal';
 import { useLocation } from 'react-router-dom';
+import getUrlParams from '../../utils/getUrlParams';
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -22,20 +23,8 @@ function FactCheck({ formats }) {
   const history = useHistory();
   const [formatFlag, setFormatFlag] = React.useState(false);
 
-  const params = {};
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
-  keys.forEach((key) => {
-    if (query.get(key)) {
-      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
-        const val = query.getAll(key).map((v) => parseInt(v));
-        params[key] = val;
-      } else if (key === 'sort' || key === 'status' || key === 'q') {
-        params[key] = query.get(key);
-      } else {
-        params[key] = parseInt(query.get(key));
-      }
-    }
-  });
+  const params = getUrlParams(query, keys);
   const [filters, setFilters] = React.useState({
     ...params,
   });

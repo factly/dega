@@ -50,6 +50,7 @@ exports[`Claimants List component snapshot testing should render the component 1
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -57,7 +58,7 @@ exports[`Claimants List component snapshot testing should render the component 1
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -91,11 +92,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                               onClick={[Function]}
                             >
                               <Button
-                                block={false}
                                 disabled={false}
-                                ghost={false}
-                                htmlType="button"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -222,6 +219,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                               <form
                                 className="ant-form ant-form-inline"
                                 id="filters"
+                                onReset={[Function]}
                                 onSubmit={[Function]}
                                 style={
                                   Object {
@@ -233,7 +231,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                   name="q"
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "q",
+                                      }
+                                    }
                                     name="q"
                                     onReset={[Function]}
                                     trigger="onChange"
@@ -266,7 +268,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                         }
                                       }
                                       key="_q"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "q",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "q",
@@ -376,7 +382,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -426,10 +432,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Button
-                                                  block={false}
-                                                  ghost={false}
                                                   htmlType="submit"
-                                                  loading={false}
                                                 >
                                                   <Wave>
                                                     <button
@@ -473,7 +476,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                               <CSSMotion
                                                 motionAppear={true}
                                                 motionDeadline={500}
-                                                motionName="show-help"
+                                                motionName="ant-show-help"
                                                 onLeaveEnd={[Function]}
                                                 removeOnLeave={true}
                                                 visible={false}
@@ -665,7 +668,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                           onChange={[Function]}
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -684,7 +687,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -760,7 +763,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                   />
                                                                 }
                                                                 prefixCls="ant-select"
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                               >
                                                                 <Trigger
                                                                   action={Array []}
@@ -911,7 +914,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                       "width": null,
                                                                     }
                                                                   }
-                                                                  popupTransitionName="slide-up"
+                                                                  popupTransitionName="ant-slide-up"
                                                                   prefixCls="ant-select-dropdown"
                                                                   showAction={Array []}
                                                                 >
@@ -975,7 +978,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                     values={Array []}
                                                                   >
                                                                     <div
@@ -1068,7 +1071,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                         values={Array []}
                                                                       >
                                                                         <span
@@ -1183,7 +1186,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                         role="img"
                                                                       >
                                                                         <IconReact
-                                                                          className=""
                                                                           icon={
                                                                             Object {
                                                                               "icon": Object {
@@ -1208,7 +1210,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                         >
                                                                           <svg
                                                                             aria-hidden="true"
-                                                                            className=""
                                                                             data-icon="down"
                                                                             fill="currentColor"
                                                                             focusable="false"
@@ -1242,7 +1243,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -1274,7 +1275,7 @@ exports[`Claimants List component snapshot testing should render the component 1
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1302,6 +1303,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -1309,7 +1311,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -1443,10 +1445,10 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                   <col />
                                                   <col />
                                                   <col
-                                                    style="width: 20%; min-width: 20%;"
+                                                    style="width: 20%;"
                                                   />
                                                   <col
-                                                    style="width: 30%; min-width: 30%;"
+                                                    style="width: 30%;"
                                                   />
                                                 </colgroup>
                                                 <thead
@@ -1530,11 +1532,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                             </g>
                                                           </svg>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           class="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </td>
                                                   </tr>
@@ -1625,10 +1627,10 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                         <col />
                                                         <col />
                                                         <col
-                                                          style="width: 20%; min-width: 20%;"
+                                                          style="width: 20%;"
                                                         />
                                                         <col
-                                                          style="width: 30%; min-width: 30%;"
+                                                          style="width: 30%;"
                                                         />
                                                       </colgroup>
                                                       <thead
@@ -1712,11 +1714,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                   </g>
                                                                 </svg>
                                                               </div>
-                                                              <p
+                                                              <div
                                                                 class="ant-empty-description"
                                                               >
                                                                 No Data
-                                                              </p>
+                                                              </div>
                                                             </div>
                                                           </td>
                                                         </tr>
@@ -1825,7 +1827,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       key="0"
                                                       style={
                                                         Object {
-                                                          "minWidth": undefined,
                                                           "width": undefined,
                                                         }
                                                       }
@@ -1834,7 +1835,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       key="1"
                                                       style={
                                                         Object {
-                                                          "minWidth": undefined,
                                                           "width": undefined,
                                                         }
                                                       }
@@ -1843,7 +1843,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       key="2"
                                                       style={
                                                         Object {
-                                                          "minWidth": "20%",
                                                           "width": "20%",
                                                         }
                                                       }
@@ -1852,7 +1851,6 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       key="3"
                                                       style={
                                                         Object {
-                                                          "minWidth": "30%",
                                                           "width": "30%",
                                                         }
                                                       }
@@ -2289,6 +2287,8 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                       component="tr"
                                                       componentWidth={0}
                                                       expanded={true}
+                                                      fixColumn={false}
+                                                      horizonScroll={false}
                                                       prefixCls="ant-table"
                                                     >
                                                       <tr
@@ -2358,11 +2358,11 @@ exports[`Claimants List component snapshot testing should render the component 1
                                                                       </svg>
                                                                     </Simple>
                                                                   </div>
-                                                                  <p
+                                                                  <div
                                                                     className="ant-empty-description"
                                                                   >
                                                                     No Data
-                                                                  </p>
+                                                                  </div>
                                                                 </div>
                                                               </LocaleReceiver>
                                                             </Empty>
@@ -2448,6 +2448,7 @@ exports[`Claimants List component snapshot testing should render the component w
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -2455,7 +2456,7 @@ exports[`Claimants List component snapshot testing should render the component w
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -2489,11 +2490,7 @@ exports[`Claimants List component snapshot testing should render the component w
                               onClick={[Function]}
                             >
                               <Button
-                                block={false}
                                 disabled={false}
-                                ghost={false}
-                                htmlType="button"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -2620,6 +2617,7 @@ exports[`Claimants List component snapshot testing should render the component w
                               <form
                                 className="ant-form ant-form-inline"
                                 id="filters"
+                                onReset={[Function]}
                                 onSubmit={[Function]}
                                 style={
                                   Object {
@@ -2631,7 +2629,11 @@ exports[`Claimants List component snapshot testing should render the component w
                                   name="q"
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "q",
+                                      }
+                                    }
                                     name="q"
                                     onReset={[Function]}
                                     trigger="onChange"
@@ -2664,7 +2666,11 @@ exports[`Claimants List component snapshot testing should render the component w
                                         }
                                       }
                                       key="_q"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "q",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "q",
@@ -2774,7 +2780,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -2824,10 +2830,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Button
-                                                  block={false}
-                                                  ghost={false}
                                                   htmlType="submit"
-                                                  loading={false}
                                                 >
                                                   <Wave>
                                                     <button
@@ -2871,7 +2874,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                               <CSSMotion
                                                 motionAppear={true}
                                                 motionDeadline={500}
-                                                motionName="show-help"
+                                                motionName="ant-show-help"
                                                 onLeaveEnd={[Function]}
                                                 removeOnLeave={true}
                                                 visible={false}
@@ -3063,7 +3066,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                           onChange={[Function]}
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -3082,7 +3085,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                             onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -3158,7 +3161,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   />
                                                                 }
                                                                 prefixCls="ant-select"
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                               >
                                                                 <Trigger
                                                                   action={Array []}
@@ -3309,7 +3312,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                       "width": null,
                                                                     }
                                                                   }
-                                                                  popupTransitionName="slide-up"
+                                                                  popupTransitionName="ant-slide-up"
                                                                   prefixCls="ant-select-dropdown"
                                                                   showAction={Array []}
                                                                 >
@@ -3373,7 +3376,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                     values={Array []}
                                                                   >
                                                                     <div
@@ -3466,7 +3469,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                         values={Array []}
                                                                       >
                                                                         <span
@@ -3581,7 +3584,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                         role="img"
                                                                       >
                                                                         <IconReact
-                                                                          className=""
                                                                           icon={
                                                                             Object {
                                                                               "icon": Object {
@@ -3606,7 +3608,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                         >
                                                                           <svg
                                                                             aria-hidden="true"
-                                                                            className=""
                                                                             data-icon="down"
                                                                             fill="currentColor"
                                                                             focusable="false"
@@ -3640,7 +3641,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -3672,7 +3673,7 @@ exports[`Claimants List component snapshot testing should render the component w
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -3725,6 +3726,7 @@ exports[`Claimants List component snapshot testing should render the component w
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -3732,7 +3734,7 @@ exports[`Claimants List component snapshot testing should render the component w
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -3947,10 +3949,10 @@ exports[`Claimants List component snapshot testing should render the component w
                                                   <col />
                                                   <col />
                                                   <col
-                                                    style="width: 20%; min-width: 20%;"
+                                                    style="width: 20%;"
                                                   />
                                                   <col
-                                                    style="width: 30%; min-width: 30%;"
+                                                    style="width: 30%;"
                                                   />
                                                 </colgroup>
                                                 <thead
@@ -4260,10 +4262,10 @@ exports[`Claimants List component snapshot testing should render the component w
                                                         <col />
                                                         <col />
                                                         <col
-                                                          style="width: 20%; min-width: 20%;"
+                                                          style="width: 20%;"
                                                         />
                                                         <col
-                                                          style="width: 30%; min-width: 30%;"
+                                                          style="width: 30%;"
                                                         />
                                                       </colgroup>
                                                       <thead
@@ -4541,7 +4543,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       key="0"
                                                       style={
                                                         Object {
-                                                          "minWidth": undefined,
                                                           "width": undefined,
                                                         }
                                                       }
@@ -4550,7 +4551,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       key="1"
                                                       style={
                                                         Object {
-                                                          "minWidth": undefined,
                                                           "width": undefined,
                                                         }
                                                       }
@@ -4559,7 +4559,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       key="2"
                                                       style={
                                                         Object {
-                                                          "minWidth": "20%",
                                                           "width": "20%",
                                                         }
                                                       }
@@ -4568,7 +4567,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       key="3"
                                                       style={
                                                         Object {
-                                                          "minWidth": "30%",
                                                           "width": "30%",
                                                         }
                                                       }
@@ -5171,7 +5169,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   componentName="Text"
                                                                 >
                                                                   <ResizeObserver
-                                                                    disabled={false}
+                                                                    disabled={true}
                                                                     onResize={[Function]}
                                                                   >
                                                                     <Typography
@@ -5249,7 +5247,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   componentName="Text"
                                                                 >
                                                                   <ResizeObserver
-                                                                    disabled={false}
+                                                                    disabled={true}
                                                                     onResize={[Function]}
                                                                   >
                                                                     <Typography
@@ -5339,11 +5337,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     }
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -5389,7 +5383,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                 onConfirm={[Function]}
                                                                 placement="top"
                                                                 title="Sure to Delete?"
-                                                                transitionName="zoom-big"
                                                                 trigger="click"
                                                               >
                                                                 <Tooltip
@@ -5419,8 +5412,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   placement="top"
                                                                   prefixCls="ant-popover"
                                                                   title="Sure to Delete?"
-                                                                  transitionName="zoom-big"
+                                                                  transitionName="ant-zoom-big"
                                                                   trigger="click"
+                                                                  visible={false}
                                                                 >
                                                                   <ForwardRef(Tooltip)
                                                                     arrowContent={
@@ -5664,6 +5658,12 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     }
                                                                     disabled={false}
                                                                     icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                                    motion={
+                                                                      Object {
+                                                                        "motionDeadline": 1000,
+                                                                        "motionName": "ant-zoom-big",
+                                                                      }
+                                                                    }
                                                                     mouseEnterDelay={0.1}
                                                                     mouseLeaveDelay={0.1}
                                                                     okType="primary"
@@ -5687,8 +5687,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     placement="top"
                                                                     prefixCls="ant-popover"
                                                                     title="Sure to Delete?"
-                                                                    transitionName="zoom-big"
+                                                                    transitionName="ant-zoom-big"
                                                                     trigger="click"
+                                                                    visible={false}
                                                                   >
                                                                     <Trigger
                                                                       action="click"
@@ -5966,12 +5967,20 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                       popup={[Function]}
                                                                       popupAlign={Object {}}
                                                                       popupClassName="ant-popconfirm"
+                                                                      popupMotion={
+                                                                        Object {
+                                                                          "motionDeadline": 1000,
+                                                                          "motionName": "ant-zoom-big",
+                                                                        }
+                                                                      }
                                                                       popupPlacement="top"
                                                                       popupStyle={Object {}}
-                                                                      popupTransitionName="zoom-big"
+                                                                      popupTransitionName="ant-zoom-big"
+                                                                      popupVisible={false}
                                                                       prefixCls="ant-popover"
                                                                       showAction={Array []}
                                                                       title="Sure to Delete?"
+                                                                      visible={false}
                                                                     >
                                                                       <Link
                                                                         className="ant-dropdown-link"
@@ -6000,11 +6009,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                             onTouchStart={[Function]}
                                                                           >
                                                                             <Button
-                                                                              block={false}
                                                                               disabled={true}
-                                                                              ghost={false}
-                                                                              htmlType="button"
-                                                                              loading={false}
                                                                             >
                                                                               <Wave>
                                                                                 <button
@@ -6202,7 +6207,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   componentName="Text"
                                                                 >
                                                                   <ResizeObserver
-                                                                    disabled={false}
+                                                                    disabled={true}
                                                                     onResize={[Function]}
                                                                   >
                                                                     <Typography
@@ -6280,7 +6285,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   componentName="Text"
                                                                 >
                                                                   <ResizeObserver
-                                                                    disabled={false}
+                                                                    disabled={true}
                                                                     onResize={[Function]}
                                                                   >
                                                                     <Typography
@@ -6370,11 +6375,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     }
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -6420,7 +6421,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                 onConfirm={[Function]}
                                                                 placement="top"
                                                                 title="Sure to Delete?"
-                                                                transitionName="zoom-big"
                                                                 trigger="click"
                                                               >
                                                                 <Tooltip
@@ -6450,8 +6450,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                   placement="top"
                                                                   prefixCls="ant-popover"
                                                                   title="Sure to Delete?"
-                                                                  transitionName="zoom-big"
+                                                                  transitionName="ant-zoom-big"
                                                                   trigger="click"
+                                                                  visible={false}
                                                                 >
                                                                   <ForwardRef(Tooltip)
                                                                     arrowContent={
@@ -6695,6 +6696,12 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     }
                                                                     disabled={false}
                                                                     icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                                    motion={
+                                                                      Object {
+                                                                        "motionDeadline": 1000,
+                                                                        "motionName": "ant-zoom-big",
+                                                                      }
+                                                                    }
                                                                     mouseEnterDelay={0.1}
                                                                     mouseLeaveDelay={0.1}
                                                                     okType="primary"
@@ -6718,8 +6725,9 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                     placement="top"
                                                                     prefixCls="ant-popover"
                                                                     title="Sure to Delete?"
-                                                                    transitionName="zoom-big"
+                                                                    transitionName="ant-zoom-big"
                                                                     trigger="click"
+                                                                    visible={false}
                                                                   >
                                                                     <Trigger
                                                                       action="click"
@@ -6997,12 +7005,20 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                       popup={[Function]}
                                                                       popupAlign={Object {}}
                                                                       popupClassName="ant-popconfirm"
+                                                                      popupMotion={
+                                                                        Object {
+                                                                          "motionDeadline": 1000,
+                                                                          "motionName": "ant-zoom-big",
+                                                                        }
+                                                                      }
                                                                       popupPlacement="top"
                                                                       popupStyle={Object {}}
-                                                                      popupTransitionName="zoom-big"
+                                                                      popupTransitionName="ant-zoom-big"
+                                                                      popupVisible={false}
                                                                       prefixCls="ant-popover"
                                                                       showAction={Array []}
                                                                       title="Sure to Delete?"
+                                                                      visible={false}
                                                                     >
                                                                       <Link
                                                                         className="ant-dropdown-link"
@@ -7031,11 +7047,7 @@ exports[`Claimants List component snapshot testing should render the component w
                                                                             onTouchStart={[Function]}
                                                                           >
                                                                             <Button
-                                                                              block={false}
                                                                               disabled={true}
-                                                                              ghost={false}
-                                                                              htmlType="button"
-                                                                              loading={false}
                                                                             >
                                                                               <Wave>
                                                                                 <button
@@ -7261,7 +7273,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -7286,7 +7297,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="left"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -7388,7 +7398,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -7413,7 +7422,6 @@ exports[`Claimants List component snapshot testing should render the component w
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="right"
                                                           fill="currentColor"
                                                           focusable="false"

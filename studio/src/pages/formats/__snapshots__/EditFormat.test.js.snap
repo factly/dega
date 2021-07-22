@@ -534,6 +534,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
             <form
               className="ant-form ant-form-horizontal"
               id="create-format"
+              onReset={[Function]}
               onSubmit={[Function]}
             >
               <FormItem
@@ -794,7 +795,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1048,7 +1049,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1190,7 +1191,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     update={2}
                                     value="description"
                                   >
-                                    <TextArea
+                                    <ForwardRef
                                       id="create-format_description"
                                       onChange={[Function]}
                                       value="description"
@@ -1202,6 +1203,8 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                             className=""
                                             id="create-format_description"
                                             onChange={[Function]}
+                                            onCompositionEnd={[Function]}
+                                            onCompositionStart={[Function]}
                                             prefixCls="ant-input"
                                             value="description"
                                           />
@@ -1209,15 +1212,15 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         handleReset={[Function]}
                                         id="create-format_description"
                                         inputType="text"
-                                        onChange={[Function]}
                                         prefixCls="ant-input"
-                                        triggerFocus={[Function]}
                                         value="description"
                                       >
                                         <TextArea
                                           className=""
                                           id="create-format_description"
                                           onChange={[Function]}
+                                          onCompositionEnd={[Function]}
+                                          onCompositionStart={[Function]}
                                           prefixCls="ant-input"
                                           value="description"
                                         >
@@ -1225,6 +1228,8 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                             className=""
                                             id="create-format_description"
                                             onChange={[Function]}
+                                            onCompositionEnd={[Function]}
+                                            onCompositionStart={[Function]}
                                             onKeyDown={[Function]}
                                             prefixCls="ant-input"
                                             value="description"
@@ -1237,6 +1242,8 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                 className="ant-input"
                                                 id="create-format_description"
                                                 onChange={[Function]}
+                                                onCompositionEnd={[Function]}
+                                                onCompositionStart={[Function]}
                                                 onKeyDown={[Function]}
                                                 style={Object {}}
                                                 value="description"
@@ -1245,7 +1252,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           </ResizableTextArea>
                                         </TextArea>
                                       </ClearableLabeledInput>
-                                    </TextArea>
+                                    </ForwardRef>
                                   </Component>
                                 </div>
                               </div>
@@ -1256,7 +1263,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1436,7 +1443,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1509,6 +1516,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                               <Space>
                                 <div
                                   className="ant-space ant-space-horizontal ant-space-align-center"
+                                  style={Object {}}
                                 >
                                   <Item
                                     className="ant-space-item"
@@ -1516,7 +1524,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     index={0}
                                     key="ant-space-item-0"
                                     marginDirection="marginRight"
-                                    size="small"
+                                    wrap={false}
                                   >
                                     <div
                                       className="ant-space-item"
@@ -1527,11 +1535,8 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                       }
                                     >
                                       <Button
-                                        block={false}
                                         disabled={true}
-                                        ghost={false}
                                         htmlType="submit"
-                                        loading={false}
                                         type="primary"
                                       >
                                         <Wave>
@@ -1576,17 +1581,14 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     index={1}
                                     key="ant-space-item-1"
                                     marginDirection="marginRight"
-                                    size="small"
+                                    wrap={false}
                                   >
                                     <div
                                       className="ant-space-item"
                                       style={Object {}}
                                     >
                                       <Button
-                                        block={false}
-                                        ghost={false}
                                         htmlType="button"
-                                        loading={false}
                                         onClick={[Function]}
                                       >
                                         <Wave>
@@ -1635,7 +1637,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                             <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
-                              motionName="show-help"
+                              motionName="ant-show-help"
                               onLeaveEnd={[Function]}
                               removeOnLeave={true}
                               visible={false}

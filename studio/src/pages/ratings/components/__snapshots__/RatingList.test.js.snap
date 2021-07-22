@@ -1519,11 +1519,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={false}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -1569,7 +1565,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -1599,8 +1594,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -1844,6 +1840,12 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -1867,8 +1869,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -2146,12 +2149,20 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -2180,11 +2191,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -2494,11 +2501,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={false}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -2544,7 +2547,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -2574,8 +2576,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -2819,6 +2822,12 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -2842,8 +2851,9 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -3121,12 +3131,20 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -3155,11 +3173,7 @@ exports[`Ratings List component snapshot testing should match component with rat
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={false}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -3385,7 +3399,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -3410,7 +3423,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -3512,7 +3524,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -3537,7 +3548,6 @@ exports[`Ratings List component snapshot testing should match component with rat
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"

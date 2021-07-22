@@ -92,6 +92,7 @@ exports[`Event create component snapshot testing should render the component 1`]
             <form
               className="ant-form ant-form-horizontal"
               id="create-event"
+              onReset={[Function]}
               onSubmit={[Function]}
             >
               <FormItem
@@ -273,7 +274,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -453,7 +454,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -526,6 +527,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                               <Space>
                                 <div
                                   className="ant-space ant-space-horizontal ant-space-align-center"
+                                  style={Object {}}
                                 >
                                   <Item
                                     className="ant-space-item"
@@ -533,7 +535,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                     index={0}
                                     key="ant-space-item-0"
                                     marginDirection="marginRight"
-                                    size="small"
+                                    wrap={false}
                                   >
                                     <div
                                       className="ant-space-item"
@@ -544,10 +546,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                                       }
                                     >
                                       <Button
-                                        block={false}
-                                        ghost={false}
                                         htmlType="submit"
-                                        loading={false}
                                         type="primary"
                                       >
                                         <Wave>
@@ -591,17 +590,14 @@ exports[`Event create component snapshot testing should render the component 1`]
                                     index={1}
                                     key="ant-space-item-1"
                                     marginDirection="marginRight"
-                                    size="small"
+                                    wrap={false}
                                   >
                                     <div
                                       className="ant-space-item"
                                       style={Object {}}
                                     >
                                       <Button
-                                        block={false}
-                                        ghost={false}
                                         htmlType="button"
-                                        loading={false}
                                         onClick={[Function]}
                                       >
                                         <Wave>
@@ -650,7 +646,7 @@ exports[`Event create component snapshot testing should render the component 1`]
                             <CSSMotion
                               motionAppear={true}
                               motionDeadline={500}
-                              motionName="show-help"
+                              motionName="ant-show-help"
                               onLeaveEnd={[Function]}
                               removeOnLeave={true}
                               visible={false}

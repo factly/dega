@@ -492,7 +492,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
             className="ant-row"
             style={
               Object {
-                "marginBottom": 10,
+                "marginBottom": -10,
                 "marginLeft": -10,
                 "marginRight": -10,
                 "marginTop": -10,
@@ -524,12 +524,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                       href="/media"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -587,7 +582,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   role="img"
                                 >
                                   <IconReact
-                                    className=""
                                     icon={
                                       Object {
                                         "icon": Object {
@@ -612,7 +606,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   >
                                     <svg
                                       aria-hidden="true"
-                                      className=""
                                       data-icon="arrow-left"
                                       fill="currentColor"
                                       focusable="false"
@@ -770,6 +763,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                       <form
                         className="ant-form ant-form-vertical"
                         id="create-space"
+                        onReset={[Function]}
                         onSubmit={[Function]}
                       >
                         <FormItem
@@ -952,7 +946,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           <CSSMotion
                                             motionAppear={true}
                                             motionDeadline={500}
-                                            motionName="show-help"
+                                            motionName="ant-show-help"
                                             onLeaveEnd={[Function]}
                                             removeOnLeave={true}
                                             visible={false}
@@ -1145,7 +1139,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           <CSSMotion
                                             motionAppear={true}
                                             motionDeadline={500}
-                                            motionName="show-help"
+                                            motionName="ant-show-help"
                                             onLeaveEnd={[Function]}
                                             removeOnLeave={true}
                                             visible={false}
@@ -1341,7 +1335,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           <CSSMotion
                                             motionAppear={true}
                                             motionDeadline={500}
-                                            motionName="show-help"
+                                            motionName="ant-show-help"
                                             onLeaveEnd={[Function]}
                                             removeOnLeave={true}
                                             visible={false}
@@ -1481,7 +1475,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                               update={2}
                                               value="description"
                                             >
-                                              <TextArea
+                                              <ForwardRef
                                                 autoSize={
                                                   Object {
                                                     "maxRows": 6,
@@ -1514,6 +1508,8 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       disabled={true}
                                                       id="create-space_description"
                                                       onChange={[Function]}
+                                                      onCompositionEnd={[Function]}
+                                                      onCompositionStart={[Function]}
                                                       prefixCls="ant-input"
                                                       value="description"
                                                     />
@@ -1521,9 +1517,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                   handleReset={[Function]}
                                                   id="create-space_description"
                                                   inputType="text"
-                                                  onChange={[Function]}
                                                   prefixCls="ant-input"
-                                                  triggerFocus={[Function]}
                                                   value="description"
                                                 >
                                                   <TextArea
@@ -1537,6 +1531,8 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                     disabled={true}
                                                     id="create-space_description"
                                                     onChange={[Function]}
+                                                    onCompositionEnd={[Function]}
+                                                    onCompositionStart={[Function]}
                                                     prefixCls="ant-input"
                                                     value="description"
                                                   >
@@ -1551,6 +1547,8 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       disabled={true}
                                                       id="create-space_description"
                                                       onChange={[Function]}
+                                                      onCompositionEnd={[Function]}
+                                                      onCompositionStart={[Function]}
                                                       onKeyDown={[Function]}
                                                       prefixCls="ant-input"
                                                       value="description"
@@ -1564,6 +1562,8 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                           disabled={true}
                                                           id="create-space_description"
                                                           onChange={[Function]}
+                                                          onCompositionEnd={[Function]}
+                                                          onCompositionStart={[Function]}
                                                           onKeyDown={[Function]}
                                                           style={
                                                             Object {
@@ -1572,6 +1572,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                               "minHeight": -12,
                                                               "overflowX": "hidden",
                                                               "overflowY": "hidden",
+                                                              "resize": "none",
                                                             }
                                                           }
                                                           value="description"
@@ -1580,7 +1581,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                     </ResizableTextArea>
                                                   </TextArea>
                                                 </ClearableLabeledInput>
-                                              </TextArea>
+                                              </ForwardRef>
                                             </Component>
                                           </div>
                                         </div>
@@ -1591,7 +1592,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           <CSSMotion
                                             motionAppear={true}
                                             motionDeadline={500}
-                                            motionName="show-help"
+                                            motionName="ant-show-help"
                                             onLeaveEnd={[Function]}
                                             removeOnLeave={true}
                                             visible={false}
@@ -1769,7 +1770,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           <CSSMotion
                                             motionAppear={true}
                                             motionDeadline={500}
-                                            motionName="show-help"
+                                            motionName="ant-show-help"
                                             onLeaveEnd={[Function]}
                                             removeOnLeave={true}
                                             visible={false}
@@ -1821,6 +1822,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                         <Space>
                                           <div
                                             className="ant-space ant-space-horizontal ant-space-align-center"
+                                            style={Object {}}
                                           >
                                             <Item
                                               className="ant-space-item"
@@ -1828,7 +1830,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                               index={0}
                                               key="ant-space-item-0"
                                               marginDirection="marginRight"
-                                              size="small"
+                                              wrap={false}
                                             >
                                               <div
                                                 className="ant-space-item"
@@ -1845,7 +1847,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                   onConfirm={[Function]}
                                                   placement="top"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
                                                   trigger="click"
                                                 >
                                                   <Tooltip
@@ -1875,8 +1876,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                     placement="top"
                                                     prefixCls="ant-popover"
                                                     title="Sure to Delete?"
-                                                    transitionName="zoom-big"
+                                                    transitionName="ant-zoom-big"
                                                     trigger="click"
+                                                    visible={false}
                                                   >
                                                     <ForwardRef(Tooltip)
                                                       arrowContent={
@@ -2120,6 +2122,12 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       }
                                                       disabled={false}
                                                       icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                      motion={
+                                                        Object {
+                                                          "motionDeadline": 1000,
+                                                          "motionName": "ant-zoom-big",
+                                                        }
+                                                      }
                                                       mouseEnterDelay={0.1}
                                                       mouseLeaveDelay={0.1}
                                                       okType="primary"
@@ -2143,8 +2151,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       placement="top"
                                                       prefixCls="ant-popover"
                                                       title="Sure to Delete?"
-                                                      transitionName="zoom-big"
+                                                      transitionName="ant-zoom-big"
                                                       trigger="click"
+                                                      visible={false}
                                                     >
                                                       <Trigger
                                                         action="click"
@@ -2422,12 +2431,20 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         popup={[Function]}
                                                         popupAlign={Object {}}
                                                         popupClassName="ant-popconfirm"
+                                                        popupMotion={
+                                                          Object {
+                                                            "motionDeadline": 1000,
+                                                            "motionName": "ant-zoom-big",
+                                                          }
+                                                        }
                                                         popupPlacement="top"
                                                         popupStyle={Object {}}
-                                                        popupTransitionName="zoom-big"
+                                                        popupTransitionName="ant-zoom-big"
+                                                        popupVisible={false}
                                                         prefixCls="ant-popover"
                                                         showAction={Array []}
                                                         title="Sure to Delete?"
+                                                        visible={false}
                                                       >
                                                         <span
                                                           className="ant-popover-disabled-compatible-wrapper"
@@ -2444,13 +2461,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                           }
                                                         >
                                                           <Button
-                                                            block={false}
                                                             className={null}
                                                             danger={true}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                             onKeyDown={[Function]}
                                                             style={
                                                               Object {
@@ -2512,18 +2525,15 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                               index={1}
                                               key="ant-space-item-1"
                                               marginDirection="marginRight"
-                                              size="small"
+                                              wrap={false}
                                             >
                                               <div
                                                 className="ant-space-item"
                                                 style={Object {}}
                                               >
                                                 <Button
-                                                  block={false}
                                                   disabled={true}
-                                                  ghost={false}
                                                   htmlType="submit"
-                                                  loading={false}
                                                   type="primary"
                                                 >
                                                   <Wave>
@@ -2573,7 +2583,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}

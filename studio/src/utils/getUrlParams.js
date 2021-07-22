@@ -1,0 +1,25 @@
+function getUrlParams(query, filters) {
+  const keys = filters ? filters : ['page', 'limit', 'q', 'sort'];
+  const params = {};
+  keys.forEach((key) => {
+    if (query.get(key)) {
+      if (
+        key === 'claimant' ||
+        key === 'rating' ||
+        key === 'format' ||
+        key === 'tag' ||
+        key === 'category' ||
+        key === 'author'
+      ) {
+        const val = query.getAll(key).map((v) => parseInt(v));
+        params[key] = val;
+      } else if (key === 'sort' || key === 'q' || key === 'status') {
+        params[key] = query.get(key);
+      } else {
+        params[key] = parseInt(query.get(key));
+      }
+    }
+  });
+  return params;
+}
+export default getUrlParams;

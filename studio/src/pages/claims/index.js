@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
 import Selector from '../../components/Selector';
 import { getClaims } from '../../actions/claims';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Claims({ permission }) {
   const { actions } = permission;
@@ -15,20 +16,8 @@ function Claims({ permission }) {
   const history = useHistory();
   const query = new URLSearchParams(location.search);
 
-  const params = {};
   const keys = ['page', 'limit', 'q', 'sort', 'rating', 'claimant'];
-  keys.forEach((key) => {
-    if (query.get(key)) {
-      if (key === 'claimant' || key === 'rating') {
-        const val = query.getAll(key).map((v) => parseInt(v));
-        params[key] = val;
-      } else if (key === 'sort' || key === 'q') {
-        params[key] = query.get(key);
-      } else {
-        params[key] = parseInt(query.get(key));
-      }
-    }
-  });
+  const params = getUrlParams(query, keys);
   const [filters, setFilters] = React.useState({
     ...params,
   });

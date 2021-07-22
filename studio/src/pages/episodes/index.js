@@ -7,6 +7,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
 import deepEqual from 'deep-equal';
 import { getEpisodes } from '../../actions/episodes';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Episodes({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -15,11 +16,7 @@ function Episodes({ permission }) {
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
 
-  const params = {};
-  const keys = ['page', 'limit', 'q', 'sort'];
-  keys.forEach((key) => {
-    if (query.get(key)) params[key] = query.get(key);
-  });
+  const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });

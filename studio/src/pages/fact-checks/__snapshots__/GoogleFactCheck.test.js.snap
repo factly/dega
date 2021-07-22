@@ -19,6 +19,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
     >
       <div
         className="ant-space ant-space-vertical"
+        style={Object {}}
       >
         <Item
           className="ant-space-item"
@@ -26,7 +27,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
           index={0}
           key="ant-space-item-0"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -110,6 +111,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                   <form
                     className="ant-form ant-form-inline"
                     id="google-fact-check"
+                    onReset={[Function]}
                     onSubmit={[Function]}
                     style={
                       Object {
@@ -368,7 +370,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -564,7 +566,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                               onChange={[Function]}
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                             >
                                               <ForwardRef(Select)
                                                 className=""
@@ -584,7 +586,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                 onChange={[Function]}
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
-                                                transitionName="slide-up"
+                                                transitionName="ant-slide-up"
                                               >
                                                 <div
                                                   className="ant-select ant-select-single ant-select-show-arrow"
@@ -1434,7 +1436,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                       />
                                                     }
                                                     prefixCls="ant-select"
-                                                    transitionName="slide-up"
+                                                    transitionName="ant-slide-up"
                                                   >
                                                     <Trigger
                                                       action={Array []}
@@ -2359,7 +2361,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                           "width": null,
                                                         }
                                                       }
-                                                      popupTransitionName="slide-up"
+                                                      popupTransitionName="ant-slide-up"
                                                       prefixCls="ant-select-dropdown"
                                                       showAction={Array []}
                                                     >
@@ -2427,7 +2429,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                         searchValue=""
                                                         showSearch={false}
                                                         tokenWithEnter={false}
-                                                        transitionName="slide-up"
+                                                        transitionName="ant-slide-up"
                                                         values={
                                                           Array [
                                                             Object {
@@ -2533,7 +2535,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                             searchValue=""
                                                             showSearch={false}
                                                             tokenWithEnter={false}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             values={
                                                               Array [
                                                                 Object {
@@ -2660,7 +2662,6 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                             role="img"
                                                           >
                                                             <IconReact
-                                                              className=""
                                                               icon={
                                                                 Object {
                                                                   "icon": Object {
@@ -2685,7 +2686,6 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                             >
                                                               <svg
                                                                 aria-hidden="true"
-                                                                className=""
                                                                 data-icon="down"
                                                                 fill="currentColor"
                                                                 focusable="false"
@@ -2719,7 +2719,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -2769,10 +2769,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                     className="ant-form-item-control-input-content"
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -2817,7 +2814,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                   <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
-                                    motionName="show-help"
+                                    motionName="ant-show-help"
                                     onLeaveEnd={[Function]}
                                     removeOnLeave={true}
                                     visible={false}
@@ -2843,7 +2840,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
           index={1}
           key="ant-space-item-1"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -2963,7 +2960,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -2971,7 +2968,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -3000,7 +2997,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -3008,7 +3005,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -3064,7 +3061,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -3072,7 +3069,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -3101,7 +3098,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -3109,7 +3106,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -3174,6 +3171,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
     >
       <div
         className="ant-space ant-space-vertical"
+        style={Object {}}
       >
         <Item
           className="ant-space-item"
@@ -3181,7 +3179,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
           index={0}
           key="ant-space-item-0"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -3265,6 +3263,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                   <form
                     className="ant-form ant-form-inline"
                     id="google-fact-check"
+                    onReset={[Function]}
                     onSubmit={[Function]}
                     style={
                       Object {
@@ -3523,7 +3522,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -3719,7 +3718,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                               onChange={[Function]}
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                             >
                                               <ForwardRef(Select)
                                                 className=""
@@ -3739,7 +3738,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                 onChange={[Function]}
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
-                                                transitionName="slide-up"
+                                                transitionName="ant-slide-up"
                                               >
                                                 <div
                                                   className="ant-select ant-select-single ant-select-show-arrow"
@@ -4589,7 +4588,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                       />
                                                     }
                                                     prefixCls="ant-select"
-                                                    transitionName="slide-up"
+                                                    transitionName="ant-slide-up"
                                                   >
                                                     <Trigger
                                                       action={Array []}
@@ -5514,7 +5513,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                           "width": null,
                                                         }
                                                       }
-                                                      popupTransitionName="slide-up"
+                                                      popupTransitionName="ant-slide-up"
                                                       prefixCls="ant-select-dropdown"
                                                       showAction={Array []}
                                                     >
@@ -5582,7 +5581,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                         searchValue=""
                                                         showSearch={false}
                                                         tokenWithEnter={false}
-                                                        transitionName="slide-up"
+                                                        transitionName="ant-slide-up"
                                                         values={
                                                           Array [
                                                             Object {
@@ -5688,7 +5687,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                             searchValue=""
                                                             showSearch={false}
                                                             tokenWithEnter={false}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             values={
                                                               Array [
                                                                 Object {
@@ -5815,7 +5814,6 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                             role="img"
                                                           >
                                                             <IconReact
-                                                              className=""
                                                               icon={
                                                                 Object {
                                                                   "icon": Object {
@@ -5840,7 +5838,6 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                             >
                                                               <svg
                                                                 aria-hidden="true"
-                                                                className=""
                                                                 data-icon="down"
                                                                 fill="currentColor"
                                                                 focusable="false"
@@ -5874,7 +5871,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -5924,10 +5921,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                     className="ant-form-item-control-input-content"
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -5972,7 +5966,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                   <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
-                                    motionName="show-help"
+                                    motionName="ant-show-help"
                                     onLeaveEnd={[Function]}
                                     removeOnLeave={true}
                                     visible={false}
@@ -5998,7 +5992,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
           index={1}
           key="ant-space-item-1"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -6061,21 +6055,13 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                     direction="horizontal"
                   >
                     <ForwardRef(InternalButton)
-                      block={false}
                       disabled={true}
-                      ghost={false}
-                      htmlType="button"
-                      loading={false}
                       onClick={[Function]}
                     >
                       Back
                     </ForwardRef(InternalButton)>
                     <ForwardRef(InternalButton)
-                      block={false}
                       disabled={false}
-                      ghost={false}
-                      htmlType="button"
-                      loading={false}
                       onClick={[Function]}
                     >
                       Next
@@ -6128,7 +6114,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -6136,7 +6122,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -6165,7 +6151,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -6173,7 +6159,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -6229,7 +6215,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -6237,7 +6223,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -6266,7 +6252,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -6274,7 +6260,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -6323,6 +6309,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                   >
                     <div
                       className="ant-space ant-space-horizontal ant-space-align-center"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -6330,7 +6317,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -6341,11 +6328,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                           }
                         >
                           <Button
-                            block={false}
                             disabled={true}
-                            ghost={false}
-                            htmlType="button"
-                            loading={false}
                             onClick={[Function]}
                           >
                             <Wave>
@@ -6390,18 +6373,14 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                         index={1}
                         key="ant-space-item-1"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
                           style={Object {}}
                         >
                           <Button
-                            block={false}
                             disabled={false}
-                            ghost={false}
-                            htmlType="button"
-                            loading={false}
                             onClick={[Function]}
                           >
                             <Wave>
@@ -6472,6 +6451,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
     >
       <div
         className="ant-space ant-space-vertical"
+        style={Object {}}
       >
         <Item
           className="ant-space-item"
@@ -6479,7 +6459,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
           index={0}
           key="ant-space-item-0"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -6563,6 +6543,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                   <form
                     className="ant-form ant-form-inline"
                     id="google-fact-check"
+                    onReset={[Function]}
                     onSubmit={[Function]}
                     style={
                       Object {
@@ -6821,7 +6802,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -7017,7 +6998,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                               onChange={[Function]}
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                              transitionName="slide-up"
+                                              transitionName="ant-slide-up"
                                             >
                                               <ForwardRef(Select)
                                                 className=""
@@ -7037,7 +7018,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                 onChange={[Function]}
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
-                                                transitionName="slide-up"
+                                                transitionName="ant-slide-up"
                                               >
                                                 <div
                                                   className="ant-select ant-select-single ant-select-show-arrow"
@@ -7887,7 +7868,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                       />
                                                     }
                                                     prefixCls="ant-select"
-                                                    transitionName="slide-up"
+                                                    transitionName="ant-slide-up"
                                                   >
                                                     <Trigger
                                                       action={Array []}
@@ -8812,7 +8793,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                           "width": null,
                                                         }
                                                       }
-                                                      popupTransitionName="slide-up"
+                                                      popupTransitionName="ant-slide-up"
                                                       prefixCls="ant-select-dropdown"
                                                       showAction={Array []}
                                                     >
@@ -8880,7 +8861,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                         searchValue=""
                                                         showSearch={false}
                                                         tokenWithEnter={false}
-                                                        transitionName="slide-up"
+                                                        transitionName="ant-slide-up"
                                                         values={
                                                           Array [
                                                             Object {
@@ -8986,7 +8967,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                             searchValue=""
                                                             showSearch={false}
                                                             tokenWithEnter={false}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             values={
                                                               Array [
                                                                 Object {
@@ -9113,7 +9094,6 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                             role="img"
                                                           >
                                                             <IconReact
-                                                              className=""
                                                               icon={
                                                                 Object {
                                                                   "icon": Object {
@@ -9138,7 +9118,6 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                             >
                                                               <svg
                                                                 aria-hidden="true"
-                                                                className=""
                                                                 data-icon="down"
                                                                 fill="currentColor"
                                                                 focusable="false"
@@ -9172,7 +9151,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       <CSSMotion
                                         motionAppear={true}
                                         motionDeadline={500}
-                                        motionName="show-help"
+                                        motionName="ant-show-help"
                                         onLeaveEnd={[Function]}
                                         removeOnLeave={true}
                                         visible={false}
@@ -9222,10 +9201,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                     className="ant-form-item-control-input-content"
                                   >
                                     <Button
-                                      block={false}
-                                      ghost={false}
                                       htmlType="submit"
-                                      loading={false}
                                       type="primary"
                                     >
                                       <Wave>
@@ -9270,7 +9246,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                   <CSSMotion
                                     motionAppear={true}
                                     motionDeadline={500}
-                                    motionName="show-help"
+                                    motionName="ant-show-help"
                                     onLeaveEnd={[Function]}
                                     removeOnLeave={true}
                                     visible={false}
@@ -9296,7 +9272,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
           index={1}
           key="ant-space-item-1"
           marginDirection="marginRight"
-          size="small"
+          wrap={false}
         >
           <div
             className="ant-space-item"
@@ -9359,21 +9335,13 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                     direction="horizontal"
                   >
                     <ForwardRef(InternalButton)
-                      block={false}
                       disabled={true}
-                      ghost={false}
-                      htmlType="button"
-                      loading={false}
                       onClick={[Function]}
                     >
                       Back
                     </ForwardRef(InternalButton)>
                     <ForwardRef(InternalButton)
-                      block={false}
                       disabled={false}
-                      ghost={false}
-                      htmlType="button"
-                      loading={false}
                       onClick={[Function]}
                     >
                       Next
@@ -9426,7 +9394,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -9434,7 +9402,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -9463,7 +9431,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -9471,7 +9439,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -9527,7 +9495,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       component="h5"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -9535,7 +9503,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -9564,7 +9532,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                       component="h4"
                                       style={
                                         Object {
-                                          "WebkitLineClamp": null,
+                                          "WebkitLineClamp": undefined,
                                         }
                                       }
                                     >
@@ -9572,7 +9540,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                         className="ant-typography"
                                         style={
                                           Object {
-                                            "WebkitLineClamp": null,
+                                            "WebkitLineClamp": undefined,
                                           }
                                         }
                                       >
@@ -9621,6 +9589,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                   >
                     <div
                       className="ant-space ant-space-horizontal ant-space-align-center"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -9628,7 +9597,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -9639,11 +9608,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                           }
                         >
                           <Button
-                            block={false}
                             disabled={true}
-                            ghost={false}
-                            htmlType="button"
-                            loading={false}
                             onClick={[Function]}
                           >
                             <Wave>
@@ -9688,18 +9653,14 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                         index={1}
                         key="ant-space-item-1"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
                           style={Object {}}
                         >
                           <Button
-                            block={false}
                             disabled={false}
-                            ghost={false}
-                            htmlType="button"
-                            loading={false}
                             onClick={[Function]}
                           >
                             <Wave>

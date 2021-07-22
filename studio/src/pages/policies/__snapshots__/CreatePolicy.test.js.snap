@@ -97,6 +97,7 @@ exports[`Policies create component snapshot testing should render the component 
             <form
               className="ant-form ant-form-vertical"
               id="create-policy"
+              onReset={[Function]}
               onSubmit={[Function]}
               style={
                 Object {
@@ -382,7 +383,7 @@ exports[`Policies create component snapshot testing should render the component 
                                         <CSSMotion
                                           motionAppear={true}
                                           motionDeadline={500}
-                                          motionName="show-help"
+                                          motionName="ant-show-help"
                                           onLeaveEnd={[Function]}
                                           removeOnLeave={true}
                                           visible={false}
@@ -521,7 +522,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           <Component
                                             update={1}
                                           >
-                                            <TextArea
+                                            <ForwardRef
                                               id="create-policy_description"
                                               onChange={[Function]}
                                             >
@@ -532,21 +533,23 @@ exports[`Policies create component snapshot testing should render the component 
                                                     className=""
                                                     id="create-policy_description"
                                                     onChange={[Function]}
+                                                    onCompositionEnd={[Function]}
+                                                    onCompositionStart={[Function]}
                                                     prefixCls="ant-input"
                                                   />
                                                 }
                                                 handleReset={[Function]}
                                                 id="create-policy_description"
                                                 inputType="text"
-                                                onChange={[Function]}
                                                 prefixCls="ant-input"
-                                                triggerFocus={[Function]}
                                                 value=""
                                               >
                                                 <TextArea
                                                   className=""
                                                   id="create-policy_description"
                                                   onChange={[Function]}
+                                                  onCompositionEnd={[Function]}
+                                                  onCompositionStart={[Function]}
                                                   prefixCls="ant-input"
                                                   value=""
                                                 >
@@ -554,6 +557,8 @@ exports[`Policies create component snapshot testing should render the component 
                                                     className=""
                                                     id="create-policy_description"
                                                     onChange={[Function]}
+                                                    onCompositionEnd={[Function]}
+                                                    onCompositionStart={[Function]}
                                                     onKeyDown={[Function]}
                                                     prefixCls="ant-input"
                                                     value=""
@@ -566,6 +571,8 @@ exports[`Policies create component snapshot testing should render the component 
                                                         className="ant-input"
                                                         id="create-policy_description"
                                                         onChange={[Function]}
+                                                        onCompositionEnd={[Function]}
+                                                        onCompositionStart={[Function]}
                                                         onKeyDown={[Function]}
                                                         style={Object {}}
                                                         value=""
@@ -574,7 +581,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                   </ResizableTextArea>
                                                 </TextArea>
                                               </ClearableLabeledInput>
-                                            </TextArea>
+                                            </ForwardRef>
                                           </Component>
                                         </div>
                                       </div>
@@ -585,7 +592,7 @@ exports[`Policies create component snapshot testing should render the component 
                                         <CSSMotion
                                           motionAppear={true}
                                           motionDeadline={500}
-                                          motionName="show-help"
+                                          motionName="ant-show-help"
                                           onLeaveEnd={[Function]}
                                           removeOnLeave={true}
                                           visible={false}
@@ -782,7 +789,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                   placeholder="Select authors"
                                                   prefixCls="ant-select"
                                                   removeIcon={<ForwardRef(CloseOutlined) />}
-                                                  transitionName="slide-up"
+                                                  transitionName="ant-slide-up"
                                                   value={Array []}
                                                 >
                                                   <ForwardRef(Select)
@@ -806,7 +813,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                     placeholder="Select authors"
                                                     prefixCls="ant-select"
                                                     removeIcon={<ForwardRef(CloseOutlined) />}
-                                                    transitionName="slide-up"
+                                                    transitionName="ant-slide-up"
                                                     value={Array []}
                                                   >
                                                     <div
@@ -867,7 +874,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                           />
                                                         }
                                                         prefixCls="ant-select"
-                                                        transitionName="slide-up"
+                                                        transitionName="ant-slide-up"
                                                       >
                                                         <Trigger
                                                           action={Array []}
@@ -1002,7 +1009,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                               "width": null,
                                                             }
                                                           }
-                                                          popupTransitionName="slide-up"
+                                                          popupTransitionName="ant-slide-up"
                                                           prefixCls="ant-select-dropdown"
                                                           showAction={Array []}
                                                         >
@@ -1018,34 +1025,43 @@ exports[`Policies create component snapshot testing should render the component 
                                                                 "current": <div
                                                                   class="ant-select-selector"
                                                                 >
-                                                                  <span
-                                                                    class="ant-select-selection-search"
-                                                                    style="width: 0px;"
+                                                                  <div
+                                                                    class="ant-select-selection-overflow"
                                                                   >
-                                                                    <input
-                                                                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                      aria-autocomplete="list"
-                                                                      aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                      aria-haspopup="listbox"
-                                                                      aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                      autocomplete="off"
-                                                                      class="ant-select-selection-search-input"
-                                                                      id="rc_select_TEST_OR_SSR"
-                                                                      readonly=""
-                                                                      role="combobox"
-                                                                      style="opacity: 0;"
-                                                                      type="search"
-                                                                      unselectable="on"
-                                                                      value=""
-                                                                    />
-                                                                    <span
-                                                                      aria-hidden="true"
-                                                                      class="ant-select-selection-search-mirror"
+                                                                    <div
+                                                                      class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                      style="opacity: 1;"
                                                                     >
-                                                                      
-                                                                       
-                                                                    </span>
-                                                                  </span>
+                                                                      <div
+                                                                        class="ant-select-selection-search"
+                                                                        style="width: 0px;"
+                                                                      >
+                                                                        <input
+                                                                          aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                          aria-autocomplete="list"
+                                                                          aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                          aria-haspopup="listbox"
+                                                                          aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                          autocomplete="off"
+                                                                          class="ant-select-selection-search-input"
+                                                                          id="rc_select_TEST_OR_SSR"
+                                                                          readonly=""
+                                                                          role="combobox"
+                                                                          style="opacity: 0;"
+                                                                          type="search"
+                                                                          unselectable="on"
+                                                                          value=""
+                                                                        />
+                                                                        <span
+                                                                          aria-hidden="true"
+                                                                          class="ant-select-selection-search-mirror"
+                                                                        >
+                                                                          
+                                                                           
+                                                                        </span>
+                                                                      </div>
+                                                                    </div>
+                                                                  </div>
                                                                   <span
                                                                     class="ant-select-selection-placeholder"
                                                                   >
@@ -1080,7 +1096,7 @@ exports[`Policies create component snapshot testing should render the component 
                                                             searchValue=""
                                                             showSearch={true}
                                                             tokenWithEnter={false}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                             value={Array []}
                                                             values={Array []}
                                                           >
@@ -1101,34 +1117,43 @@ exports[`Policies create component snapshot testing should render the component 
                                                                     "current": <div
                                                                       class="ant-select-selector"
                                                                     >
-                                                                      <span
-                                                                        class="ant-select-selection-search"
-                                                                        style="width: 0px;"
+                                                                      <div
+                                                                        class="ant-select-selection-overflow"
                                                                       >
-                                                                        <input
-                                                                          aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                          aria-autocomplete="list"
-                                                                          aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                          aria-haspopup="listbox"
-                                                                          aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                          autocomplete="off"
-                                                                          class="ant-select-selection-search-input"
-                                                                          id="rc_select_TEST_OR_SSR"
-                                                                          readonly=""
-                                                                          role="combobox"
-                                                                          style="opacity: 0;"
-                                                                          type="search"
-                                                                          unselectable="on"
-                                                                          value=""
-                                                                        />
-                                                                        <span
-                                                                          aria-hidden="true"
-                                                                          class="ant-select-selection-search-mirror"
+                                                                        <div
+                                                                          class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                          style="opacity: 1;"
                                                                         >
-                                                                          
-                                                                           
-                                                                        </span>
-                                                                      </span>
+                                                                          <div
+                                                                            class="ant-select-selection-search"
+                                                                            style="width: 0px;"
+                                                                          >
+                                                                            <input
+                                                                              aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                              aria-autocomplete="list"
+                                                                              aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                              aria-haspopup="listbox"
+                                                                              aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                              autocomplete="off"
+                                                                              class="ant-select-selection-search-input"
+                                                                              id="rc_select_TEST_OR_SSR"
+                                                                              readonly=""
+                                                                              role="combobox"
+                                                                              style="opacity: 0;"
+                                                                              type="search"
+                                                                              unselectable="on"
+                                                                              value=""
+                                                                            />
+                                                                            <span
+                                                                              aria-hidden="true"
+                                                                              class="ant-select-selection-search-mirror"
+                                                                            >
+                                                                              
+                                                                               
+                                                                            </span>
+                                                                          </div>
+                                                                        </div>
+                                                                      </div>
                                                                       <span
                                                                         class="ant-select-selection-placeholder"
                                                                       >
@@ -1188,71 +1213,141 @@ exports[`Policies create component snapshot testing should render the component 
                                                                 searchValue=""
                                                                 showSearch={true}
                                                                 tokenWithEnter={false}
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                                 value={Array []}
                                                                 values={Array []}
                                                               >
-                                                                <CSSMotionList
-                                                                  component={false}
-                                                                  keys={Array []}
-                                                                  motionAppear={true}
-                                                                />
-                                                                <span
-                                                                  className="ant-select-selection-search"
-                                                                  style={
-                                                                    Object {
-                                                                      "width": 0,
-                                                                    }
-                                                                  }
-                                                                >
-                                                                  <Input
-                                                                    accessibilityIndex={0}
-                                                                    attrs={Object {}}
-                                                                    id="rc_select_TEST_OR_SSR"
-                                                                    inputElement={null}
-                                                                    onChange={[Function]}
-                                                                    onCompositionEnd={[Function]}
-                                                                    onCompositionStart={[Function]}
-                                                                    onKeyDown={[Function]}
-                                                                    onMouseDown={[Function]}
-                                                                    onPaste={[Function]}
-                                                                    prefixCls="ant-select"
-                                                                    value=""
-                                                                  >
-                                                                    <input
-                                                                      aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                                                      aria-autocomplete="list"
-                                                                      aria-controls="rc_select_TEST_OR_SSR_list"
-                                                                      aria-haspopup="listbox"
-                                                                      aria-owns="rc_select_TEST_OR_SSR_list"
-                                                                      autoComplete="off"
-                                                                      className="ant-select-selection-search-input"
-                                                                      id="rc_select_TEST_OR_SSR"
-                                                                      onChange={[Function]}
-                                                                      onCompositionEnd={[Function]}
-                                                                      onCompositionStart={[Function]}
-                                                                      onKeyDown={[Function]}
-                                                                      onMouseDown={[Function]}
-                                                                      onPaste={[Function]}
-                                                                      readOnly={true}
-                                                                      role="combobox"
+                                                                <Overflow
+                                                                  data={Array []}
+                                                                  itemKey="key"
+                                                                  prefixCls="ant-select-selection-overflow"
+                                                                  renderItem={[Function]}
+                                                                  renderRest={[Function]}
+                                                                  suffix={
+                                                                    <div
+                                                                      className="ant-select-selection-search"
+                                                                      onBlur={[Function]}
+                                                                      onFocus={[Function]}
                                                                       style={
                                                                         Object {
-                                                                          "opacity": 0,
+                                                                          "width": 0,
                                                                         }
                                                                       }
-                                                                      type="search"
-                                                                      unselectable="on"
-                                                                      value=""
-                                                                    />
-                                                                  </Input>
-                                                                  <span
-                                                                    aria-hidden={true}
-                                                                    className="ant-select-selection-search-mirror"
+                                                                    >
+                                                                      <ForwardRef(Input)
+                                                                        accessibilityIndex={0}
+                                                                        attrs={Object {}}
+                                                                        editable={false}
+                                                                        id="rc_select_TEST_OR_SSR"
+                                                                        inputElement={null}
+                                                                        onChange={[Function]}
+                                                                        onCompositionEnd={[Function]}
+                                                                        onCompositionStart={[Function]}
+                                                                        onKeyDown={[Function]}
+                                                                        onMouseDown={[Function]}
+                                                                        onPaste={[Function]}
+                                                                        prefixCls="ant-select"
+                                                                        value=""
+                                                                      />
+                                                                      <span
+                                                                        aria-hidden={true}
+                                                                        className="ant-select-selection-search-mirror"
+                                                                      >
+                                                                        
+                                                                         
+                                                                      </span>
+                                                                    </div>
+                                                                  }
+                                                                >
+                                                                  <div
+                                                                    className="ant-select-selection-overflow"
                                                                   >
-                                                                     
-                                                                  </span>
-                                                                </span>
+                                                                    <Item
+                                                                      className="ant-select-selection-overflow-item-suffix"
+                                                                      display={true}
+                                                                      invalidate={false}
+                                                                      order={0}
+                                                                      prefixCls="ant-select-selection-overflow-item"
+                                                                      registerSize={[Function]}
+                                                                      responsive={0}
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                                                        style={
+                                                                          Object {
+                                                                            "height": undefined,
+                                                                            "opacity": 1,
+                                                                            "order": undefined,
+                                                                            "overflowY": undefined,
+                                                                            "pointerEvents": undefined,
+                                                                            "position": undefined,
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <div
+                                                                          className="ant-select-selection-search"
+                                                                          onBlur={[Function]}
+                                                                          onFocus={[Function]}
+                                                                          style={
+                                                                            Object {
+                                                                              "width": 0,
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <Input
+                                                                            accessibilityIndex={0}
+                                                                            attrs={Object {}}
+                                                                            editable={false}
+                                                                            id="rc_select_TEST_OR_SSR"
+                                                                            inputElement={null}
+                                                                            onChange={[Function]}
+                                                                            onCompositionEnd={[Function]}
+                                                                            onCompositionStart={[Function]}
+                                                                            onKeyDown={[Function]}
+                                                                            onMouseDown={[Function]}
+                                                                            onPaste={[Function]}
+                                                                            prefixCls="ant-select"
+                                                                            value=""
+                                                                          >
+                                                                            <input
+                                                                              aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                                                              aria-autocomplete="list"
+                                                                              aria-controls="rc_select_TEST_OR_SSR_list"
+                                                                              aria-haspopup="listbox"
+                                                                              aria-owns="rc_select_TEST_OR_SSR_list"
+                                                                              autoComplete="off"
+                                                                              className="ant-select-selection-search-input"
+                                                                              id="rc_select_TEST_OR_SSR"
+                                                                              onChange={[Function]}
+                                                                              onCompositionEnd={[Function]}
+                                                                              onCompositionStart={[Function]}
+                                                                              onKeyDown={[Function]}
+                                                                              onMouseDown={[Function]}
+                                                                              onPaste={[Function]}
+                                                                              readOnly={true}
+                                                                              role="combobox"
+                                                                              style={
+                                                                                Object {
+                                                                                  "opacity": 0,
+                                                                                }
+                                                                              }
+                                                                              type="search"
+                                                                              unselectable="on"
+                                                                              value=""
+                                                                            />
+                                                                          </Input>
+                                                                          <span
+                                                                            aria-hidden={true}
+                                                                            className="ant-select-selection-search-mirror"
+                                                                          >
+                                                                             
+                                                                          </span>
+                                                                        </div>
+                                                                      </div>
+                                                                    </Item>
+                                                                  </div>
+                                                                </Overflow>
                                                                 <span
                                                                   className="ant-select-selection-placeholder"
                                                                 >
@@ -1278,7 +1373,7 @@ exports[`Policies create component snapshot testing should render the component 
                                         <CSSMotion
                                           motionAppear={true}
                                           motionDeadline={500}
-                                          motionName="show-help"
+                                          motionName="ant-show-help"
                                           onLeaveEnd={[Function]}
                                           removeOnLeave={true}
                                           visible={false}
@@ -1439,7 +1534,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_posts"
                                       onChange={[Function]}
                                       options={
@@ -1474,7 +1569,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -1489,6 +1583,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1504,6 +1601,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -1520,7 +1620,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -1535,6 +1634,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1550,6 +1652,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -1566,7 +1671,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -1581,6 +1685,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1596,6 +1703,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -1612,7 +1722,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -1627,6 +1736,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1642,6 +1754,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -1658,7 +1773,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="publish"
                                           prefixCls="ant-checkbox"
                                           value="publish"
@@ -1673,6 +1787,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1688,6 +1805,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="publish"
                                                 />
@@ -1702,7 +1822,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -1713,7 +1833,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -1870,7 +1990,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_categories"
                                       onChange={[Function]}
                                       options={
@@ -1901,7 +2021,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -1916,6 +2035,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1931,6 +2053,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -1947,7 +2072,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -1962,6 +2086,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -1977,6 +2104,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -1993,7 +2123,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -2008,6 +2137,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2023,6 +2155,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -2039,7 +2174,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -2054,6 +2188,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2069,6 +2206,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -2083,7 +2223,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -2094,7 +2234,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -2251,7 +2391,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_tags"
                                       onChange={[Function]}
                                       options={
@@ -2282,7 +2422,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -2297,6 +2436,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2312,6 +2454,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -2328,7 +2473,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -2343,6 +2487,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2358,6 +2505,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -2374,7 +2524,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -2389,6 +2538,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2404,6 +2556,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -2420,7 +2575,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -2435,6 +2589,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2450,6 +2607,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -2464,7 +2624,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -2475,7 +2635,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -2632,7 +2792,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_formats"
                                       onChange={[Function]}
                                       options={
@@ -2663,7 +2823,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -2678,6 +2837,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2693,6 +2855,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -2709,7 +2874,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -2724,6 +2888,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2739,6 +2906,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -2755,7 +2925,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -2770,6 +2939,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2785,6 +2957,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -2801,7 +2976,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -2816,6 +2990,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -2831,6 +3008,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -2845,7 +3025,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -2856,7 +3036,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -3013,7 +3193,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_media"
                                       onChange={[Function]}
                                       options={
@@ -3044,7 +3224,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -3059,6 +3238,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3074,6 +3256,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -3090,7 +3275,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -3105,6 +3289,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3120,6 +3307,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -3136,7 +3326,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -3151,6 +3340,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3166,6 +3358,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -3182,7 +3377,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -3197,6 +3391,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3212,6 +3409,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -3226,7 +3426,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -3237,7 +3437,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -3394,7 +3594,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_fact-checks"
                                       onChange={[Function]}
                                       options={
@@ -3425,7 +3625,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -3440,6 +3639,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3455,6 +3657,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -3471,7 +3676,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -3486,6 +3690,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3501,6 +3708,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -3517,7 +3727,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -3532,6 +3741,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3547,6 +3759,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -3563,7 +3778,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -3578,6 +3792,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3593,6 +3810,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -3607,7 +3827,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -3618,7 +3838,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -3775,7 +3995,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_claims"
                                       onChange={[Function]}
                                       options={
@@ -3806,7 +4026,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -3821,6 +4040,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3836,6 +4058,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -3852,7 +4077,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -3867,6 +4091,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3882,6 +4109,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -3898,7 +4128,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -3913,6 +4142,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3928,6 +4160,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -3944,7 +4179,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -3959,6 +4193,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -3974,6 +4211,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -3988,7 +4228,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -3999,7 +4239,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -4156,7 +4396,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_claimants"
                                       onChange={[Function]}
                                       options={
@@ -4187,7 +4427,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -4202,6 +4441,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4217,6 +4459,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -4233,7 +4478,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -4248,6 +4492,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4263,6 +4510,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -4279,7 +4529,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -4294,6 +4543,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4309,6 +4561,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -4325,7 +4580,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -4340,6 +4594,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4355,6 +4612,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -4369,7 +4629,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -4380,7 +4640,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -4537,7 +4797,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_ratings"
                                       onChange={[Function]}
                                       options={
@@ -4568,7 +4828,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -4583,6 +4842,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4598,6 +4860,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -4614,7 +4879,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -4629,6 +4893,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4644,6 +4911,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -4660,7 +4930,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -4675,6 +4944,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4690,6 +4962,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -4706,7 +4981,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -4721,6 +4995,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4736,6 +5013,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -4750,7 +5030,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -4761,7 +5041,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -4918,7 +5198,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_policies"
                                       onChange={[Function]}
                                       options={
@@ -4949,7 +5229,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -4964,6 +5243,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -4979,6 +5261,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -4995,7 +5280,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -5010,6 +5294,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5025,6 +5312,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -5041,7 +5331,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -5056,6 +5345,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5071,6 +5363,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -5087,7 +5382,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -5102,6 +5396,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5117,6 +5414,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -5131,7 +5431,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -5142,7 +5442,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -5299,7 +5599,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_podcasts"
                                       onChange={[Function]}
                                       options={
@@ -5330,7 +5630,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -5345,6 +5644,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5360,6 +5662,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -5376,7 +5681,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -5391,6 +5695,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5406,6 +5713,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -5422,7 +5732,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -5437,6 +5746,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5452,6 +5764,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -5468,7 +5783,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -5483,6 +5797,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5498,6 +5815,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -5512,7 +5832,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -5523,7 +5843,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -5680,7 +6000,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_episodes"
                                       onChange={[Function]}
                                       options={
@@ -5711,7 +6031,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -5726,6 +6045,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5741,6 +6063,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -5757,7 +6082,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -5772,6 +6096,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5787,6 +6114,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -5803,7 +6133,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -5818,6 +6147,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5833,6 +6165,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -5849,7 +6184,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -5864,6 +6198,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -5879,6 +6216,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -5893,7 +6233,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -5904,7 +6244,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -6061,7 +6401,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_menus"
                                       onChange={[Function]}
                                       options={
@@ -6092,7 +6432,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -6107,6 +6446,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6122,6 +6464,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -6138,7 +6483,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -6153,6 +6497,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6168,6 +6515,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -6184,7 +6534,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -6199,6 +6548,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6214,6 +6566,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -6230,7 +6585,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -6245,6 +6599,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6260,6 +6617,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -6274,7 +6634,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -6285,7 +6645,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -6442,7 +6802,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_pages"
                                       onChange={[Function]}
                                       options={
@@ -6473,7 +6833,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -6488,6 +6847,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6503,6 +6865,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -6519,7 +6884,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -6534,6 +6898,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6549,6 +6916,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -6565,7 +6935,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -6580,6 +6949,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6595,6 +6967,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -6611,7 +6986,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -6626,6 +7000,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6641,6 +7018,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -6655,7 +7035,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -6666,7 +7046,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -6823,7 +7203,7 @@ exports[`Policies create component snapshot testing should render the component 
                                   <Component
                                     update={1}
                                   >
-                                    <Memo(CheckboxGroup)
+                                    <ForwardRef(InternalCheckboxGroup)
                                       id="create-policy_permissions_webhooks"
                                       onChange={[Function]}
                                       options={
@@ -6854,7 +7234,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="get"
                                           prefixCls="ant-checkbox"
                                           value="get"
@@ -6869,6 +7248,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6884,6 +7266,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="get"
                                                 />
@@ -6900,7 +7285,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="create"
                                           prefixCls="ant-checkbox"
                                           value="create"
@@ -6915,6 +7299,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6930,6 +7317,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="create"
                                                 />
@@ -6946,7 +7336,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="update"
                                           prefixCls="ant-checkbox"
                                           value="update"
@@ -6961,6 +7350,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -6976,6 +7368,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="update"
                                                 />
@@ -6992,7 +7387,6 @@ exports[`Policies create component snapshot testing should render the component 
                                         <Checkbox
                                           checked={false}
                                           className="ant-checkbox-group-item"
-                                          indeterminate={false}
                                           key="delete"
                                           prefixCls="ant-checkbox"
                                           value="delete"
@@ -7007,6 +7401,9 @@ exports[`Policies create component snapshot testing should render the component 
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              onKeyPress={[Function]}
+                                              onKeyUp={[Function]}
                                               prefixCls="ant-checkbox"
                                               style={Object {}}
                                               type="checkbox"
@@ -7022,6 +7419,9 @@ exports[`Policies create component snapshot testing should render the component 
                                                   onBlur={[Function]}
                                                   onChange={[Function]}
                                                   onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  onKeyPress={[Function]}
+                                                  onKeyUp={[Function]}
                                                   type="checkbox"
                                                   value="delete"
                                                 />
@@ -7036,7 +7436,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           </label>
                                         </Checkbox>
                                       </div>
-                                    </Memo(CheckboxGroup)>
+                                    </ForwardRef(InternalCheckboxGroup)>
                                   </Component>
                                 </div>
                               </div>
@@ -7047,7 +7447,7 @@ exports[`Policies create component snapshot testing should render the component 
                                 <CSSMotion
                                   motionAppear={true}
                                   motionDeadline={500}
-                                  motionName="show-help"
+                                  motionName="ant-show-help"
                                   onLeaveEnd={[Function]}
                                   removeOnLeave={true}
                                   visible={false}
@@ -7064,11 +7464,8 @@ exports[`Policies create component snapshot testing should render the component 
                 </WrapperField>
               </FormItem>
               <Button
-                block={false}
                 disabled={true}
-                ghost={false}
                 htmlType="submit"
-                loading={false}
                 type="primary"
               >
                 <Wave>

@@ -170,7 +170,7 @@ describe('Podcast component', () => {
           </Provider>,
         );
       });
-      expect(getPodcasts).toHaveBeenCalledWith({ page: '1', limit: '20', q: 'desc' });
+      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore(state);

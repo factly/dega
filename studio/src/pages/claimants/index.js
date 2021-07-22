@@ -6,6 +6,7 @@ import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Claimants({ permission }) {
   const { actions } = permission;
@@ -13,11 +14,7 @@ function Claimants({ permission }) {
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
 
-  const params = {};
-  const keys = ['page', 'limit', 'q', 'sort'];
-  keys.forEach((key) => {
-    if (query.get(key)) params[key] = query.get(key);
-  });
+  const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });

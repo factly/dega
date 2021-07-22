@@ -50,6 +50,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -57,7 +58,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -92,11 +93,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                               onClick={[Function]}
                             >
                               <Button
-                                block={false}
                                 disabled={false}
-                                ghost={false}
-                                htmlType="button"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -223,6 +220,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                               <form
                                 className="ant-form ant-form-inline"
                                 id="filters"
+                                onReset={[Function]}
                                 onSubmit={[Function]}
                                 style={
                                   Object {
@@ -234,7 +232,11 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                   name="q"
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "q",
+                                      }
+                                    }
                                     name="q"
                                     onReset={[Function]}
                                     trigger="onChange"
@@ -267,7 +269,11 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         }
                                       }
                                       key="_q"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "q",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "q",
@@ -377,7 +383,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -427,10 +433,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Button
-                                                  block={false}
-                                                  ghost={false}
                                                   htmlType="submit"
-                                                  loading={false}
                                                 >
                                                   <Wave>
                                                     <button
@@ -474,7 +477,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                               <CSSMotion
                                                 motionAppear={true}
                                                 motionDeadline={500}
-                                                motionName="show-help"
+                                                motionName="ant-show-help"
                                                 onLeaveEnd={[Function]}
                                                 removeOnLeave={true}
                                                 visible={false}
@@ -666,7 +669,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                           onChange={[Function]}
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -685,7 +688,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                             onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -761,7 +764,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                   />
                                                                 }
                                                                 prefixCls="ant-select"
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                               >
                                                                 <Trigger
                                                                   action={Array []}
@@ -912,7 +915,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                       "width": null,
                                                                     }
                                                                   }
-                                                                  popupTransitionName="slide-up"
+                                                                  popupTransitionName="ant-slide-up"
                                                                   prefixCls="ant-select-dropdown"
                                                                   showAction={Array []}
                                                                 >
@@ -976,7 +979,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                     values={Array []}
                                                                   >
                                                                     <div
@@ -1069,7 +1072,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                         values={Array []}
                                                                       >
                                                                         <span
@@ -1184,7 +1187,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                         role="img"
                                                                       >
                                                                         <IconReact
-                                                                          className=""
                                                                           icon={
                                                                             Object {
                                                                               "icon": Object {
@@ -1209,7 +1211,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                         >
                                                                           <svg
                                                                             aria-hidden="true"
-                                                                            className=""
                                                                             data-icon="down"
                                                                             fill="currentColor"
                                                                             focusable="false"
@@ -1243,7 +1244,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -1275,7 +1276,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1303,6 +1304,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -1310,7 +1312,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -1420,13 +1422,13 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                               >
                                                 <colgroup>
                                                   <col
-                                                    style="width: 15%; min-width: 15%;"
+                                                    style="width: 15%;"
                                                   />
                                                   <col
-                                                    style="width: 15%; min-width: 15%;"
+                                                    style="width: 15%;"
                                                   />
                                                   <col
-                                                    style="width: 20%; min-width: 20%;"
+                                                    style="width: 20%;"
                                                   />
                                                 </colgroup>
                                                 <thead
@@ -1500,11 +1502,11 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                             </g>
                                                           </svg>
                                                         </div>
-                                                        <p
+                                                        <div
                                                           class="ant-empty-description"
                                                         >
                                                           No Data
-                                                        </p>
+                                                        </div>
                                                       </div>
                                                     </td>
                                                   </tr>
@@ -1582,13 +1584,13 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     >
                                                       <colgroup>
                                                         <col
-                                                          style="width: 15%; min-width: 15%;"
+                                                          style="width: 15%;"
                                                         />
                                                         <col
-                                                          style="width: 15%; min-width: 15%;"
+                                                          style="width: 15%;"
                                                         />
                                                         <col
-                                                          style="width: 20%; min-width: 20%;"
+                                                          style="width: 20%;"
                                                         />
                                                       </colgroup>
                                                       <thead
@@ -1662,11 +1664,11 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                   </g>
                                                                 </svg>
                                                               </div>
-                                                              <p
+                                                              <div
                                                                 class="ant-empty-description"
                                                               >
                                                                 No Data
-                                                              </p>
+                                                              </div>
                                                             </div>
                                                           </td>
                                                         </tr>
@@ -1756,7 +1758,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                       key="0"
                                                       style={
                                                         Object {
-                                                          "minWidth": "15%",
                                                           "width": "15%",
                                                         }
                                                       }
@@ -1765,7 +1766,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                       key="1"
                                                       style={
                                                         Object {
-                                                          "minWidth": "15%",
                                                           "width": "15%",
                                                         }
                                                       }
@@ -1774,7 +1774,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                       key="2"
                                                       style={
                                                         Object {
-                                                          "minWidth": "20%",
                                                           "width": "20%",
                                                         }
                                                       }
@@ -2072,6 +2071,8 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                       component="tr"
                                                       componentWidth={0}
                                                       expanded={true}
+                                                      fixColumn={false}
+                                                      horizonScroll={false}
                                                       prefixCls="ant-table"
                                                     >
                                                       <tr
@@ -2141,11 +2142,11 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                       </svg>
                                                                     </Simple>
                                                                   </div>
-                                                                  <p
+                                                                  <div
                                                                     className="ant-empty-description"
                                                                   >
                                                                     No Data
-                                                                  </p>
+                                                                  </div>
                                                                 </div>
                                                               </LocaleReceiver>
                                                             </Empty>
@@ -2231,6 +2232,7 @@ exports[`Tags List component snapshot testing should render the component with d
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -2238,7 +2240,7 @@ exports[`Tags List component snapshot testing should render the component with d
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -2273,11 +2275,7 @@ exports[`Tags List component snapshot testing should render the component with d
                               onClick={[Function]}
                             >
                               <Button
-                                block={false}
                                 disabled={false}
-                                ghost={false}
-                                htmlType="button"
-                                loading={false}
                               >
                                 <Wave>
                                   <button
@@ -2404,6 +2402,7 @@ exports[`Tags List component snapshot testing should render the component with d
                               <form
                                 className="ant-form ant-form-inline"
                                 id="filters"
+                                onReset={[Function]}
                                 onSubmit={[Function]}
                                 style={
                                   Object {
@@ -2415,7 +2414,11 @@ exports[`Tags List component snapshot testing should render the component with d
                                   name="q"
                                 >
                                   <WrapperField
-                                    messageVariables={Object {}}
+                                    messageVariables={
+                                      Object {
+                                        "label": "q",
+                                      }
+                                    }
                                     name="q"
                                     onReset={[Function]}
                                     trigger="onChange"
@@ -2448,7 +2451,11 @@ exports[`Tags List component snapshot testing should render the component with d
                                         }
                                       }
                                       key="_q"
-                                      messageVariables={Object {}}
+                                      messageVariables={
+                                        Object {
+                                          "label": "q",
+                                        }
+                                      }
                                       name={
                                         Array [
                                           "q",
@@ -2558,7 +2565,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -2608,10 +2615,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Button
-                                                  block={false}
-                                                  ghost={false}
                                                   htmlType="submit"
-                                                  loading={false}
                                                 >
                                                   <Wave>
                                                     <button
@@ -2655,7 +2659,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                               <CSSMotion
                                                 motionAppear={true}
                                                 motionDeadline={500}
-                                                motionName="show-help"
+                                                motionName="ant-show-help"
                                                 onLeaveEnd={[Function]}
                                                 removeOnLeave={true}
                                                 visible={false}
@@ -2847,7 +2851,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                           onChange={[Function]}
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
-                                                          transitionName="slide-up"
+                                                          transitionName="ant-slide-up"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -2866,7 +2870,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                             onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            transitionName="slide-up"
+                                                            transitionName="ant-slide-up"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -2942,7 +2946,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                   />
                                                                 }
                                                                 prefixCls="ant-select"
-                                                                transitionName="slide-up"
+                                                                transitionName="ant-slide-up"
                                                               >
                                                                 <Trigger
                                                                   action={Array []}
@@ -3093,7 +3097,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                       "width": null,
                                                                     }
                                                                   }
-                                                                  popupTransitionName="slide-up"
+                                                                  popupTransitionName="ant-slide-up"
                                                                   prefixCls="ant-select-dropdown"
                                                                   showAction={Array []}
                                                                 >
@@ -3157,7 +3161,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
-                                                                    transitionName="slide-up"
+                                                                    transitionName="ant-slide-up"
                                                                     values={Array []}
                                                                   >
                                                                     <div
@@ -3250,7 +3254,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
-                                                                        transitionName="slide-up"
+                                                                        transitionName="ant-slide-up"
                                                                         values={Array []}
                                                                       >
                                                                         <span
@@ -3365,7 +3369,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                         role="img"
                                                                       >
                                                                         <IconReact
-                                                                          className=""
                                                                           icon={
                                                                             Object {
                                                                               "icon": Object {
@@ -3390,7 +3393,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                         >
                                                                           <svg
                                                                             aria-hidden="true"
-                                                                            className=""
                                                                             data-icon="down"
                                                                             fill="currentColor"
                                                                             focusable="false"
@@ -3424,7 +3426,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                   <CSSMotion
                                                     motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionName="show-help"
+                                                    motionName="ant-show-help"
                                                     onLeaveEnd={[Function]}
                                                     removeOnLeave={true}
                                                     visible={false}
@@ -3456,7 +3458,7 @@ exports[`Tags List component snapshot testing should render the component with d
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -3508,6 +3510,7 @@ exports[`Tags List component snapshot testing should render the component with d
                   >
                     <div
                       className="ant-space ant-space-vertical"
+                      style={Object {}}
                     >
                       <Item
                         className="ant-space-item"
@@ -3515,7 +3518,7 @@ exports[`Tags List component snapshot testing should render the component with d
                         index={0}
                         key="ant-space-item-0"
                         marginDirection="marginRight"
-                        size="small"
+                        wrap={false}
                       >
                         <div
                           className="ant-space-item"
@@ -3703,13 +3706,13 @@ exports[`Tags List component snapshot testing should render the component with d
                                               >
                                                 <colgroup>
                                                   <col
-                                                    style="width: 15%; min-width: 15%;"
+                                                    style="width: 15%;"
                                                   />
                                                   <col
-                                                    style="width: 15%; min-width: 15%;"
+                                                    style="width: 15%;"
                                                   />
                                                   <col
-                                                    style="width: 20%; min-width: 20%;"
+                                                    style="width: 20%;"
                                                   />
                                                 </colgroup>
                                                 <thead
@@ -3908,13 +3911,13 @@ exports[`Tags List component snapshot testing should render the component with d
                                                     >
                                                       <colgroup>
                                                         <col
-                                                          style="width: 15%; min-width: 15%;"
+                                                          style="width: 15%;"
                                                         />
                                                         <col
-                                                          style="width: 15%; min-width: 15%;"
+                                                          style="width: 15%;"
                                                         />
                                                         <col
-                                                          style="width: 20%; min-width: 20%;"
+                                                          style="width: 20%;"
                                                         />
                                                       </colgroup>
                                                       <thead
@@ -4077,7 +4080,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       key="0"
                                                       style={
                                                         Object {
-                                                          "minWidth": "15%",
                                                           "width": "15%",
                                                         }
                                                       }
@@ -4086,7 +4088,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       key="1"
                                                       style={
                                                         Object {
-                                                          "minWidth": "15%",
                                                           "width": "15%",
                                                         }
                                                       }
@@ -4095,7 +4096,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       key="2"
                                                       style={
                                                         Object {
-                                                          "minWidth": "20%",
                                                           "width": "20%",
                                                         }
                                                       }
@@ -4614,11 +4614,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                     }
                                                                   >
                                                                     <Button
-                                                                      block={false}
                                                                       disabled={true}
-                                                                      ghost={false}
-                                                                      htmlType="button"
-                                                                      loading={false}
                                                                     >
                                                                       <Wave>
                                                                         <button
@@ -4664,7 +4660,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                 onConfirm={[Function]}
                                                                 placement="top"
                                                                 title="Sure to Delete?"
-                                                                transitionName="zoom-big"
                                                                 trigger="click"
                                                               >
                                                                 <Tooltip
@@ -4694,8 +4689,9 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                   placement="top"
                                                                   prefixCls="ant-popover"
                                                                   title="Sure to Delete?"
-                                                                  transitionName="zoom-big"
+                                                                  transitionName="ant-zoom-big"
                                                                   trigger="click"
+                                                                  visible={false}
                                                                 >
                                                                   <ForwardRef(Tooltip)
                                                                     arrowContent={
@@ -4939,6 +4935,12 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                     }
                                                                     disabled={false}
                                                                     icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                                    motion={
+                                                                      Object {
+                                                                        "motionDeadline": 1000,
+                                                                        "motionName": "ant-zoom-big",
+                                                                      }
+                                                                    }
                                                                     mouseEnterDelay={0.1}
                                                                     mouseLeaveDelay={0.1}
                                                                     okType="primary"
@@ -4962,8 +4964,9 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                     placement="top"
                                                                     prefixCls="ant-popover"
                                                                     title="Sure to Delete?"
-                                                                    transitionName="zoom-big"
+                                                                    transitionName="ant-zoom-big"
                                                                     trigger="click"
+                                                                    visible={false}
                                                                   >
                                                                     <Trigger
                                                                       action="click"
@@ -5241,12 +5244,20 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                       popup={[Function]}
                                                                       popupAlign={Object {}}
                                                                       popupClassName="ant-popconfirm"
+                                                                      popupMotion={
+                                                                        Object {
+                                                                          "motionDeadline": 1000,
+                                                                          "motionName": "ant-zoom-big",
+                                                                        }
+                                                                      }
                                                                       popupPlacement="top"
                                                                       popupStyle={Object {}}
-                                                                      popupTransitionName="zoom-big"
+                                                                      popupTransitionName="ant-zoom-big"
+                                                                      popupVisible={false}
                                                                       prefixCls="ant-popover"
                                                                       showAction={Array []}
                                                                       title="Sure to Delete?"
+                                                                      visible={false}
                                                                     >
                                                                       <Link
                                                                         className="ant-dropdown-link"
@@ -5275,11 +5286,7 @@ exports[`Tags List component snapshot testing should render the component with d
                                                                             onTouchStart={[Function]}
                                                                           >
                                                                             <Button
-                                                                              block={false}
                                                                               disabled={true}
-                                                                              ghost={false}
-                                                                              htmlType="button"
-                                                                              loading={false}
                                                                             >
                                                                               <Wave>
                                                                                 <button
@@ -5505,7 +5512,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -5530,7 +5536,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="left"
                                                           fill="currentColor"
                                                           focusable="false"
@@ -5632,7 +5637,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       role="img"
                                                     >
                                                       <IconReact
-                                                        className=""
                                                         icon={
                                                           Object {
                                                             "icon": Object {
@@ -5657,7 +5661,6 @@ exports[`Tags List component snapshot testing should render the component with d
                                                       >
                                                         <svg
                                                           aria-hidden="true"
-                                                          className=""
                                                           data-icon="right"
                                                           fill="currentColor"
                                                           focusable="false"

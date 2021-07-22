@@ -33,6 +33,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
     >
       <form
         className="ant-form ant-form-horizontal"
+        onReset={[Function]}
         onSubmit={[Function]}
       >
         <Submenu
@@ -55,6 +56,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
               }
             >
               <WrapperField
+                isList={true}
                 name={Array []}
                 shouldUpdate={[Function]}
               >
@@ -88,6 +90,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                       "validateTrigger": "onChange",
                     }
                   }
+                  isList={true}
                   key="_"
                   name={Array []}
                   shouldUpdate={[Function]}
@@ -130,10 +133,6 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Button
-                                        block={false}
-                                        ghost={false}
-                                        htmlType="button"
-                                        loading={false}
                                         onClick={[Function]}
                                       >
                                         <Wave>
@@ -209,7 +208,6 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                                   role="img"
                                                 >
                                                   <IconReact
-                                                    className=""
                                                     icon={
                                                       Object {
                                                         "icon": Object {
@@ -250,7 +248,6 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                                   >
                                                     <svg
                                                       aria-hidden="true"
-                                                      className=""
                                                       data-icon="plus"
                                                       fill="currentColor"
                                                       focusable="false"
@@ -296,7 +293,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                     <CSSMotion
                                       motionAppear={true}
                                       motionDeadline={500}
-                                      motionName="show-help"
+                                      motionName="ant-show-help"
                                       onLeaveEnd={[Function]}
                                       removeOnLeave={true}
                                       visible={false}

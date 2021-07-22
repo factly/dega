@@ -40,6 +40,7 @@ exports[`Dashboard feature component snapshot testing should render the componen
         <Space>
           <div
             className="ant-space ant-space-horizontal ant-space-align-center"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -47,7 +48,7 @@ exports[`Dashboard feature component snapshot testing should render the componen
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             />
             <Item
               className="ant-space-item"
@@ -55,7 +56,7 @@ exports[`Dashboard feature component snapshot testing should render the componen
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             />
             <Item
               className="ant-space-item"
@@ -63,7 +64,7 @@ exports[`Dashboard feature component snapshot testing should render the componen
               index={2}
               key="ant-space-item-2"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             />
             <Item
               className="ant-space-item"
@@ -71,7 +72,7 @@ exports[`Dashboard feature component snapshot testing should render the componen
               index={3}
               key="ant-space-item-3"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             />
           </div>
         </Space>

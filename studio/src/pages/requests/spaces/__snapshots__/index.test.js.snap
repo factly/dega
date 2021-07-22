@@ -54,6 +54,7 @@ exports[`Space Request component should render the component 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -61,7 +62,7 @@ exports[`Space Request component should render the component 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -83,12 +84,7 @@ exports[`Space Request component should render the component 1`] = `
                       href="/requests/spaces/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -133,7 +129,7 @@ exports[`Space Request component should render the component 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -368,11 +364,11 @@ exports[`Space Request component should render the component 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -557,11 +553,11 @@ exports[`Space Request component should render the component 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -1225,6 +1221,8 @@ exports[`Space Request component should render the component 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -1294,11 +1292,11 @@ exports[`Space Request component should render the component 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>
@@ -1372,6 +1370,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -1379,7 +1378,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1401,12 +1400,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                       href="/requests/spaces/create"
                       onClick={[Function]}
                     >
-                      <Button
-                        block={false}
-                        ghost={false}
-                        htmlType="button"
-                        loading={false}
-                      >
+                      <Button>
                         <Wave>
                           <button
                             className="ant-btn"
@@ -1451,7 +1445,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -1686,11 +1680,11 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                                     </g>
                                                   </svg>
                                                 </div>
-                                                <p
+                                                <div
                                                   class="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </td>
                                           </tr>
@@ -1875,11 +1869,11 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                                           </g>
                                                         </svg>
                                                       </div>
-                                                      <p
+                                                      <div
                                                         class="ant-empty-description"
                                                       >
                                                         No Data
-                                                      </p>
+                                                      </div>
                                                     </div>
                                                   </td>
                                                 </tr>
@@ -2543,6 +2537,8 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                               component="tr"
                                               componentWidth={0}
                                               expanded={true}
+                                              fixColumn={false}
+                                              horizonScroll={false}
                                               prefixCls="ant-table"
                                             >
                                               <tr
@@ -2612,11 +2608,11 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                                               </svg>
                                                             </Simple>
                                                           </div>
-                                                          <p
+                                                          <div
                                                             className="ant-empty-description"
                                                           >
                                                             No Data
-                                                          </p>
+                                                          </div>
                                                         </div>
                                                       </LocaleReceiver>
                                                     </Empty>

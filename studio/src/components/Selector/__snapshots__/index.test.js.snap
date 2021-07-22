@@ -54,7 +54,7 @@ exports[`Categories List component Snapshot testing should render the component 
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
-        transitionName="slide-up"
+        transitionName="ant-slide-up"
         value={Array []}
       >
         <ForwardRef(Select)
@@ -78,7 +78,7 @@ exports[`Categories List component Snapshot testing should render the component 
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
-          transitionName="slide-up"
+          transitionName="ant-slide-up"
           value={Array []}
         >
           <div
@@ -118,7 +118,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 />
               }
               prefixCls="ant-select"
-              transitionName="slide-up"
+              transitionName="ant-slide-up"
               visible={false}
             >
               <Trigger
@@ -233,7 +233,7 @@ exports[`Categories List component Snapshot testing should render the component 
                     "width": null,
                   }
                 }
-                popupTransitionName="slide-up"
+                popupTransitionName="ant-slide-up"
                 popupVisible={false}
                 prefixCls="ant-select-dropdown"
                 showAction={Array []}
@@ -250,34 +250,43 @@ exports[`Categories List component Snapshot testing should render the component 
                       "current": <div
                         class="ant-select-selector"
                       >
-                        <span
-                          class="ant-select-selection-search"
-                          style="width: 0px;"
+                        <div
+                          class="ant-select-selection-overflow"
                         >
-                          <input
-                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                            aria-autocomplete="list"
-                            aria-controls="rc_select_TEST_OR_SSR_list"
-                            aria-haspopup="listbox"
-                            aria-owns="rc_select_TEST_OR_SSR_list"
-                            autocomplete="off"
-                            class="ant-select-selection-search-input"
-                            id="rc_select_TEST_OR_SSR"
-                            readonly=""
-                            role="combobox"
-                            style="opacity: 0;"
-                            type="search"
-                            unselectable="on"
-                            value=""
-                          />
-                          <span
-                            aria-hidden="true"
-                            class="ant-select-selection-search-mirror"
+                          <div
+                            class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                            style="opacity: 1;"
                           >
-                            
-                             
-                          </span>
-                        </span>
+                            <div
+                              class="ant-select-selection-search"
+                              style="width: 0px;"
+                            >
+                              <input
+                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                aria-autocomplete="list"
+                                aria-controls="rc_select_TEST_OR_SSR_list"
+                                aria-haspopup="listbox"
+                                aria-owns="rc_select_TEST_OR_SSR_list"
+                                autocomplete="off"
+                                class="ant-select-selection-search-input"
+                                id="rc_select_TEST_OR_SSR"
+                                readonly=""
+                                role="combobox"
+                                style="opacity: 0;"
+                                type="search"
+                                unselectable="on"
+                                value=""
+                              />
+                              <span
+                                aria-hidden="true"
+                                class="ant-select-selection-search-mirror"
+                              >
+                                
+                                 
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                         <span
                           class="ant-select-selection-placeholder"
                         >
@@ -311,7 +320,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   searchValue=""
                   showSearch={true}
                   tokenWithEnter={false}
-                  transitionName="slide-up"
+                  transitionName="ant-slide-up"
                   value={Array []}
                   values={Array []}
                 >
@@ -332,34 +341,43 @@ exports[`Categories List component Snapshot testing should render the component 
                           "current": <div
                             class="ant-select-selector"
                           >
-                            <span
-                              class="ant-select-selection-search"
-                              style="width: 0px;"
+                            <div
+                              class="ant-select-selection-overflow"
                             >
-                              <input
-                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                aria-autocomplete="list"
-                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                aria-haspopup="listbox"
-                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                autocomplete="off"
-                                class="ant-select-selection-search-input"
-                                id="rc_select_TEST_OR_SSR"
-                                readonly=""
-                                role="combobox"
-                                style="opacity: 0;"
-                                type="search"
-                                unselectable="on"
-                                value=""
-                              />
-                              <span
-                                aria-hidden="true"
-                                class="ant-select-selection-search-mirror"
+                              <div
+                                class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                style="opacity: 1;"
                               >
-                                
-                                 
-                              </span>
-                            </span>
+                                <div
+                                  class="ant-select-selection-search"
+                                  style="width: 0px;"
+                                >
+                                  <input
+                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                    aria-autocomplete="list"
+                                    aria-controls="rc_select_TEST_OR_SSR_list"
+                                    aria-haspopup="listbox"
+                                    aria-owns="rc_select_TEST_OR_SSR_list"
+                                    autocomplete="off"
+                                    class="ant-select-selection-search-input"
+                                    id="rc_select_TEST_OR_SSR"
+                                    readonly=""
+                                    role="combobox"
+                                    style="opacity: 0;"
+                                    type="search"
+                                    unselectable="on"
+                                    value=""
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    class="ant-select-selection-search-mirror"
+                                  >
+                                    
+                                     
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                             <span
                               class="ant-select-selection-placeholder"
                             >
@@ -418,69 +436,138 @@ exports[`Categories List component Snapshot testing should render the component 
                       searchValue=""
                       showSearch={true}
                       tokenWithEnter={false}
-                      transitionName="slide-up"
+                      transitionName="ant-slide-up"
                       value={Array []}
                       values={Array []}
                     >
-                      <CSSMotionList
-                        component={false}
-                        keys={Array []}
-                        motionAppear={false}
-                      />
-                      <span
-                        className="ant-select-selection-search"
-                        style={
-                          Object {
-                            "width": 0,
-                          }
-                        }
-                      >
-                        <Input
-                          accessibilityIndex={0}
-                          attrs={Object {}}
-                          inputElement={null}
-                          onChange={[Function]}
-                          onCompositionEnd={[Function]}
-                          onCompositionStart={[Function]}
-                          onKeyDown={[Function]}
-                          onMouseDown={[Function]}
-                          onPaste={[Function]}
-                          prefixCls="ant-select"
-                          value=""
-                        >
-                          <input
-                            aria-activedescendant="undefined_list_0"
-                            aria-autocomplete="list"
-                            aria-controls="undefined_list"
-                            aria-haspopup="listbox"
-                            aria-owns="undefined_list"
-                            autoComplete="off"
-                            className="ant-select-selection-search-input"
-                            onChange={[Function]}
-                            onCompositionEnd={[Function]}
-                            onCompositionStart={[Function]}
-                            onKeyDown={[Function]}
-                            onMouseDown={[Function]}
-                            onPaste={[Function]}
-                            readOnly={true}
-                            role="combobox"
+                      <Overflow
+                        data={Array []}
+                        itemKey="key"
+                        prefixCls="ant-select-selection-overflow"
+                        renderItem={[Function]}
+                        renderRest={[Function]}
+                        suffix={
+                          <div
+                            className="ant-select-selection-search"
+                            onBlur={[Function]}
+                            onFocus={[Function]}
                             style={
                               Object {
-                                "opacity": 0,
+                                "width": 0,
                               }
                             }
-                            type="search"
-                            unselectable="on"
-                            value=""
-                          />
-                        </Input>
-                        <span
-                          aria-hidden={true}
-                          className="ant-select-selection-search-mirror"
+                          >
+                            <ForwardRef(Input)
+                              accessibilityIndex={0}
+                              attrs={Object {}}
+                              editable={false}
+                              inputElement={null}
+                              onChange={[Function]}
+                              onCompositionEnd={[Function]}
+                              onCompositionStart={[Function]}
+                              onKeyDown={[Function]}
+                              onMouseDown={[Function]}
+                              onPaste={[Function]}
+                              prefixCls="ant-select"
+                              value=""
+                            />
+                            <span
+                              aria-hidden={true}
+                              className="ant-select-selection-search-mirror"
+                            >
+                              
+                               
+                            </span>
+                          </div>
+                        }
+                      >
+                        <div
+                          className="ant-select-selection-overflow"
                         >
-                           
-                        </span>
-                      </span>
+                          <Item
+                            className="ant-select-selection-overflow-item-suffix"
+                            display={true}
+                            invalidate={false}
+                            order={0}
+                            prefixCls="ant-select-selection-overflow-item"
+                            registerSize={[Function]}
+                            responsive={0}
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                              style={
+                                Object {
+                                  "height": undefined,
+                                  "opacity": 1,
+                                  "order": undefined,
+                                  "overflowY": undefined,
+                                  "pointerEvents": undefined,
+                                  "position": undefined,
+                                }
+                              }
+                            >
+                              <div
+                                className="ant-select-selection-search"
+                                onBlur={[Function]}
+                                onFocus={[Function]}
+                                style={
+                                  Object {
+                                    "width": 0,
+                                  }
+                                }
+                              >
+                                <Input
+                                  accessibilityIndex={0}
+                                  attrs={Object {}}
+                                  editable={false}
+                                  inputElement={null}
+                                  onChange={[Function]}
+                                  onCompositionEnd={[Function]}
+                                  onCompositionStart={[Function]}
+                                  onKeyDown={[Function]}
+                                  onMouseDown={[Function]}
+                                  onPaste={[Function]}
+                                  prefixCls="ant-select"
+                                  value=""
+                                >
+                                  <input
+                                    aria-activedescendant="undefined_list_0"
+                                    aria-autocomplete="list"
+                                    aria-controls="undefined_list"
+                                    aria-haspopup="listbox"
+                                    aria-owns="undefined_list"
+                                    autoComplete="off"
+                                    className="ant-select-selection-search-input"
+                                    onChange={[Function]}
+                                    onCompositionEnd={[Function]}
+                                    onCompositionStart={[Function]}
+                                    onKeyDown={[Function]}
+                                    onMouseDown={[Function]}
+                                    onPaste={[Function]}
+                                    readOnly={true}
+                                    role="combobox"
+                                    style={
+                                      Object {
+                                        "opacity": 0,
+                                      }
+                                    }
+                                    type="search"
+                                    unselectable="on"
+                                    value=""
+                                  />
+                                </Input>
+                                <span
+                                  aria-hidden={true}
+                                  className="ant-select-selection-search-mirror"
+                                >
+                                   
+                                </span>
+                              </div>
+                            </div>
+                          </Item>
+                        </div>
+                      </Overflow>
                       <span
                         className="ant-select-selection-placeholder"
                       >
@@ -553,7 +640,7 @@ exports[`Categories List component Snapshot testing should render the component 
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
-        transitionName="slide-up"
+        transitionName="ant-slide-up"
         value={Array []}
       >
         <ForwardRef(Select)
@@ -577,7 +664,7 @@ exports[`Categories List component Snapshot testing should render the component 
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
-          transitionName="slide-up"
+          transitionName="ant-slide-up"
           value={Array []}
         >
           <div
@@ -617,7 +704,7 @@ exports[`Categories List component Snapshot testing should render the component 
                 />
               }
               prefixCls="ant-select"
-              transitionName="slide-up"
+              transitionName="ant-slide-up"
               visible={false}
             >
               <Trigger
@@ -732,7 +819,7 @@ exports[`Categories List component Snapshot testing should render the component 
                     "width": null,
                   }
                 }
-                popupTransitionName="slide-up"
+                popupTransitionName="ant-slide-up"
                 popupVisible={false}
                 prefixCls="ant-select-dropdown"
                 showAction={Array []}
@@ -749,34 +836,43 @@ exports[`Categories List component Snapshot testing should render the component 
                       "current": <div
                         class="ant-select-selector"
                       >
-                        <span
-                          class="ant-select-selection-search"
-                          style="width: 0px;"
+                        <div
+                          class="ant-select-selection-overflow"
                         >
-                          <input
-                            aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                            aria-autocomplete="list"
-                            aria-controls="rc_select_TEST_OR_SSR_list"
-                            aria-haspopup="listbox"
-                            aria-owns="rc_select_TEST_OR_SSR_list"
-                            autocomplete="off"
-                            class="ant-select-selection-search-input"
-                            id="rc_select_TEST_OR_SSR"
-                            readonly=""
-                            role="combobox"
-                            style="opacity: 0;"
-                            type="search"
-                            unselectable="on"
-                            value=""
-                          />
-                          <span
-                            aria-hidden="true"
-                            class="ant-select-selection-search-mirror"
+                          <div
+                            class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                            style="opacity: 1;"
                           >
-                            
-                             
-                          </span>
-                        </span>
+                            <div
+                              class="ant-select-selection-search"
+                              style="width: 0px;"
+                            >
+                              <input
+                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                aria-autocomplete="list"
+                                aria-controls="rc_select_TEST_OR_SSR_list"
+                                aria-haspopup="listbox"
+                                aria-owns="rc_select_TEST_OR_SSR_list"
+                                autocomplete="off"
+                                class="ant-select-selection-search-input"
+                                id="rc_select_TEST_OR_SSR"
+                                readonly=""
+                                role="combobox"
+                                style="opacity: 0;"
+                                type="search"
+                                unselectable="on"
+                                value=""
+                              />
+                              <span
+                                aria-hidden="true"
+                                class="ant-select-selection-search-mirror"
+                              >
+                                
+                                 
+                              </span>
+                            </div>
+                          </div>
+                        </div>
                         <span
                           class="ant-select-selection-placeholder"
                         >
@@ -810,7 +906,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   searchValue=""
                   showSearch={true}
                   tokenWithEnter={false}
-                  transitionName="slide-up"
+                  transitionName="ant-slide-up"
                   value={Array []}
                   values={Array []}
                 >
@@ -831,34 +927,43 @@ exports[`Categories List component Snapshot testing should render the component 
                           "current": <div
                             class="ant-select-selector"
                           >
-                            <span
-                              class="ant-select-selection-search"
-                              style="width: 0px;"
+                            <div
+                              class="ant-select-selection-overflow"
                             >
-                              <input
-                                aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
-                                aria-autocomplete="list"
-                                aria-controls="rc_select_TEST_OR_SSR_list"
-                                aria-haspopup="listbox"
-                                aria-owns="rc_select_TEST_OR_SSR_list"
-                                autocomplete="off"
-                                class="ant-select-selection-search-input"
-                                id="rc_select_TEST_OR_SSR"
-                                readonly=""
-                                role="combobox"
-                                style="opacity: 0;"
-                                type="search"
-                                unselectable="on"
-                                value=""
-                              />
-                              <span
-                                aria-hidden="true"
-                                class="ant-select-selection-search-mirror"
+                              <div
+                                class="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                                style="opacity: 1;"
                               >
-                                
-                                 
-                              </span>
-                            </span>
+                                <div
+                                  class="ant-select-selection-search"
+                                  style="width: 0px;"
+                                >
+                                  <input
+                                    aria-activedescendant="rc_select_TEST_OR_SSR_list_0"
+                                    aria-autocomplete="list"
+                                    aria-controls="rc_select_TEST_OR_SSR_list"
+                                    aria-haspopup="listbox"
+                                    aria-owns="rc_select_TEST_OR_SSR_list"
+                                    autocomplete="off"
+                                    class="ant-select-selection-search-input"
+                                    id="rc_select_TEST_OR_SSR"
+                                    readonly=""
+                                    role="combobox"
+                                    style="opacity: 0;"
+                                    type="search"
+                                    unselectable="on"
+                                    value=""
+                                  />
+                                  <span
+                                    aria-hidden="true"
+                                    class="ant-select-selection-search-mirror"
+                                  >
+                                    
+                                     
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                             <span
                               class="ant-select-selection-placeholder"
                             >
@@ -917,69 +1022,138 @@ exports[`Categories List component Snapshot testing should render the component 
                       searchValue=""
                       showSearch={true}
                       tokenWithEnter={false}
-                      transitionName="slide-up"
+                      transitionName="ant-slide-up"
                       value={Array []}
                       values={Array []}
                     >
-                      <CSSMotionList
-                        component={false}
-                        keys={Array []}
-                        motionAppear={false}
-                      />
-                      <span
-                        className="ant-select-selection-search"
-                        style={
-                          Object {
-                            "width": 0,
-                          }
-                        }
-                      >
-                        <Input
-                          accessibilityIndex={0}
-                          attrs={Object {}}
-                          inputElement={null}
-                          onChange={[Function]}
-                          onCompositionEnd={[Function]}
-                          onCompositionStart={[Function]}
-                          onKeyDown={[Function]}
-                          onMouseDown={[Function]}
-                          onPaste={[Function]}
-                          prefixCls="ant-select"
-                          value=""
-                        >
-                          <input
-                            aria-activedescendant="undefined_list_0"
-                            aria-autocomplete="list"
-                            aria-controls="undefined_list"
-                            aria-haspopup="listbox"
-                            aria-owns="undefined_list"
-                            autoComplete="off"
-                            className="ant-select-selection-search-input"
-                            onChange={[Function]}
-                            onCompositionEnd={[Function]}
-                            onCompositionStart={[Function]}
-                            onKeyDown={[Function]}
-                            onMouseDown={[Function]}
-                            onPaste={[Function]}
-                            readOnly={true}
-                            role="combobox"
+                      <Overflow
+                        data={Array []}
+                        itemKey="key"
+                        prefixCls="ant-select-selection-overflow"
+                        renderItem={[Function]}
+                        renderRest={[Function]}
+                        suffix={
+                          <div
+                            className="ant-select-selection-search"
+                            onBlur={[Function]}
+                            onFocus={[Function]}
                             style={
                               Object {
-                                "opacity": 0,
+                                "width": 0,
                               }
                             }
-                            type="search"
-                            unselectable="on"
-                            value=""
-                          />
-                        </Input>
-                        <span
-                          aria-hidden={true}
-                          className="ant-select-selection-search-mirror"
+                          >
+                            <ForwardRef(Input)
+                              accessibilityIndex={0}
+                              attrs={Object {}}
+                              editable={false}
+                              inputElement={null}
+                              onChange={[Function]}
+                              onCompositionEnd={[Function]}
+                              onCompositionStart={[Function]}
+                              onKeyDown={[Function]}
+                              onMouseDown={[Function]}
+                              onPaste={[Function]}
+                              prefixCls="ant-select"
+                              value=""
+                            />
+                            <span
+                              aria-hidden={true}
+                              className="ant-select-selection-search-mirror"
+                            >
+                              
+                               
+                            </span>
+                          </div>
+                        }
+                      >
+                        <div
+                          className="ant-select-selection-overflow"
                         >
-                           
-                        </span>
-                      </span>
+                          <Item
+                            className="ant-select-selection-overflow-item-suffix"
+                            display={true}
+                            invalidate={false}
+                            order={0}
+                            prefixCls="ant-select-selection-overflow-item"
+                            registerSize={[Function]}
+                            responsive={0}
+                            style={Object {}}
+                          >
+                            <div
+                              className="ant-select-selection-overflow-item ant-select-selection-overflow-item-suffix"
+                              style={
+                                Object {
+                                  "height": undefined,
+                                  "opacity": 1,
+                                  "order": undefined,
+                                  "overflowY": undefined,
+                                  "pointerEvents": undefined,
+                                  "position": undefined,
+                                }
+                              }
+                            >
+                              <div
+                                className="ant-select-selection-search"
+                                onBlur={[Function]}
+                                onFocus={[Function]}
+                                style={
+                                  Object {
+                                    "width": 0,
+                                  }
+                                }
+                              >
+                                <Input
+                                  accessibilityIndex={0}
+                                  attrs={Object {}}
+                                  editable={false}
+                                  inputElement={null}
+                                  onChange={[Function]}
+                                  onCompositionEnd={[Function]}
+                                  onCompositionStart={[Function]}
+                                  onKeyDown={[Function]}
+                                  onMouseDown={[Function]}
+                                  onPaste={[Function]}
+                                  prefixCls="ant-select"
+                                  value=""
+                                >
+                                  <input
+                                    aria-activedescendant="undefined_list_0"
+                                    aria-autocomplete="list"
+                                    aria-controls="undefined_list"
+                                    aria-haspopup="listbox"
+                                    aria-owns="undefined_list"
+                                    autoComplete="off"
+                                    className="ant-select-selection-search-input"
+                                    onChange={[Function]}
+                                    onCompositionEnd={[Function]}
+                                    onCompositionStart={[Function]}
+                                    onKeyDown={[Function]}
+                                    onMouseDown={[Function]}
+                                    onPaste={[Function]}
+                                    readOnly={true}
+                                    role="combobox"
+                                    style={
+                                      Object {
+                                        "opacity": 0,
+                                      }
+                                    }
+                                    type="search"
+                                    unselectable="on"
+                                    value=""
+                                  />
+                                </Input>
+                                <span
+                                  aria-hidden={true}
+                                  className="ant-select-selection-search-mirror"
+                                >
+                                   
+                                </span>
+                              </div>
+                            </div>
+                          </Item>
+                        </div>
+                      </Overflow>
                       <span
                         className="ant-select-selection-placeholder"
                       >

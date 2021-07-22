@@ -358,7 +358,7 @@ exports[`Space Permission List component snapshot testing should match component
                               <colgroup>
                                 <col />
                                 <col
-                                  style="width: 10%; min-width: 10%;"
+                                  style="width: 10%;"
                                 />
                                 <col />
                                 <col />
@@ -366,7 +366,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 20%; min-width: 20%;"
+                                  style="width: 20%;"
                                 />
                               </colgroup>
                               <thead
@@ -860,7 +860,7 @@ exports[`Space Permission List component snapshot testing should match component
                                     <colgroup>
                                       <col />
                                       <col
-                                        style="width: 10%; min-width: 10%;"
+                                        style="width: 10%;"
                                       />
                                       <col />
                                       <col />
@@ -868,7 +868,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 20%; min-width: 20%;"
+                                        style="width: 20%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -1321,7 +1321,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1330,7 +1329,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": "10%",
                                         "width": "10%",
                                       }
                                     }
@@ -1339,7 +1337,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1348,7 +1345,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="3"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1357,7 +1353,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="4"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1366,7 +1361,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="5"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1375,7 +1369,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="6"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -1384,7 +1377,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="7"
                                     style={
                                       Object {
-                                        "minWidth": "20%",
                                         "width": "20%",
                                       }
                                     }
@@ -2486,11 +2478,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -2536,7 +2524,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -2566,8 +2553,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -2811,6 +2799,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -2834,8 +2828,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -3113,12 +3108,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -3147,11 +3150,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -3581,11 +3580,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -3631,7 +3626,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -3661,8 +3655,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -3906,6 +3901,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -3929,8 +3930,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -4208,12 +4210,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -4242,11 +4252,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -4648,11 +4654,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -4698,7 +4700,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -4728,8 +4729,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -4973,6 +4975,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -4996,8 +5004,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -5275,12 +5284,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -5309,11 +5326,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -5539,7 +5552,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -5564,7 +5576,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -5666,7 +5677,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -5691,7 +5701,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -6100,7 +6109,7 @@ exports[`Space Permission List component snapshot testing should match component
                               <colgroup>
                                 <col />
                                 <col
-                                  style="width: 10%; min-width: 10%;"
+                                  style="width: 10%;"
                                 />
                                 <col />
                                 <col />
@@ -6108,7 +6117,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 20%; min-width: 20%;"
+                                  style="width: 20%;"
                                 />
                               </colgroup>
                               <thead
@@ -6602,7 +6611,7 @@ exports[`Space Permission List component snapshot testing should match component
                                     <colgroup>
                                       <col />
                                       <col
-                                        style="width: 10%; min-width: 10%;"
+                                        style="width: 10%;"
                                       />
                                       <col />
                                       <col />
@@ -6610,7 +6619,7 @@ exports[`Space Permission List component snapshot testing should match component
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 20%; min-width: 20%;"
+                                        style="width: 20%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -7063,7 +7072,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7072,7 +7080,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": "10%",
                                         "width": "10%",
                                       }
                                     }
@@ -7081,7 +7088,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7090,7 +7096,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="3"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7099,7 +7104,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="4"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7108,7 +7112,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="5"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7117,7 +7120,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="6"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -7126,7 +7128,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     key="7"
                                     style={
                                       Object {
-                                        "minWidth": "20%",
                                         "width": "20%",
                                       }
                                     }
@@ -8228,11 +8229,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -8278,7 +8275,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -8308,8 +8304,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -8553,6 +8550,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -8576,8 +8579,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -8855,12 +8859,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -8889,11 +8901,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -9323,11 +9331,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -9373,7 +9377,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -9403,8 +9406,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -9648,6 +9652,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -9671,8 +9681,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -9950,12 +9961,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -9984,11 +10003,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -10390,11 +10405,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -10440,7 +10451,6 @@ exports[`Space Permission List component snapshot testing should match component
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -10470,8 +10480,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -10715,6 +10726,12 @@ exports[`Space Permission List component snapshot testing should match component
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -10738,8 +10755,9 @@ exports[`Space Permission List component snapshot testing should match component
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -11017,12 +11035,20 @@ exports[`Space Permission List component snapshot testing should match component
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -11051,11 +11077,7 @@ exports[`Space Permission List component snapshot testing should match component
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -11281,7 +11303,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -11306,7 +11327,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -11408,7 +11428,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -11433,7 +11452,6 @@ exports[`Space Permission List component snapshot testing should match component
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -11842,7 +11860,7 @@ exports[`Space Permission List component snapshot testing should render componen
                               <colgroup>
                                 <col />
                                 <col
-                                  style="width: 10%; min-width: 10%;"
+                                  style="width: 10%;"
                                 />
                                 <col />
                                 <col />
@@ -11850,7 +11868,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 20%; min-width: 20%;"
+                                  style="width: 20%;"
                                 />
                               </colgroup>
                               <thead
@@ -12344,7 +12362,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                     <colgroup>
                                       <col />
                                       <col
-                                        style="width: 10%; min-width: 10%;"
+                                        style="width: 10%;"
                                       />
                                       <col />
                                       <col />
@@ -12352,7 +12370,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 20%; min-width: 20%;"
+                                        style="width: 20%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -12805,7 +12823,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12814,7 +12831,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": "10%",
                                         "width": "10%",
                                       }
                                     }
@@ -12823,7 +12839,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12832,7 +12847,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="3"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12841,7 +12855,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="4"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12850,7 +12863,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="5"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12859,7 +12871,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="6"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -12868,7 +12879,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="7"
                                     style={
                                       Object {
-                                        "minWidth": "20%",
                                         "width": "20%",
                                       }
                                     }
@@ -13970,11 +13980,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -14020,7 +14026,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -14050,8 +14055,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -14295,6 +14301,12 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -14318,8 +14330,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -14597,12 +14610,20 @@ exports[`Space Permission List component snapshot testing should render componen
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -14631,11 +14652,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -15065,11 +15082,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -15115,7 +15128,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -15145,8 +15157,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -15390,6 +15403,12 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -15413,8 +15432,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -15692,12 +15712,20 @@ exports[`Space Permission List component snapshot testing should render componen
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -15726,11 +15754,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -16132,11 +16156,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -16182,7 +16202,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -16212,8 +16231,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -16457,6 +16477,12 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -16480,8 +16506,9 @@ exports[`Space Permission List component snapshot testing should render componen
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -16759,12 +16786,20 @@ exports[`Space Permission List component snapshot testing should render componen
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -16793,11 +16828,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -17023,7 +17054,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -17048,7 +17078,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -17150,7 +17179,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -17175,7 +17203,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -17470,7 +17497,7 @@ exports[`Space Permission List component snapshot testing should render componen
                               <colgroup>
                                 <col />
                                 <col
-                                  style="width: 10%; min-width: 10%;"
+                                  style="width: 10%;"
                                 />
                                 <col />
                                 <col />
@@ -17478,7 +17505,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 20%; min-width: 20%;"
+                                  style="width: 20%;"
                                 />
                               </colgroup>
                               <thead
@@ -17577,11 +17604,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                           </g>
                                         </svg>
                                       </div>
-                                      <p
+                                      <div
                                         class="ant-empty-description"
                                       >
                                         No Data
-                                      </p>
+                                      </div>
                                     </div>
                                   </td>
                                 </tr>
@@ -17699,7 +17726,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                     <colgroup>
                                       <col />
                                       <col
-                                        style="width: 10%; min-width: 10%;"
+                                        style="width: 10%;"
                                       />
                                       <col />
                                       <col />
@@ -17707,7 +17734,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 20%; min-width: 20%;"
+                                        style="width: 20%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -17806,11 +17833,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                                 </g>
                                               </svg>
                                             </div>
-                                            <p
+                                            <div
                                               class="ant-empty-description"
                                             >
                                               No Data
-                                            </p>
+                                            </div>
                                           </div>
                                         </td>
                                       </tr>
@@ -17959,7 +17986,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -17968,7 +17994,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": "10%",
                                         "width": "10%",
                                       }
                                     }
@@ -17977,7 +18002,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -17986,7 +18010,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="3"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -17995,7 +18018,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="4"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -18004,7 +18026,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="5"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -18013,7 +18034,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="6"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -18022,7 +18042,6 @@ exports[`Space Permission List component snapshot testing should render componen
                                     key="7"
                                     style={
                                       Object {
-                                        "minWidth": "20%",
                                         "width": "20%",
                                       }
                                     }
@@ -18725,6 +18744,8 @@ exports[`Space Permission List component snapshot testing should render componen
                                     component="tr"
                                     componentWidth={0}
                                     expanded={true}
+                                    fixColumn={false}
+                                    horizonScroll={false}
                                     prefixCls="ant-table"
                                   >
                                     <tr
@@ -18794,11 +18815,11 @@ exports[`Space Permission List component snapshot testing should render componen
                                                     </svg>
                                                   </Simple>
                                                 </div>
-                                                <p
+                                                <div
                                                   className="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </LocaleReceiver>
                                           </Empty>

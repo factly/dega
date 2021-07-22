@@ -6,19 +6,14 @@ import MediumList from './components/MediumList';
 import { getMedia } from '../../actions/media';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import getUrlParams from '../../utils/getUrlParams';
 
 function Media({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
-  const params = {};
-  const keys = ['page', 'limit', 'q', 'sort'];
-  keys.forEach((key) => {
-    if (query.get(key)) {
-      params[key] = query.get(key);
-    }
-  });
+  const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });

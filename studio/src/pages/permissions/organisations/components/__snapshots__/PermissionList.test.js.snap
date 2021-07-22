@@ -258,7 +258,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 30%; min-width: 30%;"
+                                  style="width: 30%;"
                                 />
                               </colgroup>
                               <thead
@@ -573,7 +573,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 30%; min-width: 30%;"
+                                        style="width: 30%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -844,7 +844,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": "",
                                         "width": "",
                                       }
                                     }
@@ -853,7 +852,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -862,7 +860,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": "30%",
                                         "width": "30%",
                                       }
                                     }
@@ -1346,11 +1343,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -1396,7 +1389,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -1426,8 +1418,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -1671,6 +1664,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -1694,8 +1693,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -1973,12 +1973,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -2007,11 +2015,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -2217,11 +2221,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -2267,7 +2267,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -2297,8 +2296,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -2542,6 +2542,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -2565,8 +2571,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -2844,12 +2851,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -2878,11 +2893,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -3084,11 +3095,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -3134,7 +3141,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -3164,8 +3170,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -3409,6 +3416,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -3432,8 +3445,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -3711,12 +3725,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -3745,11 +3767,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -3975,7 +3993,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -4000,7 +4017,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -4102,7 +4118,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -4127,7 +4142,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -4436,7 +4450,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 30%; min-width: 30%;"
+                                  style="width: 30%;"
                                 />
                               </colgroup>
                               <thead
@@ -4751,7 +4765,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 30%; min-width: 30%;"
+                                        style="width: 30%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -5022,7 +5036,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": "",
                                         "width": "",
                                       }
                                     }
@@ -5031,7 +5044,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -5040,7 +5052,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": "30%",
                                         "width": "30%",
                                       }
                                     }
@@ -5524,11 +5535,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -5574,7 +5581,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -5604,8 +5610,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -5849,6 +5856,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -5872,8 +5885,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -6151,12 +6165,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -6185,11 +6207,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -6395,11 +6413,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -6445,7 +6459,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -6475,8 +6488,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -6720,6 +6734,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -6743,8 +6763,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -7022,12 +7043,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -7056,11 +7085,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -7262,11 +7287,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -7312,7 +7333,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -7342,8 +7362,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -7587,6 +7608,12 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -7610,8 +7637,9 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -7889,12 +7917,20 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -7923,11 +7959,7 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -8153,7 +8185,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -8178,7 +8209,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -8280,7 +8310,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -8305,7 +8334,6 @@ exports[`Organisation Permission List component  snapshot testing should match c
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -8614,7 +8642,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 30%; min-width: 30%;"
+                                  style="width: 30%;"
                                 />
                               </colgroup>
                               <thead
@@ -8929,7 +8957,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 30%; min-width: 30%;"
+                                        style="width: 30%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -9200,7 +9228,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": "",
                                         "width": "",
                                       }
                                     }
@@ -9209,7 +9236,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -9218,7 +9244,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": "30%",
                                         "width": "30%",
                                       }
                                     }
@@ -9702,11 +9727,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -9752,7 +9773,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -9782,8 +9802,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -10027,6 +10048,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -10050,8 +10077,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -10329,12 +10357,20 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -10363,11 +10399,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -10573,11 +10605,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -10623,7 +10651,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -10653,8 +10680,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -10898,6 +10926,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -10921,8 +10955,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -11200,12 +11235,20 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -11234,11 +11277,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -11440,11 +11479,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                 >
                                                   <Button
-                                                    block={false}
                                                     disabled={true}
-                                                    ghost={false}
-                                                    htmlType="button"
-                                                    loading={false}
                                                   >
                                                     <Wave>
                                                       <button
@@ -11490,7 +11525,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                               onConfirm={[Function]}
                                               placement="top"
                                               title="Sure to Delete?"
-                                              transitionName="zoom-big"
                                               trigger="click"
                                             >
                                               <Tooltip
@@ -11520,8 +11554,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                 placement="top"
                                                 prefixCls="ant-popover"
                                                 title="Sure to Delete?"
-                                                transitionName="zoom-big"
+                                                transitionName="ant-zoom-big"
                                                 trigger="click"
+                                                visible={false}
                                               >
                                                 <ForwardRef(Tooltip)
                                                   arrowContent={
@@ -11765,6 +11800,12 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   }
                                                   disabled={false}
                                                   icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                  motion={
+                                                    Object {
+                                                      "motionDeadline": 1000,
+                                                      "motionName": "ant-zoom-big",
+                                                    }
+                                                  }
                                                   mouseEnterDelay={0.1}
                                                   mouseLeaveDelay={0.1}
                                                   okType="primary"
@@ -11788,8 +11829,9 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                   placement="top"
                                                   prefixCls="ant-popover"
                                                   title="Sure to Delete?"
-                                                  transitionName="zoom-big"
+                                                  transitionName="ant-zoom-big"
                                                   trigger="click"
+                                                  visible={false}
                                                 >
                                                   <Trigger
                                                     action="click"
@@ -12067,12 +12109,20 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                     popup={[Function]}
                                                     popupAlign={Object {}}
                                                     popupClassName="ant-popconfirm"
+                                                    popupMotion={
+                                                      Object {
+                                                        "motionDeadline": 1000,
+                                                        "motionName": "ant-zoom-big",
+                                                      }
+                                                    }
                                                     popupPlacement="top"
                                                     popupStyle={Object {}}
-                                                    popupTransitionName="zoom-big"
+                                                    popupTransitionName="ant-zoom-big"
+                                                    popupVisible={false}
                                                     prefixCls="ant-popover"
                                                     showAction={Array []}
                                                     title="Sure to Delete?"
+                                                    visible={false}
                                                   >
                                                     <Link
                                                       className="ant-dropdown-link"
@@ -12101,11 +12151,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                           onTouchStart={[Function]}
                                                         >
                                                           <Button
-                                                            block={false}
                                                             disabled={true}
-                                                            ghost={false}
-                                                            htmlType="button"
-                                                            loading={false}
                                                           >
                                                             <Wave>
                                                               <button
@@ -12331,7 +12377,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -12356,7 +12401,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="left"
                                         fill="currentColor"
                                         focusable="false"
@@ -12458,7 +12502,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     role="img"
                                   >
                                     <IconReact
-                                      className=""
                                       icon={
                                         Object {
                                           "icon": Object {
@@ -12483,7 +12526,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     >
                                       <svg
                                         aria-hidden="true"
-                                        className=""
                                         data-icon="right"
                                         fill="currentColor"
                                         focusable="false"
@@ -12705,7 +12747,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                 <col />
                                 <col />
                                 <col
-                                  style="width: 30%; min-width: 30%;"
+                                  style="width: 30%;"
                                 />
                               </colgroup>
                               <thead
@@ -12779,11 +12821,11 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                           </g>
                                         </svg>
                                       </div>
-                                      <p
+                                      <div
                                         class="ant-empty-description"
                                       >
                                         No Data
-                                      </p>
+                                      </div>
                                     </div>
                                   </td>
                                 </tr>
@@ -12865,7 +12907,7 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                       <col />
                                       <col />
                                       <col
-                                        style="width: 30%; min-width: 30%;"
+                                        style="width: 30%;"
                                       />
                                     </colgroup>
                                     <thead
@@ -12939,11 +12981,11 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                 </g>
                                               </svg>
                                             </div>
-                                            <p
+                                            <div
                                               class="ant-empty-description"
                                             >
                                               No Data
-                                            </p>
+                                            </div>
                                           </div>
                                         </td>
                                       </tr>
@@ -13035,7 +13077,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="0"
                                     style={
                                       Object {
-                                        "minWidth": "",
                                         "width": "",
                                       }
                                     }
@@ -13044,7 +13085,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="1"
                                     style={
                                       Object {
-                                        "minWidth": undefined,
                                         "width": undefined,
                                       }
                                     }
@@ -13053,7 +13093,6 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     key="2"
                                     style={
                                       Object {
-                                        "minWidth": "30%",
                                         "width": "30%",
                                       }
                                     }
@@ -13361,6 +13400,8 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                     component="tr"
                                     componentWidth={0}
                                     expanded={true}
+                                    fixColumn={false}
+                                    horizonScroll={false}
                                     prefixCls="ant-table"
                                   >
                                     <tr
@@ -13430,11 +13471,11 @@ exports[`Organisation Permission List component  snapshot testing should render 
                                                     </svg>
                                                   </Simple>
                                                 </div>
-                                                <p
+                                                <div
                                                   className="ant-empty-description"
                                                 >
                                                   No Data
-                                                </p>
+                                                </div>
                                               </div>
                                             </LocaleReceiver>
                                           </Empty>

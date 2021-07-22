@@ -84,6 +84,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
         >
           <div
             className="ant-space ant-space-vertical"
+            style={Object {}}
           >
             <Item
               className="ant-space-item"
@@ -91,7 +92,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               index={0}
               key="ant-space-item-0"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -113,7 +114,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                     </article>
                   </Typography>
                   <br />
-                  <Memo(CheckboxGroup)
+                  <ForwardRef(InternalCheckboxGroup)
                     key="categories"
                     options={
                       Array [
@@ -150,7 +151,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="get"
                         prefixCls="ant-checkbox"
                         value="get"
@@ -165,6 +165,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -180,6 +183,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="get"
                               />
@@ -196,7 +202,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="create"
                         prefixCls="ant-checkbox"
                         value="create"
@@ -211,6 +216,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -226,6 +234,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="create"
                               />
@@ -242,7 +253,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="update"
                         prefixCls="ant-checkbox"
                         value="update"
@@ -257,6 +267,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -272,6 +285,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="update"
                               />
@@ -288,7 +304,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="delete"
                         prefixCls="ant-checkbox"
                         value="delete"
@@ -303,6 +318,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -318,6 +336,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="delete"
                               />
@@ -332,7 +353,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                         </label>
                       </Checkbox>
                     </div>
-                  </Memo(CheckboxGroup)>
+                  </ForwardRef(InternalCheckboxGroup)>
                   <br />
                   <br />
                 </div>
@@ -344,7 +365,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               index={1}
               key="ant-space-item-1"
               marginDirection="marginRight"
-              size="small"
+              wrap={false}
             >
               <div
                 className="ant-space-item"
@@ -362,7 +383,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                     </article>
                   </Typography>
                   <br />
-                  <Memo(CheckboxGroup)
+                  <ForwardRef(InternalCheckboxGroup)
                     key="tags"
                     options={
                       Array [
@@ -397,7 +418,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="get"
                         prefixCls="ant-checkbox"
                         value="get"
@@ -412,6 +432,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -427,6 +450,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="get"
                               />
@@ -443,7 +469,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={true}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="create"
                         prefixCls="ant-checkbox"
                         value="create"
@@ -458,6 +483,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -473,6 +501,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="create"
                               />
@@ -489,7 +520,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={false}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="update"
                         prefixCls="ant-checkbox"
                         value="update"
@@ -504,6 +534,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -519,6 +552,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="update"
                               />
@@ -535,7 +571,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       <Checkbox
                         checked={false}
                         className="ant-checkbox-group-item"
-                        indeterminate={false}
                         key="delete"
                         prefixCls="ant-checkbox"
                         value="delete"
@@ -550,6 +585,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             onBlur={[Function]}
                             onChange={[Function]}
                             onFocus={[Function]}
+                            onKeyDown={[Function]}
+                            onKeyPress={[Function]}
+                            onKeyUp={[Function]}
                             prefixCls="ant-checkbox"
                             style={Object {}}
                             type="checkbox"
@@ -565,6 +603,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 onBlur={[Function]}
                                 onChange={[Function]}
                                 onFocus={[Function]}
+                                onKeyDown={[Function]}
+                                onKeyPress={[Function]}
+                                onKeyUp={[Function]}
                                 type="checkbox"
                                 value="delete"
                               />
@@ -579,7 +620,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                         </label>
                       </Checkbox>
                     </div>
-                  </Memo(CheckboxGroup)>
+                  </ForwardRef(InternalCheckboxGroup)>
                   <br />
                   <br />
                 </div>
