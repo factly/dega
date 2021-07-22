@@ -186,6 +186,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         page.IsSticky,
 		FormatID:         page.FormatID,
 		FeaturedMediumID: featuredMediumID,
+		Meta:             page.Meta,
+		MetaFields:       page.MetaFields,
+		HeaderCode:       page.HeaderCode,
+		FooterCode:       page.FooterCode,
 	}
 
 	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted").Omit("Tags", "Categories").Updates(model.Post{
@@ -292,6 +296,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"tag_ids":        page.TagIDs,
 		"category_ids":   page.CategoryIDs,
 		"author_ids":     page.AuthorIDs,
+		"meta":           result.Meta,
+		"meta_fields":    result.MetaFields,
+		"header_code":    result.HeaderCode,
+		"footer_code":    result.FooterCode,
 	}
 
 	if config.SearchEnabled() {
