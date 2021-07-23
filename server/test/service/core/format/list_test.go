@@ -25,8 +25,8 @@ func TestFormatList(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	formatlist := []map[string]interface{}{
-		{"name": "Test Format 1", "slug": "test-format-1"},
-		{"name": "Test Format 2", "slug": "test-format-2"},
+		{"name": "Test Format 1", "slug": "test-format-1", "description": "desc 1"},
+		{"name": "Test Format 2", "slug": "test-format-2", "description": "desc 2"},
 	}
 
 	t.Run("get empty list of formats", func(t *testing.T) {
@@ -53,8 +53,8 @@ func TestFormatList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, formatlist[0]["name"], formatlist[0]["slug"]).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"]))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, formatlist[0]["name"], formatlist[0]["slug"], formatlist[0]["description"], test.NilJsonb()).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"], formatlist[1]["description"], test.NilJsonb()))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -78,7 +78,7 @@ func TestFormatList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"]))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"], formatlist[1]["description"], test.NilJsonb()))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{

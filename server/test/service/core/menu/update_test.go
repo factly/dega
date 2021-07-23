@@ -100,7 +100,7 @@ func TestMenuUpdate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectExec(`UPDATE \"menus\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["menu"], 1).
+			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["menu"], Data["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		SelectQuery(mock, 1, 1)
 		mock.ExpectCommit()

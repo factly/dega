@@ -56,8 +56,8 @@ func TestMediumList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, mediumlist[0]["name"], mediumlist[0]["slug"], mediumlist[0]["type"], mediumlist[0]["title"], mediumlist[0]["description"], mediumlist[0]["caption"], mediumlist[0]["alt_text"], mediumlist[0]["file_size"], mediumlist[0]["url"], mediumlist[0]["dimensions"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, mediumlist[0]["name"], mediumlist[0]["slug"], mediumlist[0]["type"], mediumlist[0]["title"], mediumlist[0]["description"], mediumlist[0]["caption"], mediumlist[0]["alt_text"], mediumlist[0]["file_size"], mediumlist[0]["url"], mediumlist[0]["dimensions"], mediumlist[0]["meta_fields"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], mediumlist[1]["meta_fields"], 1))
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
@@ -80,7 +80,7 @@ func TestMediumList(t *testing.T) {
 
 		mock.ExpectQuery(paginationQuery).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], mediumlist[1]["meta_fields"], 1))
 
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
@@ -110,8 +110,8 @@ func TestMediumList(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, mediumlist[0]["name"], mediumlist[0]["slug"], mediumlist[0]["type"], mediumlist[0]["title"], mediumlist[0]["description"], mediumlist[0]["caption"], mediumlist[0]["alt_text"], mediumlist[0]["file_size"], mediumlist[0]["url"], mediumlist[0]["dimensions"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, mediumlist[0]["name"], mediumlist[0]["slug"], mediumlist[0]["type"], mediumlist[0]["title"], mediumlist[0]["description"], mediumlist[0]["caption"], mediumlist[0]["alt_text"], mediumlist[0]["file_size"], mediumlist[0]["url"], mediumlist[0]["dimensions"], mediumlist[0]["meta_fields"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, mediumlist[1]["name"], mediumlist[1]["slug"], mediumlist[1]["type"], mediumlist[1]["title"], mediumlist[1]["description"], mediumlist[1]["caption"], mediumlist[1]["alt_text"], mediumlist[1]["file_size"], mediumlist[1]["url"], mediumlist[1]["dimensions"], mediumlist[1]["meta_fields"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -163,10 +163,7 @@ func TestMediumList(t *testing.T) {
 			WithHeaders(headers).
 			WithQuery("q", "test").
 			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": 0})
+			Status(http.StatusServiceUnavailable)
 
 		test.ExpectationsMet(t, mock)
 	})

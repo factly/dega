@@ -58,8 +58,8 @@ func TestMenuList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, menulist[0]["name"], menulist[0]["slug"], menulist[0]["menu"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, menulist[1]["name"], menulist[1]["slug"], menulist[1]["menu"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, menulist[0]["name"], menulist[0]["slug"], menulist[0]["menu"], menulist[0]["meta_fields"], 1).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, menulist[1]["name"], menulist[1]["slug"], menulist[1]["menu"], menulist[1]["meta_fields"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -85,7 +85,7 @@ func TestMenuList(t *testing.T) {
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, menulist[1]["name"], menulist[1]["slug"], menulist[1]["menu"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, menulist[1]["name"], menulist[1]["slug"], menulist[1]["menu"], menulist[1]["meta_fields"], 1))
 
 		e.GET(basePath).
 			WithHeaders(headers).

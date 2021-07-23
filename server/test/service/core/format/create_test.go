@@ -105,7 +105,7 @@ func TestFormatCreate(t *testing.T) {
 
 		mock.ExpectBegin()
 		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], "", 1).
+			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["meta_fields"], 1).
 			WillReturnError(errors.New("cannot create format"))
 		mock.ExpectRollback()
 
