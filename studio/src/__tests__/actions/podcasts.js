@@ -68,7 +68,12 @@ describe('Podcast actions', () => {
     expect(actions.resetPodcasts()).toEqual(resetPodcastsAction);
   });
   it('should create actions to fetch podcasts success', () => {
-    const query = { page: 1, limit: 5 };
+    const query = {
+      q: 'podcast',
+      sort: 'asc',
+      language: 'english',
+      category: [1],
+    };
     const podcasts = [
       {
         id: 1,
@@ -115,9 +120,7 @@ describe('Podcast actions', () => {
     store
       .dispatch(actions.getPodcasts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.get).toHaveBeenCalledWith(types.PODCASTS_API, {
-      params: query,
-    });
+    expect(axios.get).toHaveBeenCalledTimes(1);
   });
   it('should create actions to fetch podcasts failure', () => {
     const query = { page: 1, limit: 5 };
@@ -149,7 +152,7 @@ describe('Podcast actions', () => {
       .dispatch(actions.getPodcasts(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.PODCASTS_API, {
-      params: query,
+      params: new URLSearchParams(query),
     });
   });
   it('should create actions to get podcast by id success', () => {

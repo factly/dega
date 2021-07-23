@@ -557,7 +557,9 @@ describe('pages actions', () => {
     expect(axios.get).toHaveBeenCalledWith(types.PAGES_API + '/' + id);
   });
   it('should create actions to create page success', () => {
-    const resp = { data: page1 };
+    const data2 = { ...page1 };
+    data2.status = 'publish';
+    const resp = { data: data2 };
     axios.post.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -599,7 +601,7 @@ describe('pages actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Page added & Ready to Publish',
+          message: 'Page Published',
           time: Date.now(),
         },
       },
@@ -643,6 +645,59 @@ describe('pages actions', () => {
     page.authors = [];
     page.tags = [];
     page.medium = undefined;
+    page.status = 'draft';
+
+    const resp = { data: page };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [],
+      },
+      {
+        type: types.RESET_PAGES,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Page added',
+          time: Date.now(),
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addPage(page))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.PAGES_API, page);
+  });
+  it('should create actions to create page success without any optional fields ready status', () => {
+    const page = { ...page1 };
+    page.categories = [];
+    page.authors = [];
+    page.tags = [];
+    page.medium = undefined;
+    page.status = 'ready';
 
     const resp = { data: page };
     axios.post.mockResolvedValue(resp);
@@ -689,7 +744,9 @@ describe('pages actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.PAGES_API, page);
   });
   it('should create actions to update page success', () => {
-    const resp = { data: { ...page1, status: 'draft' } };
+    const data2 = { ...page1 };
+    data2.status = 'draft';
+    const resp = { data: data2 };
     axios.put.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -729,6 +786,77 @@ describe('pages actions', () => {
           id: 1,
           name: 'Page 1',
           status: 'draft',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: { id: 41, name: 'Format 1' },
+          medium: 51,
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft Saved',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePage(page1))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
+  });
+  it('should create actions to update page success with ready status', () => {
+    const data2 = { ...page1 };
+    data2.status = 'ready';
+    const resp = { data: data2 };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311 },
+          { id: 32, name: 'category 32', medium: undefined },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_PAGE,
+        payload: {
+          id: 1,
+          name: 'Page 1',
+          status: 'ready',
           authors: [11],
           tags: [21, 22],
           categories: [31, 32],

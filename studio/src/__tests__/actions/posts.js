@@ -721,7 +721,9 @@ describe('posts actions', () => {
     expect(axios.get).toHaveBeenCalledWith(types.POSTS_API + '/' + id);
   });
   it('should create actions to create post success', () => {
-    const resp = { data: post };
+    const data2 = { ...post };
+    data2.status = 'publish';
+    const resp = { data: data2 };
     axios.post.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -787,7 +789,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post added & Ready to Publish',
+          message: 'Format 1 Published',
           time: Date.now(),
         },
       },
@@ -806,7 +808,7 @@ describe('posts actions', () => {
     post_without_fields.tags = [];
     post_without_fields.claims = [];
     post_without_fields.medium = undefined;
-
+    post_without_fields.status = 'draft';
     const resp = { data: post_without_fields };
     axios.post.mockResolvedValue(resp);
 
@@ -863,7 +865,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Post added & Ready to Publish',
+          message: 'Post added',
           time: Date.now(),
         },
       },
@@ -915,7 +917,9 @@ describe('posts actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.POSTS_API, post);
   });
   it('should create actions to update post success', () => {
-    const resp = { data: { ...post, status: 'draft' } };
+    const data2 = { ...post };
+    data2.status = 'draft';
+    const resp = { data: data2 };
     axios.put.mockResolvedValue(resp);
 
     const expectedActions = [
@@ -992,7 +996,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Draft saved & Ready to Publish',
+          message: 'Draft Saved',
           time: Date.now(),
         },
       },
@@ -1004,9 +1008,9 @@ describe('posts actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.updatePost(post))
+      .dispatch(actions.updatePost(data2))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post);
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', data2);
   });
   it('should create actions to publish post success', () => {
     const resp = { data: post };
@@ -1696,6 +1700,98 @@ describe('posts actions', () => {
           type: 'success',
           title: 'Success',
           message: 'Format 1 Published',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePost(post_without_fields))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_fields);
+  });
+  it('should create actions to update success without any optional fields with ready status', () => {
+    const post_without_fields = { ...post };
+    post_without_fields.categories = [];
+    post_without_fields.authors = [];
+    post_without_fields.tags = [];
+    post_without_fields.claims = [];
+    post_without_fields.medium = undefined;
+    post_without_fields.status = 'ready';
+
+    const resp = { data: post_without_fields };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 1,
+          name: 'Post 1',
+          authors: [],
+          tags: [],
+          categories: [],
+          format: 41,
+          medium: undefined,
+          claims: [],
+          status: 'ready',
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft saved & Ready to Publish',
           time: Date.now(),
         },
       },
