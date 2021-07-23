@@ -62,7 +62,7 @@ func TestPages(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "posts" (.+) ORDER BY slug asc`).
 			WithArgs(true, 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], postData["schemas"], postData["meta"], postData["header_code"], postData["footer_code"], postData["meta_fields"], 1))
 
 		resp := e.POST(path).
 			WithHeaders(headers).

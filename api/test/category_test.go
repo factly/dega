@@ -197,7 +197,7 @@ func CategorySelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 }
 
 func CategoryCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "categories"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 

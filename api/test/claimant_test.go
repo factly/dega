@@ -22,9 +22,12 @@ var claimantData = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 	"tag_line":         "sample tag line",
 	"medium_id":        uint(1),
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type": "meta_fields"}`),
+	},
 }
 
-var claimantColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "medium_id", "description", "html_description", "tag_line", "space_id"}
+var claimantColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "medium_id", "description", "html_description", "tag_line", "meta_fields", "space_id"}
 
 func TestClaimants(t *testing.T) {
 	// Setup Mock DB
@@ -85,7 +88,7 @@ func TestClaimants(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "claimants" (.+) ORDER BY updated_at asc`).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimantColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], claimantData["meta_fields"], 1))
 		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
@@ -115,10 +118,10 @@ func ClaimantSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "claimants"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(claimantColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantData["name"], claimantData["slug"], claimantData["medium_id"], claimantData["description"], claimantData["html_description"], claimantData["tag_line"], claimantData["meta_fields"], 1))
 }
 
 func ClaimantCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claimants"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claimants"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

@@ -28,9 +28,12 @@ var ratingData = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 	"numeric_value":    5,
 	"medium_id":        uint(1),
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type": "meta_field"}`),
+	},
 }
 
-var ratingColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "background_colour", "text_colour", "medium_id", "description", "html_description", "numeric_value", "space_id"}
+var ratingColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "background_colour", "text_colour", "medium_id", "description", "html_description", "numeric_value", "meta_fields", "space_id"}
 
 func TestRatings(t *testing.T) {
 	// Setup Mock DB
@@ -93,7 +96,7 @@ func TestRatings(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "ratings" (.+) ORDER BY created_at asc`).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(ratingColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], ratingData["meta_fields"], 1))
 		mediumPreloadMock(mock)
 
 		resp := e.POST(path).
@@ -124,10 +127,10 @@ func RatingSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "ratings"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(ratingColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, ratingData["name"], ratingData["slug"], ratingData["background_colour"], ratingData["text_colour"], ratingData["medium_id"], ratingData["description"], ratingData["html_description"], ratingData["numeric_value"], ratingData["meta_fields"], 1))
 }
 
 func RatingCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "ratings"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "ratings"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
