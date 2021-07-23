@@ -12,11 +12,27 @@ import getError from '../utils/getError';
 import { addPodcasts } from './podcasts';
 
 export const getEpisodes = (query) => {
+  const params = new URLSearchParams();
+  if (query.podcast && query.podcast.length > 0) {
+    query.podcast.map((each) => params.append('podcast', each));
+  }
+  if (query.page) {
+    params.append('page', query.page);
+  }
+  if (query.limit) {
+    params.append('limit', query.limit);
+  }
+  if (query.sort) {
+    params.append('sort', query.sort);
+  }
+  if (query.q) {
+    params.append('q', query.q);
+  }
   return (dispatch) => {
     dispatch(loadingEpisodes());
     return axios
       .get(EPISODES_API, {
-        params: query,
+        params: params,
       })
       .then((response) => {
         dispatch(

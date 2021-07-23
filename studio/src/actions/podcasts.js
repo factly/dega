@@ -12,11 +12,30 @@ import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
 export const getPodcasts = (query) => {
+  const params = new URLSearchParams();
+  if (query.category && query.category.length > 0) {
+    query.category.map((each) => params.append('category', each));
+  }
+  if (query.language) {
+    params.append('language', query.language);
+  }
+  if (query.sort) {
+    params.append('sort', query.sort);
+  }
+  if (query.q) {
+    params.append('q', query.q);
+  }
+  if (query.page) {
+    params.append('page', query.page);
+  }
+  if (query.limit) {
+    params.append('limit', query.limit);
+  }
   return (dispatch) => {
     dispatch(loadingPodcasts());
     return axios
       .get(PODCASTS_API, {
-        params: query,
+        params: params,
       })
       .then((response) => {
         dispatch(
