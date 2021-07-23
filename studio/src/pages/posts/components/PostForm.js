@@ -265,13 +265,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
-                {!page ? (
-                  <Form.Item>
-                    <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                      Add Meta Data
-                    </Button>
-                  </Form.Item>
-                ) : null}
+                <Form.Item>
+                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                    Add Meta Data
+                  </Button>
+                </Form.Item>
                 <Form.Item>
                   <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
                     Code Injection
