@@ -41,8 +41,12 @@ html[data-theme='dark'] .docusaurus-highlight-code-line {
 }
 
 .contact-form--dark {
-    --ifm-footer-background-color: #303846;
-    --ifm-footer-color: var(--ifm-footer-link-color);
-    --ifm-footer-link-color: var(--ifm-color-secondary);
-    --ifm-footer-title-color: var(--ifm-color-white);
-  }
+  --ifm-footer-background-color: #303846;
+  --ifm-footer-color: var(--ifm-footer-link-color);
+  --ifm-footer-link-color: var(--ifm-color-secondary);
+  --ifm-footer-title-color: var(--ifm-color-white);
+}
+
+.hero--primary {
+  --ifm-hero-background-color: var(--ifm-color-info-darkest);
+}

@@ -45,7 +45,7 @@ export default function Home() {
   return (
     <Layout
       title={`${siteConfig.tagline}`}
-      description="VidCheck is an open source web platform that makes video fact-checking more standardized for fact-checkers, easy to read and understand for audiences, and scalable for platforms & fact-checkers.">
+      description="Written in Go & React. All publishing best practices built-in. For individual bloggers and scales to large organizations.">
       <HomepageHeader />
       <main>
         <Introduction />       

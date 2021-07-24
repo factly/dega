@@ -8,7 +8,7 @@ We think chat and forum discussions are [highly complementary](https://blog.disc
 
 ## Forum Discussions
 
-Our preferred method of communication is the [forum on GitHub Discussions](https://github.com/factly/vidcheck/discussions). Asynchronous long-form discussion enables our increasingly distributed team and community to communicate across multiple timezones with minimal repetition.
+Our preferred method of communication is the [forum on GitHub Discussions](https://github.com/factly/dega/discussions). Asynchronous long-form discussion enables our increasingly distributed team and community to communicate across multiple timezones with minimal repetition.
 
 Your project announcements, feature proposals, support queries and sweet, sweet praise all belong in the forum. This is a great place for in-depth discussions and lots of code examples, logs and similar data.
 
@@ -20,7 +20,7 @@ We have dedicated Slack channels for each of our projects at Factly Labs, so ple
 
 ## Report Issues
 
-Bug reports should be added as issues in our [GitHub repository](https://github.com/factly/vidcheck/issues). Please try to keep the issues as descriptive as possible to avoid any back and forth in understanding or replicating the issue.
+Bug reports should be added as issues in our [GitHub repository](https://github.com/factly/dega/issues). Please try to keep the issues as descriptive as possible to avoid any back and forth in understanding or replicating the issue.
 
 ## Social Media
 [Follow us on twitter](https://twitter.com/factlytech) to receive regular updates about work at Factly Tech Lab and the other open source projects we support.
