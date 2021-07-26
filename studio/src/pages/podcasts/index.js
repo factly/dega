@@ -8,6 +8,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { getPodcasts } from '../../actions/podcasts';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Selector from '../../components/Selector';
 
 function Podcasts({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -16,17 +17,34 @@ function Podcasts({ permission }) {
   const history = useHistory();
   const query = new URLSearchParams(useLocation().search);
 
-  const params = getUrlParams(query);
+  const keys = ['page', 'limit', 'q', 'sort', 'category', 'language'];
+  const params = getUrlParams(query, keys);
   const [filters, setFilters] = React.useState({
     ...params,
   });
 
   const pathName = useLocation().pathname;
+  let searchFilter = new URLSearchParams(useLocation().search);
 
   useEffect(() => {
+    keys.forEach((key) => {
+      if (searchFilter.has(key)) {
+        searchFilter.delete(key);
+      }
+    });
+    Object.keys(filters).forEach(function (key) {
+      if (key === 'category') {
+        searchFilter.delete(key);
+        filters[key].map((each) => {
+          return searchFilter.append(key, each);
+        });
+      } else {
+        searchFilter.set(key, filters[key]);
+      }
+    });
     history.push({
       pathname: pathName,
-      search: new URLSearchParams(filters).toString(),
+      search: '?' + searchFilter.toString(),
     });
   }, [history, filters]);
 
@@ -55,56 +73,83 @@ function Podcasts({ permission }) {
   const fetchPodcasts = () => {
     dispatch(getPodcasts(filters));
   };
+  const onSave = (values) => {
+    let filterValue = {};
+    if (values.language === 'all') {
+      values.language = null;
+    }
+    Object.keys(values).forEach(function (key) {
+      if (values[key]) {
+        if (key === 'category') {
+          if (values[key].length > 0) {
+            filterValue[key] = values[key];
+          }
+        } else {
+          filterValue[key] = values[key];
+        }
+      }
+    });
+    setFilters(filterValue);
+  };
+
   return (
     <Space direction="vertical">
-      <Row>
-        <Col span={8}>
-          <Link key="1" to="/podcasts/create">
-            <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-              Create New
-            </Button>
-          </Link>
-        </Col>
-        <Col span={8} offset={8}>
-          <Form
-            initialValues={filters}
-            form={form}
-            name="filters"
-            layout="inline"
-            onFinish={(values) => {
-              let filterValue = {};
-              Object.keys(values).forEach(function (key) {
-                if (values[key]) {
-                  filterValue[key] = values[key];
-                }
-              });
-              setFilters({
-                ...filters,
-                ...filterValue,
-              });
-            }}
-            style={{ maxWidth: '100%' }}
-            onValuesChange={(changedValues, allValues) => {
-              if (!changedValues.q) {
-                setFilters({ ...filters, ...changedValues });
-              }
-            }}
-          >
-            <Form.Item name="q" style={{ width: '35%' }}>
-              <Input placeholder="search podcasts" />
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        onFinish={(values) => onSave(values)}
+        style={{ maxWidth: '100%' }}
+        onValuesChange={(changedValues, allValues) => {
+          if (!changedValues.q) {
+            onSave(allValues);
+          }
+        }}
+      >
+        <Row gutter={24}>
+          <Col>
+            <Link key="1" to="/podcasts/create">
+              <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
+                Create New
+              </Button>
+            </Link>
+          </Col>
+          <Col key={2} span={9} offset={12}>
+            <div style={{ float: 'right' }}>
+              <Space direction="horizontal">
+                <Form.Item name="q">
+                  <Input placeholder="search podcasts" />
+                </Form.Item>
+                <Form.Item>
+                  <Button htmlType="submit">Search</Button>
+                </Form.Item>
+                <Form.Item name="sort" label="Sort" style={{ width: '100%' }}>
+                  <Select defaultValue="desc">
+                    <Option value="desc">Latest</Option>
+                    <Option value="asc">Old</Option>
+                  </Select>
+                </Form.Item>
+              </Space>
+            </div>
+          </Col>
+        </Row>
+        <Row gutter={2}>
+          <Col span={5}>
+            <Form.Item name="category" label="Categories">
+              <Selector mode="multiple" action="Categories" />
             </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit">Search</Button>
-            </Form.Item>
-            <Form.Item name="sort" label="Sort" style={{ width: '30%' }}>
-              <Select>
-                <Option value="desc">Latest</Option>
-                <Option value="asc">Old</Option>
+          </Col>
+          <Col span={5} offset={1}>
+            <Form.Item name="language" label="Language">
+              <Select defaultValue="all">
+                <Option value="all">All</Option>
+                <Option value="english">English</Option>
+                <Option value="telugu">Telugu</Option>
               </Select>
             </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
+        </Row>
+      </Form>
       <PodcastList
         actions={actions}
         data={{ podcasts: podcasts, total: total, loading: loading }}

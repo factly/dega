@@ -108,6 +108,11 @@ describe('Podcast component', () => {
           details: {},
           loading: false,
         },
+        categories: {
+          req: [],
+          details: {},
+          loading: false,
+        },
         spaces: {
           orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
           details: {
@@ -160,7 +165,7 @@ describe('Podcast component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/podcasts?limit=20&page=1&q=desc');
+      window.history.pushState({}, '', '/podcasts?limit=20&page=1&q=desc&category=1');
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -170,7 +175,18 @@ describe('Podcast component', () => {
           </Provider>,
         );
       });
-      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(4)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'english' } });
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Search');
+        submitButtom.simulate('submit');
+      });
+      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', category: [1] });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -194,11 +210,24 @@ describe('Podcast component', () => {
           .simulate('change', { target: { value: 'podcast' } });
         wrapper
           .find('FormItem')
+          .at(4)
+          .find('Select')
+          .props()
+          .onChange({ target: { value: 'all' } });
+        wrapper
+          .find('FormItem')
           .at(2)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: '' } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Selector')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [] } });
 
         const submitButtom = wrapper.find('Button').at(1);
         expect(submitButtom.text()).toBe('Search');

@@ -170,9 +170,9 @@ export const addPage = (data) => {
         if (page.medium) dispatch(addMediaList([page.medium]));
 
         dispatch(resetPages());
-        data.status === 'publish'
+        page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
-          : data.status === 'draft'
+          : page.status === 'draft'
           ? dispatch(addSuccessNotification('Page added'))
           : dispatch(addSuccessNotification('Page added & Ready to Publish'));
         return page;
@@ -204,9 +204,9 @@ export const updatePage = (data) => {
             medium: page.medium?.id,
           }),
         );
-        data.status === 'publish'
+        page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
-          : data.status === 'draft'
+          : page.status === 'draft'
           ? dispatch(addSuccessNotification('Draft Saved'))
           : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
       })
