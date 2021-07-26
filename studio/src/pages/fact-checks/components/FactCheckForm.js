@@ -95,9 +95,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   const onSave = (values) => {
     setShouldBlockNavigation(false);
-    if (values.meta) {
-      values.meta = getJsonValue(values.meta);
-    }
     if (values.meta_fields) {
       values.meta_fields = getJsonValue(values.meta_fields);
     }
@@ -126,9 +123,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
 
   if (data && data.id) {
     data.published_date = data.published_date ? moment(data.published_date) : null;
-    if (data.meta && typeof data.meta !== 'string') {
-      data.meta = JSON.stringify(data.meta);
-    }
     if (data.meta_fields && typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
     }
@@ -384,10 +378,16 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     Back
                   </Button>
                 </Form.Item>
-                <Form.Item name="meta_fields" label="Meta Fields">
-                  <MonacoEditor language="json" />
+                <Form.Item name={['meta', 'title']} label="Meta Title">
+                  <Input />
                 </Form.Item>
-                <Form.Item name="meta" label="Meta">
+                <Form.Item name={['meta', 'description']} label="Meta Description">
+                  <Input.TextArea />
+                </Form.Item>
+                <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="meta_fields" label="Meta Fields">
                   <MonacoEditor language="json" />
                 </Form.Item>
               </Drawer>

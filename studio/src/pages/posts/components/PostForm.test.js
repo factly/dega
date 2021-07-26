@@ -296,6 +296,11 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -355,6 +360,11 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -448,6 +458,7 @@ describe('Posts Create Form component', () => {
         status: 'ready',
         format: 1,
         published_date: null,
+        meta: {},
         description: {
           time: 1595747741807,
           blocks: [
@@ -510,6 +521,7 @@ describe('Posts Create Form component', () => {
           author_ids: [],
           category_ids: [],
           tag_ids: [],
+          meta: {},
           description: {
             time: 1595747741807,
             blocks: [
@@ -547,6 +559,7 @@ describe('Posts Create Form component', () => {
         categories: [1],
         tags: [1],
         authors: [1],
+        meta: {},
         description: {
           time: 1595747741807,
           blocks: [
@@ -610,6 +623,7 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          meta: {},
           description: {
             time: 1595747741807,
             blocks: [
@@ -672,6 +686,11 @@ describe('Posts Create Form component', () => {
           tag_ids: [1],
           authors: [1],
           author_ids: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -702,7 +721,9 @@ describe('Posts Create Form component', () => {
         sample: 'testing1',
       };
       data2.meta = {
-        meta: 'data1',
+        canonical_URL: undefined,
+        description: undefined,
+        title: undefined,
       };
       act(() => {
         wrapper = mount(
@@ -729,14 +750,16 @@ describe('Posts Create Form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(16).find('MonacoEditor');
+        const metaFieldData = wrapper.find('FormItem').at(19).find('MonacoEditor');
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
-        const metaData = wrapper.find('FormItem').at(17).find('MonacoEditor');
-        metaData.props().onChange({
-          target: { value: '{"meta":"data"}' },
-        });
+        const metaTitle = wrapper.find('FormItem').at(16).find('Input');
+        metaTitle.simulate('change', { target: { value: 'Meta title' } });
+        const metaDesc = wrapper.find('FormItem').at(17).find('TextArea');
+        metaDesc.simulate('change', { target: { value: 'Meta Description' } });
+        const metaUrl = wrapper.find('FormItem').at(18).find('Input');
+        metaUrl.simulate('change', { target: { value: 'Canonical url' } });
       });
 
       act(() => {
@@ -766,6 +789,11 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          meta: {
+            canonical_URL: 'Canonical url',
+            description: 'Meta Description',
+            title: 'Meta title',
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -785,9 +813,6 @@ describe('Posts Create Form component', () => {
               },
             ],
             version: '2.18.0',
-          },
-          meta: {
-            meta: 'data',
           },
           meta_fields: {
             sample: 'testing',
@@ -825,20 +850,20 @@ describe('Posts Create Form component', () => {
       });
 
       act(() => {
-        const headerData = wrapper.find('FormItem').at(19).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(21).find('MonacoEditor');
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
 
-        const footerData = wrapper.find('FormItem').at(20).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(22).find('MonacoEditor');
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(20).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -864,6 +889,11 @@ describe('Posts Create Form component', () => {
           category_ids: [1],
           tag_ids: [1],
           tags: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [

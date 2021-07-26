@@ -68,9 +68,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const onSave = (values) => {
     setShouldBlockNavigation(false);
-    if (values.meta) {
-      values.meta = getJsonValue(values.meta);
-    }
     if (values.meta_fields) {
       values.meta_fields = getJsonValue(values.meta_fields);
     }
@@ -97,9 +94,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   if (data && data.id) {
     data.published_date = data.published_date ? moment(data.published_date) : null;
-    if (data.meta && typeof data.meta !== 'string') {
-      data.meta = JSON.stringify(data.meta);
-    }
     if (data.meta_fields && typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
     }
@@ -271,13 +265,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name="authors" label="Authors">
                   <Selector mode="multiple" display={'email'} action="Authors" />
                 </Form.Item>
-                {!page ? (
-                  <Form.Item>
-                    <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                      Add Meta Data
-                    </Button>
-                  </Form.Item>
-                ) : null}
+                <Form.Item>
+                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                    Add Meta Data
+                  </Button>
+                </Form.Item>
                 <Form.Item>
                   <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
                     Code Injection
@@ -301,10 +293,16 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     Back
                   </Button>
                 </Form.Item>
-                <Form.Item name="meta_fields" label="Meta Fields">
-                  <MonacoEditor language="json" />
+                <Form.Item name={['meta', 'title']} label="Meta Title">
+                  <Input />
                 </Form.Item>
-                <Form.Item name="meta" label="Meta">
+                <Form.Item name={['meta', 'description']} label="Meta Description">
+                  <Input.TextArea />
+                </Form.Item>
+                <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="meta_fields" label="Meta Fields">
                   <MonacoEditor language="json" />
                 </Form.Item>
               </Drawer>

@@ -8137,6 +8137,644 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                         </Row>
                                                       </FormItem>
                                                       <FormItem
+                                                        label="Meta Title"
+                                                        name={
+                                                          Array [
+                                                            "meta",
+                                                            "title",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <WrapperField
+                                                          label="Meta Title"
+                                                          messageVariables={
+                                                            Object {
+                                                              "label": "Meta Title",
+                                                            }
+                                                          }
+                                                          name={
+                                                            Array [
+                                                              "meta",
+                                                              "title",
+                                                            ]
+                                                          }
+                                                          onReset={[Function]}
+                                                          trigger="onChange"
+                                                          validateTrigger="onChange"
+                                                        >
+                                                          <Field
+                                                            fieldContext={
+                                                              Object {
+                                                                "__INTERNAL__": Object {
+                                                                  "itemRef": [Function],
+                                                                  "name": undefined,
+                                                                },
+                                                                "getFieldError": [Function],
+                                                                "getFieldInstance": [Function],
+                                                                "getFieldValue": [Function],
+                                                                "getFieldsError": [Function],
+                                                                "getFieldsValue": [Function],
+                                                                "getInternalHooks": [Function],
+                                                                "isFieldTouched": [Function],
+                                                                "isFieldValidating": [Function],
+                                                                "isFieldsTouched": [Function],
+                                                                "isFieldsValidating": [Function],
+                                                                "resetFields": [Function],
+                                                                "scrollToField": [Function],
+                                                                "setFields": [Function],
+                                                                "setFieldsValue": [Function],
+                                                                "submit": [Function],
+                                                                "validateFields": [Function],
+                                                                "validateTrigger": "onChange",
+                                                              }
+                                                            }
+                                                            key="_meta_title"
+                                                            label="Meta Title"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Meta Title",
+                                                              }
+                                                            }
+                                                            name={
+                                                              Array [
+                                                                "meta",
+                                                                "title",
+                                                              ]
+                                                            }
+                                                            onReset={[Function]}
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                            valuePropName="value"
+                                                          >
+                                                            <Row
+                                                              className="ant-form-item"
+                                                              key="row"
+                                                            >
+                                                              <div
+                                                                className="ant-row ant-form-item"
+                                                                style={Object {}}
+                                                              >
+                                                                <FormItemLabel
+                                                                  htmlFor="meta_title"
+                                                                  label="Meta Title"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "title",
+                                                                    ]
+                                                                  }
+                                                                  prefixCls="ant-form"
+                                                                  required={false}
+                                                                  requiredMark={true}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-label"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-label"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <label
+                                                                        className=""
+                                                                        htmlFor="meta_title"
+                                                                        title="Meta Title"
+                                                                      >
+                                                                        Meta Title
+                                                                      </label>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemLabel>
+                                                                <FormItemInput
+                                                                  errors={Array []}
+                                                                  label="Meta Title"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "title",
+                                                                    ]
+                                                                  }
+                                                                  onDomErrorVisibleChange={[Function]}
+                                                                  prefixCls="ant-form"
+                                                                  status=""
+                                                                  touched={false}
+                                                                  validateStatus=""
+                                                                  validating={false}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-control"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-control"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-form-item-control-input"
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input-content"
+                                                                        >
+                                                                          <Component
+                                                                            update={1}
+                                                                          >
+                                                                            <Input
+                                                                              id="meta_title"
+                                                                              onChange={[Function]}
+                                                                              type="text"
+                                                                            >
+                                                                              <ClearableLabeledInput
+                                                                                bordered={true}
+                                                                                element={
+                                                                                  <input
+                                                                                    className="ant-input"
+                                                                                    id="meta_title"
+                                                                                    onBlur={[Function]}
+                                                                                    onChange={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    onKeyDown={[Function]}
+                                                                                    type="text"
+                                                                                  />
+                                                                                }
+                                                                                focused={false}
+                                                                                handleReset={[Function]}
+                                                                                id="meta_title"
+                                                                                inputType="input"
+                                                                                onChange={[Function]}
+                                                                                prefixCls="ant-input"
+                                                                                triggerFocus={[Function]}
+                                                                                type="text"
+                                                                                value=""
+                                                                              >
+                                                                                <input
+                                                                                  className="ant-input"
+                                                                                  id="meta_title"
+                                                                                  onBlur={[Function]}
+                                                                                  onChange={[Function]}
+                                                                                  onFocus={[Function]}
+                                                                                  onKeyDown={[Function]}
+                                                                                  type="text"
+                                                                                  value=""
+                                                                                />
+                                                                              </ClearableLabeledInput>
+                                                                            </Input>
+                                                                          </Component>
+                                                                        </div>
+                                                                      </div>
+                                                                      <ErrorList
+                                                                        errors={Array []}
+                                                                        onDomErrorVisibleChange={[Function]}
+                                                                      >
+                                                                        <CSSMotion
+                                                                          motionAppear={true}
+                                                                          motionDeadline={500}
+                                                                          motionName="ant-show-help"
+                                                                          onLeaveEnd={[Function]}
+                                                                          removeOnLeave={true}
+                                                                          visible={false}
+                                                                        >
+                                                                          <DomWrapper />
+                                                                        </CSSMotion>
+                                                                      </ErrorList>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemInput>
+                                                              </div>
+                                                            </Row>
+                                                          </Field>
+                                                        </WrapperField>
+                                                      </FormItem>
+                                                      <FormItem
+                                                        label="Meta Description"
+                                                        name={
+                                                          Array [
+                                                            "meta",
+                                                            "description",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <WrapperField
+                                                          label="Meta Description"
+                                                          messageVariables={
+                                                            Object {
+                                                              "label": "Meta Description",
+                                                            }
+                                                          }
+                                                          name={
+                                                            Array [
+                                                              "meta",
+                                                              "description",
+                                                            ]
+                                                          }
+                                                          onReset={[Function]}
+                                                          trigger="onChange"
+                                                          validateTrigger="onChange"
+                                                        >
+                                                          <Field
+                                                            fieldContext={
+                                                              Object {
+                                                                "__INTERNAL__": Object {
+                                                                  "itemRef": [Function],
+                                                                  "name": undefined,
+                                                                },
+                                                                "getFieldError": [Function],
+                                                                "getFieldInstance": [Function],
+                                                                "getFieldValue": [Function],
+                                                                "getFieldsError": [Function],
+                                                                "getFieldsValue": [Function],
+                                                                "getInternalHooks": [Function],
+                                                                "isFieldTouched": [Function],
+                                                                "isFieldValidating": [Function],
+                                                                "isFieldsTouched": [Function],
+                                                                "isFieldsValidating": [Function],
+                                                                "resetFields": [Function],
+                                                                "scrollToField": [Function],
+                                                                "setFields": [Function],
+                                                                "setFieldsValue": [Function],
+                                                                "submit": [Function],
+                                                                "validateFields": [Function],
+                                                                "validateTrigger": "onChange",
+                                                              }
+                                                            }
+                                                            key="_meta_description"
+                                                            label="Meta Description"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Meta Description",
+                                                              }
+                                                            }
+                                                            name={
+                                                              Array [
+                                                                "meta",
+                                                                "description",
+                                                              ]
+                                                            }
+                                                            onReset={[Function]}
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                            valuePropName="value"
+                                                          >
+                                                            <Row
+                                                              className="ant-form-item"
+                                                              key="row"
+                                                            >
+                                                              <div
+                                                                className="ant-row ant-form-item"
+                                                                style={Object {}}
+                                                              >
+                                                                <FormItemLabel
+                                                                  htmlFor="meta_description"
+                                                                  label="Meta Description"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "description",
+                                                                    ]
+                                                                  }
+                                                                  prefixCls="ant-form"
+                                                                  required={false}
+                                                                  requiredMark={true}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-label"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-label"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <label
+                                                                        className=""
+                                                                        htmlFor="meta_description"
+                                                                        title="Meta Description"
+                                                                      >
+                                                                        Meta Description
+                                                                      </label>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemLabel>
+                                                                <FormItemInput
+                                                                  errors={Array []}
+                                                                  label="Meta Description"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "description",
+                                                                    ]
+                                                                  }
+                                                                  onDomErrorVisibleChange={[Function]}
+                                                                  prefixCls="ant-form"
+                                                                  status=""
+                                                                  touched={false}
+                                                                  validateStatus=""
+                                                                  validating={false}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-control"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-control"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-form-item-control-input"
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input-content"
+                                                                        >
+                                                                          <Component
+                                                                            update={1}
+                                                                          >
+                                                                            <ForwardRef
+                                                                              id="meta_description"
+                                                                              onChange={[Function]}
+                                                                            >
+                                                                              <ClearableLabeledInput
+                                                                                bordered={true}
+                                                                                element={
+                                                                                  <TextArea
+                                                                                    className=""
+                                                                                    id="meta_description"
+                                                                                    onChange={[Function]}
+                                                                                    onCompositionEnd={[Function]}
+                                                                                    onCompositionStart={[Function]}
+                                                                                    prefixCls="ant-input"
+                                                                                  />
+                                                                                }
+                                                                                handleReset={[Function]}
+                                                                                id="meta_description"
+                                                                                inputType="text"
+                                                                                prefixCls="ant-input"
+                                                                                value=""
+                                                                              >
+                                                                                <TextArea
+                                                                                  className=""
+                                                                                  id="meta_description"
+                                                                                  onChange={[Function]}
+                                                                                  onCompositionEnd={[Function]}
+                                                                                  onCompositionStart={[Function]}
+                                                                                  prefixCls="ant-input"
+                                                                                  value=""
+                                                                                >
+                                                                                  <ResizableTextArea
+                                                                                    className=""
+                                                                                    id="meta_description"
+                                                                                    onChange={[Function]}
+                                                                                    onCompositionEnd={[Function]}
+                                                                                    onCompositionStart={[Function]}
+                                                                                    onKeyDown={[Function]}
+                                                                                    prefixCls="ant-input"
+                                                                                    value=""
+                                                                                  >
+                                                                                    <ResizeObserver
+                                                                                      disabled={true}
+                                                                                      onResize={[Function]}
+                                                                                    >
+                                                                                      <textarea
+                                                                                        className="ant-input"
+                                                                                        id="meta_description"
+                                                                                        onChange={[Function]}
+                                                                                        onCompositionEnd={[Function]}
+                                                                                        onCompositionStart={[Function]}
+                                                                                        onKeyDown={[Function]}
+                                                                                        style={Object {}}
+                                                                                        value=""
+                                                                                      />
+                                                                                    </ResizeObserver>
+                                                                                  </ResizableTextArea>
+                                                                                </TextArea>
+                                                                              </ClearableLabeledInput>
+                                                                            </ForwardRef>
+                                                                          </Component>
+                                                                        </div>
+                                                                      </div>
+                                                                      <ErrorList
+                                                                        errors={Array []}
+                                                                        onDomErrorVisibleChange={[Function]}
+                                                                      >
+                                                                        <CSSMotion
+                                                                          motionAppear={true}
+                                                                          motionDeadline={500}
+                                                                          motionName="ant-show-help"
+                                                                          onLeaveEnd={[Function]}
+                                                                          removeOnLeave={true}
+                                                                          visible={false}
+                                                                        >
+                                                                          <DomWrapper />
+                                                                        </CSSMotion>
+                                                                      </ErrorList>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemInput>
+                                                              </div>
+                                                            </Row>
+                                                          </Field>
+                                                        </WrapperField>
+                                                      </FormItem>
+                                                      <FormItem
+                                                        label="Canonical URL"
+                                                        name={
+                                                          Array [
+                                                            "meta",
+                                                            "canonical_URL",
+                                                          ]
+                                                        }
+                                                      >
+                                                        <WrapperField
+                                                          label="Canonical URL"
+                                                          messageVariables={
+                                                            Object {
+                                                              "label": "Canonical URL",
+                                                            }
+                                                          }
+                                                          name={
+                                                            Array [
+                                                              "meta",
+                                                              "canonical_URL",
+                                                            ]
+                                                          }
+                                                          onReset={[Function]}
+                                                          trigger="onChange"
+                                                          validateTrigger="onChange"
+                                                        >
+                                                          <Field
+                                                            fieldContext={
+                                                              Object {
+                                                                "__INTERNAL__": Object {
+                                                                  "itemRef": [Function],
+                                                                  "name": undefined,
+                                                                },
+                                                                "getFieldError": [Function],
+                                                                "getFieldInstance": [Function],
+                                                                "getFieldValue": [Function],
+                                                                "getFieldsError": [Function],
+                                                                "getFieldsValue": [Function],
+                                                                "getInternalHooks": [Function],
+                                                                "isFieldTouched": [Function],
+                                                                "isFieldValidating": [Function],
+                                                                "isFieldsTouched": [Function],
+                                                                "isFieldsValidating": [Function],
+                                                                "resetFields": [Function],
+                                                                "scrollToField": [Function],
+                                                                "setFields": [Function],
+                                                                "setFieldsValue": [Function],
+                                                                "submit": [Function],
+                                                                "validateFields": [Function],
+                                                                "validateTrigger": "onChange",
+                                                              }
+                                                            }
+                                                            key="_meta_canonical_URL"
+                                                            label="Canonical URL"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Canonical URL",
+                                                              }
+                                                            }
+                                                            name={
+                                                              Array [
+                                                                "meta",
+                                                                "canonical_URL",
+                                                              ]
+                                                            }
+                                                            onReset={[Function]}
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                            valuePropName="value"
+                                                          >
+                                                            <Row
+                                                              className="ant-form-item"
+                                                              key="row"
+                                                            >
+                                                              <div
+                                                                className="ant-row ant-form-item"
+                                                                style={Object {}}
+                                                              >
+                                                                <FormItemLabel
+                                                                  htmlFor="meta_canonical_URL"
+                                                                  label="Canonical URL"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "canonical_URL",
+                                                                    ]
+                                                                  }
+                                                                  prefixCls="ant-form"
+                                                                  required={false}
+                                                                  requiredMark={true}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-label"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-label"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <label
+                                                                        className=""
+                                                                        htmlFor="meta_canonical_URL"
+                                                                        title="Canonical URL"
+                                                                      >
+                                                                        Canonical URL
+                                                                      </label>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemLabel>
+                                                                <FormItemInput
+                                                                  errors={Array []}
+                                                                  label="Canonical URL"
+                                                                  name={
+                                                                    Array [
+                                                                      "meta",
+                                                                      "canonical_URL",
+                                                                    ]
+                                                                  }
+                                                                  onDomErrorVisibleChange={[Function]}
+                                                                  prefixCls="ant-form"
+                                                                  status=""
+                                                                  touched={false}
+                                                                  validateStatus=""
+                                                                  validating={false}
+                                                                >
+                                                                  <Col
+                                                                    className="ant-form-item-control"
+                                                                  >
+                                                                    <div
+                                                                      className="ant-col ant-form-item-control"
+                                                                      style={Object {}}
+                                                                    >
+                                                                      <div
+                                                                        className="ant-form-item-control-input"
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input-content"
+                                                                        >
+                                                                          <Component
+                                                                            update={1}
+                                                                          >
+                                                                            <Input
+                                                                              id="meta_canonical_URL"
+                                                                              onChange={[Function]}
+                                                                              type="text"
+                                                                            >
+                                                                              <ClearableLabeledInput
+                                                                                bordered={true}
+                                                                                element={
+                                                                                  <input
+                                                                                    className="ant-input"
+                                                                                    id="meta_canonical_URL"
+                                                                                    onBlur={[Function]}
+                                                                                    onChange={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    onKeyDown={[Function]}
+                                                                                    type="text"
+                                                                                  />
+                                                                                }
+                                                                                focused={false}
+                                                                                handleReset={[Function]}
+                                                                                id="meta_canonical_URL"
+                                                                                inputType="input"
+                                                                                onChange={[Function]}
+                                                                                prefixCls="ant-input"
+                                                                                triggerFocus={[Function]}
+                                                                                type="text"
+                                                                                value=""
+                                                                              >
+                                                                                <input
+                                                                                  className="ant-input"
+                                                                                  id="meta_canonical_URL"
+                                                                                  onBlur={[Function]}
+                                                                                  onChange={[Function]}
+                                                                                  onFocus={[Function]}
+                                                                                  onKeyDown={[Function]}
+                                                                                  type="text"
+                                                                                  value=""
+                                                                                />
+                                                                              </ClearableLabeledInput>
+                                                                            </Input>
+                                                                          </Component>
+                                                                        </div>
+                                                                      </div>
+                                                                      <ErrorList
+                                                                        errors={Array []}
+                                                                        onDomErrorVisibleChange={[Function]}
+                                                                      >
+                                                                        <CSSMotion
+                                                                          motionAppear={true}
+                                                                          motionDeadline={500}
+                                                                          motionName="ant-show-help"
+                                                                          onLeaveEnd={[Function]}
+                                                                          removeOnLeave={true}
+                                                                          visible={false}
+                                                                        >
+                                                                          <DomWrapper />
+                                                                        </CSSMotion>
+                                                                      </ErrorList>
+                                                                    </div>
+                                                                  </Col>
+                                                                </FormItemInput>
+                                                              </div>
+                                                            </Row>
+                                                          </Field>
+                                                        </WrapperField>
+                                                      </FormItem>
+                                                      <FormItem
                                                         label="Meta Fields"
                                                         name="meta_fields"
                                                       >
@@ -8261,184 +8899,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                           >
                                                                             <MONACOEditor
                                                                               id="meta_fields"
-                                                                              language="json"
-                                                                              onChange={[Function]}
-                                                                            >
-                                                                              <MonacoEditor
-                                                                                height="240"
-                                                                                language="json"
-                                                                                onChange={[Function]}
-                                                                                options={
-                                                                                  Object {
-                                                                                    "autoClosingBrackets": "never",
-                                                                                    "autoClosingQuotes": "never",
-                                                                                    "cursorBlinking": "smooth",
-                                                                                    "folding": true,
-                                                                                    "lineNumbersMinChars": 4,
-                                                                                    "minimap": Object {
-                                                                                      "enabled": false,
-                                                                                    },
-                                                                                    "scrollBeyondLastLine": false,
-                                                                                    "theme": "vs-dark",
-                                                                                    "wordWrap": "on",
-                                                                                  }
-                                                                                }
-                                                                                width={440}
-                                                                              >
-                                                                                <div />
-                                                                              </MonacoEditor>
-                                                                            </MONACOEditor>
-                                                                          </Component>
-                                                                        </div>
-                                                                      </div>
-                                                                      <ErrorList
-                                                                        errors={Array []}
-                                                                        onDomErrorVisibleChange={[Function]}
-                                                                      >
-                                                                        <CSSMotion
-                                                                          motionAppear={true}
-                                                                          motionDeadline={500}
-                                                                          motionName="ant-show-help"
-                                                                          onLeaveEnd={[Function]}
-                                                                          removeOnLeave={true}
-                                                                          visible={false}
-                                                                        >
-                                                                          <DomWrapper />
-                                                                        </CSSMotion>
-                                                                      </ErrorList>
-                                                                    </div>
-                                                                  </Col>
-                                                                </FormItemInput>
-                                                              </div>
-                                                            </Row>
-                                                          </Field>
-                                                        </WrapperField>
-                                                      </FormItem>
-                                                      <FormItem
-                                                        label="Meta"
-                                                        name="meta"
-                                                      >
-                                                        <WrapperField
-                                                          label="Meta"
-                                                          messageVariables={
-                                                            Object {
-                                                              "label": "Meta",
-                                                            }
-                                                          }
-                                                          name="meta"
-                                                          onReset={[Function]}
-                                                          trigger="onChange"
-                                                          validateTrigger="onChange"
-                                                        >
-                                                          <Field
-                                                            fieldContext={
-                                                              Object {
-                                                                "__INTERNAL__": Object {
-                                                                  "itemRef": [Function],
-                                                                  "name": undefined,
-                                                                },
-                                                                "getFieldError": [Function],
-                                                                "getFieldInstance": [Function],
-                                                                "getFieldValue": [Function],
-                                                                "getFieldsError": [Function],
-                                                                "getFieldsValue": [Function],
-                                                                "getInternalHooks": [Function],
-                                                                "isFieldTouched": [Function],
-                                                                "isFieldValidating": [Function],
-                                                                "isFieldsTouched": [Function],
-                                                                "isFieldsValidating": [Function],
-                                                                "resetFields": [Function],
-                                                                "scrollToField": [Function],
-                                                                "setFields": [Function],
-                                                                "setFieldsValue": [Function],
-                                                                "submit": [Function],
-                                                                "validateFields": [Function],
-                                                                "validateTrigger": "onChange",
-                                                              }
-                                                            }
-                                                            key="_meta"
-                                                            label="Meta"
-                                                            messageVariables={
-                                                              Object {
-                                                                "label": "Meta",
-                                                              }
-                                                            }
-                                                            name={
-                                                              Array [
-                                                                "meta",
-                                                              ]
-                                                            }
-                                                            onReset={[Function]}
-                                                            trigger="onChange"
-                                                            validateTrigger="onChange"
-                                                            valuePropName="value"
-                                                          >
-                                                            <Row
-                                                              className="ant-form-item"
-                                                              key="row"
-                                                            >
-                                                              <div
-                                                                className="ant-row ant-form-item"
-                                                                style={Object {}}
-                                                              >
-                                                                <FormItemLabel
-                                                                  htmlFor="meta"
-                                                                  label="Meta"
-                                                                  name="meta"
-                                                                  prefixCls="ant-form"
-                                                                  required={false}
-                                                                  requiredMark={true}
-                                                                >
-                                                                  <Col
-                                                                    className="ant-form-item-label"
-                                                                  >
-                                                                    <div
-                                                                      className="ant-col ant-form-item-label"
-                                                                      style={Object {}}
-                                                                    >
-                                                                      <label
-                                                                        className=""
-                                                                        htmlFor="meta"
-                                                                        title="Meta"
-                                                                      >
-                                                                        Meta
-                                                                      </label>
-                                                                    </div>
-                                                                  </Col>
-                                                                </FormItemLabel>
-                                                                <FormItemInput
-                                                                  errors={Array []}
-                                                                  label="Meta"
-                                                                  name={
-                                                                    Array [
-                                                                      "meta",
-                                                                    ]
-                                                                  }
-                                                                  onDomErrorVisibleChange={[Function]}
-                                                                  prefixCls="ant-form"
-                                                                  status=""
-                                                                  touched={false}
-                                                                  validateStatus=""
-                                                                  validating={false}
-                                                                >
-                                                                  <Col
-                                                                    className="ant-form-item-control"
-                                                                  >
-                                                                    <div
-                                                                      className="ant-col ant-form-item-control"
-                                                                      style={Object {}}
-                                                                    >
-                                                                      <div
-                                                                        className="ant-form-item-control-input"
-                                                                      >
-                                                                        <div
-                                                                          className="ant-form-item-control-input-content"
-                                                                        >
-                                                                          <Component
-                                                                            update={1}
-                                                                          >
-                                                                            <MONACOEditor
-                                                                              id="meta"
                                                                               language="json"
                                                                               onChange={[Function]}
                                                                             >
