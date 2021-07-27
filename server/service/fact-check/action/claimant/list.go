@@ -63,6 +63,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	if all == "true" {
 		err = tx.Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	} else if searchQuery != "" {
 
 		if config.SearchEnabled() {
