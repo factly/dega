@@ -20,6 +20,12 @@ archives:
       windows: Windows
       386: i386
       amd64: x86_64
+dockers:
+-
+  dockerfile: Dockerfile.prod
+  image_templates:
+    - "hetpatel572/dega-server:{{ .Tag }}"
+  use: docker
 checksum:
   name_template: 'checksums.txt'
 snapshot:
