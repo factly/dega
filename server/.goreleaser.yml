@@ -27,6 +27,10 @@ dockers:
   image_templates:
     - "hetpatel572/dega-server:{{ .Tag }}"
   use: docker
+docker_manifests:
+- name_template: foo/bar:{{ .Version }}
+  image_templates:
+  - foo/bar:{{ .Version }}
 checksum:
   name_template: 'checksums.txt'
 snapshot:
