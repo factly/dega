@@ -27,6 +27,8 @@ dockers:
   image_templates:
     - "hetpatel572/dega-server:{{ .Tag }}"
   use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
 docker_manifests:
 - name_template: foo/bar:{{ .Version }}
   image_templates:
