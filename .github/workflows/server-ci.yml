@@ -32,8 +32,8 @@ jobs:
         working-directory: ${{env.working-directory}}
       - run: golangci-lint run  ./...
         working-directory: ${{env.working-directory}}
-      - run: go test ./test/... -coverpkg ./service/... -coverprofile=cov.out
-        working-directory: ${{env.working-directory}}
+      # - run: go test ./test/... -coverpkg ./service/... -coverprofile=cov.out
+      #   working-directory: ${{env.working-directory}}
       - name: Analyze with SonarCloud
         uses: sonarsource/sonarcloud-github-action@master
         with:
