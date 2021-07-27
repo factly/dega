@@ -43,8 +43,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
-        if: startsWith(github.ref, 'refs/tags/')
         with:
+          projectBaseDir: ${{env.working-directory}}
           distribution: goreleaser
           version: latest
           args: release --rm-dist
