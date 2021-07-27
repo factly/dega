@@ -36,11 +36,7 @@ var reindexCommand = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		if err = AddPosts(false); err != nil {
-			log.Fatal(err)
-		}
-
-		if err = AddPosts(true); err != nil {
+		if err = AddPosts(); err != nil {
 			log.Fatal(err)
 		}
 
@@ -86,9 +82,9 @@ var reindexCommand = &cobra.Command{
 	},
 }
 
-func AddPosts(page bool) error {
+func AddPosts() error {
 	posts := make([]model.Post, 0)
-	config.DB.Model(&model.Post{}).Where("is_page = ?", page).Preload("Format").Preload("Tags").Preload("Categories").Find(&posts)
+	config.DB.Model(&model.Post{}).Preload("Format").Preload("Tags").Preload("Categories").Find(&posts)
 
 	postAuthorMap := make(map[uint][]uint)
 	postAuthors := make([]model.PostAuthor, 0)
@@ -144,7 +140,7 @@ func AddPosts(page bool) error {
 			"author_ids":     postAuthorMap[p.ID],
 		}
 
-		if page {
+		if p.IsPage {
 			meiliObj["object_id"] = fmt.Sprint("page_", p.ID)
 			meiliObj["kind"] = "page"
 		}
