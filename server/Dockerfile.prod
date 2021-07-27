@@ -6,12 +6,9 @@ RUN apk add --no-cache git
 WORKDIR /tmp/dega-server
 
 # We want to populate the module cache based on the go.{mod,sum} files.
-COPY go.mod .
-COPY go.sum .
+COPY . .
 
 RUN go mod download
-
-COPY . .
 
 # Unit tests
 # RUN CGO_ENABLED=0 go test -v
