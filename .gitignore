@@ -185,4 +185,5 @@ coverage
 api/server
 server/server
 
+*.db
 dist/
