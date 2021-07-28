@@ -21,7 +21,7 @@ archives:
   - id: dega-server
     builds:
       - dega-server 
-    name_template: "{{ .Id }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "dega-server_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
     replacements:
       darwin: Darwin
       linux: Linux
