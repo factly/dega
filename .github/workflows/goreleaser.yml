@@ -8,7 +8,17 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-    - run: pwd && ls -la
+    - uses: actions/checkout@v2
+    - name: Use Go
+      uses: actions/setup-go@v2
+      id: setup_go
+      with:
+        go-version: '1.13'
+    - name: Cache go-modules
+      uses: actions/cache@v1
+      with:
+        path: ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
