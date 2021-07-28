@@ -38,9 +38,9 @@ dockers:
   - "--platform=linux/amd64"
 
 docker_manifests:
-- name_template: "hetpatel572/dega-server:{{ .Version }}"
-  image_templates:
-  - "hetpatel572/dega-server:{{ .Version }}"
+  - 
+    image_templates:
+    - "hetpatel572/dega-server:{{ .Version }}"
 
 checksum:
   name_template: 'checksums.txt'
