@@ -20,7 +20,7 @@ jobs:
         path: ~/go/pkg/mod
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
     - name: Login Docker Hub
-      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u factly --password-stdin
+      run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u deshetti --password-stdin
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:

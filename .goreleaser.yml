@@ -32,7 +32,7 @@ archives:
 dockers:
 - dockerfile: server/Dockerfile.prod
   image_templates:
-    - "hetpatel572/dega-server:{{ .Tag }}"
+    - "factly/dega-server:{{ .Tag }}"
   use: docker
   build_flag_templates:
   - "--platform=linux/amd64"
@@ -40,7 +40,7 @@ dockers:
 docker_manifests:
   - 
     image_templates:
-    - "hetpatel572/dega-server:{{ .Version }}"
+    - "factly/dega-server:{{ .Version }}"
 
 checksum:
   name_template: 'checksums.txt'
