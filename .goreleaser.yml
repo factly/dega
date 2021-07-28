@@ -38,7 +38,7 @@ dockers:
   - "--platform=linux/amd64"
 
 docker_manifests:
-  - 
+  - name_template: "factly/dega-server:{{ .Version }}"
     image_templates:
     - "factly/dega-server:{{ .Version }}"
 
