@@ -4,11 +4,11 @@ on:
     tags:
       - '*'
 
-
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
     steps:
+    - run: pwd
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
