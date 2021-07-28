@@ -8,6 +8,7 @@ builds:
   binary: dega-server
   env:
   - CGO_ENABLED=0
+  - GO386=softfloat
   goos:
   - linux
   - darwin
@@ -17,6 +18,7 @@ builds:
   binary: dega-api
   env:
   - CGO_ENABLED=0
+  - GO386=softfloat
   goos:
   - linux
   - darwin
@@ -26,6 +28,7 @@ builds:
   binary: dega-templates
   env:
   - CGO_ENABLED=0
+  - GO386=softfloat
   goos:
   - linux
   - darwin
