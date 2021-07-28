@@ -1,3 +1,4 @@
+# Start fresh from a smaller image
 FROM alpine:3.9 
 RUN apk add ca-certificates
 
@@ -5,5 +6,4 @@ WORKDIR /app
 COPY . .
 
 # Run the binary program produced by `go install`
-ENTRYPOINT ["/app/dega-api"]
-CMD ["serve"]
+ENTRYPOINT ["/app/dega-templates"]

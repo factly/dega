@@ -12,22 +12,38 @@ builds:
   - linux
   - darwin
   - windows
-  goarch:
-  - amd64
-  - arm
-  - arm64
+- id: dega-api
+  dir: api
+  binary: dega-api
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  - darwin
+  - windows
+- id: dega-templates
+  dir: templates
+  binary: dega-templates
+  env:
+  - CGO_ENABLED=0
+  goos:
+  - linux
+  - darwin
+  - windows
 
 archives:
   - id: dega-server
     builds:
       - dega-server 
     name_template: "dega-server_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
-    replacements:
-      darwin: Darwin
-      linux: Linux
-      windows: Windows
-      386: i386
-      amd64: x86_64
+  - id: dega-api
+    builds:
+      - dega-api 
+    name_template: "dega-api{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+  - id: dega-templates
+    builds:
+      - dega-templates 
+    name_template: "dega-templates{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
 dockers:
 - dockerfile: server/Dockerfile.prod
@@ -36,11 +52,38 @@ dockers:
   use: docker
   build_flag_templates:
   - "--platform=linux/amd64"
+- dockerfile: api/Dockerfile.prod
+  image_templates:
+    - "factly/dega-api:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
+- dockerfile: templates/Dockerfile.prod
+  image_templates:
+    - "factly/dega-templates:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
+- dockerfile: studio/Dockerfile.prod
+  image_templates:
+    - "factly/dega-studio:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
 
 docker_manifests:
   - name_template: "factly/dega-server:{{ .Version }}"
     image_templates:
     - "factly/dega-server:{{ .Version }}"
+  - name_template: "factly/dega-api:{{ .Version }}"
+    image_templates:
+    - "factly/dega-api:{{ .Version }}"
+  - name_template: "factly/dega-templates:{{ .Version }}"
+    image_templates:
+    - "factly/dega-templates:{{ .Version }}"
+  - name_template: "factly/dega-studio:{{ .Version }}"
+    image_templates:
+    - "factly/dega-studio:{{ .Version }}"
 
 checksum:
   name_template: 'checksums.txt'
