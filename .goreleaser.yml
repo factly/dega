@@ -67,12 +67,6 @@ dockers:
   use: docker
   build_flag_templates:
   - "--platform=linux/amd64"
-- dockerfile: studio/Dockerfile.prod
-  image_templates:
-    - "factly/dega-studio:{{ .Tag }}"
-  use: docker
-  build_flag_templates:
-  - "--platform=linux/amd64"
 
 docker_manifests:
   - name_template: "factly/dega-server:{{ .Version }}"
@@ -84,9 +78,6 @@ docker_manifests:
   - name_template: "factly/dega-templates:{{ .Version }}"
     image_templates:
     - "factly/dega-templates:{{ .Version }}"
-  - name_template: "factly/dega-studio:{{ .Version }}"
-    image_templates:
-    - "factly/dega-studio:{{ .Version }}"
 
 checksum:
   name_template: 'checksums.txt'

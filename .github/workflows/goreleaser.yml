@@ -1,4 +1,4 @@
-name: Resease CI
+name: Release CI
 on:
   push:
     tags:
