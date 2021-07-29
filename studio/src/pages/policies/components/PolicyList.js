@@ -39,7 +39,24 @@ function PolicyList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name', width: '20%' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/policies/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Description',
       dataIndex: 'description',
@@ -77,29 +94,17 @@ function PolicyList({ actions }) {
       width: '15%',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/policies/${record.id}/edit`}
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
+          >
+            <Button
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
             >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Are you sure you want to delete this?"
-              onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
-            >
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
-              >
-                Delete
-              </Button>
-            </Popconfirm>
-          </span>
+              Delete
+            </Button>
+          </Popconfirm>
         );
       },
     },

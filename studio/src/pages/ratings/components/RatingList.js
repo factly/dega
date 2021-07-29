@@ -39,7 +39,24 @@ function RatingList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/ratings/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
     {
@@ -65,32 +82,19 @@ function RatingList({ actions }) {
       dataIndex: 'operation',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/ratings/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
+                Delete
               </Button>
             </Link>
-            <Popconfirm
-              title="Are you sure you want to delete this?"
-              onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button
-                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  type="danger"
-                >
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },
