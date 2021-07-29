@@ -5,7 +5,8 @@ const options = {
   antDir: path.join(__dirname, './node_modules/antd'),
   stylesDir: path.join(__dirname, './src/styles'),
   varFile: path.join(__dirname, './src/styles/variables.less'),
-  themeVariables: ['@primary-color'],
+  themeVariables: ['@primary-color', '@link-color'],
+  publicPath: '/.factly/dega/studio/',
   indexFileName: 'index.html',
 };
 module.exports = function override(config, env) {
