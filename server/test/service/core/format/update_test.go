@@ -11,6 +11,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -76,8 +77,12 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Fact Check",
-			"slug": "fact-check",
+			"name":        "Fact Check",
+			"slug":        "fact-check",
+			"description": "description",
+			"meta_fields": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"meta fields"}`),
+			},
 		}
 
 		SelectMock(mock, 1, 1)
@@ -98,14 +103,18 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format by id with empty slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Fact Check",
-			"slug": "fact-check",
+			"name":        "Fact Check",
+			"slug":        "fact-check",
+			"description": "description",
+			"meta_fields": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"meta fields"}`),
+			},
 		}
 		SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
 			WithArgs("fact-check%", 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedFormat["name"], "factcheck"))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedFormat["name"], "factcheck", "", nil))
 
 		formatUpdateMock(mock, updatedFormat)
 
@@ -127,8 +136,12 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("update format with different slug", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Fact Check",
-			"slug": "testing-slug",
+			"name":        "Fact Check",
+			"slug":        "testing-slug",
+			"description": "description",
+			"meta_fields": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"meta fields"}`),
+			},
 		}
 		SelectMock(mock, 1, 1)
 		mock.ExpectQuery(`SELECT slug, space_id FROM "formats"`).
@@ -152,8 +165,12 @@ func TestFormatUpdate(t *testing.T) {
 	t.Run("format with same name exist", func(t *testing.T) {
 		test.CheckSpaceMock(mock)
 		updatedFormat := map[string]interface{}{
-			"name": "Fact Chk",
-			"slug": "fact-check",
+			"name":        "Fact Chk",
+			"slug":        "fact-check",
+			"description": "description",
+			"meta_fields": postgres.Jsonb{
+				RawMessage: []byte(`{"type":"meta fields"}`),
+			},
 		}
 
 		SelectMock(mock, 1, 1)

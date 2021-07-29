@@ -10,6 +10,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -25,9 +26,14 @@ var spaceData map[string]interface{} = map[string]interface{}{
 	"fav_icon_id":     1,
 	"mobile_icon_id":  1,
 	"organisation_id": 1,
+	"header_code":     "header",
+	"footer_code":     "footer",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type": "meta_field"}`),
+	},
 }
 
-var spaceColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "site_title", "tag_line", "description", "site_address", "logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id", "verification_codes", "social_media_urls", "contact_info", "organisation_id"}
+var spaceColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "site_title", "tag_line", "description", "site_address", "logo_id", "logo_mobile_id", "fav_icon_id", "mobile_icon_id", "verification_codes", "social_media_urls", "contact_info", "header_code", "footer_code", "meta_fields", "organisation_id"}
 
 func TestSpaces(t *testing.T) {
 	// Setup Mock DB
@@ -104,5 +110,5 @@ func SpaceSelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "spaces"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(spaceColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, spaceData["name"], spaceData["slug"], spaceData["site_title"], spaceData["tag_line"], spaceData["description"], spaceData["site_address"], spaceData["logo_id"], spaceData["logo_mobile_id"], spaceData["fav_icon_id"], spaceData["mobile_icon_id"], spaceData["verification_codes"], spaceData["social_media_urls"], spaceData["contact_info"], spaceData["organisation_id"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, spaceData["name"], spaceData["slug"], spaceData["site_title"], spaceData["tag_line"], spaceData["description"], spaceData["site_address"], spaceData["logo_id"], spaceData["logo_mobile_id"], spaceData["fav_icon_id"], spaceData["mobile_icon_id"], spaceData["verification_codes"], spaceData["social_media_urls"], spaceData["contact_info"], spaceData["header_code"], spaceData["footer_code"], spaceData["meta_fields"], spaceData["organisation_id"]))
 }

@@ -19,9 +19,12 @@ var menuData = map[string]interface{}{
 	"menu": postgres.Jsonb{
 		RawMessage: []byte(`{"item1":"description"}`),
 	},
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta_fields"}`),
+	},
 }
 
-var menuColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "menu", "space_id"}
+var menuColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "menu", "meta_fields", "space_id"}
 
 func TestMenu(t *testing.T) {
 	// Setup Mock DB
@@ -73,10 +76,10 @@ func MenuSelectMenu(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "menus"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(menuColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, menuData["name"], menuData["slug"], menuData["menu"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, menuData["name"], menuData["slug"], menuData["menu"], menuData["meta_fields"], 1))
 }
 
 func MenuCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "menus"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

@@ -9,15 +9,20 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 var formatData = map[string]interface{}{
-	"name": "Fact Check",
-	"slug": "fact-check",
+	"name":        "Fact Check",
+	"slug":        "fact-check",
+	"description": "test description",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type": "meta_fields"}`),
+	},
 }
 
-var formatColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug"}
+var formatColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "meta_fields"}
 
 func TestFormats(t *testing.T) {
 	// Setup Mock DB
@@ -95,10 +100,10 @@ func FormatSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "formats"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(formatColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, formatData["name"], formatData["slug"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, formatData["name"], formatData["slug"], formatData["description"], formatData["meta_fields"]))
 }
 
 func FormatCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "formats"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "formats"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

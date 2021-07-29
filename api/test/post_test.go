@@ -30,14 +30,25 @@ var postData = map[string]interface{}{
 	"is_highlighted":     true,
 	"featured_medium_id": uint(1),
 	"published_date":     time.Now(),
-	"format_id":          uint(1),
-	"category_ids":       []uint{1},
-	"tag_ids":            []uint{1},
-	"claim_ids":          []uint{1},
-	"author_ids":         []uint{1},
+	"schemas": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"schemas"}`),
+	},
+	"meta": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta"}`),
+	},
+	"header_code": "header",
+	"footer_code": "footer",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta fields"}`),
+	},
+	"format_id":    uint(1),
+	"category_ids": []uint{1},
+	"tag_ids":      []uint{1},
+	"claim_ids":    []uint{1},
+	"author_ids":   []uint{1},
 }
 
-var postColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "subtitle", "slug", "status", "page", "excerpt", "description", "html_description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "space_id"}
+var postColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "title", "subtitle", "slug", "status", "page", "excerpt", "description", "html_description", "is_featured", "is_sticky", "is_highlighted", "featured_medium_id", "format_id", "published_date", "schemas", "meta", "header_code", "footer_code", "meta_fields", "space_id"}
 
 func TestPosts(t *testing.T) {
 	// Setup Mock DB
@@ -88,9 +99,9 @@ func TestPosts(t *testing.T) {
 		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
-		mock.ExpectQuery(`SELECT \* FROM "posts" (.+) ORDER BY slug asc`).
+		mock.ExpectQuery(`SELECT de_posts\.\* FROM "posts" (.+) ORDER BY de_posts\.slug asc`).
 			WillReturnRows(sqlmock.NewRows(postColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], postData["schemas"], postData["meta"], postData["header_code"], postData["footer_code"], postData["meta_fields"], 1))
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -149,10 +160,10 @@ func TestPosts(t *testing.T) {
 		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
-		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_categories (.+) INNER JOIN post_tags (.+)category_id IN \(2,3\) (.+)tag_id IN \(1,2\) (.+)format_id IN \(1\)\)`).
+		mock.ExpectQuery(`SELECT de_posts\.\* FROM "posts" INNER JOIN de_post_categories (.+) INNER JOIN de_post_tags (.+)category_id IN \(2,3\) (.+)tag_id IN \(1,2\) (.+)format_id IN \(1\)\)`).
 			WithArgs(false, "publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], postData["schemas"], postData["meta"], postData["header_code"], postData["footer_code"], postData["meta_fields"], 1))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
@@ -177,7 +188,7 @@ func TestPosts(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-				posts(categories:[2,3], tags:[1,2], formats:[1]) {
+				posts(categories:{ids:[2,3]}, tags:{ids:[1,2]}, formats:{ids:[1]}) {
 						nodes {
 							id
 							title
@@ -210,10 +221,10 @@ func TestPosts(t *testing.T) {
 		CheckSpaceMock(mock)
 		PostCountMock(mock, 1)
 
-		mock.ExpectQuery(`SELECT (.+) FROM "posts" INNER JOIN post_authors (.+)author_id IN \(5,6\)`).
+		mock.ExpectQuery(`SELECT de_posts\.\* FROM "posts" INNER JOIN de_post_authors (.+)author_id IN \(5,6\)`).
 			WithArgs(false, "publish", 1).
 			WillReturnRows(sqlmock.NewRows(postColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], postData["schemas"], postData["meta"], postData["header_code"], postData["footer_code"], postData["meta_fields"], 1))
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
 			WithArgs(1).
@@ -226,7 +237,7 @@ func TestPosts(t *testing.T) {
 			WithHeaders(headers).
 			WithJSON(Query{
 				Query: `{
-				posts(users:[5,6]) {
+				posts(users:{ids:[5,6]}) {
 						nodes {
 							id
 							title
@@ -335,27 +346,6 @@ func TestPosts(t *testing.T) {
 		CheckSpaceMock(mock)
 		PostSelectMock(mock, 1, 1, false)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"post_id", "claim_id"}).AddRow(1, 1))
-
-		ClaimSelectMock(mock)
-		ClaimantSelectMock(mock)
-		RatingSelectMock(mock)
-
-		RatingSelectMock(mock)
-		SpaceSelectQuery(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id"}).
-				AddRow(1))
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "author_id"}).AddRow(1, 1).AddRow(1, 2))
-
-		SpaceSelectQuery(mock)
-
 		resp := e.POST(path).
 			WithHeaders(headers).
 			WithJSON(Query{
@@ -375,13 +365,13 @@ func TestPosts(t *testing.T) {
 }
 
 func PostSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "posts"`)).
+	mock.ExpectQuery(`SELECT (.*) FROM "posts"`).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(postColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, postData["title"], postData["subtitle"], postData["slug"], postData["status"], postData["page"], postData["excerpt"], postData["description"], postData["html_description"], postData["is_featured"], postData["is_sticky"], postData["is_highlighted"], postData["featured_medium_id"], postData["format_id"], postData["published_date"], postData["schemas"], postData["meta"], postData["header_code"], postData["footer_code"], postData["meta_fields"], 1))
 }
 
 func PostCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "posts"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "posts"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
