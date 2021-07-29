@@ -9,14 +9,14 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 
 const layout = {
-  labelCol: {
-    span: 8,
-    offset: 2,
-  },
-  wrapperCol: {
-    span: 20,
-    offset: 2,
-  },
+  // labelCol: {
+  //   span: 8,
+  //   offset: 2,
+  // },
+  // wrapperCol: {
+  //   span: 20,
+  //   offset: 2,
+  // },
 };
 
 const ClaimForm = ({ onCreate, data = {} }) => {
@@ -28,6 +28,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const { Panel } = Collapse;
+  const [activeKey, setActiveKey] = React.useState(['1', '2']);
 
   const onReset = () => {
     form.resetFields();
@@ -36,9 +37,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   const disabledDate = (current) => {
     return current.valueOf() > Date.now();
   };
-
-  const [sourcePanel, setSourcePanel] = React.useState(null);
-  const [basicPanel, setBasicPanel] = React.useState(null);
 
   const onSave = (values) => {
     values.claimant_id = values.claimant || 0;
@@ -70,11 +68,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     data.checked_date = data.checked_date ? moment(data.checked_date) : null;
   }
 
-  const handleSourceCollapse = () => {
-    sourcePanel === null ? setSourcePanel('2') : setSourcePanel(null);
-  };
-  const handleBasicCollapse = () => {
-    basicPanel === null ? setBasicPanel('1') : setBasicPanel(null);
+  const handleCollapse = (props) => {
+    setActiveKey(props);
   };
 
   return (
@@ -94,9 +89,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         onFinishFailed={(errors) => {
           let name = errors.errorFields[0].name[0];
           if (['claim', 'slug', 'claimant', 'rating'].includes(name)) {
-            setBasicPanel('1');
+            setActiveKey(['1']);
           } else {
-            setSourcePanel('2');
+            setActiveKey(['2']);
           }
           if (errors.errorFields[0].name[0] !== 'review_sources') {
           }
@@ -110,10 +105,23 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         }}
         layout="vertical"
       >
+        <Form.Item>
+          <Button
+            disabled={!valueChange}
+            type="primary"
+            htmlType="submit"
+            style={{ marginLeft: 'auto', display: 'block' }}
+          >
+            {data && data.id ? 'Update' : 'Submit'}
+          </Button>
+        </Form.Item>
         <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={basicPanel}
-          onChange={handleBasicCollapse}
+          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
+          defaultActiveKey={['1', '2']}
+          activeKey={activeKey && activeKey}
+          onChange={(props) => handleCollapse(props)}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Basic" key="1">
             <Form.Item
@@ -179,25 +187,28 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             >
               <Selector action="Ratings" />
             </Form.Item>
+            <Form.Item>
+              <Form.Item
+                name="claim_date"
+                label="Claim Date"
+                style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
+              >
+                <DatePicker disabledDate={disabledDate} />
+              </Form.Item>
+              <Form.Item
+                name="checked_date"
+                label="Checked Date"
+                style={{ display: 'inline-block', width: 'calc(50% - 12px)' }}
+              >
+                <DatePicker disabledDate={disabledDate} />
+              </Form.Item>
+            </Form.Item>
 
             <Form.Item name="description" label="Description">
               <Editor placeholder="Enter Description..." />
             </Form.Item>
           </Panel>
-        </Collapse>
-
-        <Collapse
-          activeKey={sourcePanel}
-          onChange={handleSourceCollapse}
-          style={{ width: '95%', marginBottom: '15px' }}
-        >
           <Panel header="Sources" key="2">
-            <Form.Item name="claim_date" label="Claim Date">
-              <DatePicker disabledDate={disabledDate} />
-            </Form.Item>
-            <Form.Item name="checked_date" label="Checked Date">
-              <DatePicker disabledDate={disabledDate} />
-            </Form.Item>
             <Form.Item label="Claim Sources">
               <Form.List name="claim_sources" label="Claim sources">
                 {(fields, { add, remove }) => (
@@ -278,16 +289,13 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 )}
               </Form.List>
             </Form.Item>
-            <Form.Item name="meta_fields" label="Metafields">
+          </Panel>
+          <Panel header="Meta Fields" key="3">
+            <Form.Item name="meta_fields">
               <MonacoEditor language="json" />
             </Form.Item>
           </Panel>
         </Collapse>
-        <Form.Item style={{ float: 'left', marginLeft: '-9px' }}>
-          <Button disabled={!valueChange} type="primary" htmlType="submit">
-            {data && data.id ? 'Update' : 'Submit'}
-          </Button>
-        </Form.Item>
       </Form>
     </div>
   );

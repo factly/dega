@@ -10,6 +10,7 @@ import deepEqual from 'deep-equal';
 import { getPages } from '../../actions/pages';
 import Selector from '../../components/Selector';
 import getUrlParams from '../../utils/getUrlParams';
+import { UpOutlined, DownOutlined } from '@ant-design/icons';
 
 function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -19,6 +20,34 @@ function Pages({ formats }) {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
   const history = useHistory();
+  const [expand, setExpand] = React.useState(false);
+  const getFields = () => {
+    const children = [];
+    expand &&
+      children.push(
+        <Col span={8} key={5}>
+          <Form.Item name="tag" label="Tags">
+            <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
+          </Form.Item>
+        </Col>,
+        <Col span={8} key={6}>
+          <Form.Item name="category" label="Categories">
+            <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
+          </Form.Item>
+        </Col>,
+        <Col span={8} key={7}>
+          <Form.Item name="author" label="Authors">
+            <Selector
+              mode="multiple"
+              action="Authors"
+              placeholder="Filter Authors"
+              display={'email'}
+            />
+          </Form.Item>
+        </Col>,
+      );
+    return children;
+  };
 
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
   const params = getUrlParams(query, keys);
@@ -114,64 +143,61 @@ function Pages({ formats }) {
             }
           }}
         >
-          <Row gutter={24}>
-            <Col key={1}>
-              <Link to="/pages/create">
-                <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-                  Create New
-                </Button>
-              </Link>
+          <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
+            <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
+              <Form.Item name="q">
+                <Input placeholder="Search pages" />
+              </Form.Item>
+              <Form.Item>
+                <Button htmlType="submit">Search</Button>
+              </Form.Item>
             </Col>
-            <Col key={2} span={9} offset={12}>
-              <Space direction="horizontal">
-                <Form.Item name="q">
-                  <Input placeholder="Search pages" />
-                </Form.Item>
-
-                <Form.Item>
-                  <Button htmlType="submit">Search</Button>
-                </Form.Item>
-                <Form.Item name="sort" label="Sort">
-                  <Select defaultValue="desc" style={{ width: '100%' }}>
-                    <Option value="desc">Latest</Option>
-                    <Option value="asc">Old</Option>
-                  </Select>
-                </Form.Item>
-              </Space>
-            </Col>
-          </Row>
-          <Row gutter={10}>
-            <Col span={4} key={4}>
-              <Form.Item name="status" label="Status">
+            <Col key={4}>
+              <Form.Item name="status">
                 <Select defaultValue="all">
-                  <Option value="all">All</Option>
-                  <Option value="draft">Draft</Option>
-                  <Option value="publish">Publish</Option>
-                  <Option value="ready">Ready to Publish</Option>
+                  <Option value="all">Status: All</Option>
+                  <Option value="draft">Status: Draft</Option>
+                  <Option value="publish">Status: Publish</Option>
+                  <Option value="ready">Status: Ready to Publish</Option>
                 </Select>
               </Form.Item>
             </Col>
-            <Col span={6} key={5}>
-              <Form.Item name="tag" label="Tags">
-                <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
+            <Col>
+              <Form.Item name="sort">
+                <Select defaultValue="desc" style={{ width: '100%' }}>
+                  <Option value="desc">Sort By: Latest</Option>
+                  <Option value="asc">Sort By: Old</Option>
+                </Select>
               </Form.Item>
             </Col>
-            <Col span={6} key={6}>
-              <Form.Item name="category" label="Categories">
-                <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
-              </Form.Item>
-            </Col>
-            <Col span={6} key={7}>
-              <Form.Item name="author" label="Authors">
-                <Selector
-                  mode="multiple"
-                  action="Authors"
-                  placeholder="Filter Authors"
-                  display={'email'}
-                />
-              </Form.Item>
+            <Button
+              type="link"
+              onClick={() => {
+                setExpand(!expand);
+              }}
+            >
+              {expand ? (
+                <>
+                  Hide Filters <UpOutlined />
+                </>
+              ) : (
+                <>
+                  More Filters <DownOutlined />
+                </>
+              )}
+            </Button>
+            <Col key={1}>
+              <Link to="/pages/create">
+                <Button
+                  disabled={!(actions.includes('admin') || actions.includes('create'))}
+                  type="primary"
+                >
+                  New Page
+                </Button>
+              </Link>
             </Col>
           </Row>
+          <Row gutter={16}>{getFields()}</Row>
         </Form>
         <PageList
           actions={actions}

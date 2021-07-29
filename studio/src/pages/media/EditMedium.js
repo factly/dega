@@ -101,12 +101,12 @@ function EditMedium() {
           <Form.Item>
             <Space>
               <Popconfirm
-                title="Sure to Delete?"
+                title="Are you sure you want to delete this?"
                 onConfirm={() => {
                   dispatch(deleteMedium(id)).then(() => history.push('/media'));
                 }}
               >
-                <Button type="primary" danger disabled={disabled}>
+                <Button type="danger" disabled={disabled}>
                   Delete
                 </Button>
               </Popconfirm>

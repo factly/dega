@@ -25,6 +25,18 @@ function SpaceList() {
       dataIndex: 'name',
       key: 'name',
       width: '12%',
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/spaces/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
     },
     {
       title: 'Site Address',
@@ -49,22 +61,12 @@ function SpaceList() {
       dataIndex: 'operation',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/spaces/${record.id}/edit`}
-            >
-              <Button>Edit</Button>
-            </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
-            >
-              <Button>Delete</Button>
-            </Popconfirm>
-          </span>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
+          >
+            <Button type="danger">Delete</Button>
+          </Popconfirm>
         );
       },
     },

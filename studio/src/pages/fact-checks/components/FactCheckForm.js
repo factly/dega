@@ -11,13 +11,14 @@ import {
   Dropdown,
   Menu,
   Switch,
+  Modal,
+  Typography,
 } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'antd/lib/modal/Modal';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
 import { addClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
@@ -41,6 +42,42 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const [valueChange, setValueChange] = useState(false);
   const [metaDrawer, setMetaDrawer] = React.useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showSchemaModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleSchemaModalOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleSchemaModalCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const copySchema = (textToCopy) => {
+    // navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+      // navigator clipboard api method'
+      return navigator.clipboard.writeText(textToCopy);
+    } else {
+      // text area method
+      let textArea = document.createElement('textarea');
+      textArea.value = textToCopy;
+      // make the textarea out of viewport
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res, rej) => {
+        // here the magic happens
+        document.execCommand('copy') ? res() : rej();
+        textArea.remove();
+      });
+    }
+  };
 
   const [claimID, setClaimID] = useState(0);
   const { details, loading } = useSelector(({ claims: { details, loading } }) => ({
@@ -360,6 +397,45 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     Code Injection
                   </Button>
                 </Form.Item>
+                <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                  View Schema
+                </Button>
+                <Modal
+                  title="View Schema"
+                  visible={isModalVisible}
+                  onOk={handleSchemaModalOk}
+                  onCancel={handleSchemaModalCancel}
+                  footer={[
+                    <Button
+                      onClick={() => {
+                        const copyText = data.schemas.map(
+                          (schema) =>
+                            `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
+                        );
+                        copySchema(copyText);
+                      }}
+                    >
+                      Copy
+                    </Button>,
+                    <a
+                      href="https://search.google.com/test/rich-results"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="ant-btn ant-btn-secondary"
+                    >
+                      Test in Google Rich Results Text
+                    </a>,
+                  ]}
+                >
+                  <div id="schema-container">
+                    {data.schemas &&
+                      data.schemas.map((schema) => (
+                        <Typography.Text code>
+                          {`<script type="application/ld+json">${JSON.stringify(schema)}</script>`}
+                        </Typography.Text>
+                      ))}
+                  </div>
+                </Modal>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}

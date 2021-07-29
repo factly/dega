@@ -75,7 +75,7 @@ function Template({ format }) {
   if (posts.length === 0) return null;
 
   return (
-    <Collapse defaultActiveKey={['1']}>
+    <Collapse defaultActiveKey={[]} style={{ marginBottom: '0.75rem' }}>
       <Panel header="Templates" key="1" extra={genExtra()}>
         <List
           grid={{ gutter: 16, column: 5 }}
@@ -109,7 +109,7 @@ function Template({ format }) {
                     <EditOutlined key="edit" />
                   </Link>,
                   <Popconfirm
-                    title="Sure to Delete?"
+                    title="Are you sure you want to delete this?"
                     onConfirm={() =>
                       dispatch(deletePost(item.id))
                         .then(() => {
@@ -118,7 +118,7 @@ function Template({ format }) {
                         .then(() => dispatch(getPosts({ page: 1, limit: 5, format: [format.id] })))
                     }
                   >
-                    <DeleteOutlined key="delete" />
+                    <DeleteOutlined key="delete" type="danger" />
                   </Popconfirm>,
                 ]}
               >

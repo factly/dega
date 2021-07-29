@@ -55,56 +55,59 @@ function Media({ permission }) {
 
   return (
     <Space direction="vertical">
-      <Row>
-        <Col span={8}>
-          <Link to="/media/upload">
-            <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-              Upload
-            </Button>
-          </Link>
-        </Col>
-        <Col span={8} offset={8}>
-          <Form
-            initialValues={filters}
-            form={form}
-            name="filters"
-            layout="inline"
-            onFinish={(values) => {
-              let filterValue = {};
-              Object.keys(values).forEach(function (key) {
-                if (values[key]) {
-                  filterValue[key] = values[key];
-                }
-              });
-              setFilters({
-                ...filters,
-                ...filterValue,
-              });
-            }}
-            style={{ width: '100%', marginBottom: '1rem' }}
-            onValuesChange={(changedValues, allValues) => {
-              if (!changedValues.q) {
-                setFilters({ ...filters, ...changedValues });
-              }
-            }}
-          >
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        onFinish={(values) => {
+          let filterValue = {};
+          Object.keys(values).forEach(function (key) {
+            if (values[key]) {
+              filterValue[key] = values[key];
+            }
+          });
+          setFilters({
+            ...filters,
+            ...filterValue,
+          });
+        }}
+        style={{ width: '100%', marginBottom: '1rem' }}
+        onValuesChange={(changedValues, allValues) => {
+          if (!changedValues.q) {
+            setFilters({ ...filters, ...changedValues });
+          }
+        }}
+      >
+        <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
+          <Col style={{ display: 'flex', justifyContent: 'end' }}>
             <Form.Item name="q">
               <Input placeholder="Search media" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Search
-              </Button>
+              <Button htmlType="submit">Search</Button>
             </Form.Item>
-            <Form.Item name="sort" label="Sort" style={{ width: '30%' }}>
-              <Select>
-                <Option value="desc">Latest</Option>
-                <Option value="asc">Old</Option>
+          </Col>
+          <Col>
+            <Form.Item name="sort">
+              <Select defaultValue="desc">
+                <Option value="desc">Sort By: Latest</Option>
+                <Option value="asc">Sort By:Old</Option>
               </Select>
             </Form.Item>
-          </Form>
-        </Col>
-      </Row>
+          </Col>
+          <Col>
+            <Link to="/media/upload">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('create'))}
+                type="primary"
+              >
+                Upload
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+      </Form>
+
       <MediumList
         actions={actions}
         data={{ media: media, total: total, loading: loading }}
