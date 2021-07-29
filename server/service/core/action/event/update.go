@@ -48,13 +48,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	event := &event{}
 
 	if err = json.NewDecoder(r.Body).Decode(&event); err != nil {
@@ -70,7 +63,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	if err = AddTags(event, sID); err != nil {
+	if err = AddTags(event); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
