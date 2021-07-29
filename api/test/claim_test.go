@@ -31,9 +31,14 @@ var claimData = map[string]interface{}{
 	"review_sources": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"review sources"}`),
 	},
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta_fields"}`),
+	},
+	"end_time":   100,
+	"start_time": 5,
 }
 
-var claimColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "claim", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "fact", "review_sources", "space_id"}
+var claimColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "claim", "slug", "claim_date", "checked_date", "claim_sources", "description", "html_description", "claimant_id", "rating_id", "fact", "review_sources", "meta_fields", "end_time", "start_time", "space_id"}
 
 func TestClaim(t *testing.T) {
 	// Setup Mock DB
@@ -112,7 +117,7 @@ func TestClaim(t *testing.T) {
 		mock.ExpectQuery(`SELECT \* FROM "claims" (.+) ORDER BY updated_at asc`).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows(claimColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], claimData["meta_fields"], claimData["end_time"], claimData["start_time"], 1))
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
@@ -146,9 +151,9 @@ func TestClaim(t *testing.T) {
 		CheckSpaceMock(mock)
 		ClaimCountMock(mock, 1)
 
-		mock.ExpectQuery(`SELECT \* FROM "claims" (.+)claims.rating_id IN \(2,3\) AND claims.claimant_id IN \(4,5\)`).
+		mock.ExpectQuery(`SELECT \* FROM "claims" (.+)de_claims.rating_id IN \(2,3\) AND de_claims.claimant_id IN \(4,5\)`).
 			WillReturnRows(sqlmock.NewRows(claimColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["title"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["review"], claimData["review_sources"], claimData["meta_fields"], claimData["end_time"], claimData["start_time"], 1))
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM`)).
 			WithArgs(1).
 			WillReturnRows(sqlmock.NewRows([]string{"id"}).AddRow(1))
@@ -183,10 +188,10 @@ func ClaimSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "claims"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(claimColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["claim"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["fact"], claimData["review_sources"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimData["claim"], claimData["slug"], claimData["claim_date"], claimData["checked_date"], claimData["claim_sources"], claimData["description"], claimData["html_description"], claimData["claimant_id"], claimData["rating_id"], claimData["fact"], claimData["review_sources"], claimData["meta_fields"], claimData["end_time"], claimData["start_time"], 1))
 }
 
 func ClaimCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "claims"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "claims"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

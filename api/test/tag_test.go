@@ -22,9 +22,12 @@ var tagData = map[string]interface{}{
 		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
 	"html_description": "<p>Test Description</p>",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type": "meta field"}`),
+	},
 }
 
-var tagColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "space_id"}
+var tagColumns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "meta_fields", "space_id"}
 
 func TestTags(t *testing.T) {
 	// Setup Mock DB
@@ -105,7 +108,7 @@ func TestTags(t *testing.T) {
 
 		mock.ExpectQuery(`SELECT \* FROM "tags" (.+) ORDER BY updated_at asc`).
 			WillReturnRows(sqlmock.NewRows(tagColumns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], tagData["meta_fields"], 1))
 
 		resp := e.POST(path).
 			WithHeaders(headers).
@@ -183,10 +186,10 @@ func TagSelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tags"`)).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(tagColumns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, tagData["name"], tagData["slug"], tagData["description"], tagData["html_description"], tagData["is_featured"], tagData["meta_fields"], 1))
 }
 
 func TagCountMock(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(1) FROM "tags"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "tags"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }

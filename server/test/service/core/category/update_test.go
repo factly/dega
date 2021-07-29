@@ -208,7 +208,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
+		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "de_media"`)).
 			WithArgs(0).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}))
 

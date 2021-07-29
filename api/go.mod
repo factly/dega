@@ -20,5 +20,6 @@ require (
 	github.com/vektah/gqlparser/v2 v2.1.0
 	gopkg.in/h2non/gock.v1 v1.0.16
 	gorm.io/driver/postgres v1.0.8
+	gorm.io/driver/sqlite v1.1.4
 	gorm.io/gorm v1.21.11
 )

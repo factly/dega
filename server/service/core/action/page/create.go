@@ -109,6 +109,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		IsSticky:         page.IsSticky,
 		FeaturedMediumID: featuredMediumID,
 		FormatID:         page.FormatID,
+		Meta:             page.Meta,
+		MetaFields:       page.MetaFields,
+		HeaderCode:       page.HeaderCode,
+		FooterCode:       page.FooterCode,
 		SpaceID:          uint(sID),
 	}
 
@@ -177,6 +181,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"tag_ids":        page.TagIDs,
 		"category_ids":   page.CategoryIDs,
 		"author_ids":     page.AuthorIDs,
+		"meta":           result.Meta,
+		"meta_fields":    result.MetaFields,
+		"header_code":    result.HeaderCode,
+		"footer_code":    result.FooterCode,
 	}
 
 	if config.SearchEnabled() {
