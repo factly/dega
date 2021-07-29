@@ -35,7 +35,25 @@ function WebhookList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name', width: '20%' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/webhooks/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Url',
       dataIndex: 'url',
@@ -50,11 +68,11 @@ function WebhookList({ actions }) {
       ),
     },
     {
-      title: '',
+      title: 'Enabled',
       dataIndex: 'enabled',
       width: '10%',
       render: (_, record) => {
-        return <p>{record.enabled ? 'Enabled' : 'Disabled'}</p>;
+        return <p>{record.enabled ? 'Yes' : 'No'}</p>;
       },
     },
     {
@@ -63,29 +81,19 @@ function WebhookList({ actions }) {
       width: '20%',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/webhooks/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
+                Delete
               </Button>
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

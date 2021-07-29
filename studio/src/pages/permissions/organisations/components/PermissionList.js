@@ -51,7 +51,26 @@ function PermissionList({ admin }) {
   };
 
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title', width: '' },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      render: (_, record) => {
+        return !admin ? (
+          <p> {record.title}</p>
+        ) : (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
+          >
+            {record.title}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Spaces',
       dataIndex: ['permission', 'spaces'],
@@ -65,29 +84,20 @@ function PermissionList({ admin }) {
       width: '30%',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
-            >
-              <Button disabled={!admin}>Edit</Button>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() =>
+              dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
+                fetchOrganisationPermissions(),
+              )
+            }
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button disabled={!admin} type="danger">
+                Delete
+              </Button>
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() =>
-                dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
-                  fetchOrganisationPermissions(),
-                )
-              }
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!admin}>Delete</Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

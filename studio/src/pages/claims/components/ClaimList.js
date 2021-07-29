@@ -8,7 +8,25 @@ import moment from 'moment';
 function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
   const dispatch = useDispatch();
   const columns = [
-    { title: 'Claim', dataIndex: 'claim', key: 'claim', width: '20%' },
+    {
+      title: 'Claim',
+      dataIndex: 'claim',
+      key: 'claim',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/claims/${record.id}/edit`}
+          >
+            {record.claim}
+          </Link>
+        );
+      },
+    },
     { title: 'Claimant', dataIndex: 'claimant', key: 'claimant', width: '20%' },
     { title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%' },
     {
@@ -28,29 +46,19 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
       dataIndex: 'operation',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/claims/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
+                Delete
               </Button>
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
       width: '20%',

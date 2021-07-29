@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Divider, Popover, List, Avatar, Button } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
+import SpaceSelector from './SpaceSelector';
+import AccountMenu from './AccountMenu';
+import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ superOrg, permission, orgs, loading }) {
+function Sidebar({ superOrg, permission, orgs, loading, applications }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
 
@@ -67,6 +70,9 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
     'events',
     'webhooks',
   ];
+  let borderRadiusStyle = {
+    borderRadius: '50px',
+  };
 
   permission.forEach((each) => {
     if (each.resource === 'admin') {
@@ -105,28 +111,27 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
 
   return (
     <Sider
-      breakpoint="lg"
+      breakpoint="xl"
+      className="main-sidebar"
       width="256"
       theme={navTheme}
       collapsible
       collapsed={collapsed}
       onCollapse={onCollapse}
-      style={{ position: 'sticky', left: 0, top: 0, overflow: 'auto', height: '100vh' }}
+      collapsedWidth={48}
+      trigger={null}
+      style={{
+        position: 'sticky',
+        background: '#f0f2f5',
+        left: 0,
+        top: 0,
+        overflow: 'auto',
+        height: '100vh',
+      }}
     >
       <Link to="/">
-        <div className="menu-header" style={{ backgroundColor: '#1890ff' }}>
-          <img
-            alt="logo"
-            hidden={!collapsed}
-            className="menu-logo"
-            src={require('../../assets/dega.png')}
-          />
-          <img
-            alt="logo"
-            hidden={collapsed}
-            src={'https://degacms.com/img/dega.svg'}
-            style={{ width: '40%' }}
-          />
+        <div className="menu-header" style={{ padding: collapsed ? '0 0.5rem' : '0 24px' }}>
+          <SpaceSelector collapsed={collapsed} />
         </div>
       </Link>
       <Menu
@@ -134,6 +139,7 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
         mode="inline"
         className="slider-menu"
         defaultOpenKeys={['0', '1']}
+        style={{ background: '#f0f2f5' }}
         defaultSelectedKeys={[selectedmenu]}
       >
         {sidebarMenu.map((menu, index) => {
@@ -160,6 +166,83 @@ function Sidebar({ superOrg, permission, orgs, loading }) {
           );
         })}
       </Menu>
+      {!collapsed ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '12px 24px',
+            lineHeight: '40px',
+            alignItems: 'center',
+            width: '100%',
+            position: 'absolute',
+            bottom: '0',
+            background: '#f0f2f5',
+          }}
+        >
+          <AccountMenu />
+          <div>
+            {applications.length > 0 ? (
+              <>
+                <Popover
+                  placement="top"
+                  overlayInnerStyle={{ paddingBottom: 0 }}
+                  content={
+                    <List
+                      grid={{
+                        gutter: 16,
+                        column: 3,
+                      }}
+                      dataSource={applications}
+                      renderItem={(item) => (
+                        <List.Item>
+                          <a
+                            href={item.url}
+                            style={{
+                              textDecoration: 'none',
+                              color: 'inherit',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                            }}
+                          >
+                            {item.medium && item.medium.url ? (
+                              <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                            ) : (
+                              <Avatar shape="square" size={35}>
+                                {item.name.charAt(0)}
+                              </Avatar>
+                            )}
+                            <span>{item.name}</span>
+                          </a>
+                        </List.Item>
+                      )}
+                    />
+                  }
+                  trigger="click"
+                >
+                  <Button style={borderRadiusStyle}>
+                    <AppstoreOutlined />
+                  </Button>
+                </Popover>
+              </>
+            ) : null}
+            <Button
+              style={{ ...borderRadiusStyle, marginLeft: '0.25rem' }}
+              onClick={() => onCollapse(true)}
+            >
+              <MenuFoldOutlined />
+            </Button>
+          </div>
+        </div>
+      ) : (
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <Button style={borderRadiusStyle} onClick={() => onCollapse(false)}>
+            <MenuUnfoldOutlined />
+          </Button>
+        </div>
+      )}
     </Sider>
   );
 }

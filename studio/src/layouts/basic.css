@@ -1,18 +1,17 @@
 .slider-menu {
-  height: calc(100vh - 64px);
+  height: calc(100vh - 108px);
 }
 
 .menu-header {
   height: 64px;
   line-height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .menu-logo {
-  height: 36px;
-  width: 36px;
+  max-height: 48px;
+  max-width: 48px;
+  width: 100%;
+  object-fit: contain;
 }
 
 .menu-company {
@@ -20,14 +19,54 @@
   font-size: 24px;
   padding-left: 16px;
 }
+.user-menu > div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 50px;
+  padding: 0.25rem;
+}
+.user-menu > div:hover {
+  background-color: #fff;
+}
+.user-menu > div > span {
+  display: flex;
+}
+.stats-wrapper {
+  background: #f0f2f5;
+  margin: 1rem auto;
+}
+.ant-btn.button-secondary {
+  color: #fff;
+  background: #15171a;
+  font-weight: 500;
+}
 
-.layout-content {
-  padding: 0.2rem;
+.ant-btn.button-secondary:not([disabled]):hover {
+  text-decoration: none;
+}
+.ant-btn.button-secondary:hover,
+.ant-btn.button-secondary:focus,
+.ant-btn.button-secondary:active {
+  background: #fff;
+  color: #15171a;
+  text-decoration: none;
+}
+
+.ant-btn.button-secondary:hover,
+.ant-btn.button-secondary:focus {
+  color: #15171a;
+  background: #fff;
+  border-color: #15171a;
 }
 
 .layout-header {
   background-color: #ffffff;
   padding-left: 16px;
+}
+.main-sidebar .slider-menu {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 /* Add In Ant Style */
@@ -43,10 +82,6 @@
 
 .ant-space {
   width: 100%;
-}
-
-.wrap-children-content {
-  margin: 24px 24px 0;
 }
 
 .ant-form {

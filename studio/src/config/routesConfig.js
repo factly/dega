@@ -3,6 +3,7 @@ import {
   IdcardOutlined,
   FileDoneOutlined,
   CheckCircleOutlined,
+  AudioOutlined,
 } from '@ant-design/icons';
 
 //Pages
@@ -672,7 +673,7 @@ export const sidebarMenu = [
   },
   {
     title: 'PODCAST',
-    Icon: CheckCircleOutlined,
+    Icon: AudioOutlined,
     children: [routes.episodes, routes.podcasts],
   },
   {

@@ -8,7 +8,24 @@ import { Link } from 'react-router-dom';
 function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
   const dispatch = useDispatch();
   const columns = [
-    { title: 'Title', dataIndex: 'title', key: 'title' },
+    {
+      title: 'Title',
+      dataIndex: 'title',
+      key: 'title',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/episodes/${record.id}/edit`}
+          >
+            {record.title}
+          </Link>
+        );
+      },
+    },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     { title: 'Season', dataIndex: 'season', key: 'season' },
     { title: 'Episode', dataIndex: 'episode', key: 'episode' },
@@ -17,29 +34,19 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
       dataIndex: 'operation',
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/episodes/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteEpisode(record.id)).then(() => fetchEpisodes())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
+                Delete
               </Button>
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteEpisode(record.id)).then(() => fetchEpisodes())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

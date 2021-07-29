@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
 import { updatePage } from '../../actions/pages';
 
-function QuickEdit({ data, setID, slug, page = false }) {
+function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => {} }) {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -58,14 +58,20 @@ function QuickEdit({ data, setID, slug, page = false }) {
               ...data,
               ...values,
             }),
-          ).then(() => setID(0));
+          ).then(() => {
+            setID(0);
+            onQuickEditUpdate();
+          });
         } else {
           dispatch(
             updatePost({
               ...data,
               ...values,
             }),
-          ).then(() => setID(0));
+          ).then(() => {
+            setID(0);
+            onQuickEditUpdate();
+          });
         }
       }}
       onValuesChange={() => {
@@ -129,10 +135,15 @@ function QuickEdit({ data, setID, slug, page = false }) {
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
-          <Button type="primary" onClick={() => setID(0)}>
+          <Button
+            onClick={() => {
+              setID(0);
+              onQuickEditUpdate();
+            }}
+          >
             Cancel
           </Button>
-          <Button htmlType="submit" disabled={!valueChange}>
+          <Button type="primary" htmlType="submit" disabled={!valueChange}>
             Update
           </Button>
         </Space>
