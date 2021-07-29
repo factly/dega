@@ -57,8 +57,11 @@ function Claimants({ permission }) {
       <Row>
         <Col span={8}>
           <Link to="/claimants/create">
-            <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-              Create New
+            <Button
+              disabled={!(actions.includes('admin') || actions.includes('create'))}
+              type="primary"
+            >
+              New Claimant
             </Button>
           </Link>
         </Col>

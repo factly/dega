@@ -63,11 +63,11 @@ function EventList() {
               <Button>Edit</Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
+                <Button type="danger">Delete</Button>
               </Link>
             </Popconfirm>
           </span>

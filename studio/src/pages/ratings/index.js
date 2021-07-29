@@ -8,8 +8,11 @@ function Ratings({ permission }) {
   return (
     <Space direction="vertical">
       <Link key="1" to="/ratings/create">
-        <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-          Create New
+        <Button
+          disabled={!(actions.includes('admin') || actions.includes('create'))}
+          type="primary"
+        >
+          New Rating
         </Button>
       </Link>
       <RatingList actions={actions} />

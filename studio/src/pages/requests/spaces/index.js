@@ -7,7 +7,7 @@ function SpaceRequests() {
   return (
     <Space direction="vertical">
       <Link key="1" to="/requests/spaces/create">
-        <Button>Create New</Button>
+        <Button type="primary">New Space Request</Button>
       </Link>
       <SpaceRequestList />
     </Space>

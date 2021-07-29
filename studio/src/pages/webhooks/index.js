@@ -11,7 +11,7 @@ function Webhooks() {
   return (
     <Space direction="vertical">
       <Link key="1" to="/webhooks/create">
-        <Button>Create New</Button>
+        <Button type="primary">New Webhook</Button>
       </Link>
       <WebhookList actions={actions} />
     </Space>

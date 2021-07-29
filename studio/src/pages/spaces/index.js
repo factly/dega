@@ -7,7 +7,7 @@ function Spaces() {
   return (
     <Space direction="vertical">
       <Link key="1" to="/spaces/create">
-        <Button>Create New</Button>
+        <Button type="primary">New Space</Button>
       </Link>
       <SpaceList />
     </Space>

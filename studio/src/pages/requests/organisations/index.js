@@ -7,7 +7,7 @@ function OrganisationRequests() {
   return (
     <Space direction="vertical">
       <Link key="1" to="/requests/organisations/create">
-        <Button>Create New</Button>
+        <Button type="primary">New Organisation Request</Button>
       </Link>
       <OrganisationRequestList />
     </Space>

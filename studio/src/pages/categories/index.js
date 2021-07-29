@@ -57,8 +57,11 @@ function Categories({ permission }) {
       <Row>
         <Col span={8}>
           <Link key="1" to="/categories/create">
-            <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-              Create New
+            <Button
+              disabled={!(actions.includes('admin') || actions.includes('create'))}
+              type="primary"
+            >
+              New Category
             </Button>
           </Link>
         </Col>

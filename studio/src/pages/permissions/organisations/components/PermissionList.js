@@ -76,7 +76,7 @@ function PermissionList({ admin }) {
               <Button disabled={!admin}>Edit</Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() =>
                 dispatch(deleteOrganisationPermission(record.permission.id)).then(() =>
                   fetchOrganisationPermissions(),
@@ -84,7 +84,9 @@ function PermissionList({ admin }) {
               }
             >
               <Link to="" className="ant-dropdown-link">
-                <Button disabled={!admin}>Delete</Button>
+                <Button disabled={!admin} type="danger">
+                  Delete
+                </Button>
               </Link>
             </Popconfirm>
           </span>

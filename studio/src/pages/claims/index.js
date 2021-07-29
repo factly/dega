@@ -111,8 +111,11 @@ function Claims({ permission }) {
         <Row gutter={24}>
           <Col key={1}>
             <Link to="/claims/create">
-              <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-                Create New
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('create'))}
+                type="primary"
+              >
+                New Claim
               </Button>
             </Link>
           </Col>

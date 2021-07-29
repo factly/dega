@@ -51,7 +51,7 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() => dispatch(deleteClaimant(record.id)).then(() => fetchClaimants())}
             >
               <Link to="" className="ant-dropdown-link">

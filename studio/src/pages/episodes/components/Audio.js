@@ -13,7 +13,7 @@ const Audio = ({ url, onUpload }) => {
         width={'800px'}
         footer={[
           <Button key="back" onClick={() => setShow(false)}>
-            Return
+            Cancel
           </Button>,
           <Button
             key="submit"
@@ -22,7 +22,7 @@ const Audio = ({ url, onUpload }) => {
               setShow(false);
             }}
           >
-            Ok
+            Submit
           </Button>,
         ]}
       >

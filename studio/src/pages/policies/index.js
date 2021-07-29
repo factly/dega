@@ -12,8 +12,11 @@ function Policies() {
   return (
     <Space direction="vertical">
       <Link to="/policies/create">
-        <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-          Create New
+        <Button
+          disabled={!(actions.includes('admin') || actions.includes('create'))}
+          type="primary"
+        >
+          New Policy
         </Button>
       </Link>
       <PolicyList actions={actions} />

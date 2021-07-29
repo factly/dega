@@ -8,8 +8,11 @@ function Formats({ permission }) {
   return (
     <Space direction="vertical">
       <Link key="1" to="/formats/create">
-        <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-          Create New
+        <Button
+          disabled={!(actions.includes('admin') || actions.includes('create'))}
+          type="primary"
+        >
+          New Format
         </Button>
       </Link>
       <FormatList actions={actions} />

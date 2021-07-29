@@ -7,7 +7,7 @@ function Events() {
   return (
     <Space direction="vertical">
       <Link key="1" to="/events/create">
-        <Button>Create New</Button>
+        <Button type="primary">New Event</Button>
       </Link>
       <EventList />
     </Space>

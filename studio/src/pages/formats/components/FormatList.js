@@ -69,11 +69,14 @@ function FormatList({ actions }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                <Button
+                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                  type="danger"
+                >
                   Delete
                 </Button>
               </Link>

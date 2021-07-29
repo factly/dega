@@ -58,8 +58,11 @@ function Tags({ permission }) {
       <Row>
         <Col span={8}>
           <Link key="1" to="/tags/create">
-            <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-              Create New
+            <Button
+              disabled={!(actions.includes('admin') || actions.includes('create'))}
+              type="primary"
+            >
+              New Tag
             </Button>
           </Link>
         </Col>

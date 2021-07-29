@@ -30,11 +30,14 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
               </Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() => dispatch(deletePodcast(record.id)).then(() => fetchPodcasts())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                <Button
+                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                  type="danger"
+                >
                   Delete
                 </Button>
               </Link>

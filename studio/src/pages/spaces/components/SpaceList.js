@@ -59,10 +59,10 @@ function SpaceList() {
               <Button>Edit</Button>
             </Link>
             <Popconfirm
-              title="Sure to Delete?"
+              title="Are you sure you want to delete this?"
               onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
             >
-              <Button>Delete</Button>
+              <Button type="danger">Delete</Button>
             </Popconfirm>
           </span>
         );

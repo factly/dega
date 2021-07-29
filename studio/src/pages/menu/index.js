@@ -11,8 +11,11 @@ function Menu() {
   return (
     <Space direction="vertical">
       <Link to="/menus/create">
-        <Button disabled={!(actions.includes('admin') || actions.includes('create'))}>
-          Create New
+        <Button
+          disabled={!(actions.includes('admin') || actions.includes('create'))}
+          type="primary"
+        >
+          New Menu
         </Button>
       </Link>
       <MenuList actions={actions} />
