@@ -347,9 +347,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   <div id="schemas-container">
                     {data.schemas &&
                       data.schemas.map((schema) => (
-                        <Typography.Text code copyable>
-                          {JSON.stringify(schema)}
-                        </Typography.Text>
+                        <Typography.Text code>{JSON.stringify(schema)}</Typography.Text>
                       ))}
                   </div>
                 </Modal>
