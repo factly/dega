@@ -191,9 +191,9 @@ export const addPost = (data) => {
         if (post.medium) dispatch(addMediaList([post.medium]));
 
         dispatch(resetPosts());
-        data.status === 'publish'
+        post.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
-          : data.status === 'draft'
+          : post.status === 'draft'
           ? dispatch(addSuccessNotification('Post added'))
           : dispatch(addSuccessNotification('Post added & Ready to Publish'));
         return post;

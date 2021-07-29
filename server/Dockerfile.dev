@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN apk add gcc musl-dev
 RUN go mod download
 
 RUN go get github.com/githubnemo/CompileDaemon

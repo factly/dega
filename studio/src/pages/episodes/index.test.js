@@ -122,6 +122,11 @@ describe('Episode Component', () => {
           details: {},
           loading: false,
         },
+        podcasts: {
+          req: [],
+          details: {},
+          loading: false,
+        },
         spaces: {
           orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
           details: {
@@ -174,7 +179,7 @@ describe('Episode Component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/episodes?limit=20&page=1&q=desc');
+      window.history.pushState({}, '', '/episodes?limit=20&page=1&q=desc&podcast=1');
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -184,7 +189,7 @@ describe('Episode Component', () => {
           </Provider>,
         );
       });
-      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
+      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', podcast: [1] });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -209,6 +214,13 @@ describe('Episode Component', () => {
           .at(0)
           .props()
           .onChange({ target: { value: '' } });
+        wrapper
+          .find('FormItem')
+          .at(3)
+          .find('Selector')
+          .at(0)
+          .props()
+          .onChange({ target: { value: [] } });
 
         const submitButtom = wrapper.find('Button').at(1);
         submitButtom.simulate('submit');

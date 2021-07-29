@@ -185,12 +185,7 @@ func TestCategoryList(t *testing.T) {
 				"sort": "asc",
 			}).
 			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			Value("total").
-			Equal(0)
-
+			Status(http.StatusServiceUnavailable)
 		test.ExpectationsMet(t, mock)
 
 	})

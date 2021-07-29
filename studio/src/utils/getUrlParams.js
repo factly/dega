@@ -9,11 +9,12 @@ function getUrlParams(query, filters) {
         key === 'format' ||
         key === 'tag' ||
         key === 'category' ||
-        key === 'author'
+        key === 'author' ||
+        key === 'podcast'
       ) {
         const val = query.getAll(key).map((v) => parseInt(v));
         params[key] = val;
-      } else if (key === 'sort' || key === 'q' || key === 'status') {
+      } else if (key === 'sort' || key === 'q' || key === 'status' || key === 'language') {
         params[key] = query.get(key);
       } else {
         params[key] = parseInt(query.get(key));

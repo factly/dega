@@ -9,6 +9,7 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
+	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 var headers = map[string]string{
@@ -17,8 +18,12 @@ var headers = map[string]string{
 }
 
 var Data = map[string]interface{}{
-	"name": "Fact Check",
-	"slug": "fact-check",
+	"name":        "Fact Check",
+	"slug":        "fact-check",
+	"description": "description",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta fields"}`),
+	},
 }
 
 var invalidData = map[string]interface{}{
@@ -38,7 +43,7 @@ var defaultData = []map[string]interface{}{
 	},
 }
 
-var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug"}
+var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "meta_fields"}
 
 var selectQuery = `SELECT (.+) FROM "formats"`
 var deleteQuery = regexp.QuoteMeta(`UPDATE "formats" SET "deleted_at"=`)
@@ -57,7 +62,7 @@ func slugCheckMock(mock sqlmock.Sqlmock) {
 func formatInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	mock.ExpectQuery(`INSERT INTO "formats"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], "", 1).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["meta_fields"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
 			AddRow(1))
@@ -80,7 +85,7 @@ func SelectMock(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["meta_fields"]))
 }
 
 // check whether format is associated with any post before deleting
@@ -93,7 +98,7 @@ func formatPostExpect(mock sqlmock.Sqlmock, count int) {
 func formatUpdateMock(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectBegin()
 	mock.ExpectExec(`UPDATE \"formats\"`).
-		WithArgs(test.AnyTime{}, 1, format["name"], format["slug"], 1).
+		WithArgs(test.AnyTime{}, 1, format["name"], format["slug"], format["description"], format["meta_fields"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 }
 
@@ -112,5 +117,5 @@ func selectAfterUpdate(mock sqlmock.Sqlmock, format map[string]interface{}) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows(columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, format["name"], format["slug"]))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, format["name"], format["slug"], format["description"], format["meta_fields"]))
 }

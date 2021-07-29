@@ -41,7 +41,7 @@ func TestDefaultFormatCreate(t *testing.T) {
 				WillReturnRows(sqlmock.NewRows(columns))
 
 			mock.ExpectQuery(`INSERT INTO "formats"`).
-				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], 1).
+				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], nil, 1).
 				WillReturnRows(sqlmock.
 					NewRows([]string{"id"}).
 					AddRow(1))
@@ -65,7 +65,7 @@ func TestDefaultFormatCreate(t *testing.T) {
 		for i := 0; i < 2; i++ {
 			mock.ExpectQuery(selectQuery).
 				WillReturnRows(sqlmock.NewRows(columns).
-					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"]))
+					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], nil))
 		}
 		mock.ExpectCommit()
 

@@ -28,6 +28,9 @@ var updatedMedium = map[string]interface{}{
 		RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
 	},
 	"dimensions": "testdims",
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta field"}`),
+	},
 }
 
 func TestMediumUpdate(t *testing.T) {
@@ -139,7 +142,7 @@ func TestMediumUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
-		mock.ExpectQuery(`SELECT slug, space_id FROM "media"`).
+		mock.ExpectQuery(`SELECT slug, space_id FROM "de_media"`).
 			WithArgs(fmt.Sprint(updatedMedium["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
@@ -148,7 +151,7 @@ func TestMediumUpdate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, updatedMedium["name"], updatedMedium["slug"], updatedMedium["type"], updatedMedium["title"], updatedMedium["description"], updatedMedium["caption"], updatedMedium["alt_text"], updatedMedium["file_size"], updatedMedium["url"], updatedMedium["dimensions"], updatedMedium["meta_fields"], 1))
 		mock.ExpectCommit()
 
 		e.PUT(path).
@@ -167,7 +170,7 @@ func TestMediumUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
-		mock.ExpectQuery(`SELECT slug, space_id FROM "media"`).
+		mock.ExpectQuery(`SELECT slug, space_id FROM "de_media"`).
 			WithArgs(fmt.Sprint(updatedMedium["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 

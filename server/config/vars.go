@@ -75,8 +75,18 @@ func SetupVars() {
 		}
 	}
 
+	if Sqlite() {
+		if !viper.IsSet("sqlite_db_path") {
+			log.Fatal("please provide sqlite_db_path config param")
+		}
+	}
+
 }
 
 func SearchEnabled() bool {
 	return viper.IsSet("enable_search_indexing") && viper.GetBool("enable_search_indexing")
+}
+
+func Sqlite() bool {
+	return viper.IsSet("use_sqlite") && viper.GetBool("use_sqlite")
 }

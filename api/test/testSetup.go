@@ -28,8 +28,8 @@ import (
 
 var path string = "/query"
 var headers map[string]string = map[string]string{
-	"X-Space":       "1",
-	"Authorization": "Basic MjQzMDlkMGY0NmNmMjlmODFkOTgzMzYzMGVlZGZlYTNlOTIzYmQyNjYwMmY0Y2NmNGRmOTcwNDZiYjEzODA0YTokMmEkMTAkdS5vVGRVWHA3OElrZnRqaXp6enIxZWpRU2E2TDJxaWpXSy9Nd2k1LlBzTVhWclFaVnNoSEc=",
+	"X-Space":        "1",
+	"X-Dega-API-Key": "$SDcasodijasidfhduifhlsduifvhasdupfhdugvhidfilhvgeaugh",
 }
 
 type Query struct {
@@ -57,7 +57,7 @@ func TestRouter() http.Handler {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("X-Dega-API-Key", "dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	return router
 }

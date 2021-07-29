@@ -112,7 +112,6 @@ describe('Spaces Create Form component', () => {
     });
 
     it('should submit form with added data', (done) => {
-      console.log(wrapper.debug());
       act(() => {
         wrapper
           .find('FormItem')

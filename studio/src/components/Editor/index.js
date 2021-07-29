@@ -30,32 +30,52 @@ function Editor({
     header: {
       class: Header,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+1',
     },
     list: {
       class: List,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+6',
     },
     paragraph: {
       class: Paragraph,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+0',
     },
     quote: {
       class: Quote,
       inlineToolbar: true,
+      shortcut: 'CMD+OPTION+O',
     },
   };
   const editorTools = {
     ...basicTools,
-    raw: RawTool,
-    table: Table,
-    code: CodeTool,
-    delimiter: Delimiter,
-    inlineCode: InlineCode,
+    raw: {
+      class: RawTool,
+      shortcut: 'CMD+OPTION+R',
+    },
+    table: {
+      class: Table,
+      shortcut: 'CMD+OPTION+T',
+    },
+    code: {
+      class: CodeTool,
+      shortcut: 'CMD+OPTION+8',
+    },
+    delimiter: {
+      class: Delimiter,
+    },
+    inlineCode: {
+      class: InlineCode,
+      shortcut: 'CMD+E',
+    },
     marker: {
       class: Marker,
+      shortcut: 'CMD+OPTION+H',
     },
     embed: {
       class: Embed,
+      shortcut: 'CMD+OPTION+E',
     },
     uppy: {
       class: UppyUploader,

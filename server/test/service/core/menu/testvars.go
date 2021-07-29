@@ -21,6 +21,9 @@ var Data = map[string]interface{}{
 	"menu": postgres.Jsonb{
 		RawMessage: []byte(`{"item1":"description"}`),
 	},
+	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"meta field"}`),
+	},
 }
 
 var menulist = []map[string]interface{}{
@@ -30,12 +33,18 @@ var menulist = []map[string]interface{}{
 		"menu": postgres.Jsonb{
 			RawMessage: []byte(`{"item1":"description1"}`),
 		},
+		"meta_fields": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"meta field"}`),
+		},
 	},
 	{
 		"name": "India",
 		"slug": "india",
 		"menu": postgres.Jsonb{
 			RawMessage: []byte(`{"item2":"description2"}`),
+		},
+		"meta_fields": postgres.Jsonb{
+			RawMessage: []byte(`{"type":"meta field"}`),
 		},
 	},
 }
@@ -44,7 +53,7 @@ var invalidData = map[string]interface{}{
 	"name": "a",
 }
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "menu", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "menu", "meta_fields", "space_id"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "menus"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "menus" SET "deleted_at"=`)
@@ -56,7 +65,7 @@ func SelectQuery(mock sqlmock.Sqlmock, args ...driver.Value) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(args...).
 		WillReturnRows(sqlmock.NewRows(Columns).
-			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["menu"], 1))
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["menu"], Data["meta_fields"], 1))
 }
 
 func slugCheckMock(mock sqlmock.Sqlmock) {
