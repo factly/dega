@@ -1,14 +1,17 @@
 import React from 'react';
 import EventList from './components/EventList';
-import { Space, Button } from 'antd';
+import { Space, Button, Row } from 'antd';
 import { Link } from 'react-router-dom';
 
 function Events() {
   return (
     <Space direction="vertical">
-      <Link key="1" to="/events/create">
-        <Button type="primary">New Event</Button>
-      </Link>
+      <Row gutter={16} justify="end">
+        <Link key="1" to="/events/create">
+          <Button type="primary">New Event</Button>
+        </Link>
+      </Row>
+
       <EventList />
     </Space>
   );

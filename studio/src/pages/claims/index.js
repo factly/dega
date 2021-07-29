@@ -108,7 +108,33 @@ function Claims({ permission }) {
           }
         }}
       >
-        <Row gutter={24}>
+        <Row justify="end" gutter={16}>
+          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
+            <Form.Item name="q">
+              <Input placeholder="search post" />
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="submit">Search</Button>
+            </Form.Item>
+          </Col>
+          <Col span={5}>
+            <Form.Item name="claimant" label="Claimants">
+              <Selector mode="multiple" action="Claimants" />
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item name="rating" label="Ratings">
+              <Selector mode="multiple" action="Ratings" />
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="sort" style={{ width: '100%' }}>
+              <Select defaultValue="desc">
+                <Option value="desc">Sort By: Latest</Option>
+                <Option value="asc">Sort By: Old</Option>
+              </Select>
+            </Form.Item>
+          </Col>
           <Col key={1}>
             <Link to="/claims/create">
               <Button
@@ -118,34 +144,6 @@ function Claims({ permission }) {
                 New Claim
               </Button>
             </Link>
-          </Col>
-          <Col key={2} span={9} offset={12}>
-            <Space direction="horizontal">
-              <Form.Item name="q">
-                <Input placeholder="search post" />
-              </Form.Item>
-              <Form.Item>
-                <Button htmlType="submit">Search</Button>
-              </Form.Item>
-              <Form.Item name="sort" label="Sort" style={{ width: '100%' }}>
-                <Select defaultValue="desc">
-                  <Option value="desc">Latest</Option>
-                  <Option value="asc">Old</Option>
-                </Select>
-              </Form.Item>
-            </Space>
-          </Col>
-        </Row>
-        <Row gutter={2}>
-          <Col span={5}>
-            <Form.Item name="claimant" label="Claimants">
-              <Selector mode="multiple" action="Claimants" />
-            </Form.Item>
-          </Col>
-          <Col span={5} offset={1}>
-            <Form.Item name="rating" label="Ratings">
-              <Selector mode="multiple" action="Ratings" />
-            </Form.Item>
           </Col>
         </Row>
       </Form>

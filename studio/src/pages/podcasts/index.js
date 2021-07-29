@@ -106,7 +106,37 @@ function Podcasts({ permission }) {
           }
         }}
       >
-        <Row gutter={24}>
+        <Row gutter={24} justify="end">
+          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
+            <Form.Item name="q">
+              <Input placeholder="search podcasts" />
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="submit">Search</Button>
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="sort">
+              <Select defaultValue="desc">
+                <Option value="desc">Sort By: Latest</Option>
+                <Option value="asc">Sort By: Old</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item name="category" label="Categories">
+              <Selector mode="multiple" action="Categories" />
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="language" label="Language">
+              <Select defaultValue="all">
+                <Option value="all">All</Option>
+                <Option value="english">English</Option>
+                <Option value="telugu">Telugu</Option>
+              </Select>
+            </Form.Item>
+          </Col>
           <Col>
             <Link key="1" to="/podcasts/create">
               <Button
@@ -116,40 +146,6 @@ function Podcasts({ permission }) {
                 New Podcast
               </Button>
             </Link>
-          </Col>
-          <Col key={2} span={9} offset={12}>
-            <div style={{ float: 'right' }}>
-              <Space direction="horizontal">
-                <Form.Item name="q">
-                  <Input placeholder="search podcasts" />
-                </Form.Item>
-                <Form.Item>
-                  <Button htmlType="submit">Search</Button>
-                </Form.Item>
-                <Form.Item name="sort" label="Sort" style={{ width: '100%' }}>
-                  <Select defaultValue="desc">
-                    <Option value="desc">Latest</Option>
-                    <Option value="asc">Old</Option>
-                  </Select>
-                </Form.Item>
-              </Space>
-            </div>
-          </Col>
-        </Row>
-        <Row gutter={2}>
-          <Col span={5}>
-            <Form.Item name="category" label="Categories">
-              <Selector mode="multiple" action="Categories" />
-            </Form.Item>
-          </Col>
-          <Col span={5} offset={1}>
-            <Form.Item name="language" label="Language">
-              <Select defaultValue="all">
-                <Option value="all">All</Option>
-                <Option value="english">English</Option>
-                <Option value="telugu">Telugu</Option>
-              </Select>
-            </Form.Item>
           </Col>
         </Row>
       </Form>

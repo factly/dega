@@ -75,7 +75,7 @@ function Template({ format }) {
   if (posts.length === 0) return null;
 
   return (
-    <Collapse defaultActiveKey={['1']}>
+    <Collapse defaultActiveKey={[]} style={{ marginBottom: '0.75rem' }}>
       <Panel header="Templates" key="1" extra={genExtra()}>
         <List
           grid={{ gutter: 16, column: 5 }}

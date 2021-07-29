@@ -48,7 +48,7 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
               key={id}
               title={
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <p
+                  <h3
                     style={{
                       width: '500px',
                       textOverflow: 'ellipsis',
@@ -56,34 +56,37 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
                     }}
                   >
                     {details[id].claim}
-                  </p>
-                  <Button
-                    size="small"
-                    onClick={() => {
-                      setClaimID(id);
-                      showModal();
-                    }}
-                  >
-                    <EditOutlined />
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    size="small"
-                    onClick={() => {
-                      moveUp(id);
-                    }}
-                  >
-                    <UpOutlined />
-                  </Button>
-                  <Button
-                    disabled={index === claimOrder.length - 1}
-                    size="small"
-                    onClick={() => {
-                      moveDown(id);
-                    }}
-                  >
-                    <DownOutlined />
-                  </Button>
+                  </h3>
+                  <div style={{ display: 'flex', justifyContent: 'end' }}>
+                    {' '}
+                    <Button
+                      size="small"
+                      onClick={() => {
+                        setClaimID(id);
+                        showModal();
+                      }}
+                    >
+                      <EditOutlined />
+                    </Button>
+                    <Button
+                      disabled={index === 0}
+                      size="small"
+                      onClick={() => {
+                        moveUp(id);
+                      }}
+                    >
+                      <UpOutlined />
+                    </Button>
+                    <Button
+                      disabled={index === claimOrder.length - 1}
+                      size="small"
+                      onClick={() => {
+                        moveDown(id);
+                      }}
+                    >
+                      <DownOutlined />
+                    </Button>
+                  </div>
                 </div>
               }
               style={{ margin: 5 }}
@@ -109,9 +112,10 @@ function ClaimList({ ids, setClaimID, details, showModal, setClaimOrder, claimOr
       bordered={false}
       className="site-collapse-custom-collapse"
       defaultActiveKey={['1']}
-      expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+      expandIconPosition="right"
+      expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
     >
-      <Panel header="Claims" key="1">
+      <Panel header={<h2>Claims</h2>} key="1">
         <Tree className="draggable-tree" blockNode treeData={treeData} />
       </Panel>
     </Collapse>

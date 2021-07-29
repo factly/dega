@@ -102,7 +102,28 @@ function Episodes({ permission }) {
           }
         }}
       >
-        <Row gutter={24}>
+        <Row gutter={24} justify="end">
+          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
+            <Form.Item name="q">
+              <Input placeholder="Search episodes" />
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="submit">Search</Button>
+            </Form.Item>
+          </Col>
+          <Col span={4}>
+            <Form.Item name="podcast" label="Podcasts">
+              <Selector mode="multiple" action="Podcasts" display="title" />
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="sort">
+              <Select defaultValue="desc">
+                <Option value="desc">Sort By: Latest</Option>
+                <Option value="asc">Sort By: Old</Option>
+              </Select>
+            </Form.Item>
+          </Col>
           <Col key={1}>
             <Link key="1" to="/episodes/create">
               <Button
@@ -112,31 +133,6 @@ function Episodes({ permission }) {
                 New Episode
               </Button>
             </Link>
-          </Col>
-          <Col key={2} span={9} offset={12}>
-            <div style={{ float: 'right' }}>
-              <Space direction="horizontal">
-                <Form.Item name="q">
-                  <Input placeholder="Search episodes" />
-                </Form.Item>
-                <Form.Item>
-                  <Button htmlType="submit">Search</Button>
-                </Form.Item>
-                <Form.Item name="sort" label="Sort" style={{ width: '100%' }}>
-                  <Select defaultValue="desc">
-                    <Option value="desc">Latest</Option>
-                    <Option value="asc">Old</Option>
-                  </Select>
-                </Form.Item>
-              </Space>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={5}>
-            <Form.Item name="podcast" label="Podcasts">
-              <Selector mode="multiple" action="Podcasts" display="title" />
-            </Form.Item>
           </Col>
         </Row>
       </Form>
