@@ -65,7 +65,7 @@ function MediaSelector({ value = null, onChange }) {
         width={'800px'}
         footer={[
           <Button key="back" onClick={() => setShow(false)}>
-            Return
+            Cancel
           </Button>,
           <Button
             key="submit"
@@ -75,7 +75,7 @@ function MediaSelector({ value = null, onChange }) {
               selected ? onChange(selected.id) : onChange(null);
             }}
           >
-            Ok
+            Confirm
           </Button>,
         ]}
       >
@@ -92,12 +92,23 @@ function MediaSelector({ value = null, onChange }) {
         </Space>
       </Modal>
       <Space direction="vertical">
-        {medium ? (
-          <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" />
-        ) : (
-          <ImagePlaceholder />
-        )}
-        <Button onClick={() => setShow(true)}>Select</Button>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <Button
+            style={{
+              background: 'transparent',
+              borderStyle: 'solid',
+              height: 'auto',
+              display: 'block',
+            }}
+            onClick={() => setShow(true)}
+          >
+            {medium ? (
+              <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" />
+            ) : (
+              <ImagePlaceholder />
+            )}
+          </Button>
+        </div>
       </Space>
     </>
   );
