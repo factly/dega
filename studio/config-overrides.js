@@ -6,7 +6,7 @@ const options = {
   stylesDir: path.join(__dirname, './src/styles'),
   varFile: path.join(__dirname, './src/styles/variables.less'),
   themeVariables: ['@primary-color', '@link-color'],
-  publicPath: '/.factly/dega/studio/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/.factly/dega/studio/' : '/',
   indexFileName: 'index.html',
 };
 module.exports = function override(config, env) {

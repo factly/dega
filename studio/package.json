@@ -4,7 +4,6 @@
   "description": "UI for dega-admin",
   "private": true,
   "license": "MIT",
-  "homepage": "http://127.0.0.1:4455/.factly/dega",
   "cacheDirectories": [
     "node_modules"
   ],
