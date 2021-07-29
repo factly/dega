@@ -263,7 +263,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		IsHighlighted: post.IsHighlighted,
 		IsPage:        post.IsPage,
 	})
-	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()

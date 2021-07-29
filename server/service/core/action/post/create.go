@@ -231,7 +231,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.DBError()
 	}
 
-	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&result.Post)
+	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post)
 
 	if result.Format.Slug == "fact-check" {
 		// create post claim
