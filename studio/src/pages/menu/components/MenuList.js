@@ -64,7 +64,10 @@ function MenuList({ actions }) {
               }
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
             >
-              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
                 Delete
               </Button>
             </Popconfirm>

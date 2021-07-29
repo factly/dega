@@ -55,7 +55,10 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
               onConfirm={() => dispatch(deleteClaimant(record.id)).then(() => fetchClaimants())}
             >
               <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
+                <Button
+                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                  type="danger"
+                >
                   Delete
                 </Button>
               </Link>
