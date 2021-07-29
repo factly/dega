@@ -83,7 +83,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.Posts = make([]model.PostCount, 0)
 
-	err = config.DB.Raw(fmt.Sprint("SELECT  formats.slug, posts.status, COUNT (*) FROM posts JOIN formats ON posts.format_id = formats.id where posts.deleted_at IS NULL AND posts.space_id = ", sID, "group by posts.status, formats.slug")).Scan(&result.Posts).Error
+	err = config.DB.Raw(fmt.Sprint("SELECT  formats.slug, posts.status, COUNT (*) FROM posts JOIN formats ON posts.format_id = formats.id WHERE is_page = false AND posts.deleted_at IS NULL AND posts.space_id = ", sID, " GROUP BY posts.status, formats.slug")).Scan(&result.Posts).Error
 
 	if err != nil {
 		loggerx.Error(err)
