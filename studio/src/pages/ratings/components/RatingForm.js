@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Space, InputNumber, Col, Row } from 'antd';
 import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Editor from '../../../components/Editor';
-import { ChromePicker } from 'react-color';
+import { SketchPicker } from 'react-color';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 
@@ -34,6 +34,24 @@ const RatingForm = ({ onCreate, data = {} }) => {
   );
   const [textColour, setTextColour] = useState(data.text_colour ? data.text_colour : null);
   const [valueChange, setValueChange] = React.useState(false);
+  const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
+  const [displayTextColorPicker, setDisplayTextColorPicker] = useState(false);
+
+  const handleBgClick = () => {
+    setDisplayBgColorPicker((prev) => !prev);
+    setValueChange(true);
+  };
+  const handleTextClick = () => {
+    setDisplayTextColorPicker((prev) => !prev);
+    setValueChange(true);
+  };
+
+  const handleBgClose = () => {
+    setDisplayBgColorPicker(false);
+  };
+  const handleTextClose = () => {
+    setDisplayTextColorPicker(false);
+  };
 
   const onReset = () => {
     form.resetFields();
@@ -55,6 +73,8 @@ const RatingForm = ({ onCreate, data = {} }) => {
         if (values.meta_fields) {
           values.meta_fields = getJsonValue(values.meta_fields);
         }
+        values.text_colour = textColour;
+        values.background_colour = backgroundColour;
         onCreate(values);
         onReset();
       }}
@@ -108,18 +128,78 @@ const RatingForm = ({ onCreate, data = {} }) => {
         <MediaSelector />
       </Form.Item>
       <Form.Item name="background_colour" label="Background Colour">
-        <ChromePicker
-          color={backgroundColour !== null && backgroundColour.hex}
-          onChange={(e) => setBackgroundColour(e)}
-          disableAlpha
-        />
+        <div style={{ position: 'relative' }}>
+          <div
+            style={{
+              padding: '5px',
+              background: '#fff',
+              borderRadius: '1px',
+              boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+              display: 'inline-block',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleBgClick()}
+          >
+            <div
+              style={{
+                width: '100px',
+                height: '24px',
+                borderRadius: '2px',
+                background: `${backgroundColour && backgroundColour.hex}`,
+              }}
+            />
+          </div>
+          {displayBgColorPicker ? (
+            <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+              <div
+                style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
+                onClick={() => handleBgClose()}
+              />
+              <SketchPicker
+                color={backgroundColour !== null && backgroundColour.hex}
+                onChange={(e) => setBackgroundColour(e)}
+                disableAlpha
+              />
+            </div>
+          ) : null}
+        </div>
       </Form.Item>
       <Form.Item name="text_colour" label="Text Colour">
-        <ChromePicker
-          color={textColour !== null && textColour.hex}
-          onChange={(e) => setTextColour(e)}
-          disableAlpha
-        />
+        <div style={{ position: 'relative' }}>
+          <div
+            style={{
+              padding: '5px',
+              background: '#fff',
+              borderRadius: '1px',
+              boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+              display: 'inline-block',
+              cursor: 'pointer',
+            }}
+            onClick={() => handleTextClick()}
+          >
+            <div
+              style={{
+                width: '100px',
+                height: '24px',
+                borderRadius: '2px',
+                background: `${textColour && textColour.hex}`,
+              }}
+            />
+          </div>
+          {displayTextColorPicker ? (
+            <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+              <div
+                style={{ position: 'fixed', top: '0px', right: '0px', bottom: '0px', left: '0px' }}
+                onClick={() => handleTextClose()}
+              />
+              <SketchPicker
+                color={textColour !== null && textColour.hex}
+                onChange={(e) => setTextColour(e)}
+                disableAlpha
+              />
+            </div>
+          ) : null}
+        </div>
       </Form.Item>
 
       <Row className="preview-container" gutter={16} style={{ marginBottom: '1rem' }}>
