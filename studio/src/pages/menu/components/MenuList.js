@@ -15,16 +15,16 @@ function MenuList({ actions }) {
   query.set('page', filters.page);
   window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
   const { menus, total, loading } = useSelector((state) => {
-    const node = state.menu.req.find((item) => {
+    const node = state.menus.req.find((item) => {
       return deepEqual(item.query, filters);
     });
     if (node)
       return {
-        menus: node.data.map((element) => state.menu.details[element]),
+        menus: node.data.map((element) => state.menus.details[element]),
         total: node.total,
-        loading: state.menu.loading,
+        loading: state.menus.loading,
       };
-    return { menus: [], total: 0, loading: state.menu.loading };
+    return { menus: [], total: 0, loading: state.menus.loading };
   });
   React.useEffect(() => {
     fetchMenus();
