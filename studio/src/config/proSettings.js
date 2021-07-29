@@ -1,5 +1,5 @@
 const proSettings = {
-  navTheme: 'dark',
+  navTheme: 'light',
   primaryColor: '#1890ff',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
