@@ -276,9 +276,11 @@ func createKavachOrganisation(userID string) (*http.Response, error) {
 }
 
 func createSuperOrganisationPermissions(oID uint) error {
-	return DB.Model(&OrganisationPermission{}).Create(&OrganisationPermission{
+	return DB.Model(&OrganisationPermission{}).FirstOrCreate(&OrganisationPermission{
 		OrganisationID: oID,
 		Spaces:         -1,
+	}, &OrganisationPermission{
+		OrganisationID: oID,
 	}).Error
 }
 
