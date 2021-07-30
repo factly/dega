@@ -33,6 +33,8 @@ function EditPost({ formats }) {
   if (!post) {
     return <RecordNotFound />;
   }
+  if (post && post.id && !formats.loading && post.format !== formats.article.id)
+    return <RecordNotFound />;
 
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
