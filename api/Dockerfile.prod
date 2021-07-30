@@ -1,8 +1,9 @@
 FROM alpine:3.9 
 RUN apk add ca-certificates
 
+RUN apk add gcc musl-dev
 WORKDIR /app
-COPY . .
+COPY dega-api .
 
 # Run the binary program produced by `go install`
 ENTRYPOINT ["/app/dega-api"]
