@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
 import moment from 'moment';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
   const dispatch = useDispatch();
@@ -12,7 +13,7 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
       title: 'Claim',
       dataIndex: 'claim',
       key: 'claim',
-      width: '20%',
+      width: '30%',
       render: (_, record) => {
         return (
           <Link
@@ -44,6 +45,9 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -52,11 +56,10 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

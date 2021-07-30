@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function FormatList({ actions }) {
   const dispatch = useDispatch();
@@ -71,6 +72,9 @@ function FormatList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -79,11 +83,10 @@ function FormatList({ actions }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

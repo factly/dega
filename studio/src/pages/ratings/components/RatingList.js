@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRatings, deleteRating } from '../../../actions/ratings';
 import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function RatingList({ actions }) {
   const dispatch = useDispatch();
@@ -80,6 +81,9 @@ function RatingList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -88,11 +92,10 @@ function RatingList({ actions }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

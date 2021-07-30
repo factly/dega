@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteEvent, getEvents } from '../../../actions/events';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function EventList() {
   const dispatch = useDispatch();
@@ -60,6 +61,9 @@ function EventList() {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -67,7 +71,7 @@ function EventList() {
             onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
           >
             <Link to="" className="ant-dropdown-link">
-              <Button type="danger">Delete</Button>
+              <Button type="danger" icon={<DeleteOutlined />} />
             </Link>
           </Popconfirm>
         );

@@ -4,6 +4,7 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../../actions/categories';
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -39,11 +43,10 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

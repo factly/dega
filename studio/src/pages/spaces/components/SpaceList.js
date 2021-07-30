@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
 import { spaceSelector } from '../../../selectors/spaces';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function SpaceList() {
   const dispatch = useDispatch();
@@ -59,13 +60,16 @@ function SpaceList() {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
           >
-            <Button type="danger">Delete</Button>
+            <Button type="danger" icon={<DeleteOutlined />} />
           </Popconfirm>
         );
       },

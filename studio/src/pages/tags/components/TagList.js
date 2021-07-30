@@ -3,6 +3,7 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function TagList({ actions, filters, setFilters, fetchTags, data }) {
   const dispatch = useDispatch();
@@ -30,6 +31,9 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -38,16 +42,14 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );
       },
-      width: '20%',
     },
   ];
 
