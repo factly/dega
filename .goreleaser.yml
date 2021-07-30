@@ -42,11 +42,11 @@ archives:
   - id: dega-api
     builds:
       - dega-api 
-    name_template: "dega-api{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "dega-api_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
   - id: dega-templates
     builds:
       - dega-templates 
-    name_template: "dega-templates{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    name_template: "dega-templates_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
 
 dockers:
 - dockerfile: server/Dockerfile.prod
