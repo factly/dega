@@ -4,6 +4,7 @@ import { Popconfirm, Button, Typography, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaimant } from '../../../actions/claimants';
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
   const dispatch = useDispatch();
@@ -53,6 +54,9 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -61,11 +65,10 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

@@ -4,6 +4,7 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteEpisode } from '../../../actions/episodes';
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -40,11 +44,10 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
           >
             <Link to="" className="ant-dropdown-link">
               <Button
+                icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
                 type="danger"
-              >
-                Delete
-              </Button>
+              />
             </Link>
           </Popconfirm>
         );

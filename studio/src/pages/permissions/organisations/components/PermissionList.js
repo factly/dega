@@ -4,6 +4,7 @@ import { Popconfirm, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrganisations, deleteOrganisationPermission } from '../../../../actions/organisations';
 import { Link, useLocation } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 function PermissionList({ admin }) {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
@@ -81,7 +82,9 @@ function PermissionList({ admin }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      width: '30%',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -93,9 +96,7 @@ function PermissionList({ admin }) {
             }
           >
             <Link to="" className="ant-dropdown-link">
-              <Button disabled={!admin} type="danger">
-                Delete
-              </Button>
+              <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
             </Link>
           </Popconfirm>
         );

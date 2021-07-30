@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function PolicyList({ actions }) {
   const dispatch = useDispatch();
@@ -91,7 +92,9 @@ function PolicyList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      width: '15%',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -99,11 +102,10 @@ function PolicyList({ actions }) {
             onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
           >
             <Button
+              icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
               type="danger"
-            >
-              Delete
-            </Button>
+            />
           </Popconfirm>
         );
       },

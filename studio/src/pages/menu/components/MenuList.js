@@ -4,6 +4,7 @@ import { getMenus, deleteMenu } from '../../../actions/menu';
 import deepEqual from 'deep-equal';
 import { Space, Button, Popconfirm, Table } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function MenuList({ actions }) {
   const dispatch = useDispatch();
@@ -57,6 +58,9 @@ function MenuList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <Popconfirm
@@ -70,11 +74,10 @@ function MenuList({ actions }) {
             disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
+              icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
               type="danger"
-            >
-              Delete
-            </Button>
+            />
           </Popconfirm>
         );
       },
