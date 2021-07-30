@@ -39,14 +39,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
-	hukzURL := viper.GetString("hukz_url") + "/events?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page") + "&tag=space:" + fmt.Sprint(sID)
+	hukzURL := viper.GetString("hukz_url") + "/events?tag=app:dega&limit=" + r.URL.Query().Get("limit") + "&page=" + r.URL.Query().Get("page")
 
 	resp, err := requestx.Request("GET", hukzURL, nil, map[string]string{
 		"X-User": fmt.Sprint(uID),

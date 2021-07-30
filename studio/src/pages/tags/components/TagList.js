@@ -3,43 +3,53 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function TagList({ actions, filters, setFilters, fetchTags, data }) {
   const dispatch = useDispatch();
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name', width: '15%' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '15%',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/tags/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/tags/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                icon={<DeleteOutlined />}
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              />
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
-      width: '20%',
     },
   ];
 

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFormats, deleteFormat } from '../../../actions/formats';
 import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function FormatList({ actions }) {
   const dispatch = useDispatch();
@@ -38,7 +39,24 @@ function FormatList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => {
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/formats/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     {
       title: 'Description',
@@ -54,31 +72,23 @@ function FormatList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/formats/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button
+                icon={<DeleteOutlined />}
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              />
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                  Delete
-                </Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

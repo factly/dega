@@ -87,6 +87,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           style={{ width: '95%', marginBottom: '15px' }}
           activeKey={basicPanel}
           onChange={handleBasicCollapse}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Basic" key="1">
             <Form.Item label="Name">
@@ -154,6 +156,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           style={{ width: '95%', marginBottom: '15px' }}
           activeKey={mediaPanel}
           onChange={handleMediaCollapse}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Media" key="2">
             <Form.Item label="Logo" name="logo_id">
@@ -174,6 +178,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           style={{ width: '95%', marginBottom: '15px' }}
           activeKey={contactPanel}
           onChange={handleContactCollapse}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Contact" key="3">
             <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
@@ -194,6 +200,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           style={{ width: '95%', marginBottom: '15px' }}
           activeKey={analyticsPanel}
           onChange={handleAnalyticsCollapse}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Analytics" key="4">
             <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
@@ -211,6 +219,8 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           style={{ width: '95%', marginBottom: '15px' }}
           activeKey={codePanel}
           onChange={handleCodeCollapse}
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
         >
           <Panel header="Code Injection" key="5">
             <Form.Item name="header_code" label="Header Code">

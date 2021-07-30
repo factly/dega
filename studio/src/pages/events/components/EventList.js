@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteEvent, getEvents } from '../../../actions/events';
 import { Link } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function EventList() {
   const dispatch = useDispatch();
@@ -44,33 +45,35 @@ function EventList() {
       dataIndex: 'name',
       key: 'name',
       render: (_, record) => {
-        return <p>{getName(record.name)}</p>;
+        return (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/events/${record.id}/edit`}
+          >
+            <p>{getName(record.name)}</p>
+          </Link>
+        );
       },
     },
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/events/${record.id}/edit`}
-            >
-              <Button>Edit</Button>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button type="danger" icon={<DeleteOutlined />} />
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button>Delete</Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

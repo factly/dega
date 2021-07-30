@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
 import { spaceSelector } from '../../../selectors/spaces';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function SpaceList() {
   const dispatch = useDispatch();
@@ -25,6 +26,18 @@ function SpaceList() {
       dataIndex: 'name',
       key: 'name',
       width: '12%',
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/spaces/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
     },
     {
       title: 'Site Address',
@@ -47,24 +60,17 @@ function SpaceList() {
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/spaces/${record.id}/edit`}
-            >
-              <Button>Edit</Button>
-            </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
-            >
-              <Button>Delete</Button>
-            </Popconfirm>
-          </span>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
+          >
+            <Button type="danger" icon={<DeleteOutlined />} />
+          </Popconfirm>
         );
       },
     },

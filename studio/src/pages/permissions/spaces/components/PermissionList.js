@@ -4,6 +4,7 @@ import { Popconfirm, Button, Table } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, deleteSpacePermission } from '../../../../actions/spacePermissions';
 import { Link, useLocation } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function PermissionList({ admin }) {
   const dispatch = useDispatch();
@@ -52,7 +53,26 @@ function PermissionList({ admin }) {
   };
 
   const columns = [
-    { title: 'Space', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Space',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => {
+        return !admin ? (
+          <p>{record.name}</p>
+        ) : (
+          <Link
+            className="ant-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/spaces/${record.id}/permissions/${record.permission.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Organisation ID',
       dataIndex: 'organisation_id',
@@ -101,32 +121,23 @@ function PermissionList({ admin }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      width: '20%',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="ant-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/spaces/${record.id}/permissions/${record.permission.id}/edit`}
-            >
-              <Button disabled={!admin}>Edit</Button>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() =>
+              dispatch(deleteSpacePermission(record.permission.id)).then(() =>
+                fetchSpacePermissions(),
+              )
+            }
+          >
+            <Link to="" className="ant-dropdown-link">
+              <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
             </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() =>
-                dispatch(deleteSpacePermission(record.permission.id)).then(() =>
-                  fetchSpacePermissions(),
-                )
-              }
-            >
-              <Link to="" className="ant-dropdown-link">
-                <Button disabled={!admin}>Delete</Button>
-              </Link>
-            </Popconfirm>
-          </span>
+          </Popconfirm>
         );
       },
     },

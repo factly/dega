@@ -32,12 +32,6 @@ var DataFile = "./data/events.json"
 // @Failure 400 {array} string
 // @Router /core/events/default [post]
 func defaults(w http.ResponseWriter, r *http.Request) {
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
 
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
@@ -67,7 +61,7 @@ func defaults(w http.ResponseWriter, r *http.Request) {
 
 	eventsResp := make([]model.Event, 0)
 	for i := range events {
-		if err = AddTags(&events[i], sID); err != nil {
+		if err = AddTags(&events[i]); err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return

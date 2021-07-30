@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies, deletePolicy } from '../../../actions/policies';
 import { Link, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function PolicyList({ actions }) {
   const dispatch = useDispatch();
@@ -39,7 +40,24 @@ function PolicyList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name', width: '20%' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      width: '20%',
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/policies/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Description',
       dataIndex: 'description',
@@ -74,29 +92,21 @@ function PolicyList({ actions }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      width: '15%',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              style={{
-                marginRight: 8,
-              }}
-              to={`/policies/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Sure to Delete?"
-              onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                Delete
-              </Button>
-            </Popconfirm>
-          </span>
+          <Popconfirm
+            title="Are you sure you want to delete this?"
+            onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
+          >
+            <Button
+              icon={<DeleteOutlined />}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
+            />
+          </Popconfirm>
         );
       },
     },

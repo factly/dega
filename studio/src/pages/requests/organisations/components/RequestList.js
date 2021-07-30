@@ -63,6 +63,9 @@ function RequestList() {
     columns.push({
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
           <span>

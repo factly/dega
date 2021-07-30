@@ -4,7 +4,7 @@ import { Row, Col, Skeleton, Form, Input, Button, Space, Popconfirm } from 'antd
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-import { ArrowLeftOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
 import { useHistory } from 'react-router-dom';
 import MonacoEditor from '../../components/MonacoEditor';
@@ -101,14 +101,12 @@ function EditMedium() {
           <Form.Item>
             <Space>
               <Popconfirm
-                title="Sure to Delete?"
+                title="Are you sure you want to delete this?"
                 onConfirm={() => {
                   dispatch(deleteMedium(id)).then(() => history.push('/media'));
                 }}
               >
-                <Button type="primary" danger disabled={disabled}>
-                  Delete
-                </Button>
+                <Button type="danger" disabled={disabled} icon={<DeleteOutlined />} />
               </Popconfirm>
               <Button type="primary" htmlType="submit" disabled={disabled || !valueChange}>
                 Submit

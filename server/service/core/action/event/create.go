@@ -39,13 +39,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	sID, err := middlewarex.GetSpace(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
-		return
-	}
-
 	event := &event{}
 
 	if err = json.NewDecoder(r.Body).Decode(&event); err != nil {
@@ -61,7 +54,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// append app and space tag even if not provided
-	if err = AddTags(event, sID); err != nil {
+	if err = AddTags(event); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -98,7 +91,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusCreated, eventRes)
 }
 
-func AddTags(event *event, sID int) error {
+func AddTags(event *event) error {
 	tags := make(map[string]string)
 	if len(event.Tags.RawMessage) > 0 && !reflect.DeepEqual(event.Tags, test.NilJsonb()) {
 		err := json.Unmarshal(event.Tags.RawMessage, &tags)
@@ -108,7 +101,6 @@ func AddTags(event *event, sID int) error {
 	}
 
 	tags["app"] = "dega"
-	tags["space"] = fmt.Sprint(sID)
 
 	bytesArr, err := json.Marshal(tags)
 	if err != nil {

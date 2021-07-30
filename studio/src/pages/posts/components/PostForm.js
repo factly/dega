@@ -11,6 +11,8 @@ import {
   Dropdown,
   Switch,
   Menu,
+  Modal,
+  Typography,
 } from 'antd';
 import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
@@ -48,6 +50,42 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const showSchemaModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const handleSchemaModalOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleSchemaModalCancel = () => {
+    setIsModalVisible(false);
+  };
+
+  const copySchema = (textToCopy) => {
+    // navigator clipboard api needs a secure context (https)
+    if (navigator.clipboard && window.isSecureContext) {
+      // navigator clipboard api method'
+      return navigator.clipboard.writeText(textToCopy);
+    } else {
+      // text area method
+      let textArea = document.createElement('textarea');
+      textArea.value = textToCopy;
+      // make the textarea out of viewport
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      return new Promise((res, rej) => {
+        // here the magic happens
+        document.execCommand('copy') ? res() : rej();
+        textArea.remove();
+      });
+    }
+  };
 
   const showDrawer = () => {
     setDrawerVisible(true);
@@ -275,6 +313,44 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     Code Injection
                   </Button>
                 </Form.Item>
+                <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                  View Schema
+                </Button>
+                <Modal
+                  title="View Schema"
+                  visible={isModalVisible}
+                  onOk={handleSchemaModalOk}
+                  onCancel={handleSchemaModalCancel}
+                  footer={[
+                    <Button
+                      onClick={() => {
+                        const copyText = data.schemas.map(
+                          (schema) =>
+                            `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
+                        );
+                        copySchema(copyText);
+                      }}
+                    >
+                      Copy
+                    </Button>,
+
+                    <a
+                      href="https://search.google.com/test/rich-results"
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="ant-btn ant-btn-secondary"
+                    >
+                      Test in Google Rich Results Text
+                    </a>,
+                  ]}
+                >
+                  <div id="schemas-container">
+                    {data.schemas &&
+                      data.schemas.map((schema) => (
+                        <Typography.Text code>{JSON.stringify(schema)}</Typography.Text>
+                      ))}
+                  </div>
+                </Modal>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}

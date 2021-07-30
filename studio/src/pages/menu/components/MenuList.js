@@ -4,6 +4,7 @@ import { getMenus, deleteMenu } from '../../../actions/menu';
 import deepEqual from 'deep-equal';
 import { Space, Button, Popconfirm, Table } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 function MenuList({ actions }) {
   const dispatch = useDispatch();
@@ -36,39 +37,48 @@ function MenuList({ actions }) {
   };
 
   const columns = [
-    { title: 'Name', dataIndex: 'name', key: 'name' },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+      render: (_, record) => {
+        return (
+          <Link
+            className="andt-dropdown-link"
+            style={{
+              marginRight: 8,
+            }}
+            to={`/menus/${record.id}/edit`}
+          >
+            {record.name}
+          </Link>
+        );
+      },
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
+      fixed: 'right',
+      align: 'center',
+      width: 150,
       render: (_, record) => {
         return (
-          <span>
-            <Link
-              className="andt-dropdown-link"
-              style={{
-                marginRight: 8,
-              }}
-              to={`/menus/${record.id}/edit`}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('update'))}>
-                Edit
-              </Button>
-            </Link>
-            <Popconfirm
-              title="Sure to delete?"
-              onConfirm={() =>
-                dispatch(deleteMenu(menus[0].id)).then(() => {
-                  fetchMenus();
-                  window.location.reload();
-                })
-              }
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() =>
+              dispatch(deleteMenu(menus[0].id)).then(() => {
+                fetchMenus();
+                window.location.reload();
+              })
+            }
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          >
+            <Button
+              icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-            >
-              <Button disabled={!(actions.includes('admin') || actions.includes('delete'))}>
-                Delete
-              </Button>
-            </Popconfirm>
-          </span>
+              type="danger"
+            />
+          </Popconfirm>
         );
       },
     },

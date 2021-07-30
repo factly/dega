@@ -1,5 +1,5 @@
-import React from 'react';
-import { Layout, Card, notification } from 'antd';
+import React, { useState } from 'react';
+import { Layout, Card, notification, BackTop } from 'antd';
 import { withRouter } from 'react-router-dom';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
@@ -11,7 +11,7 @@ import PageHeader from '../components/PageHeader';
 
 function BasicLayout(props) {
   const { location } = props;
-  const { Footer, Content } = Layout;
+  const { Content } = Layout;
   const { children } = props;
   const dispatch = useDispatch();
 
@@ -70,18 +70,31 @@ function BasicLayout(props) {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [orgs, location.pathname]);
 
+  const hideSidebar =
+    (location.pathname.includes('posts') ||
+      location.pathname.includes('fact-checks') ||
+      location.pathname.includes('pages')) &&
+    (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
     <Layout hasSider={true}>
-      <Sidebar permission={permission} orgs={orgs} loading={loading} superOrg={superOrg} />
-      <Layout>
-        <Header applications={applications} />
+      {!hideSidebar && (
+        <Sidebar
+          permission={permission}
+          orgs={orgs}
+          loading={loading}
+          superOrg={superOrg}
+          applications={applications}
+        />
+      )}
+      <Layout style={{ background: '#fff' }}>
+        {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
         <Content className="layout-content">
           <PageHeader location={location} />
           <Card key={selected.toString()} className="wrap-children-content">
             {children}
           </Card>
         </Content>
-        <Footer style={{ textAlign: 'center' }}> ©2014-2020 Factly Media & Research</Footer>
+        <BackTop style={{ right: 50 }} />
       </Layout>
     </Layout>
   );
