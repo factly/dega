@@ -1,0 +1,89 @@
+project_name: dega
+
+builds:
+- id: dega-server
+  dir: server
+  binary: dega-server
+  env:
+  - CGO_ENABLED=0
+  - GO386=softfloat
+  goos:
+  - linux
+  - darwin
+  - windows
+- id: dega-api
+  dir: api
+  binary: dega-api
+  env:
+  - CGO_ENABLED=0
+  - GO386=softfloat
+  goos:
+  - linux
+  - darwin
+  - windows
+- id: dega-templates
+  dir: templates
+  binary: dega-templates
+  env:
+  - CGO_ENABLED=0
+  - GO386=softfloat
+  goos:
+  - linux
+  - darwin
+  - windows
+
+archives:
+  - id: dega-server
+    builds:
+      - dega-server 
+    name_template: "dega-server_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+  - id: dega-api
+    builds:
+      - dega-api 
+    name_template: "dega-api_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+  - id: dega-templates
+    builds:
+      - dega-templates 
+    name_template: "dega-templates_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+
+dockers:
+- dockerfile: server/Dockerfile.prod
+  image_templates:
+    - "factly/dega-server:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
+- dockerfile: api/Dockerfile.prod
+  image_templates:
+    - "factly/dega-api:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
+- dockerfile: templates/Dockerfile.prod
+  image_templates:
+    - "factly/dega-templates:{{ .Tag }}"
+  use: docker
+  build_flag_templates:
+  - "--platform=linux/amd64"
+
+docker_manifests:
+  - 
+    image_templates:
+    - "factly/dega-server:{{ .Version }}"
+  - 
+    image_templates:
+    - "factly/dega-api:{{ .Version }}"
+  - 
+    image_templates:
+    - "factly/dega-templates:{{ .Version }}"
+
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ incpatch .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'

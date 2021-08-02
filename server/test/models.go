@@ -196,7 +196,7 @@ var MeiliHits = map[string]interface{}{
 			"is_featured":    true,
 			"is_highlighted": true,
 			"is_sticky":      true,
-			"published_date": -62135596800,
+			"published_date": 423849600,
 			"status":         "draft",
 			"subtitle":       "Test Post",
 			"tag_ids": []uint{
@@ -216,7 +216,7 @@ var MeiliHits = map[string]interface{}{
 			"space_id":        1,
 			"title":           "Test Claim",
 			"checked_date":    1598959138,
-			"claim_date":      -62135596800,
+			"claim_date":      423849600,
 			"claim_sources":   "secret sources",
 			"claimant_id":     2,
 			"rating_id":       2,

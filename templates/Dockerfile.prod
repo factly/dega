@@ -4,8 +4,7 @@ RUN apk add ca-certificates
 
 RUN apk add gcc musl-dev
 WORKDIR /app
-COPY dega-server .
+COPY dega-templates .
 
 # Run the binary program produced by `go install`
-ENTRYPOINT ["/app/dega-server"]
-CMD ["serve"]
+ENTRYPOINT ["/app/dega-templates"]
