@@ -14,8 +14,8 @@ function EditMenu() {
 
   const { menu, loading } = useSelector((state) => {
     return {
-      menu: state.menu.details[id] ? state.menu.details[id] : null,
-      loading: state.menu.loading,
+      menu: state.menus.details[id] ? state.menus.details[id] : null,
+      loading: state.menus.loading,
     };
   });
 

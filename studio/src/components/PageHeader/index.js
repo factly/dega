@@ -4,10 +4,14 @@ import { PageHeader as AntPageHeader } from 'antd';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
+import { useSelector } from 'react-redux';
 
 function PageHeader() {
+  const state = useSelector((state) => state);
   const location = useLocation();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
+  const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0];
+
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
@@ -25,33 +29,38 @@ function PageHeader() {
           index === pathSnippets.length - 1 &&
           !(location.pathname.includes('permissions') || location.pathname.includes('requests'))
         ) {
-          const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
-            .concat('/:id/')
-            .concat(pathSnippets.slice(index, index + 2).join('/'));
-          let match = matchPath(location.pathname, {
-            path: generatedReferenceURL,
-            exact: true,
-            strict: false,
-          });
-          if (match) {
-            const route = _.find(routes, { path: generatedReferenceURL });
-            if (route) {
-              return {
-                path: route.path,
-                breadcrumbName: route.title,
-              };
+          if (pathSnippets.includes('edit') && !state[entity].loading) {
+            const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
+              .concat('/:id/')
+              .concat(pathSnippets.slice(index, index + 2).join('/'));
+            let match = matchPath(location.pathname, {
+              path: generatedReferenceURL,
+              exact: true,
+              strict: false,
+            });
+            if (match) {
+              const route = _.find(routes, { path: generatedReferenceURL });
+              if (route) {
+                const entityId = pathSnippets[index - 1];
+                if (!state[entity].details[pathSnippets[index - 1]]) {
+                  return null;
+                } else {
+                  return {
+                    path: route.path,
+                    breadcrumbName:
+                      state[entity].details[entityId]?.name ||
+                      state[entity].details[entityId]?.title ||
+                      state[entity].details[entityId]?.claim,
+                  };
+                }
+              }
             }
           }
         }
         return null;
       }
     });
-    return [
-      {
-        path: '/',
-        breadcrumbName: 'Home',
-      },
-    ].concat(_.filter(urlBreadcrumbItems));
+    return _.filter(urlBreadcrumbItems);
   }, [pathSnippets, location.pathname]);
 
   const itemRender = (route, params, routes, paths) => {
@@ -61,8 +70,18 @@ function PageHeader() {
     }
     return <Link to={route.path}>{route.breadcrumbName}</Link>;
   };
-
-  return <AntPageHeader ghost={false} breadcrumb={{ itemRender, routes: breadcrumbItems }} />;
+  if (
+    (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
+    (entity === 'posts' || entity === 'pages' || entity === 'fact-checks')
+  )
+    return null;
+  else if (state[entity] && !state[entity].loading)
+    return (
+      <h2>
+        <AntPageHeader ghost={false} breadcrumb={{ itemRender, routes: breadcrumbItems }} />
+      </h2>
+    );
+  else return null;
 }
 
 export default PageHeader;
