@@ -40,6 +40,18 @@ func (r *ratingResolver) MetaFields(ctx context.Context, obj *models.Rating) (in
 	return obj.MetaFields, nil
 }
 
+func (r *ratingResolver) Meta(ctx context.Context, obj *models.Rating) (interface{}, error) {
+	return obj.Meta, nil
+}
+
+func (r *ratingResolver) HeaderCode(ctx context.Context, obj *models.Rating) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *ratingResolver) FooterCode(ctx context.Context, obj *models.Rating) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
 func (r *ratingResolver) Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error) {
 	if obj.MediumID == 0 {
 		return nil, nil
