@@ -104,6 +104,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Description: format.Description,
 		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),
 		MetaFields:  format.MetaFields,
+		Meta:        format.Meta,
+		HeaderCode:  format.HeaderCode,
+		FooterCode:  format.FooterCode,
 		SpaceID:     uint(sID),
 	}
 

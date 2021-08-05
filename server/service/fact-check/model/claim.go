@@ -35,6 +35,9 @@ type Claim struct {
 	Video           *Video         `json:"video"`
 	EndTime         int            `gorm:"column:end_time" json:"end_time"`
 	StartTime       int            `gorm:"column:start_time" json:"start_time"`
+	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
+	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
+	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
 }
 
 // PostClaim model

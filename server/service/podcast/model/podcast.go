@@ -25,6 +25,7 @@ type Podcast struct {
 	HeaderCode        string           `gorm:"column:header_code" json:"header_code"`
 	FooterCode        string           `gorm:"column:footer_code" json:"footer_code"`
 	MetaFields        postgres.Jsonb   `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
+	Meta              postgres.Jsonb   `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	SpaceID           uint             `gorm:"column:space_id" json:"space_id"`
 	Space             *model.Space     `json:"space,omitempty"`
 }

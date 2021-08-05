@@ -112,6 +112,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:         uint(sID),
 		TagLine:         claimant.TagLine,
 		MetaFields:      claimant.MetaFields,
+		Meta:            claimant.Meta,
+		HeaderCode:      claimant.HeaderCode,
+		FooterCode:      claimant.FooterCode,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

@@ -18,6 +18,9 @@ type Tag struct {
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
 	Space           *Space         `json:"space,omitempty"`
 	Posts           []*Post        `gorm:"many2many:post_tags;" json:"posts"`
+	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
+	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
+	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
 }
 
 var tagUser config.ContextKey = "tag_user"

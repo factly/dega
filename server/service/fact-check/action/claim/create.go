@@ -112,6 +112,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 		MetaFields:      claim.MetaFields,
+		Meta:            claim.Meta,
+		HeaderCode:      claim.HeaderCode,
+		FooterCode:      claim.FooterCode,
 		SpaceID:         uint(sID),
 	}
 
