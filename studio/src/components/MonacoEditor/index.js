@@ -6,8 +6,8 @@ const MONACOEditor = ({ value, onChange, language, width }) => {
     <MonacoEditor
       language={language}
       options={{
-        autoClosingBrackets: 'never',
-        autoClosingQuotes: 'never',
+        autoClosingBrackets: 'auto',
+        autoClosingQuotes: 'auto',
         cursorBlinking: 'smooth',
         folding: true,
         lineNumbersMinChars: 4,
