@@ -119,6 +119,12 @@ import Webhooks from '../pages/webhooks';
 import CreateWebhook from '../pages/webhooks/CreateWebhook';
 import EditWebhook from '../pages/webhooks/EditWebhook';
 
+//profile
+import Profile from '../pages/profile';
+
+//application
+import Applications from '../pages/applications';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -638,13 +644,23 @@ const routes = {
       action: 'update',
     },
   },
+  profile: {
+    path: '/profile',
+    Component: Profile,
+    title: 'Edit Profile',
+  },
+  applications: {
+    Component: Applications,
+    path: '/applications',
+    title: 'Applications',
+  },
 };
 
 export const sidebarMenu = [
   {
     title: 'DASHBOARD',
     Icon: DashboardOutlined,
-    children: [routes.home, routes.analytics],
+    children: [routes.home, routes.analytics, routes.applications],
   },
   {
     title: 'CORE',

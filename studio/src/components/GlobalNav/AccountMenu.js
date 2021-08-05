@@ -1,7 +1,8 @@
 import { UserOutlined } from '@ant-design/icons';
 import { Menu, Dropdown, Button } from 'antd';
 import React from 'react';
-import { LogoutOutlined, DownOutlined } from '@ant-design/icons';
+import { LogoutOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 const AccountMenu = () => {
   /**
@@ -9,6 +10,11 @@ const AccountMenu = () => {
    */
   const accountMenu = (
     <Menu>
+      <Menu.Item>
+        <Link to="/profile">
+          <EditOutlined /> Profile
+        </Link>
+      </Menu.Item>
       <Menu.Item>
         <a href={window.REACT_APP_KRATOS_PUBLIC_URL + '/self-service/browser/flows/logout'}>
           <LogoutOutlined />
