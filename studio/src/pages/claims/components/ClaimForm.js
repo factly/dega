@@ -95,6 +95,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
           }
           if (errors.errorFields[0].name[0] !== 'review_sources') {
           }
+          if (errors.errorFields[0].name[0] !== 'claim_sources') {
+          }
         }}
         onValuesChange={() => {
           setValueChange(true);
@@ -214,7 +216,11 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field) => (
-                      <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Row
+                        style={{ justifyContent: 'center', alignItems: 'baseline' }}
+                        key={field}
+                        gutter={13}
+                      >
                         <Col span={11}>
                           <Form.Item
                             {...field}
@@ -254,7 +260,11 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 {(fields, { add, remove }) => (
                   <>
                     {fields.map((field) => (
-                      <Row style={{ justifyContent: 'center', alignItems: 'baseline' }} gutter={13}>
+                      <Row
+                        style={{ justifyContent: 'center', alignItems: 'baseline' }}
+                        gutter={13}
+                        key={field}
+                      >
                         <Col span={11}>
                           <Form.Item
                             {...field}
@@ -290,6 +300,43 @@ const ClaimForm = ({ onCreate, data = {} }) => {
               </Form.List>
             </Form.Item>
           </Panel>
+        </Collapse>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
+        >
+          <Panel header="Meta Data">
+            <Form.Item name={['meta', 'title']} label="Meta Title">
+              <Input />
+            </Form.Item>
+            <Form.Item name={['meta', 'description']} label="Meta Description">
+              <Input.TextArea />
+            </Form.Item>
+            <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+              <Input />
+            </Form.Item>
+          </Panel>
+        </Collapse>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
+        >
+          <Panel header="Code Injection">
+            <Form.Item name="header_code" label="Header Code">
+              <MonacoEditor language="html" width="100%" />
+            </Form.Item>
+            <Form.Item name="footer_code" label="Footer Code">
+              <MonacoEditor language="html" width="100%" />
+            </Form.Item>
+          </Panel>
+        </Collapse>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
+        >
           <Panel header="Meta Fields" key="3">
             <Form.Item name="meta_fields">
               <MonacoEditor language="json" />

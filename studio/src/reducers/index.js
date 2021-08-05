@@ -21,7 +21,7 @@ import spaceRequests from './spaceRequestsReducer';
 import admin from './adminReducer';
 import users from './usersReducer';
 import { SET_SELECTED_SPACE } from '../constants/spaces';
-import menu from './menuReducer';
+import menus from './menuReducer';
 import sidebar from './sidebarReducer';
 import episodes from './episodesReducer';
 import podcasts from './podcastReducer';
@@ -59,7 +59,7 @@ const appReducer = combineReducers({
   policies,
   permissions,
   users,
-  menu,
+  menus,
   sidebar,
   events,
   webhooks,

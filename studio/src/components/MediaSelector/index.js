@@ -5,8 +5,9 @@ import MediaUploader from './UploadMedium';
 import MediaList from './MediaList';
 import { getMedium, getMedia } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
+import { DeleteOutlined } from '@ant-design/icons';
 
-function MediaSelector({ value = null, onChange }) {
+function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} }) {
   const [show, setShow] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
   const [tab, setTab] = React.useState('list');
@@ -92,22 +93,42 @@ function MediaSelector({ value = null, onChange }) {
         </Space>
       </Modal>
       <Space direction="vertical">
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <Button
-            style={{
-              background: 'transparent',
-              borderStyle: 'solid',
-              height: 'auto',
-              display: 'block',
-            }}
-            onClick={() => setShow(true)}
-          >
-            {medium ? (
-              <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" />
-            ) : (
-              <ImagePlaceholder />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            ...containerStyles,
+          }}
+        >
+          <div style={{ position: 'relative' }}>
+            <Button
+              style={{
+                background: 'transparent',
+                borderStyle: 'dashed',
+                height: 'auto',
+                display: 'block',
+              }}
+              onClick={() => setShow(true)}
+            >
+              {medium ? (
+                <img src={medium.url?.proxy} alt={medium.alt_text} width="100%" />
+              ) : (
+                <ImagePlaceholder maxWidth={maxWidth} />
+              )}
+            </Button>
+            {selected && (
+              <Button
+                style={{ position: 'absolute', bottom: 0, left: 0 }}
+                onClick={() => {
+                  onChange(null);
+                  setSelected(null);
+                }}
+              >
+                <DeleteOutlined />
+              </Button>
             )}
-          </Button>
+          </div>
         </div>
       </Space>
     </>

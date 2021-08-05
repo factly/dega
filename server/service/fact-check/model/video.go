@@ -5,6 +5,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -23,6 +24,7 @@ type Video struct {
 	PublishedDate *time.Time       `gorm:"column:published_date" json:"published_date"`
 	Tags          []model.Tag      `gorm:"many2many:video_tags;" json:"tags"`
 	Categories    []model.Category `gorm:"many2many:video_categories;" json:"categories"`
+	Schemas       postgres.Jsonb   `gorm:"column:schemas" json:"schemas" swaggertype:"primitive,string"`
 }
 
 // VideoAuthor model
