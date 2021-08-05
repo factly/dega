@@ -23,13 +23,6 @@ jobs:
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
     - name: Login Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u deshetti --password-stdin
-    - name: Build and push dega studio
-      uses: docker/build-push-action@v2
-      with:
-        push: true
-        tags: factly/dega-studio:${{ env.RELEASE_VERSION }}
-        context: studio
-        file: studio/Dockerfile.prod
     - name: Run GoReleaser
       uses: goreleaser/goreleaser-action@v2
       with:
