@@ -64,7 +64,6 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
           </Popconfirm>
         );
       },
-      width: '20%',
     },
   ];
 
