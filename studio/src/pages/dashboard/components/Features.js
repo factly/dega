@@ -23,6 +23,10 @@ function Features() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const superOrg = useSelector(({ admin }) => {
+    return admin.organisation;
+  });
+
   const { ratings, formats, policies, events } = useSelector(
     ({ ratings, formats, policies, events }) => {
       return {
@@ -95,24 +99,26 @@ function Features() {
             create
           </Card>
         )}
-        {events > 0 ? null : (
-          <Card
-            title="Events"
-            actions={[
-              <Button
-                onClick={() => {
-                  dispatch(addDefaultEvents()).then(() => history.push('/events'));
-                }}
-              >
-                <PlusOutlined /> CREATE EVENTS
-              </Button>,
-            ]}
-            style={{ width: 300 }}
-          >
-            Events for Create, Update and Delete for all entities will be created. Click below
-            Button to create
-          </Card>
-        )}
+        {superOrg.is_admin ? (
+          events > 0 ? null : (
+            <Card
+              title="Events"
+              actions={[
+                <Button
+                  onClick={() => {
+                    dispatch(addDefaultEvents()).then(() => history.push('/events'));
+                  }}
+                >
+                  <PlusOutlined /> CREATE EVENTS
+                </Button>,
+              ]}
+              style={{ width: 300 }}
+            >
+              Events for Create, Update and Delete for all entities will be created. Click below
+              Button to create
+            </Card>
+          )
+        ) : null}
       </Space>
     </>
   );

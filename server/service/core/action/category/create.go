@@ -132,6 +132,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:         uint(sID),
 		IsFeatured:      category.IsFeatured,
 		MetaFields:      category.MetaFields,
+		Meta:            category.Meta,
+		HeaderCode:      category.HeaderCode,
+		FooterCode:      category.FooterCode,
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Category{}).Create(&result).Error

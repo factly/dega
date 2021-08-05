@@ -9,6 +9,7 @@ import (
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
@@ -28,6 +29,26 @@ func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*st
 
 func (r *tagResolver) MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error) {
 	return obj.MetaFields, nil
+}
+
+func (r *tagResolver) Meta(ctx context.Context, obj *models.Tag) (interface{}, error) {
+	return obj.Meta, nil
+}
+
+func (r *tagResolver) HeaderCode(ctx context.Context, obj *models.Tag) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *tagResolver) FooterCode(ctx context.Context, obj *models.Tag) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
+func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medium, error) {
+	if obj.MediumID == 0 {
+		return nil, nil
+	}
+
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
 func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {

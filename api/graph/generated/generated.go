@@ -63,9 +63,12 @@ type ComplexityRoot struct {
 	Category struct {
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		FooterCode      func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
+		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Medium          func(childComplexity int) int
+		Meta            func(childComplexity int) int
 		MetaFields      func(childComplexity int) int
 		Name            func(childComplexity int) int
 		ParentID        func(childComplexity int) int
@@ -84,8 +87,12 @@ type ComplexityRoot struct {
 		Description     func(childComplexity int) int
 		EndTime         func(childComplexity int) int
 		Fact            func(childComplexity int) int
+		FooterCode      func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
+		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		Meta            func(childComplexity int) int
 		MetaFields      func(childComplexity int) int
 		Rating          func(childComplexity int) int
 		ReviewSources   func(childComplexity int) int
@@ -98,9 +105,12 @@ type ComplexityRoot struct {
 	Claimant struct {
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		FooterCode      func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
+		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Medium          func(childComplexity int) int
+		Meta            func(childComplexity int) int
 		MetaFields      func(childComplexity int) int
 		Name            func(childComplexity int) int
 		Slug            func(childComplexity int) int
@@ -122,7 +132,11 @@ type ComplexityRoot struct {
 	Format struct {
 		CreatedAt   func(childComplexity int) int
 		Description func(childComplexity int) int
+		FooterCode  func(childComplexity int) int
+		HeaderCode  func(childComplexity int) int
 		ID          func(childComplexity int) int
+		Medium      func(childComplexity int) int
+		Meta        func(childComplexity int) int
 		MetaFields  func(childComplexity int) int
 		Name        func(childComplexity int) int
 		Slug        func(childComplexity int) int
@@ -230,9 +244,12 @@ type ComplexityRoot struct {
 		BackgroundColour func(childComplexity int) int
 		CreatedAt        func(childComplexity int) int
 		Description      func(childComplexity int) int
+		FooterCode       func(childComplexity int) int
 		HTMLDescription  func(childComplexity int) int
+		HeaderCode       func(childComplexity int) int
 		ID               func(childComplexity int) int
 		Medium           func(childComplexity int) int
+		Meta             func(childComplexity int) int
 		MetaFields       func(childComplexity int) int
 		Name             func(childComplexity int) int
 		NumericValue     func(childComplexity int) int
@@ -299,8 +316,12 @@ type ComplexityRoot struct {
 	Tag struct {
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		FooterCode      func(childComplexity int) int
 		HTMLDescription func(childComplexity int) int
+		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
+		Medium          func(childComplexity int) int
+		Meta            func(childComplexity int) int
 		MetaFields      func(childComplexity int) int
 		Name            func(childComplexity int) int
 		Slug            func(childComplexity int) int
@@ -344,6 +365,9 @@ type CategoryResolver interface {
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
+	Meta(ctx context.Context, obj *models.Category) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Category) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Category) (*string, error)
 }
 type ClaimResolver interface {
 	ID(ctx context.Context, obj *models.Claim) (string, error)
@@ -357,8 +381,12 @@ type ClaimResolver interface {
 	Rating(ctx context.Context, obj *models.Claim) (*models.Rating, error)
 	Claimant(ctx context.Context, obj *models.Claim) (*models.Claimant, error)
 	MetaFields(ctx context.Context, obj *models.Claim) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Claim) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Claim) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Claim) (*string, error)
 
 	SpaceID(ctx context.Context, obj *models.Claim) (int, error)
+	Medium(ctx context.Context, obj *models.Claim) (*models.Medium, error)
 }
 type ClaimantResolver interface {
 	ID(ctx context.Context, obj *models.Claimant) (string, error)
@@ -367,13 +395,20 @@ type ClaimantResolver interface {
 
 	Medium(ctx context.Context, obj *models.Claimant) (*models.Medium, error)
 	MetaFields(ctx context.Context, obj *models.Claimant) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Claimant) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Claimant) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Claimant) (*string, error)
 	SpaceID(ctx context.Context, obj *models.Claimant) (int, error)
 }
 type FormatResolver interface {
 	ID(ctx context.Context, obj *models.Format) (string, error)
 
 	MetaFields(ctx context.Context, obj *models.Format) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Format) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Format) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Format) (*string, error)
 	SpaceID(ctx context.Context, obj *models.Format) (int, error)
+	Medium(ctx context.Context, obj *models.Format) (*models.Medium, error)
 }
 type MediumResolver interface {
 	ID(ctx context.Context, obj *models.Medium) (string, error)
@@ -438,6 +473,9 @@ type RatingResolver interface {
 
 	Medium(ctx context.Context, obj *models.Rating) (*models.Medium, error)
 	MetaFields(ctx context.Context, obj *models.Rating) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Rating) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Rating) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Rating) (*string, error)
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
 }
 type SitemapsResolver interface {
@@ -467,6 +505,10 @@ type TagResolver interface {
 	ID(ctx context.Context, obj *models.Tag) (string, error)
 
 	MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error)
+	Meta(ctx context.Context, obj *models.Tag) (interface{}, error)
+	HeaderCode(ctx context.Context, obj *models.Tag) (*string, error)
+	FooterCode(ctx context.Context, obj *models.Tag) (*string, error)
+	Medium(ctx context.Context, obj *models.Tag) (*models.Medium, error)
 	SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 }
 type UserResolver interface {
@@ -518,12 +560,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.Description(childComplexity), true
 
+	case "Category.footer_code":
+		if e.complexity.Category.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Category.FooterCode(childComplexity), true
+
 	case "Category.html_description":
 		if e.complexity.Category.HTMLDescription == nil {
 			break
 		}
 
 		return e.complexity.Category.HTMLDescription(childComplexity), true
+
+	case "Category.header_code":
+		if e.complexity.Category.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Category.HeaderCode(childComplexity), true
 
 	case "Category.id":
 		if e.complexity.Category.ID == nil {
@@ -538,6 +594,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Category.Medium(childComplexity), true
+
+	case "Category.meta":
+		if e.complexity.Category.Meta == nil {
+			break
+		}
+
+		return e.complexity.Category.Meta(childComplexity), true
 
 	case "Category.meta_fields":
 		if e.complexity.Category.MetaFields == nil {
@@ -644,6 +707,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Fact(childComplexity), true
 
+	case "Claim.footer_code":
+		if e.complexity.Claim.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Claim.FooterCode(childComplexity), true
+
 	case "Claim.html_description":
 		if e.complexity.Claim.HTMLDescription == nil {
 			break
@@ -651,12 +721,33 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.HTMLDescription(childComplexity), true
 
+	case "Claim.header_code":
+		if e.complexity.Claim.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Claim.HeaderCode(childComplexity), true
+
 	case "Claim.id":
 		if e.complexity.Claim.ID == nil {
 			break
 		}
 
 		return e.complexity.Claim.ID(childComplexity), true
+
+	case "Claim.medium":
+		if e.complexity.Claim.Medium == nil {
+			break
+		}
+
+		return e.complexity.Claim.Medium(childComplexity), true
+
+	case "Claim.meta":
+		if e.complexity.Claim.Meta == nil {
+			break
+		}
+
+		return e.complexity.Claim.Meta(childComplexity), true
 
 	case "Claim.meta_fields":
 		if e.complexity.Claim.MetaFields == nil {
@@ -721,12 +812,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claimant.Description(childComplexity), true
 
+	case "Claimant.footer_code":
+		if e.complexity.Claimant.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Claimant.FooterCode(childComplexity), true
+
 	case "Claimant.html_description":
 		if e.complexity.Claimant.HTMLDescription == nil {
 			break
 		}
 
 		return e.complexity.Claimant.HTMLDescription(childComplexity), true
+
+	case "Claimant.header_code":
+		if e.complexity.Claimant.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Claimant.HeaderCode(childComplexity), true
 
 	case "Claimant.id":
 		if e.complexity.Claimant.ID == nil {
@@ -741,6 +846,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claimant.Medium(childComplexity), true
+
+	case "Claimant.meta":
+		if e.complexity.Claimant.Meta == nil {
+			break
+		}
+
+		return e.complexity.Claimant.Meta(childComplexity), true
 
 	case "Claimant.meta_fields":
 		if e.complexity.Claimant.MetaFields == nil {
@@ -826,12 +938,40 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Format.Description(childComplexity), true
 
+	case "Format.footer_code":
+		if e.complexity.Format.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Format.FooterCode(childComplexity), true
+
+	case "Format.header_code":
+		if e.complexity.Format.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Format.HeaderCode(childComplexity), true
+
 	case "Format.id":
 		if e.complexity.Format.ID == nil {
 			break
 		}
 
 		return e.complexity.Format.ID(childComplexity), true
+
+	case "Format.medium":
+		if e.complexity.Format.Medium == nil {
+			break
+		}
+
+		return e.complexity.Format.Medium(childComplexity), true
+
+	case "Format.meta":
+		if e.complexity.Format.Meta == nil {
+			break
+		}
+
+		return e.complexity.Format.Meta(childComplexity), true
 
 	case "Format.meta_fields":
 		if e.complexity.Format.MetaFields == nil {
@@ -1489,12 +1629,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rating.Description(childComplexity), true
 
+	case "Rating.footer_code":
+		if e.complexity.Rating.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Rating.FooterCode(childComplexity), true
+
 	case "Rating.html_description":
 		if e.complexity.Rating.HTMLDescription == nil {
 			break
 		}
 
 		return e.complexity.Rating.HTMLDescription(childComplexity), true
+
+	case "Rating.header_code":
+		if e.complexity.Rating.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Rating.HeaderCode(childComplexity), true
 
 	case "Rating.id":
 		if e.complexity.Rating.ID == nil {
@@ -1509,6 +1663,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Rating.Medium(childComplexity), true
+
+	case "Rating.meta":
+		if e.complexity.Rating.Meta == nil {
+			break
+		}
+
+		return e.complexity.Rating.Meta(childComplexity), true
 
 	case "Rating.meta_fields":
 		if e.complexity.Rating.MetaFields == nil {
@@ -1846,6 +2007,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.Description(childComplexity), true
 
+	case "Tag.footer_code":
+		if e.complexity.Tag.FooterCode == nil {
+			break
+		}
+
+		return e.complexity.Tag.FooterCode(childComplexity), true
+
 	case "Tag.html_description":
 		if e.complexity.Tag.HTMLDescription == nil {
 			break
@@ -1853,12 +2021,33 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.HTMLDescription(childComplexity), true
 
+	case "Tag.header_code":
+		if e.complexity.Tag.HeaderCode == nil {
+			break
+		}
+
+		return e.complexity.Tag.HeaderCode(childComplexity), true
+
 	case "Tag.id":
 		if e.complexity.Tag.ID == nil {
 			break
 		}
 
 		return e.complexity.Tag.ID(childComplexity), true
+
+	case "Tag.medium":
+		if e.complexity.Tag.Medium == nil {
+			break
+		}
+
+		return e.complexity.Tag.Medium(childComplexity), true
+
+	case "Tag.meta":
+		if e.complexity.Tag.Meta == nil {
+			break
+		}
+
+		return e.complexity.Tag.Meta(childComplexity), true
 
 	case "Tag.meta_fields":
 		if e.complexity.Tag.MetaFields == nil {
@@ -2098,6 +2287,9 @@ type Category {
   parent_id: Int
   medium: Medium
   space_id: Int!
+  meta: Any
+  header_code: String
+  footer_code: String
 }
 
 type Tag {
@@ -2109,6 +2301,10 @@ type Tag {
   description: String
   html_description: String
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  medium: Medium
   space_id: Int!
 }
 
@@ -2120,7 +2316,11 @@ type Format {
   slug: String!
   description: String
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
+  medium: Medium
 }
 
 type Medium {
@@ -2181,7 +2381,7 @@ type User {
   slug: String
   email: String!
   birth_date: String
-  gender:  String
+  gender: String
   description: String
   display_name: String
   social_media_urls: Any
@@ -2201,6 +2401,9 @@ type Rating {
   numeric_value: Int!
   medium: Medium
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
 }
 
@@ -2215,6 +2418,9 @@ type Claimant {
   tag_line: String
   medium: Medium
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
 }
 
@@ -2234,9 +2440,13 @@ type Claim {
   rating: Rating!
   claimant: Claimant!
   meta_fields: Any
-  end_time: Int            
-	start_time: Int        
+  meta: Any
+  header_code: String
+  footer_code: String
+  end_time: Int
+  start_time: Int
   space_id: Int!
+  medium: Medium
 }
 
 type Menu {
@@ -2249,7 +2459,6 @@ type Menu {
   meta_fields: Any
   space_id: Int!
 }
-
 
 type CategoriesPaging {
   nodes: [Category!]!
@@ -2265,7 +2474,6 @@ type PostsPaging {
   nodes: [Post!]!
   total: Int!
 }
-
 
 type UsersPaging {
   nodes: [User!]!
@@ -2311,7 +2519,7 @@ type Sitemaps {
   posts: [Sitemap]
   claims: [Sitemap]
   claimants: [Sitemap]
-  ratings: [Sitemap] 
+  ratings: [Sitemap]
 }
 
 type SearchResult {
@@ -2332,26 +2540,78 @@ input PostFilter {
 type Query {
   space: Space
   menu: MenusPaging
-  categories(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): CategoriesPaging
+  categories(
+    ids: [Int!]
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): CategoriesPaging
   category(id: Int, slug: String): Category
-  tags(ids: [Int!], spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): TagsPaging
+  tags(
+    ids: [Int!]
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): TagsPaging
   tag(id: Int, slug: String): Tag
-  formats(spaces:[Int!], slugs:[String!]): FormatsPaging
-  posts(spaces:[Int!], formats: PostFilter, categories: PostFilter, tags: PostFilter, users: PostFilter, status: String, page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  formats(spaces: [Int!], slugs: [String!]): FormatsPaging
+  posts(
+    spaces: [Int!]
+    formats: PostFilter
+    categories: PostFilter
+    tags: PostFilter
+    users: PostFilter
+    status: String
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): PostsPaging
   post(id: Int, slug: String, include_pages: Boolean): Post
   page(id: Int, slug: String): Post
-  pages(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): PostsPaging
+  pages(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): PostsPaging
   users(page: Int, limit: Int): UsersPaging
   user(id: Int, slug: String): User
-  ratings(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): RatingsPaging
-  claimants(spaces:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimantsPaging
-  claims(spaces:[Int!], ratings: [Int!], claimants:[Int!], page: Int, limit: Int, sortBy: String, sortOrder: String): ClaimsPaging
+  ratings(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): RatingsPaging
+  claimants(
+    spaces: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimantsPaging
+  claims(
+    spaces: [Int!]
+    ratings: [Int!]
+    claimants: [Int!]
+    page: Int
+    limit: Int
+    sortBy: String
+    sortOrder: String
+  ): ClaimsPaging
   sitemap: Sitemaps
   search(q: String!): SearchResult
 }
 
 scalar Time
-scalar Any`, BuiltIn: false},
+scalar Any
+`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
@@ -3476,6 +3736,102 @@ func (ec *executionContext) _Category_space_id(ctx context.Context, field graphq
 	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Category_meta(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Category_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Category_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Claim_id(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3971,6 +4327,102 @@ func (ec *executionContext) _Claim_meta_fields(ctx context.Context, field graphq
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Claim_meta(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claim().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claim_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claim().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claim_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claim().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Claim_end_time(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -4068,6 +4520,38 @@ func (ec *executionContext) _Claim_space_id(ctx context.Context, field graphql.C
 	res := resTmp.(int)
 	fc.Result = res
 	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claim_medium(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claim",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claim().Medium(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Medium)
+	fc.Result = res
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant_id(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -4397,6 +4881,102 @@ func (ec *executionContext) _Claimant_meta_fields(ctx context.Context, field gra
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claimant_meta(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claimant",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claimant().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claimant_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claimant",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claimant().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Claimant_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Claimant",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Claimant().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claimant_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
@@ -4807,6 +5387,102 @@ func (ec *executionContext) _Format_meta_fields(ctx context.Context, field graph
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Format_meta(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Format",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Format().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Format_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Format",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Format().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Format_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Format",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Format().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Format_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -4840,6 +5516,38 @@ func (ec *executionContext) _Format_space_id(ctx context.Context, field graphql.
 	res := resTmp.(int)
 	fc.Result = res
 	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Format_medium(ctx context.Context, field graphql.CollectedField, obj *models.Format) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Format",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Format().Medium(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Medium)
+	fc.Result = res
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _FormatsPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.FormatsPaging) (ret graphql.Marshaler) {
@@ -7901,6 +8609,102 @@ func (ec *executionContext) _Rating_meta_fields(ctx context.Context, field graph
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Rating_meta(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Rating_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Rating_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Rating",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Rating().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Rating_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -9468,6 +10272,134 @@ func (ec *executionContext) _Tag_meta_fields(ctx context.Context, field graphql.
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_meta(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().Meta(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().HeaderCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_footer_code(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().FooterCode(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_medium(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().Medium(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.Medium)
+	fc.Result = res
+	return ec.marshalOMedium2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMedium(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag_space_id(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -11315,6 +12247,39 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				}
 				return res
 			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_footer_code(ctx, field, obj)
+				return res
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -11463,6 +12428,39 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				res = ec._Claim_meta_fields(ctx, field, obj)
 				return res
 			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_footer_code(ctx, field, obj)
+				return res
+			})
 		case "end_time":
 			out.Values[i] = ec._Claim_end_time(ctx, field, obj)
 		case "start_time":
@@ -11479,6 +12477,17 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
+				return res
+			})
+		case "medium":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claim_medium(ctx, field, obj)
 				return res
 			})
 		default:
@@ -11566,6 +12575,39 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 					}
 				}()
 				res = ec._Claimant_meta_fields(ctx, field, obj)
+				return res
+			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claimant_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claimant_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Claimant_footer_code(ctx, field, obj)
 				return res
 			})
 		case "space_id":
@@ -11709,6 +12751,39 @@ func (ec *executionContext) _Format(ctx context.Context, sel ast.SelectionSet, o
 				res = ec._Format_meta_fields(ctx, field, obj)
 				return res
 			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Format_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Format_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Format_footer_code(ctx, field, obj)
+				return res
+			})
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -11721,6 +12796,17 @@ func (ec *executionContext) _Format(ctx context.Context, sel ast.SelectionSet, o
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
+				return res
+			})
+		case "medium":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Format_medium(ctx, field, obj)
 				return res
 			})
 		default:
@@ -12594,6 +13680,39 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 				res = ec._Rating_meta_fields(ctx, field, obj)
 				return res
 			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Rating_footer_code(ctx, field, obj)
+				return res
+			})
 		case "space_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -13033,6 +14152,50 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 					}
 				}()
 				res = ec._Tag_meta_fields(ctx, field, obj)
+				return res
+			})
+		case "meta":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_meta(ctx, field, obj)
+				return res
+			})
+		case "header_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_header_code(ctx, field, obj)
+				return res
+			})
+		case "footer_code":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_footer_code(ctx, field, obj)
+				return res
+			})
+		case "medium":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_medium(ctx, field, obj)
 				return res
 			})
 		case "space_id":

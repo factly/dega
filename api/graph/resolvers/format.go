@@ -6,6 +6,7 @@ import (
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
+	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 )
@@ -20,6 +21,26 @@ func (r *formatResolver) SpaceID(ctx context.Context, obj *models.Format) (int, 
 
 func (r *formatResolver) MetaFields(ctx context.Context, obj *models.Format) (interface{}, error) {
 	return obj.MetaFields, nil
+}
+
+func (r *formatResolver) Meta(ctx context.Context, obj *models.Format) (interface{}, error) {
+	return obj.Meta, nil
+}
+
+func (r *formatResolver) HeaderCode(ctx context.Context, obj *models.Format) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *formatResolver) FooterCode(ctx context.Context, obj *models.Format) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
+func (r *formatResolver) Medium(ctx context.Context, obj *models.Format) (*models.Medium, error) {
+	if obj.MediumID == 0 {
+		return nil, nil
+	}
+
+	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
 func (r *queryResolver) Formats(ctx context.Context, spaces []int, slugs []string) (*models.FormatsPaging, error) {

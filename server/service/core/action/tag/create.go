@@ -98,14 +98,23 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	mediumID := &tag.MediumID
+	if tag.MediumID == 0 {
+		mediumID = nil
+	}
+
 	result := &model.Tag{
 		Name:            tag.Name,
 		Slug:            slugx.Approve(&config.DB, tagSlug, sID, tableName),
 		Description:     tag.Description,
 		HTMLDescription: description,
 		SpaceID:         uint(sID),
+		MediumID:        mediumID,
 		IsFeatured:      tag.IsFeatured,
 		MetaFields:      tag.MetaFields,
+		Meta:            tag.Meta,
+		HeaderCode:      tag.HeaderCode,
+		FooterCode:      tag.FooterCode,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -117,6 +126,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Model(&model.Tag{}).Preload("Medium").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{

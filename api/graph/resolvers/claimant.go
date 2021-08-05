@@ -40,6 +40,18 @@ func (r *claimantResolver) Medium(ctx context.Context, obj *models.Claimant) (*m
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
 }
 
+func (r *claimantResolver) Meta(ctx context.Context, obj *models.Claimant) (interface{}, error) {
+	return obj.Meta, nil
+}
+
+func (r *claimantResolver) HeaderCode(ctx context.Context, obj *models.Claimant) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *claimantResolver) FooterCode(ctx context.Context, obj *models.Claimant) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
 func (r *queryResolver) Claimants(ctx context.Context, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.ClaimantsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

@@ -13,6 +13,10 @@ type format struct {
 	Slug        string         `json:"slug"`
 	Description string         `json:"description"`
 	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	Meta        postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
+	HeaderCode  string         `json:"header_code"`
+	FooterCode  string         `json:"footer_code"`
+	MediumID    uint           `json:"medium_id"`
 }
 
 var userContext config.ContextKey = "format_user"

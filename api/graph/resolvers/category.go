@@ -48,6 +48,18 @@ func (r *categoryResolver) MetaFields(ctx context.Context, obj *models.Category)
 	return obj.MetaFields, nil
 }
 
+func (r *categoryResolver) Meta(ctx context.Context, obj *models.Category) (interface{}, error) {
+	return obj.Meta, nil
+}
+
+func (r *categoryResolver) HeaderCode(ctx context.Context, obj *models.Category) (*string, error) {
+	return &obj.HeaderCode, nil
+}
+
+func (r *categoryResolver) FooterCode(ctx context.Context, obj *models.Category) (*string, error) {
+	return &obj.FooterCode, nil
+}
+
 func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*models.Category, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
