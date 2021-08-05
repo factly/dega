@@ -4,7 +4,7 @@ import { Row, Col, Skeleton, Form, Input, Button, Space, Popconfirm } from 'antd
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-import { ArrowLeftOutlined, DeleteOutlined } from '@ant-design/icons';
+import { ArrowLeftOutlined } from '@ant-design/icons';
 import getUserPermission from '../../utils/getUserPermission';
 import { useHistory } from 'react-router-dom';
 import MonacoEditor from '../../components/MonacoEditor';
@@ -64,7 +64,14 @@ function EditMedium() {
         <img
           src={media.url?.proxy}
           alt={'space'}
-          style={{ maxHeight: '500px', maxWidth: '100%', margin: '0 auto', display: 'block' }}
+          style={{
+            maxHeight: '500px',
+            maxWidth: '100%',
+            display: 'block',
+            margin: '16px auto',
+            width: '100%',
+            objectFit: 'contain',
+          }}
         />
       </Col>
       <Col span={'12'}>
@@ -106,9 +113,19 @@ function EditMedium() {
                   dispatch(deleteMedium(id)).then(() => history.push('/media'));
                 }}
               >
-                <Button type="danger" disabled={disabled} icon={<DeleteOutlined />} />
+                <Button
+                  type="danger"
+                  disabled={disabled} // icon={<DeleteOutlined />}
+                >
+                  Delete
+                </Button>
               </Popconfirm>
-              <Button type="primary" htmlType="submit" disabled={disabled || !valueChange}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={disabled || !valueChange}
+                //  icon={<SendOutlined />}
+              >
                 Submit
               </Button>
             </Space>
