@@ -122,9 +122,6 @@ import EditWebhook from '../pages/webhooks/EditWebhook';
 //profile
 import Profile from '../pages/profile';
 
-//application
-import Applications from '../pages/applications';
-
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -649,18 +646,13 @@ const routes = {
     Component: Profile,
     title: 'Edit Profile',
   },
-  applications: {
-    Component: Applications,
-    path: '/applications',
-    title: 'Applications',
-  },
 };
 
 export const sidebarMenu = [
   {
     title: 'DASHBOARD',
     Icon: DashboardOutlined,
-    children: [routes.home, routes.analytics, routes.applications],
+    children: [routes.home, routes.analytics],
   },
   {
     title: 'CORE',
