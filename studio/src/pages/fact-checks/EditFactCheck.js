@@ -30,6 +30,9 @@ function EditFactCheck({ formats }) {
   if (!post) {
     return <RecordNotFound />;
   }
+  if (post && post.id && !formats.loading && post.format !== formats.factcheck.id)
+    return <RecordNotFound />;
+
   const onUpdate = (values) => {
     dispatch(updatePost({ ...post, ...values })).then(() => {
       history.push(`/fact-checks/${id}/edit`);
