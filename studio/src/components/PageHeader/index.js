@@ -12,11 +12,14 @@ function PageHeader() {
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0];
 
+  const isBreadCrumbsHidden =
+    (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
+    (entity === 'posts' || entity === 'pages' || entity === 'fact-checks'); // redundant entity check for fact-checks?
   const breadcrumbItems = useMemo(() => {
     const urlBreadcrumbItems = pathSnippets.map((empty, index) => {
       const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
       const route = _.find(routes, { path: url });
-      if (route) {
+      if (route && !isBreadCrumbsHidden) {
         return {
           path: route.path,
           breadcrumbName: route.title,
@@ -57,29 +60,58 @@ function PageHeader() {
             }
           }
         }
+        if (isBreadCrumbsHidden) {
+          return null;
+        }
         return null;
       }
     });
     return _.filter(urlBreadcrumbItems);
   }, [pathSnippets, location.pathname]);
 
+  const handleOnBack = () => {
+    if (isBreadCrumbsHidden) {
+      window.history.back();
+    }
+    return null;
+  };
+  const getTitle = (entityType) => {
+    switch (entityType) {
+      case 'fact-checks':
+        return 'Fact-Checks';
+      case 'posts':
+        return 'Posts';
+      case 'pages':
+        return 'Pages';
+      default:
+        return;
+    }
+  };
   const itemRender = (route, params, routes, paths) => {
     const last = routes.indexOf(route) === routes.length - 1;
     if (last) {
-      return <span>{route.breadcrumbName}</span>;
+      return !isBreadCrumbsHidden && <h2 style={{ display: 'inline' }}>{route.breadcrumbName}</h2>;
     }
-    return <Link to={route.path}>{route.breadcrumbName}</Link>;
-  };
-  if (
-    (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
-    (entity === 'posts' || entity === 'pages' || entity === 'fact-checks')
-  )
-    return null;
-  else if (state[entity] && !state[entity].loading)
     return (
-      <h2>
-        <AntPageHeader ghost={false} breadcrumb={{ itemRender, routes: breadcrumbItems }} />
-      </h2>
+      !isBreadCrumbsHidden && (
+        <h2 style={{ display: 'inline' }}>
+          <Link to={route.path}>{route.breadcrumbName}</Link>
+        </h2>
+      )
+    );
+  };
+  if (state[entity] && !state[entity].loading)
+    return (
+      <AntPageHeader
+        ghost={false}
+        title={isBreadCrumbsHidden ? getTitle(pathSnippets[0]) : null}
+        onBack={handleOnBack}
+        breadcrumb={{
+          itemRender,
+          routes: breadcrumbItems,
+          separator: <h2 style={{ display: 'inline', color: 'inherit' }}>&gt;</h2>,
+        }}
+      />
     );
   else return null;
 }
