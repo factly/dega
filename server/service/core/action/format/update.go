@@ -112,6 +112,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
+
+	mediumID := &format.MediumID
+	result.MediumID = &format.MediumID
+	if format.MediumID == 0 {
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	tx.Model(&result).Updates(model.Format{
 		Base:        config.Base{UpdatedByID: uint(uID)},
 		Name:        format.Name,
@@ -121,7 +135,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Meta:        format.Meta,
 		HeaderCode:  format.HeaderCode,
 		FooterCode:  format.FooterCode,
-	}).First(&result)
+		MediumID:    mediumID,
+	}).Preload("Medium").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{

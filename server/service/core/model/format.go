@@ -12,6 +12,8 @@ type Format struct {
 	Name        string         `gorm:"column:name" json:"name" validate:"required"`
 	Slug        string         `gorm:"column:slug" json:"slug" validate:"required"`
 	Description string         `gorm:"column:description" json:"description"`
+	MediumID    *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	Medium      *Medium        `json:"medium"`
 	MetaFields  postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta        postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode  string         `gorm:"column:header_code" json:"header_code"`

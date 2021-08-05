@@ -125,6 +125,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
+	mediumID := &tag.MediumID
+	result.MediumID = &tag.MediumID
+	if tag.MediumID == 0 {
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
 	err = tx.Model(&result).Updates(model.Tag{
 		Base:            config.Base{UpdatedByID: uint(uID)},
@@ -136,7 +149,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Meta:            tag.Meta,
 		HeaderCode:      tag.HeaderCode,
 		FooterCode:      tag.FooterCode,
-	}).First(&result).Error
+		MediumID:        mediumID,
+	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)

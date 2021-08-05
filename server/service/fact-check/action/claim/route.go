@@ -19,6 +19,7 @@ type claim struct {
 	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	ClaimantID    uint           `json:"claimant_id" validate:"required"`
 	RatingID      uint           `json:"rating_id" validate:"required"`
+	MediumID      uint           `json:"medium_id"`
 	Fact          string         `json:"fact"`
 	ReviewSources postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
 	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
