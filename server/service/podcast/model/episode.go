@@ -26,6 +26,9 @@ type Episode struct {
 	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium          *model.Medium  `json:"medium"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
+	Meta            postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
+	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
+	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
 	Space           *model.Space   `json:"space,omitempty"`
 }

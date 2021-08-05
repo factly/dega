@@ -32,6 +32,9 @@ type Category {
   parent_id: Int
   medium: Medium
   space_id: Int!
+  meta: Any
+  header_code: String
+  footer_code: String
 }
 
 type Tag {
@@ -43,6 +46,10 @@ type Tag {
   description: String
   html_description: String
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
+  medium: Medium
   space_id: Int!
 }
 
@@ -54,7 +61,11 @@ type Format {
   slug: String!
   description: String
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
+  medium: Medium
 }
 
 type Medium {
@@ -135,6 +146,9 @@ type Rating {
   numeric_value: Int!
   medium: Medium
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
 }
 
@@ -149,6 +163,9 @@ type Claimant {
   tag_line: String
   medium: Medium
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   space_id: Int!
 }
 
@@ -168,9 +185,13 @@ type Claim {
   rating: Rating!
   claimant: Claimant!
   meta_fields: Any
+  meta: Any
+  header_code: String
+  footer_code: String
   end_time: Int
   start_time: Int
   space_id: Int!
+  medium: Medium
 }
 
 type Menu {

@@ -99,12 +99,21 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	mediumID := &format.MediumID
+	if format.MediumID == 0 {
+		mediumID = nil
+	}
+
 	result := &model.Format{
 		Name:        format.Name,
 		Description: format.Description,
 		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),
 		MetaFields:  format.MetaFields,
+		Meta:        format.Meta,
+		HeaderCode:  format.HeaderCode,
+		FooterCode:  format.FooterCode,
 		SpaceID:     uint(sID),
+		MediumID:    mediumID,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -116,6 +125,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
 	}
+
+	tx.Model(&model.Format{}).Preload("Medium").First(&result)
 
 	if config.SearchEnabled() {
 		_ = insertIntoMeili(*result)

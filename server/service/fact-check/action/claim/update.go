@@ -127,6 +127,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
+
+	mediumID := &claim.MediumID
+	result.MediumID = &claim.MediumID
+	if claim.MediumID == 0 {
+		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
+		mediumID = nil
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
 	tx.Model(&result).Select("ClaimDate", "CheckedDate").Updates(model.Claim{
 		ClaimDate:   claim.ClaimDate,
 		CheckedDate: claim.CheckedDate,
@@ -143,7 +157,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 		MetaFields:      claim.MetaFields,
-	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").First(&result).Error
+		Meta:            claim.Meta,
+		HeaderCode:      claim.HeaderCode,
+		FooterCode:      claim.FooterCode,
+		MediumID:        mediumID,
+	}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Preload("Medium").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

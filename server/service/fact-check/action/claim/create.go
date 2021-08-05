@@ -99,6 +99,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	mediumID := &claim.MediumID
+	if claim.MediumID == 0 {
+		mediumID = nil
+	}
+
 	result := &model.Claim{
 		Claim:           claim.Claim,
 		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
@@ -112,7 +117,11 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Fact:            claim.Fact,
 		ReviewSources:   claim.ReviewSources,
 		MetaFields:      claim.MetaFields,
+		Meta:            claim.Meta,
+		HeaderCode:      claim.HeaderCode,
+		FooterCode:      claim.FooterCode,
 		SpaceID:         uint(sID),
+		MediumID:        mediumID,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -125,7 +134,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Find(&result)
+	tx.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Preload("Medium").Find(&result)
 
 	var claimMeiliDate int64 = 0
 	if result.ClaimDate != nil {
