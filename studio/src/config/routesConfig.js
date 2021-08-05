@@ -119,6 +119,9 @@ import Webhooks from '../pages/webhooks';
 import CreateWebhook from '../pages/webhooks/CreateWebhook';
 import EditWebhook from '../pages/webhooks/EditWebhook';
 
+//profile
+import Profile from '../pages/profile';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -637,6 +640,11 @@ const routes = {
       resource: 'webhooks',
       action: 'update',
     },
+  },
+  profile: {
+    path: '/profile',
+    Component: Profile,
+    title: 'Edit Profile',
   },
 };
 
