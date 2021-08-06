@@ -53,7 +53,7 @@ function Posts({ formats }) {
 
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
   const params = getUrlParams(query, keys);
-  if (formats && !formats.loading) {
+  if (formats && !formats.loading && formats.article) {
     params['format'] = [formats.article.id];
   }
   const [filters, setFilters] = React.useState({
