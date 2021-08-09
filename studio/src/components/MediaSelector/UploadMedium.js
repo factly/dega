@@ -3,16 +3,16 @@ import UppyUploader from '../Uppy';
 import { useDispatch } from 'react-redux';
 import { addMedium } from '../../actions/media';
 
-function UploadMedium({ onMediaUpload }) {
+function UploadMedium({ onMediaUpload, profile = false }) {
   const dispatch = useDispatch();
   const onUpload = (values) => {
-    dispatch(addMedium(values)).then(() => {
+    dispatch(addMedium(values, profile)).then(() => {
       if (values.length === 1) {
         onMediaUpload(values);
       }
     });
   };
-  return <UppyUploader onUpload={onUpload} />;
+  return <UppyUploader onUpload={onUpload} profile={profile} />;
 }
 
 export default UploadMedium;

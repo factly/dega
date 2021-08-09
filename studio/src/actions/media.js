@@ -6,15 +6,19 @@ import {
   SET_MEDIA_LOADING,
   RESET_MEDIA,
   MEDIA_API,
+  KAVACH_MEDIA_API,
 } from '../constants/media';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
-export const getMedia = (query) => {
+const getApi = (profile) => {
+  return profile ? KAVACH_MEDIA_API : MEDIA_API;
+};
+export const getMedia = (query, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .get(MEDIA_API, {
+      .get(getApi(profile), {
         params: query,
       })
       .then((response) => {
@@ -34,11 +38,11 @@ export const getMedia = (query) => {
   };
 };
 
-export const getMedium = (id) => {
+export const getMedium = (id, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .get(MEDIA_API + '/' + id)
+      .get(getApi(profile) + '/' + id)
       .then((response) => {
         dispatch(getMediumByID(response.data));
       })

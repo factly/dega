@@ -7,7 +7,13 @@ import { getMedium, getMedia } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} }) {
+function MediaSelector({
+  value = null,
+  onChange,
+  maxWidth,
+  containerStyles = {},
+  profile = false,
+}) {
   const [show, setShow] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
   const [tab, setTab] = React.useState('list');
@@ -28,7 +34,7 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
 
   React.useEffect(() => {
     if (value) {
-      dispatch(getMedium(value));
+      dispatch(getMedium(value, profile));
       setSelected(medium);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -47,7 +53,7 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
 
   React.useEffect(() => {
     if (mediumFetch && uploadedMedium) {
-      dispatch(getMedia());
+      dispatch(getMedia(profile));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, mediumFetch, uploadedMedium]);
@@ -86,9 +92,14 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
             <Radio.Button value="upload">Upload</Radio.Button>
           </Radio.Group>
           {tab === 'list' ? (
-            <MediaList onSelect={setSelected} selected={selected} onUnselect={setValue} />
+            <MediaList
+              onSelect={setSelected}
+              selected={selected}
+              onUnselect={setValue}
+              profile={profile}
+            />
           ) : tab === 'upload' ? (
-            <MediaUploader onMediaUpload={onUpload} />
+            <MediaUploader onMediaUpload={onUpload} profile={profile} />
           ) : null}
         </Space>
       </Modal>
