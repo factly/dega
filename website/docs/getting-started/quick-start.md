@@ -66,5 +66,3 @@ You can start creating your first Fact Check by clicking on `Create New` button 
 
 - Navigate to the Fact Check Menu
 - Click on `Create New` button to getting started with creating a new fact check
-
-<img alt="Create New Fact Check" src={useBaseUrl('/img/docs/getting-started/create-new-fact-check-1.png')} />
