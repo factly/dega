@@ -783,8 +783,8 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                         onChange={[Function]}
                                         options={
                                           Object {
-                                            "autoClosingBrackets": "never",
-                                            "autoClosingQuotes": "never",
+                                            "autoClosingBrackets": "auto",
+                                            "autoClosingQuotes": "auto",
                                             "cursorBlinking": "smooth",
                                             "folding": true,
                                             "lineNumbersMinChars": 4,
@@ -1617,8 +1617,8 @@ exports[`Menu Create Form component snapshot testing should render the component
                                         onChange={[Function]}
                                         options={
                                           Object {
-                                            "autoClosingBrackets": "never",
-                                            "autoClosingQuotes": "never",
+                                            "autoClosingBrackets": "auto",
+                                            "autoClosingQuotes": "auto",
                                             "cursorBlinking": "smooth",
                                             "folding": true,
                                             "lineNumbersMinChars": 4,

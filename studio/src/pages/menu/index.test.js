@@ -20,7 +20,7 @@ jest.mock('../../actions/menu', () => ({
   getMenus: jest.fn(),
 }));
 let state = {
-  menu: {
+  menus: {
     req: [
       {
         data: [1],
@@ -60,7 +60,7 @@ describe('Menu component', () => {
   });
   it('should render the component', () => {
     let state2 = {
-      menu: {
+      menus: {
         req: [],
         details: {},
         loading: false,
