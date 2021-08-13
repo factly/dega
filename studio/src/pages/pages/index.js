@@ -54,6 +54,18 @@ function Pages({ formats }) {
   const [filters, setFilters] = React.useState({
     ...params,
   });
+
+  React.useEffect(() => {
+    if (filters !== params) {
+      setFilters({ ...params });
+    }
+  }, [window.location.href]);
+
+  React.useEffect(() => {
+    form.resetFields();
+    form.setFieldsValue(filters);
+  }, [form, filters]);
+
   const pathName = useLocation().pathname;
   let searchFilter = new URLSearchParams(useLocation().search);
 
