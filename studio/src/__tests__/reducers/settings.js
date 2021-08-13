@@ -2,7 +2,7 @@ import reducer from '../../reducers/settingsReducer';
 import * as types from '../../constants/settings';
 
 const initialState = {
-  navTheme: 'dark',
+  navTheme: 'light',
   primaryColor: '#1890ff',
   layout: 'sidemenu',
   contentWidth: 'Fluid',
@@ -27,7 +27,7 @@ describe('settings reducer', () => {
   it('should return the state for default case', () => {
     expect(
       reducer({
-        navTheme: 'dark',
+        navTheme: 'light',
         primaryColor: '#1890ff',
         layout: 'sidemenu',
         contentWidth: 'Fluid',
@@ -45,7 +45,7 @@ describe('settings reducer', () => {
         },
       }),
     ).toEqual({
-      navTheme: 'dark',
+      navTheme: 'light',
       primaryColor: '#1890ff',
       layout: 'sidemenu',
       contentWidth: 'Fluid',

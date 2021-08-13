@@ -141,7 +141,7 @@ const initialState = {
     details: [],
     loading: true,
   },
-  menu: {
+  menus: {
     req: [],
     details: {},
     loading: true,
@@ -156,6 +156,10 @@ const initialState = {
   },
   webhooks: {
     req: [],
+    details: {},
+    loading: true,
+  },
+  profile: {
     details: {},
     loading: true,
   },
