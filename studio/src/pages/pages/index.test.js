@@ -186,6 +186,46 @@ describe('Page component', () => {
             medium_id: 1,
             format_id: 1,
             author_id: 1,
+            categories: [1],
+            tags: [1],
+          },
+        },
+        loading: false,
+      };
+      state2.tags = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+            },
+            total: 1,
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            name: 'Tag 1',
+          },
+        },
+        loading: false,
+      };
+      state2.categories = {
+        req: [
+          {
+            data: [1],
+            query: {
+              page: 1,
+              limit: 20,
+            },
+            total: 1,
+          },
+        ],
+        details: {
+          1: {
+            id: 1,
+            name: 'Category 1',
           },
         },
         loading: false,
@@ -279,6 +319,14 @@ describe('Page component', () => {
             </Router>
           </Provider>,
         );
+      });
+      act(() => {
+        const moreFilter = wrapper.find('Button').at(1);
+        expect(moreFilter.text()).toBe('More Filters ');
+        moreFilter.simulate('click');
+      });
+      wrapper.update();
+      act(() => {
         wrapper
           .find('FormItem')
           .at(0)
@@ -286,13 +334,13 @@ describe('Page component', () => {
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('Select')
           .props()
           .onChange({ target: { value: 'asc' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('Select')
           .props()
           .onChange({ target: { value: 'all' } });
@@ -311,7 +359,7 @@ describe('Page component', () => {
           .props()
           .onChange({ target: { value: [] } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });
