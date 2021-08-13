@@ -513,27 +513,15 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
 
       act(() => {
         const claimForm = wrapper.find('Modal');
         claimForm
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'Claim title' } });
-        claimForm
-          .find('FormItem')
-          .at(3)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 1 } });
         claimForm
           .find('FormItem')
           .at(4)
@@ -541,8 +529,15 @@ describe('Fact-check form component', () => {
           .at(0)
           .props()
           .onChange({ target: { value: 1 } });
+        claimForm
+          .find('FormItem')
+          .at(5)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 1 } });
 
-        const nextButton = claimForm.find('Button').at(2);
+        const nextButton = claimForm.find('Button').at(0);
         expect(nextButton.text()).toBe('Submit');
         nextButton.simulate('submit');
       });
@@ -574,12 +569,7 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
-      const okButton = wrapper.find('Modal').find('Button').at(3);
+      const okButton = wrapper.find('Modal').find('Button').at(8);
       expect(okButton.text()).toBe('Cancel');
       okButton.simulate('click');
       expect(wrapper.find('Modal').at(0).props().visible).toBe(false);
@@ -591,12 +581,7 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
-      const okButton = wrapper.find('Modal').find('Button').at(4);
+      const okButton = wrapper.find('Modal').find('Button').at(9);
       expect(okButton.text()).toBe('OK');
       okButton.simulate('click');
       expect(wrapper.find('Modal').at(0).props().visible).toBe(false);
@@ -922,20 +907,20 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(22).find('MonacoEditor');
+        const metaFieldData = wrapper.find('FormItem').at(28).find('MonacoEditor');
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
-        const metaTitle = wrapper.find('FormItem').at(19).find('Input');
+        const metaTitle = wrapper.find('FormItem').at(21).find('Input');
         metaTitle.simulate('change', { target: { value: 'Meta title' } });
-        const metaDesc = wrapper.find('FormItem').at(20).find('TextArea');
+        const metaDesc = wrapper.find('FormItem').at(22).find('TextArea');
         metaDesc.simulate('change', { target: { value: 'Meta Description' } });
-        const metaUrl = wrapper.find('FormItem').at(21).find('Input');
+        const metaUrl = wrapper.find('FormItem').at(23).find('Input');
         metaUrl.simulate('change', { target: { value: 'Canonical url' } });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(27).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -1028,19 +1013,19 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const headerData = wrapper.find('FormItem').at(24).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-        const footerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(26).find('MonacoEditor');
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(23).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(24).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
