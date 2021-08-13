@@ -154,9 +154,6 @@ describe('Claimants Create Form component', () => {
           },
           tag_line: 'tag_line',
           medium_id: 1,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
@@ -181,7 +178,7 @@ describe('Claimants Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -208,7 +205,7 @@ describe('Claimants Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(6)
           .find('Editor')
           .props()
           .onChange({
@@ -222,17 +219,17 @@ describe('Claimants Create Form component', () => {
           });
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(4)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new tag line' } });
@@ -253,9 +250,6 @@ describe('Claimants Create Form component', () => {
           slug: 'new-slug',
           medium_id: 1,
           tag_line: 'new tag line',
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
