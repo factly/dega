@@ -53,7 +53,7 @@ function FactCheck({ formats }) {
 
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
   const params = getUrlParams(query, keys);
-  if (formats && !formats.loading) {
+  if (formats && !formats.loading && formats.factcheck) {
     params['format'] = [formats.factcheck.id];
   }
   const [filters, setFilters] = React.useState({
