@@ -230,7 +230,7 @@ services:
       - kavach-migrate
     ports:
       - 5000:8000
-    image: factly/kavach-server
+    image: factly/kavach-server:0.8.0
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres 
@@ -252,7 +252,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server
+    image: factly/kavach-server:0.8.0
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres 
@@ -270,11 +270,9 @@ services:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:dev
+    image: factly/kavach-studio:dev
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
-      - REACT_APP_DEGA_PUBLIC_URL=http://127.0.0.1:4455/.factly/dega/studio
-      - REACT_APP_BINDU_PUBLIC_URL=http://127.0.0.1:4455/.factly/bindu/studio
     restart: unless-stopped
     networks:
       - dega
