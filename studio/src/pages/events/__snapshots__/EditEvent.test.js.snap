@@ -549,8 +549,8 @@ exports[`Event edit component snapshot testing should render the component 1`] =
                                         onChange={[Function]}
                                         options={
                                           Object {
-                                            "autoClosingBrackets": "never",
-                                            "autoClosingQuotes": "never",
+                                            "autoClosingBrackets": "auto",
+                                            "autoClosingQuotes": "auto",
                                             "cursorBlinking": "smooth",
                                             "folding": true,
                                             "lineNumbersMinChars": 4,
