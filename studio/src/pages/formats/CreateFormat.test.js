@@ -44,6 +44,11 @@ describe('Formats create component', () => {
       details: {},
       loading: true,
     },
+    media: {
+      req: [],
+      details: {},
+      loading: false,
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));
