@@ -75,6 +75,11 @@ describe('Tags List component', () => {
           loading: true,
           selected: false,
         },
+        media: {
+          req: [],
+          details: {},
+          loading: false,
+        },
       });
       store.dispatch = jest.fn(() => ({}));
 
@@ -157,6 +162,11 @@ describe('Tags List component', () => {
           details: {},
           loading: true,
           selected: false,
+        },
+        media: {
+          req: [],
+          details: {},
+          loading: false,
         },
       });
       store.dispatch = jest.fn(() => ({}));

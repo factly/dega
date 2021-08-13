@@ -38,6 +38,11 @@ describe('Tags Create Form component', () => {
       details: {},
       loading: true,
     },
+    media: {
+      req: [],
+      details: {},
+      loading: true,
+    },
   });
 
   describe('snapshot testing', () => {
@@ -134,7 +139,7 @@ describe('Tags Create Form component', () => {
     });
     it('should submit form with new name', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -171,17 +176,17 @@ describe('Tags Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(5)
           .find('Editor')
           .props()
           .onChange({
@@ -208,9 +213,6 @@ describe('Tags Create Form component', () => {
             time: 1613561493761,
             blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
             version: '2.19.0',
-          },
-          meta_fields: {
-            sample: 'testing',
           },
         });
         done();
