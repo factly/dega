@@ -156,9 +156,6 @@ describe('Categories Create Form component', () => {
           slug: 'slug',
           is_featured: false,
           medium_id: 2,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
@@ -212,7 +209,7 @@ describe('Categories Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(5)
+          .at(6)
           .find('Editor')
           .props()
           .onChange({
@@ -245,9 +242,6 @@ describe('Categories Create Form component', () => {
           slug: 'new-name',
           is_featured: false,
           medium_id: 2,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
