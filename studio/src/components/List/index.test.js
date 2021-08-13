@@ -6,7 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { Popconfirm, Button, List } from 'antd';
+import { Popconfirm, Button, List, Table } from 'antd';
 
 import '../../matchMedia.mock';
 import ListComponent from './index';
@@ -517,11 +517,11 @@ describe('List component', () => {
           </Provider>,
         );
       });
-      const list = wrapper.find(List);
-      list.props().pagination.onChange(1);
+      const table = wrapper.find(Table);
+      table.props().pagination.onChange(1);
       wrapper.update();
-      const updatedList = wrapper.find(List);
-      expect(updatedList.props().pagination.current).toEqual(1);
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete the post', () => {
       store = mockStore(state);
@@ -542,8 +542,8 @@ describe('List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(2);
+      expect(button.text()).toEqual('');
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
       popconfirm
@@ -572,9 +572,7 @@ describe('List component', () => {
           </Provider>,
         );
       });
-      const link = wrapper.find(Link).at(1);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      const link = wrapper.find(Link).at(0);
       expect(link.prop('to')).toEqual('/posts/1/edit');
     });
     it('should handle quick edit', () => {
@@ -596,8 +594,8 @@ describe('List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
-      expect(button.text()).toEqual('Quick Edit');
+      const button = wrapper.find(Button).at(1);
+      expect(button.text()).toEqual('');
       button.simulate('click');
       expect(wrapper.find(QuickEdit).length).toBe(1);
     });
