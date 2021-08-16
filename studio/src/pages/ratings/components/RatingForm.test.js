@@ -5,6 +5,7 @@ import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { SketchPicker } from 'react-color';
+import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import RatingForm from './RatingForm';
@@ -133,6 +134,17 @@ describe('Ratings Create Form component', () => {
       }, 0);
     });
     it('should submit form with given data', (done) => {
+      const data2 = { ...data };
+      data2.id = 1;
+      data2.background_colour = null;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <RatingForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
+
       act(() => {
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -146,14 +158,7 @@ describe('Ratings Create Form component', () => {
           slug: 'slug',
           numeric_value: 3,
           medium_id: 1,
-          background_colour: {
-            hex: '#f9f9fa',
-            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
-            hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
-            oldHue: 240,
-            rgb: { r: 249, g: 249, b: 250, a: 1 },
-            source: 'hsv',
-          },
+          background_colour: null,
           text_colour: null,
           description: {
             time: 1613559903378,
@@ -227,6 +232,27 @@ describe('Ratings Create Form component', () => {
       }, 0);
     });
     it('should submit form with updated data', (done) => {
+      const data2 = { ...data };
+      data2.text_colour = {
+        hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+        hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+        oldHue: 240,
+        rgb: { r: 249, g: 249, b: 250, a: 1 },
+        source: 'hsv',
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <RatingForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        const btn = wrapper.find('Button').at(5);
+        expect(btn.text()).toBe('Expand');
+        btn.simulate('click');
+      });
+      wrapper.update();
       wrapper.find('FormItem').at(4).find('div').at(6).simulate('click');
       wrapper.find('FormItem').at(5).find('div').at(6).simulate('click');
       act(() => {
@@ -288,6 +314,14 @@ describe('Ratings Create Form component', () => {
             rgb: { r: 240, g: 240, b: 250, a: 1 },
             source: 'hsv',
           });
+        wrapper
+          .find('FormItem')
+          .at(9)
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
+          });
         wrapper.find('FormItem').at(4).find('div').at(9).simulate('click');
         wrapper.find('FormItem').at(5).find('div').at(9).simulate('click');
 
@@ -324,9 +358,21 @@ describe('Ratings Create Form component', () => {
             blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
             version: '2.19.0',
           },
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);
+    });
+    it('should handle collapse open and close', () => {
+      act(() => {
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(Collapse).at(0).find('Button').at(0).text()).toBe('Close');
+      expect(wrapper.find(Collapse).at(1).find('Button').at(0).text()).toBe('Close');
     });
   });
 });

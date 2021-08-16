@@ -70,12 +70,13 @@ describe('Formats create component', () => {
     });
     it('should call addFormat', (done) => {
       actions.addFormat.mockReset();
+      const setReloadFlag = jest.fn();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <CreateFormat />
+            <CreateFormat setReloadFlag={setReloadFlag} reloadFlag={false} />
           </Provider>,
         );
       });
@@ -83,6 +84,7 @@ describe('Formats create component', () => {
       setTimeout(() => {
         expect(actions.addFormat).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/formats');
+        expect(setReloadFlag).toHaveBeenCalledWith(true);
         done();
       }, 0);
     });

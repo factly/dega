@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
+import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import ClaimantCreateForm from './ClaimantForm';
@@ -203,6 +204,11 @@ describe('Claimants Create Form component', () => {
     });
     it('should submit form with updated data', (done) => {
       act(() => {
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+
+      act(() => {
         wrapper
           .find('FormItem')
           .at(6)
@@ -233,7 +239,14 @@ describe('Claimants Create Form component', () => {
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new tag line' } });
-
+        wrapper
+          .find('FormItem')
+          .at(7)
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
+          });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
@@ -250,9 +263,21 @@ describe('Claimants Create Form component', () => {
           slug: 'new-slug',
           medium_id: 1,
           tag_line: 'new tag line',
+          meta_fields: {
+            sample: 'testing',
+          },
         });
         done();
       }, 0);
+    });
+    it('should handle collapse open and close', () => {
+      act(() => {
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(Collapse).at(0).find('Button').at(0).text()).toBe('Close');
+      expect(wrapper.find(Collapse).at(1).find('Button').at(0).text()).toBe('Close');
     });
   });
 });

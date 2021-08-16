@@ -14,6 +14,7 @@ import PostForm from './PostForm';
 
 import { addTemplate } from '../../../actions/posts';
 import { setCollapse } from './../../../actions/sidebar';
+import Modal from 'antd/lib/modal/Modal';
 
 Date.now = jest.fn(() => 1487076708000);
 jest.mock('@editorjs/editorjs');
@@ -717,9 +718,6 @@ describe('Posts Create Form component', () => {
     });
     it('should add meta data', (done) => {
       const data2 = { ...data };
-      data2.meta_fields = {
-        sample: 'testing1',
-      };
       data2.meta = {
         canonical_URL: undefined,
         description: undefined,
@@ -750,10 +748,6 @@ describe('Posts Create Form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(25).find('MonacoEditor');
-        metaFieldData.props().onChange({
-          target: { value: '{"sample":"testing"}' },
-        });
         const metaTitle = wrapper.find('FormItem').at(18).find('Input');
         metaTitle.simulate('change', { target: { value: 'Meta title' } });
         const metaDesc = wrapper.find('FormItem').at(19).find('TextArea');
@@ -793,6 +787,103 @@ describe('Posts Create Form component', () => {
             canonical_URL: 'Canonical url',
             description: 'Meta Description',
             title: 'Meta title',
+          },
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+        });
+        done();
+      }, 0);
+    });
+    it('should add meta fields', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = {
+        sample: 'testing1',
+      };
+      data2.meta = {
+        canonical_URL: undefined,
+        description: undefined,
+        title: undefined,
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const settingButton = wrapper.find('Button').at(3);
+        expect(settingButton.text()).toBe('');
+        settingButton.simulate('click');
+        expect(wrapper.find('Drawer').length).not.toBe(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(16).find('Button').at(0);
+        expect(addMetaDataBtn.text()).toBe('Add Meta Fields');
+        addMetaDataBtn.simulate('click');
+      });
+
+      act(() => {
+        const metaFieldData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        metaFieldData.props().onChange({
+          target: { value: '{"sample":"testing"}' },
+        });
+      });
+
+      act(() => {
+        const backBtn = wrapper.find('FormItem').at(24).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
+        backBtn.simulate('click');
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Save');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'Post-1',
+          excerpt: 'excerpt of post',
+          slug: 'post-1',
+          featured_medium_id: 1,
+          status: 'draft',
+          published_date: null,
+          format_id: 1,
+          author_ids: [1],
+          authors: [1],
+          categories: [1],
+          category_ids: [1],
+          tag_ids: [1],
+          tags: [1],
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
           },
           description: {
             time: 1595747741807,
@@ -919,6 +1010,62 @@ describe('Posts Create Form component', () => {
         });
         done();
       }, 0);
+    });
+    it('should handle view schema', () => {
+      document.execCommand = jest.fn(() => true);
+      const data2 = { ...data };
+      data2.schemas = [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'NewsArticle',
+          headline: 'abcd',
+          datePublished: null,
+          author: null,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Test Space',
+            logo: { '@type': '', url: '' },
+          },
+        },
+      ];
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <PostForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const schemaBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
+        expect(schemaBtn.text()).toBe('View Schemas');
+        schemaBtn.simulate('click');
+      });
+      wrapper.update();
+
+      expect(wrapper.find('Modal').at(1).props().title).toBe('View Schemas');
+      const copyButton = wrapper.find('Modal').at(1).find('Button').at(0);
+      expect(copyButton.text()).toBe('Copy');
+      copyButton.simulate('click');
+      wrapper.find(Modal).at(1).props().onCancel();
+      act(() => {
+        const schemaBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
+        expect(schemaBtn.text()).toBe('View Schemas');
+        schemaBtn.simulate('click');
+      });
+      wrapper.update();
+
+      expect(wrapper.find('Modal').at(1).props().title).toBe('View Schemas');
+      expect(copyButton.text()).toBe('Copy');
+      copyButton.simulate('click');
+      wrapper.find(Modal).at(1).props().onOk();
+      expect(wrapper.find('Modal').at(1).props().visible).toBe(true);
     });
   });
 });
