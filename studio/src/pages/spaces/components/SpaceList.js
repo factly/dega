@@ -5,9 +5,9 @@ import { Link } from 'react-router-dom';
 import { deleteSpace, getSpaces } from './../../../actions/spaces';
 import { spaceSelector } from '../../../selectors/spaces';
 import { DeleteOutlined } from '@ant-design/icons';
-import { reindex } from '../../../actions/meiliReindex';
+import { reindexSpace } from '../../../actions/meiliReindex';
 
-function SpaceList() {
+function SpaceList({ role }) {
   const dispatch = useDispatch();
   const { spaces, loading } = useSelector(spaceSelector);
 
@@ -15,7 +15,7 @@ function SpaceList() {
     dispatch(getSpaces());
   };
   const handleSpaceReindex = (id) => {
-    dispatch(reindex(id));
+    dispatch(reindexSpace(id));
   };
 
   const columns = [
@@ -76,9 +76,11 @@ function SpaceList() {
             >
               <Button type="danger" icon={<DeleteOutlined />} />
             </Popconfirm>{' '}
-            <Button type="primary" onClick={() => handleSpaceReindex(record.id)}>
-              Reindex
-            </Button>
+            {role === 'owner' ? (
+              <Button type="primary" onClick={() => handleSpaceReindex(record.id)}>
+                Reindex
+              </Button>
+            ) : null}
           </span>
         );
       },
