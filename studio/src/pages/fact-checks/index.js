@@ -51,7 +51,7 @@ function FactCheck({ formats }) {
     return children;
   };
 
-  const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'format', 'status'];
+  const keys = ['format', 'page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
   const params = getUrlParams(query, keys);
   if (formats && !formats.loading && formats.factcheck) {
     params['format'] = [formats.factcheck.id];
@@ -59,6 +59,17 @@ function FactCheck({ formats }) {
   const [filters, setFilters] = React.useState({
     ...params,
   });
+
+  React.useEffect(() => {
+    if (filters !== params) {
+      setFilters({ ...params });
+    }
+  }, [window.location.href]);
+
+  React.useEffect(() => {
+    form.resetFields();
+    form.setFieldsValue(filters);
+  }, [form, filters]);
 
   const pathName = useLocation().pathname;
   let searchFilter = new URLSearchParams(useLocation().search);
@@ -120,6 +131,7 @@ function FactCheck({ formats }) {
 
   React.useEffect(() => {
     fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchPosts = () => {
