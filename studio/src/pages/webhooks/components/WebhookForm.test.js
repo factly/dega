@@ -236,5 +236,50 @@ describe('Webhook form component', () => {
         done();
       }, 0);
     });
+    it('should submit form with no events', (done) => {
+      const data2 = {
+        id: 1,
+        name: 'webhook',
+        url: 'url',
+        enabled: true,
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <WebhookForm onCreate={props.onCreate} data={data2} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        wrapper
+          .find('FormItem')
+          .at(0)
+          .find('Input')
+          .simulate('change', { target: { value: 'new name' } });
+        wrapper
+          .find('FormItem')
+          .at(1)
+          .find('Input')
+          .simulate('change', { target: { value: 'new url' } });
+        wrapper.find('FormItem').at(2).find('Switch').at(0).props().onChange(false);
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Update');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          name: 'new name',
+          url: 'new url',
+          enabled: false,
+          event_ids: [],
+          events: undefined,
+        });
+        done();
+      }, 0);
+    });
   });
 });

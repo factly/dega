@@ -5,12 +5,10 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from 'react-dom/test-utils';
 import { mount, shallow } from 'enzyme';
-import { Popconfirm, Button, Table, Tree, Collapse } from 'antd';
-import { UpOutlined, DownOutlined, EditOutlined, CaretRightOutlined } from '@ant-design/icons';
+import { UpOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
 
 import '../../../matchMedia.mock';
 import ClaimList from './ClaimList';
-import { getClaims, deleteClaim } from '../../../actions/claims';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -322,10 +320,12 @@ describe('Factcheck claim list component', () => {
         );
       });
       act(() => {
-        wrapper.find(CaretRightOutlined).simulate('click');
+        const closeBtn = wrapper.find('Button').at(0);
+        expect(closeBtn.text()).toBe('Close');
+        closeBtn.simulate('click');
       });
       wrapper.update();
-      expect(wrapper.find(CaretRightOutlined).props().rotate).toBe(0);
+      expect(wrapper.find('Button').at(0).text()).toBe('Expand');
     });
   });
 });

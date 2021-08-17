@@ -34,7 +34,7 @@ describe('Menus create component', () => {
   let store;
   let mockedDispatch;
   store = mockStore({
-    menu: [],
+    menus: [],
     details: {},
     loading: false,
   });

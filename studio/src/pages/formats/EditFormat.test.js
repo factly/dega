@@ -61,6 +61,11 @@ describe('Formats edit component', () => {
           },
           loading: false,
         },
+        media: {
+          req: [],
+          details: {},
+          loading: false,
+        },
       });
       store.dispatch = jest.fn(() => ({}));
       mockedDispatch = jest.fn();
@@ -125,6 +130,11 @@ describe('Formats edit component', () => {
               description: 'description',
             },
           },
+          loading: false,
+        },
+        media: {
+          req: [],
+          details: {},
           loading: false,
         },
       });

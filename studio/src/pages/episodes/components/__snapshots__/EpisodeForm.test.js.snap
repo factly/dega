@@ -3139,8 +3139,8 @@ exports[`Episode Form component snapshot testing should match component with dat
                                           onChange={[Function]}
                                           options={
                                             Object {
-                                              "autoClosingBrackets": "never",
-                                              "autoClosingQuotes": "never",
+                                              "autoClosingBrackets": "auto",
+                                              "autoClosingQuotes": "auto",
                                               "cursorBlinking": "smooth",
                                               "folding": true,
                                               "lineNumbersMinChars": 4,
@@ -3523,13 +3523,13 @@ exports[`Episode Form component snapshot testing should match component with dat
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                               >
-                                                Return
+                                                Cancel
                                               </ForwardRef(InternalButton)>,
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                                 type="primary"
                                               >
-                                                Ok
+                                                Confirm
                                               </ForwardRef(InternalButton)>,
                                             ]
                                           }
@@ -3556,13 +3556,13 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                 >
-                                                  Return
+                                                  Cancel
                                                 </ForwardRef(InternalButton)>,
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                   type="primary"
                                                 >
-                                                  Ok
+                                                  Confirm
                                                 </ForwardRef(InternalButton)>,
                                               ]
                                             }
@@ -3598,244 +3598,92 @@ exports[`Episode Form component snapshot testing should match component with dat
                                             >
                                               <div
                                                 className="ant-space-item"
-                                                style={
-                                                  Object {
-                                                    "marginBottom": 8,
-                                                  }
-                                                }
-                                              >
-                                                <PlaceholderImage
-                                                  height={230}
-                                                  width={160}
-                                                >
-                                                  <Image
-                                                    fallback="data:image/png;base64,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"
-                                                    height={230}
-                                                    src="error"
-                                                    width={160}
-                                                  >
-                                                    <Image
-                                                      fallback="data:image/png;base64,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"
-                                                      height={230}
-                                                      prefixCls="ant-image"
-                                                      preview={
-                                                        Object {
-                                                          "icons": Object {
-                                                            "close": <ForwardRef(CloseOutlined) />,
-                                                            "left": <ForwardRef(LeftOutlined) />,
-                                                            "right": <ForwardRef(RightOutlined) />,
-                                                            "rotateLeft": <ForwardRef(RotateLeftOutlined) />,
-                                                            "rotateRight": <ForwardRef(RotateRightOutlined) />,
-                                                            "zoomIn": <ForwardRef(ZoomInOutlined) />,
-                                                            "zoomOut": <ForwardRef(ZoomOutOutlined) />,
-                                                          },
-                                                          "mask": <div
-                                                            className="ant-image-mask-info"
-                                                          >
-                                                            <ForwardRef(EyeOutlined) />
-                                                            Preview
-                                                          </div>,
-                                                          "maskTransitionName": "ant-fade",
-                                                          "transitionName": "ant-zoom",
-                                                        }
-                                                      }
-                                                      src="error"
-                                                      width={160}
-                                                    >
-                                                      <div
-                                                        className="ant-image"
-                                                        onClick={[Function]}
-                                                        style={
-                                                          Object {
-                                                            "height": 230,
-                                                            "width": 160,
-                                                          }
-                                                        }
-                                                      >
-                                                        <img
-                                                          className="ant-image-img"
-                                                          onError={[Function]}
-                                                          onLoad={[Function]}
-                                                          src="error"
-                                                          style={
-                                                            Object {
-                                                              "height": 230,
-                                                            }
-                                                          }
-                                                        />
-                                                        <div
-                                                          className="ant-image-mask"
-                                                        >
-                                                          <div
-                                                            className="ant-image-mask-info"
-                                                          >
-                                                            <ForwardRef(EyeOutlined)>
-                                                              <AntdIcon
-                                                                icon={
-                                                                  Object {
-                                                                    "icon": Object {
-                                                                      "attrs": Object {
-                                                                        "focusable": "false",
-                                                                        "viewBox": "64 64 896 896",
-                                                                      },
-                                                                      "children": Array [
-                                                                        Object {
-                                                                          "attrs": Object {
-                                                                            "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z",
-                                                                          },
-                                                                          "tag": "path",
-                                                                        },
-                                                                      ],
-                                                                      "tag": "svg",
-                                                                    },
-                                                                    "name": "eye",
-                                                                    "theme": "outlined",
-                                                                  }
-                                                                }
-                                                              >
-                                                                <span
-                                                                  aria-label="eye"
-                                                                  className="anticon anticon-eye"
-                                                                  role="img"
-                                                                >
-                                                                  <IconReact
-                                                                    icon={
-                                                                      Object {
-                                                                        "icon": Object {
-                                                                          "attrs": Object {
-                                                                            "focusable": "false",
-                                                                            "viewBox": "64 64 896 896",
-                                                                          },
-                                                                          "children": Array [
-                                                                            Object {
-                                                                              "attrs": Object {
-                                                                                "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z",
-                                                                              },
-                                                                              "tag": "path",
-                                                                            },
-                                                                          ],
-                                                                          "tag": "svg",
-                                                                        },
-                                                                        "name": "eye",
-                                                                        "theme": "outlined",
-                                                                      }
-                                                                    }
-                                                                  >
-                                                                    <svg
-                                                                      aria-hidden="true"
-                                                                      data-icon="eye"
-                                                                      fill="currentColor"
-                                                                      focusable="false"
-                                                                      height="1em"
-                                                                      key="svg-eye"
-                                                                      viewBox="64 64 896 896"
-                                                                      width="1em"
-                                                                    >
-                                                                      <path
-                                                                        d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"
-                                                                        key="svg-eye-svg-0"
-                                                                      />
-                                                                    </svg>
-                                                                  </IconReact>
-                                                                </span>
-                                                              </AntdIcon>
-                                                            </ForwardRef(EyeOutlined)>
-                                                            Preview
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <Preview
-                                                        aria-hidden={true}
-                                                        icons={
-                                                          Object {
-                                                            "close": <ForwardRef(CloseOutlined) />,
-                                                            "left": <ForwardRef(LeftOutlined) />,
-                                                            "right": <ForwardRef(RightOutlined) />,
-                                                            "rotateLeft": <ForwardRef(RotateLeftOutlined) />,
-                                                            "rotateRight": <ForwardRef(RotateRightOutlined) />,
-                                                            "zoomIn": <ForwardRef(ZoomInOutlined) />,
-                                                            "zoomOut": <ForwardRef(ZoomOutOutlined) />,
-                                                          }
-                                                        }
-                                                        maskTransitionName="ant-fade"
-                                                        mousePosition={null}
-                                                        onClose={[Function]}
-                                                        prefixCls="ant-image-preview"
-                                                        src="error"
-                                                        transitionName="ant-zoom"
-                                                        visible={false}
-                                                      >
-                                                        <Dialog
-                                                          afterClose={[Function]}
-                                                          aria-hidden={true}
-                                                          closable={false}
-                                                          keyboard={true}
-                                                          maskTransitionName="ant-fade"
-                                                          mousePosition={null}
-                                                          onClose={[Function]}
-                                                          prefixCls="ant-image-preview"
-                                                          transitionName="ant-zoom"
-                                                          visible={false}
-                                                          wrapClassName=""
-                                                        >
-                                                          <PortalWrapper
-                                                            visible={false}
-                                                          />
-                                                        </Dialog>
-                                                      </Preview>
-                                                    </Image>
-                                                  </Image>
-                                                </PlaceholderImage>
-                                              </div>
-                                            </Item>
-                                            <Item
-                                              className="ant-space-item"
-                                              direction="vertical"
-                                              index={1}
-                                              key="ant-space-item-1"
-                                              marginDirection="marginRight"
-                                              wrap={false}
-                                            >
-                                              <div
-                                                className="ant-space-item"
                                                 style={Object {}}
                                               >
-                                                <Button
-                                                  onClick={[Function]}
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "alignItems": "center",
+                                                      "display": "flex",
+                                                      "justifyContent": "center",
+                                                    }
+                                                  }
                                                 >
-                                                  <Wave>
-                                                    <button
-                                                      className="ant-btn"
+                                                  <div
+                                                    style={
+                                                      Object {
+                                                        "position": "relative",
+                                                      }
+                                                    }
+                                                  >
+                                                    <Button
                                                       onClick={[Function]}
-                                                      type="button"
+                                                      style={
+                                                        Object {
+                                                          "background": "transparent",
+                                                          "borderStyle": "dashed",
+                                                          "display": "block",
+                                                          "height": "auto",
+                                                        }
+                                                      }
                                                     >
-                                                      <LoadingIcon
-                                                        existIcon={false}
-                                                        loading={false}
-                                                        prefixCls="ant-btn"
-                                                      >
-                                                        <CSSMotion
-                                                          motionName="ant-btn-loading-icon-motion"
-                                                          onAppearActive={[Function]}
-                                                          onAppearStart={[Function]}
-                                                          onEnterActive={[Function]}
-                                                          onEnterStart={[Function]}
-                                                          onLeaveActive={[Function]}
-                                                          onLeaveStart={[Function]}
-                                                          removeOnLeave={true}
-                                                          visible={false}
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
+                                                          onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "background": "transparent",
+                                                              "borderStyle": "dashed",
+                                                              "display": "block",
+                                                              "height": "auto",
+                                                            }
+                                                          }
+                                                          type="button"
                                                         >
-                                                          <DomWrapper />
-                                                        </CSSMotion>
-                                                      </LoadingIcon>
-                                                      <span
-                                                        key=".0"
-                                                      >
-                                                        Select
-                                                      </span>
-                                                    </button>
-                                                  </Wave>
-                                                </Button>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <PlaceholderImage
+                                                            height="auto"
+                                                            key=".0"
+                                                            width="100%"
+                                                          >
+                                                            <img
+                                                              alt=""
+                                                              height="auto"
+                                                              src="placeholderImage.svg"
+                                                              style={
+                                                                Object {
+                                                                  "maxWidth": "240px",
+                                                                  "objectFit": "contain",
+                                                                  "padding": "1rem",
+                                                                }
+                                                              }
+                                                              width="100%"
+                                                            />
+                                                          </PlaceholderImage>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </Item>
                                           </div>
@@ -4008,13 +3856,13 @@ exports[`Episode Form component snapshot testing should match component with dat
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                               >
-                                                Return
+                                                Cancel
                                               </ForwardRef(InternalButton)>,
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                                 type="primary"
                                               >
-                                                Ok
+                                                Submit
                                               </ForwardRef(InternalButton)>,
                                             ]
                                           }
@@ -4041,13 +3889,13 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                 >
-                                                  Return
+                                                  Cancel
                                                 </ForwardRef(InternalButton)>,
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                   type="primary"
                                                 >
-                                                  Ok
+                                                  Submit
                                                 </ForwardRef(InternalButton)>,
                                               ]
                                             }
@@ -7309,8 +7157,8 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                           onChange={[Function]}
                                           options={
                                             Object {
-                                              "autoClosingBrackets": "never",
-                                              "autoClosingQuotes": "never",
+                                              "autoClosingBrackets": "auto",
+                                              "autoClosingQuotes": "auto",
                                               "cursorBlinking": "smooth",
                                               "folding": true,
                                               "lineNumbersMinChars": 4,
@@ -7691,13 +7539,13 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                               >
-                                                Return
+                                                Cancel
                                               </ForwardRef(InternalButton)>,
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                                 type="primary"
                                               >
-                                                Ok
+                                                Confirm
                                               </ForwardRef(InternalButton)>,
                                             ]
                                           }
@@ -7724,13 +7572,13 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                 >
-                                                  Return
+                                                  Cancel
                                                 </ForwardRef(InternalButton)>,
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                   type="primary"
                                                 >
-                                                  Ok
+                                                  Confirm
                                                 </ForwardRef(InternalButton)>,
                                               ]
                                             }
@@ -7766,244 +7614,92 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                             >
                                               <div
                                                 className="ant-space-item"
-                                                style={
-                                                  Object {
-                                                    "marginBottom": 8,
-                                                  }
-                                                }
-                                              >
-                                                <PlaceholderImage
-                                                  height={230}
-                                                  width={160}
-                                                >
-                                                  <Image
-                                                    fallback="data:image/png;base64,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"
-                                                    height={230}
-                                                    src="error"
-                                                    width={160}
-                                                  >
-                                                    <Image
-                                                      fallback="data:image/png;base64,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"
-                                                      height={230}
-                                                      prefixCls="ant-image"
-                                                      preview={
-                                                        Object {
-                                                          "icons": Object {
-                                                            "close": <ForwardRef(CloseOutlined) />,
-                                                            "left": <ForwardRef(LeftOutlined) />,
-                                                            "right": <ForwardRef(RightOutlined) />,
-                                                            "rotateLeft": <ForwardRef(RotateLeftOutlined) />,
-                                                            "rotateRight": <ForwardRef(RotateRightOutlined) />,
-                                                            "zoomIn": <ForwardRef(ZoomInOutlined) />,
-                                                            "zoomOut": <ForwardRef(ZoomOutOutlined) />,
-                                                          },
-                                                          "mask": <div
-                                                            className="ant-image-mask-info"
-                                                          >
-                                                            <ForwardRef(EyeOutlined) />
-                                                            Preview
-                                                          </div>,
-                                                          "maskTransitionName": "ant-fade",
-                                                          "transitionName": "ant-zoom",
-                                                        }
-                                                      }
-                                                      src="error"
-                                                      width={160}
-                                                    >
-                                                      <div
-                                                        className="ant-image"
-                                                        onClick={[Function]}
-                                                        style={
-                                                          Object {
-                                                            "height": 230,
-                                                            "width": 160,
-                                                          }
-                                                        }
-                                                      >
-                                                        <img
-                                                          className="ant-image-img"
-                                                          onError={[Function]}
-                                                          onLoad={[Function]}
-                                                          src="error"
-                                                          style={
-                                                            Object {
-                                                              "height": 230,
-                                                            }
-                                                          }
-                                                        />
-                                                        <div
-                                                          className="ant-image-mask"
-                                                        >
-                                                          <div
-                                                            className="ant-image-mask-info"
-                                                          >
-                                                            <ForwardRef(EyeOutlined)>
-                                                              <AntdIcon
-                                                                icon={
-                                                                  Object {
-                                                                    "icon": Object {
-                                                                      "attrs": Object {
-                                                                        "focusable": "false",
-                                                                        "viewBox": "64 64 896 896",
-                                                                      },
-                                                                      "children": Array [
-                                                                        Object {
-                                                                          "attrs": Object {
-                                                                            "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z",
-                                                                          },
-                                                                          "tag": "path",
-                                                                        },
-                                                                      ],
-                                                                      "tag": "svg",
-                                                                    },
-                                                                    "name": "eye",
-                                                                    "theme": "outlined",
-                                                                  }
-                                                                }
-                                                              >
-                                                                <span
-                                                                  aria-label="eye"
-                                                                  className="anticon anticon-eye"
-                                                                  role="img"
-                                                                >
-                                                                  <IconReact
-                                                                    icon={
-                                                                      Object {
-                                                                        "icon": Object {
-                                                                          "attrs": Object {
-                                                                            "focusable": "false",
-                                                                            "viewBox": "64 64 896 896",
-                                                                          },
-                                                                          "children": Array [
-                                                                            Object {
-                                                                              "attrs": Object {
-                                                                                "d": "M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z",
-                                                                              },
-                                                                              "tag": "path",
-                                                                            },
-                                                                          ],
-                                                                          "tag": "svg",
-                                                                        },
-                                                                        "name": "eye",
-                                                                        "theme": "outlined",
-                                                                      }
-                                                                    }
-                                                                  >
-                                                                    <svg
-                                                                      aria-hidden="true"
-                                                                      data-icon="eye"
-                                                                      fill="currentColor"
-                                                                      focusable="false"
-                                                                      height="1em"
-                                                                      key="svg-eye"
-                                                                      viewBox="64 64 896 896"
-                                                                      width="1em"
-                                                                    >
-                                                                      <path
-                                                                        d="M942.2 486.2C847.4 286.5 704.1 186 512 186c-192.2 0-335.4 100.5-430.2 300.3a60.3 60.3 0 000 51.5C176.6 737.5 319.9 838 512 838c192.2 0 335.4-100.5 430.2-300.3 7.7-16.2 7.7-35 0-51.5zM512 766c-161.3 0-279.4-81.8-362.7-254C232.6 339.8 350.7 258 512 258c161.3 0 279.4 81.8 362.7 254C791.5 684.2 673.4 766 512 766zm-4-430c-97.2 0-176 78.8-176 176s78.8 176 176 176 176-78.8 176-176-78.8-176-176-176zm0 288c-61.9 0-112-50.1-112-112s50.1-112 112-112 112 50.1 112 112-50.1 112-112 112z"
-                                                                        key="svg-eye-svg-0"
-                                                                      />
-                                                                    </svg>
-                                                                  </IconReact>
-                                                                </span>
-                                                              </AntdIcon>
-                                                            </ForwardRef(EyeOutlined)>
-                                                            Preview
-                                                          </div>
-                                                        </div>
-                                                      </div>
-                                                      <Preview
-                                                        aria-hidden={true}
-                                                        icons={
-                                                          Object {
-                                                            "close": <ForwardRef(CloseOutlined) />,
-                                                            "left": <ForwardRef(LeftOutlined) />,
-                                                            "right": <ForwardRef(RightOutlined) />,
-                                                            "rotateLeft": <ForwardRef(RotateLeftOutlined) />,
-                                                            "rotateRight": <ForwardRef(RotateRightOutlined) />,
-                                                            "zoomIn": <ForwardRef(ZoomInOutlined) />,
-                                                            "zoomOut": <ForwardRef(ZoomOutOutlined) />,
-                                                          }
-                                                        }
-                                                        maskTransitionName="ant-fade"
-                                                        mousePosition={null}
-                                                        onClose={[Function]}
-                                                        prefixCls="ant-image-preview"
-                                                        src="error"
-                                                        transitionName="ant-zoom"
-                                                        visible={false}
-                                                      >
-                                                        <Dialog
-                                                          afterClose={[Function]}
-                                                          aria-hidden={true}
-                                                          closable={false}
-                                                          keyboard={true}
-                                                          maskTransitionName="ant-fade"
-                                                          mousePosition={null}
-                                                          onClose={[Function]}
-                                                          prefixCls="ant-image-preview"
-                                                          transitionName="ant-zoom"
-                                                          visible={false}
-                                                          wrapClassName=""
-                                                        >
-                                                          <PortalWrapper
-                                                            visible={false}
-                                                          />
-                                                        </Dialog>
-                                                      </Preview>
-                                                    </Image>
-                                                  </Image>
-                                                </PlaceholderImage>
-                                              </div>
-                                            </Item>
-                                            <Item
-                                              className="ant-space-item"
-                                              direction="vertical"
-                                              index={1}
-                                              key="ant-space-item-1"
-                                              marginDirection="marginRight"
-                                              wrap={false}
-                                            >
-                                              <div
-                                                className="ant-space-item"
                                                 style={Object {}}
                                               >
-                                                <Button
-                                                  onClick={[Function]}
+                                                <div
+                                                  style={
+                                                    Object {
+                                                      "alignItems": "center",
+                                                      "display": "flex",
+                                                      "justifyContent": "center",
+                                                    }
+                                                  }
                                                 >
-                                                  <Wave>
-                                                    <button
-                                                      className="ant-btn"
+                                                  <div
+                                                    style={
+                                                      Object {
+                                                        "position": "relative",
+                                                      }
+                                                    }
+                                                  >
+                                                    <Button
                                                       onClick={[Function]}
-                                                      type="button"
+                                                      style={
+                                                        Object {
+                                                          "background": "transparent",
+                                                          "borderStyle": "dashed",
+                                                          "display": "block",
+                                                          "height": "auto",
+                                                        }
+                                                      }
                                                     >
-                                                      <LoadingIcon
-                                                        existIcon={false}
-                                                        loading={false}
-                                                        prefixCls="ant-btn"
-                                                      >
-                                                        <CSSMotion
-                                                          motionName="ant-btn-loading-icon-motion"
-                                                          onAppearActive={[Function]}
-                                                          onAppearStart={[Function]}
-                                                          onEnterActive={[Function]}
-                                                          onEnterStart={[Function]}
-                                                          onLeaveActive={[Function]}
-                                                          onLeaveStart={[Function]}
-                                                          removeOnLeave={true}
-                                                          visible={false}
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
+                                                          onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "background": "transparent",
+                                                              "borderStyle": "dashed",
+                                                              "display": "block",
+                                                              "height": "auto",
+                                                            }
+                                                          }
+                                                          type="button"
                                                         >
-                                                          <DomWrapper />
-                                                        </CSSMotion>
-                                                      </LoadingIcon>
-                                                      <span
-                                                        key=".0"
-                                                      >
-                                                        Select
-                                                      </span>
-                                                    </button>
-                                                  </Wave>
-                                                </Button>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <PlaceholderImage
+                                                            height="auto"
+                                                            key=".0"
+                                                            width="100%"
+                                                          >
+                                                            <img
+                                                              alt=""
+                                                              height="auto"
+                                                              src="placeholderImage.svg"
+                                                              style={
+                                                                Object {
+                                                                  "maxWidth": "240px",
+                                                                  "objectFit": "contain",
+                                                                  "padding": "1rem",
+                                                                }
+                                                              }
+                                                              width="100%"
+                                                            />
+                                                          </PlaceholderImage>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </Item>
                                           </div>
@@ -8173,13 +7869,13 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                               >
-                                                Return
+                                                Cancel
                                               </ForwardRef(InternalButton)>,
                                               <ForwardRef(InternalButton)
                                                 onClick={[Function]}
                                                 type="primary"
                                               >
-                                                Ok
+                                                Submit
                                               </ForwardRef(InternalButton)>,
                                             ]
                                           }
@@ -8206,13 +7902,13 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                 >
-                                                  Return
+                                                  Cancel
                                                 </ForwardRef(InternalButton)>,
                                                 <ForwardRef(InternalButton)
                                                   onClick={[Function]}
                                                   type="primary"
                                                 >
-                                                  Ok
+                                                  Submit
                                                 </ForwardRef(InternalButton)>,
                                               ]
                                             }

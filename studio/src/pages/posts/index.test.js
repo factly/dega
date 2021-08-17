@@ -216,6 +216,9 @@ describe('Posts List component', () => {
               query: {
                 page: 1,
                 limit: 20,
+                q: 'desc',
+                category: [1],
+                format: [1],
               },
               total: 1,
             },
@@ -228,6 +231,7 @@ describe('Posts List component', () => {
               tag_line: 'tag_line',
               medium_id: 1,
               format_id: 1,
+              categories: [1],
             },
           },
           loading: false,
@@ -252,7 +256,12 @@ describe('Posts List component', () => {
         },
         categories: {
           req: [],
-          details: {},
+          details: {
+            1: {
+              id: 1,
+              name: 'Category',
+            },
+          },
           loading: false,
         },
         sidebar: {
@@ -284,6 +293,14 @@ describe('Posts List component', () => {
             </Router>
           </Provider>,
         );
+      });
+      act(() => {
+        const moreFilter = wrapper.find('Button').at(1);
+        expect(moreFilter.text()).toBe('More Filters ');
+        moreFilter.simulate('click');
+      });
+      wrapper.update();
+      act(() => {
         wrapper
           .find('FormItem')
           .at(0)
@@ -291,13 +308,13 @@ describe('Posts List component', () => {
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('Select')
           .props()
           .onChange({ target: { value: 'asc' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('Select')
           .props()
           .onChange({ target: { value: 'all' } });
@@ -316,7 +333,7 @@ describe('Posts List component', () => {
           .props()
           .onChange({ target: { value: [] } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });

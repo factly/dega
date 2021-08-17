@@ -182,8 +182,8 @@ describe('Space Permission List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(3);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
 
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
@@ -191,7 +191,7 @@ describe('Space Permission List component', () => {
         .findWhere((item) => item.type() === 'button' && item.text() === 'OK')
         .simulate('click');
       expect(deleteSpacePermission).toHaveBeenCalled();
-      expect(deleteSpacePermission).toHaveBeenCalledWith(2);
+      expect(deleteSpacePermission).toHaveBeenCalledWith(1);
       expect(getSpaces).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });

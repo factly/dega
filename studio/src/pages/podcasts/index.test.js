@@ -182,7 +182,7 @@ describe('Podcast component', () => {
           .find('Select')
           .props()
           .onChange({ target: { value: 'english' } });
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });
@@ -229,7 +229,7 @@ describe('Podcast component', () => {
           .props()
           .onChange({ target: { value: [] } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });

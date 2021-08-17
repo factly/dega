@@ -68,165 +68,129 @@ exports[`Media List component snapshot testing should render the component 1`] =
                   }
                 }
               >
-                <Row>
-                  <div
-                    className="ant-row"
-                    style={Object {}}
-                  >
-                    <Col
-                      span={8}
+                <ForwardRef(InternalForm)
+                  form={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "filters",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                    }
+                  }
+                  initialValues={Object {}}
+                  name="filters"
+                  onFinish={[Function]}
+                  onValuesChange={[Function]}
+                  style={
+                    Object {
+                      "marginBottom": "1rem",
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <SizeContextProvider>
+                    <ForwardRef(Form)
+                      className="ant-form ant-form-horizontal"
+                      form={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "filters",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                        }
+                      }
+                      id="filters"
+                      initialValues={Object {}}
+                      name="filters"
+                      onFinish={[Function]}
+                      onFinishFailed={[Function]}
+                      onValuesChange={[Function]}
+                      style={
+                        Object {
+                          "marginBottom": "1rem",
+                          "width": "100%",
+                        }
+                      }
                     >
-                      <div
-                        className="ant-col ant-col-8"
-                        style={Object {}}
-                      >
-                        <Link
-                          to="/media/upload"
-                        >
-                          <LinkAnchor
-                            href="/media/upload"
-                            navigate={[Function]}
-                          >
-                            <a
-                              href="/media/upload"
-                              onClick={[Function]}
-                            >
-                              <Button
-                                disabled={false}
-                              >
-                                <Wave>
-                                  <button
-                                    className="ant-btn"
-                                    disabled={false}
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <LoadingIcon
-                                      existIcon={false}
-                                      loading={false}
-                                      prefixCls="ant-btn"
-                                    >
-                                      <CSSMotion
-                                        motionName="ant-btn-loading-icon-motion"
-                                        onAppearActive={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </LoadingIcon>
-                                    <span
-                                      key=".0"
-                                    >
-                                      Upload
-                                    </span>
-                                  </button>
-                                </Wave>
-                              </Button>
-                            </a>
-                          </LinkAnchor>
-                        </Link>
-                      </div>
-                    </Col>
-                    <Col
-                      offset={8}
-                      span={8}
-                    >
-                      <div
-                        className="ant-col ant-col-8 ant-col-offset-8"
-                        style={Object {}}
-                      >
-                        <ForwardRef(InternalForm)
-                          form={
-                            Object {
-                              "__INTERNAL__": Object {
-                                "itemRef": [Function],
-                                "name": "filters",
-                              },
-                              "getFieldError": [Function],
-                              "getFieldInstance": [Function],
-                              "getFieldValue": [Function],
-                              "getFieldsError": [Function],
-                              "getFieldsValue": [Function],
-                              "getInternalHooks": [Function],
-                              "isFieldTouched": [Function],
-                              "isFieldValidating": [Function],
-                              "isFieldsTouched": [Function],
-                              "isFieldsValidating": [Function],
-                              "resetFields": [Function],
-                              "scrollToField": [Function],
-                              "setFields": [Function],
-                              "setFieldsValue": [Function],
-                              "submit": [Function],
-                              "validateFields": [Function],
-                            }
+                      <form
+                        className="ant-form ant-form-horizontal"
+                        id="filters"
+                        onReset={[Function]}
+                        onSubmit={[Function]}
+                        style={
+                          Object {
+                            "marginBottom": "1rem",
+                            "width": "100%",
                           }
-                          initialValues={Object {}}
-                          layout="inline"
-                          name="filters"
-                          onFinish={[Function]}
-                          onValuesChange={[Function]}
+                        }
+                      >
+                        <Row
+                          gutter={16}
+                          justify="end"
                           style={
                             Object {
                               "marginBottom": "1rem",
-                              "width": "100%",
                             }
                           }
                         >
-                          <SizeContextProvider>
-                            <ForwardRef(Form)
-                              className="ant-form ant-form-inline"
-                              form={
-                                Object {
-                                  "__INTERNAL__": Object {
-                                    "itemRef": [Function],
-                                    "name": "filters",
-                                  },
-                                  "getFieldError": [Function],
-                                  "getFieldInstance": [Function],
-                                  "getFieldValue": [Function],
-                                  "getFieldsError": [Function],
-                                  "getFieldsValue": [Function],
-                                  "getInternalHooks": [Function],
-                                  "isFieldTouched": [Function],
-                                  "isFieldValidating": [Function],
-                                  "isFieldsTouched": [Function],
-                                  "isFieldsValidating": [Function],
-                                  "resetFields": [Function],
-                                  "scrollToField": [Function],
-                                  "setFields": [Function],
-                                  "setFieldsValue": [Function],
-                                  "submit": [Function],
-                                  "validateFields": [Function],
-                                }
+                          <div
+                            className="ant-row ant-row-end"
+                            style={
+                              Object {
+                                "marginBottom": "1rem",
+                                "marginLeft": -8,
+                                "marginRight": -8,
                               }
-                              id="filters"
-                              initialValues={Object {}}
-                              name="filters"
-                              onFinish={[Function]}
-                              onFinishFailed={[Function]}
-                              onValuesChange={[Function]}
+                            }
+                          >
+                            <Col
                               style={
                                 Object {
-                                  "marginBottom": "1rem",
-                                  "width": "100%",
+                                  "display": "flex",
+                                  "justifyContent": "end",
                                 }
                               }
                             >
-                              <form
-                                className="ant-form ant-form-inline"
-                                id="filters"
-                                onReset={[Function]}
-                                onSubmit={[Function]}
+                              <div
+                                className="ant-col"
                                 style={
                                   Object {
-                                    "marginBottom": "1rem",
-                                    "width": "100%",
+                                    "display": "flex",
+                                    "justifyContent": "end",
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
                                   }
                                 }
                               >
@@ -436,11 +400,10 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                               >
                                                 <Button
                                                   htmlType="submit"
-                                                  type="primary"
                                                 >
                                                   <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-primary"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="submit"
                                                     >
@@ -494,29 +457,29 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     </div>
                                   </Row>
                                 </FormItem>
-                                <FormItem
-                                  label="Sort"
-                                  name="sort"
-                                  style={
-                                    Object {
-                                      "width": "30%",
-                                    }
+                              </div>
+                            </Col>
+                            <Col>
+                              <div
+                                className="ant-col"
+                                style={
+                                  Object {
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
                                   }
+                                }
+                              >
+                                <FormItem
+                                  name="sort"
                                 >
                                   <WrapperField
-                                    label="Sort"
                                     messageVariables={
                                       Object {
-                                        "label": "Sort",
+                                        "label": "sort",
                                       }
                                     }
                                     name="sort"
                                     onReset={[Function]}
-                                    style={
-                                      Object {
-                                        "width": "30%",
-                                      }
-                                    }
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -547,10 +510,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         }
                                       }
                                       key="_sort"
-                                      label="Sort"
                                       messageVariables={
                                         Object {
-                                          "label": "Sort",
+                                          "label": "sort",
                                         }
                                       }
                                       name={
@@ -559,11 +521,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         ]
                                       }
                                       onReset={[Function]}
-                                      style={
-                                        Object {
-                                          "width": "30%",
-                                        }
-                                      }
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -571,53 +528,20 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       <Row
                                         className="ant-form-item"
                                         key="row"
-                                        style={
-                                          Object {
-                                            "width": "30%",
-                                          }
-                                        }
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          style={
-                                            Object {
-                                              "width": "30%",
-                                            }
-                                          }
+                                          style={Object {}}
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_sort"
-                                            label="Sort"
                                             name="sort"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                            style={
-                                              Object {
-                                                "width": "30%",
-                                              }
-                                            }
-                                          >
-                                            <Col
-                                              className="ant-form-item-label"
-                                            >
-                                              <div
-                                                className="ant-col ant-form-item-label"
-                                                style={Object {}}
-                                              >
-                                                <label
-                                                  className=""
-                                                  htmlFor="filters_sort"
-                                                  title="Sort"
-                                                >
-                                                  Sort
-                                                </label>
-                                              </div>
-                                            </Col>
-                                          </FormItemLabel>
+                                          />
                                           <FormItemInput
                                             errors={Array []}
-                                            label="Sort"
                                             name={
                                               Array [
                                                 "sort",
@@ -626,11 +550,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                             onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
-                                            style={
-                                              Object {
-                                                "width": "30%",
-                                              }
-                                            }
                                             touched={false}
                                             validateStatus=""
                                             validating={false}
@@ -652,12 +571,14 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                       update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
+                                                        defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
                                                       >
                                                         <Select
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                          defaultValue="desc"
                                                           dropdownClassName=""
                                                           id="filters_sort"
                                                           inputIcon={[Function]}
@@ -677,6 +598,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                           <ForwardRef(Select)
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                            defaultValue="desc"
                                                             dropdownClassName=""
                                                             id="filters_sort"
                                                             inputIcon={[Function]}
@@ -714,7 +636,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Latest",
+                                                                            "children": "Sort By: Latest",
                                                                             "key": null,
                                                                             "value": "desc",
                                                                           },
@@ -723,7 +645,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Old",
+                                                                            "children": "Sort By:Old",
                                                                             "key": null,
                                                                             "value": "asc",
                                                                           },
@@ -749,12 +671,12 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Latest",
+                                                                          "children": "Sort By: Latest",
                                                                           "key": null,
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
-                                                                          "children": "Old",
+                                                                          "children": "Sort By:Old",
                                                                           "key": null,
                                                                           "value": "asc",
                                                                         },
@@ -762,7 +684,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                     }
                                                                     prefixCls="ant-select"
                                                                     searchValue=""
-                                                                    values={Set {}}
+                                                                    values={
+                                                                      Set {
+                                                                        "desc",
+                                                                      }
+                                                                    }
                                                                     virtual={true}
                                                                   />
                                                                 }
@@ -856,7 +782,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Latest",
+                                                                                "children": "Sort By: Latest",
                                                                                 "key": null,
                                                                                 "value": "desc",
                                                                               },
@@ -865,7 +791,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Old",
+                                                                                "children": "Sort By:Old",
                                                                                 "key": null,
                                                                                 "value": "asc",
                                                                               },
@@ -891,12 +817,12 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Latest",
+                                                                              "children": "Sort By: Latest",
                                                                               "key": null,
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
-                                                                              "children": "Old",
+                                                                              "children": "Sort By:Old",
                                                                               "key": null,
                                                                               "value": "asc",
                                                                             },
@@ -904,7 +830,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         }
                                                                         prefixCls="ant-select"
                                                                         searchValue=""
-                                                                        values={Set {}}
+                                                                        values={
+                                                                          Set {
+                                                                            "desc",
+                                                                          }
+                                                                        }
                                                                         virtual={true}
                                                                       />
                                                                     </div>
@@ -927,6 +857,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                     activeValue={null}
                                                                     className=""
                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                                    defaultValue="desc"
                                                                     domRef={
                                                                       Object {
                                                                         "current": <div
@@ -953,8 +884,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                             />
                                                                           </span>
                                                                           <span
-                                                                            class="ant-select-selection-placeholder"
-                                                                          />
+                                                                            class="ant-select-selection-item"
+                                                                            title="Sort By: Latest"
+                                                                          >
+                                                                            Sort By: Latest
+                                                                          </span>
                                                                         </div>,
                                                                       }
                                                                     }
@@ -983,7 +917,16 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
-                                                                    values={Array []}
+                                                                    values={
+                                                                      Array [
+                                                                        Object {
+                                                                          "disabled": undefined,
+                                                                          "key": "desc",
+                                                                          "label": "Sort By: Latest",
+                                                                          "value": "desc",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <div
                                                                       className="ant-select-selector"
@@ -995,6 +938,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         activeValue={null}
                                                                         className=""
                                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                                        defaultValue="desc"
                                                                         domRef={
                                                                           Object {
                                                                             "current": <div
@@ -1021,8 +965,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                                 />
                                                                               </span>
                                                                               <span
-                                                                                class="ant-select-selection-placeholder"
-                                                                              />
+                                                                                class="ant-select-selection-item"
+                                                                                title="Sort By: Latest"
+                                                                              >
+                                                                                Sort By: Latest
+                                                                              </span>
                                                                             </div>,
                                                                           }
                                                                         }
@@ -1076,7 +1023,16 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
-                                                                        values={Array []}
+                                                                        values={
+                                                                          Array [
+                                                                            Object {
+                                                                              "disabled": undefined,
+                                                                              "key": "desc",
+                                                                              "label": "Sort By: Latest",
+                                                                              "value": "desc",
+                                                                            },
+                                                                          ]
+                                                                        }
                                                                       >
                                                                         <span
                                                                           className="ant-select-selection-search"
@@ -1125,8 +1081,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                           </Input>
                                                                         </span>
                                                                         <span
-                                                                          className="ant-select-selection-placeholder"
-                                                                        />
+                                                                          className="ant-select-selection-item"
+                                                                          title="Sort By: Latest"
+                                                                        >
+                                                                          Sort By: Latest
+                                                                        </span>
                                                                       </SingleSelector>
                                                                     </div>
                                                                   </Selector>
@@ -1263,14 +1222,78 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     </Field>
                                   </WrapperField>
                                 </FormItem>
-                              </form>
-                            </ForwardRef(Form)>
-                          </SizeContextProvider>
-                        </ForwardRef(InternalForm)>
-                      </div>
-                    </Col>
-                  </div>
-                </Row>
+                              </div>
+                            </Col>
+                            <Col>
+                              <div
+                                className="ant-col"
+                                style={
+                                  Object {
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
+                                  }
+                                }
+                              >
+                                <Link
+                                  to="/media/upload"
+                                >
+                                  <LinkAnchor
+                                    href="/media/upload"
+                                    navigate={[Function]}
+                                  >
+                                    <a
+                                      href="/media/upload"
+                                      onClick={[Function]}
+                                    >
+                                      <Button
+                                        disabled={false}
+                                        type="primary"
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn ant-btn-primary"
+                                            disabled={false}
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Upload
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </div>
+                            </Col>
+                          </div>
+                        </Row>
+                      </form>
+                    </ForwardRef(Form)>
+                  </SizeContextProvider>
+                </ForwardRef(InternalForm)>
               </div>
             </Item>
             <Item
@@ -1890,165 +1913,129 @@ exports[`Media List component snapshot testing should render the component with 
                   }
                 }
               >
-                <Row>
-                  <div
-                    className="ant-row"
-                    style={Object {}}
-                  >
-                    <Col
-                      span={8}
+                <ForwardRef(InternalForm)
+                  form={
+                    Object {
+                      "__INTERNAL__": Object {
+                        "itemRef": [Function],
+                        "name": "filters",
+                      },
+                      "getFieldError": [Function],
+                      "getFieldInstance": [Function],
+                      "getFieldValue": [Function],
+                      "getFieldsError": [Function],
+                      "getFieldsValue": [Function],
+                      "getInternalHooks": [Function],
+                      "isFieldTouched": [Function],
+                      "isFieldValidating": [Function],
+                      "isFieldsTouched": [Function],
+                      "isFieldsValidating": [Function],
+                      "resetFields": [Function],
+                      "scrollToField": [Function],
+                      "setFields": [Function],
+                      "setFieldsValue": [Function],
+                      "submit": [Function],
+                      "validateFields": [Function],
+                    }
+                  }
+                  initialValues={Object {}}
+                  name="filters"
+                  onFinish={[Function]}
+                  onValuesChange={[Function]}
+                  style={
+                    Object {
+                      "marginBottom": "1rem",
+                      "width": "100%",
+                    }
+                  }
+                >
+                  <SizeContextProvider>
+                    <ForwardRef(Form)
+                      className="ant-form ant-form-horizontal"
+                      form={
+                        Object {
+                          "__INTERNAL__": Object {
+                            "itemRef": [Function],
+                            "name": "filters",
+                          },
+                          "getFieldError": [Function],
+                          "getFieldInstance": [Function],
+                          "getFieldValue": [Function],
+                          "getFieldsError": [Function],
+                          "getFieldsValue": [Function],
+                          "getInternalHooks": [Function],
+                          "isFieldTouched": [Function],
+                          "isFieldValidating": [Function],
+                          "isFieldsTouched": [Function],
+                          "isFieldsValidating": [Function],
+                          "resetFields": [Function],
+                          "scrollToField": [Function],
+                          "setFields": [Function],
+                          "setFieldsValue": [Function],
+                          "submit": [Function],
+                          "validateFields": [Function],
+                        }
+                      }
+                      id="filters"
+                      initialValues={Object {}}
+                      name="filters"
+                      onFinish={[Function]}
+                      onFinishFailed={[Function]}
+                      onValuesChange={[Function]}
+                      style={
+                        Object {
+                          "marginBottom": "1rem",
+                          "width": "100%",
+                        }
+                      }
                     >
-                      <div
-                        className="ant-col ant-col-8"
-                        style={Object {}}
-                      >
-                        <Link
-                          to="/media/upload"
-                        >
-                          <LinkAnchor
-                            href="/media/upload"
-                            navigate={[Function]}
-                          >
-                            <a
-                              href="/media/upload"
-                              onClick={[Function]}
-                            >
-                              <Button
-                                disabled={false}
-                              >
-                                <Wave>
-                                  <button
-                                    className="ant-btn"
-                                    disabled={false}
-                                    onClick={[Function]}
-                                    type="button"
-                                  >
-                                    <LoadingIcon
-                                      existIcon={false}
-                                      loading={false}
-                                      prefixCls="ant-btn"
-                                    >
-                                      <CSSMotion
-                                        motionName="ant-btn-loading-icon-motion"
-                                        onAppearActive={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={true}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </LoadingIcon>
-                                    <span
-                                      key=".0"
-                                    >
-                                      Upload
-                                    </span>
-                                  </button>
-                                </Wave>
-                              </Button>
-                            </a>
-                          </LinkAnchor>
-                        </Link>
-                      </div>
-                    </Col>
-                    <Col
-                      offset={8}
-                      span={8}
-                    >
-                      <div
-                        className="ant-col ant-col-8 ant-col-offset-8"
-                        style={Object {}}
-                      >
-                        <ForwardRef(InternalForm)
-                          form={
-                            Object {
-                              "__INTERNAL__": Object {
-                                "itemRef": [Function],
-                                "name": "filters",
-                              },
-                              "getFieldError": [Function],
-                              "getFieldInstance": [Function],
-                              "getFieldValue": [Function],
-                              "getFieldsError": [Function],
-                              "getFieldsValue": [Function],
-                              "getInternalHooks": [Function],
-                              "isFieldTouched": [Function],
-                              "isFieldValidating": [Function],
-                              "isFieldsTouched": [Function],
-                              "isFieldsValidating": [Function],
-                              "resetFields": [Function],
-                              "scrollToField": [Function],
-                              "setFields": [Function],
-                              "setFieldsValue": [Function],
-                              "submit": [Function],
-                              "validateFields": [Function],
-                            }
+                      <form
+                        className="ant-form ant-form-horizontal"
+                        id="filters"
+                        onReset={[Function]}
+                        onSubmit={[Function]}
+                        style={
+                          Object {
+                            "marginBottom": "1rem",
+                            "width": "100%",
                           }
-                          initialValues={Object {}}
-                          layout="inline"
-                          name="filters"
-                          onFinish={[Function]}
-                          onValuesChange={[Function]}
+                        }
+                      >
+                        <Row
+                          gutter={16}
+                          justify="end"
                           style={
                             Object {
                               "marginBottom": "1rem",
-                              "width": "100%",
                             }
                           }
                         >
-                          <SizeContextProvider>
-                            <ForwardRef(Form)
-                              className="ant-form ant-form-inline"
-                              form={
-                                Object {
-                                  "__INTERNAL__": Object {
-                                    "itemRef": [Function],
-                                    "name": "filters",
-                                  },
-                                  "getFieldError": [Function],
-                                  "getFieldInstance": [Function],
-                                  "getFieldValue": [Function],
-                                  "getFieldsError": [Function],
-                                  "getFieldsValue": [Function],
-                                  "getInternalHooks": [Function],
-                                  "isFieldTouched": [Function],
-                                  "isFieldValidating": [Function],
-                                  "isFieldsTouched": [Function],
-                                  "isFieldsValidating": [Function],
-                                  "resetFields": [Function],
-                                  "scrollToField": [Function],
-                                  "setFields": [Function],
-                                  "setFieldsValue": [Function],
-                                  "submit": [Function],
-                                  "validateFields": [Function],
-                                }
+                          <div
+                            className="ant-row ant-row-end"
+                            style={
+                              Object {
+                                "marginBottom": "1rem",
+                                "marginLeft": -8,
+                                "marginRight": -8,
                               }
-                              id="filters"
-                              initialValues={Object {}}
-                              name="filters"
-                              onFinish={[Function]}
-                              onFinishFailed={[Function]}
-                              onValuesChange={[Function]}
+                            }
+                          >
+                            <Col
                               style={
                                 Object {
-                                  "marginBottom": "1rem",
-                                  "width": "100%",
+                                  "display": "flex",
+                                  "justifyContent": "end",
                                 }
                               }
                             >
-                              <form
-                                className="ant-form ant-form-inline"
-                                id="filters"
-                                onReset={[Function]}
-                                onSubmit={[Function]}
+                              <div
+                                className="ant-col"
                                 style={
                                   Object {
-                                    "marginBottom": "1rem",
-                                    "width": "100%",
+                                    "display": "flex",
+                                    "justifyContent": "end",
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
                                   }
                                 }
                               >
@@ -2258,11 +2245,10 @@ exports[`Media List component snapshot testing should render the component with 
                                               >
                                                 <Button
                                                   htmlType="submit"
-                                                  type="primary"
                                                 >
                                                   <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-primary"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="submit"
                                                     >
@@ -2316,29 +2302,29 @@ exports[`Media List component snapshot testing should render the component with 
                                     </div>
                                   </Row>
                                 </FormItem>
-                                <FormItem
-                                  label="Sort"
-                                  name="sort"
-                                  style={
-                                    Object {
-                                      "width": "30%",
-                                    }
+                              </div>
+                            </Col>
+                            <Col>
+                              <div
+                                className="ant-col"
+                                style={
+                                  Object {
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
                                   }
+                                }
+                              >
+                                <FormItem
+                                  name="sort"
                                 >
                                   <WrapperField
-                                    label="Sort"
                                     messageVariables={
                                       Object {
-                                        "label": "Sort",
+                                        "label": "sort",
                                       }
                                     }
                                     name="sort"
                                     onReset={[Function]}
-                                    style={
-                                      Object {
-                                        "width": "30%",
-                                      }
-                                    }
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -2369,10 +2355,9 @@ exports[`Media List component snapshot testing should render the component with 
                                         }
                                       }
                                       key="_sort"
-                                      label="Sort"
                                       messageVariables={
                                         Object {
-                                          "label": "Sort",
+                                          "label": "sort",
                                         }
                                       }
                                       name={
@@ -2381,11 +2366,6 @@ exports[`Media List component snapshot testing should render the component with 
                                         ]
                                       }
                                       onReset={[Function]}
-                                      style={
-                                        Object {
-                                          "width": "30%",
-                                        }
-                                      }
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -2393,53 +2373,20 @@ exports[`Media List component snapshot testing should render the component with 
                                       <Row
                                         className="ant-form-item"
                                         key="row"
-                                        style={
-                                          Object {
-                                            "width": "30%",
-                                          }
-                                        }
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          style={
-                                            Object {
-                                              "width": "30%",
-                                            }
-                                          }
+                                          style={Object {}}
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_sort"
-                                            label="Sort"
                                             name="sort"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                            style={
-                                              Object {
-                                                "width": "30%",
-                                              }
-                                            }
-                                          >
-                                            <Col
-                                              className="ant-form-item-label"
-                                            >
-                                              <div
-                                                className="ant-col ant-form-item-label"
-                                                style={Object {}}
-                                              >
-                                                <label
-                                                  className=""
-                                                  htmlFor="filters_sort"
-                                                  title="Sort"
-                                                >
-                                                  Sort
-                                                </label>
-                                              </div>
-                                            </Col>
-                                          </FormItemLabel>
+                                          />
                                           <FormItemInput
                                             errors={Array []}
-                                            label="Sort"
                                             name={
                                               Array [
                                                 "sort",
@@ -2448,11 +2395,6 @@ exports[`Media List component snapshot testing should render the component with 
                                             onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
-                                            style={
-                                              Object {
-                                                "width": "30%",
-                                              }
-                                            }
                                             touched={false}
                                             validateStatus=""
                                             validating={false}
@@ -2474,12 +2416,14 @@ exports[`Media List component snapshot testing should render the component with 
                                                       update={2}
                                                     >
                                                       <ForwardRef(InternalSelect)
+                                                        defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
                                                       >
                                                         <Select
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                          defaultValue="desc"
                                                           dropdownClassName=""
                                                           id="filters_sort"
                                                           inputIcon={[Function]}
@@ -2499,6 +2443,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                           <ForwardRef(Select)
                                                             className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                            defaultValue="desc"
                                                             dropdownClassName=""
                                                             id="filters_sort"
                                                             inputIcon={[Function]}
@@ -2536,7 +2481,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Latest",
+                                                                            "children": "Sort By: Latest",
                                                                             "key": null,
                                                                             "value": "desc",
                                                                           },
@@ -2545,7 +2490,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Old",
+                                                                            "children": "Sort By:Old",
                                                                             "key": null,
                                                                             "value": "asc",
                                                                           },
@@ -2571,12 +2516,12 @@ exports[`Media List component snapshot testing should render the component with 
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Latest",
+                                                                          "children": "Sort By: Latest",
                                                                           "key": null,
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
-                                                                          "children": "Old",
+                                                                          "children": "Sort By:Old",
                                                                           "key": null,
                                                                           "value": "asc",
                                                                         },
@@ -2584,7 +2529,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                     }
                                                                     prefixCls="ant-select"
                                                                     searchValue=""
-                                                                    values={Set {}}
+                                                                    values={
+                                                                      Set {
+                                                                        "desc",
+                                                                      }
+                                                                    }
                                                                     virtual={true}
                                                                   />
                                                                 }
@@ -2678,7 +2627,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Latest",
+                                                                                "children": "Sort By: Latest",
                                                                                 "key": null,
                                                                                 "value": "desc",
                                                                               },
@@ -2687,7 +2636,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Old",
+                                                                                "children": "Sort By:Old",
                                                                                 "key": null,
                                                                                 "value": "asc",
                                                                               },
@@ -2713,12 +2662,12 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Latest",
+                                                                              "children": "Sort By: Latest",
                                                                               "key": null,
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
-                                                                              "children": "Old",
+                                                                              "children": "Sort By:Old",
                                                                               "key": null,
                                                                               "value": "asc",
                                                                             },
@@ -2726,7 +2675,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         }
                                                                         prefixCls="ant-select"
                                                                         searchValue=""
-                                                                        values={Set {}}
+                                                                        values={
+                                                                          Set {
+                                                                            "desc",
+                                                                          }
+                                                                        }
                                                                         virtual={true}
                                                                       />
                                                                     </div>
@@ -2749,6 +2702,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                     activeValue={null}
                                                                     className=""
                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                                    defaultValue="desc"
                                                                     domRef={
                                                                       Object {
                                                                         "current": <div
@@ -2775,8 +2729,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                             />
                                                                           </span>
                                                                           <span
-                                                                            class="ant-select-selection-placeholder"
-                                                                          />
+                                                                            class="ant-select-selection-item"
+                                                                            title="Sort By: Latest"
+                                                                          >
+                                                                            Sort By: Latest
+                                                                          </span>
                                                                         </div>,
                                                                       }
                                                                     }
@@ -2805,7 +2762,16 @@ exports[`Media List component snapshot testing should render the component with 
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
-                                                                    values={Array []}
+                                                                    values={
+                                                                      Array [
+                                                                        Object {
+                                                                          "disabled": undefined,
+                                                                          "key": "desc",
+                                                                          "label": "Sort By: Latest",
+                                                                          "value": "desc",
+                                                                        },
+                                                                      ]
+                                                                    }
                                                                   >
                                                                     <div
                                                                       className="ant-select-selector"
@@ -2817,6 +2783,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         activeValue={null}
                                                                         className=""
                                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
+                                                                        defaultValue="desc"
                                                                         domRef={
                                                                           Object {
                                                                             "current": <div
@@ -2843,8 +2810,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                                 />
                                                                               </span>
                                                                               <span
-                                                                                class="ant-select-selection-placeholder"
-                                                                              />
+                                                                                class="ant-select-selection-item"
+                                                                                title="Sort By: Latest"
+                                                                              >
+                                                                                Sort By: Latest
+                                                                              </span>
                                                                             </div>,
                                                                           }
                                                                         }
@@ -2898,7 +2868,16 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
-                                                                        values={Array []}
+                                                                        values={
+                                                                          Array [
+                                                                            Object {
+                                                                              "disabled": undefined,
+                                                                              "key": "desc",
+                                                                              "label": "Sort By: Latest",
+                                                                              "value": "desc",
+                                                                            },
+                                                                          ]
+                                                                        }
                                                                       >
                                                                         <span
                                                                           className="ant-select-selection-search"
@@ -2947,8 +2926,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                           </Input>
                                                                         </span>
                                                                         <span
-                                                                          className="ant-select-selection-placeholder"
-                                                                        />
+                                                                          className="ant-select-selection-item"
+                                                                          title="Sort By: Latest"
+                                                                        >
+                                                                          Sort By: Latest
+                                                                        </span>
                                                                       </SingleSelector>
                                                                     </div>
                                                                   </Selector>
@@ -3085,14 +3067,78 @@ exports[`Media List component snapshot testing should render the component with 
                                     </Field>
                                   </WrapperField>
                                 </FormItem>
-                              </form>
-                            </ForwardRef(Form)>
-                          </SizeContextProvider>
-                        </ForwardRef(InternalForm)>
-                      </div>
-                    </Col>
-                  </div>
-                </Row>
+                              </div>
+                            </Col>
+                            <Col>
+                              <div
+                                className="ant-col"
+                                style={
+                                  Object {
+                                    "paddingLeft": 8,
+                                    "paddingRight": 8,
+                                  }
+                                }
+                              >
+                                <Link
+                                  to="/media/upload"
+                                >
+                                  <LinkAnchor
+                                    href="/media/upload"
+                                    navigate={[Function]}
+                                  >
+                                    <a
+                                      href="/media/upload"
+                                      onClick={[Function]}
+                                    >
+                                      <Button
+                                        disabled={false}
+                                        type="primary"
+                                      >
+                                        <Wave>
+                                          <button
+                                            className="ant-btn ant-btn-primary"
+                                            disabled={false}
+                                            onClick={[Function]}
+                                            type="button"
+                                          >
+                                            <LoadingIcon
+                                              existIcon={false}
+                                              loading={false}
+                                              prefixCls="ant-btn"
+                                            >
+                                              <CSSMotion
+                                                motionName="ant-btn-loading-icon-motion"
+                                                onAppearActive={[Function]}
+                                                onAppearStart={[Function]}
+                                                onEnterActive={[Function]}
+                                                onEnterStart={[Function]}
+                                                onLeaveActive={[Function]}
+                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
+                                                visible={false}
+                                              >
+                                                <DomWrapper />
+                                              </CSSMotion>
+                                            </LoadingIcon>
+                                            <span
+                                              key=".0"
+                                            >
+                                              Upload
+                                            </span>
+                                          </button>
+                                        </Wave>
+                                      </Button>
+                                    </a>
+                                  </LinkAnchor>
+                                </Link>
+                              </div>
+                            </Col>
+                          </div>
+                        </Row>
+                      </form>
+                    </ForwardRef(Form)>
+                  </SizeContextProvider>
+                </ForwardRef(InternalForm)>
               </div>
             </Item>
             <Item
@@ -3277,7 +3323,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                 Object {
                                                                   "height": "220px",
                                                                   "maxWidth": "100%",
-                                                                  "objectFit": "contain",
+                                                                  "objectFit": "cover",
                                                                   "objectPosition": "center center",
                                                                   "width": "100%",
                                                                 }
@@ -3302,7 +3348,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                   Object {
                                                                     "height": "220px",
                                                                     "maxWidth": "100%",
-                                                                    "objectFit": "contain",
+                                                                    "objectFit": "cover",
                                                                     "objectPosition": "center center",
                                                                     "width": "100%",
                                                                   }

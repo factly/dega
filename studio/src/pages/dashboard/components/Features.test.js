@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
-
+import { Button } from 'antd';
 import { Provider, useDispatch } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -43,6 +43,12 @@ jest.mock('../../../actions/events', () => ({
 
 let store, mockedDispatch;
 let state = {
+  admin: {
+    organisation: {
+      id: 1,
+      is_admin: true,
+    },
+  },
   spaces: {
     orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
     details: {
@@ -166,6 +172,26 @@ describe('Dashboard feature component', () => {
       });
       wrapper.update();
       expect(addDefaultEvents).toHaveBeenCalled();
+    });
+    it('should not display Events option if not super admin', () => {
+      const state2 = { ...state };
+      state2.admin = {
+        organisation: {
+          id: 1,
+        },
+      };
+      const store2 = mockStore(state2);
+      let wrapper;
+      act(() => {
+        wrapper = mount(
+          <Provider store={store2}>
+            <Router>
+              <Features />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(wrapper.find(Button).text()).not.toBe(' CREATE EVENTS');
     });
     it('should addDefaultPolicies', () => {
       const state2 = { ...state };

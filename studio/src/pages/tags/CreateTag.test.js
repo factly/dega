@@ -49,6 +49,11 @@ describe('Tags create component', () => {
       details: {},
       loading: true,
     },
+    media: {
+      req: [],
+      details: {},
+      loading: true,
+    },
   });
   store.dispatch = jest.fn(() => ({}));
   mockedDispatch = jest.fn(() => Promise.resolve({}));

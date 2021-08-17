@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
+import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import TagForm from './TagForm';
@@ -35,6 +36,11 @@ describe('Tags Create Form component', () => {
     },
     spaces: {
       orgs: [],
+      details: {},
+      loading: true,
+    },
+    media: {
+      req: [],
       details: {},
       loading: true,
     },
@@ -134,7 +140,7 @@ describe('Tags Create Form component', () => {
     });
     it('should submit form with new name', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -169,19 +175,23 @@ describe('Tags Create Form component', () => {
         );
       });
       act(() => {
-        wrapper
-          .find('FormItem')
-          .at(0)
-          .find('Input')
-          .simulate('change', { target: { value: 'new name' } });
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      act(() => {
         wrapper
           .find('FormItem')
           .at(1)
           .find('Input')
+          .simulate('change', { target: { value: 'new name' } });
+        wrapper
+          .find('FormItem')
+          .at(2)
+          .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(5)
           .find('Editor')
           .props()
           .onChange({
@@ -193,7 +203,14 @@ describe('Tags Create Form component', () => {
               },
             },
           });
-
+        wrapper
+          .find('FormItem')
+          .at(6)
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
+          });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
         wrapper.update();
@@ -215,6 +232,15 @@ describe('Tags Create Form component', () => {
         });
         done();
       }, 0);
+    });
+    it('should handle collapse open and close', () => {
+      act(() => {
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(Collapse).at(0).find('Button').at(0).text()).toBe('Close');
+      expect(wrapper.find(Collapse).at(1).find('Button').at(0).text()).toBe('Close');
     });
   });
 });

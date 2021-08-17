@@ -441,8 +441,8 @@ exports[`Event form component snapshot testing should match component with data 
                                       onChange={[Function]}
                                       options={
                                         Object {
-                                          "autoClosingBrackets": "never",
-                                          "autoClosingQuotes": "never",
+                                          "autoClosingBrackets": "auto",
+                                          "autoClosingQuotes": "auto",
                                           "cursorBlinking": "smooth",
                                           "folding": true,
                                           "lineNumbersMinChars": 4,
@@ -1108,8 +1108,8 @@ exports[`Event form component snapshot testing should match component with empty
                                       onChange={[Function]}
                                       options={
                                         Object {
-                                          "autoClosingBrackets": "never",
-                                          "autoClosingQuotes": "never",
+                                          "autoClosingBrackets": "auto",
+                                          "autoClosingQuotes": "auto",
                                           "cursorBlinking": "smooth",
                                           "folding": true,
                                           "lineNumbersMinChars": 4,
@@ -1773,8 +1773,8 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                       onChange={[Function]}
                                       options={
                                         Object {
-                                          "autoClosingBrackets": "never",
-                                          "autoClosingQuotes": "never",
+                                          "autoClosingBrackets": "auto",
+                                          "autoClosingQuotes": "auto",
                                           "cursorBlinking": "smooth",
                                           "folding": true,
                                           "lineNumbersMinChars": 4,
