@@ -12,13 +12,13 @@ exports[`Audio Component snapshot testing should render the component 1`] = `
         <ForwardRef(InternalButton)
           onClick={[Function]}
         >
-          Return
+          Cancel
         </ForwardRef(InternalButton)>,
         <ForwardRef(InternalButton)
           onClick={[Function]}
           type="primary"
         >
-          Ok
+          Submit
         </ForwardRef(InternalButton)>,
       ]
     }
@@ -45,13 +45,13 @@ exports[`Audio Component snapshot testing should render the component 1`] = `
           <ForwardRef(InternalButton)
             onClick={[Function]}
           >
-            Return
+            Cancel
           </ForwardRef(InternalButton)>,
           <ForwardRef(InternalButton)
             onClick={[Function]}
             type="primary"
           >
-            Ok
+            Submit
           </ForwardRef(InternalButton)>,
         ]
       }
@@ -203,13 +203,13 @@ exports[`Audio Component snapshot testing should render the component with url 1
         <ForwardRef(InternalButton)
           onClick={[Function]}
         >
-          Return
+          Cancel
         </ForwardRef(InternalButton)>,
         <ForwardRef(InternalButton)
           onClick={[Function]}
           type="primary"
         >
-          Ok
+          Submit
         </ForwardRef(InternalButton)>,
       ]
     }
@@ -236,13 +236,13 @@ exports[`Audio Component snapshot testing should render the component with url 1
           <ForwardRef(InternalButton)
             onClick={[Function]}
           >
-            Return
+            Cancel
           </ForwardRef(InternalButton)>,
           <ForwardRef(InternalButton)
             onClick={[Function]}
             type="primary"
           >
-            Ok
+            Submit
           </ForwardRef(InternalButton)>,
         ]
       }

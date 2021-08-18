@@ -7,6 +7,7 @@ import {
   ExceptionOutlined,
   ClockCircleOutlined,
   CloseOutlined,
+  FormOutlined,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
@@ -20,13 +21,25 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
 
   const getTagList = (tagids) => {
-    return tagids.map((id) => <Tag>{data.tags[id].name}</Tag>);
+    return tagids.map((id) => (
+      <Link to={`/pages?tag=${id}`}>
+        <Tag>{data.tags[id].name}</Tag>
+      </Link>
+    ));
   };
   const getCategoryList = (catIds) => {
-    return catIds.map((id) => <Tag>{data.categories[id].name}</Tag>);
+    return catIds.map((id) => (
+      <Link to={`/pages?category=${id}`}>
+        <Tag>{data.categories[id].name}</Tag>
+      </Link>
+    ));
   };
   const getAuthorsList = (ids) => {
-    return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
+    return ids?.map((id) => (
+      <Link>
+        <Tag>{data.authors[id].display_name}</Tag>
+      </Link>
+    ));
   };
   const columns = [
     {
@@ -88,16 +101,29 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       },
     },
     {
-      title: 'Quick Actions',
-      dataIndex: 'quick-actions',
+      title: 'Actions',
+      dataIndex: 'actions',
       fixed: 'right',
       align: 'center',
-      width: 150,
+      width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
           <>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', padding: '0 1rem' }}>
+              <Link style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
+                <Button
+                  icon={<EditOutlined />}
+                  disabled={!(actions.includes('admin') || actions.includes('update'))}
+                  style={{
+                    margin: '0.5rem',
+                    padding: '4px 22px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                />
+              </Link>
               <Button
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
                 onClick={() => {
@@ -106,7 +132,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 }}
                 style={{ margin: '0.5rem' }}
               >
-                {isOpen ? <CloseOutlined /> : <EditOutlined />}
+                {isOpen ? <CloseOutlined /> : <FormOutlined />}
               </Button>
               <Popconfirm
                 title="Are you sure you want to delete this?"
@@ -134,6 +160,9 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
         dataSource={data.pages}
         columns={columns}
         rowKey={(record) => record.id}
+        locale={{
+          emptyText: '-',
+        }}
         expandable={{
           expandIconColumnIndex: -1,
           expandedRowKeys,

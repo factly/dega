@@ -7,6 +7,7 @@ import {
   CheckCircleOutlined,
   ExceptionOutlined,
   CloseOutlined,
+  FormOutlined,
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePost } from '../../actions/posts';
@@ -23,10 +24,30 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
 
   const getTagList = (tagids) => {
-    return tagids?.map((id) => <Tag key={id}>{data.tags[id].name}</Tag>);
+    return tagids?.map((id) => (
+      <Link
+        to={
+          format.slug === 'article'
+            ? `/posts?tag=${id}&format=${format.id}`
+            : `/fact-checks?tag=${id}&format=${format.id}`
+        }
+      >
+        <Tag key={id}>{data.tags[id].name}</Tag>
+      </Link>
+    ));
   };
   const getCategoryList = (catIds) => {
-    return catIds?.map((id) => <Tag key={id}>{data.categories[id].name}</Tag>);
+    return catIds?.map((id) => (
+      <Link
+        to={
+          format.slug === 'article'
+            ? `/posts?category=${id}&format=${format.id}`
+            : `/fact-checks?category=${id}&format=${format.id}`
+        }
+      >
+        <Tag key={id}>{data.categories[id].name}</Tag>
+      </Link>
+    ));
   };
   const getAuthorsList = (ids) => {
     return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
@@ -93,16 +114,36 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
       },
     },
     {
-      title: 'Quick Actions',
-      dataIndex: 'quick-actions',
+      title: 'Actions',
+      dataIndex: 'actions',
       fixed: 'right',
       align: 'center',
-      width: 150,
+      width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
           <>
             <div style={{ display: 'flex' }}>
+              <Link
+                style={{ display: 'block' }}
+                to={
+                  format.slug === 'article'
+                    ? `/posts/${item.id}/edit`
+                    : `/fact-checks/${item.id}/edit`
+                }
+              >
+                <Button
+                  icon={<EditOutlined />}
+                  disabled={!(actions.includes('admin') || actions.includes('update'))}
+                  style={{
+                    margin: '0.5rem',
+                    padding: '4px 22px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                />
+              </Link>
               <Button
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
                 onClick={() => {
@@ -111,7 +152,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
                 }}
                 style={{ margin: '0.5rem' }}
               >
-                {isOpen ? <CloseOutlined /> : <EditOutlined />}
+                {isOpen ? <CloseOutlined /> : <FormOutlined />}
               </Button>
               <Popconfirm
                 title="Are you sure you want to delete this?"

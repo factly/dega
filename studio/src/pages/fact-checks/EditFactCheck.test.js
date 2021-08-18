@@ -170,6 +170,7 @@ describe('FactCheck edit component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 2,
+          format: 2,
         },
       },
       loading: false,
@@ -216,6 +217,7 @@ describe('FactCheck edit component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 2,
+          format: 2,
           status: 'draft',
           published_date: null,
         });
@@ -234,6 +236,34 @@ describe('FactCheck edit component', () => {
             tag_line: 'tag_line',
             medium_id: 1,
             format_id: 2,
+          },
+        },
+        loading: false,
+      };
+      store = mockStore(state);
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <EditFactCheck formats={formats} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+      expect(wrapper.find(FactCheckEditForm).length).toBe(0);
+    });
+    it('should display RecordNotFound if post format is not fact-check', () => {
+      state.posts = {
+        req: [],
+        details: {
+          1: {
+            id: 1,
+            title: 'Factcheck-2',
+            slug: 'factcheck-2',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 1,
           },
         },
         loading: false,

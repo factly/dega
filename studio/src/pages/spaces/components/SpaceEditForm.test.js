@@ -132,11 +132,6 @@ describe('Space Edit Form component', () => {
           </Provider>,
         );
       });
-
-      act(() => {
-        const submitButtom = wrapper.find('Button').at(0);
-        expect(submitButtom.props().disabled).toBe(true);
-      });
       wrapper.update();
 
       setTimeout(() => {

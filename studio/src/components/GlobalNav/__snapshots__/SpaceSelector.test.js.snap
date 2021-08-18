@@ -52,17 +52,34 @@ exports[`SpaceSelector component snapshot testing should render the component wi
     <span
       className="ant-select-selection-item"
     >
-      <span
-        className="ant-avatar ant-avatar-sm ant-avatar-circle ant-avatar-image"
-        style={Object {}}
+      <div
+        style={
+          Object {
+            "alignItems": "center",
+            "display": "flex",
+          }
+        }
       >
-        <img
-          onError={[Function]}
-          src="https://www.tibs.org.tw/images/default.jpg"
-        />
-      </span>
-       
-      English
+        <span
+          className="ant-avatar ant-avatar-sm ant-avatar-square ant-avatar-image"
+          style={Object {}}
+        >
+          <img
+            onError={[Function]}
+            src="dega.png"
+          />
+        </span>
+        <h3
+          style={
+            Object {
+              "margin": 0,
+              "marginLeft": "0.5rem",
+            }
+          }
+        >
+          English
+        </h3>
+      </div>
     </span>
   </div>
   <span

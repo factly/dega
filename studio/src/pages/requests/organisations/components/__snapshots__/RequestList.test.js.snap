@@ -59,9 +59,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                 "title": "Status",
               },
               Object {
+                "align": "center",
                 "dataIndex": "operation",
+                "fixed": "right",
                 "render": [Function],
                 "title": "Action",
+                "width": 150,
               },
             ]
           }
@@ -162,9 +165,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                           "title": "Status",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -240,7 +246,14 @@ exports[`Organisation Request List component snapshot testing should match the c
                             <table
                               style="table-layout: auto;"
                             >
-                              <colgroup />
+                              <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col
+                                  style="width: 150px;"
+                                />
+                              </colgroup>
                               <thead
                                 class="ant-table-thead"
                               >
@@ -261,7 +274,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     Status
                                   </th>
                                   <th
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     Action
                                   </th>
@@ -290,7 +304,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -337,7 +352,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -384,7 +400,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -432,7 +449,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                     transformColumns={[Function]}
                   >
                     <div
-                      className="ant-table ant-table-bordered"
+                      className="ant-table ant-table-bordered ant-table-has-fix-right"
                     >
                       <Component
                         pingLeft={false}
@@ -460,9 +477,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                 "title": "Status",
                               },
                               Object {
+                                "align": "center",
                                 "dataIndex": "operation",
+                                "fixed": "right",
                                 "render": [Function],
                                 "title": "Action",
+                                "width": 150,
                               },
                             ],
                             "data": Array [
@@ -529,7 +549,14 @@ exports[`Organisation Request List component snapshot testing should match the c
                                   <table
                                     style="table-layout: auto;"
                                   >
-                                    <colgroup />
+                                    <colgroup>
+                                      <col />
+                                      <col />
+                                      <col />
+                                      <col
+                                        style="width: 150px;"
+                                      />
+                                    </colgroup>
                                     <thead
                                       class="ant-table-thead"
                                     >
@@ -550,7 +577,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           Status
                                         </th>
                                         <th
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           Action
                                         </th>
@@ -579,7 +607,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -626,7 +655,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -673,7 +703,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -755,7 +786,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     undefined,
                                     undefined,
                                     undefined,
-                                    undefined,
+                                    150,
                                   ]
                                 }
                                 columns={
@@ -781,15 +812,50 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
                               >
-                                <colgroup />
+                                <colgroup>
+                                  <col
+                                    key="0"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="1"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="2"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="3"
+                                    style={
+                                      Object {
+                                        "width": 150,
+                                      }
+                                    }
+                                  />
+                                </colgroup>
                               </ColGroup>
                               <Header
                                 colWidths={
@@ -821,9 +887,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -850,10 +919,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -932,9 +1003,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           "colSpan": 1,
                                           "colStart": 3,
                                           "column": Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           },
                                           "key": undefined,
                                           "rowSpan": 1,
@@ -964,10 +1038,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           "title": "Status",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
-                                          "fixed": undefined,
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ]
                                     }
@@ -1088,20 +1164,25 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </th>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         className=""
                                         colEnd={3}
                                         colSpan={1}
                                         colStart={3}
                                         column={
                                           Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           }
                                         }
                                         component="th"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         key="operation"
                                         lastFixLeft={false}
                                         lastFixRight={false}
@@ -1110,10 +1191,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         rowType="header"
                                       >
                                         <th
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           Action
                                         </th>
@@ -1275,10 +1362,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={0}
                                         key="operation"
                                         lastFixLeft={false}
@@ -1296,10 +1385,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -2752,10 +2847,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={1}
                                         key="operation"
                                         lastFixLeft={false}
@@ -2773,10 +2870,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -4225,10 +4328,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={2}
                                         key="operation"
                                         lastFixLeft={false}
@@ -4245,10 +4350,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -6042,9 +6153,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                 "title": "Status",
               },
               Object {
+                "align": "center",
                 "dataIndex": "operation",
+                "fixed": "right",
                 "render": [Function],
                 "title": "Action",
+                "width": 150,
               },
             ]
           }
@@ -6121,9 +6235,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                           "title": "Status",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -6199,7 +6316,14 @@ exports[`Organisation Request List component snapshot testing should match the c
                             <table
                               style="table-layout: auto;"
                             >
-                              <colgroup />
+                              <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col
+                                  style="width: 150px;"
+                                />
+                              </colgroup>
                               <thead
                                 class="ant-table-thead"
                               >
@@ -6220,7 +6344,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     Status
                                   </th>
                                   <th
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     Action
                                   </th>
@@ -6249,7 +6374,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -6296,7 +6422,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -6343,7 +6470,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -6391,7 +6519,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                     transformColumns={[Function]}
                   >
                     <div
-                      className="ant-table ant-table-bordered"
+                      className="ant-table ant-table-bordered ant-table-has-fix-right"
                     >
                       <Component
                         pingLeft={false}
@@ -6419,9 +6547,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                 "title": "Status",
                               },
                               Object {
+                                "align": "center",
                                 "dataIndex": "operation",
+                                "fixed": "right",
                                 "render": [Function],
                                 "title": "Action",
+                                "width": 150,
                               },
                             ],
                             "data": Array [
@@ -6488,7 +6619,14 @@ exports[`Organisation Request List component snapshot testing should match the c
                                   <table
                                     style="table-layout: auto;"
                                   >
-                                    <colgroup />
+                                    <colgroup>
+                                      <col />
+                                      <col />
+                                      <col />
+                                      <col
+                                        style="width: 150px;"
+                                      />
+                                    </colgroup>
                                     <thead
                                       class="ant-table-thead"
                                     >
@@ -6509,7 +6647,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           Status
                                         </th>
                                         <th
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           Action
                                         </th>
@@ -6538,7 +6677,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -6585,7 +6725,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -6632,7 +6773,8 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -6714,7 +6856,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                                     undefined,
                                     undefined,
                                     undefined,
-                                    undefined,
+                                    150,
                                   ]
                                 }
                                 columns={
@@ -6740,15 +6882,50 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
                               >
-                                <colgroup />
+                                <colgroup>
+                                  <col
+                                    key="0"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="1"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="2"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="3"
+                                    style={
+                                      Object {
+                                        "width": 150,
+                                      }
+                                    }
+                                  />
+                                </colgroup>
                               </ColGroup>
                               <Header
                                 colWidths={
@@ -6780,9 +6957,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -6809,10 +6989,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -6891,9 +7073,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           "colSpan": 1,
                                           "colStart": 3,
                                           "column": Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           },
                                           "key": undefined,
                                           "rowSpan": 1,
@@ -6923,10 +7108,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                           "title": "Status",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
-                                          "fixed": undefined,
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ]
                                     }
@@ -7047,20 +7234,25 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </th>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         className=""
                                         colEnd={3}
                                         colSpan={1}
                                         colStart={3}
                                         column={
                                           Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           }
                                         }
                                         component="th"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         key="operation"
                                         lastFixLeft={false}
                                         lastFixRight={false}
@@ -7069,10 +7261,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         rowType="header"
                                       >
                                         <th
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           Action
                                         </th>
@@ -7234,10 +7432,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={0}
                                         key="operation"
                                         lastFixLeft={false}
@@ -7255,10 +7455,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -8711,10 +8917,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={1}
                                         key="operation"
                                         lastFixLeft={false}
@@ -8732,10 +8940,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -10184,10 +10398,12 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={2}
                                         key="operation"
                                         lastFixLeft={false}
@@ -10204,10 +10420,16 @@ exports[`Organisation Request List component snapshot testing should match the c
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -12001,9 +12223,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                 "title": "Status",
               },
               Object {
+                "align": "center",
                 "dataIndex": "operation",
+                "fixed": "right",
                 "render": [Function],
                 "title": "Action",
+                "width": 150,
               },
             ]
           }
@@ -12080,9 +12305,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                           "title": "Status",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -12158,7 +12386,14 @@ exports[`Organisation Request List component snapshot testing should render the 
                             <table
                               style="table-layout: auto;"
                             >
-                              <colgroup />
+                              <colgroup>
+                                <col />
+                                <col />
+                                <col />
+                                <col
+                                  style="width: 150px;"
+                                />
+                              </colgroup>
                               <thead
                                 class="ant-table-thead"
                               >
@@ -12179,7 +12414,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                     Status
                                   </th>
                                   <th
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     Action
                                   </th>
@@ -12208,7 +12444,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -12255,7 +12492,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -12302,7 +12540,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                     pending
                                   </td>
                                   <td
-                                    class="ant-table-cell"
+                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                    style="text-align: center; position: sticky; right: 0px;"
                                   >
                                     <span>
                                       <button
@@ -12350,7 +12589,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                     transformColumns={[Function]}
                   >
                     <div
-                      className="ant-table ant-table-bordered"
+                      className="ant-table ant-table-bordered ant-table-has-fix-right"
                     >
                       <Component
                         pingLeft={false}
@@ -12378,9 +12617,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                 "title": "Status",
                               },
                               Object {
+                                "align": "center",
                                 "dataIndex": "operation",
+                                "fixed": "right",
                                 "render": [Function],
                                 "title": "Action",
+                                "width": 150,
                               },
                             ],
                             "data": Array [
@@ -12447,7 +12689,14 @@ exports[`Organisation Request List component snapshot testing should render the 
                                   <table
                                     style="table-layout: auto;"
                                   >
-                                    <colgroup />
+                                    <colgroup>
+                                      <col />
+                                      <col />
+                                      <col />
+                                      <col
+                                        style="width: 150px;"
+                                      />
+                                    </colgroup>
                                     <thead
                                       class="ant-table-thead"
                                     >
@@ -12468,7 +12717,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           Status
                                         </th>
                                         <th
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           Action
                                         </th>
@@ -12497,7 +12747,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -12544,7 +12795,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -12591,7 +12843,8 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           pending
                                         </td>
                                         <td
-                                          class="ant-table-cell"
+                                          class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                          style="text-align: center; position: sticky; right: 0px;"
                                         >
                                           <span>
                                             <button
@@ -12673,7 +12926,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                                     undefined,
                                     undefined,
                                     undefined,
-                                    undefined,
+                                    150,
                                   ]
                                 }
                                 columns={
@@ -12699,15 +12952,50 @@ exports[`Organisation Request List component snapshot testing should render the 
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
                               >
-                                <colgroup />
+                                <colgroup>
+                                  <col
+                                    key="0"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="1"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="2"
+                                    style={
+                                      Object {
+                                        "width": undefined,
+                                      }
+                                    }
+                                  />
+                                  <col
+                                    key="3"
+                                    style={
+                                      Object {
+                                        "width": 150,
+                                      }
+                                    }
+                                  />
+                                </colgroup>
                               </ColGroup>
                               <Header
                                 colWidths={
@@ -12739,9 +13027,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -12768,10 +13059,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                       "title": "Status",
                                     },
                                     Object {
+                                      "align": "center",
                                       "dataIndex": "operation",
-                                      "fixed": undefined,
+                                      "fixed": "right",
                                       "render": [Function],
                                       "title": "Action",
+                                      "width": 150,
                                     },
                                   ]
                                 }
@@ -12850,9 +13143,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           "colSpan": 1,
                                           "colStart": 3,
                                           "column": Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           },
                                           "key": undefined,
                                           "rowSpan": 1,
@@ -12882,10 +13178,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                           "title": "Status",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
-                                          "fixed": undefined,
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ]
                                     }
@@ -13006,20 +13304,25 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         </th>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         className=""
                                         colEnd={3}
                                         colSpan={1}
                                         colStart={3}
                                         column={
                                           Object {
+                                            "align": "center",
                                             "dataIndex": "operation",
+                                            "fixed": "right",
                                             "render": [Function],
                                             "title": "Action",
+                                            "width": 150,
                                           }
                                         }
                                         component="th"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         key="operation"
                                         lastFixLeft={false}
                                         lastFixRight={false}
@@ -13028,10 +13331,16 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         rowType="header"
                                       >
                                         <th
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           Action
                                         </th>
@@ -13193,10 +13502,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={0}
                                         key="operation"
                                         lastFixLeft={false}
@@ -13214,10 +13525,16 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -14670,10 +14987,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={1}
                                         key="operation"
                                         lastFixLeft={false}
@@ -14691,10 +15010,16 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef
@@ -16143,10 +16468,12 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         </td>
                                       </Cell>
                                       <Cell
+                                        align="center"
                                         component="td"
                                         dataIndex="operation"
                                         firstFixLeft={false}
-                                        firstFixRight={false}
+                                        firstFixRight={true}
+                                        fixRight={0}
                                         index={2}
                                         key="operation"
                                         lastFixLeft={false}
@@ -16163,10 +16490,16 @@ exports[`Organisation Request List component snapshot testing should render the 
                                         render={[Function]}
                                       >
                                         <td
-                                          className="ant-table-cell"
+                                          className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                           colSpan={null}
                                           rowSpan={null}
-                                          style={Object {}}
+                                          style={
+                                            Object {
+                                              "position": "sticky",
+                                              "right": 0,
+                                              "textAlign": "center",
+                                            }
+                                          }
                                         >
                                           <span>
                                             <ForwardRef

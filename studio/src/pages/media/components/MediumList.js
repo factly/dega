@@ -44,7 +44,7 @@ function MediumList({ data, filters, setFilters, fetchMedia }) {
                     style={{
                       maxWidth: '100%',
                       width: '100%',
-                      objectFit: 'contain',
+                      objectFit: 'cover',
                       height: '220px',
                       objectPosition: 'center center',
                     }}

@@ -204,8 +204,8 @@ describe('Episode List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
 
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
@@ -234,8 +234,7 @@ describe('Episode List component', () => {
         );
       });
       const link = wrapper.find(Link).at(0);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      expect(link.text()).toEqual('Episode 1');
       expect(link.prop('to')).toEqual('/episodes/1/edit');
     });
     it('should disable edit delete button if no permission', () => {
@@ -256,9 +255,7 @@ describe('Episode List component', () => {
           </Provider>,
         );
       });
-      const editButton = wrapper.find('Button').at(0);
-      const deleteButton = wrapper.find('Button').at(1);
-      expect(editButton.props().disabled).toBe(true);
+      const deleteButton = wrapper.find('Button').at(0);
       expect(deleteButton.props().disabled).toBe(true);
     });
   });

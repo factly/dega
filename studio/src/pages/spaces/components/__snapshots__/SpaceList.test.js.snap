@@ -33,7 +33,7 @@ exports[`Spaces List component snapshot testing should match component when load
       className="ant-spin-container ant-spin-blur"
     >
       <div
-        className="ant-table ant-table-bordered ant-table-empty"
+        className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
       >
         <div
           className="ant-table-container"
@@ -86,6 +86,13 @@ exports[`Spaces List component snapshot testing should match component when load
                     }
                   }
                 />
+                <col
+                  style={
+                    Object {
+                      "width": 150,
+                    }
+                  }
+                />
               </colgroup>
               <thead
                 className="ant-table-thead"
@@ -132,10 +139,16 @@ exports[`Spaces List component snapshot testing should match component when load
                     Tag line
                   </th>
                   <th
-                    className="ant-table-cell"
+                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
                     rowSpan={null}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "position": "sticky",
+                        "right": 0,
+                        "textAlign": "center",
+                      }
+                    }
                   >
                     Action
                   </th>
@@ -227,7 +240,7 @@ exports[`Spaces List component snapshot testing should match component with spac
       className="ant-spin-container"
     >
       <div
-        className="ant-table ant-table-bordered"
+        className="ant-table ant-table-bordered ant-table-has-fix-right"
       >
         <div
           className="ant-table-container"
@@ -280,6 +293,13 @@ exports[`Spaces List component snapshot testing should match component with spac
                     }
                   }
                 />
+                <col
+                  style={
+                    Object {
+                      "width": 150,
+                    }
+                  }
+                />
               </colgroup>
               <thead
                 className="ant-table-thead"
@@ -326,10 +346,16 @@ exports[`Spaces List component snapshot testing should match component with spac
                     Tag line
                   </th>
                   <th
-                    className="ant-table-cell"
+                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
                     rowSpan={null}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "position": "sticky",
+                        "right": 0,
+                        "textAlign": "center",
+                      }
+                    }
                   >
                     Action
                   </th>
@@ -358,7 +384,17 @@ exports[`Spaces List component snapshot testing should match component with spac
                     rowSpan={null}
                     style={Object {}}
                   >
-                    space
+                    <a
+                      href="/spaces/1/edit"
+                      onClick={[Function]}
+                      style={
+                        Object {
+                          "marginRight": 8,
+                        }
+                      }
+                    >
+                      space 1
+                    </a>
                   </td>
                   <td
                     className="ant-table-cell"
@@ -385,44 +421,45 @@ exports[`Spaces List component snapshot testing should match component with spac
                     tag_line
                   </td>
                   <td
-                    className="ant-table-cell"
+                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
                     rowSpan={null}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "position": "sticky",
+                        "right": 0,
+                        "textAlign": "center",
+                      }
+                    }
                   >
-                    <span>
-                      <a
-                        href="/spaces/1/edit"
-                        onClick={[Function]}
-                        style={
-                          Object {
-                            "marginRight": 8,
-                          }
-                        }
+                    <button
+                      className="ant-btn ant-btn-danger ant-btn-icon-only"
+                      onClick={[Function]}
+                      onKeyDown={[Function]}
+                      onMouseDown={[Function]}
+                      onTouchStart={[Function]}
+                      type="button"
+                    >
+                      <span
+                        aria-label="delete"
+                        className="anticon anticon-delete"
+                        role="img"
                       >
-                        <button
-                          className="ant-btn"
-                          onClick={[Function]}
-                          type="button"
+                        <svg
+                          aria-hidden="true"
+                          data-icon="delete"
+                          fill="currentColor"
+                          focusable="false"
+                          height="1em"
+                          viewBox="64 64 896 896"
+                          width="1em"
                         >
-                          <span>
-                            Edit
-                          </span>
-                        </button>
-                      </a>
-                      <button
-                        className="ant-btn"
-                        onClick={[Function]}
-                        onKeyDown={[Function]}
-                        onMouseDown={[Function]}
-                        onTouchStart={[Function]}
-                        type="button"
-                      >
-                        <span>
-                          Delete
-                        </span>
-                      </button>
-                    </span>
+                          <path
+                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                          />
+                        </svg>
+                      </span>
+                    </button>
                   </td>
                 </tr>
               </tbody>
@@ -535,7 +572,7 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
       className="ant-spin-container"
     >
       <div
-        className="ant-table ant-table-bordered ant-table-empty"
+        className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
       >
         <div
           className="ant-table-container"
@@ -588,6 +625,13 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                     }
                   }
                 />
+                <col
+                  style={
+                    Object {
+                      "width": 150,
+                    }
+                  }
+                />
               </colgroup>
               <thead
                 className="ant-table-thead"
@@ -634,10 +678,16 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                     Tag line
                   </th>
                   <th
-                    className="ant-table-cell"
+                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
                     rowSpan={null}
-                    style={Object {}}
+                    style={
+                      Object {
+                        "position": "sticky",
+                        "right": 0,
+                        "textAlign": "center",
+                      }
+                    }
                   >
                     Action
                   </th>

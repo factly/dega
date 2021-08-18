@@ -1,14 +1,14 @@
 import React from 'react';
 import placeholderImg from './placeholderImage.svg';
-function PlaceholderImage(props) {
+function PlaceholderImage({ width, height, maxWidth }) {
   return (
     <>
       <img
         src={placeholderImg}
-        width={props.width}
-        height={props.height}
+        width={width}
+        height={height}
         alt=""
-        style={{ objectFit: 'contain', padding: '1rem', maxWidth: '240px' }}
+        style={{ objectFit: 'contain', padding: '1rem', maxWidth: maxWidth || '240px' }}
       />
     </>
   );

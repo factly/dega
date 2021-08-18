@@ -7,7 +7,7 @@ import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
 import { useHistory } from 'react-router-dom';
 import moment from 'moment';
-import { Collapse, Dropdown } from 'antd';
+import { Dropdown, Modal } from 'antd';
 
 import '../../../matchMedia.mock';
 import FactCheckForm from './FactCheckForm';
@@ -513,27 +513,15 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
 
       act(() => {
         const claimForm = wrapper.find('Modal');
         claimForm
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'Claim title' } });
-        claimForm
-          .find('FormItem')
-          .at(3)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 1 } });
         claimForm
           .find('FormItem')
           .at(4)
@@ -541,8 +529,15 @@ describe('Fact-check form component', () => {
           .at(0)
           .props()
           .onChange({ target: { value: 1 } });
+        claimForm
+          .find('FormItem')
+          .at(5)
+          .find('Select')
+          .at(0)
+          .props()
+          .onChange({ target: { value: 1 } });
 
-        const nextButton = claimForm.find('Button').at(2);
+        const nextButton = claimForm.find('Button').at(0);
         expect(nextButton.text()).toBe('Submit');
         nextButton.simulate('submit');
       });
@@ -567,6 +562,7 @@ describe('Fact-check form component', () => {
         done();
       }, 0);
     });
+
     it('should handle cancel click of Modal', () => {
       act(() => {
         const addClaimButton = wrapper.find('FormItem').at(8).find('Button');
@@ -574,12 +570,7 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
-      const okButton = wrapper.find('Modal').find('Button').at(3);
+      const okButton = wrapper.find('Modal').find('Button').at(8);
       expect(okButton.text()).toBe('Cancel');
       okButton.simulate('click');
       expect(wrapper.find('Modal').at(0).props().visible).toBe(false);
@@ -591,12 +582,7 @@ describe('Fact-check form component', () => {
         addClaimButton.simulate('click');
       });
       wrapper.update();
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
-      wrapper.update();
-      const okButton = wrapper.find('Modal').find('Button').at(4);
+      const okButton = wrapper.find('Modal').find('Button').at(9);
       expect(okButton.text()).toBe('OK');
       okButton.simulate('click');
       expect(wrapper.find('Modal').at(0).props().visible).toBe(false);
@@ -884,11 +870,9 @@ describe('Fact-check form component', () => {
         done();
       }, 0);
     });
-    it('should add meta data', (done) => {
+    it('should add seo meta data', (done) => {
       const data2 = { ...data };
-      data2.meta_fields = {
-        sample: 'testing1',
-      };
+
       data2.meta = {
         canonical_URL: undefined,
         description: undefined,
@@ -922,20 +906,16 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(22).find('MonacoEditor');
-        metaFieldData.props().onChange({
-          target: { value: '{"sample":"testing"}' },
-        });
-        const metaTitle = wrapper.find('FormItem').at(19).find('Input');
+        const metaTitle = wrapper.find('FormItem').at(21).find('Input');
         metaTitle.simulate('change', { target: { value: 'Meta title' } });
-        const metaDesc = wrapper.find('FormItem').at(20).find('TextArea');
+        const metaDesc = wrapper.find('FormItem').at(22).find('TextArea');
         metaDesc.simulate('change', { target: { value: 'Meta Description' } });
-        const metaUrl = wrapper.find('FormItem').at(21).find('Input');
+        const metaUrl = wrapper.find('FormItem').at(23).find('Input');
         metaUrl.simulate('change', { target: { value: 'Canonical url' } });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(20).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -989,6 +969,109 @@ describe('Fact-check form component', () => {
             description: 'Meta Description',
             title: 'Meta title',
           },
+        });
+        done();
+      }, 0);
+    });
+    it('should add meta fields', (done) => {
+      const data2 = { ...data };
+      data2.meta_fields = {
+        sample: 'testing1',
+      };
+      data2.meta = {
+        canonical_URL: undefined,
+        description: undefined,
+        title: undefined,
+      };
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={{ id: 1, name: 'article', slug: 'article' }}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const settingButton = wrapper.find('Button').at(3);
+        expect(settingButton.text()).toBe('');
+        settingButton.simulate('click');
+        expect(wrapper.find('Drawer').length).not.toBe(0);
+      });
+      wrapper.update();
+      act(() => {
+        const addMetaDataBtn = wrapper.find('FormItem').at(19).find('Button').at(0);
+        expect(addMetaDataBtn.text()).toBe('Add Meta Fields');
+        addMetaDataBtn.simulate('click');
+      });
+
+      act(() => {
+        const metaFieldData = wrapper.find('FormItem').at(28).find('MonacoEditor');
+        metaFieldData.props().onChange({
+          target: { value: '{"sample":"testing"}' },
+        });
+      });
+
+      act(() => {
+        const backBtn = wrapper.find('FormItem').at(27).find('Button').at(0);
+        expect(backBtn.text()).toBe('Back');
+        backBtn.simulate('click');
+
+        const submitButtom = wrapper.find('Button').at(1);
+        expect(submitButtom.text()).toBe('Save');
+        submitButtom.simulate('click');
+        submitButtom.simulate('submit');
+        wrapper.update();
+      });
+      setTimeout(() => {
+        expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(props.onCreate).toHaveBeenCalledWith({
+          title: 'FactCheck-1',
+          excerpt: 'excerpt of factcheck',
+          slug: 'factcheck-1',
+          featured_medium_id: 1,
+          status: 'draft',
+          format_id: 1,
+          author_ids: [1],
+          authors: [1],
+          categories: [1],
+          category_ids: [1],
+          published_date: null,
+          tag_ids: [1],
+          tags: [1],
+          claims: [1, undefined],
+          claim_ids: [1],
+          claim_order: [1],
+          description: {
+            time: 1595747741807,
+            blocks: [
+              {
+                type: 'header',
+                data: {
+                  text: 'Editor.js',
+                  level: 2,
+                },
+              },
+              {
+                type: 'paragraph',
+                data: {
+                  text:
+                    'Hey. Meet the new Editor. On this page you can see it in action — try to edit this text.',
+                },
+              },
+            ],
+            version: '2.18.0',
+          },
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           meta_fields: {
             sample: 'testing',
           },
@@ -1028,19 +1111,19 @@ describe('Fact-check form component', () => {
       });
 
       act(() => {
-        const headerData = wrapper.find('FormItem').at(24).find('MonacoEditor');
+        const headerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-        const footerData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        const footerData = wrapper.find('FormItem').at(26).find('MonacoEditor');
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(23).find('Button').at(0);
+        const backBtn = wrapper.find('FormItem').at(24).find('Button').at(0);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -1099,6 +1182,62 @@ describe('Fact-check form component', () => {
         });
         done();
       }, 0);
+    });
+    it('should handle view schema', () => {
+      document.execCommand = jest.fn(() => true);
+      const data2 = { ...data };
+      data2.schemas = [
+        {
+          '@context': 'https://schema.org',
+          '@type': 'NewsArticle',
+          headline: 'abcd',
+          datePublished: null,
+          author: null,
+          publisher: {
+            '@type': 'Organization',
+            name: 'Test Space',
+            logo: { '@type': '', url: '' },
+          },
+        },
+      ];
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <FactCheckForm
+                actions={['publish']}
+                onCreate={props.onCreate}
+                data={data2}
+                format={format}
+              />
+            </Router>
+          </Provider>,
+        );
+      });
+      act(() => {
+        const schemaBtn = wrapper.find('FormItem').at(17).find('Button').at(0);
+        expect(schemaBtn.text()).toBe('View Schemas');
+        schemaBtn.simulate('click');
+      });
+      wrapper.update();
+
+      expect(wrapper.find('Modal').at(1).props().title).toBe('View Schemas');
+      const copyButton = wrapper.find('Modal').at(1).find('Button').at(0);
+      expect(copyButton.text()).toBe('Copy');
+      copyButton.simulate('click');
+      wrapper.find(Modal).at(1).props().onCancel();
+      act(() => {
+        const schemaBtn = wrapper.find('FormItem').at(18).find('Button').at(0);
+        expect(schemaBtn.text()).toBe('View Schemas');
+        schemaBtn.simulate('click');
+      });
+      wrapper.update();
+
+      expect(wrapper.find('Modal').at(1).props().title).toBe('View Schemas');
+      expect(copyButton.text()).toBe('Copy');
+      copyButton.simulate('click');
+      wrapper.find(Modal).at(1).props().onOk();
+      expect(wrapper.find('Modal').at(1).props().visible).toBe(true);
     });
   });
 });

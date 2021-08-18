@@ -168,6 +168,7 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
+          format: 1,
         },
       },
       loading: false,
@@ -214,6 +215,7 @@ describe('Posts List component', () => {
           tag_line: 'tag_line',
           medium_id: 1,
           format_id: 1,
+          format: 1,
           published_date: null,
           status: 'draft',
         });
@@ -245,6 +247,7 @@ describe('Posts List component', () => {
           published_date: null,
           medium_id: 1,
           format_id: 1,
+          format: 1,
           status: 'publish',
         });
         expect(push).toHaveBeenCalledWith('/posts/1/edit');
@@ -262,6 +265,35 @@ describe('Posts List component', () => {
             tag_line: 'tag_line',
             medium_id: 1,
             format_id: 1,
+          },
+        },
+        loading: false,
+      };
+      store = mockStore(state);
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <Router>
+              <EditPost formats={formats} />
+            </Router>
+          </Provider>,
+        );
+      });
+      expect(wrapper.find('RecordNotFound').length).toBe(1);
+      expect(wrapper.find(PostEditForm).length).toBe(0);
+    });
+    it('should display RecordNotFound if post format is not article not found', () => {
+      state.posts = {
+        req: [],
+        details: {
+          1: {
+            id: 1,
+            title: 'Post-2',
+            slug: 'post-2',
+            tag_line: 'tag_line',
+            medium_id: 1,
+            format_id: 2,
+            format: 2,
           },
         },
         loading: false,

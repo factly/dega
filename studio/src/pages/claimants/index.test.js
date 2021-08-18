@@ -189,7 +189,7 @@ describe('Claimants List component', () => {
           .props()
           .onChange({ target: { value: '' } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });

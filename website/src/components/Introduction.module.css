@@ -1,0 +1,21 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+.intros {
+  display: flex;
+  align-items: center;
+  padding: 3rem 0;
+  width: 100%;
+}
+
+.introImg {
+  height: 200px;
+  width: 200px;
+}
+
+.introContainer {
+  padding: 2rem 0 0 0;
+}
+
+.introDescription {
+  font-size: 1.2rem;
+}

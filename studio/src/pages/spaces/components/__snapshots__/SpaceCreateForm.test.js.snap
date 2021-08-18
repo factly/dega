@@ -2235,8 +2235,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       onChange={[Function]}
                                       options={
                                         Object {
-                                          "autoClosingBrackets": "never",
-                                          "autoClosingQuotes": "never",
+                                          "autoClosingBrackets": "auto",
+                                          "autoClosingQuotes": "auto",
                                           "cursorBlinking": "smooth",
                                           "folding": true,
                                           "lineNumbersMinChars": 4,
@@ -4638,8 +4638,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       onChange={[Function]}
                                       options={
                                         Object {
-                                          "autoClosingBrackets": "never",
-                                          "autoClosingQuotes": "never",
+                                          "autoClosingBrackets": "auto",
+                                          "autoClosingQuotes": "auto",
                                           "cursorBlinking": "smooth",
                                           "folding": true,
                                           "lineNumbersMinChars": 4,

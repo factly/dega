@@ -37,19 +37,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
 
   const [metaDrawer, setMetaDrawer] = React.useState(false);
 
-  useEffect(() => {
-    const prev = sidebar.collapsed;
-    if (!sidebar.collapsed) {
-      dispatch(setCollapse(true));
-    }
-    return () => {
-      if (!prev) dispatch(setCollapse(false));
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
+  const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const showSchemaModal = () => {
     setIsModalVisible(true);
@@ -94,6 +84,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     setDrawerVisible(false);
     setCodeDrawerVisible(false);
     setMetaDrawer(false);
+    setMetaFieldsDrawerVisible(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -313,11 +304,21 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     Code Injection
                   </Button>
                 </Form.Item>
-                <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
-                  View Schema
-                </Button>
+                <Form.Item>
+                  <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                    View Schemas
+                  </Button>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    style={{ width: '100%' }}
+                    onClick={() => setMetaFieldsDrawerVisible(true)}
+                  >
+                    Add Meta Fields
+                  </Button>
+                </Form.Item>
                 <Modal
-                  title="View Schema"
+                  title="View Schemas"
                   visible={isModalVisible}
                   onOk={handleSchemaModalOk}
                   onCancel={handleSchemaModalCancel}
@@ -378,9 +379,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
                   <Input />
                 </Form.Item>
-                <Form.Item name="meta_fields" label="Meta Fields">
-                  <MonacoEditor language="json" />
-                </Form.Item>
               </Drawer>
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Code Injection</h4>}
@@ -404,6 +402,31 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 </Form.Item>
                 <Form.Item name="footer_code" label="Footer Code">
                   <MonacoEditor language="html" width={650} />
+                </Form.Item>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Meta Fields</h4>}
+                placement="right"
+                closable={true}
+                onClose={onClose}
+                visible={metaFieldsDrawer}
+                getContainer={false}
+                width={480}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form.Item style={{ marginLeft: '-20px' }}>
+                  <Button type="text" onClick={() => setMetaFieldsDrawerVisible(false)}>
+                    <LeftOutlined />
+                    Back
+                  </Button>
+                </Form.Item>
+                <Form.Item
+                  name="meta_fields"
+                  label="Meta Fields"
+                  extra="add JSON if you have to pass any extra data"
+                >
+                  <MonacoEditor language="json" />
                 </Form.Item>
               </Drawer>
             </Col>
