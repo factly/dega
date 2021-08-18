@@ -18,6 +18,7 @@ import (
 	"github.com/factly/dega-server/service/core/action/request/space"
 	"github.com/factly/dega-server/service/core/action/tag"
 	factCheck "github.com/factly/dega-server/service/fact-check"
+	"github.com/factly/dega-server/service/kavach"
 	"github.com/factly/dega-server/service/podcast"
 	podcastAction "github.com/factly/dega-server/service/podcast/action"
 	"github.com/factly/dega-server/util"
@@ -67,6 +68,10 @@ func RegisterRoutes() http.Handler {
 	r.With(middlewarex.CheckUser).Group(func(r chi.Router) {
 		r.Post("/core/requests/organisations", organisation.Create)
 		r.With(middlewarex.CheckSpace(1)).Post("/core/requests/spaces", space.Create)
+	})
+
+	r.Group(func(r chi.Router) {
+		r.Mount("/kavach", kavach.Router())
 	})
 
 	return r
