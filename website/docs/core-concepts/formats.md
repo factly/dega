@@ -12,10 +12,10 @@ The default formats for Dega are
 
 Fact-Check and Article formats are mandatory formats for Dega.
 
-Name: This allows the user to add a Name of the format
-Featured: Check if the claimant is featured
-Featured Image - Image for the format
-Description: Describes what the format is.
+- Name: This allows the user to add a Name of the format
+- Featured: Check if the claimant is featured
+- Featured Image - Image for the format
+- Description: Describes what the format is.
 
 Apart from the basic information, extra data can be added such as SEO metadata. SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 

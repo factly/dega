@@ -25,12 +25,12 @@ New posts can be created from templates by clicking on any of the templates avai
 
 The user can add information about the post by clicking on the Settings button.
 
-Featured Image - Image to be set as thumbnail for the post
-Excerpt - Brief description of the post
-Tags - This allows you to add or assign tags to the post
-Categories - This allows you to add or assign categories to the post
-Authors - This allows you to add the author of the post
-Published Date - The date of publishing for the fact-check. If not entered automatically takes the current date when clicked on the Publish button.
+- Featured Image - Image to be set as thumbnail for the post
+- Excerpt - Brief description of the post
+- Tags - This allows you to add or assign tags to the post
+- Categories - This allows you to add or assign categories to the post
+- Authors - This allows you to add the author of the post
+- Published Date - The date of publishing for the fact-check. If not entered automatically takes the current date when clicked on the Publish button.
 
 Apart from the basic information, extra data can be added such as SEO metadata. SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 

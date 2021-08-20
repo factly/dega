@@ -13,12 +13,12 @@ The default ratings for Dega are
 - Unverified
 - Party True
 
-Name: Name for the rating
-Numeric Value:  Rating value associated with each rating
-Background Color: This allows users to choose a background color to display for a rating
-Text Color:  This allows users to choose a text color for a rating for displaying
-Preview: This previews the rating display with the selected background and text colors
-Description: Describes what the rating is.
+- Name: Name for the rating
+- Numeric Value:  Rating value associated with each rating
+- Background Color: This allows users to choose a background color to display for a rating
+- Text Color:  This allows users to choose a text color for a rating for displaying
+- Preview: This previews the rating display with the selected background and text colors
+- Description: Describes what the rating is.
 
 Apart from the basic information, extra data can be added such as SEO metadata. SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 

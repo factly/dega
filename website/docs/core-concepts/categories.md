@@ -5,15 +5,15 @@ sidebar_position: 3
 # Categories
 
 Categories help to group related posts. 
-Users can add or assign categories while creating a post. While adding a category for a post, if a category does not exist then click on Create a Category <Category Name>. This allows users to quickly create a new category and assign it to a post.
+Users can add or assign categories while creating a post. While adding a category for a post, if a category does not exist then click on Create a Category. This allows users to quickly create a new category and assign it to a post.
 
 Category can be added from the Categories menu item by clicking on the New Category button on the right side. 
 
-Name: Name of a category
-Parent Category: Select Parent category for the category
-Featured - Check if the Tag is featured
-Featured Image: Image of category
-Description: Describes what the category is for.
+- Name: Name of a category
+- Parent Category: Select Parent category for the category
+- Featured - Check if the Tag is featured
+- Featured Image: Image of category
+- Description: Describes what the category is for.
 
 Apart from the basic information, extra data can be added such as SEO metadata. SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 

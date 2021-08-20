@@ -12,34 +12,34 @@ Each space is associated with one organization.
 Spaces can be created from the Space menu item by clicking on the New Space button on the right side.
 
 The form provides the ability to add basic information for the space.
-Organization: Organization for which space needs to be created
-Name: Name of  the space
-Title: Title for the space
-Tag Line: Tagline of the space
-Website: The website information for the space
-Description: Describes what the space is for.
-Meta Fields: To add more information about the space if the field is not included in the form. The user can use this to feed in extra data as a JSON object.
+- Organization: Organization for which space needs to be created
+- Name: Name of  the space
+- Title: Title for the space
+- Tag Line: Tagline of the space
+- Website: The website information for the space
+- Description: Describes what the space is for.
+- Meta Fields: To add more information about the space if the field is not included in the form. The user can use this to feed in extra data as a JSON object.
 
 After the space is created, the user can add more information about the space.
 
 The media section allows the user to add logos and icons
-Logo
-Logo Mobile
-Fav Icon
-Mobile Icon
+- Logo
+- Logo Mobile
+- Fav Icon
+- Mobile Icon
 
 The contact section allows the user to add information about the social media
-Facebook
-Twitter
-Pinterest
-Instagram
+- Facebook
+- Twitter
+- Pinterest
+- Instagram
 
 The analytics section allows the user to add information to get the analytics for the space which can be viewed later  in the Analytics Menu
-Server URL
-Domain
-Embed Code
+- Server URL
+- Domain
+- Embed Code
 
-Code Injection section
+Code Injection section:
 Customizing the header and footer specific to a format can be done by adding code in this section
 
 All the Spaces will be available under the Spaces menu. 

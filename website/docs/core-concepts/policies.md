@@ -19,8 +19,8 @@ Policies can be deleted by clicking on the Delete button. To edit a Policy click
 
 The user can add a new policy from the Policy menu by clicking on the New Policy button on the right side.
 
-Name: Name of the policy
-Users: This allows the user to select users of the application to be associated with the policy. 
-Description: Describes what the policy is for.
+- Name: Name of the policy
+- Users: This allows the user to select users of the application to be associated with the policy. 
+- Description: Describes what the policy is for.
 
 Permission to be provided to the user for each entity can be marked as checked from the options provided.

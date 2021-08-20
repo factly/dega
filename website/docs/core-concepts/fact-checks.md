@@ -25,15 +25,15 @@ New Fact-check posts can be created from templates by clicking on any of the tem
 
 The user can add information about the fact-check by clicking on the Settings button.
 
-Featured Image - Image to be set as thumbnail for the post
-Excerpt - Brief description of the post
-Tags - This allows users to add or assign tags to the post
-Categories - This allows users to add or assign categories to the post
-Claims - This allows users to add claims to the post. The user can either select from the existing list of claims or can create a new claim by clicking on the Add claim button.
+- Featured Image - Image to be set as thumbnail for the post
+- Excerpt - Brief description of the post
+- Tags - This allows users to add or assign tags to the post
+- Categories - This allows users to add or assign categories to the post
+- Claims - This allows users to add claims to the post. The user can either select from the existing list of claims or can create a new  claim by clicking on the Add claim button.
 When clicked on the Add Claim button, a modal popup opens to add in details about the claim.
 A Fact-check can have multiple claims.
-Authors - This allows users to add the author of the post
-Published Date - The date of publishing for the fact-check. If not entered automatically takes the current date when clicked on the Publish button.
+- Authors - This allows users to add the author of the post
+- Published Date - The date of publishing for the fact-check. If not entered automatically takes the current date when clicked on the Publish button.
 
 Apart from the basic information, extra data can be added such as SEO metadata. SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 
