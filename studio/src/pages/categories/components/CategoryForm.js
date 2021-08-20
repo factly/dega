@@ -8,20 +8,19 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import SocialCardPreview from '../../../components/PreviewSocialCard';
 import PlaceholderImage from '../../../components/ErrorsAndImage/PlaceholderImage';
+import { useSelector } from 'react-redux';
 
 const CategoryForm = ({ onCreate, data = {} }) => {
-  const meta = {
-    title: 'CATEGORY NAME',
-    canonical_URL: '/category',
-    description:
-      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Alias nisi inventore delectus amet tempora voluptatibus sed quibusdam aperiam fugit explicabo consectetur blanditiis cum ab fugiat perspiciatis, eum minima rerum ipsa?',
-    // image: PlaceholderImage,
-  };
+  const siteAddress = useSelector(
+    ({ spaces: { details, selected } }) => details[selected].site_address,
+  );
+
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
     }
   }
+  const [formData, setFormData] = useState(data);
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
 
@@ -29,10 +28,27 @@ const CategoryForm = ({ onCreate, data = {} }) => {
     form.resetFields();
   };
 
-  const onTitleChange = (string) => {
-    form.setFieldsValue({
-      slug: maker(string),
-    });
+  const onTitleChange = (title) => {
+    const slug = maker(title);
+    const values = {
+      slug: slug,
+      meta: {
+        facebook: {
+          title: title,
+          canonical_URL: slug,
+        },
+        twitter: {
+          title: title,
+          canonical_URL: slug,
+        },
+        google: {
+          title: title,
+          canonical_URL: slug,
+        },
+      },
+    };
+    form.setFieldsValue(values);
+    setFormData(form.getFieldValue());
   };
 
   return (
@@ -48,8 +64,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         onCreate(values);
         onReset();
       }}
-      onValuesChange={() => {
+      onValuesChange={(changedFields, allFields) => {
         setValueChange(true);
+        setFormData(allFields);
       }}
     >
       <Row justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
@@ -114,7 +131,23 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   },
                 ]}
               >
-                <Input />
+                <Input
+                  onChange={(e) =>
+                    form.setFieldsValue({
+                      meta: {
+                        facebook: {
+                          canonical_URL: e.target.value,
+                        },
+                        google: {
+                          canonical_URL: e.target.value,
+                        },
+                        twitter: {
+                          canonical_URL: e.target.value,
+                        },
+                      },
+                    })
+                  }
+                />
               </Form.Item>
             </Col>
             <Col span={10}>
@@ -149,15 +182,12 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                     <Input.TextArea />
                   </Form.Item>
                   <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input />
+                    <Input
+                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                    />
                   </Form.Item>
                 </div>
-                <SocialCardPreview
-                  type="google"
-                  url={form.getFieldValue(['meta', 'canonical_URL'])}
-                  title={meta.title}
-                  desc={meta.description}
-                />
+                <SocialCardPreview type="google" siteAddress={siteAddress} formData={formData} />
               </Collapse.Panel>
               <Collapse.Panel header="Twitter Card" className="meta-data-container">
                 <div style={{ flexBasis: '67%', marginRight: '2.4rem' }}>
@@ -167,48 +197,50 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                       containerStyles={{ justifyContent: 'start' }}
                     />
                   </Form.Item>
-                  <Form.Item name={['meta', 'title']} label="Meta Title">
+                  <Form.Item name={['meta', 'twitter', 'title']} label="Meta Title">
                     <Input />
                   </Form.Item>
-                  <Form.Item name={['meta', 'description']} label="Meta Description">
+                  <Form.Item name={['meta', 'twitter', 'description']} label="Meta Description">
                     <Input.TextArea />
                   </Form.Item>
-                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input />
+                  <Form.Item name={['meta', 'twitter', 'canonical_URL']} label="Canonical URL">
+                    <Input
+                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                    />
                   </Form.Item>
                 </div>
                 <SocialCardPreview
                   type="twitter"
-                  url={meta.canonical_URL}
-                  title={meta.title}
-                  desc={meta.description}
-                  image={meta.image}
+                  formData={formData}
+                  siteAddress={siteAddress}
+                  image={PlaceholderImage}
                 />
               </Collapse.Panel>
               <Collapse.Panel header="Facebook Card" className="meta-data-container">
                 <div style={{ flexBasis: '67%', marginRight: '2.4rem' }}>
-                  <Form.Item label="Facebook Image" name={['meta', 'medium_id']}>
+                  <Form.Item label="Facebook Image" name={['meta', 'facebook', 'medium_id']}>
                     <MediaSelector
                       maxWidth={'350px'}
                       containerStyles={{ justifyContent: 'start' }}
                     />
                   </Form.Item>
-                  <Form.Item name={['meta', 'title']} label="Meta Title">
+                  <Form.Item name={['meta', 'facebook', 'title']} label="Meta Title">
                     <Input />
                   </Form.Item>
-                  <Form.Item name={['meta', 'description']} label="Meta Description">
+                  <Form.Item name={['meta', 'facebook', 'description']} label="Meta Description">
                     <Input.TextArea />
                   </Form.Item>
-                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input />
+                  <Form.Item name={['meta', 'facebook', 'canonical_URL']} label="Canonical URL">
+                    <Input
+                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                    />
                   </Form.Item>
                 </div>
                 <SocialCardPreview
                   type="fb"
-                  url={meta.canonical_URL}
-                  title={meta.title}
-                  desc={meta.description}
-                  image={meta.image}
+                  formData={formData}
+                  siteAddress={siteAddress}
+                  image={PlaceholderImage}
                 />
               </Collapse.Panel>
             </Collapse>
