@@ -122,6 +122,9 @@ import EditWebhook from '../pages/webhooks/EditWebhook';
 //profile
 import Profile from '../pages/profile';
 
+//Reindex
+import Reindex from '../pages/spaces/Reindex';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -161,6 +164,11 @@ const routes = {
       resource: 'spaces',
       action: 'update',
     },
+  },
+  reindex: {
+    path: '/reindex',
+    Component: Reindex,
+    title: 'Reindex',
   },
   episodes: {
     path: '/episodes',

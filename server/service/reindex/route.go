@@ -11,7 +11,7 @@ func Router() chi.Router {
 	r := chi.NewRouter()
 
 	r.With(middlewarex.CheckSuperOrganisation("dega", util.GetOrganisation)).Post("/all", all)
-	r.Post("/space", space)
+	r.Post("/space/{space_id}", space)
 
 	return r
 }
