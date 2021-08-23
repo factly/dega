@@ -6,9 +6,9 @@ sidebar_position: 9
 
 Events define when to trigger a notification for a webhook.
 
-Webhooks
+#### Webhooks
 Webhooks are used to notify the users when defined events have occurred. These allow Dega to send POST requests to user-configured URLs to send them a notification about it. The request contains a triggered event and the result could be a notification on the set URL. 
-To use webhooks, setting up Hukz is required. Hukz is a simple & lightweight service implemented in GO to add webhooks to your application. This service is intended to fire webhooks on different events that are registered.
+To use webhooks, setting up [Hukz](https://github.com/factly/hukz) is required. Hukz is a simple & lightweight service implemented in GO to add webhooks to your application. This service is intended to fire webhooks on different events that are registered.
 Webhook can be added from the Webhook menu item by clicking on New Webhook. Webhooks can be added only by admins of the organization.
 
 The user can add default events supported by Dega by clicking on Create default events. Events can be added only by the super organization. While creating webhook supported events are assigned to a webhook.
@@ -20,43 +20,45 @@ The events supported in Dega are listed below:
 
 |  Events          | Description                                        |
 |------------------|----------------------------------------------------|
-| create.category  | Triggered when a category is added                 |
-| update.category  | Triggered when a category is edited                |
-| delete.category  | Triggered when a category is deleted               |
-| create.format    | Triggered when a format is added                   |
-| update.format    | Triggered when a format is edited                  |
-| delete.format    | Triggered when a format is deleted                 |
-| create.media     | Triggered when a media  is added                   |
-| update.media     | Triggered when a media is edited                   |
-| delete.media     | Triggered when a media is deleted                  |
-| create.menu      | Triggered when a menu is added                     |
-| update.menu      | Triggered when a menu is edited                    |
-| delete.menu      | Triggered when a menu is deleted                   |
-| create.post      | Triggered when a post is added                     |
-| update.post      | Triggered when a post is edited                    |
-| delete.post      | Triggered when a post is deleted                   |
-| create.template  | Triggered when a template is created               |
-| publish.post     | Triggered when a post is published                 |
-| unpublish.post   | Triggered when a post is unpublished               |
-| ready.post       | Triggered when a post is saved as Ready to Publish |
-| create.space     | Triggered when a space is added                    |
-| update.space     | Triggered when a space is edited                   |
-| delete.space     | Triggered when a space is deleted                  |
-| create.tag       | Triggered when a tag is added                      |
-| update.tag       | Triggered when a tag is edited                     |
-| delete.tag       | Triggered when a tag is deleted                    |
-| create.claim     | Triggered when a claim is added                    |
-| update.claim     | Triggered when a claim is edited                   |
-| delete.claim     | Triggered when a claim is deleted                  |
-| create.claimant  | Triggered when a claimant is added                 |
-| update.claimant  | Triggered when a claimant is edited                |  
-| delete.claimant  | Triggered when a claimant is deleted               |
-| create.rating    | Triggered when a rating is added                   |
-| update.rating    | Triggered when a rating is edited                  |
-| delete.rating    | Triggered when a rating is deleted                 |
-| create.podcast   | Triggered when a podcast is added                  |
-| update.podcast   | Triggered when a podcast is edited                 |
-| delete.podcast   | Triggered when a podcast is deleted                |
-| create.episode   | Triggered when a episode is added                  |
-| update.episode   | Triggered when a episode is edited                 |
-| delete.episode   | Triggered when a episode is deleted                |
+| Create Category  | Triggered when a category is added                 |
+| Update Category  | Triggered when a category is edited                |
+| Delete Category  | Triggered when a category is deleted               |
+| Create Format    | Triggered when a format is added                   |
+| Update Format    | Triggered when a format is edited                  |
+| Delete Format    | Triggered when a format is deleted                 |
+| Create Media     | Triggered when a media  is added                   |
+| Update Media     | Triggered when a media is edited                   |
+| Delete Media     | Triggered when a media is deleted                  |
+| Create Menu      | Triggered when a menu is added                     |
+| Update Menu      | Triggered when a menu is edited                    |
+| Delete Menu      | Triggered when a menu is deleted                   |
+| Create Post      | Triggered when a post is added                     |
+| Update Post      | Triggered when a post is edited                    |
+| Delete Post      | Triggered when a post is deleted                   |
+| Create Template  | Triggered when a template is created               |
+| Publish Post     | Triggered when a post is published                 |
+| Unpublish Post   | Triggered when a post is unpublished               |
+| Ready Post       | Triggered when a post is saved as Ready to Publish |
+| Create Space     | Triggered when a space is added                    |
+| Update Space     | Triggered when a space is edited                   |
+| Delete Space     | Triggered when a space is deleted                  |
+| Create Tag       | Triggered when a tag is added                      |
+| Update Tag       | Triggered when a tag is edited                     |
+| Delete Tag       | Triggered when a tag is deleted                    |
+| Create Claim     | Triggered when a claim is added                    |
+| Update Claim     | Triggered when a claim is edited                   |
+| Delete Claim     | Triggered when a claim is deleted                  |
+| Create Claimant  | Triggered when a claimant is added                 |
+| Update Claimant  | Triggered when a claimant is edited                |  
+| Delete Claimant  | Triggered when a claimant is deleted               |
+| Create Rating    | Triggered when a rating is added                   |
+| Update Rating    | Triggered when a rating is edited                  |
+| Delete Rating    | Triggered when a rating is deleted                 |
+| Create Podcast   | Triggered when a podcast is added                  |
+| Update Podcast   | Triggered when a podcast is edited                 |
+| Delete Podcast   | Triggered when a podcast is deleted                |
+| Create Episode   | Triggered when a episode is added                  |
+| Update Episode   | Triggered when a episode is edited                 |
+| Delete Episode   | Triggered when a episode is deleted                |
+| Create Policy    | Triggered when a policy is added                   |
+| Update Policy    | Triggered when a policy is updated                 |

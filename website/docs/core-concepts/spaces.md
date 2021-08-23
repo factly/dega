@@ -18,7 +18,9 @@ The form provides the ability to add basic information for the space.
 - Tag Line: Tagline of the space
 - Website: The website information for the space
 - Description: Describes what the space is for.
-- Meta Fields: To add more information about the space if the field is not included in the form. The user can use this to feed in extra data as a JSON object.
+
+### Metafields
+To add more information about the space if the field is not included in the form. The user can use [Metafields](/docs/features/extend-features) to feed in extra data as a JSON object.
 
 After the space is created, the user can add more information about the space.
 
