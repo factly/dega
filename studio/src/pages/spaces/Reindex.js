@@ -61,7 +61,7 @@ const Reindex = () => {
   };
   return (
     <Space direction="vertical">
-      <Title level={3}>Reindex</Title>;
+      <Title level={3}>Reindex</Title>
       <Form form={form} name="reindex" layout="vertical">
         <Row justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
           <Col span={24}>
