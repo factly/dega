@@ -155,12 +155,11 @@ describe('Claims Create Form component', () => {
     });
     it('should submit form with given data', (done) => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
@@ -180,6 +179,11 @@ describe('Claims Create Form component', () => {
           claim_sources: 'claim_sources',
           fact: 'review',
           review_sources: 'review_sources',
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           description: {
             time: 1595747741807,
             blocks: [
@@ -217,20 +221,21 @@ describe('Claims Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(3).find('Button').at(0).simulate('click');
       });
       wrapper.update();
+
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('TextArea').at(0);
+        const input = wrapper.find('FormItem').at(1).find('TextArea').at(0);
         input.simulate('change', {
           target: {
             value:
               'new name new claim title for testing claim update and testing slug update. slug maker should take only first one hundred and fifty characters to create a slug and not all characters from title, since claim title can be  more than 150',
           },
         });
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
 
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Update');
         submitButtom.simulate('submit');
       });
@@ -298,65 +303,61 @@ describe('Claims Create Form component', () => {
         ],
         version: '2.18.0',
       };
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-      });
       wrapper.update();
       act(() => {
         wrapper
           .find('FormItem')
-          .at(5)
+          .at(9)
           .find('Editor')
           .at(0)
           .props()
           .onChange({ target: { value: newDescription } });
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
-        wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
           .at(4)
           .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: 3 } });
+          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(6)
-          .find(DatePicker)
+          .at(5)
+          .find('Select')
           .at(0)
           .props()
-          .onChange({ target: { value: moment(new Date('2020-01-01')) } });
+          .onChange({ target: { value: 3 } });
         wrapper
           .find('FormItem')
           .at(7)
           .find(DatePicker)
           .at(0)
           .props()
+          .onChange({ target: { value: moment(new Date('2020-01-01')) } });
+        wrapper
+          .find('FormItem')
+          .at(8)
+          .find(DatePicker)
+          .at(0)
+          .props()
           .onChange({ target: { value: moment(new Date('2020-04-04')) } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new review' } });
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
@@ -383,32 +384,31 @@ describe('Claims Create Form component', () => {
 
     it('should highlight form field with error in first panel', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: '' } });
-        wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Select')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
           .at(4)
           .find('Select')
           .at(0)
           .props()
+          .onChange({ target: { value: 2 } });
+        wrapper
+          .find('FormItem')
+          .at(5)
+          .find('Select')
+          .at(0)
+          .props()
           .onChange({ target: { value: 3 } });
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
@@ -416,32 +416,31 @@ describe('Claims Create Form component', () => {
     });
     it('should highlight form field with error in second panel', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'claim' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(4)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(5)
           .find('Select')
           .at(0)
           .props()
@@ -451,13 +450,13 @@ describe('Claims Create Form component', () => {
         const formListInputCount = wrapper.find('FormList').find('Input').length;
         expect(formListInputCount).toBe(0);
         act(() => {
-          const button = wrapper.find('FormItem').at(9).find('Button').at(0);
+          const button = wrapper.find('FormItem').at(10).find('Button').at(0);
           expect(button.text()).toBe('Add Claim sources');
           button.simulate('click');
         });
       });
       act(() => {
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
@@ -465,14 +464,13 @@ describe('Claims Create Form component', () => {
     });
     it('should add review sources input field on button click', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(10).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(12).find('Button').at(0);
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
@@ -481,12 +479,11 @@ describe('Claims Create Form component', () => {
     });
     it('should remove review sources input field on button click', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
-        const button = wrapper.find('FormItem').at(10).find('Button');
+        const button = wrapper.find('FormItem').at(12).find('Button');
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
@@ -500,14 +497,13 @@ describe('Claims Create Form component', () => {
     });
     it('should add claim sources input field on button click', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(9).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(11).find('Button').at(0);
         expect(button.text()).toBe('Add Claim sources');
         button.simulate('click');
       });
@@ -516,12 +512,11 @@ describe('Claims Create Form component', () => {
     });
     it('should remove claim sources input field on button click', () => {
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
-        const button = wrapper.find('FormItem').at(9).find('Button');
+        const button = wrapper.find('FormItem').at(11).find('Button');
         expect(button.text()).toBe('Add Claim sources');
         button.simulate('click');
       });
@@ -571,12 +566,11 @@ describe('Claims Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       act(() => {
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');
         submitButtom.simulate('submit');
       });
@@ -614,6 +608,11 @@ describe('Claims Create Form component', () => {
               },
             ],
             version: '2.18.0',
+          },
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
           },
         });
         done();
@@ -658,20 +657,19 @@ describe('Claims Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       const formListInputCount = wrapper.find('FormList').find('Input').length;
       expect(formListInputCount).toBe(0);
       act(() => {
-        const button = wrapper.find('FormItem').at(10).find('Button').at(0);
+        const button = wrapper.find('FormItem').at(12).find('Button').at(0);
         expect(button.text()).toBe('Add Review sources');
         button.simulate('click');
       });
       wrapper.update();
       act(() => {
-        const submitButtom = wrapper.find('Button').at(2);
+        const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
         wrapper.update();
       });

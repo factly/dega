@@ -268,7 +268,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                       Object {
                                                         "height": "220px",
                                                         "maxWidth": "100%",
-                                                        "objectFit": "contain",
+                                                        "objectFit": "cover",
                                                         "objectPosition": "center center",
                                                         "width": "100%",
                                                       }
@@ -293,7 +293,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                         Object {
                                                           "height": "220px",
                                                           "maxWidth": "100%",
-                                                          "objectFit": "contain",
+                                                          "objectFit": "cover",
                                                           "objectPosition": "center center",
                                                           "width": "100%",
                                                         }
@@ -383,7 +383,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                       Object {
                                                         "height": "220px",
                                                         "maxWidth": "100%",
-                                                        "objectFit": "contain",
+                                                        "objectFit": "cover",
                                                         "objectPosition": "center center",
                                                         "width": "100%",
                                                       }
@@ -408,7 +408,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                         Object {
                                                           "height": "220px",
                                                           "maxWidth": "100%",
-                                                          "objectFit": "contain",
+                                                          "objectFit": "cover",
                                                           "objectPosition": "center center",
                                                           "width": "100%",
                                                         }
@@ -1105,7 +1105,7 @@ exports[`Media List component snapshot testing should match component with media
                                                       Object {
                                                         "height": "220px",
                                                         "maxWidth": "100%",
-                                                        "objectFit": "contain",
+                                                        "objectFit": "cover",
                                                         "objectPosition": "center center",
                                                         "width": "100%",
                                                       }
@@ -1130,7 +1130,7 @@ exports[`Media List component snapshot testing should match component with media
                                                         Object {
                                                           "height": "220px",
                                                           "maxWidth": "100%",
-                                                          "objectFit": "contain",
+                                                          "objectFit": "cover",
                                                           "objectPosition": "center center",
                                                           "width": "100%",
                                                         }
@@ -1220,7 +1220,7 @@ exports[`Media List component snapshot testing should match component with media
                                                       Object {
                                                         "height": "220px",
                                                         "maxWidth": "100%",
-                                                        "objectFit": "contain",
+                                                        "objectFit": "cover",
                                                         "objectPosition": "center center",
                                                         "width": "100%",
                                                       }
@@ -1245,7 +1245,7 @@ exports[`Media List component snapshot testing should match component with media
                                                         Object {
                                                           "height": "220px",
                                                           "maxWidth": "100%",
-                                                          "objectFit": "contain",
+                                                          "objectFit": "cover",
                                                           "objectPosition": "center center",
                                                           "width": "100%",
                                                         }

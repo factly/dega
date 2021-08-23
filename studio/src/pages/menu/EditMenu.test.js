@@ -36,7 +36,7 @@ describe('Menu Edit component', () => {
   let store;
   let mockedDispatch;
   store = mockStore({
-    menu: {
+    menus: {
       req: [
         {
           data: [1],
@@ -71,7 +71,7 @@ describe('Menu Edit component', () => {
     });
     it('should match component with empty data', () => {
       store = mockStore({
-        menu: {
+        menus: {
           req: [],
           details: {},
           loading: false,
@@ -86,7 +86,7 @@ describe('Menu Edit component', () => {
     });
     it('should match skeleton while loading', () => {
       store = mockStore({
-        menu: {
+        menus: {
           req: [],
           details: {},
           loading: true,
@@ -104,7 +104,7 @@ describe('Menu Edit component', () => {
     let wrapper;
     beforeEach(() => {
       store = mockStore({
-        menu: {
+        menus: {
           req: [
             {
               data: [1],

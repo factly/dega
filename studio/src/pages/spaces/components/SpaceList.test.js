@@ -28,7 +28,7 @@ describe('Spaces List component', () => {
   let mockedDispatch;
   const space = {
     id: 1,
-    name: 'space',
+    name: 'space 1',
     site_address: 'site_address',
     site_title: 'site_title',
     tag_line: 'tag_line',
@@ -98,8 +98,8 @@ describe('Spaces List component', () => {
           <SpaceList />
         </Router>,
       );
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
 
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
@@ -125,8 +125,7 @@ describe('Spaces List component', () => {
         </Router>,
       );
       const link = wrapper.find(Link).at(0);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      expect(link.text()).toEqual('space 1');
       expect(link.prop('to')).toEqual('/spaces/1/edit');
     });
     it('should have no delete and edit buttons', () => {

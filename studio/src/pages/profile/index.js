@@ -48,7 +48,6 @@ function Profile() {
       slug: maker(string),
     });
   };
-  console.log('profile', profile);
 
   return (
     <div className="content">
@@ -60,7 +59,7 @@ function Profile() {
           onFinish={update}
           initialValues={{
             ...profile,
-            birth_date: profile.birth_date ? moment(profile.birth_date) : null,
+            birth_date: profile && profile.birth_date ? moment(profile.birth_date) : null,
           }}
           onValuesChange={(changedValues, allValues) => {
             setValueChange(true);

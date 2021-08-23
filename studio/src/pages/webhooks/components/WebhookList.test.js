@@ -156,8 +156,8 @@ describe('Webhook List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
 
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
@@ -182,8 +182,7 @@ describe('Webhook List component', () => {
         );
       });
       const link = wrapper.find(Link).at(0);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      expect(link.text()).toEqual('Webhook2');
       expect(link.prop('to')).toEqual('/webhooks/2/edit');
     });
     it('should have no delete and edit buttons', () => {

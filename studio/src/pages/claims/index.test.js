@@ -281,21 +281,21 @@ describe('Claims List component', () => {
           .simulate('change', { target: { value: 'fact check' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(4)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: 'asc' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: [1] } });
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(3)
           .find('Select')
           .at(0)
           .props()

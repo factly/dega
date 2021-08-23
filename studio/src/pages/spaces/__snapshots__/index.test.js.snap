@@ -60,55 +60,72 @@ exports[`Spaces List component should render the component 1`] = `
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/spaces/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/spaces/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/spaces/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/spaces/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/spaces/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/spaces/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Space
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -137,6 +154,7 @@ exports[`Spaces List component should render the component 1`] = `
                         Object {
                           "dataIndex": "name",
                           "key": "name",
+                          "render": [Function],
                           "title": "Name",
                           "width": "12%",
                         },
@@ -159,9 +177,12 @@ exports[`Spaces List component should render the component 1`] = `
                           "width": "20%",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -196,6 +217,7 @@ exports[`Spaces List component should render the component 1`] = `
                                   Object {
                                     "dataIndex": "name",
                                     "key": "name",
+                                    "render": [Function],
                                     "title": "Name",
                                     "width": "12%",
                                   },
@@ -218,9 +240,12 @@ exports[`Spaces List component should render the component 1`] = `
                                     "width": "20%",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -265,6 +290,9 @@ exports[`Spaces List component should render the component 1`] = `
                                           <col
                                             style="width: 20%;"
                                           />
+                                          <col
+                                            style="width: 150px;"
+                                          />
                                         </colgroup>
                                         <thead
                                           class="ant-table-thead"
@@ -296,7 +324,8 @@ exports[`Spaces List component should render the component 1`] = `
                                               Tag line
                                             </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -372,7 +401,7 @@ exports[`Spaces List component should render the component 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered ant-table-empty"
+                                className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -391,6 +420,7 @@ exports[`Spaces List component should render the component 1`] = `
                                         Object {
                                           "dataIndex": "name",
                                           "key": "name",
+                                          "render": [Function],
                                           "title": "Name",
                                           "width": "12%",
                                         },
@@ -413,9 +443,12 @@ exports[`Spaces List component should render the component 1`] = `
                                           "width": "20%",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [],
@@ -456,6 +489,9 @@ exports[`Spaces List component should render the component 1`] = `
                                                 <col
                                                   style="width: 20%;"
                                                 />
+                                                <col
+                                                  style="width: 150px;"
+                                                />
                                               </colgroup>
                                               <thead
                                                 class="ant-table-thead"
@@ -487,7 +523,8 @@ exports[`Spaces List component should render the component 1`] = `
                                                     Tag line
                                                   </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -606,7 +643,7 @@ exports[`Spaces List component should render the component 1`] = `
                                               "20%",
                                               "20%",
                                               "20%",
-                                              undefined,
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -622,6 +659,7 @@ exports[`Spaces List component should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -647,10 +685,12 @@ exports[`Spaces List component should render the component 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -696,6 +736,14 @@ exports[`Spaces List component should render the component 1`] = `
                                                 }
                                               }
                                             />
+                                            <col
+                                              key="5"
+                                              style={
+                                                Object {
+                                                  "width": 150,
+                                                }
+                                              }
+                                            />
                                           </colgroup>
                                         </ColGroup>
                                         <Header
@@ -721,6 +769,7 @@ exports[`Spaces List component should render the component 1`] = `
                                               Object {
                                                 "dataIndex": "name",
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -743,9 +792,12 @@ exports[`Spaces List component should render the component 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -762,6 +814,7 @@ exports[`Spaces List component should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -787,10 +840,12 @@ exports[`Spaces List component should render the component 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -846,6 +901,7 @@ exports[`Spaces List component should render the component 1`] = `
                                                     "column": Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "12%",
                                                     },
@@ -904,9 +960,12 @@ exports[`Spaces List component should render the component 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 5,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -926,6 +985,7 @@ exports[`Spaces List component should render the component 1`] = `
                                                     "dataIndex": "name",
                                                     "fixed": undefined,
                                                     "key": "name",
+                                                    "render": [Function],
                                                     "title": "Name",
                                                     "width": "12%",
                                                   },
@@ -951,10 +1011,12 @@ exports[`Spaces List component should render the component 1`] = `
                                                     "width": "20%",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -1024,6 +1086,7 @@ exports[`Spaces List component should render the component 1`] = `
                                                     Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "12%",
                                                     }
@@ -1144,20 +1207,25 @@ exports[`Spaces List component should render the component 1`] = `
                                                   </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={5}
                                                   colSpan={1}
                                                   colStart={5}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -1166,10 +1234,16 @@ exports[`Spaces List component should render the component 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>
@@ -1367,55 +1441,72 @@ exports[`Spaces List component should render the component with data 1`] = `
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/spaces/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/spaces/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/spaces/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/spaces/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/spaces/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/spaces/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Space
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -1444,6 +1535,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                         Object {
                           "dataIndex": "name",
                           "key": "name",
+                          "render": [Function],
                           "title": "Name",
                           "width": "12%",
                         },
@@ -1466,9 +1558,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                           "width": "20%",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -1515,6 +1610,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                   Object {
                                     "dataIndex": "name",
                                     "key": "name",
+                                    "render": [Function],
                                     "title": "Name",
                                     "width": "12%",
                                   },
@@ -1537,9 +1633,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                     "width": "20%",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -1605,6 +1704,9 @@ exports[`Spaces List component should render the component with data 1`] = `
                                           <col
                                             style="width: 20%;"
                                           />
+                                          <col
+                                            style="width: 150px;"
+                                          />
                                         </colgroup>
                                         <thead
                                           class="ant-table-thead"
@@ -1636,7 +1738,8 @@ exports[`Spaces List component should render the component with data 1`] = `
                                               Tag line
                                             </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -1657,7 +1760,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                             <td
                                               class="ant-table-cell"
                                             >
-                                              space
+                                              <a
+                                                href="/spaces/1/edit"
+                                                style="margin-right: 8px;"
+                                              >
+                                                space
+                                              </a>
                                             </td>
                                             <td
                                               class="ant-table-cell"
@@ -1675,31 +1783,33 @@ exports[`Spaces List component should render the component with data 1`] = `
                                               tag_line
                                             </td>
                                             <td
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <span>
-                                                <a
-                                                  href="/spaces/1/edit"
-                                                  style="margin-right: 8px;"
+                                              <button
+                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                type="button"
+                                              >
+                                                <span
+                                                  aria-label="delete"
+                                                  class="anticon anticon-delete"
+                                                  role="img"
                                                 >
-                                                  <button
-                                                    class="ant-btn"
-                                                    type="button"
+                                                  <svg
+                                                    aria-hidden="true"
+                                                    data-icon="delete"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height="1em"
+                                                    viewBox="64 64 896 896"
+                                                    width="1em"
                                                   >
-                                                    <span>
-                                                      Edit
-                                                    </span>
-                                                  </button>
-                                                </a>
-                                                <button
-                                                  class="ant-btn"
-                                                  type="button"
-                                                >
-                                                  <span>
-                                                    Delete
-                                                  </span>
-                                                </button>
-                                              </span>
+                                                    <path
+                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                    />
+                                                  </svg>
+                                                </span>
+                                              </button>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -1715,7 +1825,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered"
+                                className="ant-table ant-table-bordered ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -1734,6 +1844,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                         Object {
                                           "dataIndex": "name",
                                           "key": "name",
+                                          "render": [Function],
                                           "title": "Name",
                                           "width": "12%",
                                         },
@@ -1756,9 +1867,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                           "width": "20%",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [
@@ -1815,6 +1929,9 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 <col
                                                   style="width: 20%;"
                                                 />
+                                                <col
+                                                  style="width: 150px;"
+                                                />
                                               </colgroup>
                                               <thead
                                                 class="ant-table-thead"
@@ -1846,7 +1963,8 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     Tag line
                                                   </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -1867,7 +1985,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                   <td
                                                     class="ant-table-cell"
                                                   >
-                                                    space
+                                                    <a
+                                                      href="/spaces/1/edit"
+                                                      style="margin-right: 8px;"
+                                                    >
+                                                      space
+                                                    </a>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
@@ -1885,31 +2008,33 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     tag_line
                                                   </td>
                                                   <td
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <span>
-                                                      <a
-                                                        href="/spaces/1/edit"
-                                                        style="margin-right: 8px;"
+                                                    <button
+                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                      type="button"
+                                                    >
+                                                      <span
+                                                        aria-label="delete"
+                                                        class="anticon anticon-delete"
+                                                        role="img"
                                                       >
-                                                        <button
-                                                          class="ant-btn"
-                                                          type="button"
+                                                        <svg
+                                                          aria-hidden="true"
+                                                          data-icon="delete"
+                                                          fill="currentColor"
+                                                          focusable="false"
+                                                          height="1em"
+                                                          viewBox="64 64 896 896"
+                                                          width="1em"
                                                         >
-                                                          <span>
-                                                            Edit
-                                                          </span>
-                                                        </button>
-                                                      </a>
-                                                      <button
-                                                        class="ant-btn"
-                                                        type="button"
-                                                      >
-                                                        <span>
-                                                          Delete
-                                                        </span>
-                                                      </button>
-                                                    </span>
+                                                          <path
+                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                          />
+                                                        </svg>
+                                                      </span>
+                                                    </button>
                                                   </td>
                                                 </tr>
                                               </tbody>
@@ -1967,7 +2092,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                               "20%",
                                               "20%",
                                               "20%",
-                                              undefined,
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -1983,6 +2108,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -2008,10 +2134,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -2057,6 +2185,14 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 }
                                               }
                                             />
+                                            <col
+                                              key="5"
+                                              style={
+                                                Object {
+                                                  "width": 150,
+                                                }
+                                              }
+                                            />
                                           </colgroup>
                                         </ColGroup>
                                         <Header
@@ -2082,6 +2218,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                               Object {
                                                 "dataIndex": "name",
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -2104,9 +2241,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -2123,6 +2263,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "12%",
                                               },
@@ -2148,10 +2289,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                 "width": "20%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -2207,6 +2350,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     "column": Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "12%",
                                                     },
@@ -2265,9 +2409,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 5,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -2287,6 +2434,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     "dataIndex": "name",
                                                     "fixed": undefined,
                                                     "key": "name",
+                                                    "render": [Function],
                                                     "title": "Name",
                                                     "width": "12%",
                                                   },
@@ -2312,10 +2460,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     "width": "20%",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -2385,6 +2535,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "12%",
                                                     }
@@ -2505,20 +2656,25 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                   </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={5}
                                                   colSpan={1}
                                                   colStart={5}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -2527,10 +2683,16 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>
@@ -2634,6 +2796,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                       "tag_line": "tag_line",
                                                     }
                                                   }
+                                                  render={[Function]}
                                                 >
                                                   <td
                                                     className="ant-table-cell"
@@ -2641,7 +2804,36 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    space
+                                                    <Link
+                                                      style={
+                                                        Object {
+                                                          "marginRight": 8,
+                                                        }
+                                                      }
+                                                      to="/spaces/1/edit"
+                                                    >
+                                                      <LinkAnchor
+                                                        href="/spaces/1/edit"
+                                                        navigate={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "marginRight": 8,
+                                                          }
+                                                        }
+                                                      >
+                                                        <a
+                                                          href="/spaces/1/edit"
+                                                          onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "marginRight": 8,
+                                                            }
+                                                          }
+                                                        >
+                                                          space
+                                                        </a>
+                                                      </LinkAnchor>
+                                                    </Link>
                                                   </td>
                                                 </Cell>
                                                 <Cell
@@ -2732,10 +2924,12 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                   </td>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   component="td"
                                                   dataIndex="operation"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   index={0}
                                                   key="operation"
                                                   lastFixLeft={false}
@@ -2753,93 +2947,310 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                   render={[Function]}
                                                 >
                                                   <td
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
-                                                    <span>
-                                                      <Link
-                                                        style={
-                                                          Object {
-                                                            "marginRight": 8,
-                                                          }
-                                                        }
-                                                        to="/spaces/1/edit"
-                                                      >
-                                                        <LinkAnchor
-                                                          href="/spaces/1/edit"
-                                                          navigate={[Function]}
-                                                          style={
-                                                            Object {
-                                                              "marginRight": 8,
-                                                            }
-                                                          }
-                                                        >
-                                                          <a
-                                                            href="/spaces/1/edit"
-                                                            onClick={[Function]}
-                                                            style={
+                                                    <ForwardRef
+                                                      disabled={false}
+                                                      icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                      okType="primary"
+                                                      onConfirm={[Function]}
+                                                      placement="top"
+                                                      title="Are you sure you want to delete this?"
+                                                      trigger="click"
+                                                    >
+                                                      <Tooltip
+                                                        arrowPointAtCenter={false}
+                                                        autoAdjustOverflow={true}
+                                                        disabled={false}
+                                                        icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                        mouseEnterDelay={0.1}
+                                                        mouseLeaveDelay={0.1}
+                                                        okType="primary"
+                                                        onConfirm={[Function]}
+                                                        onVisibleChange={[Function]}
+                                                        overlay={
+                                                          <LocaleReceiver
+                                                            componentName="Popconfirm"
+                                                            defaultLocale={
                                                               Object {
-                                                                "marginRight": 8,
+                                                                "cancelText": "Cancel",
+                                                                "okText": "OK",
                                                               }
                                                             }
                                                           >
-                                                            <Button>
-                                                              <Wave>
-                                                                <button
-                                                                  className="ant-btn"
-                                                                  onClick={[Function]}
-                                                                  type="button"
-                                                                >
-                                                                  <LoadingIcon
-                                                                    existIcon={false}
-                                                                    loading={false}
-                                                                    prefixCls="ant-btn"
-                                                                  >
-                                                                    <CSSMotion
-                                                                      motionName="ant-btn-loading-icon-motion"
-                                                                      onAppearActive={[Function]}
-                                                                      onAppearStart={[Function]}
-                                                                      onEnterActive={[Function]}
-                                                                      onEnterStart={[Function]}
-                                                                      onLeaveActive={[Function]}
-                                                                      onLeaveStart={[Function]}
-                                                                      removeOnLeave={true}
-                                                                      visible={false}
-                                                                    >
-                                                                      <DomWrapper />
-                                                                    </CSSMotion>
-                                                                  </LoadingIcon>
-                                                                  <span
-                                                                    key=".0"
-                                                                  >
-                                                                    Edit
-                                                                  </span>
-                                                                </button>
-                                                              </Wave>
-                                                            </Button>
-                                                          </a>
-                                                        </LinkAnchor>
-                                                      </Link>
-                                                      <ForwardRef
-                                                        disabled={false}
-                                                        icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                        okType="primary"
-                                                        onConfirm={[Function]}
+                                                            [Function]
+                                                          </LocaleReceiver>
+                                                        }
+                                                        overlayClassName="ant-popconfirm"
                                                         placement="top"
-                                                        title="Sure to Delete?"
+                                                        prefixCls="ant-popover"
+                                                        title="Are you sure you want to delete this?"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
-                                                        <Tooltip
+                                                        <ForwardRef(Tooltip)
+                                                          arrowContent={
+                                                            <span
+                                                              className="ant-popover-arrow-content"
+                                                            />
+                                                          }
                                                           arrowPointAtCenter={false}
                                                           autoAdjustOverflow={true}
+                                                          builtinPlacements={
+                                                            Object {
+                                                              "bottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tc",
+                                                                  "bc",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "bottomLeft": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tl",
+                                                                  "bl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "bottomRight": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tr",
+                                                                  "br",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "left": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "cr",
+                                                                  "cl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "leftBottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "br",
+                                                                  "bl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "leftTop": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tr",
+                                                                  "tl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "right": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "cl",
+                                                                  "cr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "rightBottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bl",
+                                                                  "br",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "rightTop": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tl",
+                                                                  "tr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "top": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bc",
+                                                                  "tc",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "topLeft": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bl",
+                                                                  "tl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "topRight": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "br",
+                                                                  "tr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                            }
+                                                          }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
                                                           onConfirm={[Function]}
+                                                          onPopupAlign={[Function]}
                                                           onVisibleChange={[Function]}
                                                           overlay={
                                                             <LocaleReceiver
@@ -2857,12 +3268,14 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to Delete?"
+                                                          title="Are you sure you want to delete this?"
                                                           transitionName="ant-zoom-big"
                                                           trigger="click"
                                                           visible={false}
                                                         >
-                                                          <ForwardRef(Tooltip)
+                                                          <Trigger
+                                                            action="click"
+                                                            afterPopupVisibleChange={[Function]}
                                                             arrowContent={
                                                               <span
                                                                 className="ant-popover-arrow-content"
@@ -2870,6 +3283,8 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                             }
                                                             arrowPointAtCenter={false}
                                                             autoAdjustOverflow={true}
+                                                            autoDestroy={false}
+                                                            blurDelay={0.15}
                                                             builtinPlacements={
                                                               Object {
                                                                 "bottom": Object {
@@ -3102,20 +3517,22 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                                 },
                                                               }
                                                             }
+                                                            defaultPopupVisible={false}
+                                                            destroyPopupOnHide={false}
                                                             disabled={false}
+                                                            focusDelay={0}
+                                                            getDocument={[Function]}
+                                                            getPopupClassNameFromAlign={[Function]}
+                                                            hideAction={Array []}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                            motion={
-                                                              Object {
-                                                                "motionDeadline": 1000,
-                                                                "motionName": "ant-zoom-big",
-                                                              }
-                                                            }
+                                                            mask={false}
+                                                            maskClosable={true}
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
                                                             onConfirm={[Function]}
                                                             onPopupAlign={[Function]}
-                                                            onVisibleChange={[Function]}
+                                                            onPopupVisibleChange={[Function]}
                                                             overlay={
                                                               <LocaleReceiver
                                                                 componentName="Popconfirm"
@@ -3129,353 +3546,120 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                                 [Function]
                                                               </LocaleReceiver>
                                                             }
-                                                            overlayClassName="ant-popconfirm"
-                                                            placement="top"
+                                                            popup={[Function]}
+                                                            popupAlign={Object {}}
+                                                            popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
+                                                            popupPlacement="top"
+                                                            popupStyle={Object {}}
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
-                                                            title="Sure to Delete?"
-                                                            transitionName="ant-zoom-big"
-                                                            trigger="click"
+                                                            showAction={Array []}
+                                                            title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Trigger
-                                                              action="click"
-                                                              afterPopupVisibleChange={[Function]}
-                                                              arrowContent={
-                                                                <span
-                                                                  className="ant-popover-arrow-content"
-                                                                />
-                                                              }
-                                                              arrowPointAtCenter={false}
-                                                              autoAdjustOverflow={true}
-                                                              autoDestroy={false}
-                                                              blurDelay={0.15}
-                                                              builtinPlacements={
-                                                                Object {
-                                                                  "bottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tc",
-                                                                      "bc",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "bottomLeft": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tl",
-                                                                      "bl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "bottomRight": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tr",
-                                                                      "br",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "left": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "cr",
-                                                                      "cl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "leftBottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "br",
-                                                                      "bl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "leftTop": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tr",
-                                                                      "tl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "right": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "cl",
-                                                                      "cr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "rightBottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bl",
-                                                                      "br",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "rightTop": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tl",
-                                                                      "tr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "top": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bc",
-                                                                      "tc",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "topLeft": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bl",
-                                                                      "tl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "topRight": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "br",
-                                                                      "tr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                }
-                                                              }
-                                                              defaultPopupVisible={false}
-                                                              destroyPopupOnHide={false}
-                                                              disabled={false}
-                                                              focusDelay={0}
-                                                              getDocument={[Function]}
-                                                              getPopupClassNameFromAlign={[Function]}
-                                                              hideAction={Array []}
-                                                              icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                              mask={false}
-                                                              maskClosable={true}
-                                                              mouseEnterDelay={0.1}
-                                                              mouseLeaveDelay={0.1}
-                                                              okType="primary"
-                                                              onConfirm={[Function]}
-                                                              onPopupAlign={[Function]}
-                                                              onPopupVisibleChange={[Function]}
-                                                              overlay={
-                                                                <LocaleReceiver
-                                                                  componentName="Popconfirm"
-                                                                  defaultLocale={
-                                                                    Object {
-                                                                      "cancelText": "Cancel",
-                                                                      "okText": "OK",
-                                                                    }
-                                                                  }
-                                                                >
-                                                                  [Function]
-                                                                </LocaleReceiver>
-                                                              }
-                                                              popup={[Function]}
-                                                              popupAlign={Object {}}
-                                                              popupClassName="ant-popconfirm"
-                                                              popupMotion={
-                                                                Object {
-                                                                  "motionDeadline": 1000,
-                                                                  "motionName": "ant-zoom-big",
-                                                                }
-                                                              }
-                                                              popupPlacement="top"
-                                                              popupStyle={Object {}}
-                                                              popupTransitionName="ant-zoom-big"
-                                                              popupVisible={false}
-                                                              prefixCls="ant-popover"
-                                                              showAction={Array []}
-                                                              title="Sure to Delete?"
-                                                              visible={false}
+                                                            <Button
+                                                              icon={<ForwardRef(DeleteOutlined) />}
+                                                              key="trigger"
+                                                              onClick={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              onMouseDown={[Function]}
+                                                              onTouchStart={[Function]}
+                                                              type="danger"
                                                             >
-                                                              <Button
-                                                                key="trigger"
-                                                                onClick={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
-                                                              >
-                                                                <Wave>
-                                                                  <button
-                                                                    className="ant-btn"
-                                                                    onClick={[Function]}
-                                                                    onKeyDown={[Function]}
-                                                                    onMouseDown={[Function]}
-                                                                    onTouchStart={[Function]}
-                                                                    type="button"
-                                                                  >
-                                                                    <LoadingIcon
-                                                                      existIcon={false}
-                                                                      loading={false}
-                                                                      prefixCls="ant-btn"
+                                                              <Wave>
+                                                                <button
+                                                                  className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                  onClick={[Function]}
+                                                                  onKeyDown={[Function]}
+                                                                  onMouseDown={[Function]}
+                                                                  onTouchStart={[Function]}
+                                                                  type="button"
+                                                                >
+                                                                  <ForwardRef(DeleteOutlined)>
+                                                                    <AntdIcon
+                                                                      icon={
+                                                                        Object {
+                                                                          "icon": Object {
+                                                                            "attrs": Object {
+                                                                              "focusable": "false",
+                                                                              "viewBox": "64 64 896 896",
+                                                                            },
+                                                                            "children": Array [
+                                                                              Object {
+                                                                                "attrs": Object {
+                                                                                  "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                },
+                                                                                "tag": "path",
+                                                                              },
+                                                                            ],
+                                                                            "tag": "svg",
+                                                                          },
+                                                                          "name": "delete",
+                                                                          "theme": "outlined",
+                                                                        }
+                                                                      }
                                                                     >
-                                                                      <CSSMotion
-                                                                        motionName="ant-btn-loading-icon-motion"
-                                                                        onAppearActive={[Function]}
-                                                                        onAppearStart={[Function]}
-                                                                        onEnterActive={[Function]}
-                                                                        onEnterStart={[Function]}
-                                                                        onLeaveActive={[Function]}
-                                                                        onLeaveStart={[Function]}
-                                                                        removeOnLeave={true}
-                                                                        visible={false}
+                                                                      <span
+                                                                        aria-label="delete"
+                                                                        className="anticon anticon-delete"
+                                                                        role="img"
                                                                       >
-                                                                        <DomWrapper />
-                                                                      </CSSMotion>
-                                                                    </LoadingIcon>
-                                                                    <span
-                                                                      key=".0"
-                                                                    >
-                                                                      Delete
-                                                                    </span>
-                                                                  </button>
-                                                                </Wave>
-                                                              </Button>
-                                                            </Trigger>
-                                                          </ForwardRef(Tooltip)>
-                                                        </Tooltip>
-                                                      </ForwardRef>
-                                                    </span>
+                                                                        <IconReact
+                                                                          icon={
+                                                                            Object {
+                                                                              "icon": Object {
+                                                                                "attrs": Object {
+                                                                                  "focusable": "false",
+                                                                                  "viewBox": "64 64 896 896",
+                                                                                },
+                                                                                "children": Array [
+                                                                                  Object {
+                                                                                    "attrs": Object {
+                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                    },
+                                                                                    "tag": "path",
+                                                                                  },
+                                                                                ],
+                                                                                "tag": "svg",
+                                                                              },
+                                                                              "name": "delete",
+                                                                              "theme": "outlined",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <svg
+                                                                            aria-hidden="true"
+                                                                            data-icon="delete"
+                                                                            fill="currentColor"
+                                                                            focusable="false"
+                                                                            height="1em"
+                                                                            key="svg-delete"
+                                                                            viewBox="64 64 896 896"
+                                                                            width="1em"
+                                                                          >
+                                                                            <path
+                                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                              key="svg-delete-svg-0"
+                                                                            />
+                                                                          </svg>
+                                                                        </IconReact>
+                                                                      </span>
+                                                                    </AntdIcon>
+                                                                  </ForwardRef(DeleteOutlined)>
+                                                                </button>
+                                                              </Wave>
+                                                            </Button>
+                                                          </Trigger>
+                                                        </ForwardRef(Tooltip)>
+                                                      </Tooltip>
+                                                    </ForwardRef>
                                                   </td>
                                                 </Cell>
                                               </tr>

@@ -1,4 +1,4 @@
-package profile
+package user
 
 import (
 	"encoding/json"
@@ -6,14 +6,38 @@ import (
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
+	"github.com/go-chi/chi"
 	"github.com/spf13/viper"
 )
+
+// Router - Group of category router
+func Router() chi.Router {
+	r := chi.NewRouter()
+
+	r.Route("/profile", func(r chi.Router) {
+		r.Get("/", redirectToKavach)
+		r.Put("/", redirectToKavach)
+	})
+
+	r.Route("/medium", func(r chi.Router) {
+		r.Get("/", redirectToKavach)
+		r.Post("/", redirectToKavach)
+	})
+
+	return r
+}
 
 func redirectToKavach(w http.ResponseWriter, r *http.Request) {
 
 	header := r.Header
 
-	url := viper.GetString("kavach_url") + "/profile"
+	path := r.URL.Path
+
+	if len(r.URL.Path) > 5 {
+		path = path[5:]
+	}
+
+	url := viper.GetString("kavach_url") + path
 
 	req, _ := http.NewRequest(r.Method, url, r.Body)
 

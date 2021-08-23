@@ -68,57 +68,73 @@ exports[`Policies List component should render the component 1`] = `
                   }
                 }
               >
-                <Link
-                  to="/policies/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/policies/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/policies/create"
-                      onClick={[Function]}
+                    <Link
+                      to="/policies/create"
                     >
-                      <Button
-                        disabled={true}
+                      <LinkAnchor
+                        href="/policies/create"
+                        navigate={[Function]}
                       >
-                        <Wave>
-                          <button
-                            className="ant-btn"
+                        <a
+                          href="/policies/create"
+                          onClick={[Function]}
+                        >
+                          <Button
                             disabled={true}
-                            onClick={[Function]}
-                            type="button"
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                disabled={true}
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Policy
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -143,6 +159,7 @@ exports[`Policies List component should render the component 1`] = `
                         Object {
                           "dataIndex": "name",
                           "key": "name",
+                          "render": [Function],
                           "title": "Name",
                           "width": "20%",
                         },
@@ -160,10 +177,12 @@ exports[`Policies List component should render the component 1`] = `
                           "width": "25%",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
-                          "width": "15%",
+                          "width": 150,
                         },
                       ]
                     }
@@ -202,6 +221,7 @@ exports[`Policies List component should render the component 1`] = `
                                   Object {
                                     "dataIndex": "name",
                                     "key": "name",
+                                    "render": [Function],
                                     "title": "Name",
                                     "width": "20%",
                                   },
@@ -219,10 +239,12 @@ exports[`Policies List component should render the component 1`] = `
                                     "width": "25%",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
-                                    "width": "15%",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -261,7 +283,7 @@ exports[`Policies List component should render the component 1`] = `
                                             style="width: 25%;"
                                           />
                                           <col
-                                            style="width: 15%;"
+                                            style="width: 150px;"
                                           />
                                         </colgroup>
                                         <thead
@@ -284,7 +306,8 @@ exports[`Policies List component should render the component 1`] = `
                                               Members
                                             </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -369,7 +392,7 @@ exports[`Policies List component should render the component 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered ant-table-empty"
+                                className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -382,6 +405,7 @@ exports[`Policies List component should render the component 1`] = `
                                         Object {
                                           "dataIndex": "name",
                                           "key": "name",
+                                          "render": [Function],
                                           "title": "Name",
                                           "width": "20%",
                                         },
@@ -399,10 +423,12 @@ exports[`Policies List component should render the component 1`] = `
                                           "width": "25%",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
-                                          "width": "15%",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [],
@@ -436,7 +462,7 @@ exports[`Policies List component should render the component 1`] = `
                                                   style="width: 25%;"
                                                 />
                                                 <col
-                                                  style="width: 15%;"
+                                                  style="width: 150px;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -459,7 +485,8 @@ exports[`Policies List component should render the component 1`] = `
                                                     Members
                                                   </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -578,7 +605,7 @@ exports[`Policies List component should render the component 1`] = `
                                               "20%",
                                               undefined,
                                               "25%",
-                                              "15%",
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -587,6 +614,7 @@ exports[`Policies List component should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -606,11 +634,12 @@ exports[`Policies List component should render the component 1`] = `
                                                 "width": "25%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "15%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -644,7 +673,7 @@ exports[`Policies List component should render the component 1`] = `
                                               key="3"
                                               style={
                                                 Object {
-                                                  "width": "15%",
+                                                  "width": 150,
                                                 }
                                               }
                                             />
@@ -665,6 +694,7 @@ exports[`Policies List component should render the component 1`] = `
                                               Object {
                                                 "dataIndex": "name",
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -682,10 +712,12 @@ exports[`Policies List component should render the component 1`] = `
                                                 "width": "25%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "15%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -695,6 +727,7 @@ exports[`Policies List component should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -714,11 +747,12 @@ exports[`Policies List component should render the component 1`] = `
                                                 "width": "25%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "15%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -755,6 +789,7 @@ exports[`Policies List component should render the component 1`] = `
                                                     "column": Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     },
@@ -799,10 +834,12 @@ exports[`Policies List component should render the component 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "15%",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -815,6 +852,7 @@ exports[`Policies List component should render the component 1`] = `
                                                     "dataIndex": "name",
                                                     "fixed": undefined,
                                                     "key": "name",
+                                                    "render": [Function],
                                                     "title": "Name",
                                                     "width": "20%",
                                                   },
@@ -834,11 +872,12 @@ exports[`Policies List component should render the component 1`] = `
                                                     "width": "25%",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
-                                                    "width": "15%",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -872,6 +911,7 @@ exports[`Policies List component should render the component 1`] = `
                                                     Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     }
@@ -961,21 +1001,25 @@ exports[`Policies List component should render the component 1`] = `
                                                   </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={3}
                                                   colSpan={1}
                                                   colStart={3}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "15%",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -984,10 +1028,16 @@ exports[`Policies List component should render the component 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>

@@ -13,6 +13,7 @@ import deepEqual from 'deep-equal';
 import './App.css';
 
 function App() {
+  const [reloadFlag, setReloadFlag] = React.useState(false);
   const dispatch = useDispatch();
   const selected = useSelector((state) => state.spaces.selected);
 
@@ -42,7 +43,7 @@ function App() {
 
   React.useEffect(() => {
     fetchFormats();
-  }, [dispatch, selected]);
+  }, [dispatch, selected, reloadFlag]);
   return (
     <div className="App">
       <Router basename={process.env.PUBLIC_URL}>
@@ -57,6 +58,8 @@ function App() {
                   path={route.path}
                   component={route.Component}
                   formats={formats}
+                  setReloadFlag={setReloadFlag}
+                  reloadFlag={reloadFlag}
                 />
               ) : route.isAdmin ? (
                 <AdminRoute

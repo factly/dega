@@ -5,8 +5,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
-import { Popconfirm, Button, List } from 'antd';
-
+import { Popconfirm, Button, Table } from 'antd';
+import { FormOutlined, CloseOutlined } from '@ant-design/icons';
 import '../../../matchMedia.mock';
 import PageList from './PageList';
 import { deletePage } from '../../../actions/pages';
@@ -512,11 +512,11 @@ describe('Page List component', () => {
           </Provider>,
         );
       });
-      const list = wrapper.find(List);
-      list.props().pagination.onChange(1);
+      const table = wrapper.find(Table);
+      table.props().pagination.onChange(1);
       wrapper.update();
-      const updatedList = wrapper.find(List);
-      expect(updatedList.props().pagination.current).toEqual(1);
+      const updatedTable = wrapper.find(Table);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete the page', () => {
       store = mockStore(state);
@@ -537,8 +537,8 @@ describe('Page List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(2);
+      expect(button.text()).toEqual('');
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
       popconfirm
@@ -567,9 +567,8 @@ describe('Page List component', () => {
           </Provider>,
         );
       });
-      const link = wrapper.find(Link).at(1);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      const link = wrapper.find(Link).at(0);
+      expect(link.text()).toEqual('Explainer: The US Presidential Debates – History & Format');
       expect(link.prop('to')).toEqual('/pages/1/edit');
     });
     it('should handle quick edit', () => {
@@ -591,10 +590,25 @@ describe('Page List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(2);
-      expect(button.text()).toEqual('Quick Edit');
+      const button2 = wrapper.find(Button).at(4);
+      expect(button2.find(FormOutlined).length).toBe(1);
+      button2.simulate('click');
+      wrapper.update();
+      button2.simulate('click');
+
+      const button = wrapper.find(Button).at(1);
+      expect(button.find(FormOutlined).length).toBe(1);
       button.simulate('click');
-      expect(wrapper.find(QuickEdit).length).toBe(1);
+      expect(wrapper.find(QuickEdit).length).toBe(2);
+      const updateBtn = wrapper.find(Button).at(4);
+      expect(updateBtn.text()).toBe('Update');
+      expect(wrapper.find('FormItem').at(0).props().name).toBe('title');
+      wrapper
+        .find('FormItem')
+        .at(0)
+        .find('TextArea')
+        .simulate('change', { target: { value: 'New title' } });
+      updateBtn.simulate('submit');
     });
     it('should have not delete and edit buttons', () => {
       store = mockStore({
@@ -617,7 +631,9 @@ describe('Page List component', () => {
                 actions={['update', 'delete']}
                 format={{ id: 1, name: 'article', slug: 'article' }}
                 data={{ pages: [], tags: {}, categories: {}, total: 0, loading: false }}
-                filters={filters}
+                filters={{
+                  page: 1,
+                }}
                 setFilters={setFilters}
                 fetchPages={fetchPages}
               />

@@ -655,9 +655,11 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                   style={
                     Object {
                       "display": "block",
-                      "margin": "0 auto",
+                      "margin": "16px auto",
                       "maxHeight": "500px",
                       "maxWidth": "100%",
+                      "objectFit": "contain",
+                      "width": "100%",
                     }
                   }
                 />
@@ -1742,8 +1744,8 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                   onChange={[Function]}
                                                   options={
                                                     Object {
-                                                      "autoClosingBrackets": "never",
-                                                      "autoClosingQuotes": "never",
+                                                      "autoClosingBrackets": "auto",
+                                                      "autoClosingQuotes": "auto",
                                                       "cursorBlinking": "smooth",
                                                       "folding": true,
                                                       "lineNumbersMinChars": 4,
@@ -1846,7 +1848,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                   okType="primary"
                                                   onConfirm={[Function]}
                                                   placement="top"
-                                                  title="Sure to Delete?"
+                                                  title="Are you sure you want to delete this?"
                                                   trigger="click"
                                                 >
                                                   <Tooltip
@@ -1875,7 +1877,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                     overlayClassName="ant-popconfirm"
                                                     placement="top"
                                                     prefixCls="ant-popover"
-                                                    title="Sure to Delete?"
+                                                    title="Are you sure you want to delete this?"
                                                     transitionName="ant-zoom-big"
                                                     trigger="click"
                                                     visible={false}
@@ -2150,7 +2152,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       overlayClassName="ant-popconfirm"
                                                       placement="top"
                                                       prefixCls="ant-popover"
-                                                      title="Sure to Delete?"
+                                                      title="Are you sure you want to delete this?"
                                                       transitionName="ant-zoom-big"
                                                       trigger="click"
                                                       visible={false}
@@ -2443,7 +2445,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         popupVisible={false}
                                                         prefixCls="ant-popover"
                                                         showAction={Array []}
-                                                        title="Sure to Delete?"
+                                                        title="Are you sure you want to delete this?"
                                                         visible={false}
                                                       >
                                                         <span
@@ -2462,7 +2464,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         >
                                                           <Button
                                                             className={null}
-                                                            danger={true}
                                                             disabled={true}
                                                             onKeyDown={[Function]}
                                                             style={
@@ -2470,11 +2471,11 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                                 "pointerEvents": "none",
                                                               }
                                                             }
-                                                            type="primary"
+                                                            type="danger"
                                                           >
                                                             <Wave>
                                                               <button
-                                                                className="ant-btn ant-btn-primary ant-btn-dangerous"
+                                                                className="ant-btn ant-btn-danger"
                                                                 disabled={true}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}

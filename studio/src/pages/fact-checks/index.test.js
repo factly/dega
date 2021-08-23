@@ -238,6 +238,9 @@ describe('FactCheck component', () => {
               query: {
                 page: 1,
                 limit: 20,
+                q: 'desc',
+                category: [1],
+                format: [2],
               },
               total: 1,
             },
@@ -251,6 +254,7 @@ describe('FactCheck component', () => {
               medium_id: 1,
               format_id: 2,
               status: 'draft',
+              categories: [1],
             },
           },
           loading: false,
@@ -290,7 +294,12 @@ describe('FactCheck component', () => {
         },
         categories: {
           req: [],
-          details: {},
+          details: {
+            1: {
+              id: 1,
+              name: 'Category',
+            },
+          },
           loading: false,
         },
         sidebar: {
@@ -322,6 +331,14 @@ describe('FactCheck component', () => {
             </Router>
           </Provider>,
         );
+      });
+      act(() => {
+        const moreFilter = wrapper.find('Button').at(1);
+        expect(moreFilter.text()).toBe('More Filters ');
+        moreFilter.simulate('click');
+      });
+      act(() => {
+        wrapper.update();
         wrapper
           .find('FormItem')
           .at(0)
@@ -329,13 +346,13 @@ describe('FactCheck component', () => {
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('Select')
           .props()
           .onChange({ target: { value: 'asc' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('Select')
           .props()
           .onChange({ target: { value: 'all' } });
@@ -354,7 +371,7 @@ describe('FactCheck component', () => {
           .props()
           .onChange({ target: { value: [] } });
 
-        const submitButtom = wrapper.find('Button').at(1);
+        const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });

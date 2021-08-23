@@ -135,8 +135,8 @@ describe('Event List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
 
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
@@ -161,8 +161,7 @@ describe('Event List component', () => {
         );
       });
       const link = wrapper.find(Link).at(0);
-      const button = link.find(Button).at(0);
-      expect(button.text()).toEqual('Edit');
+      expect(link.text()).toEqual('Event Deleted');
       expect(link.prop('to')).toEqual('/events/1/edit');
     });
     it('should have no delete and edit buttons', () => {

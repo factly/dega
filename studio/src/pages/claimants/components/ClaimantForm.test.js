@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
+import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import ClaimantCreateForm from './ClaimantForm';
@@ -154,9 +155,6 @@ describe('Claimants Create Form component', () => {
           },
           tag_line: 'tag_line',
           medium_id: 1,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
@@ -181,7 +179,7 @@ describe('Claimants Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -206,9 +204,14 @@ describe('Claimants Create Form component', () => {
     });
     it('should submit form with updated data', (done) => {
       act(() => {
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+
+      act(() => {
         wrapper
           .find('FormItem')
-          .at(4)
+          .at(6)
           .find('Editor')
           .props()
           .onChange({
@@ -222,21 +225,28 @@ describe('Claimants Create Form component', () => {
           });
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(4)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new tag line' } });
-
+        wrapper
+          .find('FormItem')
+          .at(7)
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
+          });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
@@ -259,6 +269,15 @@ describe('Claimants Create Form component', () => {
         });
         done();
       }, 0);
+    });
+    it('should handle collapse open and close', () => {
+      act(() => {
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(Collapse).at(0).find('Button').at(0).text()).toBe('Close');
+      expect(wrapper.find(Collapse).at(1).find('Button').at(0).text()).toBe('Close');
     });
   });
 });

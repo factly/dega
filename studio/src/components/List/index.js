@@ -42,7 +42,7 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
         to={
           format.slug === 'article'
             ? `/posts?category=${id}&format=${format.id}`
-            : `/fact-checks?tag=${id}&format=${format.id}`
+            : `/fact-checks?category=${id}&format=${format.id}`
         }
       >
         <Tag key={id}>{data.categories[id].name}</Tag>
