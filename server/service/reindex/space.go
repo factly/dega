@@ -64,11 +64,9 @@ func space(w http.ResponseWriter, r *http.Request) {
 	for _, hit := range hits {
 		obj := hit.(map[string]interface{})
 		objectIDs = append(objectIDs, obj["object_id"].(string))
-
-		log.Println("obj['object_id']", obj["object_id"])
 	}
 
-	_, err = meilisearchx.Client.Documents("Dega").Deletes(objectIDs)
+	_, err = meilisearchx.Client.Documents("dega").Deletes(objectIDs)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -81,5 +79,5 @@ func space(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, hits)
+	renderx.JSON(w, http.StatusOK, nil)
 }
