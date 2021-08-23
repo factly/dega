@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/menu"
 	"github.com/factly/dega-server/service/core/action/page"
 	"github.com/factly/dega-server/service/core/action/permissions"
-	"github.com/factly/dega-server/service/core/action/profile"
 	"github.com/factly/dega-server/service/core/action/request"
 	"github.com/factly/dega-server/service/core/action/webhook"
 	"github.com/factly/dega-server/util"
@@ -46,7 +45,6 @@ func Router() http.Handler {
 	r.Mount("/permissions", permissions.Router())
 	r.Mount("/requests", request.Router())
 	r.Mount("/info", info.Router())
-	r.Mount("/profile", profile.Router())
 	if config.SearchEnabled() {
 		r.Mount("/search", search.Router())
 	}

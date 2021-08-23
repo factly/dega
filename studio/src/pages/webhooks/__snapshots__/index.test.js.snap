@@ -68,55 +68,72 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/webhooks/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/webhooks/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/webhooks/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/webhooks/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/webhooks/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/webhooks/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Webhook
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -141,6 +158,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                         Object {
                           "dataIndex": "name",
                           "key": "name",
+                          "render": [Function],
                           "title": "Name",
                           "width": "20%",
                         },
@@ -156,14 +174,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                         Object {
                           "dataIndex": "enabled",
                           "render": [Function],
-                          "title": "",
+                          "title": "Enabled",
                           "width": "10%",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
-                          "width": "20%",
+                          "width": 150,
                         },
                       ]
                     }
@@ -226,6 +246,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                   Object {
                                     "dataIndex": "name",
                                     "key": "name",
+                                    "render": [Function],
                                     "title": "Name",
                                     "width": "20%",
                                   },
@@ -241,14 +262,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                   Object {
                                     "dataIndex": "enabled",
                                     "render": [Function],
-                                    "title": "",
+                                    "title": "Enabled",
                                     "width": "10%",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
-                                    "width": "20%",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -287,7 +310,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                             style="width: 10%;"
                                           />
                                           <col
-                                            style="width: 20%;"
+                                            style="width: 150px;"
                                           />
                                         </colgroup>
                                         <thead
@@ -307,9 +330,12 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                             </th>
                                             <th
                                               class="ant-table-cell"
-                                            />
+                                            >
+                                              Enabled
+                                            </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -394,7 +420,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered ant-table-empty"
+                                className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -407,6 +433,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                         Object {
                                           "dataIndex": "name",
                                           "key": "name",
+                                          "render": [Function],
                                           "title": "Name",
                                           "width": "20%",
                                         },
@@ -422,14 +449,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                         Object {
                                           "dataIndex": "enabled",
                                           "render": [Function],
-                                          "title": "",
+                                          "title": "Enabled",
                                           "width": "10%",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
-                                          "width": "20%",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [],
@@ -463,7 +492,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                   style="width: 10%;"
                                                 />
                                                 <col
-                                                  style="width: 20%;"
+                                                  style="width: 150px;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -483,9 +512,12 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                   </th>
                                                   <th
                                                     class="ant-table-cell"
-                                                  />
+                                                  >
+                                                    Enabled
+                                                  </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -604,7 +636,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                               "20%",
                                               undefined,
                                               "10%",
-                                              "20%",
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -613,6 +645,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -630,15 +663,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                 "dataIndex": "enabled",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -672,7 +706,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                               key="3"
                                               style={
                                                 Object {
-                                                  "width": "20%",
+                                                  "width": 150,
                                                 }
                                               }
                                             />
@@ -693,6 +727,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                               Object {
                                                 "dataIndex": "name",
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -708,14 +743,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                               Object {
                                                 "dataIndex": "enabled",
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -725,6 +762,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -742,15 +780,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                 "dataIndex": "enabled",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -787,6 +826,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "column": Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     },
@@ -812,7 +852,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "rowSpan": 1,
                                                   },
                                                   Object {
-                                                    "children": "",
+                                                    "children": "Enabled",
                                                     "className": "",
                                                     "colEnd": 2,
                                                     "colSpan": 1,
@@ -820,7 +860,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "column": Object {
                                                       "dataIndex": "enabled",
                                                       "render": [Function],
-                                                      "title": "",
+                                                      "title": "Enabled",
                                                       "width": "10%",
                                                     },
                                                     "key": undefined,
@@ -833,10 +873,12 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "20%",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -849,6 +891,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "dataIndex": "name",
                                                     "fixed": undefined,
                                                     "key": "name",
+                                                    "render": [Function],
                                                     "title": "Name",
                                                     "width": "20%",
                                                   },
@@ -866,15 +909,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     "dataIndex": "enabled",
                                                     "fixed": undefined,
                                                     "render": [Function],
-                                                    "title": "",
+                                                    "title": "Enabled",
                                                     "width": "10%",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
-                                                    "width": "20%",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -908,6 +952,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     }
@@ -981,7 +1026,7 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     Object {
                                                       "dataIndex": "enabled",
                                                       "render": [Function],
-                                                      "title": "",
+                                                      "title": "Enabled",
                                                       "width": "10%",
                                                     }
                                                   }
@@ -1000,24 +1045,30 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                     colSpan={null}
                                                     rowSpan={null}
                                                     style={Object {}}
-                                                  />
+                                                  >
+                                                    Enabled
+                                                  </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={3}
                                                   colSpan={1}
                                                   colStart={3}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "20%",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -1026,10 +1077,16 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>
@@ -1235,55 +1292,72 @@ exports[`Webhook component snapshot testing should render the component with dat
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/webhooks/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/webhooks/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/webhooks/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/webhooks/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/webhooks/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/webhooks/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Webhook
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -1308,6 +1382,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                         Object {
                           "dataIndex": "name",
                           "key": "name",
+                          "render": [Function],
                           "title": "Name",
                           "width": "20%",
                         },
@@ -1323,14 +1398,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                         Object {
                           "dataIndex": "enabled",
                           "render": [Function],
-                          "title": "",
+                          "title": "Enabled",
                           "width": "10%",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
-                          "width": "20%",
+                          "width": 150,
                         },
                       ]
                     }
@@ -1380,6 +1457,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                   Object {
                                     "dataIndex": "name",
                                     "key": "name",
+                                    "render": [Function],
                                     "title": "Name",
                                     "width": "20%",
                                   },
@@ -1395,14 +1473,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                   Object {
                                     "dataIndex": "enabled",
                                     "render": [Function],
-                                    "title": "",
+                                    "title": "Enabled",
                                     "width": "10%",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
-                                    "width": "20%",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -1463,7 +1543,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                             style="width: 10%;"
                                           />
                                           <col
-                                            style="width: 20%;"
+                                            style="width: 150px;"
                                           />
                                         </colgroup>
                                         <thead
@@ -1483,9 +1563,12 @@ exports[`Webhook component snapshot testing should render the component with dat
                                             </th>
                                             <th
                                               class="ant-table-cell"
-                                            />
+                                            >
+                                              Enabled
+                                            </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -1501,7 +1584,13 @@ exports[`Webhook component snapshot testing should render the component with dat
                                             <td
                                               class="ant-table-cell"
                                             >
-                                              Webhook-1
+                                              <a
+                                                class="ant-dropdown-link"
+                                                href="/webhooks/1/edit"
+                                                style="margin-right: 8px;"
+                                              >
+                                                Webhook-1
+                                              </a>
                                             </td>
                                             <td
                                               class="ant-table-cell ant-table-cell-ellipsis"
@@ -1514,43 +1603,43 @@ exports[`Webhook component snapshot testing should render the component with dat
                                               class="ant-table-cell"
                                             >
                                               <p>
-                                                Disabled
+                                                No
                                               </p>
                                             </td>
                                             <td
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <span>
-                                                <a
-                                                  class="ant-dropdown-link"
-                                                  href="/webhooks/1/edit"
-                                                  style="margin-right: 8px;"
+                                              <a
+                                                class="ant-dropdown-link"
+                                                href="/"
+                                              >
+                                                <button
+                                                  class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                  disabled=""
+                                                  type="button"
                                                 >
-                                                  <button
-                                                    class="ant-btn"
-                                                    disabled=""
-                                                    type="button"
+                                                  <span
+                                                    aria-label="delete"
+                                                    class="anticon anticon-delete"
+                                                    role="img"
                                                   >
-                                                    <span>
-                                                      Edit
-                                                    </span>
-                                                  </button>
-                                                </a>
-                                                <a
-                                                  class="ant-dropdown-link"
-                                                  href="/"
-                                                >
-                                                  <button
-                                                    class="ant-btn"
-                                                    disabled=""
-                                                    type="button"
-                                                  >
-                                                    <span>
-                                                      Delete
-                                                    </span>
-                                                  </button>
-                                                </a>
-                                              </span>
+                                                    <svg
+                                                      aria-hidden="true"
+                                                      data-icon="delete"
+                                                      fill="currentColor"
+                                                      focusable="false"
+                                                      height="1em"
+                                                      viewBox="64 64 896 896"
+                                                      width="1em"
+                                                    >
+                                                      <path
+                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                      />
+                                                    </svg>
+                                                  </span>
+                                                </button>
+                                              </a>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -1574,7 +1663,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered"
+                                className="ant-table ant-table-bordered ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -1587,6 +1676,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                         Object {
                                           "dataIndex": "name",
                                           "key": "name",
+                                          "render": [Function],
                                           "title": "Name",
                                           "width": "20%",
                                         },
@@ -1602,14 +1692,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                         Object {
                                           "dataIndex": "enabled",
                                           "render": [Function],
-                                          "title": "",
+                                          "title": "Enabled",
                                           "width": "10%",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
-                                          "width": "20%",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [
@@ -1661,7 +1753,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   style="width: 10%;"
                                                 />
                                                 <col
-                                                  style="width: 20%;"
+                                                  style="width: 150px;"
                                                 />
                                               </colgroup>
                                               <thead
@@ -1681,9 +1773,12 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   </th>
                                                   <th
                                                     class="ant-table-cell"
-                                                  />
+                                                  >
+                                                    Enabled
+                                                  </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -1699,7 +1794,13 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   <td
                                                     class="ant-table-cell"
                                                   >
-                                                    Webhook-1
+                                                    <a
+                                                      class="ant-dropdown-link"
+                                                      href="/webhooks/1/edit"
+                                                      style="margin-right: 8px;"
+                                                    >
+                                                      Webhook-1
+                                                    </a>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell ant-table-cell-ellipsis"
@@ -1712,43 +1813,43 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     class="ant-table-cell"
                                                   >
                                                     <p>
-                                                      Disabled
+                                                      No
                                                     </p>
                                                   </td>
                                                   <td
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <span>
-                                                      <a
-                                                        class="ant-dropdown-link"
-                                                        href="/webhooks/1/edit"
-                                                        style="margin-right: 8px;"
+                                                    <a
+                                                      class="ant-dropdown-link"
+                                                      href="/"
+                                                    >
+                                                      <button
+                                                        class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                        disabled=""
+                                                        type="button"
                                                       >
-                                                        <button
-                                                          class="ant-btn"
-                                                          disabled=""
-                                                          type="button"
+                                                        <span
+                                                          aria-label="delete"
+                                                          class="anticon anticon-delete"
+                                                          role="img"
                                                         >
-                                                          <span>
-                                                            Edit
-                                                          </span>
-                                                        </button>
-                                                      </a>
-                                                      <a
-                                                        class="ant-dropdown-link"
-                                                        href="/"
-                                                      >
-                                                        <button
-                                                          class="ant-btn"
-                                                          disabled=""
-                                                          type="button"
-                                                        >
-                                                          <span>
-                                                            Delete
-                                                          </span>
-                                                        </button>
-                                                      </a>
-                                                    </span>
+                                                          <svg
+                                                            aria-hidden="true"
+                                                            data-icon="delete"
+                                                            fill="currentColor"
+                                                            focusable="false"
+                                                            height="1em"
+                                                            viewBox="64 64 896 896"
+                                                            width="1em"
+                                                          >
+                                                            <path
+                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                            />
+                                                          </svg>
+                                                        </span>
+                                                      </button>
+                                                    </a>
                                                   </td>
                                                 </tr>
                                               </tbody>
@@ -1806,7 +1907,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                               "20%",
                                               undefined,
                                               "10%",
-                                              "20%",
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -1815,6 +1916,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -1832,15 +1934,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                 "dataIndex": "enabled",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -1874,7 +1977,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                               key="3"
                                               style={
                                                 Object {
-                                                  "width": "20%",
+                                                  "width": 150,
                                                 }
                                               }
                                             />
@@ -1895,6 +1998,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                               Object {
                                                 "dataIndex": "name",
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -1910,14 +2014,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                               Object {
                                                 "dataIndex": "enabled",
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -1927,6 +2033,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                 "dataIndex": "name",
                                                 "fixed": undefined,
                                                 "key": "name",
+                                                "render": [Function],
                                                 "title": "Name",
                                                 "width": "20%",
                                               },
@@ -1944,15 +2051,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                 "dataIndex": "enabled",
                                                 "fixed": undefined,
                                                 "render": [Function],
-                                                "title": "",
+                                                "title": "Enabled",
                                                 "width": "10%",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
-                                                "width": "20%",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -1989,6 +2097,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "column": Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     },
@@ -2014,7 +2123,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "rowSpan": 1,
                                                   },
                                                   Object {
-                                                    "children": "",
+                                                    "children": "Enabled",
                                                     "className": "",
                                                     "colEnd": 2,
                                                     "colSpan": 1,
@@ -2022,7 +2131,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "column": Object {
                                                       "dataIndex": "enabled",
                                                       "render": [Function],
-                                                      "title": "",
+                                                      "title": "Enabled",
                                                       "width": "10%",
                                                     },
                                                     "key": undefined,
@@ -2035,10 +2144,12 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "20%",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -2051,6 +2162,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "dataIndex": "name",
                                                     "fixed": undefined,
                                                     "key": "name",
+                                                    "render": [Function],
                                                     "title": "Name",
                                                     "width": "20%",
                                                   },
@@ -2068,15 +2180,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     "dataIndex": "enabled",
                                                     "fixed": undefined,
                                                     "render": [Function],
-                                                    "title": "",
+                                                    "title": "Enabled",
                                                     "width": "10%",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
-                                                    "width": "20%",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -2110,6 +2223,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     Object {
                                                       "dataIndex": "name",
                                                       "key": "name",
+                                                      "render": [Function],
                                                       "title": "Name",
                                                       "width": "20%",
                                                     }
@@ -2183,7 +2297,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     Object {
                                                       "dataIndex": "enabled",
                                                       "render": [Function],
-                                                      "title": "",
+                                                      "title": "Enabled",
                                                       "width": "10%",
                                                     }
                                                   }
@@ -2202,24 +2316,30 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     colSpan={null}
                                                     rowSpan={null}
                                                     style={Object {}}
-                                                  />
+                                                  >
+                                                    Enabled
+                                                  </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={3}
                                                   colSpan={1}
                                                   colStart={3}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
-                                                      "width": "20%",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -2228,10 +2348,16 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>
@@ -2309,6 +2435,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                       "url": "url",
                                                     }
                                                   }
+                                                  render={[Function]}
                                                 >
                                                   <td
                                                     className="ant-table-cell"
@@ -2316,7 +2443,39 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    Webhook-1
+                                                    <Link
+                                                      className="ant-dropdown-link"
+                                                      style={
+                                                        Object {
+                                                          "marginRight": 8,
+                                                        }
+                                                      }
+                                                      to="/webhooks/1/edit"
+                                                    >
+                                                      <LinkAnchor
+                                                        className="ant-dropdown-link"
+                                                        href="/webhooks/1/edit"
+                                                        navigate={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "marginRight": 8,
+                                                          }
+                                                        }
+                                                      >
+                                                        <a
+                                                          className="ant-dropdown-link"
+                                                          href="/webhooks/1/edit"
+                                                          onClick={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "marginRight": 8,
+                                                            }
+                                                          }
+                                                        >
+                                                          Webhook-1
+                                                        </a>
+                                                      </LinkAnchor>
+                                                    </Link>
                                                   </td>
                                                 </Cell>
                                                 <Cell
@@ -2936,15 +3095,17 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                     style={Object {}}
                                                   >
                                                     <p>
-                                                      Disabled
+                                                      No
                                                     </p>
                                                   </td>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   component="td"
                                                   dataIndex="operation"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   index={0}
                                                   key="operation"
                                                   lastFixLeft={false}
@@ -2963,99 +3124,310 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   render={[Function]}
                                                 >
                                                   <td
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
-                                                    <span>
-                                                      <Link
-                                                        className="ant-dropdown-link"
-                                                        style={
-                                                          Object {
-                                                            "marginRight": 8,
-                                                          }
-                                                        }
-                                                        to="/webhooks/1/edit"
-                                                      >
-                                                        <LinkAnchor
-                                                          className="ant-dropdown-link"
-                                                          href="/webhooks/1/edit"
-                                                          navigate={[Function]}
-                                                          style={
-                                                            Object {
-                                                              "marginRight": 8,
-                                                            }
-                                                          }
-                                                        >
-                                                          <a
-                                                            className="ant-dropdown-link"
-                                                            href="/webhooks/1/edit"
-                                                            onClick={[Function]}
-                                                            style={
+                                                    <ForwardRef
+                                                      disabled={false}
+                                                      icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                      okType="primary"
+                                                      onConfirm={[Function]}
+                                                      placement="top"
+                                                      title="Are you sure you want to delete this?"
+                                                      trigger="click"
+                                                    >
+                                                      <Tooltip
+                                                        arrowPointAtCenter={false}
+                                                        autoAdjustOverflow={true}
+                                                        disabled={false}
+                                                        icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                        mouseEnterDelay={0.1}
+                                                        mouseLeaveDelay={0.1}
+                                                        okType="primary"
+                                                        onConfirm={[Function]}
+                                                        onVisibleChange={[Function]}
+                                                        overlay={
+                                                          <LocaleReceiver
+                                                            componentName="Popconfirm"
+                                                            defaultLocale={
                                                               Object {
-                                                                "marginRight": 8,
+                                                                "cancelText": "Cancel",
+                                                                "okText": "OK",
                                                               }
                                                             }
                                                           >
-                                                            <Button
-                                                              disabled={true}
-                                                            >
-                                                              <Wave>
-                                                                <button
-                                                                  className="ant-btn"
-                                                                  disabled={true}
-                                                                  onClick={[Function]}
-                                                                  type="button"
-                                                                >
-                                                                  <LoadingIcon
-                                                                    existIcon={false}
-                                                                    loading={false}
-                                                                    prefixCls="ant-btn"
-                                                                  >
-                                                                    <CSSMotion
-                                                                      motionName="ant-btn-loading-icon-motion"
-                                                                      onAppearActive={[Function]}
-                                                                      onAppearStart={[Function]}
-                                                                      onEnterActive={[Function]}
-                                                                      onEnterStart={[Function]}
-                                                                      onLeaveActive={[Function]}
-                                                                      onLeaveStart={[Function]}
-                                                                      removeOnLeave={true}
-                                                                      visible={false}
-                                                                    >
-                                                                      <DomWrapper />
-                                                                    </CSSMotion>
-                                                                  </LoadingIcon>
-                                                                  <span
-                                                                    key=".0"
-                                                                  >
-                                                                    Edit
-                                                                  </span>
-                                                                </button>
-                                                              </Wave>
-                                                            </Button>
-                                                          </a>
-                                                        </LinkAnchor>
-                                                      </Link>
-                                                      <ForwardRef
-                                                        disabled={false}
-                                                        icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                        okType="primary"
-                                                        onConfirm={[Function]}
+                                                            [Function]
+                                                          </LocaleReceiver>
+                                                        }
+                                                        overlayClassName="ant-popconfirm"
                                                         placement="top"
-                                                        title="Sure to Delete?"
+                                                        prefixCls="ant-popover"
+                                                        title="Are you sure you want to delete this?"
+                                                        transitionName="ant-zoom-big"
                                                         trigger="click"
+                                                        visible={false}
                                                       >
-                                                        <Tooltip
+                                                        <ForwardRef(Tooltip)
+                                                          arrowContent={
+                                                            <span
+                                                              className="ant-popover-arrow-content"
+                                                            />
+                                                          }
                                                           arrowPointAtCenter={false}
                                                           autoAdjustOverflow={true}
+                                                          builtinPlacements={
+                                                            Object {
+                                                              "bottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tc",
+                                                                  "bc",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "bottomLeft": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tl",
+                                                                  "bl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "bottomRight": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tr",
+                                                                  "br",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "left": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "cr",
+                                                                  "cl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "leftBottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "br",
+                                                                  "bl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "leftTop": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  -4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tr",
+                                                                  "tl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "right": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "cl",
+                                                                  "cr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "rightBottom": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bl",
+                                                                  "br",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "rightTop": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  4,
+                                                                  0,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "tl",
+                                                                  "tr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "top": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bc",
+                                                                  "tc",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "topLeft": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "bl",
+                                                                  "tl",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                              "topRight": Object {
+                                                                "ignoreShake": true,
+                                                                "offset": Array [
+                                                                  0,
+                                                                  -4,
+                                                                ],
+                                                                "overflow": Object {
+                                                                  "adjustX": 1,
+                                                                  "adjustY": 1,
+                                                                },
+                                                                "points": Array [
+                                                                  "br",
+                                                                  "tr",
+                                                                ],
+                                                                "targetOffset": Array [
+                                                                  0,
+                                                                  0,
+                                                                ],
+                                                              },
+                                                            }
+                                                          }
                                                           disabled={false}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
+                                                          motion={
+                                                            Object {
+                                                              "motionDeadline": 1000,
+                                                              "motionName": "ant-zoom-big",
+                                                            }
+                                                          }
                                                           mouseEnterDelay={0.1}
                                                           mouseLeaveDelay={0.1}
                                                           okType="primary"
                                                           onConfirm={[Function]}
+                                                          onPopupAlign={[Function]}
                                                           onVisibleChange={[Function]}
                                                           overlay={
                                                             <LocaleReceiver
@@ -3073,12 +3445,14 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                           overlayClassName="ant-popconfirm"
                                                           placement="top"
                                                           prefixCls="ant-popover"
-                                                          title="Sure to Delete?"
+                                                          title="Are you sure you want to delete this?"
                                                           transitionName="ant-zoom-big"
                                                           trigger="click"
                                                           visible={false}
                                                         >
-                                                          <ForwardRef(Tooltip)
+                                                          <Trigger
+                                                            action="click"
+                                                            afterPopupVisibleChange={[Function]}
                                                             arrowContent={
                                                               <span
                                                                 className="ant-popover-arrow-content"
@@ -3086,6 +3460,8 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                             }
                                                             arrowPointAtCenter={false}
                                                             autoAdjustOverflow={true}
+                                                            autoDestroy={false}
+                                                            blurDelay={0.15}
                                                             builtinPlacements={
                                                               Object {
                                                                 "bottom": Object {
@@ -3318,20 +3694,22 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                                 },
                                                               }
                                                             }
+                                                            defaultPopupVisible={false}
+                                                            destroyPopupOnHide={false}
                                                             disabled={false}
+                                                            focusDelay={0}
+                                                            getDocument={[Function]}
+                                                            getPopupClassNameFromAlign={[Function]}
+                                                            hideAction={Array []}
                                                             icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                            motion={
-                                                              Object {
-                                                                "motionDeadline": 1000,
-                                                                "motionName": "ant-zoom-big",
-                                                              }
-                                                            }
+                                                            mask={false}
+                                                            maskClosable={true}
                                                             mouseEnterDelay={0.1}
                                                             mouseLeaveDelay={0.1}
                                                             okType="primary"
                                                             onConfirm={[Function]}
                                                             onPopupAlign={[Function]}
-                                                            onVisibleChange={[Function]}
+                                                            onPopupVisibleChange={[Function]}
                                                             overlay={
                                                               <LocaleReceiver
                                                                 componentName="Popconfirm"
@@ -3345,376 +3723,143 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                                 [Function]
                                                               </LocaleReceiver>
                                                             }
-                                                            overlayClassName="ant-popconfirm"
-                                                            placement="top"
+                                                            popup={[Function]}
+                                                            popupAlign={Object {}}
+                                                            popupClassName="ant-popconfirm"
+                                                            popupMotion={
+                                                              Object {
+                                                                "motionDeadline": 1000,
+                                                                "motionName": "ant-zoom-big",
+                                                              }
+                                                            }
+                                                            popupPlacement="top"
+                                                            popupStyle={Object {}}
+                                                            popupTransitionName="ant-zoom-big"
+                                                            popupVisible={false}
                                                             prefixCls="ant-popover"
-                                                            title="Sure to Delete?"
-                                                            transitionName="ant-zoom-big"
-                                                            trigger="click"
+                                                            showAction={Array []}
+                                                            title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Trigger
-                                                              action="click"
-                                                              afterPopupVisibleChange={[Function]}
-                                                              arrowContent={
-                                                                <span
-                                                                  className="ant-popover-arrow-content"
-                                                                />
-                                                              }
-                                                              arrowPointAtCenter={false}
-                                                              autoAdjustOverflow={true}
-                                                              autoDestroy={false}
-                                                              blurDelay={0.15}
-                                                              builtinPlacements={
-                                                                Object {
-                                                                  "bottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tc",
-                                                                      "bc",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "bottomLeft": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tl",
-                                                                      "bl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "bottomRight": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tr",
-                                                                      "br",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "left": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "cr",
-                                                                      "cl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "leftBottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "br",
-                                                                      "bl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "leftTop": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      -4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tr",
-                                                                      "tl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "right": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "cl",
-                                                                      "cr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "rightBottom": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bl",
-                                                                      "br",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "rightTop": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      4,
-                                                                      0,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "tl",
-                                                                      "tr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "top": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bc",
-                                                                      "tc",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "topLeft": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "bl",
-                                                                      "tl",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                  "topRight": Object {
-                                                                    "ignoreShake": true,
-                                                                    "offset": Array [
-                                                                      0,
-                                                                      -4,
-                                                                    ],
-                                                                    "overflow": Object {
-                                                                      "adjustX": 1,
-                                                                      "adjustY": 1,
-                                                                    },
-                                                                    "points": Array [
-                                                                      "br",
-                                                                      "tr",
-                                                                    ],
-                                                                    "targetOffset": Array [
-                                                                      0,
-                                                                      0,
-                                                                    ],
-                                                                  },
-                                                                }
-                                                              }
-                                                              defaultPopupVisible={false}
-                                                              destroyPopupOnHide={false}
-                                                              disabled={false}
-                                                              focusDelay={0}
-                                                              getDocument={[Function]}
-                                                              getPopupClassNameFromAlign={[Function]}
-                                                              hideAction={Array []}
-                                                              icon={<ForwardRef(ExclamationCircleFilled) />}
-                                                              mask={false}
-                                                              maskClosable={true}
-                                                              mouseEnterDelay={0.1}
-                                                              mouseLeaveDelay={0.1}
-                                                              okType="primary"
-                                                              onConfirm={[Function]}
-                                                              onPopupAlign={[Function]}
-                                                              onPopupVisibleChange={[Function]}
-                                                              overlay={
-                                                                <LocaleReceiver
-                                                                  componentName="Popconfirm"
-                                                                  defaultLocale={
-                                                                    Object {
-                                                                      "cancelText": "Cancel",
-                                                                      "okText": "OK",
-                                                                    }
-                                                                  }
-                                                                >
-                                                                  [Function]
-                                                                </LocaleReceiver>
-                                                              }
-                                                              popup={[Function]}
-                                                              popupAlign={Object {}}
-                                                              popupClassName="ant-popconfirm"
-                                                              popupMotion={
-                                                                Object {
-                                                                  "motionDeadline": 1000,
-                                                                  "motionName": "ant-zoom-big",
-                                                                }
-                                                              }
-                                                              popupPlacement="top"
-                                                              popupStyle={Object {}}
-                                                              popupTransitionName="ant-zoom-big"
-                                                              popupVisible={false}
-                                                              prefixCls="ant-popover"
-                                                              showAction={Array []}
-                                                              title="Sure to Delete?"
-                                                              visible={false}
+                                                            <Link
+                                                              className="ant-dropdown-link"
+                                                              key="trigger"
+                                                              onClick={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              onMouseDown={[Function]}
+                                                              onTouchStart={[Function]}
+                                                              to=""
                                                             >
-                                                              <Link
+                                                              <LinkAnchor
                                                                 className="ant-dropdown-link"
-                                                                key="trigger"
+                                                                href="/"
+                                                                navigate={[Function]}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}
                                                                 onMouseDown={[Function]}
                                                                 onTouchStart={[Function]}
-                                                                to=""
                                                               >
-                                                                <LinkAnchor
+                                                                <a
                                                                   className="ant-dropdown-link"
                                                                   href="/"
-                                                                  navigate={[Function]}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}
                                                                   onTouchStart={[Function]}
                                                                 >
-                                                                  <a
-                                                                    className="ant-dropdown-link"
-                                                                    href="/"
-                                                                    onClick={[Function]}
-                                                                    onKeyDown={[Function]}
-                                                                    onMouseDown={[Function]}
-                                                                    onTouchStart={[Function]}
+                                                                  <Button
+                                                                    disabled={true}
+                                                                    icon={<ForwardRef(DeleteOutlined) />}
+                                                                    type="danger"
                                                                   >
-                                                                    <Button
-                                                                      disabled={true}
-                                                                    >
-                                                                      <Wave>
-                                                                        <button
-                                                                          className="ant-btn"
-                                                                          disabled={true}
-                                                                          onClick={[Function]}
-                                                                          type="button"
-                                                                        >
-                                                                          <LoadingIcon
-                                                                            existIcon={false}
-                                                                            loading={false}
-                                                                            prefixCls="ant-btn"
+                                                                    <Wave>
+                                                                      <button
+                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                        disabled={true}
+                                                                        onClick={[Function]}
+                                                                        type="button"
+                                                                      >
+                                                                        <ForwardRef(DeleteOutlined)>
+                                                                          <AntdIcon
+                                                                            icon={
+                                                                              Object {
+                                                                                "icon": Object {
+                                                                                  "attrs": Object {
+                                                                                    "focusable": "false",
+                                                                                    "viewBox": "64 64 896 896",
+                                                                                  },
+                                                                                  "children": Array [
+                                                                                    Object {
+                                                                                      "attrs": Object {
+                                                                                        "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                      },
+                                                                                      "tag": "path",
+                                                                                    },
+                                                                                  ],
+                                                                                  "tag": "svg",
+                                                                                },
+                                                                                "name": "delete",
+                                                                                "theme": "outlined",
+                                                                              }
+                                                                            }
                                                                           >
-                                                                            <CSSMotion
-                                                                              motionName="ant-btn-loading-icon-motion"
-                                                                              onAppearActive={[Function]}
-                                                                              onAppearStart={[Function]}
-                                                                              onEnterActive={[Function]}
-                                                                              onEnterStart={[Function]}
-                                                                              onLeaveActive={[Function]}
-                                                                              onLeaveStart={[Function]}
-                                                                              removeOnLeave={true}
-                                                                              visible={false}
+                                                                            <span
+                                                                              aria-label="delete"
+                                                                              className="anticon anticon-delete"
+                                                                              role="img"
                                                                             >
-                                                                              <DomWrapper />
-                                                                            </CSSMotion>
-                                                                          </LoadingIcon>
-                                                                          <span
-                                                                            key=".0"
-                                                                          >
-                                                                            Delete
-                                                                          </span>
-                                                                        </button>
-                                                                      </Wave>
-                                                                    </Button>
-                                                                  </a>
-                                                                </LinkAnchor>
-                                                              </Link>
-                                                            </Trigger>
-                                                          </ForwardRef(Tooltip)>
-                                                        </Tooltip>
-                                                      </ForwardRef>
-                                                    </span>
+                                                                              <IconReact
+                                                                                icon={
+                                                                                  Object {
+                                                                                    "icon": Object {
+                                                                                      "attrs": Object {
+                                                                                        "focusable": "false",
+                                                                                        "viewBox": "64 64 896 896",
+                                                                                      },
+                                                                                      "children": Array [
+                                                                                        Object {
+                                                                                          "attrs": Object {
+                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                          },
+                                                                                          "tag": "path",
+                                                                                        },
+                                                                                      ],
+                                                                                      "tag": "svg",
+                                                                                    },
+                                                                                    "name": "delete",
+                                                                                    "theme": "outlined",
+                                                                                  }
+                                                                                }
+                                                                              >
+                                                                                <svg
+                                                                                  aria-hidden="true"
+                                                                                  data-icon="delete"
+                                                                                  fill="currentColor"
+                                                                                  focusable="false"
+                                                                                  height="1em"
+                                                                                  key="svg-delete"
+                                                                                  viewBox="64 64 896 896"
+                                                                                  width="1em"
+                                                                                >
+                                                                                  <path
+                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                                    key="svg-delete-svg-0"
+                                                                                  />
+                                                                                </svg>
+                                                                              </IconReact>
+                                                                            </span>
+                                                                          </AntdIcon>
+                                                                        </ForwardRef(DeleteOutlined)>
+                                                                      </button>
+                                                                    </Wave>
+                                                                  </Button>
+                                                                </a>
+                                                              </LinkAnchor>
+                                                            </Link>
+                                                          </Trigger>
+                                                        </ForwardRef(Tooltip)>
+                                                      </Tooltip>
+                                                    </ForwardRef>
                                                   </td>
                                                 </Cell>
                                               </tr>

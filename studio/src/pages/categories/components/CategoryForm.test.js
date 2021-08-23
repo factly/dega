@@ -4,6 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
 import { act } from '@testing-library/react';
+import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import CategoryCreateForm from './CategoryForm';
@@ -156,9 +157,6 @@ describe('Categories Create Form component', () => {
           slug: 'slug',
           is_featured: false,
           medium_id: 2,
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
@@ -210,9 +208,13 @@ describe('Categories Create Form component', () => {
     });
     it('should submit form with updated data', (done) => {
       act(() => {
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      act(() => {
         wrapper
           .find('FormItem')
-          .at(5)
+          .at(6)
           .find('Editor')
           .props()
           .onChange({
@@ -223,6 +225,14 @@ describe('Categories Create Form component', () => {
                 version: '2.19.0',
               },
             },
+          });
+        wrapper
+          .find('FormItem')
+          .at(7)
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
           });
         wrapper
           .find('FormItem')
@@ -251,6 +261,15 @@ describe('Categories Create Form component', () => {
         });
         done();
       }, 0);
+    });
+    it('should handle collapse open and close', () => {
+      act(() => {
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(Collapse).at(0).find('Button').at(0).text()).toBe('Close');
+      expect(wrapper.find(Collapse).at(1).find('Button').at(0).text()).toBe('Close');
     });
   });
 });

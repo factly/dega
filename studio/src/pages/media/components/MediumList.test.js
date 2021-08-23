@@ -226,7 +226,7 @@ describe('Media List component', () => {
               <MediumList
                 actions={['update', 'delete']}
                 data={info}
-                filters={filters}
+                filters={{ page: 1 }}
                 setFilters={setFilters}
                 fetchMedia={fetchMedia}
               />

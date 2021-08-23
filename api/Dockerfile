@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN apk add gcc musl-dev
 RUN go mod download
 ENV CONFIG_FILE $CONFIG_FILE
 

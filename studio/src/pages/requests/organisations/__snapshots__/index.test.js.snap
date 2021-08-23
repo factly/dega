@@ -60,55 +60,72 @@ exports[`Organisation Request list should render the component 1`] = `
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/requests/organisations/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/requests/organisations/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/requests/organisations/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/requests/organisations/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/requests/organisations/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/requests/organisations/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Organisation Request
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -146,9 +163,12 @@ exports[`Organisation Request list should render the component 1`] = `
                           "title": "Status",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -202,9 +222,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                     "title": "Status",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -234,7 +257,14 @@ exports[`Organisation Request list should render the component 1`] = `
                                       <table
                                         style="table-layout: auto;"
                                       >
-                                        <colgroup />
+                                        <colgroup>
+                                          <col />
+                                          <col />
+                                          <col />
+                                          <col
+                                            style="width: 150px;"
+                                          />
+                                        </colgroup>
                                         <thead
                                           class="ant-table-thead"
                                         >
@@ -255,7 +285,8 @@ exports[`Organisation Request list should render the component 1`] = `
                                               Status
                                             </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -340,7 +371,7 @@ exports[`Organisation Request list should render the component 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered ant-table-empty"
+                                className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -368,9 +399,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                           "title": "Status",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [],
@@ -395,7 +429,14 @@ exports[`Organisation Request list should render the component 1`] = `
                                             <table
                                               style="table-layout: auto;"
                                             >
-                                              <colgroup />
+                                              <colgroup>
+                                                <col />
+                                                <col />
+                                                <col />
+                                                <col
+                                                  style="width: 150px;"
+                                                />
+                                              </colgroup>
                                               <thead
                                                 class="ant-table-thead"
                                               >
@@ -416,7 +457,8 @@ exports[`Organisation Request list should render the component 1`] = `
                                                     Status
                                                   </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -535,7 +577,7 @@ exports[`Organisation Request list should render the component 1`] = `
                                               undefined,
                                               undefined,
                                               undefined,
-                                              undefined,
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -561,15 +603,50 @@ exports[`Organisation Request list should render the component 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
                                         >
-                                          <colgroup />
+                                          <colgroup>
+                                            <col
+                                              key="0"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="1"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="2"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="3"
+                                              style={
+                                                Object {
+                                                  "width": 150,
+                                                }
+                                              }
+                                            />
+                                          </colgroup>
                                         </ColGroup>
                                         <Header
                                           colWidths={
@@ -601,9 +678,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -630,10 +710,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -712,9 +794,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -744,10 +829,12 @@ exports[`Organisation Request list should render the component 1`] = `
                                                     "title": "Status",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -868,20 +955,25 @@ exports[`Organisation Request list should render the component 1`] = `
                                                   </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={3}
                                                   colSpan={1}
                                                   colStart={3}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -890,10 +982,16 @@ exports[`Organisation Request list should render the component 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>
@@ -1103,55 +1201,72 @@ exports[`Organisation Request list should render the component with data 1`] = `
                   }
                 }
               >
-                <Link
-                  key="1"
-                  to="/requests/organisations/create"
+                <Row
+                  gutter={16}
+                  justify="end"
                 >
-                  <LinkAnchor
-                    href="/requests/organisations/create"
-                    navigate={[Function]}
+                  <div
+                    className="ant-row ant-row-end"
+                    style={
+                      Object {
+                        "marginLeft": -8,
+                        "marginRight": -8,
+                      }
+                    }
                   >
-                    <a
-                      href="/requests/organisations/create"
-                      onClick={[Function]}
+                    <Link
+                      key="1"
+                      to="/requests/organisations/create"
                     >
-                      <Button>
-                        <Wave>
-                          <button
-                            className="ant-btn"
-                            onClick={[Function]}
-                            type="button"
+                      <LinkAnchor
+                        href="/requests/organisations/create"
+                        navigate={[Function]}
+                      >
+                        <a
+                          href="/requests/organisations/create"
+                          onClick={[Function]}
+                        >
+                          <Button
+                            type="primary"
                           >
-                            <LoadingIcon
-                              existIcon={false}
-                              loading={false}
-                              prefixCls="ant-btn"
-                            >
-                              <CSSMotion
-                                motionName="ant-btn-loading-icon-motion"
-                                onAppearActive={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
-                                onLeaveStart={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                            <Wave>
+                              <button
+                                className="ant-btn ant-btn-primary"
+                                onClick={[Function]}
+                                type="button"
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </LoadingIcon>
-                            <span
-                              key=".0"
-                            >
-                              Create New
-                            </span>
-                          </button>
-                        </Wave>
-                      </Button>
-                    </a>
-                  </LinkAnchor>
-                </Link>
+                                <LoadingIcon
+                                  existIcon={false}
+                                  loading={false}
+                                  prefixCls="ant-btn"
+                                >
+                                  <CSSMotion
+                                    motionName="ant-btn-loading-icon-motion"
+                                    onAppearActive={[Function]}
+                                    onAppearStart={[Function]}
+                                    onEnterActive={[Function]}
+                                    onEnterStart={[Function]}
+                                    onLeaveActive={[Function]}
+                                    onLeaveStart={[Function]}
+                                    removeOnLeave={true}
+                                    visible={false}
+                                  >
+                                    <DomWrapper />
+                                  </CSSMotion>
+                                </LoadingIcon>
+                                <span
+                                  key=".0"
+                                >
+                                  New Organisation Request
+                                </span>
+                              </button>
+                            </Wave>
+                          </Button>
+                        </a>
+                      </LinkAnchor>
+                    </Link>
+                  </div>
+                </Row>
               </div>
             </Item>
             <Item
@@ -1189,9 +1304,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                           "title": "Status",
                         },
                         Object {
+                          "align": "center",
                           "dataIndex": "operation",
+                          "fixed": "right",
                           "render": [Function],
                           "title": "Action",
+                          "width": 150,
                         },
                       ]
                     }
@@ -1245,9 +1363,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                     "title": "Status",
                                   },
                                   Object {
+                                    "align": "center",
                                     "dataIndex": "operation",
+                                    "fixed": "right",
                                     "render": [Function],
                                     "title": "Action",
+                                    "width": 150,
                                   },
                                 ]
                               }
@@ -1277,7 +1398,14 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                       <table
                                         style="table-layout: auto;"
                                       >
-                                        <colgroup />
+                                        <colgroup>
+                                          <col />
+                                          <col />
+                                          <col />
+                                          <col
+                                            style="width: 150px;"
+                                          />
+                                        </colgroup>
                                         <thead
                                           class="ant-table-thead"
                                         >
@@ -1298,7 +1426,8 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                               Status
                                             </th>
                                             <th
-                                              class="ant-table-cell"
+                                              class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                              style="text-align: center; position: sticky; right: 0px;"
                                             >
                                               Action
                                             </th>
@@ -1383,7 +1512,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
                               transformColumns={[Function]}
                             >
                               <div
-                                className="ant-table ant-table-bordered ant-table-empty"
+                                className="ant-table ant-table-bordered ant-table-empty ant-table-has-fix-right"
                               >
                                 <Component
                                   pingLeft={false}
@@ -1411,9 +1540,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                           "title": "Status",
                                         },
                                         Object {
+                                          "align": "center",
                                           "dataIndex": "operation",
+                                          "fixed": "right",
                                           "render": [Function],
                                           "title": "Action",
+                                          "width": 150,
                                         },
                                       ],
                                       "data": Array [],
@@ -1438,7 +1570,14 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                             <table
                                               style="table-layout: auto;"
                                             >
-                                              <colgroup />
+                                              <colgroup>
+                                                <col />
+                                                <col />
+                                                <col />
+                                                <col
+                                                  style="width: 150px;"
+                                                />
+                                              </colgroup>
                                               <thead
                                                 class="ant-table-thead"
                                               >
@@ -1459,7 +1598,8 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                     Status
                                                   </th>
                                                   <th
-                                                    class="ant-table-cell"
+                                                    class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
+                                                    style="text-align: center; position: sticky; right: 0px;"
                                                   >
                                                     Action
                                                   </th>
@@ -1578,7 +1718,7 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                               undefined,
                                               undefined,
                                               undefined,
-                                              undefined,
+                                              150,
                                             ]
                                           }
                                           columns={
@@ -1604,15 +1744,50 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
                                         >
-                                          <colgroup />
+                                          <colgroup>
+                                            <col
+                                              key="0"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="1"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="2"
+                                              style={
+                                                Object {
+                                                  "width": undefined,
+                                                }
+                                              }
+                                            />
+                                            <col
+                                              key="3"
+                                              style={
+                                                Object {
+                                                  "width": 150,
+                                                }
+                                              }
+                                            />
+                                          </colgroup>
                                         </ColGroup>
                                         <Header
                                           colWidths={
@@ -1644,9 +1819,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -1673,10 +1851,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                 "title": "Status",
                                               },
                                               Object {
+                                                "align": "center",
                                                 "dataIndex": "operation",
-                                                "fixed": undefined,
+                                                "fixed": "right",
                                                 "render": [Function],
                                                 "title": "Action",
+                                                "width": 150,
                                               },
                                             ]
                                           }
@@ -1755,9 +1935,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                     "colSpan": 1,
                                                     "colStart": 3,
                                                     "column": Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     },
                                                     "key": undefined,
                                                     "rowSpan": 1,
@@ -1787,10 +1970,12 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                     "title": "Status",
                                                   },
                                                   Object {
+                                                    "align": "center",
                                                     "dataIndex": "operation",
-                                                    "fixed": undefined,
+                                                    "fixed": "right",
                                                     "render": [Function],
                                                     "title": "Action",
+                                                    "width": 150,
                                                   },
                                                 ]
                                               }
@@ -1911,20 +2096,25 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                   </th>
                                                 </Cell>
                                                 <Cell
+                                                  align="center"
                                                   className=""
                                                   colEnd={3}
                                                   colSpan={1}
                                                   colStart={3}
                                                   column={
                                                     Object {
+                                                      "align": "center",
                                                       "dataIndex": "operation",
+                                                      "fixed": "right",
                                                       "render": [Function],
                                                       "title": "Action",
+                                                      "width": 150,
                                                     }
                                                   }
                                                   component="th"
                                                   firstFixLeft={false}
-                                                  firstFixRight={false}
+                                                  firstFixRight={true}
+                                                  fixRight={0}
                                                   key="operation"
                                                   lastFixLeft={false}
                                                   lastFixRight={false}
@@ -1933,10 +2123,16 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                                   rowType="header"
                                                 >
                                                   <th
-                                                    className="ant-table-cell"
+                                                    className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     colSpan={null}
                                                     rowSpan={null}
-                                                    style={Object {}}
+                                                    style={
+                                                      Object {
+                                                        "position": "sticky",
+                                                        "right": 0,
+                                                        "textAlign": "center",
+                                                      }
+                                                    }
                                                   >
                                                     Action
                                                   </th>

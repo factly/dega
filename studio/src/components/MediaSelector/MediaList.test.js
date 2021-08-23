@@ -25,9 +25,9 @@ let state = {
   media: {
     req: [
       {
-        data: [1],
+        data: [1, 2],
         query: { page: 1, limit: 8 },
-        total: 1,
+        total: 2,
       },
     ],
     details: {
@@ -73,31 +73,22 @@ describe('Media List component', () => {
       );
       expect(tree).toMatchSnapshot();
     });
-    it('should render the component with empty data', () => {
-      state.media = {
-        req: [],
-        details: {},
-        loading: false,
-      };
-      store = mockStore(() => state);
-      const tree = mount(
-        <Provider store={store}>
-          <MediaList />
-        </Provider>,
-      );
-      expect(tree).toMatchSnapshot();
-    });
   });
   describe('component testing', () => {
+    let wrapper;
+
     beforeEach(() => {
       jest.clearAllMocks();
       mockedDispatch = jest.fn(() => new Promise((resolve) => resolve(true)));
       useDispatch.mockReturnValue(mockedDispatch);
     });
+    afterEach(() => {
+      wrapper.unmount();
+    });
+
     it('should change the page', () => {
       actions.getMedia.mockReset();
       store = mockStore(() => state);
-      let wrapper;
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -112,6 +103,60 @@ describe('Media List component', () => {
       const updatedTable = wrapper.find(List);
       expect(updatedTable.props().pagination.current).toEqual(2);
       expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 8 });
+    });
+    it('should handle image selection', () => {
+      store = mockStore(() => state);
+      const onSelect = jest.fn();
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <MediaList onSelect={onSelect} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        wrapper.find('Input').simulate('change', { target: { value: 'Medium -1' } });
+      });
+      wrapper.find('Avatar').at(0).simulate('click');
+      expect(onSelect).toHaveBeenCalledWith({
+        id: 1,
+        name: 'Medium -1',
+        url: 'some-url',
+        file_size: 'file_size',
+        caption: 'caption',
+        description: 'description',
+      });
+    });
+
+    it('should handle image unselection', () => {
+      store = mockStore(state);
+      const onSelect = jest.fn();
+      const onUnselect = jest.fn();
+
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <MediaList
+              onSelect={onSelect}
+              onUnselect={onUnselect}
+              selected={{
+                id: 1,
+                name: 'Medium -1',
+                url: 'some-url',
+                file_size: 'file_size',
+                caption: 'caption',
+                description: 'description',
+              }}
+            />
+          </Provider>,
+        );
+      });
+      act(() => {
+        wrapper.find('Input').simulate('change', { target: { value: '' } });
+      });
+
+      wrapper.find('Avatar').at(0).simulate('click');
+      expect(onSelect).toHaveBeenCalledWith(null);
     });
   });
 });

@@ -18,7 +18,7 @@ const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
 
 let state = {
-  menu: {
+  menus: {
     req: [
       {
         data: [1, 2],
@@ -71,7 +71,7 @@ describe('Menu List component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component when loading', () => {
-      state.menu.loading = true;
+      state.menus.loading = true;
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
@@ -83,7 +83,7 @@ describe('Menu List component', () => {
       expect(tree).toMatchSnapshot();
     });
     it('should match component with menus', () => {
-      state.menu.loading = false;
+      state.menus.loading = false;
       store = mockStore(state);
       const tree = mount(
         <Provider store={store}>
@@ -132,8 +132,8 @@ describe('Menu List component', () => {
           </Provider>,
         );
       });
-      const button = wrapper.find(Button).at(1);
-      expect(button.text()).toEqual('Delete');
+      const button = wrapper.find(Button).at(0);
+      expect(button.text()).toEqual('');
       button.simulate('click');
       const popconfirm = wrapper.find(Popconfirm);
       popconfirm
@@ -156,13 +156,12 @@ describe('Menu List component', () => {
         );
       });
       const link = wrapper.find(Link).at(0);
-      const button = link.find(Button).at(0);
-      expect(button.text(0)).toEqual('Edit');
+      expect(link.text(0)).toEqual('Menu 1');
       expect(link.prop('to')).toEqual('/menus/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
-        menu: {
+        menus: {
           req: [],
           details: {},
           loading: false,

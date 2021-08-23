@@ -104,4 +104,22 @@ describe('Analytics Component', () => {
     );
     expect(tree).toMatchSnapshot();
   });
+  it('should render the recordNotFound component when no space found', () => {
+    const state2 = { ...state };
+    state2.spaces = {
+      orgs: [{ id: 1, organazation: 'Organization 1', spaces: [] }],
+      details: {},
+      loading: false,
+      selected: 0,
+    };
+    const store2 = mockStore(state2);
+    const tree = mount(
+      <Provider store={store2}>
+        <Router>
+          <Analytics />
+        </Router>
+      </Provider>,
+    );
+    expect(tree).toMatchSnapshot();
+  });
 });

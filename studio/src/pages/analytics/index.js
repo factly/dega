@@ -1,6 +1,7 @@
 import React from 'react';
 import { Result, Skeleton, Space } from 'antd';
 import { useSelector } from 'react-redux';
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
 function Analytics() {
   const { space, loading } = useSelector(({ spaces }) => {
@@ -11,6 +12,7 @@ function Analytics() {
   });
 
   if (loading) return <Skeleton />;
+  if (!space) return <RecordNotFound title={'No space found.'} link="/spaces" entity={'Space'} />;
 
   return (
     <Space direction="vertical">

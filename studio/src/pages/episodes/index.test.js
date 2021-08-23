@@ -209,14 +209,14 @@ describe('Episode Component', () => {
           .simulate('change', { target: { value: 'episode' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(3)
           .find('Select')
           .at(0)
           .props()
           .onChange({ target: { value: '' } });
         wrapper
           .find('FormItem')
-          .at(3)
+          .at(2)
           .find('Selector')
           .at(0)
           .props()

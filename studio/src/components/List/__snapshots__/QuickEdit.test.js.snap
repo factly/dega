@@ -6211,11 +6211,10 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                       >
                                         <Button
                                           onClick={[Function]}
-                                          type="primary"
                                         >
                                           <Wave>
                                             <button
-                                              className="ant-btn ant-btn-primary"
+                                              className="ant-btn"
                                               onClick={[Function]}
                                               type="button"
                                             >
@@ -6263,10 +6262,11 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                         <Button
                                           disabled={true}
                                           htmlType="submit"
+                                          type="primary"
                                         >
                                           <Wave>
                                             <button
-                                              className="ant-btn"
+                                              className="ant-btn ant-btn-primary"
                                               disabled={true}
                                               onClick={[Function]}
                                               type="submit"

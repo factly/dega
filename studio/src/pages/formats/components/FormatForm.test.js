@@ -4,7 +4,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
-
+import { Collapse } from 'antd';
 import '../../../matchMedia.mock';
 import FormatsCreateForm from './FormatForm';
 
@@ -137,7 +137,12 @@ describe('Formats Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+      });
+      act(() => {
+        const input = wrapper.find('FormItem').at(1).find('Input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -154,6 +159,15 @@ describe('Formats Create Form component', () => {
           meta_fields: {
             sample: 'testing',
           },
+          footer_code: undefined,
+          header_code: undefined,
+          is_featured: undefined,
+          medium_id: undefined,
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
         });
         done();
       }, 0);
@@ -162,17 +176,17 @@ describe('Formats Create Form component', () => {
       act(() => {
         wrapper
           .find('FormItem')
-          .at(0)
+          .at(1)
           .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
-          .at(1)
+          .at(2)
           .find('Input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
-          .at(2)
+          .at(5)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'new description' } });
