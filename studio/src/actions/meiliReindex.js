@@ -6,33 +6,21 @@ import getError from '../utils/getError';
 export const reindexSpace = (id) => {
   return (dispatch) => {
     return axios
-      .get(MEILI_REINDEX_API + '/' + id)
+      .post(MEILI_REINDEX_API + '/space/' + id)
       .then((response) => {
-        dispatch(addSuccessNotification('Successfully Reindexed'));
+        if (response.status === 200) dispatch(addSuccessNotification('Successfully Reindexed'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
       });
   };
 };
-export const reindexOrg = (orgId) => {
+export const reindex = () => {
   return (dispatch) => {
     return axios
-      .get(MEILI_REINDEX_API + '/' + orgId)
+      .post(MEILI_REINDEX_API + '/all')
       .then((response) => {
-        dispatch(addSuccessNotification('Successfully Reindexed'));
-      })
-      .catch((error) => {
-        dispatch(addErrorNotification(getError(error)));
-      });
-  };
-};
-export const reindex = (id) => {
-  return (dispatch) => {
-    return axios
-      .get(MEILI_REINDEX_API)
-      .then((response) => {
-        dispatch(addSuccessNotification('Successfully Reindexed'));
+        if (response.status === 200) dispatch(addSuccessNotification('Successfully Reindexed'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
