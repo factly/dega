@@ -18,9 +18,10 @@ import (
 	"github.com/factly/dega-server/service/core/action/request/space"
 	"github.com/factly/dega-server/service/core/action/tag"
 	factCheck "github.com/factly/dega-server/service/fact-check"
-	"github.com/factly/dega-server/service/kavach"
 	"github.com/factly/dega-server/service/podcast"
 	podcastAction "github.com/factly/dega-server/service/podcast/action"
+	"github.com/factly/dega-server/service/reindex"
+	"github.com/factly/dega-server/service/user"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -63,6 +64,7 @@ func RegisterRoutes() http.Handler {
 		r.Mount("/core", core.Router())
 		r.With(util.FactCheckPermission).Mount("/fact-check", factCheck.Router())
 		r.With(util.PodcastPermission).Mount("/podcast", podcast.Router())
+		r.Mount("/reindex", reindex.Router())
 	})
 
 	r.With(middlewarex.CheckUser).Group(func(r chi.Router) {
@@ -71,7 +73,7 @@ func RegisterRoutes() http.Handler {
 	})
 
 	r.Group(func(r chi.Router) {
-		r.Mount("/kavach", kavach.Router())
+		r.Mount("/user", user.Router())
 	})
 
 	return r

@@ -1,4 +1,4 @@
-package kavach
+package user
 
 import (
 	"encoding/json"
@@ -31,7 +31,13 @@ func redirectToKavach(w http.ResponseWriter, r *http.Request) {
 
 	header := r.Header
 
-	url := viper.GetString("kavach_url") + r.URL.Path
+	path := r.URL.Path
+
+	if len(r.URL.Path) > 5 {
+		path = path[5:]
+	}
+
+	url := viper.GetString("kavach_url") + path
 
 	req, _ := http.NewRequest(r.Method, url, r.Body)
 
