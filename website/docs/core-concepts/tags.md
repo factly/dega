@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 13
 ---
 
 # Tags
@@ -16,15 +16,17 @@ Tags can be added from the Tags menu item by clicking on the New Tag button on t
 - Featured - This field can be used to highlight the Tag on the website if it is enabled.
 
 ### SEO Metadata
+
 Apart from the basic information, extra data can be added such as [SEO metadata](/docs/features/search-engine-optimisation). SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 
 ### Metafields
+
 There is also a provision to add more information about the tag if the field is not included in the form. The user can use the [Metafields](/docs/features/extend-features) section by clicking on the Meta Fields section to feed in extra data as a JSON object.
 
 Customizing the header and footer specific to a tag can be done by adding code in the Code Injection section by clicking on the Code Injection section.
 
 All the Tags will be available under the Tags menu.
-Search and sort options are available to simplify the search for a Tag. Tags can be deleted by clicking on the Delete button. To edit a Tag click on the name of the tag in the list.
+[Search](/docs/features/search-and-filtering) and sort options are available to simplify the search for a Tag. Tags can be deleted by clicking on the Delete button. To edit a Tag click on the name of the tag in the list.
 
 ### Policies
 

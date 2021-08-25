@@ -21,15 +21,17 @@ Claim Settings:
   By clicking on the Add Review Sources button, new fields are added to add information about the review sources. Url and description can be provided for each review source.
 
 ### SEO Metadata
+
 Apart from the basic information, extra data can be added such as [SEO metadata](/docs/features/search-engine-optimisation). SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 
 ### Metafields
+
 There is also a provision to add more information about the claim if the field is not included in the form. The user can use the [Metafields](/docs/features/extend-features) section by clicking on the Meta Fields section to feed in extra data as a JSON object.
 
 Customizing the header and footer specific to a claim can be done by adding code in the Code Injection section by clicking on the Code Injection section.
 
 All the Claims will be available under the Claims menu.
-Filter and sort options are available to simplify the search for Claims. Available filters are Ratings and Claimants. Claims can be deleted by clicking on the Delete button. To edit a Claim click on the name of the claim in the list.
+[Filter](/docs/features/search-and-filtering) and sort options are available to simplify the search for Claims. Available filters are Ratings and Claimants. Claims can be deleted by clicking on the Delete button. To edit a Claim click on the name of the claim in the list.
 
 ### Policies
 

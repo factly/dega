@@ -18,10 +18,12 @@ Fact-Check and Article formats are mandatory formats for Dega.
 - Featured Image - Image for the format
 - Description: Describes what the format is.
 
-### SEO Metadata 
+### SEO Metadata
+
 Apart from the basic information, extra data can be added such as [SEO metadata](/docs/features/search-engine-optimisation). SEO metadata includes title, description, and canonical URL. It can be added by clicking on the Add MetaData button.
 
 ### Metafields
+
 There is also a provision to add more information about the format if the field is not included in the form. The user can use the [Metafields](/docs/features/extend-features) section by clicking on the Meta Fields section to feed in extra data as a JSON object.
 
 Customizing the header and footer specific to a format can be done by adding code in the Code Injection section by clicking on the Code Injection section.

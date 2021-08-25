@@ -17,11 +17,12 @@ While uploading, basic editing options like crop, rotate, etc are provided.
 - Description: This allows users to describe the media
 - Delete button - To delete the media
 
-### Metafields 
+### Metafields
+
 There is also a provision to add more information about the media if the field is not included in the form. The user can use the [Metafields](/docs/features/extend-features) to feed in extra data as a JSON object.
 
 All the media will be available under the Media menu.
-Search and sort options are available to simplify the search for an image. To edit a Media click on the image in the list.
+[Search](/docs/features/search-and-filtering) and sort options are available to simplify the search for an image. To edit a Media click on the image in the list.
 
 ### Policies
 
