@@ -10,12 +10,12 @@ const AccountMenu = () => {
    */
   const accountMenu = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item key="profile">
         <Link to="/profile">
           <EditOutlined /> Profile
         </Link>
       </Menu.Item>
-      <Menu.Item>
+      <Menu.Item key="logout">
         <a href={window.REACT_APP_KRATOS_PUBLIC_URL + '/self-service/browser/flows/logout'}>
           <LogoutOutlined />
           Logout
