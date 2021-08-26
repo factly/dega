@@ -53,14 +53,15 @@ export const getMedium = (id, profile) => {
   };
 };
 
-export const addMedium = (data) => {
+export const addMedium = (data, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
-      .post(MEDIA_API, data)
-      .then(() => {
+      .post(getApi(profile), profile ? data[0] : data)
+      .then((response) => {
         dispatch(resetMedia());
         dispatch(addSuccessNotification('Medium added'));
+        return profile ? response.data : response.data.nodes[0];
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

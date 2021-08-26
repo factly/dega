@@ -19,9 +19,6 @@ function MediaSelector({
   const [tab, setTab] = React.useState('list');
   const dispatch = useDispatch();
 
-  const [mediumFetch, setMediumFetch] = React.useState(false);
-  const [uploadedMedium, setUploadedMedium] = React.useState(null);
-
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
   });
@@ -31,36 +28,20 @@ function MediaSelector({
   const setValue = () => {
     value = null;
   };
-
+  if (!selected && value && medium) {
+    setSelected(medium);
+  }
   React.useEffect(() => {
     if (value) {
       dispatch(getMedium(value, profile));
       setSelected(medium);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
-  if (!loading && mediumFetch && uploadedMedium) {
-    const fetchedId = media.req[0].data[0];
-    const fetchedMedium = media.details[fetchedId];
-    if (fetchedMedium.name === uploadedMedium.name) {
-      value = fetchedId;
-      setSelected(fetchedMedium);
-      setMediumFetch(false);
-      setUploadedMedium(null);
-    }
-  }
-
-  React.useEffect(() => {
-    if (mediumFetch && uploadedMedium) {
-      dispatch(getMedia(profile));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, mediumFetch, uploadedMedium]);
-
-  const onUpload = (values) => {
-    setMediumFetch(true);
-    setUploadedMedium(values[0]);
+  const onUpload = (values, medium) => {
+    value = medium.id;
+    setSelected(medium);
   };
 
   return (
@@ -128,7 +109,7 @@ function MediaSelector({
                 <ImagePlaceholder maxWidth={maxWidth} />
               )}
             </Button>
-            {selected && (
+            {medium && (
               <Button
                 style={{ position: 'absolute', bottom: 0, left: 0 }}
                 onClick={() => {
