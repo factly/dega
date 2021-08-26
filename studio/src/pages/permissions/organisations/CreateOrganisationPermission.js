@@ -10,7 +10,7 @@ function CreateOrganisationPermission() {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addOrganisationPermission(values)).then(() =>
-      history.push('/permissions/organisations'),
+      history.push('/admin/permissions/organisations'),
     );
   };
   return <OrganisationPermissionCreateForm onCreate={onCreate} />;
