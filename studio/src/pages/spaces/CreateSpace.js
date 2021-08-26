@@ -11,7 +11,7 @@ function CreateSpace() {
   const onCreate = (values) => {
     dispatch(addSpace(values)).then(() => {
       dispatch(getSpaces());
-      history.push('/spaces');
+      history.push('/admin/spaces');
     });
   };
   return <SpaceCreateForm onCreate={onCreate} />;

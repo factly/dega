@@ -48,7 +48,7 @@ function WebhookList({ actions }) {
             style={{
               marginRight: 8,
             }}
-            to={`/webhooks/${record.id}/edit`}
+            to={`/advanced/webhooks/${record.id}/edit`}
           >
             {record.name}
           </Link>

@@ -69,7 +69,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats()).then(() => history.push('/formats'));
+                  dispatch(addDefaultFormats()).then(() => history.push('/advanced/formats'));
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
@@ -80,14 +80,13 @@ function Features() {
             Two formats will be created Fact Check and Article. Click below Button to create
           </Card>
         )}
-
         {policies > 0 ? null : (
           <Card
             title="Policies"
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultPolicies()).then(() => history.push('/policies'));
+                  dispatch(addDefaultPolicies()).then(() => history.push('/members/policies'));
                 }}
               >
                 <PlusOutlined /> CREATE POLICIES
@@ -106,7 +105,7 @@ function Features() {
               actions={[
                 <Button
                   onClick={() => {
-                    dispatch(addDefaultEvents()).then(() => history.push('/events'));
+                    dispatch(addDefaultEvents()).then(() => history.push('/admin/events'));
                   }}
                 >
                   <PlusOutlined /> CREATE EVENTS

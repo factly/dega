@@ -48,7 +48,7 @@ function MenuList({ actions }) {
             style={{
               marginRight: 8,
             }}
-            to={`/menus/${record.id}/edit`}
+            to={`/website/menus/${record.id}/edit`}
           >
             {record.name}
           </Link>

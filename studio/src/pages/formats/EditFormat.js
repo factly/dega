@@ -31,7 +31,7 @@ function EditFormat() {
 
   const onUpdate = (values) => {
     dispatch(updateFormat({ ...format, ...values }));
-    history.push(`/formats/${id}/edit`);
+    history.push(`/advanced/formats/${id}/edit`);
   };
   return <FormatEditForm data={format} onCreate={onUpdate} />;
 }
