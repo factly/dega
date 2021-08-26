@@ -1,9 +1,10 @@
 import {
-  DashboardOutlined,
-  IdcardOutlined,
-  FileDoneOutlined,
-  CheckCircleOutlined,
-  AudioOutlined,
+  PieChartTwoTone,
+  ControlTwoTone,
+  AudioTwoTone,
+  ToolTwoTone,
+  SettingTwoTone,
+  SecurityScanTwoTone,
 } from '@ant-design/icons';
 
 //Pages
@@ -122,6 +123,21 @@ import EditWebhook from '../pages/webhooks/EditWebhook';
 //profile
 import Profile from '../pages/profile';
 
+// Website
+import Website from '../pages/website';
+import EditWebsite from '../pages/website/EditWebsite';
+import CodeInjection from '../pages/website/CodeInjection';
+import Branding from '../pages/website/Branding';
+import AnalyticsForm from '../pages/website/AnalyticsForm';
+
+// Advanced
+import Advanced from '../pages/advanced';
+
+// Members
+import Members from '../pages/members';
+import Requests from '../pages/requests';
+import Permissions from '../pages/permissions';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -139,12 +155,12 @@ const routes = {
     title: 'Analytics',
   },
   spaces: {
-    path: '/spaces',
+    path: '/admin/spaces',
     Component: Spaces,
     title: 'Spaces',
   },
   createSpace: {
-    path: '/spaces/create',
+    path: '/admin/spaces/create',
     Component: CreateSpace,
     title: 'New Space',
     permission: {
@@ -154,9 +170,45 @@ const routes = {
     },
   },
   editSpace: {
-    path: '/spaces/:id/edit',
+    path: '/admin/spaces/:id/edit',
     Component: EditSpace,
     title: 'Edit',
+    permission: {
+      resource: 'spaces',
+      action: 'update',
+    },
+  },
+  editWebsite: {
+    path: '/website/general',
+    Component: EditWebsite,
+    title: 'General',
+    permission: {
+      resource: 'spaces',
+      action: 'update',
+    },
+  },
+  codeInjection: {
+    path: '/website/code-injection',
+    Component: CodeInjection,
+    title: 'Code Injection',
+    permission: {
+      resource: 'spaces',
+      action: 'update',
+    },
+  },
+  branding: {
+    path: '/website/branding',
+    Component: Branding,
+    title: 'Branding',
+    permission: {
+      resource: 'spaces',
+      action: 'update',
+    },
+  },
+  analyticsForm: {
+    path: '/website/analytics',
+    Component: AnalyticsForm,
+    title: 'Analytics',
     permission: {
       resource: 'spaces',
       action: 'update',
@@ -208,62 +260,74 @@ const routes = {
       action: 'update',
     },
   },
+  permissions: {
+    path: '/admin/permissions',
+    Component: Permissions,
+    title: 'Permissions',
+    isAdmin: true,
+  },
+  requests: {
+    path: '/admin/requests',
+    Component: Requests,
+    title: 'Requests',
+    isOwner: true,
+  },
   organisationPermissions: {
-    path: '/permissions/organisations',
+    path: '/admin/permissions/organisations',
     Component: OrganisationPermissions,
     title: 'Organisations',
     isAdmin: true,
   },
   createOrganisationPermission: {
-    path: '/permissions/organisations/create',
+    path: '/admin/permissions/organisations/create',
     Component: CreateOrganisationPermission,
     title: 'Create',
     isAdmin: true,
   },
   editOrganisationPermission: {
-    path: '/organisations/:oid/permissions/:pid/edit',
+    path: '/admin/organisations/:oid/permissions/:pid/edit',
     Component: EditOrganisationPermission,
     title: 'Edit',
     isAdmin: true,
   },
   spacePermissions: {
-    path: '/permissions/spaces',
+    path: '/admin/permissions/spaces',
     Component: SpacePermissions,
     title: 'Spaces',
     isAdmin: true,
   },
   createSpacePermission: {
-    path: '/permissions/spaces/create',
+    path: '/admin/permissions/spaces/create',
     Component: CreateSpacePermission,
     title: 'Create',
     isAdmin: true,
   },
   editSpacePermission: {
-    path: '/spaces/:sid/permissions/:pid/edit',
+    path: '/admin/spaces/:sid/permissions/:pid/edit', //! check with harsha whether its spaces/* or permissions/spaces/*
     Component: EditSpacePermission,
     title: 'Edit',
     isAdmin: true,
   },
   organisationRequests: {
-    path: '/requests/organisations',
+    path: '/admin/requests/organisations',
     Component: OrganisationRequests,
     title: 'Organisations',
     isOwner: true,
   },
   createOrganisationRequest: {
-    path: '/requests/organisations/create',
+    path: '/admin/requests/organisations/create',
     Component: CreateOrganisationRequest,
     title: 'New Request',
     isOwner: true,
   },
   spaceRequests: {
-    path: '/requests/spaces',
+    path: '/admin/requests/spaces',
     Component: SpaceRequests,
     title: 'Spaces',
     isOwner: true,
   },
   createSpaceRequest: {
-    path: '/requests/spaces/create',
+    path: '/admin/requests/spaces/create',
     Component: CreateSpaceRequest,
     title: 'New Request',
     isOwner: true,
@@ -296,12 +360,12 @@ const routes = {
     },
   },
   policies: {
-    path: '/policies',
+    path: '/members/policies',
     Component: Policies,
     title: 'Policies',
   },
   createPolicy: {
-    path: '/policies/create',
+    path: '/members/policies/create',
     Component: CreatePolicy,
     title: 'New Policy',
     permission: {
@@ -310,7 +374,7 @@ const routes = {
     },
   },
   editPolicy: {
-    path: '/policies/:id/edit',
+    path: '/members/policies/:id/edit',
     Component: EditPolicy,
     title: 'Edit',
     permission: {
@@ -319,7 +383,7 @@ const routes = {
     },
   },
   formats: {
-    path: '/formats',
+    path: '/advanced/formats',
     Component: Formats,
     title: 'Formats',
     permission: {
@@ -328,7 +392,7 @@ const routes = {
     },
   },
   createFormat: {
-    path: '/formats/create',
+    path: '/advanced/formats/create',
     Component: CreateFormat,
     title: 'New Format',
     permission: {
@@ -337,7 +401,7 @@ const routes = {
     },
   },
   editFormat: {
-    path: '/formats/:id/edit',
+    path: '/advanced/formats/:id/edit',
     Component: EditFormat,
     title: 'Edit',
     permission: {
@@ -537,12 +601,12 @@ const routes = {
     title: 'Factly',
   },
   users: {
-    path: '/users',
+    path: '/members/users',
     Component: Users,
     title: 'Users',
   },
   usersPermission: {
-    path: '/users/:id/permissions',
+    path: '/members/users/:id/permissions',
     Component: PermissionList,
     title: 'Users Permission ',
     permission: {
@@ -551,12 +615,12 @@ const routes = {
     },
   },
   menu: {
-    path: '/menus',
+    path: '/website/menus',
     Component: Menu,
     title: 'Menus',
   },
   createMenu: {
-    path: '/menus/create',
+    path: '/website/menus/create',
     Component: CreateMenu,
     title: 'New Menu',
     permission: {
@@ -565,7 +629,7 @@ const routes = {
     },
   },
   editMenu: {
-    path: '/menus/:id/edit',
+    path: '/website/menus/:id/edit',
     Component: EditMenu,
     title: 'Edit',
     permission: {
@@ -597,25 +661,25 @@ const routes = {
     },
   },
   events: {
-    path: '/events',
+    path: '/admin/events',
     Component: Events,
     title: 'Events',
     isAdmin: true,
   },
   createEvent: {
-    path: '/events/create',
+    path: '/admin/events/create',
     Component: CreateEvent,
     title: 'New Event',
     isAdmin: true,
   },
   editEvent: {
-    path: '/events/:id/edit',
+    path: '/admin/events/:id/edit',
     Component: EditEvent,
     title: 'Edit',
     isAdmin: true,
   },
   webhooks: {
-    path: '/webhooks',
+    path: '/advanced/webhooks',
     Component: Webhooks,
     title: 'Webhooks',
     permission: {
@@ -624,7 +688,7 @@ const routes = {
     },
   },
   createWebhook: {
-    path: '/webhooks/create',
+    path: '/advanced/webhooks/create',
     Component: CreateWebhook,
     title: 'New Webhook',
     permission: {
@@ -633,7 +697,7 @@ const routes = {
     },
   },
   editWebhook: {
-    path: '/webhooks/:id/edit',
+    path: '/advanced/webhooks/:id/edit',
     Component: EditWebhook,
     title: 'Edit',
     permission: {
@@ -646,30 +710,36 @@ const routes = {
     Component: Profile,
     title: 'Edit Profile',
   },
+  website: {
+    path: '/website',
+    Component: Website,
+    title: 'Website',
+  },
+  members: {
+    path: '/members',
+    Component: Members,
+    title: 'Members',
+  },
+  advanced: {
+    path: '/advanced',
+    Component: Advanced,
+    title: 'Advanced',
+  },
 };
-
 export const sidebarMenu = [
   {
-    title: 'DASHBOARD',
-    Icon: DashboardOutlined,
+    title: 'Dashboard',
+    Icon: PieChartTwoTone,
     children: [routes.home, routes.analytics],
   },
   {
-    title: 'CORE',
-    Icon: FileDoneOutlined,
-    children: [
-      routes.posts,
-      routes.pages,
-      routes.categories,
-      routes.tags,
-      routes.media,
-      routes.formats,
-      routes.menu,
-    ],
+    title: 'Core',
+    Icon: ControlTwoTone,
+    children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
   },
   {
-    title: 'FACT CHECKING',
-    Icon: CheckCircleOutlined,
+    title: 'Fact Checking',
+    Icon: SecurityScanTwoTone,
     children: [
       routes.factCheck,
       routes.claims,
@@ -680,27 +750,19 @@ export const sidebarMenu = [
     ],
   },
   {
-    title: 'PODCAST',
-    Icon: AudioOutlined,
+    title: 'Podcast',
+    Icon: AudioTwoTone,
     children: [routes.episodes, routes.podcasts],
   },
   {
-    title: 'ADMINSTRATION',
-    Icon: IdcardOutlined,
-    children: [routes.spaces, routes.policies, routes.users, routes.events, routes.webhooks],
-    submenu: [
-      {
-        isAdmin: true,
-        title: 'Permissions',
-        Icon: IdcardOutlined,
-        children: [routes.organisationPermissions, routes.spacePermissions],
-      },
-      {
-        title: 'Requests',
-        Icon: IdcardOutlined,
-        children: [routes.organisationRequests, routes.spaceRequests],
-      },
-    ],
+    title: 'Settings',
+    Icon: SettingTwoTone,
+    children: [routes.website, routes.members, routes.advanced],
+  },
+  {
+    title: 'Administration',
+    Icon: ToolTwoTone,
+    children: [routes.spaces, routes.requests, routes.permissions, routes.events],
   },
 ];
 
