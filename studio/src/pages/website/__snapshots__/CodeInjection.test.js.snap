@@ -1,0 +1,603 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Code Injection Form component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <CodeInjection>
+    <div>
+      <ForwardRef(InternalForm)
+        form={
+          Object {
+            "__INTERNAL__": Object {
+              "itemRef": [Function],
+              "name": "code-injection",
+            },
+            "getFieldError": [Function],
+            "getFieldInstance": [Function],
+            "getFieldValue": [Function],
+            "getFieldsError": [Function],
+            "getFieldsValue": [Function],
+            "getInternalHooks": [Function],
+            "isFieldTouched": [Function],
+            "isFieldValidating": [Function],
+            "isFieldsTouched": [Function],
+            "isFieldsValidating": [Function],
+            "resetFields": [Function],
+            "scrollToField": [Function],
+            "setFields": [Function],
+            "setFieldsValue": [Function],
+            "submit": [Function],
+            "validateFields": [Function],
+          }
+        }
+        initialValues={
+          Object {
+            "description": "description",
+            "id": 11,
+            "name": "name",
+            "organisation_id": 1,
+            "site_address": "site_address",
+            "site_title": "site_title",
+            "slug": "slug",
+            "social_media_urls": Object {
+              "facebook": "facebookUrl",
+            },
+            "tag_line": "tag_line",
+          }
+        }
+        layout="vertical"
+        name="code-injection"
+        onFinish={[Function]}
+        onFinishFailed={[Function]}
+        onValuesChange={[Function]}
+        scrollToFirstError={true}
+        style={
+          Object {
+            "paddingTop": "24px",
+          }
+        }
+      >
+        <SizeContextProvider>
+          <ForwardRef(Form)
+            className="ant-form ant-form-vertical"
+            form={
+              Object {
+                "__INTERNAL__": Object {
+                  "itemRef": [Function],
+                  "name": "code-injection",
+                },
+                "getFieldError": [Function],
+                "getFieldInstance": [Function],
+                "getFieldValue": [Function],
+                "getFieldsError": [Function],
+                "getFieldsValue": [Function],
+                "getInternalHooks": [Function],
+                "isFieldTouched": [Function],
+                "isFieldValidating": [Function],
+                "isFieldsTouched": [Function],
+                "isFieldsValidating": [Function],
+                "resetFields": [Function],
+                "scrollToField": [Function],
+                "setFields": [Function],
+                "setFieldsValue": [Function],
+                "submit": [Function],
+                "validateFields": [Function],
+              }
+            }
+            id="code-injection"
+            initialValues={
+              Object {
+                "description": "description",
+                "id": 11,
+                "name": "name",
+                "organisation_id": 1,
+                "site_address": "site_address",
+                "site_title": "site_title",
+                "slug": "slug",
+                "social_media_urls": Object {
+                  "facebook": "facebookUrl",
+                },
+                "tag_line": "tag_line",
+              }
+            }
+            name="code-injection"
+            onFinish={[Function]}
+            onFinishFailed={[Function]}
+            onValuesChange={[Function]}
+            style={
+              Object {
+                "paddingTop": "24px",
+              }
+            }
+          >
+            <form
+              className="ant-form ant-form-vertical"
+              id="code-injection"
+              onReset={[Function]}
+              onSubmit={[Function]}
+              style={
+                Object {
+                  "paddingTop": "24px",
+                }
+              }
+            >
+              <Row
+                justify="end"
+              >
+                <div
+                  className="ant-row ant-row-end"
+                  style={Object {}}
+                >
+                  <FormItem>
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          prefixCls="ant-form"
+                          requiredMark={true}
+                        />
+                        <FormItemInput
+                          errors={Array []}
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          validateStatus=""
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Button
+                                    disabled={true}
+                                    htmlType="submit"
+                                    type="primary"
+                                  >
+                                    <Wave>
+                                      <button
+                                        className="ant-btn ant-btn-primary"
+                                        disabled={true}
+                                        onClick={[Function]}
+                                        type="submit"
+                                      >
+                                        <LoadingIcon
+                                          existIcon={false}
+                                          loading={false}
+                                          prefixCls="ant-btn"
+                                        >
+                                          <CSSMotion
+                                            motionName="ant-btn-loading-icon-motion"
+                                            onAppearActive={[Function]}
+                                            onAppearStart={[Function]}
+                                            onEnterActive={[Function]}
+                                            onEnterStart={[Function]}
+                                            onLeaveActive={[Function]}
+                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
+                                          >
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </LoadingIcon>
+                                        <span
+                                          key=".0"
+                                        >
+                                          Update
+                                        </span>
+                                      </button>
+                                    </Wave>
+                                  </Button>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </FormItem>
+                </div>
+              </Row>
+              <FormItem
+                label="Header Code"
+                name="header_code"
+              >
+                <WrapperField
+                  label="Header Code"
+                  messageVariables={
+                    Object {
+                      "label": "Header Code",
+                    }
+                  }
+                  name="header_code"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "code-injection",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_header_code"
+                    label="Header Code"
+                    messageVariables={
+                      Object {
+                        "label": "Header Code",
+                      }
+                    }
+                    name={
+                      Array [
+                        "header_code",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="code-injection_header_code"
+                          label="Header Code"
+                          name="header_code"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="code-injection_header_code"
+                                title="Header Code"
+                              >
+                                Header Code
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Header Code"
+                          name={
+                            Array [
+                              "header_code",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <MONACOEditor
+                                      id="code-injection_header_code"
+                                      language="html"
+                                      onChange={[Function]}
+                                      width="100%"
+                                    >
+                                      <MonacoEditor
+                                        height="240"
+                                        language="html"
+                                        onChange={[Function]}
+                                        options={
+                                          Object {
+                                            "autoClosingBrackets": "auto",
+                                            "autoClosingQuotes": "auto",
+                                            "cursorBlinking": "smooth",
+                                            "folding": true,
+                                            "lineNumbersMinChars": 4,
+                                            "minimap": Object {
+                                              "enabled": false,
+                                            },
+                                            "scrollBeyondLastLine": false,
+                                            "theme": "vs-dark",
+                                            "wordWrap": "on",
+                                          }
+                                        }
+                                        width="100%"
+                                      >
+                                        <div />
+                                      </MonacoEditor>
+                                    </MONACOEditor>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+              <FormItem
+                label="Footer Code"
+                name="footer_code"
+              >
+                <WrapperField
+                  label="Footer Code"
+                  messageVariables={
+                    Object {
+                      "label": "Footer Code",
+                    }
+                  }
+                  name="footer_code"
+                  onReset={[Function]}
+                  trigger="onChange"
+                  validateTrigger="onChange"
+                >
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "code-injection",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_footer_code"
+                    label="Footer Code"
+                    messageVariables={
+                      Object {
+                        "label": "Footer Code",
+                      }
+                    }
+                    name={
+                      Array [
+                        "footer_code",
+                      ]
+                    }
+                    onReset={[Function]}
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
+                  >
+                    <Row
+                      className="ant-form-item"
+                      key="row"
+                    >
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
+                      >
+                        <FormItemLabel
+                          htmlFor="code-injection_footer_code"
+                          label="Footer Code"
+                          name="footer_code"
+                          prefixCls="ant-form"
+                          required={false}
+                          requiredMark={true}
+                        >
+                          <Col
+                            className="ant-form-item-label"
+                          >
+                            <div
+                              className="ant-col ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className=""
+                                htmlFor="code-injection_footer_code"
+                                title="Footer Code"
+                              >
+                                Footer Code
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Footer Code"
+                          name={
+                            Array [
+                              "footer_code",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                          >
+                            <div
+                              className="ant-col ant-form-item-control"
+                              style={Object {}}
+                            >
+                              <div
+                                className="ant-form-item-control-input"
+                              >
+                                <div
+                                  className="ant-form-item-control-input-content"
+                                >
+                                  <Component
+                                    update={2}
+                                  >
+                                    <MONACOEditor
+                                      id="code-injection_footer_code"
+                                      language="html"
+                                      onChange={[Function]}
+                                      width="100%"
+                                    >
+                                      <MonacoEditor
+                                        height="240"
+                                        language="html"
+                                        onChange={[Function]}
+                                        options={
+                                          Object {
+                                            "autoClosingBrackets": "auto",
+                                            "autoClosingQuotes": "auto",
+                                            "cursorBlinking": "smooth",
+                                            "folding": true,
+                                            "lineNumbersMinChars": 4,
+                                            "minimap": Object {
+                                              "enabled": false,
+                                            },
+                                            "scrollBeyondLastLine": false,
+                                            "theme": "vs-dark",
+                                            "wordWrap": "on",
+                                          }
+                                        }
+                                        width="100%"
+                                      >
+                                        <div />
+                                      </MonacoEditor>
+                                    </MONACOEditor>
+                                  </Component>
+                                </div>
+                              </div>
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
+                              >
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+            </form>
+          </ForwardRef(Form)>
+        </SizeContextProvider>
+      </ForwardRef(InternalForm)>
+    </div>
+  </CodeInjection>
+</Provider>
+`;
