@@ -28,9 +28,14 @@ function PageHeader() {
         if (url === '/permissions' && !pathSnippets[index + 2])
           return { breadcrumbName: 'Permissions' };
         if (url === '/requests' && !pathSnippets[index + 2]) return { breadcrumbName: 'Requests' };
+        if (url === '/spaces' && !pathSnippets[index + 2]) return { breadcrumbName: 'Spaces' };
         if (
           index === pathSnippets.length - 1 &&
-          !(location.pathname.includes('permissions') || location.pathname.includes('requests'))
+          !(
+            location.pathname.includes('permissions') ||
+            location.pathname.includes('requests') ||
+            location.pathname.includes('spaces')
+          )
         ) {
           if (pathSnippets.includes('edit') && !state[entity].loading) {
             const generatedReferenceURL = `/${pathSnippets.slice(0, index - 1).join('/')}`
@@ -89,7 +94,7 @@ function PageHeader() {
   };
   const itemRender = (route, params, routes, paths) => {
     const last = routes.indexOf(route) === routes.length - 1;
-    if (last) {
+    if (last && routes.length > 1) {
       return !isBreadCrumbsHidden && <h2 style={{ display: 'inline' }}>{route.breadcrumbName}</h2>;
     }
     return (
@@ -100,7 +105,10 @@ function PageHeader() {
       )
     );
   };
-  if (state[entity] && !state[entity].loading)
+  if (
+    (state[entity] && !state[entity].loading) ||
+    ['members', 'advanced', 'website', 'admin'].includes(entity)
+  )
     return (
       <AntPageHeader
         ghost={false}
