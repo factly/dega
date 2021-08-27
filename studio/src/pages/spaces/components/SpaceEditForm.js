@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Select, Collapse } from 'antd';
-import MediaSelector from '../../../components/MediaSelector';
+import { Button, Form, Input, Select, Row } from 'antd';
 import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -26,34 +25,11 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
-  const { Panel } = Collapse;
-
   const onReset = () => {
     form.resetFields();
   };
 
   const [valueChange, setValueChange] = React.useState(false);
-  const [basicPanel, setBasicPanel] = React.useState(null);
-  const [mediaPanel, setMediaPanel] = React.useState(null);
-  const [contactPanel, setContactPanel] = React.useState(null);
-  const [analyticsPanel, setAnalyticsPanel] = React.useState(null);
-  const [codePanel, setCodePanel] = React.useState(null);
-
-  const handleBasicCollapse = () => {
-    basicPanel === null ? setBasicPanel('1') : setBasicPanel(null);
-  };
-  const handleMediaCollapse = () => {
-    mediaPanel === null ? setMediaPanel('2') : setMediaPanel(null);
-  };
-  const handleContactCollapse = () => {
-    contactPanel === null ? setContactPanel('3') : setContactPanel(null);
-  };
-  const handleAnalyticsCollapse = () => {
-    analyticsPanel === null ? setAnalyticsPanel('4') : setAnalyticsPanel(null);
-  };
-  const handleCodeCollapse = () => {
-    codePanel === null ? setCodePanel('5') : setCodePanel(null);
-  };
 
   return (
     <div>
@@ -71,9 +47,9 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
-          let name = errors.errorFields[0].name[0];
+          // let name = errors.errorFields[0].name[0];
           // if (['name', 'slug'].includes(name)) {
-          setBasicPanel('1');
+          console.log({ errors });
           // }
         }}
         onValuesChange={() => {
@@ -83,158 +59,71 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
           paddingTop: '24px',
         }}
       >
-        <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={basicPanel}
-          onChange={handleBasicCollapse}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-        >
-          <Panel header="Basic" key="1">
-            <Form.Item label="Name">
-              <Input.Group compact>
-                <Form.Item
-                  name="organisation_id"
-                  noStyle
-                  rules={[{ required: true, message: 'Organisation is required' }]}
-                >
-                  <Select style={{ width: '40%' }} placeholder="Select organisation">
-                    {orgs.map((org) => (
-                      <Option key={org.id} value={org.id}>
-                        {org.title}
-                      </Option>
-                    ))}
-                  </Select>
-                </Form.Item>
-                <Form.Item
-                  name="name"
-                  noStyle
-                  rules={[
-                    { required: true, message: 'Name is required' },
-                    { min: 3, message: 'Name must be minimum 3 characters.' },
-                    { max: 50, message: 'Name must be maximum 50 characters.' },
-                  ]}
-                >
-                  <Input style={{ width: '60%' }} placeholder="Input name" />
-                </Form.Item>
-              </Input.Group>
+        <Row justify="end">
+          <Form.Item>
+            <Button disabled={!valueChange} type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Form.Item>
+        </Row>
+        <Form.Item label="Name">
+          <Input.Group compact>
+            <Form.Item
+              name="organisation_id"
+              noStyle
+              rules={[{ required: true, message: 'Organisation is required' }]}
+            >
+              <Select style={{ width: '40%' }} placeholder="Select organisation">
+                {orgs.map((org) => (
+                  <Option key={org.id} value={org.id}>
+                    {org.title}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
             <Form.Item
-              name="slug"
-              label="Slug"
+              name="name"
+              noStyle
               rules={[
-                {
-                  required: true,
-                  message: 'Please input the slug!',
-                },
-                {
-                  required: checker,
-                  message: 'Please enter valid slug!',
-                },
+                { required: true, message: 'Name is required' },
+                { min: 3, message: 'Name must be minimum 3 characters.' },
+                { max: 50, message: 'Name must be maximum 50 characters.' },
               ]}
             >
-              <Input />
+              <Input style={{ width: '60%' }} placeholder="Input name" />
             </Form.Item>
-            <Form.Item name="site_title" label="Title">
-              <Input />
-            </Form.Item>
-            <Form.Item name="tag_line" label="Tag line">
-              <Input />
-            </Form.Item>
-            <Form.Item name="site_address" label="Website">
-              <Input />
-            </Form.Item>
-            <Form.Item name="description" label="Description">
-              <TextArea placeholder="Enter Description..." />
-            </Form.Item>
-            <Form.Item name="meta_fields" label="Metafields">
-              <MonacoEditor language="json" />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={mediaPanel}
-          onChange={handleMediaCollapse}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          </Input.Group>
+        </Form.Item>
+        <Form.Item
+          name="slug"
+          label="Slug"
+          rules={[
+            {
+              required: true,
+              message: 'Please input the slug!',
+            },
+            {
+              required: checker,
+              message: 'Please enter valid slug!',
+            },
+          ]}
         >
-          <Panel header="Media" key="2">
-            <Form.Item label="Logo" name="logo_id">
-              <MediaSelector />
-            </Form.Item>
-            <Form.Item label="Logo Mobile" name="logo_mobile_id">
-              <MediaSelector />
-            </Form.Item>
-            <Form.Item label="Fav Icon" name="fav_icon_id">
-              <MediaSelector />
-            </Form.Item>
-            <Form.Item label="Mobile Icon" name="mobile_icon_id">
-              <MediaSelector />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={contactPanel}
-          onChange={handleContactCollapse}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-        >
-          <Panel header="Contact" key="3">
-            <Form.Item name={['social_media_urls', 'facebook']} label="Facebook">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'twitter']} label="Twitter">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'pintrest']} label="Pintrest">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={analyticsPanel}
-          onChange={handleAnalyticsCollapse}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-        >
-          <Panel header="Analytics" key="4">
-            <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name={['analytics', 'plausible', 'domain']} label="Domain">
-              <Input style={{ width: '100%' }} />
-            </Form.Item>
-            <Form.Item name={['analytics', 'plausible', 'embed_code']} label="Embed Code">
-              <Input.TextArea style={{ width: '100%' }} />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          style={{ width: '95%', marginBottom: '15px' }}
-          activeKey={codePanel}
-          onChange={handleCodeCollapse}
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-        >
-          <Panel header="Code Injection" key="5">
-            <Form.Item name="header_code" label="Header Code">
-              <MonacoEditor language="html" width={650} />
-            </Form.Item>
-            <Form.Item name="footer_code" label="Footer Code">
-              <MonacoEditor language="html" width={650} />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Form.Item>
-          <Button disabled={!valueChange} type="primary" htmlType="submit">
-            Update
-          </Button>
+          <Input />
+        </Form.Item>
+        <Form.Item name="site_title" label="Title">
+          <Input />
+        </Form.Item>
+        <Form.Item name="tag_line" label="Tag line">
+          <Input />
+        </Form.Item>
+        <Form.Item name="site_address" label="Website">
+          <Input />
+        </Form.Item>
+        <Form.Item name="description" label="Description">
+          <TextArea placeholder="Enter Description..." />
+        </Form.Item>
+        <Form.Item name="meta_fields" label="Metafields">
+          <MonacoEditor language="json" />
         </Form.Item>
       </Form>
     </div>
