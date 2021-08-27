@@ -385,7 +385,7 @@ exports[`Spaces List component snapshot testing should match component with spac
                     style={Object {}}
                   >
                     <a
-                      href="/spaces/1/edit"
+                      href="/admin/spaces/1/edit"
                       onClick={[Function]}
                       style={
                         Object {

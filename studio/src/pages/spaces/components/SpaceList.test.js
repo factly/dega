@@ -126,7 +126,7 @@ describe('Spaces List component', () => {
       );
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('space 1');
-      expect(link.prop('to')).toEqual('/spaces/1/edit');
+      expect(link.prop('to')).toEqual('/admin/spaces/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       useSelector.mockImplementation((state) => ({}));

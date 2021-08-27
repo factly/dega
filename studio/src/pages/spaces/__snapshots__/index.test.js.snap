@@ -75,14 +75,14 @@ exports[`Spaces List component should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/spaces/create"
+                      to="/admin/spaces/create"
                     >
                       <LinkAnchor
-                        href="/spaces/create"
+                        href="/admin/spaces/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/spaces/create"
+                          href="/admin/spaces/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1456,14 +1456,14 @@ exports[`Spaces List component should render the component with data 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/spaces/create"
+                      to="/admin/spaces/create"
                     >
                       <LinkAnchor
-                        href="/spaces/create"
+                        href="/admin/spaces/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/spaces/create"
+                          href="/admin/spaces/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1761,7 +1761,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                               class="ant-table-cell"
                                             >
                                               <a
-                                                href="/spaces/1/edit"
+                                                href="/admin/spaces/1/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 space
@@ -1986,7 +1986,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                     class="ant-table-cell"
                                                   >
                                                     <a
-                                                      href="/spaces/1/edit"
+                                                      href="/admin/spaces/1/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       space
@@ -2810,10 +2810,10 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/spaces/1/edit"
+                                                      to="/admin/spaces/1/edit"
                                                     >
                                                       <LinkAnchor
-                                                        href="/spaces/1/edit"
+                                                        href="/admin/spaces/1/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -2822,7 +2822,7 @@ exports[`Spaces List component should render the component with data 1`] = `
                                                         }
                                                       >
                                                         <a
-                                                          href="/spaces/1/edit"
+                                                          href="/admin/spaces/1/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
