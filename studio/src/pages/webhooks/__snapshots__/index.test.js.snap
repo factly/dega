@@ -83,14 +83,14 @@ exports[`Webhook component snapshot testing should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/webhooks/create"
+                      to="/advanced/webhooks/create"
                     >
                       <LinkAnchor
-                        href="/webhooks/create"
+                        href="/advanced/webhooks/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/webhooks/create"
+                          href="/advanced/webhooks/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1307,14 +1307,14 @@ exports[`Webhook component snapshot testing should render the component with dat
                   >
                     <Link
                       key="1"
-                      to="/webhooks/create"
+                      to="/advanced/webhooks/create"
                     >
                       <LinkAnchor
-                        href="/webhooks/create"
+                        href="/advanced/webhooks/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/webhooks/create"
+                          href="/advanced/webhooks/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1586,7 +1586,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                             >
                                               <a
                                                 class="ant-dropdown-link"
-                                                href="/webhooks/1/edit"
+                                                href="/advanced/webhooks/1/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Webhook-1
@@ -1796,7 +1796,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                   >
                                                     <a
                                                       class="ant-dropdown-link"
-                                                      href="/webhooks/1/edit"
+                                                      href="/advanced/webhooks/1/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Webhook-1
@@ -2450,11 +2450,11 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/webhooks/1/edit"
+                                                      to="/advanced/webhooks/1/edit"
                                                     >
                                                       <LinkAnchor
                                                         className="ant-dropdown-link"
-                                                        href="/webhooks/1/edit"
+                                                        href="/advanced/webhooks/1/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -2464,7 +2464,7 @@ exports[`Webhook component snapshot testing should render the component with dat
                                                       >
                                                         <a
                                                           className="ant-dropdown-link"
-                                                          href="/webhooks/1/edit"
+                                                          href="/advanced/webhooks/1/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {

@@ -183,7 +183,7 @@ describe('Webhook List component', () => {
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('Webhook2');
-      expect(link.prop('to')).toEqual('/webhooks/2/edit');
+      expect(link.prop('to')).toEqual('/advanced/webhooks/2/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
