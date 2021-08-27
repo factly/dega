@@ -76,10 +76,10 @@ function Branding() {
           <Panel header="Icons and Logos" key="1">
             <Row gutter={[16, 16]}>
               <Col span={12}>
-                <Form.Item label="Logo" name="logo_id" extra="Primary Logo">
+                <Form.Item label="Primary Logo" name="logo_id" extra="Primary Logo">
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '192px' }}
-                    maxWidth="192px"
+                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
+                    maxWidth="152px"
                   />
                 </Form.Item>
               </Col>
@@ -90,8 +90,8 @@ function Branding() {
                   extra="Secondary logo for mobile sites or amp pages"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '192px' }}
-                    maxWidth="192px"
+                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
+                    maxWidth="152px"
                   />
                 </Form.Item>
               </Col>
@@ -102,8 +102,8 @@ function Branding() {
                   extra="Default favicon for browsers and pwa sites"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '192px' }}
-                    maxWidth="192px"
+                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
+                    maxWidth="152px"
                   />
                 </Form.Item>
               </Col>
@@ -114,8 +114,8 @@ function Branding() {
                   extra="Favicon for mobile and pwa sites"
                 >
                   <MediaSelector
-                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '192px' }}
-                    maxWidth="192px"
+                    containerStyles={{ justifyContent: 'flex-start', maxWidth: '152px' }}
+                    maxWidth="152px"
                   />
                 </Form.Item>
               </Col>
