@@ -174,7 +174,7 @@ describe('Policies List component', () => {
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('Test');
-      expect(link.prop('to')).toEqual('/policies/1/edit');
+      expect(link.prop('to')).toEqual('/members/policies/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({

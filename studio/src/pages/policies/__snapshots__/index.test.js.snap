@@ -82,14 +82,14 @@ exports[`Policies List component should render the component 1`] = `
                     }
                   >
                     <Link
-                      to="/policies/create"
+                      to="/members/policies/create"
                     >
                       <LinkAnchor
-                        href="/policies/create"
+                        href="/members/policies/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/policies/create"
+                          href="/members/policies/create"
                           onClick={[Function]}
                         >
                           <Button

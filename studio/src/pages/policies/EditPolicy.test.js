@@ -268,7 +268,7 @@ describe('Policies edit component', () => {
           users: [],
           test: 'test',
         });
-        expect(push).toHaveBeenCalledWith('/policies/1/edit');
+        expect(push).toHaveBeenCalledWith('/members/policies/1/edit');
         done();
       }, 0);
     });
