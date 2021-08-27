@@ -12,8 +12,12 @@ import '@uppy/url/dist/style.css';
 import '@uppy/image-editor/dist/style.css';
 import { checker, maker } from '../../utils/sluger';
 
-function UppyUploader({ onUpload, allowedFileTypes = ['image/*'] }) {
+function UppyUploader({ onUpload, allowedFileTypes = ['image/*'], profile = false }) {
   const space_slug = useSelector((state) => state.spaces.details[state.spaces.selected].slug);
+  const org_slug = useSelector(
+    (state) => state.spaces.orgs.find((org) => org.spaces.includes(state.spaces.selected)).slug,
+  );
+  const slug = profile ? org_slug : space_slug;
   const uppy = Uppy({
     id: 'uppy-media',
     meta: { type: 'avatar' },
@@ -33,7 +37,7 @@ function UppyUploader({ onUpload, allowedFileTypes = ['image/*'] }) {
           meta: {
             ...files[fileID].meta,
             name:
-              space_slug +
+              slug +
               '/' +
               new Date().getFullYear() +
               '/' +

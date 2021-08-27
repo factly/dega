@@ -19,8 +19,9 @@ func Router() chi.Router {
 		r.Put("/", redirectToKavach)
 	})
 
-	r.Route("/medium", func(r chi.Router) {
+	r.Route("/media", func(r chi.Router) {
 		r.Get("/", redirectToKavach)
+		r.Get("/{medium_id}", redirectToKavach)
 		r.Post("/", redirectToKavach)
 	})
 

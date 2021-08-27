@@ -7,14 +7,17 @@ import { getMedium, getMedia } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} }) {
+function MediaSelector({
+  value = null,
+  onChange,
+  maxWidth,
+  containerStyles = {},
+  profile = false,
+}) {
   const [show, setShow] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
   const [tab, setTab] = React.useState('list');
   const dispatch = useDispatch();
-
-  const [mediumFetch, setMediumFetch] = React.useState(false);
-  const [uploadedMedium, setUploadedMedium] = React.useState(null);
 
   const medium = useSelector((state) => {
     return state.media.details[value] || null;
@@ -25,36 +28,20 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
   const setValue = () => {
     value = null;
   };
-
+  if (!selected && value && medium) {
+    setSelected(medium);
+  }
   React.useEffect(() => {
     if (value) {
-      dispatch(getMedium(value));
+      dispatch(getMedium(value, profile));
       setSelected(medium);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [value]);
 
-  if (!loading && mediumFetch && uploadedMedium) {
-    const fetchedId = media.req[0].data[0];
-    const fetchedMedium = media.details[fetchedId];
-    if (fetchedMedium.name === uploadedMedium.name) {
-      value = fetchedId;
-      setSelected(fetchedMedium);
-      setMediumFetch(false);
-      setUploadedMedium(null);
-    }
-  }
-
-  React.useEffect(() => {
-    if (mediumFetch && uploadedMedium) {
-      dispatch(getMedia());
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, mediumFetch, uploadedMedium]);
-
-  const onUpload = (values) => {
-    setMediumFetch(true);
-    setUploadedMedium(values[0]);
+  const onUpload = (values, medium) => {
+    value = medium.id;
+    setSelected(medium);
   };
 
   return (
@@ -86,9 +73,14 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
             <Radio.Button value="upload">Upload</Radio.Button>
           </Radio.Group>
           {tab === 'list' ? (
-            <MediaList onSelect={setSelected} selected={selected} onUnselect={setValue} />
+            <MediaList
+              onSelect={setSelected}
+              selected={selected}
+              onUnselect={setValue}
+              profile={profile}
+            />
           ) : tab === 'upload' ? (
-            <MediaUploader onMediaUpload={onUpload} />
+            <MediaUploader onMediaUpload={onUpload} profile={profile} />
           ) : null}
         </Space>
       </Modal>
@@ -117,7 +109,7 @@ function MediaSelector({ value = null, onChange, maxWidth, containerStyles = {} 
                 <ImagePlaceholder maxWidth={maxWidth} />
               )}
             </Button>
-            {selected && (
+            {medium && (
               <Button
                 style={{ position: 'absolute', bottom: 0, left: 0 }}
                 onClick={() => {

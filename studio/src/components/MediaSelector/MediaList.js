@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
 import deepEqual from 'deep-equal';
 
-function MediaList({ onSelect, selected, onUnselect }) {
+function MediaList({ onSelect, selected, onUnselect, profile = false }) {
   const dispatch = useDispatch();
 
   const [filters, setFilters] = React.useState({
@@ -33,7 +33,7 @@ function MediaList({ onSelect, selected, onUnselect }) {
   }, [dispatch, filters]);
 
   const fetchMedia = () => {
-    dispatch(getMedia(filters));
+    dispatch(getMedia(filters, profile));
   };
 
   return (

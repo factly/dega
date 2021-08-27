@@ -7,3 +7,4 @@ export const SET_MEDIA_LOADING = 'SET_MEDIA_LOADING';
 
 //API
 export const MEDIA_API = '/core/media';
+export const KAVACH_MEDIA_API = '/user/media';
