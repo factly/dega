@@ -207,7 +207,7 @@ describe('Formats edit component', () => {
         description: 'description',
         test: 'test',
       });
-      expect(push).toHaveBeenCalledWith('/formats/1/edit');
+      expect(push).toHaveBeenCalledWith('/advanced/formats/1/edit');
     });
   });
 });

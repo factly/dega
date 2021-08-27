@@ -83,7 +83,7 @@ describe('Formats create component', () => {
       wrapper.find(FormatCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addFormat).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/formats');
+        expect(push).toHaveBeenCalledWith('/advanced/formats');
         expect(setReloadFlag).toHaveBeenCalledWith(true);
         done();
       }, 0);
