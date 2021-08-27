@@ -470,15 +470,15 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                           >
                                             <FormItem
                                               extra="Primary Logo"
-                                              label="Logo"
+                                              label="Primary Logo"
                                               name="logo_id"
                                             >
                                               <WrapperField
                                                 extra="Primary Logo"
-                                                label="Logo"
+                                                label="Primary Logo"
                                                 messageVariables={
                                                   Object {
-                                                    "label": "Logo",
+                                                    "label": "Primary Logo",
                                                   }
                                                 }
                                                 name="logo_id"
@@ -514,10 +514,10 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                     }
                                                   }
                                                   key="_logo_id"
-                                                  label="Logo"
+                                                  label="Primary Logo"
                                                   messageVariables={
                                                     Object {
-                                                      "label": "Logo",
+                                                      "label": "Primary Logo",
                                                     }
                                                   }
                                                   name={
@@ -541,7 +541,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                       <FormItemLabel
                                                         extra="Primary Logo"
                                                         htmlFor="create-space_logo_id"
-                                                        label="Logo"
+                                                        label="Primary Logo"
                                                         name="logo_id"
                                                         prefixCls="ant-form"
                                                         required={false}
@@ -557,9 +557,9 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                             <label
                                                               className=""
                                                               htmlFor="create-space_logo_id"
-                                                              title="Logo"
+                                                              title="Primary Logo"
                                                             >
-                                                              Logo
+                                                              Primary Logo
                                                             </label>
                                                           </div>
                                                         </Col>
@@ -567,7 +567,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                       <FormItemInput
                                                         errors={Array []}
                                                         extra="Primary Logo"
-                                                        label="Logo"
+                                                        label="Primary Logo"
                                                         name={
                                                           Array [
                                                             "logo_id",
@@ -600,11 +600,11 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                     containerStyles={
                                                                       Object {
                                                                         "justifyContent": "flex-start",
-                                                                        "maxWidth": "192px",
+                                                                        "maxWidth": "152px",
                                                                       }
                                                                     }
                                                                     id="create-space_logo_id"
-                                                                    maxWidth="192px"
+                                                                    maxWidth="152px"
                                                                     onChange={[Function]}
                                                                   >
                                                                     <Modal
@@ -698,7 +698,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                   "alignItems": "center",
                                                                                   "display": "flex",
                                                                                   "justifyContent": "flex-start",
-                                                                                  "maxWidth": "192px",
+                                                                                  "maxWidth": "152px",
                                                                                 }
                                                                               }
                                                                             >
@@ -756,7 +756,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                       <PlaceholderImage
                                                                                         height="auto"
                                                                                         key=".0"
-                                                                                        maxWidth="192px"
+                                                                                        maxWidth="152px"
                                                                                         width="100%"
                                                                                       >
                                                                                         <img
@@ -765,7 +765,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                           src="placeholderImage.svg"
                                                                                           style={
                                                                                             Object {
-                                                                                              "maxWidth": "192px",
+                                                                                              "maxWidth": "152px",
                                                                                               "objectFit": "contain",
                                                                                               "padding": "1rem",
                                                                                             }
@@ -962,11 +962,11 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                     containerStyles={
                                                                       Object {
                                                                         "justifyContent": "flex-start",
-                                                                        "maxWidth": "192px",
+                                                                        "maxWidth": "152px",
                                                                       }
                                                                     }
                                                                     id="create-space_logo_mobile_id"
-                                                                    maxWidth="192px"
+                                                                    maxWidth="152px"
                                                                     onChange={[Function]}
                                                                   >
                                                                     <Modal
@@ -1060,7 +1060,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                   "alignItems": "center",
                                                                                   "display": "flex",
                                                                                   "justifyContent": "flex-start",
-                                                                                  "maxWidth": "192px",
+                                                                                  "maxWidth": "152px",
                                                                                 }
                                                                               }
                                                                             >
@@ -1118,7 +1118,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                       <PlaceholderImage
                                                                                         height="auto"
                                                                                         key=".0"
-                                                                                        maxWidth="192px"
+                                                                                        maxWidth="152px"
                                                                                         width="100%"
                                                                                       >
                                                                                         <img
@@ -1127,7 +1127,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                           src="placeholderImage.svg"
                                                                                           style={
                                                                                             Object {
-                                                                                              "maxWidth": "192px",
+                                                                                              "maxWidth": "152px",
                                                                                               "objectFit": "contain",
                                                                                               "padding": "1rem",
                                                                                             }
@@ -1324,11 +1324,11 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                     containerStyles={
                                                                       Object {
                                                                         "justifyContent": "flex-start",
-                                                                        "maxWidth": "192px",
+                                                                        "maxWidth": "152px",
                                                                       }
                                                                     }
                                                                     id="create-space_fav_icon_id"
-                                                                    maxWidth="192px"
+                                                                    maxWidth="152px"
                                                                     onChange={[Function]}
                                                                   >
                                                                     <Modal
@@ -1422,7 +1422,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                   "alignItems": "center",
                                                                                   "display": "flex",
                                                                                   "justifyContent": "flex-start",
-                                                                                  "maxWidth": "192px",
+                                                                                  "maxWidth": "152px",
                                                                                 }
                                                                               }
                                                                             >
@@ -1480,7 +1480,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                       <PlaceholderImage
                                                                                         height="auto"
                                                                                         key=".0"
-                                                                                        maxWidth="192px"
+                                                                                        maxWidth="152px"
                                                                                         width="100%"
                                                                                       >
                                                                                         <img
@@ -1489,7 +1489,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                           src="placeholderImage.svg"
                                                                                           style={
                                                                                             Object {
-                                                                                              "maxWidth": "192px",
+                                                                                              "maxWidth": "152px",
                                                                                               "objectFit": "contain",
                                                                                               "padding": "1rem",
                                                                                             }
@@ -1686,11 +1686,11 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                     containerStyles={
                                                                       Object {
                                                                         "justifyContent": "flex-start",
-                                                                        "maxWidth": "192px",
+                                                                        "maxWidth": "152px",
                                                                       }
                                                                     }
                                                                     id="create-space_mobile_icon_id"
-                                                                    maxWidth="192px"
+                                                                    maxWidth="152px"
                                                                     onChange={[Function]}
                                                                   >
                                                                     <Modal
@@ -1784,7 +1784,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                   "alignItems": "center",
                                                                                   "display": "flex",
                                                                                   "justifyContent": "flex-start",
-                                                                                  "maxWidth": "192px",
+                                                                                  "maxWidth": "152px",
                                                                                 }
                                                                               }
                                                                             >
@@ -1842,7 +1842,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                       <PlaceholderImage
                                                                                         height="auto"
                                                                                         key=".0"
-                                                                                        maxWidth="192px"
+                                                                                        maxWidth="152px"
                                                                                         width="100%"
                                                                                       >
                                                                                         <img
@@ -1851,7 +1851,7 @@ exports[`Branding Form component snapshot testing should render the component 1`
                                                                                           src="placeholderImage.svg"
                                                                                           style={
                                                                                             Object {
-                                                                                              "maxWidth": "192px",
+                                                                                              "maxWidth": "152px",
                                                                                               "objectFit": "contain",
                                                                                               "padding": "1rem",
                                                                                             }

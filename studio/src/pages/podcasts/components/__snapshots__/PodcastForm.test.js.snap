@@ -3919,6 +3919,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                             Object {
                                                               "bottom": 0,
                                                               "left": 0,
+                                                              "maxWidth": "52px",
                                                               "position": "absolute",
                                                             }
                                                           }
@@ -3931,6 +3932,7 @@ exports[`Podcast form component snapshot testing should match component with dat
                                                                 Object {
                                                                   "bottom": 0,
                                                                   "left": 0,
+                                                                  "maxWidth": "52px",
                                                                   "position": "absolute",
                                                                 }
                                                               }

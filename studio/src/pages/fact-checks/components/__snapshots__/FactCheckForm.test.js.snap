@@ -2418,6 +2418,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -2430,6 +2431,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -14152,6 +14154,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -14164,6 +14167,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -25729,6 +25733,7 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -25741,6 +25746,7 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -37096,6 +37102,7 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -37108,6 +37115,7 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }

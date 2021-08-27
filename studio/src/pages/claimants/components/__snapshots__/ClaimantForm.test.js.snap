@@ -1635,6 +1635,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -1647,6 +1648,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -4165,6 +4167,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -4177,6 +4180,7 @@ exports[`Claimants Create Form component snapshot testing should match component
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -6667,6 +6671,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -6679,6 +6684,7 @@ exports[`Claimants Create Form component snapshot testing should render the comp
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }

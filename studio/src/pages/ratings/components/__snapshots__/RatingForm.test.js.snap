@@ -2285,6 +2285,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -2297,6 +2298,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -5293,6 +5295,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -5305,6 +5308,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -8271,6 +8275,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -8283,6 +8288,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }

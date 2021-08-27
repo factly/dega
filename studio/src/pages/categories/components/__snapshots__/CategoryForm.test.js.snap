@@ -2320,6 +2320,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -2332,6 +2333,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -5812,6 +5814,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -5824,6 +5827,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }
@@ -9274,6 +9278,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                     Object {
                                                                       "bottom": 0,
                                                                       "left": 0,
+                                                                      "maxWidth": "52px",
                                                                       "position": "absolute",
                                                                     }
                                                                   }
@@ -9286,6 +9291,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                         Object {
                                                                           "bottom": 0,
                                                                           "left": 0,
+                                                                          "maxWidth": "52px",
                                                                           "position": "absolute",
                                                                         }
                                                                       }

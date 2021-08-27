@@ -2420,6 +2420,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -2432,6 +2433,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -12975,6 +12977,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -12987,6 +12990,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -23367,6 +23371,7 @@ exports[`Posts Create Form component snapshot testing should match with differen
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -23379,6 +23384,7 @@ exports[`Posts Create Form component snapshot testing should match with differen
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
@@ -33574,6 +33580,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                                                             Object {
                                                                                               "bottom": 0,
                                                                                               "left": 0,
+                                                                                              "maxWidth": "52px",
                                                                                               "position": "absolute",
                                                                                             }
                                                                                           }
@@ -33586,6 +33593,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                                                                 Object {
                                                                                                   "bottom": 0,
                                                                                                   "left": 0,
+                                                                                                  "maxWidth": "52px",
                                                                                                   "position": "absolute",
                                                                                                 }
                                                                                               }
