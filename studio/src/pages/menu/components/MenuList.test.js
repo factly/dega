@@ -157,7 +157,7 @@ describe('Menu List component', () => {
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text(0)).toEqual('Menu 1');
-      expect(link.prop('to')).toEqual('/menus/1/edit');
+      expect(link.prop('to')).toEqual('/website/menus/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({

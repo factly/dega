@@ -76,14 +76,14 @@ exports[`Menu component should render the component 1`] = `
                     style={Object {}}
                   >
                     <Link
-                      to="/menus/create"
+                      to="/website/menus/create"
                     >
                       <LinkAnchor
-                        href="/menus/create"
+                        href="/website/menus/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/menus/create"
+                          href="/website/menus/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1002,14 +1002,14 @@ exports[`Menu component should render the component with data 1`] = `
                     style={Object {}}
                   >
                     <Link
-                      to="/menus/create"
+                      to="/website/menus/create"
                     >
                       <LinkAnchor
-                        href="/menus/create"
+                        href="/website/menus/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/menus/create"
+                          href="/website/menus/create"
                           onClick={[Function]}
                         >
                           <Button

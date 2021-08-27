@@ -249,7 +249,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/1/edit"
+                                              href="/website/menus/1/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 1
@@ -294,7 +294,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/2/edit"
+                                              href="/website/menus/2/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 2
@@ -451,7 +451,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/1/edit"
+                                                    href="/website/menus/1/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 1
@@ -496,7 +496,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/2/edit"
+                                                    href="/website/menus/2/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 2
@@ -912,11 +912,11 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/1/edit"
+                                                    to="/website/menus/1/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/1/edit"
+                                                      href="/website/menus/1/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -926,7 +926,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/1/edit"
+                                                        href="/website/menus/1/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
@@ -1734,11 +1734,11 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/2/edit"
+                                                    to="/website/menus/2/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/2/edit"
+                                                      href="/website/menus/2/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -1748,7 +1748,7 @@ exports[`Menu List component snapshot testing should match component when loadin
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/2/edit"
+                                                        href="/website/menus/2/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
@@ -3132,7 +3132,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/1/edit"
+                                              href="/website/menus/1/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 1
@@ -3177,7 +3177,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/2/edit"
+                                              href="/website/menus/2/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 2
@@ -3334,7 +3334,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/1/edit"
+                                                    href="/website/menus/1/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 1
@@ -3379,7 +3379,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/2/edit"
+                                                    href="/website/menus/2/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 2
@@ -3795,11 +3795,11 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/1/edit"
+                                                    to="/website/menus/1/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/1/edit"
+                                                      href="/website/menus/1/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -3809,7 +3809,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/1/edit"
+                                                        href="/website/menus/1/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
@@ -4617,11 +4617,11 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/2/edit"
+                                                    to="/website/menus/2/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/2/edit"
+                                                      href="/website/menus/2/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -4631,7 +4631,7 @@ exports[`Menu List component snapshot testing should match component with menus 
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/2/edit"
+                                                        href="/website/menus/2/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
@@ -6015,7 +6015,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/1/edit"
+                                              href="/website/menus/1/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 1
@@ -6060,7 +6060,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                           >
                                             <a
                                               class="andt-dropdown-link"
-                                              href="/menus/2/edit"
+                                              href="/website/menus/2/edit"
                                               style="margin-right: 8px;"
                                             >
                                               Menu 2
@@ -6217,7 +6217,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/1/edit"
+                                                    href="/website/menus/1/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 1
@@ -6262,7 +6262,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                 >
                                                   <a
                                                     class="andt-dropdown-link"
-                                                    href="/menus/2/edit"
+                                                    href="/website/menus/2/edit"
                                                     style="margin-right: 8px;"
                                                   >
                                                     Menu 2
@@ -6678,11 +6678,11 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/1/edit"
+                                                    to="/website/menus/1/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/1/edit"
+                                                      href="/website/menus/1/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -6692,7 +6692,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/1/edit"
+                                                        href="/website/menus/1/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
@@ -7500,11 +7500,11 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                         "marginRight": 8,
                                                       }
                                                     }
-                                                    to="/menus/2/edit"
+                                                    to="/website/menus/2/edit"
                                                   >
                                                     <LinkAnchor
                                                       className="andt-dropdown-link"
-                                                      href="/menus/2/edit"
+                                                      href="/website/menus/2/edit"
                                                       navigate={[Function]}
                                                       style={
                                                         Object {
@@ -7514,7 +7514,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
                                                     >
                                                       <a
                                                         className="andt-dropdown-link"
-                                                        href="/menus/2/edit"
+                                                        href="/website/menus/2/edit"
                                                         onClick={[Function]}
                                                         style={
                                                           Object {
