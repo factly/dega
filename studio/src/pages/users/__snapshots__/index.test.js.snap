@@ -359,7 +359,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                               class="ant-typography"
                                             >
                                               <a
-                                                href="/users/1/permissions"
+                                                href="/members/users/1/permissions"
                                               >
                                                 Ross Geller
                                               </a>
@@ -377,7 +377,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                               class="ant-tag"
                                             >
                                               <a
-                                                href="/policies/Editor/edit"
+                                                href="/members/policies/Editor/edit"
                                               >
                                                  
                                                 Editor
@@ -387,7 +387,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                               class="ant-tag"
                                             >
                                               <a
-                                                href="/policies/Test/edit"
+                                                href="/members/policies/Test/edit"
                                               >
                                                  
                                                 Test
@@ -604,7 +604,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     class="ant-typography"
                                                   >
                                                     <a
-                                                      href="/users/1/permissions"
+                                                      href="/members/users/1/permissions"
                                                     >
                                                       Ross Geller
                                                     </a>
@@ -622,7 +622,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     class="ant-tag"
                                                   >
                                                     <a
-                                                      href="/policies/Editor/edit"
+                                                      href="/members/policies/Editor/edit"
                                                     >
                                                        
                                                       Editor
@@ -632,7 +632,7 @@ exports[`Tags List component should render the component with data 1`] = `
                                                     class="ant-tag"
                                                   >
                                                     <a
-                                                      href="/policies/Test/edit"
+                                                      href="/members/policies/Test/edit"
                                                     >
                                                        
                                                       Test
@@ -1150,14 +1150,14 @@ exports[`Tags List component should render the component with data 1`] = `
                                                       className="ant-typography"
                                                     >
                                                       <Link
-                                                        to="/users/1/permissions"
+                                                        to="/members/users/1/permissions"
                                                       >
                                                         <LinkAnchor
-                                                          href="/users/1/permissions"
+                                                          href="/members/users/1/permissions"
                                                           navigate={[Function]}
                                                         >
                                                           <a
-                                                            href="/users/1/permissions"
+                                                            href="/members/users/1/permissions"
                                                             onClick={[Function]}
                                                           >
                                                             Ross Geller
@@ -1268,14 +1268,14 @@ exports[`Tags List component should render the component with data 1`] = `
                                                       }
                                                     >
                                                       <Link
-                                                        to="/policies/Editor/edit"
+                                                        to="/members/policies/Editor/edit"
                                                       >
                                                         <LinkAnchor
-                                                          href="/policies/Editor/edit"
+                                                          href="/members/policies/Editor/edit"
                                                           navigate={[Function]}
                                                         >
                                                           <a
-                                                            href="/policies/Editor/edit"
+                                                            href="/members/policies/Editor/edit"
                                                             onClick={[Function]}
                                                           >
                                                              
@@ -1297,14 +1297,14 @@ exports[`Tags List component should render the component with data 1`] = `
                                                       }
                                                     >
                                                       <Link
-                                                        to="/policies/Test/edit"
+                                                        to="/members/policies/Test/edit"
                                                       >
                                                         <LinkAnchor
-                                                          href="/policies/Test/edit"
+                                                          href="/members/policies/Test/edit"
                                                           navigate={[Function]}
                                                         >
                                                           <a
-                                                            href="/policies/Test/edit"
+                                                            href="/members/policies/Test/edit"
                                                             onClick={[Function]}
                                                           >
                                                              
