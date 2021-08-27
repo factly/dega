@@ -3334,6 +3334,7 @@ exports[`Categories Edit component snapshot testing should render the component 
                               >
                                 <CollapsePanel
                                   accordion={false}
+                                  className="meta-data-container"
                                   destroyInactivePanel={false}
                                   expandIcon={[Function]}
                                   header="Meta Data"
@@ -3362,7 +3363,7 @@ exports[`Categories Edit component snapshot testing should render the component 
                                 >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
+                                    className="meta-data-container"
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
                                     forceRender={false}
@@ -3392,7 +3393,7 @@ exports[`Categories Edit component snapshot testing should render the component 
                                     showArrow={true}
                                   >
                                     <div
-                                      className="ant-collapse-item"
+                                      className="ant-collapse-item meta-data-container"
                                     >
                                       <div
                                         aria-expanded={false}
@@ -3439,6 +3440,270 @@ exports[`Categories Edit component snapshot testing should render the component 
                                           </Wave>
                                         </Button>
                                         Meta Data
+                                      </div>
+                                      <CSSMotion
+                                        forceRender={false}
+                                        leavedClassName="ant-collapse-content-hidden"
+                                        motionAppear={false}
+                                        motionDeadline={500}
+                                        motionName="ant-motion-collapse"
+                                        onAppearActive={[Function]}
+                                        onAppearEnd={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterEnd={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveEnd={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={false}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </div>
+                                  </CollapsePanel>
+                                </CollapsePanel>
+                                <CollapsePanel
+                                  accordion={false}
+                                  className="meta-data-container"
+                                  destroyInactivePanel={false}
+                                  expandIcon={[Function]}
+                                  header="Twitter Card"
+                                  isActive={false}
+                                  key="1"
+                                  onItemClick={[Function]}
+                                  openMotion={
+                                    Object {
+                                      "leavedClassName": "ant-collapse-content-hidden",
+                                      "motionAppear": false,
+                                      "motionDeadline": 500,
+                                      "motionName": "ant-motion-collapse",
+                                      "onAppearActive": [Function],
+                                      "onAppearEnd": [Function],
+                                      "onAppearStart": [Function],
+                                      "onEnterActive": [Function],
+                                      "onEnterEnd": [Function],
+                                      "onEnterStart": [Function],
+                                      "onLeaveActive": [Function],
+                                      "onLeaveEnd": [Function],
+                                      "onLeaveStart": [Function],
+                                    }
+                                  }
+                                  panelKey="1"
+                                  prefixCls="ant-collapse"
+                                >
+                                  <CollapsePanel
+                                    accordion={false}
+                                    className="meta-data-container"
+                                    destroyInactivePanel={false}
+                                    expandIcon={[Function]}
+                                    forceRender={false}
+                                    header="Twitter Card"
+                                    headerClass=""
+                                    isActive={false}
+                                    onItemClick={[Function]}
+                                    openMotion={
+                                      Object {
+                                        "leavedClassName": "ant-collapse-content-hidden",
+                                        "motionAppear": false,
+                                        "motionDeadline": 500,
+                                        "motionName": "ant-motion-collapse",
+                                        "onAppearActive": [Function],
+                                        "onAppearEnd": [Function],
+                                        "onAppearStart": [Function],
+                                        "onEnterActive": [Function],
+                                        "onEnterEnd": [Function],
+                                        "onEnterStart": [Function],
+                                        "onLeaveActive": [Function],
+                                        "onLeaveEnd": [Function],
+                                        "onLeaveStart": [Function],
+                                      }
+                                    }
+                                    panelKey="1"
+                                    prefixCls="ant-collapse"
+                                    showArrow={true}
+                                  >
+                                    <div
+                                      className="ant-collapse-item meta-data-container"
+                                    >
+                                      <div
+                                        aria-expanded={false}
+                                        className="ant-collapse-header"
+                                        onClick={[Function]}
+                                        onKeyPress={[Function]}
+                                        role="button"
+                                        tabIndex={0}
+                                      >
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
+                                            >
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
+                                              >
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
+                                                >
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
+                                        Twitter Card
+                                      </div>
+                                      <CSSMotion
+                                        forceRender={false}
+                                        leavedClassName="ant-collapse-content-hidden"
+                                        motionAppear={false}
+                                        motionDeadline={500}
+                                        motionName="ant-motion-collapse"
+                                        onAppearActive={[Function]}
+                                        onAppearEnd={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterEnd={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveEnd={[Function]}
+                                        onLeaveStart={[Function]}
+                                        removeOnLeave={false}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </div>
+                                  </CollapsePanel>
+                                </CollapsePanel>
+                                <CollapsePanel
+                                  accordion={false}
+                                  className="meta-data-container"
+                                  destroyInactivePanel={false}
+                                  expandIcon={[Function]}
+                                  header="Facebook Card"
+                                  isActive={false}
+                                  key="2"
+                                  onItemClick={[Function]}
+                                  openMotion={
+                                    Object {
+                                      "leavedClassName": "ant-collapse-content-hidden",
+                                      "motionAppear": false,
+                                      "motionDeadline": 500,
+                                      "motionName": "ant-motion-collapse",
+                                      "onAppearActive": [Function],
+                                      "onAppearEnd": [Function],
+                                      "onAppearStart": [Function],
+                                      "onEnterActive": [Function],
+                                      "onEnterEnd": [Function],
+                                      "onEnterStart": [Function],
+                                      "onLeaveActive": [Function],
+                                      "onLeaveEnd": [Function],
+                                      "onLeaveStart": [Function],
+                                    }
+                                  }
+                                  panelKey="2"
+                                  prefixCls="ant-collapse"
+                                >
+                                  <CollapsePanel
+                                    accordion={false}
+                                    className="meta-data-container"
+                                    destroyInactivePanel={false}
+                                    expandIcon={[Function]}
+                                    forceRender={false}
+                                    header="Facebook Card"
+                                    headerClass=""
+                                    isActive={false}
+                                    onItemClick={[Function]}
+                                    openMotion={
+                                      Object {
+                                        "leavedClassName": "ant-collapse-content-hidden",
+                                        "motionAppear": false,
+                                        "motionDeadline": 500,
+                                        "motionName": "ant-motion-collapse",
+                                        "onAppearActive": [Function],
+                                        "onAppearEnd": [Function],
+                                        "onAppearStart": [Function],
+                                        "onEnterActive": [Function],
+                                        "onEnterEnd": [Function],
+                                        "onEnterStart": [Function],
+                                        "onLeaveActive": [Function],
+                                        "onLeaveEnd": [Function],
+                                        "onLeaveStart": [Function],
+                                      }
+                                    }
+                                    panelKey="2"
+                                    prefixCls="ant-collapse"
+                                    showArrow={true}
+                                  >
+                                    <div
+                                      className="ant-collapse-item meta-data-container"
+                                    >
+                                      <div
+                                        aria-expanded={false}
+                                        className="ant-collapse-header"
+                                        onClick={[Function]}
+                                        onKeyPress={[Function]}
+                                        role="button"
+                                        tabIndex={0}
+                                      >
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
+                                            >
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
+                                              >
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
+                                                >
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
+                                        Facebook Card
                                       </div>
                                       <CSSMotion
                                         forceRender={false}

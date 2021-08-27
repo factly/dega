@@ -49,8 +49,15 @@ describe('Categories create component', () => {
     },
     spaces: {
       orgs: [],
-      details: {},
-      loading: true,
+      details: {
+        1: {
+          id: 1,
+          name: 'Space 1',
+          site_address: 'site_address',
+        },
+      },
+      selected: 1,
+      loading: false,
     },
   });
   store.dispatch = jest.fn(() => ({}));
