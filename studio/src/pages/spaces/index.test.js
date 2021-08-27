@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { useDispatch, useSelector, Provider } from 'react-redux';
+import { useDispatch, Provider } from 'react-redux';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import { mount } from 'enzyme';
@@ -14,7 +14,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -38,7 +37,13 @@ describe('Spaces List component', () => {
     useDispatch.mockReturnValue(mockedDispatch);
   });
   it('should render the component', () => {
-    useSelector.mockImplementationOnce(() => ({}));
+    store = mockStore({
+      spaces: {
+        details: {},
+        orgs: [],
+        selected: 0,
+      },
+    });
     const tree = mount(
       <Provider store={store}>
         <Router>
@@ -49,19 +54,29 @@ describe('Spaces List component', () => {
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
-    useSelector.mockImplementationOnce(() => ({
-      spaces: [
-        {
-          id: 1,
-          name: 'space',
-          site_address: 'site_address',
-          site_title: 'site_title',
-          tag_line: 'tag_line',
+    store = mockStore({
+      spaces: {
+        details: {
+          1: {
+            id: 1,
+            organisation_id: 1,
+            name: 'name',
+            slug: 'name',
+          },
         },
-      ],
-      total: 1,
-      loading: false,
-    }));
+        orgs: [
+          {
+            id: 1,
+            permission: {
+              role: 'owner',
+            },
+            spaces: [1],
+          },
+        ],
+        selected: 1,
+        loading: false,
+      },
+    });
     const tree = mount(
       <Provider store={store}>
         <Router>

@@ -1016,7 +1016,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -1331,7 +1331,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -1500,7 +1500,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -2128,7 +2128,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -2443,7 +2443,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -2612,7 +2612,7 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -3752,14 +3752,14 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag
@@ -6828,14 +6828,14 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag
@@ -8439,14 +8439,14 @@ exports[`List component snapshot testing should match when component loading 1`]
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag
@@ -11137,7 +11137,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -11452,7 +11452,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -11621,7 +11621,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                             class="ant-table-cell ant-table-cell-ellipsis"
                                           >
                                             <a
-                                              href="/fact-checks?tag=1&format=1"
+                                              href="/fact-checks?category=1&format=1"
                                             >
                                               <span
                                                 class="ant-tag"
@@ -12249,7 +12249,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -12564,7 +12564,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -12733,7 +12733,7 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   class="ant-table-cell ant-table-cell-ellipsis"
                                                 >
                                                   <a
-                                                    href="/fact-checks?tag=1&format=1"
+                                                    href="/fact-checks?category=1&format=1"
                                                   >
                                                     <span
                                                       class="ant-tag"
@@ -13873,14 +13873,14 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag
@@ -16949,14 +16949,14 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag
@@ -18560,14 +18560,14 @@ exports[`List component snapshot testing should match with posts 1`] = `
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    to="/fact-checks?tag=1&format=1"
+                                                    to="/fact-checks?category=1&format=1"
                                                   >
                                                     <LinkAnchor
-                                                      href="/fact-checks?tag=1&format=1"
+                                                      href="/fact-checks?category=1&format=1"
                                                       navigate={[Function]}
                                                     >
                                                       <a
-                                                        href="/fact-checks?tag=1&format=1"
+                                                        href="/fact-checks?category=1&format=1"
                                                         onClick={[Function]}
                                                       >
                                                         <Tag

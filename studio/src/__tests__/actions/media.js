@@ -104,6 +104,43 @@ describe('media actions', () => {
       params: query,
     });
   });
+  it('should create actions to fetch media success with profile is true', () => {
+    const query = { page: 1, limit: 5 };
+    const media = [{ id: 1, name: 'Medium' }];
+    const resp = { data: { nodes: media, total: 1 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_MEDIA,
+        payload: [{ id: 1, name: 'Medium', medium: undefined }],
+      },
+      {
+        type: types.ADD_MEDIA_REQUEST,
+        payload: {
+          data: [1],
+          query: query,
+          total: 1,
+        },
+      },
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getMedia(query, true))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.KAVACH_MEDIA_API, {
+      params: query,
+    });
+  });
   it('should create actions to fetch media success with media', () => {
     const query = { page: 1, limit: 5 };
     const media = [{ id: 1, name: 'Medium' }];
@@ -259,8 +296,8 @@ describe('media actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.MEDIA_API + '/' + id);
   });
-  it('should create actions to create medium success', () => {
-    const medium = { name: 'Medium' };
+  it('should create actions to create medium success where profile is true', () => {
+    const medium = [{ name: 'Medium' }];
     const resp = { data: medium };
     axios.post.mockResolvedValue(resp);
 
@@ -285,7 +322,37 @@ describe('media actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMedium(medium))
+      .dispatch(actions.addMedium(medium, true))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.post).toHaveBeenCalledWith(types.KAVACH_MEDIA_API, medium[0]);
+  });
+  it('should create actions to create medium success', () => {
+    const medium = { name: 'Medium' };
+    const resp = { data: { nodes: medium } };
+    axios.post.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_MEDIA_LOADING,
+        payload: true,
+      },
+      {
+        type: types.RESET_MEDIA,
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Medium added',
+          time: Date.now(),
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.addMedium(medium, false))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MEDIA_API, medium);
   });

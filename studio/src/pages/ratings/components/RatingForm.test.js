@@ -251,6 +251,7 @@ describe('Ratings Create Form component', () => {
         const btn = wrapper.find('Button').at(5);
         expect(btn.text()).toBe('Expand');
         btn.simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
       wrapper.find('FormItem').at(4).find('div').at(6).simulate('click');
@@ -316,7 +317,7 @@ describe('Ratings Create Form component', () => {
           });
         wrapper
           .find('FormItem')
-          .at(9)
+          .at(11)
           .find('MonacoEditor')
           .props()
           .onChange({

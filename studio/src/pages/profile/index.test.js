@@ -152,7 +152,9 @@ describe('Profiles index component', () => {
           .find(DatePicker)
           .at(0)
           .props()
-          .onChange({ target: { value: moment('2020-10-10') } });
+          .onChange({
+            target: { value: moment('10 Oct 2020 00:00:00 IST') },
+          });
         wrapper
           .find('FormItem')
           .at(6)
@@ -177,7 +179,7 @@ describe('Profiles index component', () => {
           last_name: 'lastname',
           display_name: 'new Display Name',
           slug: 'new-display-name',
-          birth_date: '2020-10-10T00:00:00+00:00',
+          birth_date: moment('10 Oct 2020 00:00:00 IST').format('YYYY-MM-DDTHH:mm:ssZ'),
           social_media_urls: {
             facebook: 'facebook/abc',
             twitter: 'twitter/abc',
