@@ -14,6 +14,8 @@ The default ratings for Dega are
 - Unverified
 - Party True
 
+The attributes of a rating are :
+
 - Name: Name for the rating
 - Numeric Value: Rating value associated with each rating
 - Background Color: This allows users to choose a background color to display for a rating
