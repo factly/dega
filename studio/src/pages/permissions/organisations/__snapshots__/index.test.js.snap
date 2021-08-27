@@ -1203,7 +1203,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                             >
                                               <a
                                                 class="ant-dropdown-link"
-                                                href="/organisations/1/permissions/2/edit"
+                                                href="/admin/organisations/1/permissions/2/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Super Org
@@ -1390,7 +1390,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                   >
                                                     <a
                                                       class="ant-dropdown-link"
-                                                      href="/organisations/1/permissions/2/edit"
+                                                      href="/admin/organisations/1/permissions/2/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Super Org
@@ -1934,11 +1934,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/organisations/1/permissions/2/edit"
+                                                      to="/admin/organisations/1/permissions/2/edit"
                                                     >
                                                       <LinkAnchor
                                                         className="ant-dropdown-link"
-                                                        href="/organisations/1/permissions/2/edit"
+                                                        href="/admin/organisations/1/permissions/2/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -1948,7 +1948,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                                       >
                                                         <a
                                                           className="ant-dropdown-link"
-                                                          href="/organisations/1/permissions/2/edit"
+                                                          href="/admin/organisations/1/permissions/2/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {

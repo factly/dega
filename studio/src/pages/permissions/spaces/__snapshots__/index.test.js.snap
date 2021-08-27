@@ -2023,7 +2023,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             >
                                               <a
                                                 class="ant-dropdown-link"
-                                                href="/spaces/1/permissions/1/edit"
+                                                href="/admin/spaces/1/permissions/1/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Space 1
@@ -2113,7 +2113,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                             >
                                               <a
                                                 class="ant-dropdown-link"
-                                                href="/spaces/2/permissions/2/edit"
+                                                href="/admin/spaces/2/permissions/2/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Space 2
@@ -2428,7 +2428,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                   >
                                                     <a
                                                       class="ant-dropdown-link"
-                                                      href="/spaces/1/permissions/1/edit"
+                                                      href="/admin/spaces/1/permissions/1/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Space 1
@@ -2518,7 +2518,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                   >
                                                     <a
                                                       class="ant-dropdown-link"
-                                                      href="/spaces/2/permissions/2/edit"
+                                                      href="/admin/spaces/2/permissions/2/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Space 2
@@ -3608,11 +3608,11 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/spaces/1/permissions/1/edit"
+                                                      to="/admin/spaces/1/permissions/1/edit"
                                                     >
                                                       <LinkAnchor
                                                         className="ant-dropdown-link"
-                                                        href="/spaces/1/permissions/1/edit"
+                                                        href="/admin/spaces/1/permissions/1/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -3622,7 +3622,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                       >
                                                         <a
                                                           className="ant-dropdown-link"
-                                                          href="/spaces/1/permissions/1/edit"
+                                                          href="/admin/spaces/1/permissions/1/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
@@ -4710,11 +4710,11 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/spaces/2/permissions/2/edit"
+                                                      to="/admin/spaces/2/permissions/2/edit"
                                                     >
                                                       <LinkAnchor
                                                         className="ant-dropdown-link"
-                                                        href="/spaces/2/permissions/2/edit"
+                                                        href="/admin/spaces/2/permissions/2/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -4724,7 +4724,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                       >
                                                         <a
                                                           className="ant-dropdown-link"
-                                                          href="/spaces/2/permissions/2/edit"
+                                                          href="/admin/spaces/2/permissions/2/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
