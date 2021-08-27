@@ -1,0 +1,596 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Advanced Settings Component snapshot testing should render the component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [MockFunction],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Advanced>
+        <div>
+          <Row
+            gutter={
+              Array [
+                16,
+                16,
+              ]
+            }
+          >
+            <div
+              className="ant-row"
+              style={
+                Object {
+                  "marginBottom": -8,
+                  "marginLeft": -8,
+                  "marginRight": -8,
+                  "marginTop": -8,
+                }
+              }
+            >
+              <Col
+                span={12}
+              >
+                <div
+                  className="ant-col ant-col-12"
+                  style={
+                    Object {
+                      "paddingBottom": 8,
+                      "paddingLeft": 8,
+                      "paddingRight": 8,
+                      "paddingTop": 8,
+                    }
+                  }
+                >
+                  <Link
+                    to="/advanced/webhooks"
+                  >
+                    <LinkAnchor
+                      href="/advanced/webhooks"
+                      navigate={[Function]}
+                    >
+                      <a
+                        href="/advanced/webhooks"
+                        onClick={[Function]}
+                      >
+                        <Card
+                          hoverable={true}
+                          style={
+                            Object {
+                              "textAlign": "left",
+                            }
+                          }
+                        >
+                          <div
+                            className="ant-card ant-card-bordered ant-card-hoverable"
+                            style={
+                              Object {
+                                "textAlign": "left",
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-body"
+                              style={Object {}}
+                            >
+                              <Meta
+                                avatar={
+                                  <ForwardRef(InternalAvatar)
+                                    icon={
+                                      <ForwardRef(ApiTwoTone)
+                                        twoToneColor="#51bbf6"
+                                      />
+                                    }
+                                    shape="circle"
+                                    size="default"
+                                    style={
+                                      Object {
+                                        "backgroundColor": "transparent",
+                                      }
+                                    }
+                                  />
+                                }
+                                description="Create/ Modify Webhooks"
+                                title="Webhooks"
+                              >
+                                <div
+                                  className="ant-card-meta"
+                                >
+                                  <div
+                                    className="ant-card-meta-avatar"
+                                  >
+                                    <Avatar
+                                      icon={
+                                        <ForwardRef(ApiTwoTone)
+                                          twoToneColor="#51bbf6"
+                                        />
+                                      }
+                                      shape="circle"
+                                      size="default"
+                                      style={
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                        }
+                                      }
+                                    >
+                                      <span
+                                        className="ant-avatar ant-avatar-circle ant-avatar-icon"
+                                        style={
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                          }
+                                        }
+                                      >
+                                        <ForwardRef(ApiTwoTone)
+                                          twoToneColor="#51bbf6"
+                                        >
+                                          <AntdIcon
+                                            icon={
+                                              Object {
+                                                "icon": [Function],
+                                                "name": "api",
+                                                "theme": "twotone",
+                                              }
+                                            }
+                                            twoToneColor="#51bbf6"
+                                          >
+                                            <span
+                                              aria-label="api"
+                                              className="anticon anticon-api"
+                                              role="img"
+                                            >
+                                              <IconReact
+                                                icon={
+                                                  Object {
+                                                    "icon": [Function],
+                                                    "name": "api",
+                                                    "theme": "twotone",
+                                                  }
+                                                }
+                                                primaryColor="#51bbf6"
+                                              >
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="api"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  key="svg-api"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M148.2 674.6zm106.7-92.3c-25 25-38.7 58.1-38.7 93.4s13.8 68.5 38.7 93.4c25 25 58.1 38.7 93.4 38.7 35.3 0 68.5-13.8 93.4-38.7l59.4-59.4-186.8-186.8-59.4 59.4zm420.8-366.1c-35.3 0-68.5 13.8-93.4 38.7l-59.4 59.4 186.8 186.8 59.4-59.4c24.9-25 38.7-58.1 38.7-93.4s-13.8-68.5-38.7-93.4c-25-25-58.1-38.7-93.4-38.7z"
+                                                    fill="#f0fcff"
+                                                    key="svg-api-svg-0"
+                                                  />
+                                                  <path
+                                                    d="M578.9 546.7a8.03 8.03 0 00-11.3 0L501 613.3 410.7 523l66.7-66.7c3.1-3.1 3.1-8.2 0-11.3L441 408.6a8.03 8.03 0 00-11.3 0L363 475.3l-43-43a7.85 7.85 0 00-5.7-2.3c-2 0-4.1.8-5.7 2.3L206.8 534.2a199.45 199.45 0 00-58.6 140.4c-.2 39.5 11.2 79.1 34.3 113.1l-76.1 76.1a8.03 8.03 0 000 11.3l42.4 42.4c1.6 1.6 3.6 2.3 5.7 2.3s4.1-.8 5.7-2.3l76.1-76.1c33.7 22.9 72.9 34.3 112.1 34.3 51.2 0 102.4-19.5 141.5-58.6l101.9-101.9c3.1-3.1 3.1-8.2 0-11.3l-43-43 66.7-66.7c3.1-3.1 3.1-8.2 0-11.3l-36.6-36.2zM441.7 769.1a131.32 131.32 0 01-93.4 38.7c-35.3 0-68.4-13.7-93.4-38.7-24.9-24.9-38.7-58.1-38.7-93.4s13.7-68.4 38.7-93.4l59.4-59.4 186.8 186.8-59.4 59.4zm476-620.3l-42.4-42.4c-1.6-1.6-3.6-2.3-5.7-2.3s-4.1.8-5.7 2.3l-76.1 76.1a199.27 199.27 0 00-112.1-34.3c-51.2 0-102.4 19.5-141.5 58.6L432.3 308.7a8.03 8.03 0 000 11.3L704 591.7c1.6 1.6 3.6 2.3 5.7 2.3 2 0 4.1-.8 5.7-2.3l101.9-101.9c68.9-69 77-175.7 24.3-253.5l76.1-76.1c3.1-3.2 3.1-8.3 0-11.4zM769.1 441.7l-59.4 59.4-186.8-186.8 59.4-59.4c24.9-24.9 58.1-38.7 93.4-38.7s68.4 13.7 93.4 38.7c24.9 24.9 38.7 58.1 38.7 93.4s-13.8 68.4-38.7 93.4z"
+                                                    fill="#51bbf6"
+                                                    key="svg-api-svg-1"
+                                                  />
+                                                </svg>
+                                              </IconReact>
+                                            </span>
+                                          </AntdIcon>
+                                        </ForwardRef(ApiTwoTone)>
+                                      </span>
+                                    </Avatar>
+                                  </div>
+                                  <div
+                                    className="ant-card-meta-detail"
+                                  >
+                                    <div
+                                      className="ant-card-meta-title"
+                                    >
+                                      Webhooks
+                                    </div>
+                                    <div
+                                      className="ant-card-meta-description"
+                                    >
+                                      Create/ Modify Webhooks
+                                    </div>
+                                  </div>
+                                </div>
+                              </Meta>
+                            </div>
+                          </div>
+                        </Card>
+                      </a>
+                    </LinkAnchor>
+                  </Link>
+                </div>
+              </Col>
+              <Col
+                span={12}
+              >
+                <div
+                  className="ant-col ant-col-12"
+                  style={
+                    Object {
+                      "paddingBottom": 8,
+                      "paddingLeft": 8,
+                      "paddingRight": 8,
+                      "paddingTop": 8,
+                    }
+                  }
+                >
+                  <Link
+                    to="/advanced/webhooks"
+                  >
+                    <LinkAnchor
+                      href="/advanced/webhooks"
+                      navigate={[Function]}
+                    >
+                      <a
+                        href="/advanced/webhooks"
+                        onClick={[Function]}
+                      >
+                        <Card
+                          hoverable={true}
+                          style={
+                            Object {
+                              "textAlign": "left",
+                            }
+                          }
+                        >
+                          <div
+                            className="ant-card ant-card-bordered ant-card-hoverable"
+                            style={
+                              Object {
+                                "textAlign": "left",
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-body"
+                              style={Object {}}
+                            >
+                              <Meta
+                                avatar={
+                                  <ForwardRef(InternalAvatar)
+                                    icon={
+                                      <ForwardRef(InteractionTwoTone)
+                                        twoToneColor="#7b2feb"
+                                      />
+                                    }
+                                    shape="circle"
+                                    size="default"
+                                    style={
+                                      Object {
+                                        "backgroundColor": "transparent",
+                                      }
+                                    }
+                                  />
+                                }
+                                description="Re-Index Meili Database"
+                                title="Re-Indexing Meili"
+                              >
+                                <div
+                                  className="ant-card-meta"
+                                >
+                                  <div
+                                    className="ant-card-meta-avatar"
+                                  >
+                                    <Avatar
+                                      icon={
+                                        <ForwardRef(InteractionTwoTone)
+                                          twoToneColor="#7b2feb"
+                                        />
+                                      }
+                                      shape="circle"
+                                      size="default"
+                                      style={
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                        }
+                                      }
+                                    >
+                                      <span
+                                        className="ant-avatar ant-avatar-circle ant-avatar-icon"
+                                        style={
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                          }
+                                        }
+                                      >
+                                        <ForwardRef(InteractionTwoTone)
+                                          twoToneColor="#7b2feb"
+                                        >
+                                          <AntdIcon
+                                            icon={
+                                              Object {
+                                                "icon": [Function],
+                                                "name": "interaction",
+                                                "theme": "twotone",
+                                              }
+                                            }
+                                            twoToneColor="#7b2feb"
+                                          >
+                                            <span
+                                              aria-label="interaction"
+                                              className="anticon anticon-interaction"
+                                              role="img"
+                                            >
+                                              <IconReact
+                                                icon={
+                                                  Object {
+                                                    "icon": [Function],
+                                                    "name": "interaction",
+                                                    "theme": "twotone",
+                                                  }
+                                                }
+                                                primaryColor="#7b2feb"
+                                              >
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="interaction"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  key="svg-interaction"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M880 112H144c-17.7 0-32 14.3-32 32v736c0 17.7 14.3 32 32 32h736c17.7 0 32-14.3 32-32V144c0-17.7-14.3-32-32-32zm-40 728H184V184h656v656z"
+                                                    fill="#7b2feb"
+                                                    key="svg-interaction-svg-0"
+                                                  />
+                                                  <path
+                                                    d="M184 840h656V184H184v656zm114-401.9c0-55.3 44.6-100.1 99.7-100.1h205.8v-53.4c0-5.6 6.5-8.8 10.9-5.3L723.5 365c3.5 2.7 3.5 8 0 10.7l-109.1 85.7c-4.4 3.5-10.9.4-10.9-5.3v-53.4H397.8c-19.6 0-35.5 15.9-35.5 35.6v78.9c0 3.8-3.1 6.8-6.8 6.8h-50.7c-3.8 0-6.8-3-6.8-7v-78.9zm2.6 210.3l109.1-85.7c4.4-3.5 10.9-.4 10.9 5.3v53.4h205.6c19.6 0 35.5-15.9 35.5-35.6v-78.9c0-3.8 3.1-6.8 6.8-6.8h50.7c3.8 0 6.8 3.1 6.8 6.8v78.9c0 55.3-44.6 100.1-99.7 100.1H420.6v53.4c0 5.6-6.5 8.8-10.9 5.3l-109.1-85.7c-3.5-2.7-3.5-8 0-10.5z"
+                                                    fill="#f8f0ff"
+                                                    key="svg-interaction-svg-1"
+                                                  />
+                                                  <path
+                                                    d="M304.8 524h50.7c3.7 0 6.8-3 6.8-6.8v-78.9c0-19.7 15.9-35.6 35.5-35.6h205.7v53.4c0 5.7 6.5 8.8 10.9 5.3l109.1-85.7c3.5-2.7 3.5-8 0-10.7l-109.1-85.7c-4.4-3.5-10.9-.3-10.9 5.3V338H397.7c-55.1 0-99.7 44.8-99.7 100.1V517c0 4 3 7 6.8 7zm-4.2 134.9l109.1 85.7c4.4 3.5 10.9.3 10.9-5.3v-53.4h205.7c55.1 0 99.7-44.8 99.7-100.1v-78.9c0-3.7-3-6.8-6.8-6.8h-50.7c-3.7 0-6.8 3-6.8 6.8v78.9c0 19.7-15.9 35.6-35.5 35.6H420.6V568c0-5.7-6.5-8.8-10.9-5.3l-109.1 85.7c-3.5 2.5-3.5 7.8 0 10.5z"
+                                                    fill="#7b2feb"
+                                                    key="svg-interaction-svg-2"
+                                                  />
+                                                </svg>
+                                              </IconReact>
+                                            </span>
+                                          </AntdIcon>
+                                        </ForwardRef(InteractionTwoTone)>
+                                      </span>
+                                    </Avatar>
+                                  </div>
+                                  <div
+                                    className="ant-card-meta-detail"
+                                  >
+                                    <div
+                                      className="ant-card-meta-title"
+                                    >
+                                      Re-Indexing Meili
+                                    </div>
+                                    <div
+                                      className="ant-card-meta-description"
+                                    >
+                                      Re-Index Meili Database
+                                    </div>
+                                  </div>
+                                </div>
+                              </Meta>
+                            </div>
+                          </div>
+                        </Card>
+                      </a>
+                    </LinkAnchor>
+                  </Link>
+                </div>
+              </Col>
+              <Col
+                span={12}
+              >
+                <div
+                  className="ant-col ant-col-12"
+                  style={
+                    Object {
+                      "paddingBottom": 8,
+                      "paddingLeft": 8,
+                      "paddingRight": 8,
+                      "paddingTop": 8,
+                    }
+                  }
+                >
+                  <Link
+                    to="/advanced/formats"
+                  >
+                    <LinkAnchor
+                      href="/advanced/formats"
+                      navigate={[Function]}
+                    >
+                      <a
+                        href="/advanced/formats"
+                        onClick={[Function]}
+                      >
+                        <Card
+                          hoverable={true}
+                          style={
+                            Object {
+                              "textAlign": "left",
+                            }
+                          }
+                        >
+                          <div
+                            className="ant-card ant-card-bordered ant-card-hoverable"
+                            style={
+                              Object {
+                                "textAlign": "left",
+                              }
+                            }
+                          >
+                            <div
+                              className="ant-card-body"
+                              style={Object {}}
+                            >
+                              <Meta
+                                avatar={
+                                  <ForwardRef(InternalAvatar)
+                                    icon={
+                                      <ForwardRef(FileTextTwoTone)
+                                        twoToneColor="#30cf43"
+                                      />
+                                    }
+                                    shape="circle"
+                                    size="default"
+                                    style={
+                                      Object {
+                                        "backgroundColor": "transparent",
+                                      }
+                                    }
+                                  />
+                                }
+                                description="Add/Edit formats"
+                                title="Formats"
+                              >
+                                <div
+                                  className="ant-card-meta"
+                                >
+                                  <div
+                                    className="ant-card-meta-avatar"
+                                  >
+                                    <Avatar
+                                      icon={
+                                        <ForwardRef(FileTextTwoTone)
+                                          twoToneColor="#30cf43"
+                                        />
+                                      }
+                                      shape="circle"
+                                      size="default"
+                                      style={
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                        }
+                                      }
+                                    >
+                                      <span
+                                        className="ant-avatar ant-avatar-circle ant-avatar-icon"
+                                        style={
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                          }
+                                        }
+                                      >
+                                        <ForwardRef(FileTextTwoTone)
+                                          twoToneColor="#30cf43"
+                                        >
+                                          <AntdIcon
+                                            icon={
+                                              Object {
+                                                "icon": [Function],
+                                                "name": "file-text",
+                                                "theme": "twotone",
+                                              }
+                                            }
+                                            twoToneColor="#30cf43"
+                                          >
+                                            <span
+                                              aria-label="file-text"
+                                              className="anticon anticon-file-text"
+                                              role="img"
+                                            >
+                                              <IconReact
+                                                icon={
+                                                  Object {
+                                                    "icon": [Function],
+                                                    "name": "file-text",
+                                                    "theme": "twotone",
+                                                  }
+                                                }
+                                                primaryColor="#30cf43"
+                                              >
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="file-text"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  key="svg-file-text"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M534 352V136H232v752h560V394H576a42 42 0 01-42-42zm-22 322c0 4.4-3.6 8-8 8H320c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h184c4.4 0 8 3.6 8 8v48zm200-184v48c0 4.4-3.6 8-8 8H320c-4.4 0-8-3.6-8-8v-48c0-4.4 3.6-8 8-8h384c4.4 0 8 3.6 8 8z"
+                                                    fill="#f0fff0"
+                                                    key="svg-file-text-svg-0"
+                                                  />
+                                                  <path
+                                                    d="M854.6 288.6L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM602 137.8L790.2 326H602V137.8zM792 888H232V136h302v216a42 42 0 0042 42h216v494z"
+                                                    fill="#30cf43"
+                                                    key="svg-file-text-svg-1"
+                                                  />
+                                                  <path
+                                                    d="M312 490v48c0 4.4 3.6 8 8 8h384c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8H320c-4.4 0-8 3.6-8 8zm192 128H320c-4.4 0-8 3.6-8 8v48c0 4.4 3.6 8 8 8h184c4.4 0 8-3.6 8-8v-48c0-4.4-3.6-8-8-8z"
+                                                    fill="#30cf43"
+                                                    key="svg-file-text-svg-2"
+                                                  />
+                                                </svg>
+                                              </IconReact>
+                                            </span>
+                                          </AntdIcon>
+                                        </ForwardRef(FileTextTwoTone)>
+                                      </span>
+                                    </Avatar>
+                                  </div>
+                                  <div
+                                    className="ant-card-meta-detail"
+                                  >
+                                    <div
+                                      className="ant-card-meta-title"
+                                    >
+                                      Formats
+                                    </div>
+                                    <div
+                                      className="ant-card-meta-description"
+                                    >
+                                      Add/Edit formats
+                                    </div>
+                                  </div>
+                                </div>
+                              </Meta>
+                            </div>
+                          </div>
+                        </Card>
+                      </a>
+                    </LinkAnchor>
+                  </Link>
+                </div>
+              </Col>
+            </div>
+          </Row>
+        </div>
+      </Advanced>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
