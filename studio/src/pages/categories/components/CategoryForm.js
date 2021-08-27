@@ -7,7 +7,6 @@ import Selector from '../../../components/Selector';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import SocialCardPreview from '../../../components/PreviewSocialCard';
-import PlaceholderImage from '../../../components/ErrorsAndImage/PlaceholderImage';
 import { useSelector } from 'react-redux';
 
 const CategoryForm = ({ onCreate, data = {} }) => {
@@ -174,9 +173,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               style={{ width: '100%' }}
             >
               <Collapse.Panel header="Meta Data" className="meta-data-container">
-                <div style={{ flexBasis: '67%', marginRight: '2.4rem' }}>
+                <div className="preview-form-container">
                   <Form.Item name={['meta', 'title']} label="Meta Title">
-                    <Input />
+                    <Input
+                      defaultValue={
+                        form.getFieldValue(['meta', 'title']) || form.getFieldValue('name')
+                      }
+                    />
                   </Form.Item>
                   <Form.Item name={['meta', 'description']} label="Meta Description">
                     <Input.TextArea />
@@ -184,21 +187,32 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
                     <Input
                       addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                      defaultValue={
+                        form.getFieldValue(['meta', 'canonical_URL']) ||
+                        form.getFieldValue('slug') ||
+                        ''
+                      }
+                      style={{ minWidth: '30ch' }}
                     />
                   </Form.Item>
                 </div>
                 <SocialCardPreview type="google" siteAddress={siteAddress} formData={formData} />
               </Collapse.Panel>
               <Collapse.Panel header="Twitter Card" className="meta-data-container">
-                <div style={{ flexBasis: '67%', marginRight: '2.4rem' }}>
-                  <Form.Item label="Twitter Image" name={['meta', 'medium_id']}>
+                <div className="preview-form-container">
+                  {/* <Form.Item label="Twitter Image" name={'medium_id'}>
                     <MediaSelector
                       maxWidth={'350px'}
                       containerStyles={{ justifyContent: 'start' }}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item name={['meta', 'twitter', 'title']} label="Meta Title">
-                    <Input />
+                    <Input
+                      defaultValue={
+                        form.getFieldValue(['meta', 'twitter', 'title']) ||
+                        form.getFieldValue('name')
+                      }
+                    />
                   </Form.Item>
                   <Form.Item name={['meta', 'twitter', 'description']} label="Meta Description">
                     <Input.TextArea />
@@ -206,6 +220,12 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   <Form.Item name={['meta', 'twitter', 'canonical_URL']} label="Canonical URL">
                     <Input
                       addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                      defaultValue={
+                        form.getFieldValue(['meta', 'twitter', 'canonical_URL']) ||
+                        form.getFieldValue('slug') ||
+                        ''
+                      }
+                      style={{ minWidth: '30ch' }}
                     />
                   </Form.Item>
                 </div>
@@ -213,19 +233,24 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   type="twitter"
                   formData={formData}
                   siteAddress={siteAddress}
-                  image={PlaceholderImage}
+                  image={form.getFieldValue('medium_id')}
                 />
               </Collapse.Panel>
               <Collapse.Panel header="Facebook Card" className="meta-data-container">
-                <div style={{ flexBasis: '67%', marginRight: '2.4rem' }}>
-                  <Form.Item label="Facebook Image" name={['meta', 'facebook', 'medium_id']}>
+                <div className="preview-form-container">
+                  {/* <Form.Item label="Facebook Image" name={'medium_id'}>
                     <MediaSelector
                       maxWidth={'350px'}
                       containerStyles={{ justifyContent: 'start' }}
                     />
-                  </Form.Item>
+                  </Form.Item> */}
                   <Form.Item name={['meta', 'facebook', 'title']} label="Meta Title">
-                    <Input />
+                    <Input
+                      defaultValue={
+                        form.getFieldValue(['meta', 'facebook', 'title']) ||
+                        form.getFieldValue('name')
+                      }
+                    />
                   </Form.Item>
                   <Form.Item name={['meta', 'facebook', 'description']} label="Meta Description">
                     <Input.TextArea />
@@ -233,6 +258,12 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   <Form.Item name={['meta', 'facebook', 'canonical_URL']} label="Canonical URL">
                     <Input
                       addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
+                      defaultValue={
+                        form.getFieldValue(['meta', 'facebook', 'canonical_URL']) ||
+                        form.getFieldValue('slug') ||
+                        ''
+                      }
+                      style={{ minWidth: '30ch' }}
                     />
                   </Form.Item>
                 </div>
@@ -240,7 +271,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   type="fb"
                   formData={formData}
                   siteAddress={siteAddress}
-                  image={PlaceholderImage}
+                  image={form.getFieldValue('medium_id')}
                 />
               </Collapse.Panel>
             </Collapse>

@@ -1,6 +1,13 @@
 .meta-data-container .ant-collapse-content-box {
   display: flex;
 }
+.preview-container,
+.preview-form-container {
+  flex-basis: 50%;
+}
+.preview-form-container {
+  margin-right: 2.4rem;
+}
 .seo-container {
   display: flex;
   width: 100%;
@@ -14,8 +21,9 @@
 .seo-preview {
   display: flex;
   flex-direction: column;
-  width: 600px;
+  max-width: 600px;
   margin-bottom: 28px;
+  width: 100%;
 }
 .seo-container .google-logo {
   width: 92px;
@@ -281,6 +289,32 @@
   word-wrap: break-word;
 }
 
+@media (max-width: 1080px) {
+  .twitter-container {
+    width: 100%;
+    max-width: 591px;
+  }
+  .og-container {
+    width: 100%;
+    max-width: 476px;
+  }
+}
+@media (max-width: 1360px) {
+  .meta-data-container .ant-collapse-content-box {
+    flex-direction: column;
+  }
+  .seo-container {
+    max-width: 591px;
+  }
+}
+@media (min-width: 1080px) {
+  .preview-form-container {
+    flex-basis: 67%;
+  }
+  .preview-container {
+    flex-basis: 33%;
+  }
+}
 @media (min-width: 1360px) {
   .seo-container {
     max-width: 1091px;

@@ -1,10 +1,11 @@
 import React from 'react';
 import './style.css';
+import { useSelector } from 'react-redux';
 
-const getGoogleContainer = (formData, siteAddress) => {
+const getGoogleContainer = ({ formData, siteAddress }) => {
   return (
-    <div style={{ flexBasis: '33%' }}>
-      Search Engine Result Preview:{' '}
+    <div className="preview-container">
+      <h4 style={{ marginBottom: '0.375rem' }}>Search Engine Result Preview:</h4>
       <div
         className="seo-container"
         style={{
@@ -49,8 +50,10 @@ const getGoogleContainer = (formData, siteAddress) => {
               </svg>
             </div>
           </div>
-          <div className="seo-preview-link">{siteAddress + '/' + formData.meta?.canonical_URL}</div>
-          <div className="seo-preview-title">{formData.meta?.title}</div>
+          <div className="seo-preview-link">
+            {`${siteAddress}/${formData.meta?.canonical_URL || formData.slug}`}
+          </div>
+          <div className="seo-preview-title">{formData.meta?.title || formData.name}</div>
           <div className="seo-preview-desc">{formData.meta?.description}</div>
         </div>
       </div>
@@ -58,10 +61,10 @@ const getGoogleContainer = (formData, siteAddress) => {
   );
 };
 
-const getTwitterContainer = ({ image, formData, siteAddress }) => {
+const getTwitterContainer = ({ medium, formData, siteAddress }) => {
   return (
-    <div style={{ flexBasis: '33%' }}>
-      Twitter Preview:{' '}
+    <div className="preview-container">
+      <h4 style={{ marginBottom: '0.375rem' }}>Twitter Preview:</h4>
       <div className="twitter-container">
         <div className="flex ma4" style={{ display: 'flex', margin: '0.8rem' }}>
           <span>
@@ -73,8 +76,10 @@ const getTwitterContainer = ({ image, formData, siteAddress }) => {
               ></path>
             </svg>
           </span>
-          <div className="w-100" style={{ width: '100%' }}>
-            <span className="social-og-title">{formData.meta?.twitter?.title}</span>
+          <div className="w-100" style={{ width: `calc(100% - 26px)` }}>
+            <span className="social-og-title">
+              {formData.meta?.twitter?.title || formData.name}
+            </span>
             <span className="social-og-time">12 hrs</span>
             <div
               className="flex flex-column mt2 mb3"
@@ -92,14 +97,18 @@ const getTwitterContainer = ({ image, formData, siteAddress }) => {
               <span className="social-og-desc w-60" style={{ width: '60%' }}></span>
             </div>
             <div className="social-twitter-post-preview">
-              {image && (
+              {medium && (
                 <div
-                  className="social-twitter-preview-image"
-                  style={{ backgroundImage: image }} // use ImgProxy url
+                  className="social-twitter-preview-image idiot"
+                  style={{
+                    backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fill:800:418`,
+                  }} // use ImgProxy url
                 ></div>
               )}
               <div className="social-twitter-preview-content">
-                <div className="social-twitter-preview-title">{formData.meta?.twitter?.title}</div>
+                <div className="social-twitter-preview-title">
+                  {formData.meta?.twitter?.title || formData.name}
+                </div>
                 <div className="social-twitter-preview-desc">
                   {formData.meta?.twitter?.description}
                 </div>
@@ -110,7 +119,7 @@ const getTwitterContainer = ({ image, formData, siteAddress }) => {
                       <path d="M7.27 22.054a5.24 5.24 0 01-5.193-6.019 5.21 5.21 0 012.07-3.438l1.478-1.094a.752.752 0 01.893 1.208l-1.48 1.095a3.716 3.716 0 00-1.475 2.45c-.148.99.097 1.975.69 2.778a3.745 3.745 0 005.23.785l3.528-2.608a3.744 3.744 0 00.785-5.23 3.7 3.7 0 00-1.992-1.376.75.75 0 01-.52-.927c.112-.4.528-.63.926-.522a5.19 5.19 0 012.794 1.932 5.248 5.248 0 01-1.1 7.33l-3.53 2.608a5.189 5.189 0 01-3.105 1.026z"></path>
                     </g>
                   </svg>
-                  {siteAddress + '/' + formData.meta?.twitter?.canonical_URL}
+                  {`${siteAddress}/${formData.meta?.twitter?.canonical_URL || formData.slug}`}
                 </div>
               </div>
             </div>
@@ -147,10 +156,10 @@ const getTwitterContainer = ({ image, formData, siteAddress }) => {
   );
 };
 
-const getFacebookContainer = ({ image, formData, siteAddress }) => {
+const getFacebookContainer = ({ medium, formData, siteAddress }) => {
   return (
-    <div style={{ flexBasis: '33%' }}>
-      Facebook Preview:{' '}
+    <div className="preview-container">
+      <h4 style={{ marginBottom: '0.375rem' }}>Facebook Preview:</h4>
       <div className="og-container">
         <div
           className="flex ma3 mb2"
@@ -189,15 +198,22 @@ const getFacebookContainer = ({ image, formData, siteAddress }) => {
           <span className="social-og-desc w-60" style={{ width: '60%' }}></span>
         </div>
         <div className="social-og-preview">
-          {image && (
-            <div className="social-og-preview-image" style={{ backgroundImage: image }}></div>
+          {medium && (
+            <div
+              className="social-og-preview-image"
+              style={{
+                backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fit:1200:627)`,
+              }}
+            ></div>
           )}
           <div className="social-og-preview-bookmark">
             <div className="social-og-preview-content">
               <div className="social-og-preview-meta">
-                {siteAddress + '/' + formData.meta?.facebook?.canonical_URL}
+                {`${siteAddress}/${formData.meta?.facebook?.canonical_URL || formData.slug}`}
               </div>
-              <div className="social-og-preview-title">{formData.meta?.facebook?.title}</div>
+              <div className="social-og-preview-title">
+                {formData.meta?.facebook?.title || formData.name}
+              </div>
               <div className="social-og-preview-desc">{formData.meta?.facebook?.description}</div>
             </div>
           </div>
@@ -251,15 +267,16 @@ const getFacebookContainer = ({ image, formData, siteAddress }) => {
 };
 
 const SocialCardPreview = ({ image, type, formData, siteAddress }) => {
+  const medium = useSelector((state) => state.media.details[image]);
   //  add time field
 
   switch (type) {
     case 'google':
-      return getGoogleContainer(formData, siteAddress);
+      return getGoogleContainer({ formData, siteAddress });
     case 'twitter':
-      return getTwitterContainer({ image, formData, siteAddress });
+      return getTwitterContainer({ medium, formData, siteAddress });
     case 'fb':
-      return getFacebookContainer({ image, formData, siteAddress });
+      return getFacebookContainer({ medium, formData, siteAddress });
     default:
       return null;
   }
