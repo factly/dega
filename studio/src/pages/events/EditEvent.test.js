@@ -157,7 +157,7 @@ describe('Event edit component', () => {
           name: 'event-1',
           tags: { app: 'dega' },
         });
-        expect(push).toHaveBeenCalledWith('/events/1/edit');
+        expect(push).toHaveBeenCalledWith('/admin/events/1/edit');
         done();
       }, 0);
     });

@@ -75,14 +75,14 @@ exports[`Event component snapshot testing should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/events/create"
+                      to="/admin/events/create"
                     >
                       <LinkAnchor
-                        href="/events/create"
+                        href="/admin/events/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/events/create"
+                          href="/admin/events/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -997,14 +997,14 @@ exports[`Event component snapshot testing should render the component with data 
                   >
                     <Link
                       key="1"
-                      to="/events/create"
+                      to="/admin/events/create"
                     >
                       <LinkAnchor
-                        href="/events/create"
+                        href="/admin/events/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/events/create"
+                          href="/admin/events/create"
                           onClick={[Function]}
                         >
                           <Button
