@@ -47,12 +47,6 @@ describe('Media upload component', () => {
   mockedDispatch = jest.fn(() => Promise.resolve({}));
   useDispatch.mockReturnValue(mockedDispatch);
 
-  describe('snapshot testing', () => {
-    it('should render the component', () => {
-      const component = shallow(<UploadMedium />);
-      expect(component).toMatchSnapshot();
-    });
-  });
   describe('component testing', () => {
     let wrapper;
     afterEach(() => {
@@ -62,14 +56,14 @@ describe('Media upload component', () => {
       const onMediaUpload = jest.fn();
       actions.addMedium.mockReset();
       act(() => {
-        wrapper = shallow(<UploadMedium onMediaUpload={onMediaUpload} />);
+        wrapper = shallow(<UploadMedium onMediaUpload={onMediaUpload} profile={true} />);
       });
       wrapper
         .find(UppyUploader)
         .props()
         .onUpload([{ test: 'test' }]);
       setTimeout(() => {
-        expect(actions.addMedium).toHaveBeenCalledWith([{ test: 'test' }]);
+        expect(actions.addMedium).toHaveBeenCalledWith([{ test: 'test' }], true);
         done();
       }, 0);
     });
@@ -84,7 +78,10 @@ describe('Media upload component', () => {
         .props()
         .onUpload([{ test: 'test' }, { test: 'test2' }]);
       setTimeout(() => {
-        expect(actions.addMedium).toHaveBeenCalledWith([{ test: 'test' }, { test: 'test2' }]);
+        expect(actions.addMedium).toHaveBeenCalledWith(
+          [{ test: 'test' }, { test: 'test2' }],
+          false,
+        );
         done();
       }, 0);
     });

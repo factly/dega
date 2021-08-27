@@ -25,7 +25,14 @@ jest.mock('../../actions/media', () => ({
 }));
 let state = {
   spaces: {
-    orgs: [],
+    orgs: [
+      {
+        id: 1,
+        name: 'org 1',
+        slug: 'org-1',
+        spaces: [11],
+      },
+    ],
     details: {
       11: {
         id: 11,
@@ -184,7 +191,11 @@ describe('Media List component', () => {
       wrapper
         .find(MediaUploader)
         .props()
-        .onMediaUpload([{ id: 1, test: 'test', name: 'Medium -1' }]);
+        .onMediaUpload([{ id: 1, test: 'test', name: 'Medium -1' }], {
+          id: 1,
+          test: 'test',
+          name: 'Medium -1',
+        });
       setTimeout(() => {
         expect(actions.getMedia).toHaveBeenCalled();
         done();
