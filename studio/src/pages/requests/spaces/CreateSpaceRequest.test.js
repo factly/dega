@@ -112,7 +112,7 @@ describe('Space Request create component', () => {
       wrapper.find(CreateSpaceRequestForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addSpaceRequest).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/requests/spaces');
+        expect(push).toHaveBeenCalledWith('/admin/requests/spaces');
         done();
       }, 0);
     });

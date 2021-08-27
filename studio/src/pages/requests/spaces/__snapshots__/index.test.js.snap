@@ -87,14 +87,14 @@ exports[`Space Request component should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/spaces/create"
+                      to="/admin/requests/spaces/create"
                     >
                       <LinkAnchor
-                        href="/requests/spaces/create"
+                        href="/admin/requests/spaces/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/spaces/create"
+                          href="/admin/requests/spaces/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1531,14 +1531,14 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/spaces/create"
+                      to="/admin/requests/spaces/create"
                     >
                       <LinkAnchor
-                        href="/requests/spaces/create"
+                        href="/admin/requests/spaces/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/spaces/create"
+                          href="/admin/requests/spaces/create"
                           onClick={[Function]}
                         >
                           <Button

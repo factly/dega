@@ -91,7 +91,7 @@ describe('Organisation Request create component', () => {
       wrapper.find(CreateOrganisationRequestForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addOrganisationRequest).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/requests/organisations');
+        expect(push).toHaveBeenCalledWith('/admin/requests/organisations');
         done();
       }, 0);
     });

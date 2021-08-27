@@ -75,14 +75,14 @@ exports[`Organisation Request list should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/organisations/create"
+                      to="/admin/requests/organisations/create"
                     >
                       <LinkAnchor
-                        href="/requests/organisations/create"
+                        href="/admin/requests/organisations/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/organisations/create"
+                          href="/admin/requests/organisations/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1216,14 +1216,14 @@ exports[`Organisation Request list should render the component with data 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/organisations/create"
+                      to="/admin/requests/organisations/create"
                     >
                       <LinkAnchor
-                        href="/requests/organisations/create"
+                        href="/admin/requests/organisations/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/organisations/create"
+                          href="/admin/requests/organisations/create"
                           onClick={[Function]}
                         >
                           <Button
