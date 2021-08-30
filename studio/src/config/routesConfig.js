@@ -138,6 +138,9 @@ import Members from '../pages/members';
 import Requests from '../pages/requests';
 import Permissions from '../pages/permissions';
 
+//Reindex
+import Reindex from '../pages/spaces/Reindex';
+
 const routes = {
   dashboard: {
     path: '/dashboard',
@@ -213,6 +216,10 @@ const routes = {
       resource: 'spaces',
       action: 'update',
     },
+  reindex: {
+    path: '/reindex',
+    Component: Reindex,
+    title: 'Reindex',
   },
   episodes: {
     path: '/episodes',
@@ -303,7 +310,7 @@ const routes = {
     isAdmin: true,
   },
   editSpacePermission: {
-    path: '/admin/spaces/:sid/permissions/:pid/edit', //! check with harsha whether its spaces/* or permissions/spaces/*
+    path: '/admin/spaces/:sid/permissions/:pid/edit',
     Component: EditSpacePermission,
     title: 'Edit',
     isAdmin: true,
