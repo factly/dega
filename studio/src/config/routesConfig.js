@@ -218,7 +218,7 @@ const routes = {
     },
   },
   reindex: {
-    path: '/reindex',
+    path: '/advanced/reindex',
     Component: Reindex,
     title: 'Reindex',
   },

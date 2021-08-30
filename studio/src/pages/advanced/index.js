@@ -27,10 +27,7 @@ const Advanced = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/advanced/webhooks">
-            {
-              //! add meili reindexing path
-            }
+          <Link to="/advanced/reindex">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={

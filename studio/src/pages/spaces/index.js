@@ -25,7 +25,7 @@ function Spaces() {
       <Row gutter={16} justify="end">
         {role === 'owner' ? (
           <Col>
-            <Link key="2" to="/reindex">
+            <Link key="2" to="/advanced/reindex">
               <Button>Reindex</Button>
             </Link>
           </Col>
