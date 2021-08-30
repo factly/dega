@@ -216,6 +216,7 @@ const routes = {
       resource: 'spaces',
       action: 'update',
     },
+  },
   reindex: {
     path: '/reindex',
     Component: Reindex,
