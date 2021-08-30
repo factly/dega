@@ -3,7 +3,7 @@ package search
 import "github.com/go-chi/chi"
 
 type searchQuery struct {
-	Query        string   `json:"q" validate:"required,min=3"`
+	Query        string   `json:"q"`
 	Limit        int64    `json:"limit" validate:"lte=20"`
 	Filters      string   `json:"filters"`
 	FacetFilters []string `json:"facetFilters"`
