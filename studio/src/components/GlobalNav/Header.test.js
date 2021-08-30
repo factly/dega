@@ -63,6 +63,10 @@ describe('Header component', () => {
     sidebar: {
       collapsed: true,
     },
+    profile: {
+      details: {},
+      loading: false,
+    },
   };
   store = mockStore(() => state);
   store.dispatch = jest.fn(() => ({}));

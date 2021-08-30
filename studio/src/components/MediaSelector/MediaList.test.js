@@ -102,7 +102,7 @@ describe('Media List component', () => {
       wrapper.update();
       const updatedTable = wrapper.find(List);
       expect(updatedTable.props().pagination.current).toEqual(2);
-      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 8 });
+      expect(actions.getMedia).toHaveBeenCalledWith({ page: 1, limit: 8 }, false);
     });
     it('should handle image selection', () => {
       store = mockStore(() => state);
