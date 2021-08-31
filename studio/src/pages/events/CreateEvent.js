@@ -8,7 +8,7 @@ function CreateEvent() {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addEvent(values)).then(() => history.push('/events'));
+    dispatch(addEvent(values)).then(() => history.push('/admin/events'));
   };
   return <EventCreateForm onCreate={onCreate} />;
 }

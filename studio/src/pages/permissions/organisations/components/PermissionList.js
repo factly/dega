@@ -65,7 +65,7 @@ function PermissionList({ admin }) {
             style={{
               marginRight: 8,
             }}
-            to={`/organisations/${record.id}/permissions/${record.permission.id}/edit`}
+            to={`/admin/organisations/${record.id}/permissions/${record.permission.id}/edit`}
           >
             {record.title}
           </Link>

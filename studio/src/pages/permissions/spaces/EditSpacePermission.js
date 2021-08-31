@@ -30,7 +30,7 @@ function EditSpacePermission() {
 
   const onUpdate = (values) => {
     dispatch(updateSpacePermission({ ...space.permission, ...values })).then(() =>
-      history.push('/permissions/spaces'),
+      history.push('/admin/permissions/spaces'),
     );
   };
   if (space) {

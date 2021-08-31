@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Form, Input, Select, Row } from 'antd';
+import { Button, Collapse, Form, Input, Row, Select } from 'antd';
 import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -8,16 +8,7 @@ import getJsonValue from '../../../utils/getJsonValue';
 const { Option } = Select;
 const { TextArea } = Input;
 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 8,
-  },
-};
-
-const SpaceEditForm = ({ onCreate, data = {} }) => {
+const WebsiteEditForm = ({ onCreate, data = {} }) => {
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
@@ -25,16 +16,17 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
+
   const onReset = () => {
     form.resetFields();
   };
 
   const [valueChange, setValueChange] = React.useState(false);
-
+  const { Panel } = Collapse;
   return (
     <div>
       <Form
-        {...layout}
+        layout="vertical"
         form={form}
         initialValues={data}
         name="create-space"
@@ -47,7 +39,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
-          // let name = errors.errorFields[0].name[0];
+          //let name = errors.errorFields[0].name[0];
           // if (['name', 'slug'].includes(name)) {
           console.log({ errors });
           // }
@@ -66,14 +58,19 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Button>
           </Form.Item>
         </Row>
-        <Form.Item label="Name">
-          <Input.Group compact>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          defaultActiveKey={['1']}
+          style={{ width: '100%' }}
+        >
+          <Panel header="Title and Description" key="1">
             <Form.Item
               name="organisation_id"
-              noStyle
+              label="Organisation"
               rules={[{ required: true, message: 'Organisation is required' }]}
             >
-              <Select style={{ width: '40%' }} placeholder="Select organisation">
+              <Select placeholder="Select organisation" disabled>
                 {orgs.map((org) => (
                   <Option key={org.id} value={org.id}>
                     {org.title}
@@ -83,51 +80,53 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
             <Form.Item
               name="name"
-              noStyle
+              label="Name"
               rules={[
                 { required: true, message: 'Name is required' },
                 { min: 3, message: 'Name must be minimum 3 characters.' },
                 { max: 50, message: 'Name must be maximum 50 characters.' },
               ]}
             >
-              <Input style={{ width: '60%' }} placeholder="Input name" />
+              <Input placeholder="Input name" />
             </Form.Item>
-          </Input.Group>
-        </Form.Item>
-        <Form.Item
-          name="slug"
-          label="Slug"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the slug!',
-            },
-            {
-              required: checker,
-              message: 'Please enter valid slug!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item name="site_title" label="Title">
-          <Input />
-        </Form.Item>
-        <Form.Item name="tag_line" label="Tag line">
-          <Input />
-        </Form.Item>
-        <Form.Item name="site_address" label="Website">
-          <Input />
-        </Form.Item>
-        <Form.Item name="description" label="Description">
-          <TextArea placeholder="Enter Description..." />
-        </Form.Item>
-        <Form.Item name="meta_fields" label="Metafields">
-          <MonacoEditor language="json" />
-        </Form.Item>
+            <Form.Item name="site_title" label="Title">
+              <Input />
+            </Form.Item>
+            <Form.Item name="tag_line" label="Tag line">
+              <Input />
+            </Form.Item>
+            <Form.Item name="description" label="Description">
+              <TextArea placeholder="Enter Description..." />
+            </Form.Item>
+            <Form.Item
+              name="slug"
+              label="Slug"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please input the slug!',
+                },
+                {
+                  required: checker,
+                  message: 'Please enter valid slug!',
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name="site_address" label="Site Address">
+              <Input />
+            </Form.Item>
+          </Panel>
+          <Panel header="Meta Fields" key="2">
+            <Form.Item name="meta_fields" label="Metafields">
+              <MonacoEditor language="json" width="100%" />
+            </Form.Item>
+          </Panel>
+        </Collapse>
       </Form>
     </div>
   );
 };
 
-export default SpaceEditForm;
+export default WebsiteEditForm;

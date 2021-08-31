@@ -13,7 +13,7 @@ function CreatePolicy() {
     values.permissions = values.permissions.filter(
       (item) => item && item.resource && item.actions.length > 0,
     );
-    dispatch(addPolicy(values)).then(() => history.push('/policies'));
+    dispatch(addPolicy(values)).then(() => history.push('/members/policies'));
   };
 
   return <PolicyCreateForm onCreate={onCreate} />;

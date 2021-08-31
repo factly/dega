@@ -31,7 +31,7 @@ function EditEvent() {
 
   const onUpdate = (values) => {
     dispatch(updateEvent({ ...event, ...values }));
-    history.push(`/events/${id}/edit`);
+    history.push(`/admin/events/${id}/edit`);
   };
   return <EventEditForm data={event} onCreate={onUpdate} />;
 }

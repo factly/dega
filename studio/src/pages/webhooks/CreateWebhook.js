@@ -8,7 +8,7 @@ function CreateWebhook() {
   const history = useHistory();
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addWebhook(values)).then(() => history.push('/webhooks'));
+    dispatch(addWebhook(values)).then(() => history.push('/advanced/webhooks'));
   };
   return <WebhookCreateForm onCreate={onCreate} />;
 }

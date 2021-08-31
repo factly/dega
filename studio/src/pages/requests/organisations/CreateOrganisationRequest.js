@@ -9,7 +9,9 @@ function CreateOrganisationRequest() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addOrganisationRequest(values)).then(() => history.push('/requests/organisations'));
+    dispatch(addOrganisationRequest(values)).then(() =>
+      history.push('/admin/requests/organisations'),
+    );
   };
   return <OrganisationRequestCreateForm onCreate={onCreate} />;
 }

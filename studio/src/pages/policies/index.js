@@ -12,7 +12,7 @@ function Policies() {
   return (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
-        <Link to="/policies/create">
+        <Link to="/members/policies/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

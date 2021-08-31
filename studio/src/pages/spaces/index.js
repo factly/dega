@@ -25,16 +25,14 @@ function Spaces() {
       <Row gutter={16} justify="end">
         {role === 'owner' ? (
           <Col>
-            <Link key="2" to="/reindex">
+            <Link key="2" to="/advanced/reindex">
               <Button>Reindex</Button>
             </Link>
           </Col>
         ) : null}
-        <Col>
-          <Link key="1" to="/spaces/create">
-            <Button type="primary">New Space</Button>
-          </Link>
-        </Col>
+        <Link key="1" to="/admin/spaces/create">
+          <Button type="primary">New Space</Button>
+        </Link>
       </Row>
       <SpaceList />
     </Space>

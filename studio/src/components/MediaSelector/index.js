@@ -111,7 +111,7 @@ function MediaSelector({
             </Button>
             {medium && (
               <Button
-                style={{ position: 'absolute', bottom: 0, left: 0 }}
+                style={{ position: 'absolute', bottom: 0, left: 0, maxWidth: '52px' }}
                 onClick={() => {
                   onChange(null);
                   setSelected(null);

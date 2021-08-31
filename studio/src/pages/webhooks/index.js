@@ -11,7 +11,7 @@ function Webhooks() {
   return (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
-        <Link key="1" to="/webhooks/create">
+        <Link key="1" to="/advanced/webhooks/create">
           <Button type="primary">New Webhook</Button>
         </Link>
       </Row>

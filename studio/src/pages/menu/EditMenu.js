@@ -29,7 +29,9 @@ function EditMenu() {
     return <RecordNotFound />;
   }
   const onUpdate = (values) => {
-    dispatch(updateMenu({ ...menu, ...values })).then(() => history.push(`/menus/${id}/edit`));
+    dispatch(updateMenu({ ...menu, ...values })).then(() =>
+      history.push(`/website/menus/${id}/edit`),
+    );
   };
   return <MenuEditForm data={menu} onCreate={onUpdate} />;
 }
