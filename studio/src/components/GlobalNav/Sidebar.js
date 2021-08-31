@@ -8,6 +8,7 @@ import { setCollapse } from './../../actions/sidebar';
 import SpaceSelector from './SpaceSelector';
 import AccountMenu from './AccountMenu';
 import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import Search from '../Search';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -134,6 +135,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
           <SpaceSelector collapsed={collapsed} />
         </div>
       </Link>
+      <Search />
       <Menu
         theme={navTheme}
         mode="inline"
