@@ -31,6 +31,7 @@ import info from './infoReducer';
 import pages from './pagesReducer';
 import webhooks from './webhooksReducer';
 import profile from './profileReducer';
+import search from './searchReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -64,6 +65,7 @@ const appReducer = combineReducers({
   events,
   webhooks,
   profile,
+  search,
 });
 
 const rootReducer = (state, action) => {

@@ -8,6 +8,7 @@ import { setCollapse } from './../../actions/sidebar';
 import SpaceSelector from './SpaceSelector';
 import AccountMenu from './AccountMenu';
 import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import Search from '../Search';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -137,9 +138,23 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         height: '100vh',
       }}
     >
-      <div className="menu-header" style={{ padding: collapsed ? '0 0.5rem' : '0 24px' }}>
-        <SpaceSelector collapsed={collapsed} />
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: collapsed ? 'column' : 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: collapsed ? '0 0.5rem' : '0 24px',
+        }}
+      >
+        <Link to="/">
+          <div className="menu-header" style={{}}>
+            <SpaceSelector collapsed={collapsed} />
+          </div>
+        </Link>
+        <Search collapsed={collapsed} />
       </div>
+
       <Menu
         theme={navTheme}
         mode="inline"
