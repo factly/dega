@@ -2,29 +2,31 @@ import { Input, Modal, List, Typography } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { SearchOutlined } from '@ant-design/icons';
 import { getSearchDetails } from '../../actions/search';
 
-function Search() {
+function Search({ collapsed }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = React.useState(false);
   const [selected, setSelected] = useState({
-    indexList: 0,
+    entityIndex: 0,
     indexItem: 0,
   });
+  const inputRef = useRef(null);
   const dispatch = useDispatch();
+
+  const searchEntities = ['articles', 'fact-checks', 'pages', 'claims', 'categories', 'tags'];
+
+  const { data, total, entitiesLength } = useSelector(({ search }) => {
+    const entitiesLength = searchEntities.map((entity) => {
+      return search.details[entity].length;
+    });
+    return { data: search.details, total: search.total, entitiesLength: entitiesLength };
+  });
 
   useEffect(() => {
     if (query.length > 0) dispatch(getSearchDetails({ q: query }));
   }, [dispatch, query]);
-
-  const searchEntites = ['articles', 'fact-checks', 'pages', 'claims', 'categories', 'tags'];
-
-  const { data, total, entitiesLength } = useSelector(({ search }) => {
-    const entitiesLength = searchEntites.map((each) => {
-      return search.details[each].length;
-    });
-    return { data: search.details, total: search.total, entitiesLength: entitiesLength };
-  });
 
   const handleOk = () => {
     setOpen(false);
@@ -38,62 +40,70 @@ function Search() {
     <div
       onKeyDown={() => {
         let isSet = false;
-        let indexList = selected.indexList;
+        let entityIndex = selected.entityIndex;
         let indexItem = selected.indexItem;
         entitiesLength.forEach((length, index) => {
-          if (selected.indexList === index && selected.indexItem < length - 1 && !isSet) {
+          if (selected.entityIndex === index && selected.indexItem < length - 1 && !isSet) {
             isSet = true;
             indexItem = selected.indexItem + 1;
           }
-          if (!isSet && index > selected.indexList && length !== 0) {
+          if (!isSet && index > selected.entityIndex && length !== 0) {
             isSet = true;
             indexItem = 0;
-            indexList = index;
+            entityIndex = index;
           }
         });
-        setSelected({ indexList, indexItem });
+        setSelected({ entityIndex, indexItem });
       }}
     >
-      <Input onClick={(e) => setOpen(true)} />
+      <SearchOutlined
+        style={{ fontSize: collapsed ? '16px' : '20px' }}
+        onClick={(e) => {
+          setOpen(true);
+          setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
+        }}
+      />
       <Modal visible={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
         <div>
           <Input
             onChange={(e) => {
               setQuery(e.target.value);
-              setSelected({ indexList: 0, indexItem: 0 });
+              setSelected({ entityIndex: 0, indexItem: 0 });
             }}
+            ref={inputRef}
             placeholder={'search articles, fact-checks, claims, categories ...'}
           />
         </div>
 
         {total > 0 && query.length > 0 ? (
           <div style={{ height: 600, overflow: 'scroll' }}>
-            {searchEntites.map((each, indexList) =>
-              data[each].length > 0 ? (
+            {searchEntities.map((entity, entityIndex) =>
+              data[entity].length > 0 ? (
                 <List
-                  key={each}
-                  header={<h2>{each.toLocaleUpperCase()}</h2>}
-                  dataSource={data[each]}
+                  key={entity}
+                  header={<h2>{entity.toLocaleUpperCase()}</h2>}
+                  dataSource={data[entity]}
                   renderItem={(item, indexItem) => {
                     return (
                       <Link
-                        to={`/${each === 'articles' ? 'posts' : each}/${item.id}/edit`}
+                        to={`/${entity === 'articles' ? 'posts' : entity}/${item.id}/edit`}
                         onClick={() => setOpen(false)}
                       >
                         <List.Item
                           style={
-                            indexItem === selected.indexItem && indexList === selected.indexList
+                            indexItem === selected.indexItem && entityIndex === selected.entityIndex
                               ? { backgroundColor: '#5468ff', padding: 5 }
                               : {}
                           }
                         >
                           <Typography.Text
                             style={
-                              indexItem === selected.indexItem && indexList === selected.indexList
+                              indexItem === selected.indexItem &&
+                              entityIndex === selected.entityIndex
                                 ? { color: '#fff' }
                                 : {}
                             }
-                            onMouseOver={() => setSelected({ indexItem, indexList })}
+                            onMouseOver={() => setSelected({ indexItem, entityIndex })}
                           >
                             {item.title || item.name || item.claim}
                           </Typography.Text>
