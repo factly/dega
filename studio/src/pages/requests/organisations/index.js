@@ -7,7 +7,7 @@ function OrganisationRequests() {
   return (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
-        <Link key="1" to="/requests/organisations/create">
+        <Link key="1" to="/admin/requests/organisations/create">
           <Button type="primary">New Organisation Request</Button>
         </Link>
       </Row>

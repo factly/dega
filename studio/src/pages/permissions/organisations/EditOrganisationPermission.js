@@ -30,7 +30,7 @@ function EditOrganisationPermission() {
 
   const onUpdate = (values) => {
     dispatch(updateOrganisationPermission({ ...organisation.permission, ...values })).then(() =>
-      history.push('/permissions/organisations'),
+      history.push('/admin/permissions/organisations'),
     );
   };
   if (organisation)

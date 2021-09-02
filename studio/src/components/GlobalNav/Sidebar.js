@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import { Layout, Menu, Divider, Popover, List, Avatar, Button } from 'antd';
+import { Layout, Menu, Popover, List, Avatar, Button } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
@@ -20,7 +20,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
   let key;
   const location = useLocation();
   const [enteredRoute, setRoute] = React.useState(null);
-  const [selectedmenu, setSelectedMenu] = React.useState('DASHBOARD.Home.0.0');
+  const [selectedmenu, setSelectedMenu] = React.useState('Dashboard.Home.0.0');
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   var index;
   for (index = 0; index < pathSnippets.length; index++) {
@@ -53,7 +53,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'spaces',
   ];
 
-  let protectedResouces = [
+  let protectedResources = [
     'posts',
     'pages',
     'categories',
@@ -70,31 +70,39 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'podcasts',
     'events',
     'webhooks',
+    'website',
+    'advanced',
+    'members',
+    'code-injection',
+    'requests',
+    'permissions',
   ];
-  let borderRadiusStyle = {
+  let buttonStyle = {
     borderRadius: '50px',
+    padding: '0.25rem 0.5rem',
   };
 
   permission.forEach((each) => {
     if (each.resource === 'admin') {
-      resource = resource.concat(protectedResouces);
+      resource = resource.concat(protectedResources);
       if (!showCoreMenu) {
         setCoreMenu(true);
       }
     } else {
-      if (!showCoreMenu && protectedResouces.includes(each.resource)) {
+      if (!showCoreMenu && protectedResources.includes(each.resource)) {
         setCoreMenu(true);
       }
       resource.push(each.resource);
     }
   });
 
-  if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResouces);
+  if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
 
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
-        route.title === 'Events' && route.isAdmin !== superOrg.is_admin ? null : (
+        ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
+        route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
             {
               ((key = `${title}.${route.title}.${index}.${childIndex}`),
@@ -161,17 +169,20 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
             <SubMenu key={index} title={menu.title} icon={<Icon />}>
               {menu.submenu && menu.submenu.length > 0 ? (
                 <>
-                  {menu.submenu[0].isAdmin === superOrg.is_admin &&
-                  orgs[0]?.permission.role === 'owner' ? (
-                    <SubMenu key={menu.submenu[0].title + index} title={menu.submenu[0].title}>
-                      {getMenuItems(menu.submenu[0].children, index, menu.submenu[0].title)}
-                    </SubMenu>
-                  ) : null}
-                  {orgs[0]?.permission.role === 'owner' ? (
-                    <SubMenu key={menu.submenu[1].title + index} title={menu.submenu[1].title}>
-                      {getMenuItems(menu.submenu[1].children, index, menu.submenu[1].title)}
-                    </SubMenu>
-                  ) : null}
+                  {menu.submenu.map((submenuItem, index) => {
+                    return (
+                      // check with Harsha on roles and permissions
+                      orgs[0]?.permission.role === 'owner' ? (
+                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
+                        </SubMenu>
+                      ) : (
+                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
+                        </SubMenu>
+                      )
+                    );
+                  })}
                 </>
               ) : null}
               {getMenuItems(menu.children, index, menu.title)}
@@ -235,14 +246,14 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
                   }
                   trigger="click"
                 >
-                  <Button style={borderRadiusStyle}>
+                  <Button style={buttonStyle}>
                     <AppstoreOutlined />
                   </Button>
                 </Popover>
               </>
             ) : null}
             <Button
-              style={{ ...borderRadiusStyle, marginLeft: '0.25rem' }}
+              style={{ ...buttonStyle, marginLeft: '0.25rem' }}
               onClick={() => onCollapse(true)}
             >
               <MenuFoldOutlined />
@@ -250,8 +261,20 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
           </div>
         </div>
       ) : (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button style={borderRadiusStyle} onClick={() => onCollapse(false)}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '12px 8px',
+            lineHeight: '40px',
+            alignItems: 'center',
+            width: '100%',
+            position: 'absolute',
+            bottom: '0',
+            background: '#f0f2f5',
+          }}
+        >
+          <Button style={buttonStyle} onClick={() => onCollapse(false)}>
             <MenuUnfoldOutlined />
           </Button>
         </div>

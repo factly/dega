@@ -7,7 +7,7 @@ function SpaceRequests() {
   return (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
-        <Link key="1" to="/requests/spaces/create">
+        <Link key="1" to="/admin/requests/spaces/create">
           <Button type="primary">New Space Request</Button>
         </Link>
       </Row>

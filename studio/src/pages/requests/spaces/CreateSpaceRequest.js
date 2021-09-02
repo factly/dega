@@ -9,7 +9,7 @@ function CreateSpaceRequest() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addSpaceRequest(values)).then(() => history.push('/requests/spaces'));
+    dispatch(addSpaceRequest(values)).then(() => history.push('/admin/requests/spaces'));
   };
   return <SpaceRequestCreateForm onCreate={onCreate} />;
 }

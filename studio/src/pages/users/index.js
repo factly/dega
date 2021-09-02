@@ -27,7 +27,7 @@ function Users() {
         return (
           <Typography key={record.id}>
             {record.policies[0].id !== 'admin' ? (
-              <Link to={`/users/${record.id}/permissions`}>
+              <Link to={`/members/users/${record.id}/permissions`}>
                 {record.first_name + ' ' + record.last_name}
               </Link>
             ) : (
@@ -50,7 +50,7 @@ function Users() {
         return record.policies.map((policy, index) => (
           <Tag key={record.id + policy.id}>
             {policy.id !== 'admin' ? (
-              <Link to={`/policies/${policy.id}/edit`}> {policy.name}</Link>
+              <Link to={`/members/policies/${policy.id}/edit`}> {policy.name}</Link>
             ) : (
               policy.name
             )}

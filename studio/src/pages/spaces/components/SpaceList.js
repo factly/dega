@@ -32,7 +32,7 @@ function SpaceList() {
             style={{
               marginRight: 8,
             }}
-            to={`/spaces/${record.id}/edit`}
+            to={`/admin/spaces/${record.id}/edit`}
           >
             {record.name}
           </Link>

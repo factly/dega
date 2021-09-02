@@ -31,7 +31,7 @@ function EditWebhook() {
 
   const onUpdate = (values) => {
     dispatch(updateWebhook({ ...webhook, ...values }));
-    history.push(`/webhooks/${id}/edit`);
+    history.push(`/advanced/webhooks/${id}/edit`);
   };
   return <WebhookEditForm data={webhook} onCreate={onUpdate} />;
 }

@@ -51,7 +51,7 @@ function PolicyList({ actions }) {
             style={{
               marginRight: 8,
             }}
-            to={`/policies/${record.id}/edit`}
+            to={`/members/policies/${record.id}/edit`}
           >
             {record.name}
           </Link>

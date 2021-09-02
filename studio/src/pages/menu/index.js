@@ -11,7 +11,7 @@ function Menu() {
   return (
     <Space direction="vertical">
       <Row justify="end">
-        <Link to="/menus/create">
+        <Link to="/website/menus/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

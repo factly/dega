@@ -9,7 +9,7 @@ function CreateSpacePermission() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addSpacePermission(values)).then(() => history.push('/permissions/spaces'));
+    dispatch(addSpacePermission(values)).then(() => history.push('/admin/permissions/spaces'));
   };
   return <SpacePermissionCreateForm onCreate={onCreate} />;
 }

@@ -10,7 +10,7 @@ function CreateFormat({ setReloadFlag, reloadFlag }) {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addFormat(values)).then(() => {
-      history.push('/formats');
+      history.push('/advanced/formats');
       setReloadFlag(!reloadFlag);
     });
   };

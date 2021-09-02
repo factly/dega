@@ -1,14 +1,13 @@
 import React from 'react';
-import { useParams, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
-import SpaceEditForm from './components/SpaceEditForm';
-import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 
-function EditSpace() {
-  const history = useHistory();
-  const { id } = useParams();
+import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import WebsiteEditForm from './components/WebsiteEditForm';
+
+function EditWebsite() {
+  const id = useSelector((state) => state.spaces.selected);
   const dispatch = useDispatch();
 
   const { space, loading } = useSelector((state) => {
@@ -19,9 +18,7 @@ function EditSpace() {
   });
 
   const onCreate = (values) => {
-    dispatch(updateSpace({ ...space, ...values })).then(() =>
-      history.push(`/admin/spaces/${id}/edit`),
-    );
+    dispatch(updateSpace({ ...space, ...values }));
   };
 
   if (loading) return <Skeleton />;
@@ -30,7 +27,7 @@ function EditSpace() {
     return <RecordNotFound />;
   }
 
-  return <SpaceEditForm onCreate={onCreate} data={space} />;
+  return <WebsiteEditForm onCreate={onCreate} data={space} />;
 }
 
-export default EditSpace;
+export default EditWebsite;

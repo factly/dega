@@ -12,7 +12,6 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '15%',
       render: (_, record) => {
         return (
           <Link
@@ -27,7 +26,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
         );
       },
     },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug', width: '15%' },
+    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
     {
       title: 'Action',
       dataIndex: 'operation',
