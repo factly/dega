@@ -141,7 +141,7 @@ import Permissions from '../pages/permissions';
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
 
-const routes = {
+export const routes = {
   dashboard: {
     path: '/dashboard',
     Component: Dashboard,
