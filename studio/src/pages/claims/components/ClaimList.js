@@ -17,7 +17,6 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
       render: (_, record) => {
         return (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -54,13 +53,11 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button
-                icon={<DeleteOutlined />}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
-              />
-            </Link>
+            <Button
+              icon={<DeleteOutlined />}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
+            />
           </Popconfirm>
         );
       },

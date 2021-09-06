@@ -3,7 +3,7 @@ import { Popconfirm, Button, Table } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces, approveSpaceRequest } from '../../../../actions/spaceRequests';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function RequestList() {
@@ -105,9 +105,7 @@ function RequestList() {
                 dispatch(approveSpaceRequest(record.id, 'reject')).then(() => fetchSpaceRequests())
               }
             >
-              <Link to="" className="ant-dropdown-link">
-                <Button>Reject</Button>
-              </Link>
+              <Button>Reject</Button>
             </Popconfirm>
           </span>
         );

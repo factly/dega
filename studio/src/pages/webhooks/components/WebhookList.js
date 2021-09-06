@@ -44,7 +44,6 @@ function WebhookList({ actions }) {
       render: (_, record) => {
         return (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -88,13 +87,11 @@ function WebhookList({ actions }) {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button
-                icon={<DeleteOutlined />}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
-              />
-            </Link>
+            <Button
+              icon={<DeleteOutlined />}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
+            />
           </Popconfirm>
         );
       },
