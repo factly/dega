@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button, Form, Input, DatePicker, Row, Col, Collapse } from 'antd';
 import Selector from '../../../components/Selector';
-import Editor from '../../../components/Editor';
-import { maker, checker } from '../../../utils/sluger';
+import { maker } from '../../../utils/sluger';
 import moment from 'moment';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { DescriptionInput, MetaForm, SlugInput } from '../../../components/FormItems';
 
 const layout = {
   // labelCol: {
@@ -144,23 +143,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 onChange={(e) => onClaimChange(e.target.value)}
               />
             </Form.Item>
-            <Form.Item
-              name="slug"
-              label="Slug"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the slug!',
-                },
-                {
-                  pattern: checker,
-                  message: 'Please enter valid slug!',
-                },
-                { max: 150, message: 'Slug must be maximum 150 characters.' },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <SlugInput />
             <Form.Item name="fact" label="Fact">
               <Input.TextArea rows={6} placeholder={'Enter Fact ...'} />
             </Form.Item>
@@ -205,10 +188,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 <DatePicker disabledDate={disabledDate} />
               </Form.Item>
             </Form.Item>
-
-            <Form.Item name="description" label="Description">
-              <Editor placeholder="Enter Description..." />
-            </Form.Item>
+            <DescriptionInput inputProps={{ placeholder: 'Enter Description...' }} />
           </Panel>
           <Panel header="Sources" key="2">
             <Form.Item label="Claim Sources">
@@ -301,48 +281,9 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Panel>
         </Collapse>
-        <Collapse
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+        <MetaForm
           style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
-        >
-          <Panel header="Meta Data">
-            <Form.Item name={['meta', 'title']} label="Meta Title">
-              <Input />
-            </Form.Item>
-            <Form.Item name={['meta', 'description']} label="Meta Description">
-              <Input.TextArea />
-            </Form.Item>
-            <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-              <Input />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
-        >
-          <Panel header="Code Injection">
-            <Form.Item name="header_code" label="Header Code">
-              <MonacoEditor language="html" width="100%" />
-            </Form.Item>
-            <Form.Item name="footer_code" label="Footer Code">
-              <MonacoEditor language="html" width="100%" />
-            </Form.Item>
-          </Panel>
-        </Collapse>
-        <Collapse
-          expandIconPosition="right"
-          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-          style={{ width: '100%', marginBottom: '15px', maxWidth: 800, margin: '0 auto' }}
-        >
-          <Panel header="Meta Fields" key="3">
-            <Form.Item name="meta_fields">
-              <MonacoEditor language="json" />
-            </Form.Item>
-          </Panel>
-        </Collapse>
+        />
       </Form>
     </div>
   );

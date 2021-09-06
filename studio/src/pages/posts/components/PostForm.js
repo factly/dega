@@ -14,23 +14,21 @@ import {
   Modal,
   Typography,
 } from 'antd';
-import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
-import { maker, checker } from '../../../utils/sluger';
+import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
-import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
   const [form] = Form.useForm();
-  const sidebar = useSelector((state) => state.sidebar);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
@@ -234,10 +232,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
-
-              <Form.Item name="description" className="post-description">
-                <Editor />
-              </Form.Item>
+              <DescriptionInput
+                type="editor"
+                formItemProps={{ className: 'post-description' }}
+                noLabel
+              />
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
                 placement="right"
@@ -265,22 +264,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input the slug!',
-                    },
-                    {
-                      pattern: checker,
-                      message: 'Please enter valid slug!',
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+                <SlugInput />
                 <Form.Item name="published_date" label="Published Date">
                   <DatePicker />
                 </Form.Item>
@@ -348,7 +332,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   <div id="schemas-container">
                     {data.schemas &&
                       data.schemas.map((schema) => (
-                        <Typography.Text code>{JSON.stringify(schema)}</Typography.Text>
+                        <Typography.Text key={schema} code>
+                          {JSON.stringify(schema)}
+                        </Typography.Text>
                       ))}
                   </div>
                 </Modal>

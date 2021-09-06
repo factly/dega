@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Form, InputNumber, Space, Select, Input } from 'antd';
 import { useSelector } from 'react-redux';
+import { TitleInput } from '../../../../components/FormItems';
 
 const layout = {
   labelCol: {
@@ -37,20 +38,7 @@ const RequestForm = ({ onCreate, data = {} }) => {
         onReset();
       }}
     >
-      <Form.Item
-        name="title"
-        label="Title"
-        rules={[
-          {
-            required: true,
-            message: 'Please enter title!',
-          },
-          { min: 3, message: 'Name must be minimum 3 characters.' },
-          { max: 50, message: 'Name must be maximum 50 characters.' },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+      <TitleInput />
       <Form.Item name="organisation_id" label="Organisation">
         <Select
           allowClear

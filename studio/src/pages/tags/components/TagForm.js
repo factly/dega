@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Form, Input, Space, Switch, Collapse, Row, Col } from 'antd';
-import { maker, checker } from '../../../utils/sluger';
-import Editor from '../../../components/Editor';
-import MonacoEditor from '../../../components/MonacoEditor';
+import { Button, Form, Space, Switch, Row, Col } from 'antd';
+import { maker } from '../../../utils/sluger';
 import getJsonValue from '../../../utils/getJsonValue';
 import MediaSelector from '../../../components/MediaSelector';
+import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
 const TagForm = ({ onCreate, data = {} }) => {
   if (data && data.meta_fields) {
@@ -65,36 +64,12 @@ const TagForm = ({ onCreate, data = {} }) => {
               style={{ background: '#f0f2f5', padding: '1.25rem', marginBottom: '1rem' }}
             >
               <Col span={12}>
-                <Form.Item
+                <TitleInput
                   name="name"
                   label="Tag Name"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please enter the name!',
-                    },
-                    { min: 3, message: 'Name must be minimum 3 characters.' },
-                    { max: 50, message: 'Name must be maximum 50 characters.' },
-                  ]}
-                >
-                  <Input onChange={(e) => onTitleChange(e.target.value)} />
-                </Form.Item>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input the slug!',
-                    },
-                    {
-                      pattern: checker,
-                      message: 'Please enter valid slug!',
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+                  onChange={(e) => onTitleChange(e.target.value)}
+                />
+                <SlugInput />
                 <Form.Item label="Featured" name="is_featured" valuePropName="checked">
                   <Switch />
                 </Form.Item>
@@ -105,60 +80,20 @@ const TagForm = ({ onCreate, data = {} }) => {
                 </Form.Item>
               </Col>
               <Col span={12} style={{ marginRight: 'auto', marginLeft: '20px' }}>
-                <Form.Item name="description" label="Description">
-                  <Editor
-                    style={{ width: '600px', background: '#fff', padding: '0.5rem 0.75rem' }}
-                    placeholder="Enter Description..."
-                    basic={true}
-                  />
-                </Form.Item>
+                <DescriptionInput
+                  type="editor"
+                  inputProps={{
+                    style: { width: '600px', background: '#fff', padding: '0.5rem 0.75rem' },
+                    placeholder: 'Enter Description...',
+                    basic: true,
+                  }}
+                />
               </Col>
             </Row>
           </Col>
           <Col span={24}>
             <Row gutter={40} style={{ background: '#f0f2f5' }}>
-              <Collapse
-                expandIconPosition="right"
-                expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-                style={{ width: '100%' }}
-              >
-                <Collapse.Panel header="Meta Data">
-                  <Form.Item name={['meta', 'title']} label="Meta Title">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'description']} label="Meta Description">
-                    <Input.TextArea />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input />
-                  </Form.Item>
-                </Collapse.Panel>
-              </Collapse>
-              <Collapse
-                expandIconPosition="right"
-                expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-                style={{ width: '100%' }}
-              >
-                <Collapse.Panel header="Code Injection">
-                  <Form.Item name="header_code" label="Header Code">
-                    <MonacoEditor language="html" width="100%" />
-                  </Form.Item>
-                  <Form.Item name="footer_code" label="Footer Code">
-                    <MonacoEditor language="html" width="100%" />
-                  </Form.Item>
-                </Collapse.Panel>
-              </Collapse>
-              <Collapse
-                expandIconPosition="right"
-                expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-                style={{ width: '100%' }}
-              >
-                <Collapse.Panel header="Meta Fields">
-                  <Form.Item name="meta_fields">
-                    <MonacoEditor language="json" width="100%" />
-                  </Form.Item>
-                </Collapse.Panel>
-              </Collapse>
+              <MetaForm />
             </Row>
           </Col>
         </Row>

@@ -1,10 +1,9 @@
 import React from 'react';
-import { Button, Col, Collapse, Form, Input, Row, Space, Switch } from 'antd';
-import { maker, checker } from '../../../utils/sluger';
-import MonacoEditor from '../../../components/MonacoEditor';
+import { Button, Col, Form, Input, Row, Space, Switch } from 'antd';
+import { maker } from '../../../utils/sluger';
 import getJsonValue from '../../../utils/getJsonValue';
-import Editor from '../../../components/Editor/index';
 import MediaSelector from '../../../components/MediaSelector/index';
+import { MetaForm, SlugInput } from '../../../components/FormItems';
 
 const { TextArea } = Input;
 
@@ -80,22 +79,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
               >
                 <Input onChange={(e) => onTitleChange(e.target.value)} />
               </Form.Item>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input the slug!',
-                  },
-                  {
-                    pattern: checker,
-                    message: 'Please enter valid slug!',
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
+              <SlugInput />
               <Form.Item label="Featured" name="is_featured" valuePropName="checked">
                 <Switch />
               </Form.Item>
@@ -114,48 +98,7 @@ const FormatForm = ({ onCreate, data = {} }) => {
         </Col>
         <Col span={24}>
           <Row gutter={40} style={{ background: '#f0f2f5' }}>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Meta Data">
-                <Form.Item name={['meta', 'title']} label="Meta Title">
-                  <Input />
-                </Form.Item>
-                <Form.Item name={['meta', 'description']} label="Meta Description">
-                  <Input.TextArea />
-                </Form.Item>
-                <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                  <Input />
-                </Form.Item>
-              </Collapse.Panel>
-            </Collapse>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Code Injection">
-                <Form.Item name="header_code" label="Header Code">
-                  <MonacoEditor language="html" width="100%" />
-                </Form.Item>
-                <Form.Item name="footer_code" label="Footer Code">
-                  <MonacoEditor language="html" width="100%" />
-                </Form.Item>
-              </Collapse.Panel>
-            </Collapse>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Meta Fields">
-                <Form.Item name="meta_fields">
-                  <MonacoEditor language="json" width="100%" />
-                </Form.Item>
-              </Collapse.Panel>
-            </Collapse>
+            <MetaForm />
           </Row>
         </Col>
       </Row>

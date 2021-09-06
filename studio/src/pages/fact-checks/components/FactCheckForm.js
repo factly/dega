@@ -14,9 +14,8 @@ import {
   Modal,
   Typography,
 } from 'antd';
-import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
-import { maker, checker } from '../../../utils/sluger';
+import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
@@ -24,16 +23,15 @@ import { addClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
-import { setCollapse } from './../../../actions/sidebar';
 import moment from 'moment';
 import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
   const [form] = Form.useForm();
-  const sidebar = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
@@ -317,9 +315,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   />
                 </Form.Item>
               ) : null}
-              <Form.Item name="description" className="post-description">
-                <Editor />
-              </Form.Item>
+              <DescriptionInput formItemProps={{ className: 'post-description' }} noLabel />
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
                 placement="right"
@@ -351,22 +347,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
-                <Form.Item
-                  name="slug"
-                  label="Slug"
-                  rules={[
-                    {
-                      required: true,
-                      message: 'Please input the slug!',
-                    },
-                    {
-                      pattern: checker,
-                      message: 'Please enter valid slug!',
-                    },
-                  ]}
-                >
-                  <Input />
-                </Form.Item>
+                <SlugInput />
                 <Form.Item name="published_date" label="Published Date">
                   <DatePicker />
                 </Form.Item>

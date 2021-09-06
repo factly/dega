@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Collapse, Form, Input, Row, Select } from 'antd';
-import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { SlugInput } from '../../../components/FormItems';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -98,22 +98,7 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
             <Form.Item name="description" label="Description">
               <TextArea placeholder="Enter Description..." />
             </Form.Item>
-            <Form.Item
-              name="slug"
-              label="Slug"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the slug!',
-                },
-                {
-                  required: checker,
-                  message: 'Please enter valid slug!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
+            <SlugInput />
             <Form.Item name="site_address" label="Site Address">
               <Input />
             </Form.Item>
