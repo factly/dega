@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addTag } from '../../actions/tags';
+import { createTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import TagCreateForm from './components/TagForm';
 
@@ -9,7 +9,7 @@ function CreateTag() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addTag(values)).then(() => history.push('/tags'));
+    dispatch(createTag(values)).then(() => history.push('/tags'));
   };
   return <TagCreateForm onCreate={onCreate} />;
 }
