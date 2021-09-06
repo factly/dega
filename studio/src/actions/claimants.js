@@ -8,7 +8,7 @@ import {
   CLAIMANTS_API,
 } from '../constants/claimants';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import getError from '../utils/getError';
 
 export const getClaimants = (query) => {
@@ -20,7 +20,7 @@ export const getClaimants = (query) => {
       })
       .then((response) => {
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes
               .filter((claimant) => claimant.medium)
               .map((claimant) => claimant.medium),
@@ -54,7 +54,7 @@ export const getClaimant = (id) => {
     return axios
       .get(CLAIMANTS_API + '/' + id)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
       })
@@ -86,7 +86,7 @@ export const updateClaimant = (data) => {
     return axios
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
         dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(addSuccessNotification('Claimant updated'));
@@ -116,9 +116,7 @@ export const deleteClaimant = (id) => {
 export const addClaimants = (claimants) => {
   return (dispatch) => {
     dispatch(
-      addMediaList(
-        claimants.filter((claimant) => claimant.medium).map((claimant) => claimant.medium),
-      ),
+      addMedia(claimants.filter((claimant) => claimant.medium).map((claimant) => claimant.medium)),
     );
     dispatch(
       addClaimantsList(

@@ -8,7 +8,7 @@ import {
   PAGES_API,
 } from '../constants/pages';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import { addAuthors } from './authors';
 import { addTags } from './tags';
 import { addCategories } from './categories';
@@ -94,9 +94,7 @@ export const getPages = (query) => {
           ),
         );
         dispatch(
-          addMediaList(
-            response.data.nodes.filter((page) => page.medium).map((page) => page.medium),
-          ),
+          addMedia(response.data.nodes.filter((page) => page.medium).map((page) => page.medium)),
         );
         dispatch(
           addPagesList(
@@ -138,7 +136,7 @@ export const getPage = (id) => {
         dispatch(addTags(page.tags));
         dispatch(addAuthors(page.authors));
         dispatch(addCategories(page.categories));
-        if (page.medium) dispatch(addMediaList([page.medium]));
+        if (page.medium) dispatch(addMedia([page.medium]));
 
         dispatch(
           getPageByID({
@@ -167,7 +165,7 @@ export const addPage = (data) => {
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));
-        if (page.medium) dispatch(addMediaList([page.medium]));
+        if (page.medium) dispatch(addMedia([page.medium]));
 
         dispatch(resetPages());
         page.status === 'publish'
@@ -193,7 +191,7 @@ export const updatePage = (data) => {
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));
-        if (page.medium) dispatch(addMediaList([page.medium]));
+        if (page.medium) dispatch(addMedia([page.medium]));
 
         dispatch(
           getPageByID({

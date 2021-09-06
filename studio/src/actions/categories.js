@@ -8,7 +8,7 @@ import {
   CATEGORIES_API,
 } from '../constants/categories';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import getError from '../utils/getError';
 
 export const getCategories = (query) => {
@@ -20,7 +20,7 @@ export const getCategories = (query) => {
       })
       .then((response) => {
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes
               .filter((category) => category.medium)
               .map((category) => category.medium),
@@ -54,7 +54,7 @@ export const getCategory = (id) => {
     return axios
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
       })
@@ -86,7 +86,7 @@ export const updateCategory = (data) => {
     return axios
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
         dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
         dispatch(addSuccessNotification('Category updated'));
@@ -116,9 +116,7 @@ export const deleteCategory = (id) => {
 export const addCategories = (categories) => {
   return (dispatch) => {
     dispatch(
-      addMediaList(
-        categories.filter((category) => category.medium).map((category) => category.medium),
-      ),
+      addMedia(categories.filter((category) => category.medium).map((category) => category.medium)),
     );
     dispatch(
       addCategoriesList(

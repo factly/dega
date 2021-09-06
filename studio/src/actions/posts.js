@@ -11,7 +11,7 @@ import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addCategories } from './categories';
 import { addTags } from './tags';
 import { addFormats } from './formats';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import { addAuthors } from './authors';
 import { addClaims } from './claims';
 import getError from '../utils/getError';
@@ -104,7 +104,7 @@ export const getPosts = (query) => {
           ),
         );
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes
               .filter((post) => post.medium)
               .map((post) => {
@@ -155,7 +155,7 @@ export const getPost = (id) => {
         dispatch(addCategories(post.categories));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({
@@ -188,7 +188,7 @@ export const addPost = (data) => {
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(resetPosts());
         post.status === 'publish'
@@ -216,7 +216,7 @@ export const publish = (data) => {
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({
@@ -250,7 +250,7 @@ export const addTemplate = (data) => {
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({
@@ -284,7 +284,7 @@ export const publishPost = (data) => {
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({
@@ -318,7 +318,7 @@ export const updatePost = (data) => {
         dispatch(addAuthors(post.authors));
         dispatch(addClaims(post.claims));
         dispatch(addFormats([post.format]));
-        if (post.medium) dispatch(addMediaList([post.medium]));
+        if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({

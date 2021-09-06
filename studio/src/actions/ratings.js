@@ -8,7 +8,7 @@ import {
   RATINGS_API,
 } from '../constants/ratings';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import getError from '../utils/getError';
 
 export const addDefaultRatings = (query) => {
@@ -48,7 +48,7 @@ export const getRatings = (query) => {
       })
       .then((response) => {
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes.filter((rating) => rating.medium).map((rating) => rating.medium),
           ),
         );
@@ -80,7 +80,7 @@ export const getRating = (id) => {
     return axios
       .get(RATINGS_API + '/' + id)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
         dispatch(getRatingByID({ ...response.data, medium: response.data.medium?.id }));
       })
@@ -113,7 +113,7 @@ export const updateRating = (data) => {
       .put(RATINGS_API + '/' + data.id, data)
       .then((response) => {
         const rating = response.data;
-        if (rating.medium) dispatch(addMediaList([rating.medium]));
+        if (rating.medium) dispatch(addMedia([rating.medium]));
 
         dispatch(getRatingByID({ ...rating, medium: rating.medium?.id }));
         dispatch(addSuccessNotification('Rating updated'));
@@ -141,9 +141,7 @@ export const deleteRating = (id) => {
 
 export const addRatings = (ratings) => {
   return (dispatch) => {
-    dispatch(
-      addMediaList(ratings.filter((rating) => rating.medium).map((rating) => rating.medium)),
-    );
+    dispatch(addMedia(ratings.filter((rating) => rating.medium).map((rating) => rating.medium)));
     dispatch(
       addRatingsList(
         ratings.map((rating) => {
