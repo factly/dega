@@ -32,7 +32,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/tags', () => ({
   getTag: jest.fn(),
-  addTag: jest.fn(),
+  createTag: jest.fn(),
   updateTag: jest.fn(),
 }));
 

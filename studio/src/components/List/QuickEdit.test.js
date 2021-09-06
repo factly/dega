@@ -19,7 +19,7 @@ const mockStore = configureMockStore(middlewares);
 Date.now = jest.fn(() => 1487076708000);
 jest.mock('../../actions/tags', () => ({
   ...jest.requireActual('../../actions/tags'),
-  addTag: jest.fn(),
+  createTag: jest.fn(),
 }));
 jest.mock('../../actions/sidebar', () => ({
   setCollapse: jest.fn(),

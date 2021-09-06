@@ -42,7 +42,7 @@ describe('tags actions', () => {
       type: types.ADD_TAGS,
       payload: data,
     };
-    expect(actions.addTagsList(data)).toEqual(addTagsAction);
+    expect(actions.addTags(data)).toEqual(addTagsAction);
   });
   it('should create an action to add tags request', () => {
     const data = [{ query: 'query' }];
@@ -51,14 +51,6 @@ describe('tags actions', () => {
       payload: data,
     };
     expect(actions.addTagsRequest(data)).toEqual(addTagsRequestAction);
-  });
-  it('should create an action to add tag', () => {
-    const data = { id: 1, name: 'new tag' };
-    const addTagsRequestAction = {
-      type: types.ADD_TAG,
-      payload: data,
-    };
-    expect(actions.getTagByID(data)).toEqual(addTagsRequestAction);
   });
   it('should create an action to reset tags', () => {
     const resetTagsRequestAction = {
@@ -148,7 +140,7 @@ describe('tags actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_TAG,
+        type: types.GET_TAG,
         payload: { id, name: 'Tag' },
       },
       {
@@ -212,7 +204,7 @@ describe('tags actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Tag added',
+          message: 'Tag created',
           time: Date.now(),
         },
       },
@@ -220,7 +212,7 @@ describe('tags actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addTag(tag))
+      .dispatch(actions.createTag(tag))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.TAGS_API, tag);
   });
@@ -247,7 +239,7 @@ describe('tags actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addTag(tag))
+      .dispatch(actions.createTag(tag))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.TAGS_API, tag);
   });
@@ -262,7 +254,7 @@ describe('tags actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_TAG,
+        type: types.UPDATE_TAG,
         payload: { id: 1, name: 'Tag' },
       },
       {
