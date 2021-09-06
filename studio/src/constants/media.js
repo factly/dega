@@ -1,5 +1,6 @@
 //Actions
-export const ADD_MEDIUM = 'ADD_MEDIUM';
+export const GET_MEDIUM = 'GET_MEDIUM';
+export const UPDATE_MEDIUM = 'UPDATE_MEDIUM';
 export const ADD_MEDIA = 'ADD_MEDIA';
 export const ADD_MEDIA_REQUEST = 'ADD_MEDIA_REQUEST';
 export const RESET_MEDIA = 'RESET_MEDIA';
