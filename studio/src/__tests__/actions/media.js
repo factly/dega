@@ -43,7 +43,7 @@ describe('media actions', () => {
       type: types.ADD_MEDIA,
       payload: data,
     };
-    expect(actions.addMediaList(data)).toEqual(addMediaAction);
+    expect(actions.addMedia(data)).toEqual(addMediaAction);
   });
   it('should create an action to add media request', () => {
     const data = [{ query: 'query' }];
@@ -52,14 +52,6 @@ describe('media actions', () => {
       payload: data,
     };
     expect(actions.addMediaRequest(data)).toEqual(addMediaRequestAction);
-  });
-  it('should create an action to add medium', () => {
-    const data = { id: 1, name: 'new medium' };
-    const addMediaRequestAction = {
-      type: types.ADD_MEDIUM,
-      payload: data,
-    };
-    expect(actions.getMediumByID(data)).toEqual(addMediaRequestAction);
   });
   it('should create an action to reset media', () => {
     const resetMediaRequestAction = {
@@ -254,7 +246,7 @@ describe('media actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_MEDIUM,
+        type: types.GET_MEDIUM,
         payload: { id, name: 'Medium', medium: undefined },
       },
       {
@@ -281,7 +273,7 @@ describe('media actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_MEDIUM,
+        type: types.GET_MEDIUM,
         payload: { id, name: 'Medium' },
       },
       {
@@ -314,7 +306,7 @@ describe('media actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Medium added',
+          message: 'Medium created',
           time: Date.now(),
         },
       },
@@ -322,7 +314,7 @@ describe('media actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMedium(medium, true))
+      .dispatch(actions.createMedium(medium, true))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.KAVACH_MEDIA_API, medium[0]);
   });
@@ -344,7 +336,7 @@ describe('media actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Medium added',
+          message: 'Medium created',
           time: Date.now(),
         },
       },
@@ -352,7 +344,7 @@ describe('media actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMedium(medium, false))
+      .dispatch(actions.createMedium(medium, false))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MEDIA_API, medium);
   });
@@ -379,7 +371,7 @@ describe('media actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMedium(medium))
+      .dispatch(actions.createMedium(medium))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MEDIA_API, medium);
   });
@@ -394,7 +386,7 @@ describe('media actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_MEDIUM,
+        type: types.UPDATE_MEDIUM,
         payload: { id: 1, name: 'Medium' },
       },
       {

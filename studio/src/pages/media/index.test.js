@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/media', () => ({
   getMedia: jest.fn(),
-  addMedium: jest.fn(),
+  createMedium: jest.fn(),
 }));
 let state = {
   media: {

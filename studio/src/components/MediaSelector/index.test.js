@@ -21,7 +21,7 @@ jest.mock('react-redux', () => ({
 jest.mock('../../actions/media', () => ({
   getMedium: jest.fn(),
   getMedia: jest.fn(),
-  addMedium: jest.fn(),
+  createMedium: jest.fn(),
 }));
 let state = {
   spaces: {
@@ -170,7 +170,7 @@ describe('Media List component', () => {
     });
     it('should handle media upload', (done) => {
       const onChange = jest.fn();
-      actions.addMedium.mockReset();
+      actions.createMedium.mockReset();
       act(() => {
         wrapper = mount(
           <Provider store={store}>
