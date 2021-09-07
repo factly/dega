@@ -33,18 +33,7 @@ describe('episodes actions', () => {
     };
     expect(actions.stopEpisodesLoading()).toEqual(stopLoadingAction);
   });
-  it('should create an action to add episode list', () => {
-    const data = [
-      { id: 1, title: 'episode 1' },
-      { id: 2, title: 'episode 2' },
-    ];
 
-    const addEpisodesAction = {
-      type: types.ADD_EPISODES,
-      payload: data,
-    };
-    expect(actions.addEpisodesList(data)).toEqual(addEpisodesAction);
-  });
   it('should create an action to add episode request', () => {
     const data = [{ query: 'query' }];
     const addEpisodesRequestAction = {
@@ -52,14 +41,6 @@ describe('episodes actions', () => {
       payload: data,
     };
     expect(actions.addEpisodesRequest(data)).toEqual(addEpisodesRequestAction);
-  });
-  it('should create an action to add episode', () => {
-    const data = { id: 1, title: 'new episode' };
-    const addEpisodeAction = {
-      type: types.ADD_EPISODE,
-      payload: data,
-    };
-    expect(actions.getEpisodeByID(data)).toEqual(addEpisodeAction);
   });
   it('should create an action to reset episode', () => {
     const resetEpisodesAction = {
@@ -164,7 +145,7 @@ describe('episodes actions', () => {
         payload: [podcast],
       },
       {
-        type: types.ADD_EPISODE,
+        type: types.GET_EPISODE,
         payload: { id, title: 'Episode', podcast: 1 },
       },
       {
@@ -223,7 +204,7 @@ describe('episodes actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_EPISODE,
+        type: types.GET_EPISODE,
         payload: { id, title: 'Episode' },
       },
       {
@@ -256,7 +237,7 @@ describe('episodes actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Episode added',
+          message: 'Episode created',
           time: Date.now(),
         },
       },
@@ -264,7 +245,7 @@ describe('episodes actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addEpisode(episode))
+      .dispatch(actions.createEpisode(episode))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.EPISODES_API, episode);
   });
@@ -291,7 +272,7 @@ describe('episodes actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addEpisode(episode))
+      .dispatch(actions.createEpisode(episode))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.EPISODES_API, episode);
   });
@@ -311,7 +292,7 @@ describe('episodes actions', () => {
         payload: [podcast],
       },
       {
-        type: types.ADD_EPISODE,
+        type: types.UPDATE_EPISODE,
         payload: { id: 1, title: 'Episode', podcast: 1 },
       },
       {
@@ -378,7 +359,7 @@ describe('episodes actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_EPISODE,
+        type: types.UPDATE_EPISODE,
         payload: { id: 1, title: 'Episode' },
       },
       {
