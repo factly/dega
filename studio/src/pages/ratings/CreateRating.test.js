@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/ratings', () => ({
   getRatings: jest.fn(),
-  addRating: jest.fn(),
+  createRating: jest.fn(),
 }));
 
 describe('Ratings create component', () => {
@@ -78,8 +78,8 @@ describe('Ratings create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addRating', (done) => {
-      actions.addRating.mockReset();
+    it('should call createRating', (done) => {
+      actions.createRating.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -91,7 +91,7 @@ describe('Ratings create component', () => {
       });
       wrapper.find(RatingForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addRating).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createRating).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/ratings');
         done();
       }, 0);
