@@ -1,15 +1,17 @@
 import axios from 'axios';
 import {
-  ADD_MENU,
   ADD_MENUS,
   ADD_MENUS_REQUEST,
   SET_MENUS_LOADING,
   RESET_MENUS,
   MENUS_API,
+  GET_MENU,
+  UPDATE_MENU,
 } from '../constants/menu';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
+// action to fetch all menus
 export const getMenus = (query) => {
   return (dispatch) => {
     dispatch(loadingMenus());
@@ -34,13 +36,14 @@ export const getMenus = (query) => {
   };
 };
 
+// action to fetch menu by id
 export const getMenu = (id) => {
   return (dispatch) => {
     dispatch(loadingMenus());
     return axios
       .get(MENUS_API + '/' + id)
       .then((response) => {
-        dispatch(getMenuById(response.data));
+        dispatch(addMenu(GET_MENU, response.data));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -49,14 +52,15 @@ export const getMenu = (id) => {
   };
 };
 
-export const addMenu = (data) => {
+// action to create menu
+export const createMenu = (data) => {
   return (dispatch) => {
     dispatch(loadingMenus());
     return axios
       .post(MENUS_API, data)
       .then(() => {
         dispatch(resetMenus());
-        dispatch(addSuccessNotification('Menu added'));
+        dispatch(addSuccessNotification('Menu created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -64,13 +68,14 @@ export const addMenu = (data) => {
   };
 };
 
+// action to update menu
 export const updateMenu = (data) => {
   return (dispatch) => {
     dispatch(loadingMenus());
     return axios
       .put(MENUS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getMenuById(response.data));
+        dispatch(addMenu(UPDATE_MENU, response.data));
         dispatch(addSuccessNotification('Menu updated'));
       })
       .catch((error) => {
@@ -80,6 +85,7 @@ export const updateMenu = (data) => {
   };
 };
 
+// action to delete menu by id
 export const deleteMenu = (id) => {
   return (dispatch) => {
     dispatch(loadingMenus());
@@ -105,19 +111,19 @@ export const stopMenusLoading = () => ({
   payload: false,
 });
 
-export const getMenuById = (data) => ({
-  type: ADD_MENU,
-  payload: data,
+export const addMenu = (type, payload) => ({
+  type,
+  payload,
 });
 
-export const addMenus = (data) => ({
+export const addMenus = (payload) => ({
   type: ADD_MENUS,
-  payload: data,
+  payload,
 });
 
-export const addMenusRequest = (data) => ({
+export const addMenusRequest = (payload) => ({
   type: ADD_MENUS_REQUEST,
-  payload: data,
+  payload,
 });
 
 export const resetMenus = () => ({
