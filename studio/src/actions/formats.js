@@ -1,16 +1,18 @@
 import axios from 'axios';
 import {
-  ADD_FORMAT,
   ADD_FORMATS,
   ADD_FORMATS_REQUEST,
   SET_FORMATS_LOADING,
   RESET_FORMATS,
   FORMATS_API,
+  GET_FORMAT,
+  UPDATE_FORMAT,
 } from '../constants/formats';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 import { SET_REDIRECT } from '../constants/settings';
 
+// action to fetch default formats
 export const addDefaultFormats = (query) => {
   return (dispatch) => {
     dispatch(loadingFormats());
@@ -33,6 +35,7 @@ export const addDefaultFormats = (query) => {
   };
 };
 
+// action to fetch all formats
 export const getFormats = (query) => {
   return (dispatch) => {
     dispatch(loadingFormats());
@@ -58,13 +61,14 @@ export const getFormats = (query) => {
   };
 };
 
+// action to fetch format by id
 export const getFormat = (id) => {
   return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .get(FORMATS_API + '/' + id)
       .then((response) => {
-        dispatch(getFormatByID(response.data));
+        dispatch(addFormat(GET_FORMAT, response.data));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -73,14 +77,15 @@ export const getFormat = (id) => {
   };
 };
 
-export const addFormat = (data) => {
+// action to create format
+export const createFormat = (data) => {
   return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .post(FORMATS_API, data)
       .then(() => {
         dispatch(resetFormats());
-        dispatch(addSuccessNotification('Format added'));
+        dispatch(addSuccessNotification('Format created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -88,13 +93,14 @@ export const addFormat = (data) => {
   };
 };
 
+// action to update format by id
 export const updateFormat = (data) => {
   return (dispatch) => {
     dispatch(loadingFormats());
     return axios
       .put(FORMATS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getFormatByID(response.data));
+        dispatch(addFormat(UPDATE_FORMAT, response.data));
         dispatch(addSuccessNotification('Format updated'));
       })
       .catch((error) => {
@@ -104,6 +110,7 @@ export const updateFormat = (data) => {
   };
 };
 
+// action to delete format by id
 export const deleteFormat = (id) => {
   return (dispatch) => {
     dispatch(loadingFormats());
@@ -134,19 +141,19 @@ export const stopFormatsLoading = () => ({
   payload: false,
 });
 
-export const getFormatByID = (data) => ({
-  type: ADD_FORMAT,
-  payload: data,
+export const addFormat = (type, payload) => ({
+  type,
+  payload,
 });
 
-export const addFormats = (data) => ({
+export const addFormats = (payload) => ({
   type: ADD_FORMATS,
-  payload: data,
+  payload,
 });
 
-export const addFormatsRequest = (data) => ({
+export const addFormatsRequest = (payload) => ({
   type: ADD_FORMATS_REQUEST,
-  payload: data,
+  payload,
 });
 
 export const resetFormats = () => ({
