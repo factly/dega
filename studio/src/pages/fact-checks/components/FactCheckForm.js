@@ -20,7 +20,7 @@ import { maker, checker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch, useSelector } from 'react-redux';
 import ClaimCreateForm from '../../claims/components/ClaimForm';
-import { addClaim, updateClaim } from '../../../actions/claims';
+import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
@@ -172,7 +172,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   };
 
   const onClaimCreate = (values) => {
-    dispatch(addClaim(values)).then((claim) => {
+    dispatch(createClaim(values)).then((claim) => {
       setVisible(false);
       setNewClaim(claim);
       setClaimID(0);
