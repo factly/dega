@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../actions/formats', () => ({
   getFormats: jest.fn(),
   getFormat: jest.fn(),
-  addFormat: jest.fn(),
+  createFormat: jest.fn(),
 }));
 
 describe('Formats create component', () => {
@@ -68,8 +68,8 @@ describe('Formats create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addFormat', (done) => {
-      actions.addFormat.mockReset();
+    it('should call createFormat', (done) => {
+      actions.createFormat.mockReset();
       const setReloadFlag = jest.fn();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
@@ -82,7 +82,7 @@ describe('Formats create component', () => {
       });
       wrapper.find(FormatCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addFormat).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createFormat).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/formats');
         expect(setReloadFlag).toHaveBeenCalledWith(true);
         done();

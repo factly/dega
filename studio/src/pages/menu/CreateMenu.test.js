@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
 }));
 jest.mock('../../actions/menu', () => ({
-  addMenu: jest.fn(),
+  createMenu: jest.fn(),
 }));
 
 describe('Menus create component', () => {
@@ -57,8 +57,8 @@ describe('Menus create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addMenu', (done) => {
-      actions.addMenu.mockReset();
+    it('should call createMenu', (done) => {
+      actions.createMenu.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -70,7 +70,7 @@ describe('Menus create component', () => {
       });
       wrapper.find(MenuCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addMenu).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createMenu).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/menus');
         done();
       }, 0);
