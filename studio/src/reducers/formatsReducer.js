@@ -1,9 +1,10 @@
 import {
-  ADD_FORMAT,
   ADD_FORMATS,
   ADD_FORMATS_REQUEST,
   SET_FORMATS_LOADING,
   RESET_FORMATS,
+  GET_FORMAT,
+  UPDATE_FORMAT,
 } from '../constants/formats';
 import deepEqual from 'deep-equal';
 
@@ -45,7 +46,8 @@ export default function formatsReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_FORMAT:
+    case GET_FORMAT:
+    case UPDATE_FORMAT:
       return {
         ...state,
         details: {
