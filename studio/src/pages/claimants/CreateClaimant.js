@@ -1,7 +1,7 @@
 import React from 'react';
 import ClaimantCreateForm from './components/ClaimantForm';
 import { useDispatch } from 'react-redux';
-import { addClaimant } from '../../actions/claimants';
+import { createClaimant } from '../../actions/claimants';
 import { useHistory } from 'react-router-dom';
 
 function CreateClaimant() {
@@ -9,7 +9,7 @@ function CreateClaimant() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addClaimant(values)).then(() => history.push('/claimants'));
+    dispatch(createClaimant(values)).then(() => history.push('/claimants'));
   };
   return <ClaimantCreateForm onCreate={onCreate} />;
 }
