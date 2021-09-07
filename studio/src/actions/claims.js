@@ -1,17 +1,19 @@
 import axios from 'axios';
 import {
-  ADD_CLAIM,
   ADD_CLAIMS,
   ADD_CLAIMS_REQUEST,
   SET_CLAIMS_LOADING,
   RESET_CLAIMS,
   CLAIMS_API,
+  GET_CLAIM,
+  UPDATE_CLAIM,
 } from '../constants/claims';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import { addRatings } from './ratings';
 import { addClaimants } from './claimants';
 import getError from '../utils/getError';
 
+// action to fetch all claims
 export const getClaims = (query) => {
   const params = new URLSearchParams();
   if (query.claimant && query.claimant.length > 0) {
@@ -71,6 +73,7 @@ export const getClaims = (query) => {
   };
 };
 
+// action to fetch claim by id
 export const getClaim = (id) => {
   return (dispatch) => {
     dispatch(loadingClaims());
@@ -81,7 +84,9 @@ export const getClaim = (id) => {
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 
-        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
+        dispatch(
+          addClaim(GET_CLAIM, { ...claim, claimant: claim.claimant.id, rating: claim.rating.id }),
+        );
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -90,7 +95,8 @@ export const getClaim = (id) => {
   };
 };
 
-export const addClaim = (data) => {
+// action to create claim
+export const createClaim = (data) => {
   return (dispatch) => {
     dispatch(loadingClaims());
     return axios
@@ -101,7 +107,7 @@ export const addClaim = (data) => {
         dispatch(addRatings([claim.rating]));
 
         dispatch(resetClaims());
-        dispatch(addSuccessNotification('Claim added'));
+        dispatch(addSuccessNotification('Claim created'));
         return claim;
       })
       .catch((error) => {
@@ -110,6 +116,7 @@ export const addClaim = (data) => {
   };
 };
 
+// action to update claim by id
 export const updateClaim = (data) => {
   return (dispatch) => {
     dispatch(loadingClaims());
@@ -120,7 +127,13 @@ export const updateClaim = (data) => {
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 
-        dispatch(getClaimByID({ ...claim, claimant: claim.claimant.id, rating: claim.rating.id }));
+        dispatch(
+          addClaim(UPDATE_CLAIM, {
+            ...claim,
+            claimant: claim.claimant.id,
+            rating: claim.rating.id,
+          }),
+        );
         dispatch(addSuccessNotification('Claim updated'));
       })
       .catch((error) => {
@@ -130,6 +143,7 @@ export const updateClaim = (data) => {
   };
 };
 
+// action to delete claim by id
 export const deleteClaim = (id) => {
   return (dispatch) => {
     dispatch(loadingClaims());
@@ -169,19 +183,19 @@ export const stopClaimsLoading = () => ({
   payload: false,
 });
 
-export const getClaimByID = (data) => ({
-  type: ADD_CLAIM,
-  payload: data,
+export const addClaim = (type, payload) => ({
+  type,
+  payload,
 });
 
-export const addClaimsList = (data) => ({
+export const addClaimsList = (payload) => ({
   type: ADD_CLAIMS,
-  payload: data,
+  payload,
 });
 
-export const addClaimsRequest = (data) => ({
+export const addClaimsRequest = (payload) => ({
   type: ADD_CLAIMS_REQUEST,
-  payload: data,
+  payload,
 });
 
 export const resetClaims = () => ({
