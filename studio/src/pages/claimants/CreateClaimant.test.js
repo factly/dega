@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/claimants', () => ({
   getClaimants: jest.fn(),
-  addClaimant: jest.fn(),
+  createCategory: jest.fn(),
 }));
 
 describe('Claimants create component', () => {
@@ -74,8 +74,8 @@ describe('Claimants create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addClaimant', (done) => {
-      actions.addClaimant.mockReset();
+    it('should call createCategory', (done) => {
+      actions.createCategory.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -87,7 +87,7 @@ describe('Claimants create component', () => {
       });
       wrapper.find(ClaimantCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addClaimant).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createCategory).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/claimants');
         done();
       }, 0);
