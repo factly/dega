@@ -1,9 +1,10 @@
 import {
-  ADD_MENU,
   ADD_MENUS,
   ADD_MENUS_REQUEST,
   SET_MENUS_LOADING,
   RESET_MENUS,
+  GET_MENU,
+  UPDATE_MENU,
 } from '../constants/menu';
 import deepEqual from 'deep-equal';
 
@@ -45,7 +46,8 @@ export default function menuReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_MENU:
+    case GET_MENU:
+    case UPDATE_MENU:
       return {
         ...state,
         details: {
