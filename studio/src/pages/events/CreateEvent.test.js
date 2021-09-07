@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/events', () => ({
   getEvents: jest.fn(),
-  addEvent: jest.fn(),
+  createEvent: jest.fn(),
 }));
 
 describe('Event create component', () => {
@@ -74,8 +74,8 @@ describe('Event create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addEvent', (done) => {
-      actions.addEvent.mockReset();
+    it('should call createEvent', (done) => {
+      actions.createEvent.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -89,7 +89,7 @@ describe('Event create component', () => {
       });
       wrapper.find(EventCreateForm).props().onCreate({ id: 1, name: 'test' });
       setTimeout(() => {
-        expect(actions.addEvent).toHaveBeenCalledWith({ id: 1, name: 'test' });
+        expect(actions.createEvent).toHaveBeenCalledWith({ id: 1, name: 'test' });
         done();
       }, 0);
     });

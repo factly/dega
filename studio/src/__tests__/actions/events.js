@@ -51,14 +51,6 @@ describe('Events actions', () => {
     };
     expect(actions.addEventsRequest(data)).toEqual(addEventsRequestAction);
   });
-  it('should create an action to add event', () => {
-    const data = { id: 1, name: 'new event' };
-    const addEventAction = {
-      type: types.ADD_EVENT,
-      payload: data,
-    };
-    expect(actions.getEventByID(data)).toEqual(addEventAction);
-  });
   it('should create an action to reset event', () => {
     const resetEventsAction = {
       type: types.RESET_EVENTS,
@@ -207,7 +199,7 @@ describe('Events actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_EVENT,
+        type: types.GET_EVENT,
         payload: { id, name: 'Event' },
       },
       {
@@ -271,7 +263,7 @@ describe('Events actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Event added',
+          message: 'Event created',
           time: Date.now(),
         },
       },
@@ -279,7 +271,7 @@ describe('Events actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addEvent(event))
+      .dispatch(actions.createEvent(event))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.EVENTS_API, event);
   });
@@ -306,7 +298,7 @@ describe('Events actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addEvent(event))
+      .dispatch(actions.createEvent(event))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.EVENTS_API, event);
   });
@@ -321,7 +313,7 @@ describe('Events actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_EVENT,
+        type: types.UPDATE_EVENT,
         payload: { id: 1, name: 'Event' },
       },
       {
