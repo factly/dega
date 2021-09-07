@@ -1,9 +1,10 @@
 import {
-  ADD_RATING,
   ADD_RATINGS,
   ADD_RATINGS_REQUEST,
   SET_RATINGS_LOADING,
   RESET_RATINGS,
+  GET_RATING,
+  UPDATE_RATING,
 } from '../constants/ratings';
 import deepEqual from 'deep-equal';
 
@@ -45,7 +46,8 @@ export default function ratingsReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_RATING:
+    case GET_RATING:
+    case UPDATE_RATING:
       return {
         ...state,
         details: {
