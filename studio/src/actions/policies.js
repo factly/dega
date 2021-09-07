@@ -1,6 +1,5 @@
 import axios from 'axios';
 import {
-  ADD_POLICY,
   ADD_POLICIES,
   ADD_POLICIES_REQUEST,
   SET_POLICIES_LOADING,
@@ -136,7 +135,7 @@ export const stopPoliciesLoading = () => ({
 });
 
 export const addPolicy = (type, payload) => ({
-  type: ADD_POLICY,
+  type,
   payload,
 });
 

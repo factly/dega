@@ -25,7 +25,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('../../actions/policies', () => ({
-  addPolicy: jest.fn(),
+  createPolicy: jest.fn(),
 }));
 
 describe('Policies create component', () => {
@@ -61,8 +61,8 @@ describe('Policies create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addPolicy', (done) => {
-      actions.addPolicy.mockReset();
+    it('should call createPolicy', (done) => {
+      actions.createPolicy.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -74,13 +74,13 @@ describe('Policies create component', () => {
       });
       wrapper.find(PolicyCreateForm).props().onCreate({ users: [], permissions: [] });
       setTimeout(() => {
-        expect(actions.addPolicy).toHaveBeenCalledWith({ permissions: [], users: [] });
+        expect(actions.createPolicy).toHaveBeenCalledWith({ permissions: [], users: [] });
         expect(push).toHaveBeenCalledWith('/policies');
         done();
       }, 0);
     });
-    it('should call addPolicy with some permissions', (done) => {
-      actions.addPolicy.mockReset();
+    it('should call createPolicy with some permissions', (done) => {
+      actions.createPolicy.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -98,7 +98,7 @@ describe('Policies create component', () => {
           permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
         });
       setTimeout(() => {
-        expect(actions.addPolicy).toHaveBeenCalledWith({
+        expect(actions.createPolicy).toHaveBeenCalledWith({
           permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
           users: [],
         });
