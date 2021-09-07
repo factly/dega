@@ -43,7 +43,7 @@ describe('policies actions', () => {
       type: types.ADD_POLICIES,
       payload: data,
     };
-    expect(actions.addPoliciesList(data)).toEqual(addPoliciesAction);
+    expect(actions.addPolicies(data)).toEqual(addPoliciesAction);
   });
   it('should create an action to add policies request', () => {
     const data = [{ query: 'query' }];
@@ -52,14 +52,6 @@ describe('policies actions', () => {
       payload: data,
     };
     expect(actions.addPoliciesRequest(data)).toEqual(addPoliciesRequestAction);
-  });
-  it('should create an action to add policy', () => {
-    const data = { id: 1, name: 'new policy' };
-    const addPoliciesRequestAction = {
-      type: types.ADD_POLICY,
-      payload: data,
-    };
-    expect(actions.getPolicyByID(data)).toEqual(addPoliciesRequestAction);
   });
   it('should create an action to reset policies', () => {
     const resetPoliciesRequestAction = {
@@ -180,7 +172,7 @@ describe('policies actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_POLICY,
+        type: types.GET_POLICY,
         payload: { id, name: 'Policy' },
       },
       {
@@ -213,7 +205,7 @@ describe('policies actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Policy added',
+          message: 'Policy created',
           time: Date.now(),
         },
       },
@@ -221,7 +213,7 @@ describe('policies actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addPolicy(policy))
+      .dispatch(actions.createPolicy(policy))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API, policy);
   });
@@ -248,7 +240,7 @@ describe('policies actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addPolicy(policy))
+      .dispatch(actions.createPolicy(policy))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.POLICIES_API, policy);
   });
@@ -263,7 +255,7 @@ describe('policies actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_POLICY,
+        type: types.UPDATE_POLICY,
         payload: { id: 1, name: 'Policy' },
       },
       {
