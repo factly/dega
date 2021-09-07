@@ -6,17 +6,20 @@ import {
   SET_POLICIES_LOADING,
   RESET_POLICIES,
   POLICIES_API,
+  UPDATE_POLICY,
+  GET_POLICY,
 } from '../constants/policies';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
+// action to fetch all policies
 export const addDefaultPolicies = (query) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .post(POLICIES_API + '/default')
       .then((response) => {
-        dispatch(addPoliciesList(response.data.nodes));
+        dispatch(addPolicies(response.data.nodes));
         dispatch(
           addPoliciesRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -32,6 +35,7 @@ export const addDefaultPolicies = (query) => {
   };
 };
 
+// action to fetch all policies
 export const getPolicies = (query) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
@@ -40,7 +44,7 @@ export const getPolicies = (query) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addPoliciesList(response.data.nodes));
+        dispatch(addPolicies(response.data.nodes));
         dispatch(
           addPoliciesRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -56,13 +60,14 @@ export const getPolicies = (query) => {
   };
 };
 
+// action to fetch policy by id
 export const getPolicy = (id) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .get(POLICIES_API + '/' + id)
       .then((response) => {
-        dispatch(getPolicyByID(response.data));
+        dispatch(addPolicy(GET_POLICY, response.data));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -71,14 +76,15 @@ export const getPolicy = (id) => {
   };
 };
 
-export const addPolicy = (data) => {
+// action to create policy
+export const createPolicy = (data) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .post(POLICIES_API, data)
       .then(() => {
         dispatch(resetPolicies());
-        dispatch(addSuccessNotification('Policy added'));
+        dispatch(addSuccessNotification('Policy created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -86,13 +92,14 @@ export const addPolicy = (data) => {
   };
 };
 
+// action to update policy by id
 export const updatePolicy = (data) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
     return axios
       .put(POLICIES_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getPolicyByID(response.data));
+        dispatch(addPolicy(UPDATE_POLICY, response.data));
         dispatch(addSuccessNotification('Policy updated'));
       })
       .catch((error) => {
@@ -102,6 +109,7 @@ export const updatePolicy = (data) => {
   };
 };
 
+// action to delete policy by id
 export const deletePolicy = (id) => {
   return (dispatch) => {
     dispatch(loadingPolicies());
@@ -117,12 +125,6 @@ export const deletePolicy = (id) => {
   };
 };
 
-export const addPolicies = (policies) => {
-  return (dispatch) => {
-    dispatch(addPoliciesList(policies));
-  };
-};
-
 export const loadingPolicies = () => ({
   type: SET_POLICIES_LOADING,
   payload: true,
@@ -133,19 +135,19 @@ export const stopPoliciesLoading = () => ({
   payload: false,
 });
 
-export const getPolicyByID = (data) => ({
+export const addPolicy = (type, payload) => ({
   type: ADD_POLICY,
-  payload: data,
+  payload,
 });
 
-export const addPoliciesList = (data) => ({
+export const addPolicies = (payload) => ({
   type: ADD_POLICIES,
-  payload: data,
+  payload,
 });
 
-export const addPoliciesRequest = (data) => ({
+export const addPoliciesRequest = (payload) => ({
   type: ADD_POLICIES_REQUEST,
-  payload: data,
+  payload,
 });
 
 export const resetPolicies = () => ({

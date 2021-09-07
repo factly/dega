@@ -1,5 +1,5 @@
 import React from 'react';
-import { addPolicy } from '../../actions/policies';
+import { createPolicy } from '../../actions/policies';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PolicyCreateForm from './components/PolicyForm';
@@ -13,7 +13,7 @@ function CreatePolicy() {
     values.permissions = values.permissions.filter(
       (item) => item && item.resource && item.actions.length > 0,
     );
-    dispatch(addPolicy(values)).then(() => history.push('/members/policies'));
+    dispatch(createPolicy(values)).then(() => history.push('/members/policies'));
   };
 
   return <PolicyCreateForm onCreate={onCreate} />;
