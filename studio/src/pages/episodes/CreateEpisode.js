@@ -1,7 +1,7 @@
 import React from 'react';
 import EpisodeCreateForm from './components/EpisodeForm';
 import { useDispatch } from 'react-redux';
-import { addEpisode } from '../../actions/episodes';
+import { createEpisode } from '../../actions/episodes';
 import { useHistory } from 'react-router-dom';
 
 function CreateEpisode() {
@@ -9,7 +9,7 @@ function CreateEpisode() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addEpisode(values)).then(() => history.push('/episodes'));
+    dispatch(createEpisode(values)).then(() => history.push('/episodes'));
   };
   return <EpisodeCreateForm onCreate={onCreate} />;
 }

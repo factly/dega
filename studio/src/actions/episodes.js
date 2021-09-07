@@ -1,16 +1,18 @@
 import axios from 'axios';
 import {
-  ADD_EPISODE,
   ADD_EPISODES,
   ADD_EPISODES_REQUEST,
   SET_EPISODES_LOADING,
   RESET_EPISODES,
   EPISODES_API,
+  UPDATE_EPISODE,
+  GET_EPISODE,
 } from '../constants/episodes';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 import { addPodcasts } from './podcasts';
 
+// action to fetch all episodes
 export const getEpisodes = (query) => {
   const params = new URLSearchParams();
   if (query.podcast && query.podcast.length > 0) {
@@ -46,7 +48,7 @@ export const getEpisodes = (query) => {
           ),
         );
         dispatch(
-          addEpisodesList(
+          addEpisodes(
             response.data.nodes.map((episode) => {
               return { ...episode, podcast: episode.podcast.id };
             }),
@@ -67,6 +69,7 @@ export const getEpisodes = (query) => {
   };
 };
 
+// action to fetch episode by id
 export const getEpisode = (id) => {
   return (dispatch) => {
     dispatch(loadingEpisodes());
@@ -75,7 +78,7 @@ export const getEpisode = (id) => {
       .then((response) => {
         let episode = response.data;
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
-        dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
+        dispatch(addEpisode(GET_EPISODE, { ...episode, podcast: episode.podcast.id }));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -84,14 +87,15 @@ export const getEpisode = (id) => {
   };
 };
 
-export const addEpisode = (data) => {
+// action to create episode
+export const createEpisode = (data) => {
   return (dispatch) => {
     dispatch(loadingEpisodes());
     return axios
       .post(EPISODES_API, data)
       .then(() => {
         dispatch(resetEpisodes());
-        dispatch(addSuccessNotification('Episode added'));
+        dispatch(addSuccessNotification('Episode created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -99,6 +103,7 @@ export const addEpisode = (data) => {
   };
 };
 
+// action to update episode by id
 export const updateEpisode = (data) => {
   return (dispatch) => {
     dispatch(loadingEpisodes());
@@ -107,7 +112,7 @@ export const updateEpisode = (data) => {
       .then((response) => {
         let episode = response.data;
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
-        dispatch(getEpisodeByID({ ...episode, podcast: episode.podcast.id }));
+        dispatch(addEpisode(UPDATE_EPISODE, { ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));
       })
       .catch((error) => {
@@ -117,6 +122,7 @@ export const updateEpisode = (data) => {
   };
 };
 
+// action to delete episode by id
 export const deleteEpisode = (id) => {
   return (dispatch) => {
     dispatch(loadingEpisodes());
@@ -132,12 +138,6 @@ export const deleteEpisode = (id) => {
   };
 };
 
-export const addEpisodes = (episodes) => {
-  return (dispatch) => {
-    dispatch(addEpisodesList(episodes));
-  };
-};
-
 export const loadingEpisodes = () => ({
   type: SET_EPISODES_LOADING,
   payload: true,
@@ -148,19 +148,19 @@ export const stopEpisodesLoading = () => ({
   payload: false,
 });
 
-export const getEpisodeByID = (data) => ({
-  type: ADD_EPISODE,
-  payload: data,
+export const addEpisode = (type, payload) => ({
+  type,
+  payload,
 });
 
-export const addEpisodesList = (data) => ({
+export const addEpisodes = (payload) => ({
   type: ADD_EPISODES,
-  payload: data,
+  payload,
 });
 
-export const addEpisodesRequest = (data) => ({
+export const addEpisodesRequest = (payload) => ({
   type: ADD_EPISODES_REQUEST,
-  payload: data,
+  payload,
 });
 
 export const resetEpisodes = () => ({
