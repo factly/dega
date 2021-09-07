@@ -47,7 +47,6 @@ function EventList() {
       render: (_, record) => {
         return (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -70,9 +69,7 @@ function EventList() {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button type="danger" icon={<DeleteOutlined />} />
-            </Link>
+            <Button type="danger" icon={<DeleteOutlined />} />
           </Popconfirm>
         );
       },

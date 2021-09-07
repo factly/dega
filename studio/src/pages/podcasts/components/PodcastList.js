@@ -16,7 +16,6 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
       render: (_, record) => {
         return (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -42,13 +41,11 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deletePodcast(record.id)).then(() => fetchPodcasts())}
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button
-                icon={<DeleteOutlined />}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
-              />
-            </Link>
+            <Button
+              icon={<DeleteOutlined />}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
+            />
           </Popconfirm>
         );
       },

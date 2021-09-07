@@ -16,7 +16,6 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       render: (_, record) => {
         return (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -41,13 +40,11 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button
-                icon={<DeleteOutlined />}
-                disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
-              />
-            </Link>
+            <Button
+              icon={<DeleteOutlined />}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              type="danger"
+            />
           </Popconfirm>
         );
       },

@@ -6,7 +6,7 @@ import {
   getOrganisations,
   approveOrganisationRequest,
 } from '../../../../actions/organisationRequests';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 
 function RequestList() {
@@ -87,9 +87,7 @@ function RequestList() {
                 )
               }
             >
-              <Link to="" className="ant-dropdown-link">
-                <Button>Reject</Button>
-              </Link>
+              <Button>Reject</Button>
             </Popconfirm>
           </span>
         );

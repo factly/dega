@@ -61,7 +61,6 @@ function PermissionList({ admin }) {
           <p> {record.title}</p>
         ) : (
           <Link
-            className="ant-dropdown-link"
             style={{
               marginRight: 8,
             }}
@@ -95,9 +94,7 @@ function PermissionList({ admin }) {
               )
             }
           >
-            <Link to="" className="ant-dropdown-link">
-              <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
-            </Link>
+            <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
           </Popconfirm>
         );
       },
