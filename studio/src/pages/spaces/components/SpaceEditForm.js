@@ -1,9 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Button, Form, Input, Select, Row } from 'antd';
-import { checker } from '../../../utils/sluger';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { SlugInput } from '../../../components/FormItems';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -94,22 +94,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             </Form.Item>
           </Input.Group>
         </Form.Item>
-        <Form.Item
-          name="slug"
-          label="Slug"
-          rules={[
-            {
-              required: true,
-              message: 'Please input the slug!',
-            },
-            {
-              required: checker,
-              message: 'Please enter valid slug!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+        <SlugInput />
         <Form.Item name="site_title" label="Title">
           <Input />
         </Form.Item>

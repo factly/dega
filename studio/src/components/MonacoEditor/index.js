@@ -15,6 +15,9 @@ const MONACOEditor = ({ value, onChange, language, width }) => {
         scrollBeyondLastLine: false,
         wordWrap: 'on',
         theme: 'vs-dark',
+        scrollbar: {
+          alwaysConsumeMouseWheel: false,
+        },
       }}
       height="240"
       width={width ? width : 440}

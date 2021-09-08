@@ -9,6 +9,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useHistory } from 'react-router-dom';
 import MonacoEditor from '../../components/MonacoEditor';
 import getJsonValue from '../../utils/getJsonValue';
+import { TitleInput } from '../../components/FormItems';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -90,9 +91,7 @@ function EditMedium() {
           }}
           initialValues={media}
         >
-          <Form.Item name="name" label="Name">
-            <Input disabled={disabled} />
-          </Form.Item>
+          <TitleInput name="name" label="Name" inputProps={{ disabled }} />
           <Form.Item name="alt_text" label="Alt Text">
             <Input disabled={disabled} />
           </Form.Item>

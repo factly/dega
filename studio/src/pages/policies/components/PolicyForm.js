@@ -1,9 +1,10 @@
 import React from 'react';
 import { Row, Col, Form, Input, Button, Checkbox } from 'antd';
 import Selector from '../../../components/Selector';
+import { TitleInput } from '../../../components/FormItems';
 
 const options = [
-  { label: 'Get', value: 'get' },
+  { label: 'Read', value: 'get' },
   { label: 'Create', value: 'create' },
   { label: 'Update', value: 'update' },
   { label: 'Delete', value: 'delete' },
@@ -113,17 +114,7 @@ function PolicyForm({ data = {}, onCreate }) {
     >
       <Row gutter={16}>
         <Col span={12}>
-          <Form.Item
-            label="Name"
-            name="name"
-            rules={[
-              { required: true, message: 'Please input your name!' },
-              { min: 3, message: 'Name must be minimum 3 characters.' },
-              { max: 50, message: 'Name must be maximum 50 characters.' },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+          <TitleInput label="Name" name="name" />
           <Form.Item name="description" label="Description">
             <Input.TextArea />
           </Form.Item>

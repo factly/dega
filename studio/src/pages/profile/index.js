@@ -2,9 +2,10 @@ import React from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio } from 'antd';
 import moment from 'moment';
 import MediaSelector from '../../components/MediaSelector';
-import { maker, checker } from '../../utils/sluger';
+import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, updateProfile } from '../../actions/profile';
+import { SlugInput } from '../../components/FormItems';
 
 const layout = {
   labelCol: {
@@ -88,22 +89,7 @@ function Profile() {
             <Form.Item name="display_name" label="Display Name">
               <Input placeholder="Display name" onChange={(e) => onNameChange(e.target.value)} />
             </Form.Item>
-            <Form.Item
-              label="Slug"
-              name="slug"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input the slug!',
-                },
-                {
-                  pattern: checker,
-                  message: 'Please enter valid slug!',
-                },
-              ]}
-            >
-              <Input placeholder="slug" />
-            </Form.Item>
+            <SlugInput inputProps={{ placeholder: 'slug' }} />
             <Form.Item
               label="Birthdate"
               name="birth_date"

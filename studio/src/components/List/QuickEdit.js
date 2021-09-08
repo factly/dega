@@ -1,11 +1,12 @@
-import { Form, Input, DatePicker, Button, Space, Select } from 'antd';
+import { Form, DatePicker, Button, Space, Select } from 'antd';
 import React from 'react';
-import { checker, maker } from '../../utils/sluger';
+import { maker } from '../../utils/sluger';
 import Selector from '../Selector';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
 import { updatePage } from '../../actions/pages';
+import { SlugInput, TitleInput } from '../FormItems';
 
 function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => {} }) {
   const [form] = Form.useForm();
@@ -78,36 +79,12 @@ function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => 
         setValueChange(true);
       }}
     >
-      <Form.Item
-        name="title"
-        label="Title"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the title!',
-          },
-          { min: 3, message: 'Title must be minimum 3 characters.' },
-          { max: 150, message: 'Title must be maximum 150 characters.' },
-        ]}
-      >
-        <Input.TextArea onChange={onTitleChange} rows={2} placeholder="Add title for the post" />
-      </Form.Item>
-      <Form.Item
-        name="slug"
-        label="Slug"
-        rules={[
-          {
-            required: true,
-            message: 'Please input the slug!',
-          },
-          {
-            pattern: checker,
-            message: 'Please enter valid slug!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
+      <TitleInput
+        onChange={onTitleChange}
+        type="textarea"
+        inputProps={{ rows: 2, placeholder: 'Add title for the post' }}
+      />
+      <SlugInput />
       <Form.Item name="status" label="Status">
         <Select style={{ maxWidth: '160px' }}>
           <Select.Option value="publish">Published</Select.Option>

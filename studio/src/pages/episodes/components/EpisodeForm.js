@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, InputNumber, Space, Radio } from 'antd';
-import { maker, checker } from '../../../utils/sluger';
+import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import Editor from '../../../components/Editor';
 import Audio from './Audio';
 import Selector from '../../../components/Selector';
-import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
+import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
 const layout = {
   labelCol: {
@@ -71,36 +70,8 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
     >
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1, marginRight: 10 }}>
-          <Form.Item
-            name="title"
-            label="Title"
-            rules={[
-              {
-                required: true,
-                message: 'Please enter the title!',
-              },
-              { min: 3, message: 'Name must be minimum 3 characters.' },
-              { max: 50, message: 'Name must be maximum 50 characters.' },
-            ]}
-          >
-            <Input onChange={(e) => onTitleChange(e.target.value)} />
-          </Form.Item>
-          <Form.Item
-            name="slug"
-            label="Slug"
-            rules={[
-              {
-                required: true,
-                message: 'Please input the slug!',
-              },
-              {
-                pattern: checker,
-                message: 'Please enter valid slug!',
-              },
-            ]}
-          >
-            <Input />
-          </Form.Item>
+          <TitleInput onChange={(e) => onTitleChange(e.target.value)} />
+          <SlugInput />
           <Form.Item name="podcast" label="Podcasts">
             <Selector action="Podcasts" display="title" />
           </Form.Item>
@@ -121,13 +92,10 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
               <Radio.Button value="bonus">Bonus</Radio.Button>
             </Radio.Group>
           </Form.Item>
-
-          <Form.Item name="description" label="Description">
-            <Editor style={{ width: '600px' }} placeholder="Enter Description..." />
-          </Form.Item>
-          <Form.Item name="meta_fields" label="Metafields">
-            <MonacoEditor language="json" />
-          </Form.Item>
+          <DescriptionInput
+            inputProps={{ style: { width: '600px' }, placeholder: 'Enter Description...' }}
+          />
+          <MetaForm />
           <Form.Item {...tailLayout}>
             <Space>
               <Button disabled={!valueChange} type="primary" htmlType="submit">

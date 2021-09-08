@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Form, Input, Space, Switch, Collapse } from 'antd';
-import { maker, checker } from '../../../utils/sluger';
+import { Row, Col, Button, Form, Input, Space, Switch } from 'antd';
+import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import Editor from '../../../components/Editor';
 import Selector from '../../../components/Selector';
-import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
-import SocialCardPreview from '../../../components/PreviewSocialCard';
 import { useSelector } from 'react-redux';
+
+import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
 const CategoryForm = ({ onCreate, data = {} }) => {
   const siteAddress = useSelector(
@@ -32,6 +31,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
     const values = {
       slug: slug,
       meta: {
+        canonical_URL: slug,
         facebook: {
           title: title,
           canonical_URL: slug,
@@ -90,20 +90,12 @@ const CategoryForm = ({ onCreate, data = {} }) => {
             style={{ background: '#f0f2f5', padding: '1.25rem', marginBottom: '1rem' }}
           >
             <Col span={12}>
-              <Form.Item
+              <TitleInput
                 name="name"
                 label="Category Name"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please enter the name!',
-                  },
-                  { min: 3, message: 'Name must be minimum 3 characters.' },
-                  { max: 50, message: 'Name must be maximum 50 characters.' },
-                ]}
-              >
-                <Input onChange={(e) => onTitleChange(e.target.value)} />
-              </Form.Item>
+                onChange={(e) => onTitleChange(e.target.value)}
+              />
+
               <Row gutter={40}>
                 <Col md={{ span: 16 }}>
                   <Form.Item name="parent_id" label="Parent Category">
@@ -116,38 +108,24 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item
-                name="slug"
-                label="Slug"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please input the slug!',
-                  },
-                  {
-                    pattern: checker,
-                    message: 'Please enter valid slug!',
-                  },
-                ]}
-              >
-                <Input
-                  onChange={(e) =>
-                    form.setFieldsValue({
-                      meta: {
-                        facebook: {
-                          canonical_URL: e.target.value,
-                        },
-                        google: {
-                          canonical_URL: e.target.value,
-                        },
-                        twitter: {
-                          canonical_URL: e.target.value,
-                        },
+              <SlugInput
+                onChange={(e) =>
+                  form.setFieldsValue({
+                    meta: {
+                      canonical_URL: e.target.value,
+                      facebook: {
+                        canonical_URL: e.target.value,
                       },
-                    })
-                  }
-                />
-              </Form.Item>
+                      google: {
+                        canonical_URL: e.target.value,
+                      },
+                      twitter: {
+                        canonical_URL: e.target.value,
+                      },
+                    },
+                  })
+                }
+              />
             </Col>
             <Col span={10}>
               <Form.Item label="Featured Image" name="medium_id">
@@ -155,151 +133,19 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               </Form.Item>
             </Col>
             <Col span={12} style={{ marginRight: 'auto', marginLeft: '20px' }}>
-              <Form.Item name="description" label="Description">
-                <Editor
-                  style={{ width: '600px', background: '#fff', padding: '0.5rem 0.75rem' }}
-                  placeholder="Enter Description..."
-                  basic={true}
-                />
-              </Form.Item>
+              <DescriptionInput
+                inputProps={{
+                  style: { width: '600px', background: '#fff', padding: '0.5rem 0.75rem' },
+                  placeholder: 'Enter Description...',
+                  basic: true,
+                }}
+              />
             </Col>
           </Row>
         </Col>
         <Col span={24}>
           <Row gutter={40} style={{ background: '#f0f2f5' }}>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Meta Data" className="meta-data-container">
-                <div className="preview-form-container">
-                  <Form.Item name={['meta', 'title']} label="Meta Title">
-                    <Input
-                      defaultValue={
-                        form.getFieldValue(['meta', 'title']) || form.getFieldValue('name')
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'description']} label="Meta Description">
-                    <Input.TextArea />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input
-                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
-                      defaultValue={
-                        form.getFieldValue(['meta', 'canonical_URL']) ||
-                        form.getFieldValue('slug') ||
-                        ''
-                      }
-                      style={{ minWidth: '30ch' }}
-                    />
-                  </Form.Item>
-                </div>
-                <SocialCardPreview type="google" siteAddress={siteAddress} formData={formData} />
-              </Collapse.Panel>
-              <Collapse.Panel header="Twitter Card" className="meta-data-container">
-                <div className="preview-form-container">
-                  {/* <Form.Item label="Twitter Image" name={'medium_id'}>
-                    <MediaSelector
-                      maxWidth={'350px'}
-                      containerStyles={{ justifyContent: 'start' }}
-                    />
-                  </Form.Item> */}
-                  <Form.Item name={['meta', 'twitter', 'title']} label="Meta Title">
-                    <Input
-                      defaultValue={
-                        form.getFieldValue(['meta', 'twitter', 'title']) ||
-                        form.getFieldValue('name')
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'twitter', 'description']} label="Meta Description">
-                    <Input.TextArea />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'twitter', 'canonical_URL']} label="Canonical URL">
-                    <Input
-                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
-                      defaultValue={
-                        form.getFieldValue(['meta', 'twitter', 'canonical_URL']) ||
-                        form.getFieldValue('slug') ||
-                        ''
-                      }
-                      style={{ minWidth: '30ch' }}
-                    />
-                  </Form.Item>
-                </div>
-                <SocialCardPreview
-                  type="twitter"
-                  formData={formData}
-                  siteAddress={siteAddress}
-                  image={form.getFieldValue('medium_id')}
-                />
-              </Collapse.Panel>
-              <Collapse.Panel header="Facebook Card" className="meta-data-container">
-                <div className="preview-form-container">
-                  {/* <Form.Item label="Facebook Image" name={'medium_id'}>
-                    <MediaSelector
-                      maxWidth={'350px'}
-                      containerStyles={{ justifyContent: 'start' }}
-                    />
-                  </Form.Item> */}
-                  <Form.Item name={['meta', 'facebook', 'title']} label="Meta Title">
-                    <Input
-                      defaultValue={
-                        form.getFieldValue(['meta', 'facebook', 'title']) ||
-                        form.getFieldValue('name')
-                      }
-                    />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'facebook', 'description']} label="Meta Description">
-                    <Input.TextArea />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'facebook', 'canonical_URL']} label="Canonical URL">
-                    <Input
-                      addonBefore={siteAddress ? siteAddress + '/' : 'http://example.factly.in/'}
-                      defaultValue={
-                        form.getFieldValue(['meta', 'facebook', 'canonical_URL']) ||
-                        form.getFieldValue('slug') ||
-                        ''
-                      }
-                      style={{ minWidth: '30ch' }}
-                    />
-                  </Form.Item>
-                </div>
-                <SocialCardPreview
-                  type="fb"
-                  formData={formData}
-                  siteAddress={siteAddress}
-                  image={form.getFieldValue('medium_id')}
-                />
-              </Collapse.Panel>
-            </Collapse>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Code Injection">
-                <Form.Item name="header_code" label="Header Code">
-                  <MonacoEditor language="html" width="100%" />
-                </Form.Item>
-                <Form.Item name="footer_code" label="Footer Code">
-                  <MonacoEditor language="html" width="100%" />
-                </Form.Item>
-              </Collapse.Panel>
-            </Collapse>
-            <Collapse
-              expandIconPosition="right"
-              expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
-              style={{ width: '100%' }}
-            >
-              <Collapse.Panel header="Meta Fields">
-                <Form.Item name="meta_fields">
-                  <MonacoEditor language="json" width="100%" />
-                </Form.Item>
-              </Collapse.Panel>
-            </Collapse>
+            <MetaForm form={form} formData={formData} />
           </Row>
         </Col>
       </Row>
