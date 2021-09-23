@@ -13,7 +13,7 @@ import '../../../matchMedia.mock';
 import FactCheckForm from './FactCheckForm';
 
 import { addTemplate } from '../../../actions/posts';
-import { addClaim } from '../../../actions/claims';
+import { createClaim } from '../../../actions/claims';
 
 Date.now = jest.fn(() => 1487076708000);
 jest.mock('@editorjs/editorjs');
@@ -34,7 +34,7 @@ jest.mock('../../../actions/posts', () => ({
 }));
 jest.mock('../../../actions/claims', () => ({
   ...jest.requireActual('../../../actions/claims'),
-  addClaim: jest.fn(),
+  createClaim: jest.fn(),
   getClaims: jest.fn(),
 }));
 jest.mock('react-redux', () => ({
@@ -508,9 +508,9 @@ describe('Fact-check form component', () => {
       }));
 
       act(() => {
-        const addClaimButton = wrapper.find('FormItem').at(8).find('Button');
-        expect(addClaimButton.text()).toBe('Add Claim');
-        addClaimButton.simulate('click');
+        const createClaimButton = wrapper.find('FormItem').at(8).find('Button');
+        expect(createClaimButton.text()).toBe('Add Claim');
+        createClaimButton.simulate('click');
       });
       wrapper.update();
 
@@ -542,8 +542,8 @@ describe('Fact-check form component', () => {
         nextButton.simulate('submit');
       });
       setTimeout(() => {
-        expect(addClaim).toHaveBeenCalled();
-        expect(addClaim).toHaveBeenCalledWith({
+        expect(createClaim).toHaveBeenCalled();
+        expect(createClaim).toHaveBeenCalledWith({
           checked_date: null,
           claim_date: null,
           claim_sources: undefined,
@@ -565,9 +565,9 @@ describe('Fact-check form component', () => {
 
     it('should handle cancel click of Modal', () => {
       act(() => {
-        const addClaimButton = wrapper.find('FormItem').at(8).find('Button');
-        expect(addClaimButton.text()).toBe('Add Claim');
-        addClaimButton.simulate('click');
+        const createClaimButton = wrapper.find('FormItem').at(8).find('Button');
+        expect(createClaimButton.text()).toBe('Add Claim');
+        createClaimButton.simulate('click');
       });
       wrapper.update();
       const okButton = wrapper.find('Modal').find('Button').at(8);
@@ -577,9 +577,9 @@ describe('Fact-check form component', () => {
     });
     it('should handle ok click of Modal', () => {
       act(() => {
-        const addClaimButton = wrapper.find('FormItem').at(8).find('Button');
-        expect(addClaimButton.text()).toBe('Add Claim');
-        addClaimButton.simulate('click');
+        const createClaimButton = wrapper.find('FormItem').at(8).find('Button');
+        expect(createClaimButton.text()).toBe('Add Claim');
+        createClaimButton.simulate('click');
       });
       wrapper.update();
       const okButton = wrapper.find('Modal').find('Button').at(9);

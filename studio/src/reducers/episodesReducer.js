@@ -1,9 +1,10 @@
 import {
-  ADD_EPISODE,
   ADD_EPISODES,
   ADD_EPISODES_REQUEST,
   SET_EPISODES_LOADING,
   RESET_EPISODES,
+  GET_EPISODE,
+  UPDATE_EPISODE,
 } from '../constants/episodes';
 import deepEqual from 'deep-equal';
 
@@ -44,7 +45,8 @@ export default function episodesReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_EPISODE:
+    case GET_EPISODE:
+    case UPDATE_EPISODE:
       return {
         ...state,
         details: {

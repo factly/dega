@@ -1,9 +1,10 @@
 import {
-  ADD_EVENT,
   ADD_EVENTS,
   ADD_EVENTS_REQUEST,
+  GET_EVENT,
   RESET_EVENTS,
   SET_EVENTS_LOADING,
+  UPDATE_EVENT,
 } from '../constants/events';
 import deepEqual from 'deep-equal';
 
@@ -44,7 +45,8 @@ export default function eventsReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_EVENT:
+    case GET_EVENT:
+    case UPDATE_EVENT:
       return {
         ...state,
         details: {

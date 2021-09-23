@@ -54,14 +54,6 @@ describe('categories actions', () => {
     };
     expect(actions.addCategoriesRequest(data)).toEqual(addCategoriesRequestAction);
   });
-  it('should create an action to add category', () => {
-    const data = { id: 1, name: 'new category' };
-    const addCategoriesRequestAction = {
-      type: types.ADD_CATEGORY,
-      payload: data,
-    };
-    expect(actions.getCategoryByID(data)).toEqual(addCategoriesRequestAction);
-  });
   it('should create an action to reset categories', () => {
     const resetCategoriesRequestAction = {
       type: types.RESET_CATEGORIES,
@@ -227,7 +219,7 @@ describe('categories actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_CATEGORY,
+        type: types.GET_CATEGORY,
         payload: { id, name: 'Category', medium: undefined },
       },
       {
@@ -259,7 +251,7 @@ describe('categories actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_CATEGORY,
+        type: types.GET_CATEGORY,
         payload: { id, name: 'Category', medium: 1 },
       },
       {
@@ -292,7 +284,7 @@ describe('categories actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Category added',
+          message: 'Category created',
           time: Date.now(),
         },
       },
@@ -300,7 +292,7 @@ describe('categories actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addCategory(category))
+      .dispatch(actions.createCategory(category))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CATEGORIES_API, category);
   });
@@ -327,7 +319,7 @@ describe('categories actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addCategory(category))
+      .dispatch(actions.createCategory(category))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CATEGORIES_API, category);
   });
@@ -342,7 +334,7 @@ describe('categories actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_CATEGORY,
+        type: types.UPDATE_CATEGORY,
         payload: { id: 1, name: 'Category', medium: undefined },
       },
       {
@@ -382,7 +374,7 @@ describe('categories actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_CATEGORY,
+        type: types.UPDATE_CATEGORY,
         payload: { id: 1, name: 'Category', medium: 4 },
       },
       {

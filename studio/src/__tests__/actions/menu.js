@@ -51,14 +51,6 @@ describe('menu actions', () => {
     };
     expect(actions.addMenusRequest(data)).toEqual(addMenusRequestAction);
   });
-  it('should create an action to add menu', () => {
-    const data = { id: 1, name: 'menu1' };
-    const addMenuAction = {
-      type: types.ADD_MENU,
-      payload: data,
-    };
-    expect(actions.getMenuById(data)).toEqual(addMenuAction);
-  });
   it('should create an action to reset menu', () => {
     const resetMenuAction = {
       type: types.RESET_MENUS,
@@ -145,7 +137,7 @@ describe('menu actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_MENU,
+        type: types.GET_MENU,
         payload: { id: 1, name: 'menu1' },
       },
       {
@@ -206,14 +198,14 @@ describe('menu actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Menu added',
+          message: 'Menu created',
           time: Date.now(),
         },
       },
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMenu(menu))
+      .dispatch(actions.createMenu(menu))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MENUS_API, menu);
   });
@@ -238,7 +230,7 @@ describe('menu actions', () => {
     ];
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addMenu(menu))
+      .dispatch(actions.createMenu(menu))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.MENUS_API, menu);
   });
@@ -252,7 +244,7 @@ describe('menu actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_MENU,
+        type: types.UPDATE_MENU,
         payload: { id: 1, name: 'new menu1' },
       },
       {

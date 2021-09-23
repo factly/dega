@@ -1,5 +1,6 @@
 //Actions
-export const ADD_MENU = 'ADD_MENU';
+export const GET_MENU = 'GET_MENU';
+export const UPDATE_MENU = 'UPDATE_MENU';
 export const ADD_MENUS = 'ADD_MENUS';
 export const ADD_MENUS_REQUEST = 'ADD_MENUS_REQUEST';
 export const RESET_MENUS = 'RESET_NENUS';

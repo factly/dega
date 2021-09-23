@@ -27,7 +27,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/tags', () => ({
   getTags: jest.fn(),
-  addTag: jest.fn(),
+  createTag: jest.fn(),
 }));
 let state = {
   tags: {

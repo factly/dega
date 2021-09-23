@@ -1,9 +1,10 @@
 import {
-  ADD_POLICY,
   ADD_POLICIES,
   ADD_POLICIES_REQUEST,
   SET_POLICIES_LOADING,
   RESET_POLICIES,
+  GET_POLICY,
+  UPDATE_POLICY,
 } from '../constants/policies';
 import deepEqual from 'deep-equal';
 
@@ -45,7 +46,8 @@ export default function policiesReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_POLICY:
+    case GET_POLICY:
+    case UPDATE_POLICY:
       return {
         ...state,
         details: {

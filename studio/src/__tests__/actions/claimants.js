@@ -53,14 +53,6 @@ describe('claimants actions', () => {
     };
     expect(actions.addClaimantsRequest(data)).toEqual(addClaimantsRequestAction);
   });
-  it('should create an action to add claimant', () => {
-    const data = { id: 1, name: 'new claimant' };
-    const addClaimantsRequestAction = {
-      type: types.ADD_CLAIMANT,
-      payload: data,
-    };
-    expect(actions.getClaimantByID(data)).toEqual(addClaimantsRequestAction);
-  });
   it('should create an action to reset claimants', () => {
     const resetClaimantsRequestAction = {
       type: types.RESET_CLAIMANTS,
@@ -283,7 +275,7 @@ describe('claimants actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_CLAIMANT,
+        type: types.GET_CLAIMANT,
         payload: { id, name: 'Claimant', medium: undefined },
       },
       {
@@ -315,7 +307,7 @@ describe('claimants actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_CLAIMANT,
+        type: types.GET_CLAIMANT,
         payload: { id, name: 'Claimant', medium: 1 },
       },
       {
@@ -348,7 +340,7 @@ describe('claimants actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Claimant added',
+          message: 'Claimant created',
           time: Date.now(),
         },
       },
@@ -356,7 +348,7 @@ describe('claimants actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addClaimant(claimant))
+      .dispatch(actions.createClaimant(claimant))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMANTS_API, claimant);
   });
@@ -383,7 +375,7 @@ describe('claimants actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addClaimant(claimant))
+      .dispatch(actions.createClaimant(claimant))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMANTS_API, claimant);
   });
@@ -398,7 +390,7 @@ describe('claimants actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_CLAIMANT,
+        type: types.UPDATE_CLAIMANT,
         payload: { id: 1, name: 'Claimant', medium: undefined },
       },
       {
@@ -438,7 +430,7 @@ describe('claimants actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_CLAIMANT,
+        type: types.UPDATE_CLAIMANT,
         payload: { id: 1, name: 'Claimant', medium: 4 },
       },
       {

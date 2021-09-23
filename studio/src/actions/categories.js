@@ -1,16 +1,18 @@
 import axios from 'axios';
 import {
-  ADD_CATEGORY,
   ADD_CATEGORIES,
   ADD_CATEGORIES_REQUEST,
   SET_CATEGORIES_LOADING,
   RESET_CATEGORIES,
   CATEGORIES_API,
+  GET_CATEGORY,
+  UPDATE_CATEGORY,
 } from '../constants/categories';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import getError from '../utils/getError';
 
+// action to fetch all categories
 export const getCategories = (query) => {
   return (dispatch) => {
     dispatch(loadingCategories());
@@ -20,7 +22,7 @@ export const getCategories = (query) => {
       })
       .then((response) => {
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes
               .filter((category) => category.medium)
               .map((category) => category.medium),
@@ -48,15 +50,16 @@ export const getCategories = (query) => {
   };
 };
 
+// action to fetch category by id
 export const getCategory = (id) => {
   return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(addCategory(GET_CATEGORY, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -65,14 +68,15 @@ export const getCategory = (id) => {
   };
 };
 
-export const addCategory = (data) => {
+// action to create category
+export const createCategory = (data) => {
   return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .post(CATEGORIES_API, data)
       .then(() => {
         dispatch(resetCategories());
-        dispatch(addSuccessNotification('Category added'));
+        dispatch(addSuccessNotification('Category created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -80,15 +84,18 @@ export const addCategory = (data) => {
   };
 };
 
+// action to update category by id
 export const updateCategory = (data) => {
   return (dispatch) => {
     dispatch(loadingCategories());
     return axios
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        dispatch(getCategoryByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(
+          addCategory(UPDATE_CATEGORY, { ...response.data, medium: response.data.medium?.id }),
+        );
         dispatch(addSuccessNotification('Category updated'));
       })
       .catch((error) => {
@@ -98,6 +105,7 @@ export const updateCategory = (data) => {
   };
 };
 
+// action to delete category by id
 export const deleteCategory = (id) => {
   return (dispatch) => {
     dispatch(loadingCategories());
@@ -116,9 +124,7 @@ export const deleteCategory = (id) => {
 export const addCategories = (categories) => {
   return (dispatch) => {
     dispatch(
-      addMediaList(
-        categories.filter((category) => category.medium).map((category) => category.medium),
-      ),
+      addMedia(categories.filter((category) => category.medium).map((category) => category.medium)),
     );
     dispatch(
       addCategoriesList(
@@ -140,9 +146,9 @@ export const stopCategoriesLoading = () => ({
   payload: false,
 });
 
-export const getCategoryByID = (data) => ({
-  type: ADD_CATEGORY,
-  payload: data,
+export const addCategory = (type, payload) => ({
+  type,
+  payload,
 });
 
 export const addCategoriesList = (data) => ({

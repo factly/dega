@@ -54,14 +54,6 @@ describe('ratings actions', () => {
     };
     expect(actions.addRatingsRequest(data)).toEqual(addRatingsRequestAction);
   });
-  it('should create an action to add rating', () => {
-    const data = { id: 1, name: 'new rating' };
-    const addRatingAction = {
-      type: types.ADD_RATING,
-      payload: data,
-    };
-    expect(actions.getRatingByID(data)).toEqual(addRatingAction);
-  });
   it('should create an action to reset ratings', () => {
     const resetRatingsAction = {
       type: types.RESET_RATINGS,
@@ -282,7 +274,7 @@ describe('ratings actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_RATING,
+        type: types.GET_RATING,
         payload: { id, name: 'Rating', medium: undefined },
       },
       {
@@ -314,7 +306,7 @@ describe('ratings actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_RATING,
+        type: types.GET_RATING,
         payload: { id, name: 'Rating', medium: 1 },
       },
       {
@@ -347,7 +339,7 @@ describe('ratings actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Rating added',
+          message: 'Rating created',
           time: Date.now(),
         },
       },
@@ -355,7 +347,7 @@ describe('ratings actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addRating(rating))
+      .dispatch(actions.createRating(rating))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API, rating);
   });
@@ -382,7 +374,7 @@ describe('ratings actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addRating(rating))
+      .dispatch(actions.createRating(rating))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API, rating);
   });
@@ -397,7 +389,7 @@ describe('ratings actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_RATING,
+        type: types.UPDATE_RATING,
         payload: { id: 1, name: 'Rating', medium: undefined },
       },
       {
@@ -437,7 +429,7 @@ describe('ratings actions', () => {
         payload: [medium],
       },
       {
-        type: types.ADD_RATING,
+        type: types.UPDATE_RATING,
         payload: { id: 1, name: 'Rating', medium: 4 },
       },
       {

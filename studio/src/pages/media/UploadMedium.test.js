@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
 }));
 jest.mock('../../actions/media', () => ({
-  addMedium: jest.fn(),
+  createMedium: jest.fn(),
 }));
 
 describe('Media upload component', () => {
@@ -58,8 +58,8 @@ describe('Media upload component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addMedium', (done) => {
-      actions.addMedium.mockReset();
+    it('should call createMedium', (done) => {
+      actions.createMedium.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -67,7 +67,7 @@ describe('Media upload component', () => {
       });
       wrapper.find(UppyUploader).props().onUpload({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addMedium).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createMedium).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/media');
         done();
       }, 0);

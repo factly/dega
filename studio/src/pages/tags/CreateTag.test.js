@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/tags', () => ({
   getTags: jest.fn(),
-  addTag: jest.fn(),
+  createTag: jest.fn(),
 }));
 
 describe('Tags create component', () => {
@@ -73,8 +73,8 @@ describe('Tags create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addTag', (done) => {
-      actions.addTag.mockReset();
+    it('should call createTag', (done) => {
+      actions.createTag.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -86,7 +86,7 @@ describe('Tags create component', () => {
       });
       wrapper.find(TagCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addTag).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createTag).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/tags');
         done();
       }, 0);

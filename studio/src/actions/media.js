@@ -1,12 +1,13 @@
 import axios from 'axios';
 import {
-  ADD_MEDIUM,
   ADD_MEDIA,
   ADD_MEDIA_REQUEST,
   SET_MEDIA_LOADING,
   RESET_MEDIA,
   MEDIA_API,
   KAVACH_MEDIA_API,
+  GET_MEDIUM,
+  UPDATE_MEDIUM,
 } from '../constants/media';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
@@ -14,6 +15,8 @@ import getError from '../utils/getError';
 const getApi = (profile) => {
   return profile ? KAVACH_MEDIA_API : MEDIA_API;
 };
+
+// action to fetch media
 export const getMedia = (query, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
@@ -22,7 +25,7 @@ export const getMedia = (query, profile) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addMediaList(response.data.nodes));
+        dispatch(addMedia(response.data.nodes));
         dispatch(
           addMediaRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -38,13 +41,14 @@ export const getMedia = (query, profile) => {
   };
 };
 
+// action to fetch medium by id
 export const getMedium = (id, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .get(getApi(profile) + '/' + id)
       .then((response) => {
-        dispatch(getMediumByID(response.data));
+        dispatch({ type: GET_MEDIUM, payload: response.data });
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -53,14 +57,15 @@ export const getMedium = (id, profile) => {
   };
 };
 
-export const addMedium = (data, profile) => {
+// action to create medium
+export const createMedium = (data, profile) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .post(getApi(profile), profile ? data[0] : data)
       .then((response) => {
         dispatch(resetMedia());
-        dispatch(addSuccessNotification('Medium added'));
+        dispatch(addSuccessNotification('Medium created'));
         return profile ? response.data : response.data.nodes[0];
       })
       .catch((error) => {
@@ -69,13 +74,14 @@ export const addMedium = (data, profile) => {
   };
 };
 
+// action to update medium
 export const updateMedium = (data) => {
   return (dispatch) => {
     dispatch(loadingMedia());
     return axios
       .put(MEDIA_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getMediumByID(response.data));
+        dispatch({ type: UPDATE_MEDIUM, payload: response.data });
         dispatch(addSuccessNotification('Medium updated'));
       })
       .catch((error) => {
@@ -85,6 +91,7 @@ export const updateMedium = (data) => {
   };
 };
 
+// action to delete medium by id
 export const deleteMedium = (id) => {
   return (dispatch) => {
     dispatch(loadingMedia());
@@ -100,12 +107,6 @@ export const deleteMedium = (id) => {
   };
 };
 
-export const addMedia = (media) => {
-  return (dispatch) => {
-    dispatch(addMediaList(media));
-  };
-};
-
 export const loadingMedia = () => ({
   type: SET_MEDIA_LOADING,
   payload: true,
@@ -116,12 +117,7 @@ export const stopMediaLoading = () => ({
   payload: false,
 });
 
-export const getMediumByID = (data) => ({
-  type: ADD_MEDIUM,
-  payload: data,
-});
-
-export const addMediaList = (data) => ({
+export const addMedia = (data) => ({
   type: ADD_MEDIA,
   payload: data,
 });

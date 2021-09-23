@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { addFormat } from '../../actions/formats';
+import { createFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
 import FormatCreateForm from './components/FormatForm';
 
@@ -9,7 +9,7 @@ function CreateFormat({ setReloadFlag, reloadFlag }) {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    dispatch(addFormat(values)).then(() => {
+    dispatch(createFormat(values)).then(() => {
       history.push('/advanced/formats');
       setReloadFlag(!reloadFlag);
     });

@@ -29,7 +29,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/categories', () => ({
   getCategories: jest.fn(),
-  addCategory: jest.fn(),
+  createCategory: jest.fn(),
 }));
 
 describe('Categories create component', () => {
@@ -72,8 +72,8 @@ describe('Categories create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addCategory', (done) => {
-      actions.addCategory.mockReset();
+    it('should call createCategory', (done) => {
+      actions.createCategory.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -85,7 +85,7 @@ describe('Categories create component', () => {
       });
       wrapper.find(CategoryCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addCategory).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createCategory).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/categories');
         done();
       }, 0);

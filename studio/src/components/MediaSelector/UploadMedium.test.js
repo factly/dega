@@ -23,7 +23,7 @@ jest.mock('react-router-dom', () => ({
   useHistory: jest.fn(),
 }));
 jest.mock('../../actions/media', () => ({
-  addMedium: jest.fn(),
+  createMedium: jest.fn(),
 }));
 
 describe('Media upload component', () => {
@@ -52,9 +52,9 @@ describe('Media upload component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addMedium', (done) => {
+    it('should call createMedium', (done) => {
       const onMediaUpload = jest.fn();
-      actions.addMedium.mockReset();
+      actions.createMedium.mockReset();
       act(() => {
         wrapper = shallow(<UploadMedium onMediaUpload={onMediaUpload} profile={true} />);
       });
@@ -63,13 +63,13 @@ describe('Media upload component', () => {
         .props()
         .onUpload([{ test: 'test' }]);
       setTimeout(() => {
-        expect(actions.addMedium).toHaveBeenCalledWith([{ test: 'test' }], true);
+        expect(actions.createMedium).toHaveBeenCalledWith([{ test: 'test' }], true);
         done();
       }, 0);
     });
-    it('should call addMedium with more than 1 ', (done) => {
+    it('should call createMedium with more than 1 ', (done) => {
       const onMediaUpload = jest.fn();
-      actions.addMedium.mockReset();
+      actions.createMedium.mockReset();
       act(() => {
         wrapper = shallow(<UploadMedium onMediaUpload={onMediaUpload} />);
       });
@@ -78,7 +78,7 @@ describe('Media upload component', () => {
         .props()
         .onUpload([{ test: 'test' }, { test: 'test2' }]);
       setTimeout(() => {
-        expect(actions.addMedium).toHaveBeenCalledWith(
+        expect(actions.createMedium).toHaveBeenCalledWith(
           [{ test: 'test' }, { test: 'test2' }],
           false,
         );

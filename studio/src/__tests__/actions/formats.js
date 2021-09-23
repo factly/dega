@@ -52,14 +52,6 @@ describe('formats actions', () => {
     };
     expect(actions.addFormatsRequest(data)).toEqual(addFormatsRequestAction);
   });
-  it('should create an action to add format', () => {
-    const data = { id: 1, name: 'new format' };
-    const addFormatsRequestAction = {
-      type: types.ADD_FORMAT,
-      payload: data,
-    };
-    expect(actions.getFormatByID(data)).toEqual(addFormatsRequestAction);
-  });
   it('should create an action to reset formats', () => {
     const resetFormatsRequestAction = {
       type: types.RESET_FORMATS,
@@ -149,7 +141,7 @@ describe('formats actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_FORMAT,
+        type: types.GET_FORMAT,
         payload: { id, name: 'Format' },
       },
       {
@@ -213,7 +205,7 @@ describe('formats actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Format added',
+          message: 'Format created',
           time: Date.now(),
         },
       },
@@ -221,7 +213,7 @@ describe('formats actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addFormat(format))
+      .dispatch(actions.createFormat(format))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.FORMATS_API, format);
   });
@@ -248,7 +240,7 @@ describe('formats actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addFormat(format))
+      .dispatch(actions.createFormat(format))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.FORMATS_API, format);
   });
@@ -263,7 +255,7 @@ describe('formats actions', () => {
         payload: true,
       },
       {
-        type: types.ADD_FORMAT,
+        type: types.UPDATE_FORMAT,
         payload: { id: 1, name: 'Format' },
       },
       {

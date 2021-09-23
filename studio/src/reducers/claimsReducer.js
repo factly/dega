@@ -1,9 +1,10 @@
 import {
-  ADD_CLAIM,
   ADD_CLAIMS,
   ADD_CLAIMS_REQUEST,
   SET_CLAIMS_LOADING,
   RESET_CLAIMS,
+  GET_CLAIM,
+  UPDATE_CLAIM,
 } from '../constants/claims';
 import deepEqual from 'deep-equal';
 
@@ -44,7 +45,8 @@ export default function claimsReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_CLAIM:
+    case GET_CLAIM:
+    case UPDATE_CLAIM:
       return {
         ...state,
         details: {

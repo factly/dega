@@ -1,16 +1,18 @@
 import axios from 'axios';
 import {
-  ADD_CLAIMANT,
   ADD_CLAIMANTS,
   ADD_CLAIMANTS_REQUEST,
   SET_CLAIMANTS_LOADING,
   RESET_CLAIMANTS,
   CLAIMANTS_API,
+  UPDATE_CLAIMANT,
+  GET_CLAIMANT,
 } from '../constants/claimants';
 import { addErrorNotification, addSuccessNotification } from './notifications';
-import { addMediaList } from './media';
+import { addMedia } from './media';
 import getError from '../utils/getError';
 
+// action to fetch all claimants
 export const getClaimants = (query) => {
   return (dispatch) => {
     dispatch(loadingClaimants());
@@ -20,7 +22,7 @@ export const getClaimants = (query) => {
       })
       .then((response) => {
         dispatch(
-          addMediaList(
+          addMedia(
             response.data.nodes
               .filter((claimant) => claimant.medium)
               .map((claimant) => claimant.medium),
@@ -48,15 +50,16 @@ export const getClaimants = (query) => {
   };
 };
 
+// action to fetch claimant by id
 export const getClaimant = (id) => {
   return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .get(CLAIMANTS_API + '/' + id)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(addClaimant(GET_CLAIMANT, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -65,14 +68,15 @@ export const getClaimant = (id) => {
   };
 };
 
-export const addClaimant = (data) => {
+// action to create claimant
+export const createClaimant = (data) => {
   return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .post(CLAIMANTS_API, data)
       .then(() => {
         dispatch(resetClaimants());
-        dispatch(addSuccessNotification('Claimant added'));
+        dispatch(addSuccessNotification('Claimant created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -80,15 +84,18 @@ export const addClaimant = (data) => {
   };
 };
 
+// action to update claimant by id
 export const updateClaimant = (data) => {
   return (dispatch) => {
     dispatch(loadingClaimants());
     return axios
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
-        if (response.data.medium) dispatch(addMediaList([response.data.medium]));
+        if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        dispatch(getClaimantByID({ ...response.data, medium: response.data.medium?.id }));
+        dispatch(
+          addClaimant(UPDATE_CLAIMANT, { ...response.data, medium: response.data.medium?.id }),
+        );
         dispatch(addSuccessNotification('Claimant updated'));
       })
       .catch((error) => {
@@ -98,6 +105,7 @@ export const updateClaimant = (data) => {
   };
 };
 
+// action to delete claimant by id
 export const deleteClaimant = (id) => {
   return (dispatch) => {
     dispatch(loadingClaimants());
@@ -116,9 +124,7 @@ export const deleteClaimant = (id) => {
 export const addClaimants = (claimants) => {
   return (dispatch) => {
     dispatch(
-      addMediaList(
-        claimants.filter((claimant) => claimant.medium).map((claimant) => claimant.medium),
-      ),
+      addMedia(claimants.filter((claimant) => claimant.medium).map((claimant) => claimant.medium)),
     );
     dispatch(
       addClaimantsList(
@@ -140,9 +146,9 @@ export const stopClaimantsLoading = () => ({
   payload: false,
 });
 
-export const getClaimantByID = (data) => ({
-  type: ADD_CLAIMANT,
-  payload: data,
+export const addClaimant = (type, payload) => ({
+  type,
+  payload,
 });
 
 export const addClaimantsList = (data) => ({

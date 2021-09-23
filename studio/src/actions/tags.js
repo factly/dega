@@ -1,15 +1,17 @@
 import axios from 'axios';
 import {
-  ADD_TAG,
   ADD_TAGS,
   ADD_TAGS_REQUEST,
   SET_TAGS_LOADING,
   RESET_TAGS,
   TAGS_API,
+  GET_TAG,
+  UPDATE_TAG,
 } from '../constants/tags';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
+// action to fetch tags
 export const getTags = (query) => {
   return (dispatch) => {
     dispatch(loadingTags());
@@ -18,7 +20,7 @@ export const getTags = (query) => {
         params: query,
       })
       .then((response) => {
-        dispatch(addTagsList(response.data.nodes));
+        dispatch(addTags(response.data.nodes));
         dispatch(
           addTagsRequest({
             data: response.data.nodes.map((item) => item.id),
@@ -34,13 +36,14 @@ export const getTags = (query) => {
   };
 };
 
+// action to fetch tag by id
 export const getTag = (id) => {
   return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .get(TAGS_API + '/' + id)
       .then((response) => {
-        dispatch(getTagByID(response.data));
+        dispatch(addTag(GET_TAG, response.data));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -49,14 +52,15 @@ export const getTag = (id) => {
   };
 };
 
-export const addTag = (data) => {
+// action to create tag
+export const createTag = (data) => {
   return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .post(TAGS_API, data)
       .then(() => {
         dispatch(resetTags());
-        dispatch(addSuccessNotification('Tag added'));
+        dispatch(addSuccessNotification('Tag created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -64,13 +68,14 @@ export const addTag = (data) => {
   };
 };
 
+// action to update tag by id
 export const updateTag = (data) => {
   return (dispatch) => {
     dispatch(loadingTags());
     return axios
       .put(TAGS_API + '/' + data.id, data)
       .then((response) => {
-        dispatch(getTagByID(response.data));
+        dispatch(addTag(UPDATE_TAG, response.data));
         dispatch(addSuccessNotification('Tag updated'));
       })
       .catch((error) => {
@@ -80,6 +85,7 @@ export const updateTag = (data) => {
   };
 };
 
+// action to delete tag by id
 export const deleteTag = (id) => {
   return (dispatch) => {
     dispatch(loadingTags());
@@ -95,12 +101,6 @@ export const deleteTag = (id) => {
   };
 };
 
-export const addTags = (tags) => {
-  return (dispatch) => {
-    dispatch(addTagsList(tags));
-  };
-};
-
 export const loadingTags = () => ({
   type: SET_TAGS_LOADING,
   payload: true,
@@ -111,12 +111,12 @@ export const stopTagsLoading = () => ({
   payload: false,
 });
 
-export const getTagByID = (data) => ({
-  type: ADD_TAG,
-  payload: data,
+export const addTag = (type, payload) => ({
+  type,
+  payload,
 });
 
-export const addTagsList = (data) => ({
+export const addTags = (data) => ({
   type: ADD_TAGS,
   payload: data,
 });

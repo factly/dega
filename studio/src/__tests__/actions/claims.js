@@ -78,14 +78,6 @@ describe('claims actions', () => {
     };
     expect(actions.addClaimsRequest(data)).toEqual(addClaimsRequestAction);
   });
-  it('should create an action to add claim', () => {
-    const data = claim;
-    const addClaimsRequestAction = {
-      type: types.ADD_CLAIM,
-      payload: data,
-    };
-    expect(actions.getClaimByID(data)).toEqual(addClaimsRequestAction);
-  });
   it('should create an action to reset claims', () => {
     const resetClaimsRequestAction = {
       type: types.RESET_CLAIMS,
@@ -316,7 +308,7 @@ describe('claims actions', () => {
         payload: [{ id: 100, name: 'Rating 1', medium: 110 }],
       },
       {
-        type: types.ADD_CLAIM,
+        type: types.GET_CLAIM,
         payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100 },
       },
       {
@@ -427,7 +419,7 @@ describe('claims actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Claim added',
+          message: 'Claim created',
           time: Date.now(),
         },
       },
@@ -435,7 +427,7 @@ describe('claims actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addClaim(claim_without_id))
+      .dispatch(actions.createClaim(claim_without_id))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMS_API, claim_without_id);
   });
@@ -461,7 +453,7 @@ describe('claims actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.addClaim(claim))
+      .dispatch(actions.createClaim(claim))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMS_API, claim);
   });
@@ -491,7 +483,7 @@ describe('claims actions', () => {
         payload: [{ id: 100, name: 'Rating 1', medium: 110 }],
       },
       {
-        type: types.ADD_CLAIM,
+        type: types.UPDATE_CLAIM,
         payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100 },
       },
       {

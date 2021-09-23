@@ -27,7 +27,6 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/claims', () => ({
   getClaims: jest.fn(),
-  addClaim: jest.fn(),
 }));
 let state = {
   claims: {

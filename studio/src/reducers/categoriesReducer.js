@@ -1,9 +1,10 @@
 import {
-  ADD_CATEGORY,
   ADD_CATEGORIES,
   ADD_CATEGORIES_REQUEST,
   SET_CATEGORIES_LOADING,
   RESET_CATEGORIES,
+  GET_CATEGORY,
+  UPDATE_CATEGORY,
 } from '../constants/categories';
 import deepEqual from 'deep-equal';
 
@@ -44,7 +45,8 @@ export default function categoriesReducer(state = initialState, action = {}) {
           ...action.payload.reduce((obj, item) => Object.assign(obj, { [item.id]: item }), {}),
         },
       };
-    case ADD_CATEGORY:
+    case GET_CATEGORY:
+    case UPDATE_CATEGORY:
       return {
         ...state,
         details: {

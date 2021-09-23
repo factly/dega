@@ -31,7 +31,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/episodes', () => ({
   getEpisodes: jest.fn(),
-  addEpisode: jest.fn(),
+  createEpisode: jest.fn(),
 }));
 
 describe('Episode create component', () => {
@@ -100,8 +100,8 @@ describe('Episode create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addEpisode', (done) => {
-      actions.addEpisode.mockReset();
+    it('should call createEpisode', (done) => {
+      actions.createEpisode.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -113,7 +113,7 @@ describe('Episode create component', () => {
       });
       wrapper.find(EpisodeCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addEpisode).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createEpisode).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/episodes');
         done();
       }, 0);

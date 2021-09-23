@@ -29,7 +29,7 @@ jest.mock('react-router-dom', () => ({
 
 jest.mock('../../actions/claims', () => ({
   ...jest.requireActual('../../actions/claims'),
-  addClaim: jest.fn(),
+  createClaim: jest.fn(),
 }));
 
 const middlewares = [thunk];
@@ -85,8 +85,8 @@ describe('Claim create component', () => {
     afterEach(() => {
       wrapper.unmount();
     });
-    it('should call addClaim', (done) => {
-      actions.addClaim.mockReset();
+    it('should call createClaim', (done) => {
+      actions.createClaim.mockReset();
       const push = jest.fn();
       useHistory.mockReturnValueOnce({ push });
       act(() => {
@@ -98,7 +98,7 @@ describe('Claim create component', () => {
       });
       wrapper.find(ClaimCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.addClaim).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createClaim).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/claims');
         done();
       }, 0);

@@ -1,5 +1,6 @@
 //Actions
-export const ADD_TAG = 'ADD_TAG';
+export const GET_TAG = 'GET_TAG';
+export const UPDATE_TAG = 'UPDATE_TAG';
 export const ADD_TAGS = 'ADD_TAGS';
 export const ADD_TAGS_REQUEST = 'ADD_TAGS_REQUEST';
 export const RESET_TAGS = 'RESET_TAGS';
