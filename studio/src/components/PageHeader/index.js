@@ -34,7 +34,8 @@ function PageHeader() {
           !(
             location.pathname.includes('permissions') ||
             location.pathname.includes('requests') ||
-            location.pathname.includes('spaces')
+            location.pathname.includes('spaces') ||
+            location.pathname.includes('members')
           )
         ) {
           if (pathSnippets.includes('edit') && !state[entity].loading) {
