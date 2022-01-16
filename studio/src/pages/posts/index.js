@@ -12,6 +12,7 @@ import Selector from '../../components/Selector';
 import Template from '../../components/Template';
 import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import Loader from '../../components/Loader';
 
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -156,98 +157,100 @@ function Posts({ formats }) {
     filterValue['format'] = filters.format;
     setFilters(filterValue);
   };
-  if (!formats.loading && formats.article)
-    return (
-      <Space direction="vertical">
-        <Template format={formats.article} />
+  return formats.loading ? (
+    <Loader />
+  ) : formats.article ? (
+    <Space direction="vertical">
+      <Template format={formats.article} />
 
-        <Form
-          initialValues={filters}
-          form={form}
-          name="filters"
-          onFinish={(values) => onSave(values)}
-          style={{ maxWidth: '100%' }}
-          className="ant-advanced-search-form"
-          onValuesChange={(changedValues, allValues) => {
-            if (!changedValues.q) {
-              onSave(allValues);
-            }
-          }}
-        >
-          <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
-            <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
-              <Form.Item name="q">
-                <Input placeholder="Search posts" />
-              </Form.Item>
-              <Form.Item>
-                <Button htmlType="submit">Search</Button>
-              </Form.Item>
-            </Col>
-            <Col key={4}>
-              <Form.Item name="status">
-                <Select defaultValue="all">
-                  <Option value="all">Status: All</Option>
-                  <Option value="draft">Status: Draft</Option>
-                  <Option value="publish">Status: Publish</Option>
-                  <Option value="ready">Status: Ready to Publish</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col>
-              <Form.Item name="sort">
-                <Select defaultValue="desc" style={{ width: '100%' }}>
-                  <Option value="desc">Sort By: Latest</Option>
-                  <Option value="asc">Sort By: Old</Option>
-                </Select>
-              </Form.Item>
-            </Col>
-            <Button
-              type="link"
-              onClick={() => {
-                setExpand(!expand);
-              }}
-            >
-              {expand ? (
-                <>
-                  Hide Filters <UpOutlined />
-                </>
-              ) : (
-                <>
-                  More Filters <DownOutlined />
-                </>
-              )}
-            </Button>
-            <Col key={1}>
-              <Link to="/posts/create">
-                <Button
-                  disabled={!(actions.includes('admin') || actions.includes('create'))}
-                  type="primary"
-                >
-                  New Post
-                </Button>
-              </Link>
-            </Col>
-          </Row>
-          <Row gutter={16}>{getFields()}</Row>
-        </Form>
-        <PostList
-          actions={actions}
-          format={formats.article}
-          data={{
-            posts: posts,
-            total: total,
-            loading: loading,
-            tags: tags,
-            categories: categories,
-            authors: authors,
-          }}
-          filters={filters}
-          setFilters={setFilters}
-          fetchPosts={fetchPosts}
-        />
-      </Space>
-    );
-  return <FormatNotFound status="info" title="Article format not found" link="/formats/create" />;
+      <Form
+        initialValues={filters}
+        form={form}
+        name="filters"
+        onFinish={(values) => onSave(values)}
+        style={{ maxWidth: '100%' }}
+        className="ant-advanced-search-form"
+        onValuesChange={(changedValues, allValues) => {
+          if (!changedValues.q) {
+            onSave(allValues);
+          }
+        }}
+      >
+        <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
+          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
+            <Form.Item name="q">
+              <Input placeholder="Search posts" />
+            </Form.Item>
+            <Form.Item>
+              <Button htmlType="submit">Search</Button>
+            </Form.Item>
+          </Col>
+          <Col key={4}>
+            <Form.Item name="status">
+              <Select defaultValue="all">
+                <Option value="all">Status: All</Option>
+                <Option value="draft">Status: Draft</Option>
+                <Option value="publish">Status: Publish</Option>
+                <Option value="ready">Status: Ready to Publish</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="sort">
+              <Select defaultValue="desc" style={{ width: '100%' }}>
+                <Option value="desc">Sort By: Latest</Option>
+                <Option value="asc">Sort By: Old</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+          <Button
+            type="link"
+            onClick={() => {
+              setExpand(!expand);
+            }}
+          >
+            {expand ? (
+              <>
+                Hide Filters <UpOutlined />
+              </>
+            ) : (
+              <>
+                More Filters <DownOutlined />
+              </>
+            )}
+          </Button>
+          <Col key={1}>
+            <Link to="/posts/create">
+              <Button
+                disabled={!(actions.includes('admin') || actions.includes('create'))}
+                type="primary"
+              >
+                New Post
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+        <Row gutter={16}>{getFields()}</Row>
+      </Form>
+      <PostList
+        actions={actions}
+        format={formats.article}
+        data={{
+          posts: posts,
+          total: total,
+          loading: loading,
+          tags: tags,
+          categories: categories,
+          authors: authors,
+        }}
+        filters={filters}
+        setFilters={setFilters}
+        fetchPosts={fetchPosts}
+      />
+    </Space>
+  ) : (
+    <FormatNotFound status="info" title="Article format not found" link="/formats/create" />
+  );
 }
 
 export default Posts;

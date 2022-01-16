@@ -8,6 +8,7 @@ import deepEqual from 'deep-equal';
 import Selector from '../../components/Selector';
 import { getClaims } from '../../actions/claims';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 
 function Claims({ permission }) {
   const { actions } = permission;
@@ -94,7 +95,9 @@ function Claims({ permission }) {
     setFilters(filterValue);
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

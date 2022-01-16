@@ -5,6 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings } from '../../actions/ratings';
 import deepEqual from 'deep-equal';
+import Loader from '../../components/Loader';
 
 function Ratings({ permission }) {
   const { actions } = permission;
@@ -38,7 +39,9 @@ function Ratings({ permission }) {
   const fetchRatings = () => {
     dispatch(getRatings(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Row justify="end">
         <Link key="1" to="/ratings/create">

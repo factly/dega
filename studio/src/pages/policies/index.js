@@ -6,6 +6,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies } from '../../actions/policies';
 import deepEqual from 'deep-equal';
+import Loader from '../../components/Loader';
 function Policies() {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'policies', action: 'get', spaces });
@@ -40,7 +41,9 @@ function Policies() {
     dispatch(getPolicies(filters));
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
         <Link to="/members/policies/create">

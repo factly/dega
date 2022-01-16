@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import { getEpisodes } from '../../actions/episodes';
 import getUrlParams from '../../utils/getUrlParams';
 import Selector from '../../components/Selector';
+import Loader from '../../components/Loader';
 
 function Episodes({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -88,7 +89,9 @@ function Episodes({ permission }) {
     });
     setFilters(filterValue);
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

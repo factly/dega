@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getWebhooks } from '../../actions/webhooks';
 import deepEqual from 'deep-equal';
+import Loader from '../../components/Loader';
 
 function Webhooks() {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -38,7 +39,9 @@ function Webhooks() {
     dispatch(getWebhooks(filters));
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Row gutter={16} justify="end">
         <Link key="1" to="/advanced/webhooks/create">

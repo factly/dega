@@ -7,6 +7,7 @@ import { getMedia } from '../../actions/media';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 
 function Media({ permission }) {
   const { actions } = permission;
@@ -53,7 +54,9 @@ function Media({ permission }) {
     dispatch(getMedia(filters));
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

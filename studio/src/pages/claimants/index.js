@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 
 function Claimants({ permission }) {
   const { actions } = permission;
@@ -52,7 +53,9 @@ function Claimants({ permission }) {
   const fetchClaimants = () => {
     dispatch(getClaimants(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

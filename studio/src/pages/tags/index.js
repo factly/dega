@@ -7,6 +7,7 @@ import { getTags } from '../../actions/tags';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 
 function Tags({ permission }) {
   const { actions } = permission;
@@ -53,7 +54,9 @@ function Tags({ permission }) {
   const fetchTags = () => {
     dispatch(getTags(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

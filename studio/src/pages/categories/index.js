@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import CategoryList from './components/CategoryList';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCategories } from '../../actions/categories';
 import deepEqual from 'deep-equal';
+import CategoryList from './components/CategoryList';
+import Loader from '../../components/Loader';
+import { getCategories } from '../../actions/categories';
 import getUrlParams from '../../utils/getUrlParams';
 
 function Categories({ permission }) {
@@ -52,7 +53,9 @@ function Categories({ permission }) {
   const fetchCategories = () => {
     dispatch(getCategories(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Form
         initialValues={filters}

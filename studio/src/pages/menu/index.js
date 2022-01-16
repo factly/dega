@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getMenus } from '../../actions/menu';
 import deepEqual from 'deep-equal';
 import getUserPermission from '../../utils/getUserPermission';
+import Loader from '../../components/Loader';
 
 function Menu() {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -38,7 +39,9 @@ function Menu() {
   const fetchMenus = () => {
     dispatch(getMenus(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Row justify="end">
         <Link to="/website/menus/create">
