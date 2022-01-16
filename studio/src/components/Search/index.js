@@ -118,7 +118,7 @@ function Search({ collapsed }) {
               )}
             </div>
           ) : (
-            <Empty style={{ marginTop: '2rem' }} />
+            <Empty style={{ marginTop: '2rem' }} description="No Results Found" />
           ))}
       </Modal>
     </div>
