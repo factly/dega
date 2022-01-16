@@ -1,40 +1,12 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getMenus, deleteMenu } from '../../../actions/menu';
-import deepEqual from 'deep-equal';
+import { useDispatch } from 'react-redux';
+import { deleteMenu } from '../../../actions/menu';
 import { Space, Button, Popconfirm, Table } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function MenuList({ actions }) {
+function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  query.set('page', filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  const { menus, total, loading } = useSelector((state) => {
-    const node = state.menus.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-    if (node)
-      return {
-        menus: node.data.map((element) => state.menus.details[element]),
-        total: node.total,
-        loading: state.menus.loading,
-      };
-    return { menus: [], total: 0, loading: state.menus.loading };
-  });
-  React.useEffect(() => {
-    fetchMenus();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchMenus = () => {
-    dispatch(getMenus(filters));
-  };
 
   const columns = [
     {
@@ -88,11 +60,11 @@ function MenuList({ actions }) {
       <Table
         bordered
         columns={columns}
-        dataSource={menus}
-        loading={loading}
+        dataSource={data.menus}
+        loading={data.loading}
         rowKey={'id'}
         pagination={{
-          total: total,
+          total: data.total,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>

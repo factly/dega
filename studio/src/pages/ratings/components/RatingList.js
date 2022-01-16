@@ -1,44 +1,13 @@
 import React from 'react';
 import { Popconfirm, Button, Table } from 'antd';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { getRatings, deleteRating } from '../../../actions/ratings';
-import { Link, useLocation } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { useDispatch } from 'react-redux';
+import { deleteRating } from '../../../actions/ratings';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function RatingList({ actions }) {
+function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  query.set('page', filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  const { ratings, total, loading } = useSelector((state) => {
-    const node = state.ratings.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        ratings: node.data.map((element) => state.ratings.details[element]),
-        total: node.total,
-        loading: state.ratings.loading,
-      };
-    return { ratings: [], total: 0, loading: state.ratings.loading };
-  });
-
-  React.useEffect(() => {
-    fetchRatings();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchRatings = () => {
-    dispatch(getRatings(filters));
-  };
-
   const columns = [
     {
       title: 'Name',
@@ -104,11 +73,11 @@ function RatingList({ actions }) {
     <Table
       bordered
       columns={columns}
-      dataSource={ratings}
-      loading={loading}
+      dataSource={data.ratings}
+      loading={data.loading}
       rowKey={'id'}
       pagination={{
-        total: total,
+        total: data.total,
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
