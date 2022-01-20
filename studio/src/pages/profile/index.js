@@ -6,6 +6,7 @@ import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile, updateProfile } from '../../actions/profile';
 import { SlugInput } from '../../components/FormItems';
+import { Helmet } from 'react-helmet';
 
 const layout = {
   labelCol: {
@@ -52,6 +53,7 @@ function Profile() {
 
   return (
     <div className="content">
+      <Helmet title={'Profile'} />
       <Card title="Update Profile" loading={loading}>
         <Form
           {...layout}

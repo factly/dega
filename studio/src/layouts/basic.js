@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Layout, Card, notification, BackTop } from 'antd';
 import { withRouter } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
 import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
@@ -77,6 +78,7 @@ function BasicLayout(props) {
     (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
     <Layout hasSider={true}>
+      <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
       {!hideSidebar && (
         <Sidebar
           permission={permission}

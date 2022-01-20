@@ -5,6 +5,7 @@ import MediaSelector from '../../components/MediaSelector/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSpace } from '../../actions/spaces';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function Branding() {
   const { Panel } = Collapse;
@@ -37,6 +38,7 @@ function Branding() {
   //! More Descriptive favicons and logo fields
   return (
     <div>
+      <Helmet title={'Branding'} />
       <Form
         layout="vertical"
         form={form}

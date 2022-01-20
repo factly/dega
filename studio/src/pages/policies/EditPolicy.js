@@ -6,6 +6,7 @@ import { getPolicy, updatePolicy } from '../../actions/policies';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditPolicy() {
   const history = useHistory();
@@ -51,7 +52,12 @@ function EditPolicy() {
     );
   };
 
-  return <PolicyEditForm data={policy} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${policy?.name} - Edit Policy`} />
+      <PolicyEditForm data={policy} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditPolicy;

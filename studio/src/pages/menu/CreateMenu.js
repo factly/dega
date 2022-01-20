@@ -3,6 +3,7 @@ import MenuForm from './components/MenuForm';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createMenu } from '../../actions/menu';
+import { Helmet } from 'react-helmet';
 
 function CreateMenu() {
   const history = useHistory();
@@ -12,7 +13,10 @@ function CreateMenu() {
   };
   return (
     <div>
-      <MenuForm onCreate={onCreate} />
+      <>
+        <Helmet title={'Create Menu'} />
+        <MenuForm onCreate={onCreate} />
+      </>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
+import { Helmet } from 'react-helmet';
 
 function EditFactCheck({ formats }) {
   const history = useHistory();
@@ -39,12 +40,15 @@ function EditFactCheck({ formats }) {
     });
   };
   return (
-    <EditFactCheckForm
-      data={post}
-      onCreate={onUpdate}
-      actions={actions}
-      format={formats.factcheck}
-    />
+    <>
+      <Helmet title={`${post?.title} - Edit Fact Check`} />
+      <EditFactCheckForm
+        data={post}
+        onCreate={onUpdate}
+        actions={actions}
+        format={formats.factcheck}
+      />
+    </>
   );
 }
 

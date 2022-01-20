@@ -12,6 +12,7 @@ import Selector from '../../components/Selector';
 import Template from '../../components/Template';
 import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import { Helmet } from 'react-helmet';
 
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -159,6 +160,7 @@ function Posts({ formats }) {
   if (!formats.loading && formats.article)
     return (
       <Space direction="vertical">
+        <Helmet title={'Posts'} />
         <Template format={formats.article} />
 
         <Form

@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Avatar, Row, Col } from 'antd';
 import { InteractionTwoTone, FileTextTwoTone, ApiTwoTone } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 const Advanced = () => {
   const { Meta } = Card;
   const gridStyle = {
@@ -9,6 +10,7 @@ const Advanced = () => {
   };
   return (
     <div>
+      <Helmet title={'Advanced'} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
           <Link to="/advanced/webhooks">

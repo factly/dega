@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createFormat } from '../../actions/formats';
 import { useHistory } from 'react-router-dom';
 import FormatCreateForm from './components/FormatForm';
+import { Helmet } from 'react-helmet';
 
 function CreateFormat({ setReloadFlag, reloadFlag }) {
   const history = useHistory();
@@ -14,7 +15,12 @@ function CreateFormat({ setReloadFlag, reloadFlag }) {
       setReloadFlag(!reloadFlag);
     });
   };
-  return <FormatCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Format'} />
+      <FormatCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 
 export default CreateFormat;

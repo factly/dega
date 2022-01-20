@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 import MonacoEditor from '../../components/MonacoEditor';
 import getJsonValue from '../../utils/getJsonValue';
 import { TitleInput } from '../../components/FormItems';
+import { Helmet } from 'react-helmet';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -54,6 +55,7 @@ function EditMedium() {
 
   return (
     <Row gutter={['20', '20']}>
+      <Helmet title={`${media?.name} - Edit Medium`} />
       <Col span={'24'}>
         <Link to="/media">
           <Button>

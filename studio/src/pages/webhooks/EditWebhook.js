@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditWebhook() {
   const history = useHistory();
@@ -33,7 +34,12 @@ function EditWebhook() {
     dispatch(updateWebhook({ ...webhook, ...values }));
     history.push(`/advanced/webhooks/${id}/edit`);
   };
-  return <WebhookEditForm data={webhook} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={'Edit Webhook'} />
+      <WebhookEditForm data={webhook} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditWebhook;

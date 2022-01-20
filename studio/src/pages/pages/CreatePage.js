@@ -5,6 +5,7 @@ import { addPage } from '../../actions/pages';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function CreatePage({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -18,7 +19,12 @@ function CreatePage({ formats }) {
     });
   };
   if (!formats.loading && formats.article) {
-    return <PageForm onCreate={onCreate} actions={actions} page={true} format={formats.article} />;
+    return (
+      <>
+        <Helmet title={'Create Page'} />
+        <PageForm onCreate={onCreate} actions={actions} page={true} format={formats.article} />
+      </>
+    );
   }
   return <FormatNotFound status="info" title="Article format not found" link="/formats" />;
 }

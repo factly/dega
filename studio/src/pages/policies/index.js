@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import PolicyList from './components/PolicyList';
 import getUserPermission from '../../utils/getUserPermission';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 function Policies() {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -11,6 +12,7 @@ function Policies() {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Policies'} />
       <Row gutter={16} justify="end">
         <Link to="/members/policies/create">
           <Button
