@@ -29,13 +29,23 @@ function PageHeader() {
           return { breadcrumbName: 'Permissions' };
         if (url === '/requests' && !pathSnippets[index + 2]) return { breadcrumbName: 'Requests' };
         if (url === '/spaces' && !pathSnippets[index + 2]) return { breadcrumbName: 'Spaces' };
+        if (url === '/formats' && !pathSnippets[index + 2]) return { breadcrumbName: 'Formats' };
+        if (url === '/menus' && !pathSnippets[index + 2]) return { breadcrumbName: 'Menus' };
+        if (url === '/users' && !pathSnippets[index + 2]) return { breadcrumbName: 'Users' };
+        if (url === '/webhooks' && !pathSnippets[index + 2]) return { breadcrumbName: 'Webhooks' };
+        if (url === '/policies' && !pathSnippets[index + 2]) return { breadcrumbName: 'Policies' };
         if (
           index === pathSnippets.length - 1 &&
           !(
             location.pathname.includes('permissions') ||
             location.pathname.includes('requests') ||
             location.pathname.includes('spaces') ||
-            location.pathname.includes('members')
+            location.pathname.includes('members') ||
+            location.pathname.includes('formats') ||
+            location.pathname.includes('menus') ||
+            location.pathname.includes('webhooks') ||
+            location.pathname.includes('policies') ||
+            location.pathname.includes('users')
           )
         ) {
           if (pathSnippets.includes('edit') && !state[entity].loading) {
@@ -107,7 +117,7 @@ function PageHeader() {
     );
   };
   if (
-    (state[entity] && !state[entity].loading) ||
+    (state[entity] && !state[entity]?.loading) ||
     ['members', 'advanced', 'website', 'admin'].includes(entity)
   )
     return (
