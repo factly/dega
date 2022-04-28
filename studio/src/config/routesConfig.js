@@ -739,11 +739,13 @@ export const sidebarMenu = [
     title: 'Dashboard',
     Icon: PieChartTwoTone,
     children: [routes.home, routes.analytics],
+    isService: false
   },
   {
     title: 'Core',
     Icon: ControlTwoTone,
     children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
+    isService: true
   },
   {
     title: 'Fact Checking',
@@ -756,21 +758,25 @@ export const sidebarMenu = [
       routes.googleFactCheck,
       routes.factly,
     ],
+    isService: true
   },
   {
     title: 'Podcast',
     Icon: AudioTwoTone,
     children: [routes.episodes, routes.podcasts],
+    isService: true
   },
   {
     title: 'Settings',
     Icon: SettingTwoTone,
     children: [routes.website, routes.members, routes.advanced],
+    isService: false
   },
   {
     title: 'Administration',
     Icon: ToolTwoTone,
     children: [routes.spaces, routes.requests, routes.permissions, routes.events],
+    isService: false
   },
 ];
 
