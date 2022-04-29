@@ -59,7 +59,7 @@ services:
   iframely:
     image: factly/iframely:v1.5.0-102820
     ports:
-      - "8061:8061" 
+      - "8061:8061"
     volumes:
       - ./iframely/config.local.js:/iframely/config.local.js
     networks:
@@ -231,13 +231,17 @@ services:
     ports:
       - 5001:8000
     image: factly/kavach-server:0.8.0
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-server/data
+        target: /app/data
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
-      - KAVACH_DATABASE_HOST=postgres 
+      - KAVACH_DATABASE_HOST=postgres
       - KAVACH_DATABASE_USER=postgres
       - KAVACH_DATABASE_PASSWORD=postgres
-      - KAVACH_DATABASE_NAME=kavach 
-      - KAVACH_DATABASE_PORT=5432 
+      - KAVACH_DATABASE_NAME=kavach
+      - KAVACH_DATABASE_PORT=5432
       - KAVACH_DATABASE_SSL_MODE=disable
       - KAVACH_KETO_URL=http://keto:4466
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
@@ -246,7 +250,7 @@ services:
     restart: unless-stopped
     networks:
       - dega
-  
+
   kavach-migrate:
     depends_on:
       - postgres
@@ -255,11 +259,11 @@ services:
     image: factly/kavach-server:0.8.0
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
-      - KAVACH_DATABASE_HOST=postgres 
+      - KAVACH_DATABASE_HOST=postgres
       - KAVACH_DATABASE_USER=postgres
       - KAVACH_DATABASE_PASSWORD=postgres
-      - KAVACH_DATABASE_NAME=kavach 
-      - KAVACH_DATABASE_PORT=5432 
+      - KAVACH_DATABASE_NAME=kavach
+      - KAVACH_DATABASE_PORT=5432
       - KAVACH_DATABASE_SSL_MODE=disable
       - KAVACH_KETO_URL=http://keto:4466
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
@@ -329,11 +333,11 @@ services:
     image: factly/hukz
     environment:
       - WAIT_HOSTS=postgres:5432, dega-server:8000
-      - HUKZ_DATABASE_HOST=postgres 
+      - HUKZ_DATABASE_HOST=postgres
       - HUKZ_DATABASE_USER=postgres
       - HUKZ_DATABASE_PASSWORD=postgres
-      - HUKZ_DATABASE_NAME=hukz 
-      - HUKZ_DATABASE_PORT=5432 
+      - HUKZ_DATABASE_NAME=hukz
+      - HUKZ_DATABASE_PORT=5432
       - HUKZ_DATABASE_SSL_MODE=disable
       - HUKZ_NATS_URL=nats://nats:4222
       - HUKZ_NATS_USER_NAME=natsuser
@@ -352,11 +356,11 @@ services:
     image: factly/hukz
     environment:
       - WAIT_HOSTS=postgres:5432, dega-server:8000
-      - HUKZ_DATABASE_HOST=postgres 
+      - HUKZ_DATABASE_HOST=postgres
       - HUKZ_DATABASE_USER=postgres
       - HUKZ_DATABASE_PASSWORD=postgres
-      - HUKZ_DATABASE_NAME=hukz 
-      - HUKZ_DATABASE_PORT=5432 
+      - HUKZ_DATABASE_NAME=hukz
+      - HUKZ_DATABASE_PORT=5432
       - HUKZ_DATABASE_SSL_MODE=disable
       - HUKZ_NATS_URL=nats://nats:4222
       - HUKZ_NATS_USER_NAME=natsuser
