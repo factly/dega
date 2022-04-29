@@ -8,7 +8,7 @@ function Formats({ permission }) {
   return (
     <Space direction="vertical">
       <Row justify="end">
-        <Link key="1" to="/formats/create">
+        <Link key="1" to="/advanced/formats/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

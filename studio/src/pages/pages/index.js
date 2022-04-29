@@ -227,7 +227,7 @@ function Pages({ formats }) {
         />
       </Space>
     );
-  return <FormatNotFound status="info" title="Article format not found" link="/formats/create" />;
+  return <FormatNotFound status="info" title="Article format not found" link="/advanced/formats/create" />;
 }
 
 export default Pages;
