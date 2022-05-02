@@ -7,6 +7,7 @@ import { getMedia } from '../../actions/media';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import { Helmet } from 'react-helmet';
 
 function Media({ permission }) {
   const { actions } = permission;
@@ -55,6 +56,7 @@ function Media({ permission }) {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Media'} />
       <Form
         initialValues={filters}
         form={form}

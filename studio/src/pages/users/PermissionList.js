@@ -4,6 +4,7 @@ import { Space, Typography, Checkbox } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getPermissions } from '../../actions/permissions';
+import { Helmet } from 'react-helmet';
 
 const options = [
   { label: 'Get', value: 'get' },
@@ -46,6 +47,7 @@ function PermissionList() {
 
   return (
     <Space direction={'vertical'}>
+      <Helmet title={'Permission List'} />
       {permission.map((each) => {
         return (
           <div key={each.resource}>

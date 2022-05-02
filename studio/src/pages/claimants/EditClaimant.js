@@ -6,6 +6,7 @@ import { updateClaimant, getClaimant } from '../../actions/claimants';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditClaimant() {
   const history = useHistory();
@@ -36,7 +37,12 @@ function EditClaimant() {
     );
   };
 
-  return <ClaimantEditForm data={claimant} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${claimant?.name} - Edit Claimant`} />
+      <ClaimantEditForm data={claimant} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditClaimant;

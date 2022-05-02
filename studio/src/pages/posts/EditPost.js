@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
+import { Helmet } from 'react-helmet';
 
 function EditPost({ formats }) {
   const history = useHistory();
@@ -42,7 +43,10 @@ function EditPost({ formats }) {
     });
   };
   return (
-    <PostEditForm data={post} onCreate={onUpdate} actions={actions} format={formats.article} />
+    <>
+      <Helmet title={`${post?.title} - Edit Post`} />
+      <PostEditForm data={post} onCreate={onUpdate} actions={actions} format={formats.article} />
+    </>
   );
 }
 

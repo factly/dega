@@ -11,6 +11,7 @@ import { getPages } from '../../actions/pages';
 import Selector from '../../components/Selector';
 import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import { Helmet } from 'react-helmet';
 
 function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -142,6 +143,7 @@ function Pages({ formats }) {
   if (!formats.loading && formats.article)
     return (
       <Space direction="vertical">
+        <Helmet title={'Pages'} />
         <Form
           initialValues={filters}
           form={form}

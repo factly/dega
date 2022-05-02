@@ -4,12 +4,14 @@ import MenuList from './components/MenuList';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import getUserPermission from '../../utils/getUserPermission';
+import { Helmet } from 'react-helmet';
 
 function Menu() {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'menus', action: 'get', spaces });
   return (
     <Space direction="vertical">
+      <Helmet title={'Menu'} />
       <Row justify="end">
         <Link to="/website/menus/create">
           <Button

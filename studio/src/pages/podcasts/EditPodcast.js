@@ -6,6 +6,7 @@ import { updatePodcast, getPodcast } from '../../actions/podcasts';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditPodcast() {
   const history = useHistory();
@@ -36,7 +37,12 @@ function EditPodcast() {
     );
   };
 
-  return <PodcastEditForm data={podcast} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${podcast?.title} - Edit Podcast`} />
+      <PodcastEditForm data={podcast} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditPodcast;

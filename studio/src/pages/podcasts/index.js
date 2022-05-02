@@ -9,6 +9,7 @@ import { getPodcasts } from '../../actions/podcasts';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Selector from '../../components/Selector';
+import { Helmet } from 'react-helmet';
 
 function Podcasts({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -94,6 +95,7 @@ function Podcasts({ permission }) {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Podcasts'} />
       <Form
         initialValues={filters}
         form={form}

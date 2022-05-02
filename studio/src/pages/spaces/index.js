@@ -3,6 +3,7 @@ import { Space, Button, Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import SpaceList from './components/SpaceList';
 import { useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 
 function Spaces() {
   const { role } = useSelector((state) => {
@@ -22,6 +23,7 @@ function Spaces() {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Spaces'} />
       <Row gutter={16} justify="end">
         {role === 'owner' ? (
           <Col>
