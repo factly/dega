@@ -100,7 +100,7 @@ function FactCheck({ formats }) {
     setFilters({ ...filters, format: [formats.factcheck.id] });
     setFormatFlag(true);
   }
-  const { posts, total, loading, tags, categories, authors } = useSelector((state) => {
+  const { posts, total, loading, tags, categories } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       return deepEqual(item.query, params);
     });

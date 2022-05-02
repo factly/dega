@@ -17,7 +17,7 @@ import {
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
@@ -32,13 +32,18 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
-
   const [metaDrawer, setMetaDrawer] = React.useState(false);
-
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // const { tags, loading } = useSelector((state) => {
+  //   return {
+  //     tags: tagIDs?.length ? tagIDs.map((id) => state.tags.details[id]) : [],
+  //     loading: state.tags.loading
+  //   }
+  // })
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -46,11 +51,15 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const handleSchemaModalOk = () => {
     setIsModalVisible(false);
   };
-
   const handleSchemaModalCancel = () => {
     setIsModalVisible(false);
   };
 
+  const onTagChange = (values) => {
+    
+  }
+
+  
   const copySchema = (textToCopy) => {
     // navigator clipboard api needs a secure context (https)
     if (navigator.clipboard && window.isSecureContext) {
@@ -271,7 +280,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />
                 </Form.Item>
-
                 <Form.Item name="tags" label="Tags">
                   <Selector mode="multiple" action="Tags" createEntity="Tag" />
                 </Form.Item>
