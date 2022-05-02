@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Kavach",
+        "slug": "kavach",
+        "url": "http://127.0.0.1:4455/.factly/kavach/web/"
+    },
+    {
+        "name": "Dega",
+        "slug": "dega",
+        "url": "http://127.0.0.1:4455/.factly/dega/studio/"
+    },
+    {
+        "name": "Vidcheck",
+        "slug": "vidcheck",
+        "url": "http://127.0.0.1:4455/.factly/vidcheck/web/"
+    },
+    {
+        "name": "MandE",
+        "slug": "mande",
+        "url": "http://127.0.0.1:4455/.factly/mande/web/home"
+    }
+]
