@@ -17,6 +17,7 @@ require (
 	github.com/nats-io/gnatsd v1.4.1
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
+	github.com/prometheus/common v0.15.0
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/http-swagger v1.0.0
