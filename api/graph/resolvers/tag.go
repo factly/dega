@@ -20,7 +20,7 @@ func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
 }
 
 func (r *tagResolver) IsFeatured(ctx context.Context, obj *models.Tag) (*bool, error) {
-	return nil, nil
+	return &obj.IsFeatured, nil
 }
 
 func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error) {
@@ -56,7 +56,29 @@ func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medi
 }
 
 func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error) {
-	return nil, nil
+	res := make([]models.PostTag, 0)
+	err := config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
+		TagID: obj.ID,
+	}).Find(&res).Error
+	if err!=nil {
+		return nil, err
+	}
+	posts := make([]*models.Post, 0)
+	for _, postTag := range res {
+		post := new(models.Post)
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			ID: postTag.PostID,
+		}).Find(&post).Error
+		if err!=nil {
+			return nil, err
+		}
+
+		posts = append(posts, post)
+	}
+	response := new(models.PostsPaging)
+	response.Nodes = posts
+	response.Total = len(posts)
+	return response, nil
 }
 
 func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
