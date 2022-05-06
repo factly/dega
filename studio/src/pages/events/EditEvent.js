@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditEvent() {
   const history = useHistory();
@@ -33,7 +34,12 @@ function EditEvent() {
     dispatch(updateEvent({ ...event, ...values }));
     history.push(`/admin/events/${id}/edit`);
   };
-  return <EventEditForm data={event} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={'Edit Event'} />
+      <EventEditForm data={event} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditEvent;

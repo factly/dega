@@ -1,13 +1,17 @@
 import React from 'react';
 import OrganisationPermissions from './organisations';
 import SpacePermissions from './spaces';
+import { Helmet } from 'react-helmet';
 
 const Permissions = () => {
   return (
     <>
       <div>
-        <h3>Organisation Permissions</h3>
-        <OrganisationPermissions />
+        <>
+          <Helmet title={'Permissions'} />
+          <h3>Organisation Permissions</h3>
+          <OrganisationPermissions />
+        </>
       </div>
 
       <div>

@@ -8,6 +8,7 @@ import deepEqual from 'deep-equal';
 import Selector from '../../components/Selector';
 import { getClaims } from '../../actions/claims';
 import getUrlParams from '../../utils/getUrlParams';
+import { Helmet } from 'react-helmet';
 
 function Claims({ permission }) {
   const { actions } = permission;
@@ -96,6 +97,7 @@ function Claims({ permission }) {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Claims'} />
       <Form
         initialValues={filters}
         form={form}

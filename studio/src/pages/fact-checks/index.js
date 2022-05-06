@@ -12,6 +12,7 @@ import Selector from '../../components/Selector';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import { Helmet } from 'react-helmet';
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -159,6 +160,7 @@ function FactCheck({ formats }) {
   if (!formats.loading && formats.factcheck)
     return (
       <Space direction="vertical">
+        <Helmet title={'Fact-checks'} />
         <Template format={formats.factcheck} />
         <Form
           initialValues={filters}
@@ -247,7 +249,7 @@ function FactCheck({ formats }) {
     );
 
   return (
-    <FormatNotFound status="info" title="Fact-Check format not found" link="/formats/create" />
+    <FormatNotFound status="info" title="Fact-Check format not found" link="/advanced/formats/create" />
   );
 }
 

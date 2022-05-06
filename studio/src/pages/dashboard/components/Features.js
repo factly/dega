@@ -27,25 +27,41 @@ function Features() {
     return admin.organisation;
   });
 
-  const { ratings, formats, policies, events } = useSelector(
-    ({ ratings, formats, policies, events }) => {
-      return {
-        ratings: Object.keys(ratings.details).length,
-        formats: Object.keys(formats.details).length,
-        policies: Object.keys(policies.details).length,
-        events: Object.keys(events.details).length,
-      };
-    },
-  );
+  const {
+    ratings,
+    ratingsLoading,
+    formats,
+    formatsLoading,
+    policies,
+    policiesLoading,
+    events,
+    eventsLoading,
+  } = useSelector(({ ratings, formats, policies, events }) => {
+    return {
+      ratings: Object.keys(ratings.details).length,
+      ratingsLoading: ratings.loading,
+      formats: Object.keys(formats.details).length,
+      formatsLoading: formats.loading,
+      policies: Object.keys(policies.details).length,
+      policiesLoading: policies.loading,
+      events: Object.keys(events.details).length,
+      eventsLoading: events.loading,
+    };
+  });
 
   return (
     <>
-      {ratings > 0 && formats > 0 && policies > 0 ? null : (
+      {!ratingsLoading &&
+      !policiesLoading &&
+      !formatsLoading &&
+      ratings < 1 &&
+      formats < 1 &&
+      policies < 1 ? (
         <Typography.Title level={3}>Add default features</Typography.Title>
-      )}
+      ) : null}
 
       <Space>
-        {ratings > 0 ? null : (
+        {ratingsLoading ? null : ratings > 0 ? null : (
           <Card
             title="Ratings"
             actions={[
@@ -63,7 +79,7 @@ function Features() {
             Click below Button to create
           </Card>
         )}
-        {formats > 0 ? null : (
+        {formatsLoading ? null : formats > 0 ? null : (
           <Card
             title="Formats"
             actions={[
@@ -80,7 +96,7 @@ function Features() {
             Two formats will be created Fact Check and Article. Click below Button to create
           </Card>
         )}
-        {policies > 0 ? null : (
+        {policiesLoading ? null : policies > 0 ? null : (
           <Card
             title="Policies"
             actions={[
@@ -98,7 +114,7 @@ function Features() {
             create
           </Card>
         )}
-        {superOrg.is_admin ? (
+        {eventsLoading ? null : superOrg.is_admin ? (
           events > 0 ? null : (
             <Card
               title="Events"
