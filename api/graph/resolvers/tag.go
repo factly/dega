@@ -19,6 +19,10 @@ func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
 	return fmt.Sprint(obj.ID), nil
 }
 
+func (r *tagResolver) IsFeatured(ctx context.Context, obj *models.Tag) (*bool, error) {
+	return nil, nil
+}
+
 func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error) {
 	return int(obj.SpaceID), nil
 }
@@ -49,6 +53,10 @@ func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medi
 	}
 
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+}
+
+func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error) {
+	return nil, nil
 }
 
 func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
