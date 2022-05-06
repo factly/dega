@@ -53,7 +53,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	category := &category{}
 
-	err = json.NewDecoder(r.Body).Decode(&category)
+	err = json.NewDecoder(r.Body).Decode(category)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -123,21 +123,22 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Category{
-		Name:            category.Name,
-		Description:     category.Description,
-		HTMLDescription: description,
-		Slug:            slugx.Approve(&config.DB, categorySlug, sID, tableName),
-		ParentID:        parentID,
-		MediumID:        mediumID,
-		SpaceID:         uint(sID),
-		IsFeatured:      category.IsFeatured,
-		MetaFields:      category.MetaFields,
-		Meta:            category.Meta,
-		HeaderCode:      category.HeaderCode,
-		FooterCode:      category.FooterCode,
+		Name:             category.Name,
+		Description:      category.Description,
+		BackgroundColour: category.BackgroundColour,
+		HTMLDescription:  description,
+		Slug:             slugx.Approve(&config.DB, categorySlug, sID, tableName),
+		ParentID:         parentID,
+		MediumID:         mediumID,
+		SpaceID:          uint(sID),
+		IsFeatured:       category.IsFeatured,
+		MetaFields:       category.MetaFields,
+		Meta:             category.Meta,
+		HeaderCode:       category.HeaderCode,
+		FooterCode:       category.FooterCode,
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Category{}).Create(&result).Error
+	err = tx.Model(&model.Category{}).Create(result).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -150,13 +151,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "category",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
-		"meta_fields": result.MetaFields,
+		"id":                result.ID,
+		"kind":              "category",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"background_colour": result.BackgroundColour,
+		"description":       result.Description,
+		"space_id":          result.SpaceID,
+		"meta_fields":       result.MetaFields,
 	}
 
 	if config.SearchEnabled() {
