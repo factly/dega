@@ -301,6 +301,24 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+              <Form.Item
+                name="subtitle"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input the Sub title!',
+                  },
+                  { min: 3, message: 'Sub title must be minimum 3 characters.' },
+                  { max: 150, message: 'Sub title must be maximum 150 characters.' },
+                ]}
+              >
+                <Input.TextArea
+                  bordered={false}
+                  placeholder="Add Sub title for the fact-check"
+                  autoSize={{ minRows: 1, maxRows: 3 }}
+                  style={{ fontSize: '1.5rem', fontWeight: 'bold'}}
+                />
+              </Form.Item>
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
               !loading ? (

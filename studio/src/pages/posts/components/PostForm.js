@@ -232,6 +232,30 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
+              <Form.Item
+                name="subtitle"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Please input the Sub title!',
+                  },
+                  { min: 3, message: 'Sub title must be minimum 3 characters.' },
+                  { max: 150, message: 'Sub title must be maximum 150 characters.' },
+                ]}
+              >
+                <Input.TextArea
+                  bordered={false}
+                  placeholder="Add Sub title for the post"
+                 // onChange={(e) => onTitleChange(e.target.value)}
+                  style={{
+                    fontSize: '1.5rem',
+                    fontWeight: 'bold',
+                 //   textAlign: 'center',
+                    resize: 'none',
+                  }}
+                  autoSize={{ minRows: 1, maxRows: 3 }}
+                />
+              </Form.Item>
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
