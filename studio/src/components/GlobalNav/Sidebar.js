@@ -24,10 +24,12 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     }
   })
 
-  let filteredMenuItems;
+  let filteredMenuItems = [];
   if(!loadingSpace){
     if (space?.services?.length){
         filteredMenuItems = [...sidebarMenu.filter((menuItem)=>(menuItem.isService && space?.services?.indexOf(maker(menuItem.title)) > -1)), ...sidebarMenu.filter((menuItem) => !menuItem.isService)]
+    }else{
+        filteredMenuItems = [...sidebarMenu.filter((menuItem) => !menuItem.isService)]
     }
   }
 

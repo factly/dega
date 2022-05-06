@@ -1,6 +1,7 @@
 package organisation
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/config"
@@ -23,7 +24,9 @@ import (
 // @Success 200 {array} paging
 // @Router /core/requests/organisations/my [get]
 func my(w http.ResponseWriter, r *http.Request) {
+	log.Println("core  req")
 	oID, err := util.GetOrganisation(r.Context())
+	log.Println("this is OID", oID, err.Error())
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))

@@ -144,8 +144,8 @@ func my(w http.ResponseWriter, r *http.Request) {
 					spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
 				} else {
 					adminSpaceWithPerm := spaceWithPermissions{
-						Space:       space,
-						Permissions: []model.Permission{adminPerm},
+						Space:           space,
+						Permissions:     []model.Permission{adminPerm},
 						AllowedServices: services,
 					}
 					spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
