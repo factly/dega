@@ -60,7 +60,7 @@ func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.Posts
 	err := config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
 		TagID: obj.ID,
 	}).Find(&res).Error
-	if err!=nil {
+	if err != nil {
 		return nil, err
 	}
 	posts := make([]*models.Post, 0)
@@ -69,7 +69,7 @@ func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.Posts
 		err = config.DB.Model(&models.Post{}).Where(&models.Post{
 			ID: postTag.PostID,
 		}).Find(&post).Error
-		if err!=nil {
+		if err != nil {
 			return nil, err
 		}
 
@@ -153,6 +153,26 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 	result.Total = int(total)
 
 	return result, nil
+}
+
+func (r *queryResolver) FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
+	result := &models.TagsPaging{}
+	result.Nodes = make([]*models.Tag, 0)
+
+	err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
+		SpaceID:    sID,
+		IsFeatured: true,
+	}).Limit(featuredCount).Find(&result.Nodes).Error
+	if err != nil{
+		return nil, err
+	}
+
+	result.Total = len(result.Nodes)
+	return nil, nil
 }
 
 // Tag model resolver

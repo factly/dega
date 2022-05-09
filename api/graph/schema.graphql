@@ -298,6 +298,7 @@ type Query {
     sortOrder: String
   ): CategoriesPaging
   featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+  featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
   category(id: Int, slug: String): Category
   tags(
     ids: [Int!]

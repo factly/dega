@@ -227,6 +227,7 @@ type ComplexityRoot struct {
 		Claimants          func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims             func(childComplexity int, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		FeaturedCategories func(childComplexity int, featuredCount int, postLimit int) int
+		FeaturedTags       func(childComplexity int, featuredCount int, tagLimit int) int
 		Formats            func(childComplexity int, spaces []int, slugs []string) int
 		Menu               func(childComplexity int) int
 		Page               func(childComplexity int, id *int, slug *string) int
@@ -367,7 +368,7 @@ type CategoryResolver interface {
 	Description(ctx context.Context, obj *models.Category) (interface{}, error)
 
 	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
-	IsFeatured(ctx context.Context, obj *models.Category) (*bool, error)
+
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
@@ -449,6 +450,7 @@ type QueryResolver interface {
 	Menu(ctx context.Context) (*models.MenusPaging, error)
 	Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
 	FeaturedCategories(ctx context.Context, featuredCount int, postLimit int) (*models.CategoriesPaging, error)
+	FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error)
 	Category(ctx context.Context, id *int, slug *string) (*models.Category, error)
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
@@ -506,7 +508,6 @@ type TagResolver interface {
 
 	MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error)
 	Meta(ctx context.Context, obj *models.Tag) (interface{}, error)
-	IsFeatured(ctx context.Context, obj *models.Tag) (*bool, error)
 
 	SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 	Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error)
@@ -1480,6 +1481,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.FeaturedCategories(childComplexity, args["featuredCount"].(int), args["postLimit"].(int)), true
+
+	case "Query.featuredTags":
+		if e.complexity.Query.FeaturedTags == nil {
+			break
+		}
+
+		args, err := ec.field_Query_featuredTags_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.FeaturedTags(childComplexity, args["featuredCount"].(int), args["tagLimit"].(int)), true
 
 	case "Query.formats":
 		if e.complexity.Query.Formats == nil {
@@ -2593,6 +2606,7 @@ type Query {
     sortOrder: String
   ): CategoriesPaging
   featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+  featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
   category(id: Int, slug: String): Category
   tags(
     ids: [Int!]
@@ -2904,6 +2918,30 @@ func (ec *executionContext) field_Query_featuredCategories_args(ctx context.Cont
 		}
 	}
 	args["postLimit"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_featuredTags_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 int
+	if tmp, ok := rawArgs["featuredCount"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("featuredCount"))
+		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["featuredCount"] = arg0
+	var arg1 int
+	if tmp, ok := rawArgs["tagLimit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tagLimit"))
+		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["tagLimit"] = arg1
 	return args, nil
 }
 
@@ -3717,14 +3755,14 @@ func (ec *executionContext) _Category_is_featured(ctx context.Context, field gra
 		Object:     "Category",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Category().IsFeatured(rctx, obj)
+		return obj.IsFeatured, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3733,9 +3771,9 @@ func (ec *executionContext) _Category_is_featured(ctx context.Context, field gra
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Category_parent_id(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
@@ -7736,6 +7774,45 @@ func (ec *executionContext) _Query_featuredCategories(ctx context.Context, field
 	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_featuredTags(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_featuredTags_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().FeaturedTags(rctx, args["featuredCount"].(int), args["tagLimit"].(int))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.TagsPaging)
+	fc.Result = res
+	return ec.marshalOTagsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagsPaging(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_category(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -10489,14 +10566,14 @@ func (ec *executionContext) _Tag_is_featured(ctx context.Context, field graphql.
 		Object:     "Tag",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Tag().IsFeatured(rctx, obj)
+		return obj.IsFeatured, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10505,9 +10582,9 @@ func (ec *executionContext) _Tag_is_featured(ctx context.Context, field graphql.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -12457,16 +12534,7 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				return res
 			})
 		case "is_featured":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Category_is_featured(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Category_is_featured(ctx, field, obj)
 		case "parent_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -13578,6 +13646,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_featuredCategories(ctx, field)
 				return res
 			})
+		case "featuredTags":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_featuredTags(ctx, field)
+				return res
+			})
 		case "category":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -14327,16 +14406,7 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 				return res
 			})
 		case "is_featured":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Tag_is_featured(ctx, field, obj)
-				return res
-			})
+			out.Values[i] = ec._Tag_is_featured(ctx, field, obj)
 		case "header_code":
 			out.Values[i] = ec._Tag_header_code(ctx, field, obj)
 		case "footer_code":
