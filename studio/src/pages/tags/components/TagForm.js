@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Space, Switch, Row, Col } from 'antd';
 import { maker } from '../../../utils/sluger';
 import getJsonValue from '../../../utils/getJsonValue';
 import MediaSelector from '../../../components/MediaSelector';
+import { SketchPicker } from 'react-color';
 import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
 const TagForm = ({ onCreate, data = {} }) => {
@@ -13,6 +14,17 @@ const TagForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [backgroundColour, setBackgroundColour] = useState(
+    data.background_colour ? data.background_colour : null,
+  );
+  const [displayBgColorPicker, setDisplayBgColorPicker] = useState(false);
+  const handleBgClick = () => {
+    setDisplayBgColorPicker((prev) => !prev);
+    setValueChange(true);
+  };
+  const handleBgClose = () => {
+    setDisplayBgColorPicker(false);
+  };
 
   const onReset = () => {
     form.resetFields();
@@ -35,6 +47,7 @@ const TagForm = ({ onCreate, data = {} }) => {
           if (values.meta_fields) {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
+          values.background_colour = backgroundColour;
           onCreate(values);
           onReset();
         }}
@@ -73,6 +86,49 @@ const TagForm = ({ onCreate, data = {} }) => {
                 <Form.Item label="Featured" name="is_featured" valuePropName="checked">
                   <Switch />
                 </Form.Item>
+                <Form.Item name="background_colour" label="Background Colour">
+                <div style={{ position: 'relative' }}>
+                  <div
+                    style={{
+                      padding: '5px',
+                      background: '#fff',
+                      borderRadius: '1px',
+                      boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
+                      display: 'inline-block',
+                      cursor: 'pointer',
+                    }}
+                   onClick={() => handleBgClick()}
+                  >
+                    <div
+                      style={{
+                        width: '100px',
+                        height: '24px',
+                        borderRadius: '2px',
+                        background: `${backgroundColour && backgroundColour.hex}`,
+                      }}
+                    />
+                  </div>
+                  {displayBgColorPicker ? (
+                    <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+                      <div
+                        style={{
+                          position: 'fixed',
+                          top: '0px',
+                          right: '0px',
+                          bottom: '0px',
+                          left: '0px',
+                        }}
+                        onClick={() => handleBgClose()}
+                      />
+                      <SketchPicker
+                        color={backgroundColour !== null && backgroundColour.hex}
+                        onChange={(e) => setBackgroundColour(e)}
+                        disableAlpha
+                      />
+                    </div>
+                  ) : null}
+                </div>
+              </Form.Item>
               </Col>
               <Col span={10}>
                 <Form.Item label="Featured Image" name="medium_id">

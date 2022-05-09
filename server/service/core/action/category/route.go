@@ -9,16 +9,17 @@ import (
 
 // category request body
 type category struct {
-	Name        string         `json:"name" validate:"required,min=3,max=50"`
-	Slug        string         `json:"slug"`
-	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	ParentID    uint           `json:"parent_id"`
-	MediumID    uint           `json:"medium_id"`
-	IsFeatured  bool           `json:"is_featured"`
-	MetaFields  postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
-	Meta        postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
-	HeaderCode  string         `json:"header_code"`
-	FooterCode  string         `json:"footer_code"`
+	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	Slug             string         `json:"slug"`
+	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
+	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	ParentID         uint           `json:"parent_id"`
+	MediumID         uint           `json:"medium_id"`
+	IsFeatured       bool           `json:"is_featured"`
+	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	Meta             postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
+	HeaderCode       string         `json:"header_code"`
+	FooterCode       string         `json:"footer_code"`
 }
 
 var userContext config.ContextKey = "category_user"

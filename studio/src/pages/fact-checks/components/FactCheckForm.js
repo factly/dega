@@ -347,6 +347,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
+                <Form.Item name="subtitle" label="Subtitle">
+                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                </Form.Item>
                 <SlugInput />
                 <Form.Item name="published_date" label="Published Date">
                   <DatePicker />

@@ -16,7 +16,7 @@ function MediaSelector({
 }) {
   const [show, setShow] = React.useState(false);
   const [selected, setSelected] = React.useState(null);
-  const [tab, setTab] = React.useState('list');
+  const [tab, setTab] = React.useState('upload');
   const dispatch = useDispatch();
 
   const medium = useSelector((state) => {
@@ -63,16 +63,16 @@ function MediaSelector({
               selected ? onChange(selected.id) : onChange(null);
             }}
           >
-            Confirm
+           Ok
           </Button>,
         ]}
       >
         <Space direction="vertical">
           <Radio.Group buttonStyle="solid" value={tab} onChange={(e) => setTab(e.target.value)}>
-            <Radio.Button value="list">List</Radio.Button>
             <Radio.Button value="upload">Upload</Radio.Button>
+            <Radio.Button value="library">Library</Radio.Button>
           </Radio.Group>
-          {tab === 'list' ? (
+          {tab === 'library' ? (
             <MediaList
               onSelect={setSelected}
               selected={selected}

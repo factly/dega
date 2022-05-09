@@ -61,22 +61,23 @@ type ComplexityRoot struct {
 	}
 
 	Category struct {
-		CreatedAt       func(childComplexity int) int
-		Description     func(childComplexity int) int
-		FooterCode      func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
-		HeaderCode      func(childComplexity int) int
-		ID              func(childComplexity int) int
-		IsFeatured      func(childComplexity int) int
-		Medium          func(childComplexity int) int
-		Meta            func(childComplexity int) int
-		MetaFields      func(childComplexity int) int
-		Name            func(childComplexity int) int
-		ParentID        func(childComplexity int) int
-		Posts           func(childComplexity int) int
-		Slug            func(childComplexity int) int
-		SpaceID         func(childComplexity int) int
-		UpdatedAt       func(childComplexity int) int
+		BackgroundColour func(childComplexity int) int
+		CreatedAt        func(childComplexity int) int
+		Description      func(childComplexity int) int
+		FooterCode       func(childComplexity int) int
+		HTMLDescription  func(childComplexity int) int
+		HeaderCode       func(childComplexity int) int
+		ID               func(childComplexity int) int
+		IsFeatured       func(childComplexity int) int
+		Medium           func(childComplexity int) int
+		Meta             func(childComplexity int) int
+		MetaFields       func(childComplexity int) int
+		Name             func(childComplexity int) int
+		ParentID         func(childComplexity int) int
+		Posts            func(childComplexity int) int
+		Slug             func(childComplexity int) int
+		SpaceID          func(childComplexity int) int
+		UpdatedAt        func(childComplexity int) int
 	}
 
 	Claim struct {
@@ -318,21 +319,22 @@ type ComplexityRoot struct {
 	}
 
 	Tag struct {
-		CreatedAt       func(childComplexity int) int
-		Description     func(childComplexity int) int
-		FooterCode      func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
-		HeaderCode      func(childComplexity int) int
-		ID              func(childComplexity int) int
-		IsFeatured      func(childComplexity int) int
-		Medium          func(childComplexity int) int
-		Meta            func(childComplexity int) int
-		MetaFields      func(childComplexity int) int
-		Name            func(childComplexity int) int
-		Posts           func(childComplexity int) int
-		Slug            func(childComplexity int) int
-		SpaceID         func(childComplexity int) int
-		UpdatedAt       func(childComplexity int) int
+		BackgroundColour func(childComplexity int) int
+		CreatedAt        func(childComplexity int) int
+		Description      func(childComplexity int) int
+		FooterCode       func(childComplexity int) int
+		HTMLDescription  func(childComplexity int) int
+		HeaderCode       func(childComplexity int) int
+		ID               func(childComplexity int) int
+		IsFeatured       func(childComplexity int) int
+		Medium           func(childComplexity int) int
+		Meta             func(childComplexity int) int
+		MetaFields       func(childComplexity int) int
+		Name             func(childComplexity int) int
+		Posts            func(childComplexity int) int
+		Slug             func(childComplexity int) int
+		SpaceID          func(childComplexity int) int
+		UpdatedAt        func(childComplexity int) int
 	}
 
 	TagsPaging struct {
@@ -367,14 +369,14 @@ type CategoryResolver interface {
 
 	Description(ctx context.Context, obj *models.Category) (interface{}, error)
 
-	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
+	Posts(ctx context.Context, obj *models.Category) (*models.PostsPaging, error)
+	BackgroundColour(ctx context.Context, obj *models.Category) (interface{}, error)
 
+	MetaFields(ctx context.Context, obj *models.Category) (interface{}, error)
 	ParentID(ctx context.Context, obj *models.Category) (*int, error)
 
 	SpaceID(ctx context.Context, obj *models.Category) (int, error)
 	Meta(ctx context.Context, obj *models.Category) (interface{}, error)
-
-	Posts(ctx context.Context, obj *models.Category) (*models.PostsPaging, error)
 }
 type ClaimResolver interface {
 	ID(ctx context.Context, obj *models.Claim) (string, error)
@@ -448,9 +450,9 @@ type PostResolver interface {
 type QueryResolver interface {
 	Space(ctx context.Context) (*models.Space, error)
 	Menu(ctx context.Context) (*models.MenusPaging, error)
-	Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
 	FeaturedCategories(ctx context.Context, featuredCount int, postLimit int) (*models.CategoriesPaging, error)
 	FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error)
+	Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
 	Category(ctx context.Context, id *int, slug *string) (*models.Category, error)
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
 	Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error)
@@ -506,11 +508,12 @@ type SpaceResolver interface {
 type TagResolver interface {
 	ID(ctx context.Context, obj *models.Tag) (string, error)
 
+	Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error)
 	MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error)
+	BackgroundColour(ctx context.Context, obj *models.Tag) (interface{}, error)
 	Meta(ctx context.Context, obj *models.Tag) (interface{}, error)
 
 	SpaceID(ctx context.Context, obj *models.Tag) (int, error)
-	Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error)
 }
 type UserResolver interface {
 	ID(ctx context.Context, obj *models.User) (string, error)
@@ -546,6 +549,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CategoriesPaging.Total(childComplexity), true
+
+	case "Category.background_colour":
+		if e.complexity.Category.BackgroundColour == nil {
+			break
+		}
+
+		return e.complexity.Category.BackgroundColour(childComplexity), true
 
 	case "Category.created_at":
 		if e.complexity.Category.CreatedAt == nil {
@@ -2032,6 +2042,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Space.VerificationCodes(childComplexity), true
 
+	case "Tag.background_colour":
+		if e.complexity.Tag.BackgroundColour == nil {
+			break
+		}
+
+		return e.complexity.Tag.BackgroundColour(childComplexity), true
+
 	case "Tag.created_at":
 		if e.complexity.Tag.CreatedAt == nil {
 			break
@@ -2307,365 +2324,367 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 
 var sources = []*ast.Source{
 	{Name: "graph/schema.graphql", Input: `type Space {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  site_title: String
-  tag_line: String
-  description: String
-  site_address: String
-  logo: Medium
-  logo_mobile: Medium
-  fav_icon: Medium
-  mobile_icon: Medium
-  verification_codes: Any
-  social_media_urls: Any
-  contact_info: Any
-  header_code: String
-  footer_code: String
-  meta_fields: Any
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	site_title: String
+	tag_line: String
+	description: String
+	site_address: String
+	logo: Medium
+	logo_mobile: Medium
+	fav_icon: Medium
+	mobile_icon: Medium
+	verification_codes: Any
+	social_media_urls: Any
+	contact_info: Any
+	header_code: String
+	footer_code: String
+	meta_fields: Any
 }
 
 type Category {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  description: Any
-  html_description: String
-  meta_fields: Any
-  is_featured: Boolean
-  parent_id: Int
-  medium: Medium
-  space_id: Int!
-  meta: Any
-  header_code: String
-  footer_code: String
-  posts: PostsPaging
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	description: Any
+	is_featured: Boolean
+	posts: PostsPaging
+	background_colour: Any
+	html_description: String
+	meta_fields: Any
+	parent_id: Int
+	medium: Medium
+	space_id: Int!
+	meta: Any
+	header_code: String
+	footer_code: String
 }
 
 type Tag {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  description: String
-  html_description: String
-  meta_fields: Any
-  meta: Any
-  is_featured: Boolean
-  header_code: String
-  footer_code: String
-  medium: Medium
-  space_id: Int!
-  posts: PostsPaging
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	description: String
+	html_description: String
+	is_featured: Boolean
+	posts: PostsPaging
+	meta_fields: Any
+	background_colour: Any
+	meta: Any
+	header_code: String
+	footer_code: String
+	medium: Medium
+	space_id: Int!
 }
 
 type Format {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  description: String
-  meta_fields: Any
-  meta: Any
-  header_code: String
-  footer_code: String
-  space_id: Int!
-  medium: Medium
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	description: String
+	meta_fields: Any
+	meta: Any
+	header_code: String
+	footer_code: String
+	space_id: Int!
+	medium: Medium
 }
 
 type Medium {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String
-  type: String!
-  title: String!
-  description: String
-  caption: String
-  file_size: Int!
-  alt_text: String!
-  url: Any!
-  dimensions: String!
-  meta_fields: Any
-  space_id: Int!
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String
+	type: String!
+	title: String!
+	description: String
+	caption: String
+	file_size: Int!
+	alt_text: String!
+	url: Any!
+	dimensions: String!
+	meta_fields: Any
+	space_id: Int!
 }
 
 type Post {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  title: String!
-  subtitle: String
-  slug: String!
-  status: String!
-  excerpt: String
-  description: Any
-  html_description: String
-  is_featured: Boolean
-  is_sticky: Boolean
-  is_highlighted: Boolean
-  is_page: Boolean
-  published_date: Time
-  format: Format!
-  medium: Medium
-  categories: [Category!]!
-  tags: [Tag!]!
-  users: [User!]!
-  claims: [Claim!]!
-  schemas: Any
-  meta: Any
-  space_id: Int!
-  header_code: String
-  footer_code: String
-  meta_fields: Any
-  claim_order: [Int]
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	title: String!
+	subtitle: String
+	slug: String!
+	status: String!
+	excerpt: String
+	description: Any
+	html_description: String
+	is_featured: Boolean
+	is_sticky: Boolean
+	is_highlighted: Boolean
+	is_page: Boolean
+	published_date: Time
+	format: Format!
+	medium: Medium
+	categories: [Category!]!
+	tags: [Tag!]!
+	users: [User!]!
+	claims: [Claim!]!
+	schemas: Any
+	meta: Any
+	space_id: Int!
+	header_code: String
+	footer_code: String
+	meta_fields: Any
+	claim_order: [Int]
 }
 
 type User {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  first_name: String!
-  last_name: String
-  slug: String
-  email: String!
-  birth_date: String
-  gender: String
-  description: String
-  display_name: String
-  social_media_urls: Any
-  medium: Medium
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	first_name: String!
+	last_name: String
+	slug: String
+	email: String!
+	birth_date: String
+	gender: String
+	description: String
+	display_name: String
+	social_media_urls: Any
+	medium: Medium
 }
 
 type Rating {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  description: Any
-  background_colour: Any
-  text_colour: Any
-  html_description: String
-  numeric_value: Int!
-  medium: Medium
-  meta_fields: Any
-  meta: Any
-  header_code: String
-  footer_code: String
-  space_id: Int!
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	description: Any
+	background_colour: Any
+	text_colour: Any
+	html_description: String
+	numeric_value: Int!
+	medium: Medium
+	meta_fields: Any
+	meta: Any
+	header_code: String
+	footer_code: String
+	space_id: Int!
 }
 
 type Claimant {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  description: Any
-  html_description: String
-  tag_line: String
-  medium: Medium
-  meta_fields: Any
-  meta: Any
-  header_code: String
-  footer_code: String
-  space_id: Int!
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	description: Any
+	html_description: String
+	tag_line: String
+	medium: Medium
+	meta_fields: Any
+	meta: Any
+	header_code: String
+	footer_code: String
+	space_id: Int!
 }
 
 type Claim {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  claim: String!
-  slug: String!
-  claim_date: Time
-  checked_date: Time
-  claim_sources: Any
-  description: Any
-  html_description: String
-  fact: String
-  review_sources: Any
-  rating: Rating!
-  claimant: Claimant!
-  meta_fields: Any
-  meta: Any
-  header_code: String
-  footer_code: String
-  end_time: Int
-  start_time: Int
-  space_id: Int!
-  medium: Medium
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	claim: String!
+	slug: String!
+	claim_date: Time
+	checked_date: Time
+	claim_sources: Any
+	description: Any
+	html_description: String
+	fact: String
+	review_sources: Any
+	rating: Rating!
+	claimant: Claimant!
+	meta_fields: Any
+	meta: Any
+	header_code: String
+	footer_code: String
+	end_time: Int
+	start_time: Int
+	space_id: Int!
+	medium: Medium
 }
 
 type Menu {
-  id: ID!
-  created_at: Time
-  updated_at: Time
-  name: String!
-  slug: String!
-  menu: Any
-  meta_fields: Any
-  space_id: Int!
+	id: ID!
+	created_at: Time
+	updated_at: Time
+	name: String!
+	slug: String!
+	menu: Any
+	meta_fields: Any
+	space_id: Int!
 }
 
 type CategoriesPaging {
-  nodes: [Category!]!
-  total: Int!
+	nodes: [Category!]!
+	total: Int!
 }
 
 type TagsPaging {
-  nodes: [Tag!]!
-  total: Int!
+	nodes: [Tag!]!
+	total: Int!
 }
 
 type PostsPaging {
-  nodes: [Post!]!
-  total: Int!
+	nodes: [Post!]!
+	total: Int!
 }
 
 type UsersPaging {
-  nodes: [User!]!
-  total: Int!
+	nodes: [User!]!
+	total: Int!
 }
 
 type ClaimsPaging {
-  nodes: [Claim!]!
-  total: Int!
+	nodes: [Claim!]!
+	total: Int!
 }
 
 type ClaimantsPaging {
-  nodes: [Claimant!]!
-  total: Int!
+	nodes: [Claimant!]!
+	total: Int!
 }
 
 type RatingsPaging {
-  nodes: [Rating!]!
-  total: Int!
+	nodes: [Rating!]!
+	total: Int!
 }
 
 type FormatsPaging {
-  nodes: [Format!]!
-  total: Int!
+	nodes: [Format!]!
+	total: Int!
 }
 
 type MenusPaging {
-  nodes: [Menu!]!
-  total: Int!
+	nodes: [Menu!]!
+	total: Int!
 }
 
 type Sitemap {
-  slug: String!
-  id: ID!
-  created_at: Time
+	slug: String!
+	id: ID!
+	created_at: Time
 }
 
 type Sitemaps {
-  categories: [Sitemap]
-  tags: [Sitemap]
-  users: [Sitemap]
-  formats: [Sitemap]
-  posts: [Sitemap]
-  claims: [Sitemap]
-  claimants: [Sitemap]
-  ratings: [Sitemap]
+	categories: [Sitemap]
+	tags: [Sitemap]
+	users: [Sitemap]
+	formats: [Sitemap]
+	posts: [Sitemap]
+	claims: [Sitemap]
+	claimants: [Sitemap]
+	ratings: [Sitemap]
 }
 
 type SearchResult {
-  posts: [Post]
-  categories: [Category]
-  tags: [Tag]
-  claims: [Claim]
-  claimants: [Claimant]
-  ratings: [Rating]
-  media: [Medium]
+	posts: [Post]
+	categories: [Category]
+	tags: [Tag]
+	claims: [Claim]
+	claimants: [Claimant]
+	ratings: [Rating]
+	media: [Medium]
 }
 
 input PostFilter {
-  slugs: [String!]
-  ids: [Int!]
+	slugs: [String!]
+	ids: [Int!]
 }
 
 type Query {
-  space: Space
-  menu: MenusPaging
-  categories(
-    ids: [Int!]
-    spaces: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): CategoriesPaging
-  featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
-  featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
-  category(id: Int, slug: String): Category
-  tags(
-    ids: [Int!]
-    spaces: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): TagsPaging
-  tag(id: Int, slug: String): Tag
-  formats(spaces: [Int!], slugs: [String!]): FormatsPaging
-  posts(
-    spaces: [Int!]
-    formats: PostFilter
-    categories: PostFilter
-    tags: PostFilter
-    users: PostFilter
-    status: String
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): PostsPaging
-  post(id: Int, slug: String, include_pages: Boolean): Post
-  page(id: Int, slug: String): Post
-  pages(
-    spaces: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): PostsPaging
-  users(page: Int, limit: Int): UsersPaging
-  user(id: Int, slug: String): User
-  ratings(
-    spaces: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): RatingsPaging
-  claimants(
-    spaces: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): ClaimantsPaging
-  claims(
-    spaces: [Int!]
-    ratings: [Int!]
-    claimants: [Int!]
-    page: Int
-    limit: Int
-    sortBy: String
-    sortOrder: String
-  ): ClaimsPaging
-  sitemap: Sitemaps
-  search(q: String!): SearchResult
+	space: Space
+	menu: MenusPaging
+	featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+	featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
+	categories(
+		ids: [Int!]
+		spaces: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): CategoriesPaging
+	category(id: Int, slug: String): Category
+	tags(
+		ids: [Int!]
+		spaces: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): TagsPaging
+	tag(id: Int, slug: String): Tag
+	formats(spaces: [Int!], slugs: [String!]): FormatsPaging
+	posts(
+		spaces: [Int!]
+		formats: PostFilter
+		categories: PostFilter
+		tags: PostFilter
+		users: PostFilter
+		status: String
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): PostsPaging
+	post(id: Int, slug: String, include_pages: Boolean): Post
+	page(id: Int, slug: String): Post
+	pages(
+		spaces: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): PostsPaging
+	users(page: Int, limit: Int): UsersPaging
+	user(id: Int, slug: String): User
+	ratings(
+		spaces: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): RatingsPaging
+	claimants(
+		spaces: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): ClaimantsPaging
+	claims(
+		spaces: [Int!]
+		ratings: [Int!]
+		claimants: [Int!]
+		page: Int
+		limit: Int
+		sortBy: String
+		sortOrder: String
+	): ClaimsPaging
+	sitemap: Sitemaps
+	search(q: String!): SearchResult
 }
 
 scalar Time
@@ -3680,6 +3699,102 @@ func (ec *executionContext) _Category_description(ctx context.Context, field gra
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Category_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsFeatured, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Category_posts(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().Posts(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.PostsPaging)
+	fc.Result = res
+	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Category_background_colour(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Category",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Category().BackgroundColour(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Category_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3742,38 +3857,6 @@ func (ec *executionContext) _Category_meta_fields(ctx context.Context, field gra
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Category_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Category",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IsFeatured, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Category_parent_id(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
@@ -3969,38 +4052,6 @@ func (ec *executionContext) _Category_footer_code(ctx context.Context, field gra
 	res := resTmp.(string)
 	fc.Result = res
 	return ec.marshalOString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Category_posts(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Category",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Category().Posts(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.PostsPaging)
-	fc.Result = res
-	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Claim_id(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
@@ -7696,45 +7747,6 @@ func (ec *executionContext) _Query_menu(ctx context.Context, field graphql.Colle
 	return ec.marshalOMenusPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐMenusPaging(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _Query_categories(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	rawArgs := field.ArgumentMap(ec.Variables)
-	args, err := ec.field_Query_categories_args(ctx, rawArgs)
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	fc.Args = args
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Categories(rctx, args["ids"].([]int), args["spaces"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.CategoriesPaging)
-	fc.Result = res
-	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _Query_featuredCategories(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -7811,6 +7823,45 @@ func (ec *executionContext) _Query_featuredTags(ctx context.Context, field graph
 	res := resTmp.(*models.TagsPaging)
 	fc.Result = res
 	return ec.marshalOTagsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐTagsPaging(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_categories(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_categories_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Categories(rctx, args["ids"].([]int), args["spaces"].([]int), args["page"].(*int), args["limit"].(*int), args["sortBy"].(*string), args["sortOrder"].(*string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.CategoriesPaging)
+	fc.Result = res
+	return ec.marshalOCategoriesPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐCategoriesPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_category(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -10491,6 +10542,70 @@ func (ec *executionContext) _Tag_html_description(ctx context.Context, field gra
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Tag_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsFeatured, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_posts(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().Posts(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.PostsPaging)
+	fc.Result = res
+	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Tag_meta_fields(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -10510,6 +10625,38 @@ func (ec *executionContext) _Tag_meta_fields(ctx context.Context, field graphql.
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Tag().MetaFields(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(interface{})
+	fc.Result = res
+	return ec.marshalOAny2interface(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Tag_background_colour(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Tag",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Tag().BackgroundColour(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -10553,38 +10700,6 @@ func (ec *executionContext) _Tag_meta(ctx context.Context, field graphql.Collect
 	res := resTmp.(interface{})
 	fc.Result = res
 	return ec.marshalOAny2interface(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tag_is_featured(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Tag",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IsFeatured, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Tag_header_code(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
@@ -10716,38 +10831,6 @@ func (ec *executionContext) _Tag_space_id(ctx context.Context, field graphql.Col
 	res := resTmp.(int)
 	fc.Result = res
 	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Tag_posts(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "Tag",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Tag().Posts(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.PostsPaging)
-	fc.Result = res
-	return ec.marshalOPostsPaging2ᚖgithubᚗcomᚋfactlyᚋdegaᚑapiᚋgraphᚋmodelsᚐPostsPaging(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _TagsPaging_nodes(ctx context.Context, field graphql.CollectedField, obj *models.TagsPaging) (ret graphql.Marshaler) {
@@ -12520,6 +12603,30 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				res = ec._Category_description(ctx, field, obj)
 				return res
 			})
+		case "is_featured":
+			out.Values[i] = ec._Category_is_featured(ctx, field, obj)
+		case "posts":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_posts(ctx, field, obj)
+				return res
+			})
+		case "background_colour":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Category_background_colour(ctx, field, obj)
+				return res
+			})
 		case "html_description":
 			out.Values[i] = ec._Category_html_description(ctx, field, obj)
 		case "meta_fields":
@@ -12533,8 +12640,6 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				res = ec._Category_meta_fields(ctx, field, obj)
 				return res
 			})
-		case "is_featured":
-			out.Values[i] = ec._Category_is_featured(ctx, field, obj)
 		case "parent_id":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -12577,17 +12682,6 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 			out.Values[i] = ec._Category_header_code(ctx, field, obj)
 		case "footer_code":
 			out.Values[i] = ec._Category_footer_code(ctx, field, obj)
-		case "posts":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Category_posts(ctx, field, obj)
-				return res
-			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -13624,17 +13718,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				res = ec._Query_menu(ctx, field)
 				return res
 			})
-		case "categories":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_categories(ctx, field)
-				return res
-			})
 		case "featuredCategories":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -13655,6 +13738,17 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_featuredTags(ctx, field)
+				return res
+			})
+		case "categories":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_categories(ctx, field)
 				return res
 			})
 		case "category":
@@ -14383,6 +14477,19 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 			out.Values[i] = ec._Tag_description(ctx, field, obj)
 		case "html_description":
 			out.Values[i] = ec._Tag_html_description(ctx, field, obj)
+		case "is_featured":
+			out.Values[i] = ec._Tag_is_featured(ctx, field, obj)
+		case "posts":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_posts(ctx, field, obj)
+				return res
+			})
 		case "meta_fields":
 			field := field
 			out.Concurrently(i, func() (res graphql.Marshaler) {
@@ -14392,6 +14499,17 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 					}
 				}()
 				res = ec._Tag_meta_fields(ctx, field, obj)
+				return res
+			})
+		case "background_colour":
+			field := field
+			out.Concurrently(i, func() (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Tag_background_colour(ctx, field, obj)
 				return res
 			})
 		case "meta":
@@ -14405,8 +14523,6 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 				res = ec._Tag_meta(ctx, field, obj)
 				return res
 			})
-		case "is_featured":
-			out.Values[i] = ec._Tag_is_featured(ctx, field, obj)
 		case "header_code":
 			out.Values[i] = ec._Tag_header_code(ctx, field, obj)
 		case "footer_code":
@@ -14425,17 +14541,6 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
-				return res
-			})
-		case "posts":
-			field := field
-			out.Concurrently(i, func() (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Tag_posts(ctx, field, obj)
 				return res
 			})
 		default:
