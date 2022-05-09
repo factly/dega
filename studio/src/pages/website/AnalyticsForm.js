@@ -3,6 +3,7 @@ import { Button, Form, Input, Skeleton, Row } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSpace } from '../../actions/spaces';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function AnalyticsForm() {
   const id = useSelector((state) => state.spaces.selected);
@@ -33,6 +34,7 @@ function AnalyticsForm() {
   };
   return (
     <div>
+      <Helmet title={'Analytics Form'} />
       <Form
         form={form}
         layout="vertical"

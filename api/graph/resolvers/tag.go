@@ -19,6 +19,10 @@ func (r *tagResolver) ID(ctx context.Context, obj *models.Tag) (string, error) {
 	return fmt.Sprint(obj.ID), nil
 }
 
+func (r *tagResolver) IsFeatured(ctx context.Context, obj *models.Tag) (*bool, error) {
+	return &obj.IsFeatured, nil
+}
+
 func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error) {
 	return int(obj.SpaceID), nil
 }
@@ -53,6 +57,33 @@ func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medi
 	}
 
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.MediumID))
+}
+
+func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error) {
+	postCount := 20 // remove this hardcoded value
+	res := make([]models.PostTag, 0)
+	err := config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
+		TagID: obj.ID,
+	}).Limit(postCount).Find(&res).Error
+	if err != nil {
+		return nil, err
+	}
+	posts := make([]*models.Post, 0)
+	for _, postTag := range res {
+		post := new(models.Post)
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			ID: postTag.PostID,
+		}).Find(&post).Error
+		if err != nil {
+			return nil, err
+		}
+
+		posts = append(posts, post)
+	}
+	response := new(models.PostsPaging)
+	response.Nodes = posts
+	response.Total = len(posts)
+	return response, nil
 }
 
 func (r *queryResolver) Tag(ctx context.Context, id *int, slug *string) (*models.Tag, error) {
@@ -127,6 +158,26 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 	result.Total = int(total)
 
 	return result, nil
+}
+
+func (r *queryResolver) FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
+	result := &models.TagsPaging{}
+	result.Nodes = make([]*models.Tag, 0)
+
+	err = config.DB.Model(&models.Tag{}).Where(&models.Tag{
+		SpaceID:    sID,
+		IsFeatured: true,
+	}).Limit(featuredCount).Find(&result.Nodes).Error
+	if err != nil{
+		return nil, err
+	}
+
+	result.Total = len(result.Nodes)
+	return nil, nil
 }
 
 // Tag model resolver

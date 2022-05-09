@@ -2,7 +2,7 @@ import React from 'react';
 import { Result, Skeleton, Space } from 'antd';
 import { useSelector } from 'react-redux';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-
+import { Helmet } from 'react-helmet';
 function Analytics() {
   const { space, loading } = useSelector(({ spaces }) => {
     return {
@@ -16,6 +16,7 @@ function Analytics() {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Analytics'} />
       {space.analytics && space.analytics.plausible && space.analytics.plausible.embed_code ? (
         <div dangerouslySetInnerHTML={{ __html: space.analytics.plausible.embed_code }} />
       ) : (

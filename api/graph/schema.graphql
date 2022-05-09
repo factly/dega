@@ -27,6 +27,8 @@ type Category {
 	name: String!
 	slug: String!
 	description: Any
+	is_featured: Boolean
+	posts: PostsPaging
 	background_colour: Any
 	html_description: String
 	meta_fields: Any
@@ -46,6 +48,8 @@ type Tag {
 	slug: String!
 	description: String
 	html_description: String
+	is_featured: Boolean
+	posts: PostsPaging
 	meta_fields: Any
 	background_colour: Any
 	meta: Any
@@ -287,6 +291,8 @@ input PostFilter {
 type Query {
 	space: Space
 	menu: MenusPaging
+	featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+	featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
 	categories(
 		ids: [Int!]
 		spaces: [Int!]

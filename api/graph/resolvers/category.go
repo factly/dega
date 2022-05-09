@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	"gorm.io/gorm"
 
@@ -39,6 +40,9 @@ func (r *categoryResolver) Medium(ctx context.Context, obj *models.Category) (*m
 func (r *categoryResolver) Description(ctx context.Context, obj *models.Category) (interface{}, error) {
 	return obj.Description, nil
 }
+func (r *categoryResolver) IsFeatured(ctx context.Context, obj *models.Category) (*bool, error) {
+	return &obj.IsFeatured, nil
+}
 
 func (r *categoryResolver) HTMLDescription(ctx context.Context, obj *models.Category) (*string, error) {
 	return &obj.HTMLDescription, nil
@@ -61,6 +65,34 @@ func (r *categoryResolver) HeaderCode(ctx context.Context, obj *models.Category)
 
 func (r *categoryResolver) FooterCode(ctx context.Context, obj *models.Category) (*string, error) {
 	return &obj.FooterCode, nil
+}
+
+func (r *categoryResolver) Posts(ctx context.Context, obj *models.Category) (*models.PostsPaging, error) {
+	postCount := 20 // remove this hardcoded value
+
+	res := make([]models.PostCategory, 0)
+	err := config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
+		CategoryID: obj.ID,
+	}).Limit(postCount).Find(&res).Error
+	if err != nil {
+		return nil, err
+	}
+	posts := make([]*models.Post, 0)
+	for _, postCat := range res {
+		post := new(models.Post)
+		err = config.DB.Model(&models.Post{}).Where(&models.Post{
+			ID: postCat.PostID,
+		}).Find(&post).Error
+		if err != nil {
+			return nil, err
+		}
+
+		posts = append(posts, post)
+	}
+	response := new(models.PostsPaging)
+	response.Nodes = posts
+	response.Total = len(posts)
+	return response, nil
 }
 
 func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*models.Category, error) {
@@ -92,7 +124,30 @@ func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*m
 	return result, nil
 }
 
+func (r *queryResolver) FeaturedCategories(ctx context.Context, featuredCount int, postLimit int) (*models.CategoriesPaging, error) {
+	sID, err := validator.GetSpace(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	result := &models.CategoriesPaging{}
+	result.Nodes = make([]*models.Category, 0)
+
+	err = config.DB.Model(&models.Category{}).Where(&models.Category{
+		SpaceID:    sID,
+		IsFeatured: true,
+	}).Limit(featuredCount).Find(&result.Nodes).Error
+	if err != nil {
+		return nil, err
+	}
+
+	result.Total = len(result.Nodes)
+	return result, nil
+}
+
 func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+
+	log.Println(" categories resolver entry")
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err

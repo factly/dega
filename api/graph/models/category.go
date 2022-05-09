@@ -26,6 +26,7 @@ type Category struct {
 	Meta             postgres.Jsonb  `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string          `gorm:"column:header_code" json:"header_code"`
 	FooterCode       string          `gorm:"column:footer_code" json:"footer_code"`
+	IsFeatured       bool            `gorm:"column:is_featured" json:"is_featured"`
 }
 
 // CategoriesPaging model

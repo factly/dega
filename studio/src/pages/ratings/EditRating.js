@@ -6,6 +6,7 @@ import { updateRating, getRating } from '../../actions/ratings';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditRating() {
   const history = useHistory();
@@ -36,7 +37,12 @@ function EditRating() {
     );
   };
 
-  return <RatingEditForm data={rating} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${rating?.name} - Edit Rating`} />
+      <RatingEditForm data={rating} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditRating;

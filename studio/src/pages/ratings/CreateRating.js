@@ -3,6 +3,7 @@ import RatingCreateForm from './components/RatingForm';
 import { useDispatch } from 'react-redux';
 import { createRating } from '../../actions/ratings';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function CreateRating() {
   const history = useHistory();
@@ -11,7 +12,12 @@ function CreateRating() {
   const onCreate = (values) => {
     dispatch(createRating(values)).then(() => history.push('/ratings'));
   };
-  return <RatingCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Rating'} />
+      <RatingCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 
 export default CreateRating;

@@ -7,6 +7,7 @@ import { getTags } from '../../actions/tags';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import { Helmet } from 'react-helmet';
 
 function Tags({ permission }) {
   const { actions } = permission;
@@ -55,6 +56,7 @@ function Tags({ permission }) {
   };
   return (
     <Space direction="vertical">
+      <Helmet title={'Tags'} />
       <Form
         initialValues={filters}
         form={form}

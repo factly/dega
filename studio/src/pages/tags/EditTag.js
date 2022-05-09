@@ -6,6 +6,7 @@ import { updateTag, getTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditTag() {
   const history = useHistory();
@@ -33,7 +34,12 @@ function EditTag() {
     dispatch(updateTag({ ...tag, ...values }));
     history.push(`/tags/${id}/edit`);
   };
-  return <TagEditForm data={tag} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${tag?.name} - Edit Tag`} />
+      <TagEditForm data={tag} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditTag;

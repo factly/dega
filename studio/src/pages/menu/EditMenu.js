@@ -6,6 +6,7 @@ import { updateMenu, getMenu } from '../../actions/menu';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditMenu() {
   const history = useHistory();
@@ -33,7 +34,12 @@ function EditMenu() {
       history.push(`/website/menus/${id}/edit`),
     );
   };
-  return <MenuEditForm data={menu} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${menu?.name} - Edit Menu`} />
+      <MenuEditForm data={menu} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditMenu;

@@ -25,6 +25,7 @@ type Tag struct {
 	SpaceID          uint            `gorm:"column:space_id" json:"space_id"`
 	MediumID         uint            `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	Medium           *Medium         `json:"medium"`
+	IsFeatured       bool            `gorm:"column:is_featured" json:"is_featured"`
 }
 
 // TagsPaging model
