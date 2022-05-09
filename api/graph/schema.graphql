@@ -29,12 +29,14 @@ type Category {
   description: Any
   html_description: String
   meta_fields: Any
+  is_featured: Boolean
   parent_id: Int
   medium: Medium
   space_id: Int!
   meta: Any
   header_code: String
   footer_code: String
+  posts: PostsPaging
 }
 
 type Tag {
@@ -47,10 +49,12 @@ type Tag {
   html_description: String
   meta_fields: Any
   meta: Any
+  is_featured: Boolean
   header_code: String
   footer_code: String
   medium: Medium
   space_id: Int!
+  posts: PostsPaging
 }
 
 type Format {
@@ -293,6 +297,8 @@ type Query {
     sortBy: String
     sortOrder: String
   ): CategoriesPaging
+  featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
+  featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
   category(id: Int, slug: String): Category
   tags(
     ids: [Int!]

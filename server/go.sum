@@ -144,8 +144,6 @@ github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4/go.mod h1:gDnZ9
 github.com/factly/hukz v0.0.0-20210513184540-cb49caf5c3d1/go.mod h1:JnwNJ/nQ4Y+qpW44k2Ap/vL0mZHQFstZlrIGPbd77nQ=
 github.com/factly/x v0.0.23/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
 github.com/factly/x v0.0.46/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
-github.com/factly/x v0.0.69 h1:/mCjtUuIF3L0Jpb9n7+a9SrHc/Kjds0ZhPxBLhKQZqg=
-github.com/factly/x v0.0.69/go.mod h1:0OKvu90gUJBjBwJ0OYXvXPNxWJ2KqimeehHNI+5KOjA=
 github.com/factly/x v0.0.72 h1:7u+04XMLA1AbEYVwHt7C+FsRmmVwqs2KjJs4oEKzpas=
 github.com/factly/x v0.0.72/go.mod h1:0OKvu90gUJBjBwJ0OYXvXPNxWJ2KqimeehHNI+5KOjA=
 github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072 h1:DddqAaWDpywytcG8w/qoQ5sAN8X12d3Z3koB0C3Rxsc=
@@ -298,6 +296,7 @@ github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+
 github.com/google/uuid v1.1.2/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/googleapis/gax-go/v2 v2.0.4/go.mod h1:0Wqv26UfaUD9n4G6kQubkQ+KchISgw+vpHVxEJEs9eg=
 github.com/googleapis/gax-go/v2 v2.0.5/go.mod h1:DWXyrwAJ9X0FpwwEdw+IPEYBICEFu5mhpdKc/us6bOk=
+github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1 h1:EGx4pi6eqNxGaHF6qqu48+N2wcFQ5qg5FXgOdqsJ5d8=
 github.com/gopherjs/gopherjs v0.0.0-20181017120253-0766667cb4d1/go.mod h1:wJfORRmW1u3UXTncJ5qlYoELFm8eSnnEO6hX4iZ3EWY=
 github.com/gorilla/context v1.1.1/go.mod h1:kBGZzfjB9CEq2AlWe17Uuf7NDRt0dE0s8S51q0aT7Yg=
 github.com/gorilla/feeds v1.1.1 h1:HwKXxqzcRNg9to+BbvJog4+f3s/xzvtZXICcQGutYfY=

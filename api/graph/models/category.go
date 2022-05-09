@@ -15,6 +15,7 @@ type Category struct {
 	DeletedAt       *gorm.DeletedAt `sql:"index" json:"deleted_at"`
 	Name            string          `gorm:"column:name" json:"name"`
 	Slug            string          `gorm:"column:slug" json:"slug"`
+	IsFeatured      bool            `gorm:"column:is_featured" json:"is_featured"`
 	Description     postgres.Jsonb  `gorm:"column:description" json:"description"`
 	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
 	Medium          *Medium         `json:"medium"`

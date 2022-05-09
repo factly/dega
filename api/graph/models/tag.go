@@ -18,6 +18,7 @@ type Tag struct {
 	Description     string          `gorm:"column:description" json:"description"`
 	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
 	MetaFields      postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
+	IsFeatured      bool            `gorm:"column:is_featured" json:"is_featured"`
 	Meta            postgres.Jsonb  `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode      string          `gorm:"column:header_code" json:"header_code"`
 	FooterCode      string          `gorm:"column:footer_code" json:"footer_code"`
