@@ -64,11 +64,13 @@ func (r *categoryResolver) FooterCode(ctx context.Context, obj *models.Category)
 }
 
 func (r *categoryResolver) Posts(ctx context.Context, obj *models.Category) (*models.PostsPaging, error) {
+	postCount := 20 // remove this hardcoded value
+
 	res := make([]models.PostCategory, 0)
 	err := config.DB.Model(&models.PostCategory{}).Where(&models.PostCategory{
 		CategoryID: obj.ID,
-	}).Find(&res).Error
-	if err!=nil{
+	}).Limit(postCount).Find(&res).Error
+	if err != nil {
 		return nil, err
 	}
 	posts := make([]*models.Post, 0)
@@ -77,7 +79,7 @@ func (r *categoryResolver) Posts(ctx context.Context, obj *models.Category) (*mo
 		err = config.DB.Model(&models.Post{}).Where(&models.Post{
 			ID: postCat.PostID,
 		}).Find(&post).Error
-		if err!=nil {
+		if err != nil {
 			return nil, err
 		}
 
@@ -123,18 +125,18 @@ func (r *queryResolver) FeaturedCategories(ctx context.Context, featuredCount in
 	if err != nil {
 		return nil, err
 	}
-	categories := make([]models.Category, 0)
+
+	result := &models.CategoriesPaging{}
+	result.Nodes = make([]*models.Category, 0)
+
 	err = config.DB.Model(&models.Category{}).Where(&models.Category{
-		SpaceID: sID,
+		SpaceID:    sID,
 		IsFeatured: true,
-	}).Limit(featuredCount).Find(&categories).Error
-	if err!=nil {
+	}).Limit(featuredCount).Find(&result.Nodes).Error
+	if err != nil {
 		return nil, err
-	}	
-	result := new(models.CategoriesPaging)
-	for _, category := range categories {
-		result.Nodes = append(result.Nodes, &category)
 	}
+
 	result.Total = len(result.Nodes)
 	return result, nil
 }
