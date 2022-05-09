@@ -9,14 +9,29 @@ import SpaceSelector from './SpaceSelector';
 import AccountMenu from './AccountMenu';
 import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Search from '../Search';
+import { maker } from '../../utils/sluger';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
 function Sidebar({ superOrg, permission, orgs, loading, applications }) {
   const { collapsed } = useSelector((state) => state.sidebar);
-  const dispatch = useDispatch();
+  const { space, loadingSpace } = useSelector((state) => {
+    const currentSpaceID = orgs[0]?.spaces.find((id)=>id===state.spaces.selected)
+    return {
+      space: currentSpaceID ? state.spaces.details[currentSpaceID]: null,
+      loadingSpace: state.spaces.loading
+    }
+  })
 
+  let filteredMenuItems;
+  if(!loadingSpace){
+    if (space?.services?.length){
+        filteredMenuItems = [...sidebarMenu.filter((menuItem)=>(menuItem.isService && space?.services?.indexOf(maker(menuItem.title)) > -1)), ...sidebarMenu.filter((menuItem) => !menuItem.isService)]
+    }
+  }
+
+  const dispatch = useDispatch();
   let key;
   const location = useLocation();
   const [enteredRoute, setRoute] = React.useState(null);
@@ -64,7 +79,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'claimants',
     'ratings',
     'organisations',
-    'menus',
+    'menus', 
     'fact-checks',
     'episodes',
     'podcasts',
@@ -163,7 +178,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         style={{ background: '#f0f2f5' }}
         defaultSelectedKeys={[selectedmenu]}
       >
-        {sidebarMenu.map((menu, index) => {
+        {filteredMenuItems.map((menu, index) => {
           const { Icon } = menu;
           return menu.title === 'CORE' && !showCoreMenu ? null : (
             <SubMenu key={index} title={menu.title} icon={<Icon />}>

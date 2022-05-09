@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
 import { Link } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
-import moment from 'moment';
 
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
@@ -34,13 +33,13 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       </Link>
     ));
   };
-  const getAuthorsList = (ids) => {
-    return ids?.map((id) => (
-      <Link>
-        <Tag>{data.authors[id].display_name}</Tag>
-      </Link>
-    ));
-  };
+  // const getAuthorsList = (ids) => {
+  //   return ids?.map((id) => (
+  //     <Link>
+  //       <Tag>{data.authors[id].display_name}</Tag>
+  //     </Link>
+  //   ));
+  // };
   const columns = [
     {
       title: 'Title',
