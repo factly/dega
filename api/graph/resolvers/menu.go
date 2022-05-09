@@ -3,6 +3,7 @@ package resolvers
 import (
 	"context"
 	"fmt"
+	"log"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -27,6 +28,8 @@ func (r *menuResolver) MetaFields(ctx context.Context, obj *models.Menu) (interf
 }
 
 func (r *queryResolver) Menu(ctx context.Context) (*models.MenusPaging, error) {
+
+	log.Println(" Menu resolver entry")
 
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

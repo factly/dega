@@ -27,6 +27,7 @@ func (myrw *CacheResponseWriter) WriteHeader(header int) {
 
 func RespMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(" RespMiddleware entry")
 		// Create a response writer:
 		crw := &CacheResponseWriter{
 			ResponseWriter: w,
@@ -65,5 +66,7 @@ func RespMiddleware(next http.Handler) http.Handler {
 		if _, err = io.Copy(w, crw.buf); err != nil {
 			log.Printf("Failed to send out response: %v", err)
 		}
+
+		log.Println(" RespMiddleware exit")
 	})
 }
