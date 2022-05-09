@@ -27,6 +27,10 @@ func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*st
 	return &obj.HTMLDescription, nil
 }
 
+func (r *tagResolver) BackgroundColour(ctx context.Context, obj *models.Tag) (interface{}, error) {
+	return obj.BackgroundColour, nil
+}
+
 func (r *tagResolver) MetaFields(ctx context.Context, obj *models.Tag) (interface{}, error) {
 	return obj.MetaFields, nil
 }
