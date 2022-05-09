@@ -56,10 +56,11 @@ func (r *tagResolver) Medium(ctx context.Context, obj *models.Tag) (*models.Medi
 }
 
 func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.PostsPaging, error) {
+	postCount := 20 // remove this hardcoded value
 	res := make([]models.PostTag, 0)
 	err := config.DB.Model(&models.PostTag{}).Where(&models.PostTag{
 		TagID: obj.ID,
-	}).Find(&res).Error
+	}).Limit(postCount).Find(&res).Error
 	if err != nil {
 		return nil, err
 	}
