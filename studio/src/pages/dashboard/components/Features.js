@@ -12,20 +12,29 @@ function Features() {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  React.useEffect(() => {
-    const fetchEntities = () => {
-      dispatch(getRatings());
-      dispatch(getFormats());
-      dispatch(getPolicies());
-      dispatch(getEvents());
-    };
-    fetchEntities();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
   });
+
+  React.useEffect(() => {
+    fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const fetchEntities = () => {
+    dispatch(getRatings());
+    dispatch(getFormats());
+    dispatch(getPolicies());
+  };
+
+  React.useEffect(() => {
+    if (superOrg.is_admin) {
+      fetchEvents();
+    }
+  }, [superOrg.is_admin]);
+
+  const fetchEvents = () => {
+    dispatch(getEvents());
+  };
 
   const {
     ratings,
@@ -54,9 +63,7 @@ function Features() {
       {!ratingsLoading &&
       !policiesLoading &&
       !formatsLoading &&
-      ratings < 1 &&
-      formats < 1 &&
-      policies < 1 ? (
+      (ratings < 1 || formats < 1 || policies < 1) ? (
         <Typography.Title level={3}>Add default features</Typography.Title>
       ) : null}
 
