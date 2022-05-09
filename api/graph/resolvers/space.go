@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
@@ -73,6 +74,8 @@ func (r *spaceResolver) MetaFields(ctx context.Context, obj *models.Space) (inte
 }
 
 func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
+
+	log.Println(" Space resolver entry")
 
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {

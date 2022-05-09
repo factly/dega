@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
@@ -39,6 +40,7 @@ func (v values) Get(key string) interface{} {
 // DataloaderMiddleware to add middleware in main
 func DataloaderMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		log.Println(" DataloaderMiddleware entry")
 		ratingloader := RatingLoader{
 			maxBatch: 100,
 			wait:     1 * time.Second,
@@ -363,6 +365,8 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 		}}
 
 		ctx := context.WithValue(r.Context(), loadersKey, v)
+
+		log.Println(" DataloaderMiddleware exit")
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

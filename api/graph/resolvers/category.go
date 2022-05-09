@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 
 	"gorm.io/gorm"
 
@@ -142,6 +143,8 @@ func (r *queryResolver) FeaturedCategories(ctx context.Context, featuredCount in
 }
 
 func (r *queryResolver) Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error) {
+
+	log.Println(" categories resolver entry")
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
