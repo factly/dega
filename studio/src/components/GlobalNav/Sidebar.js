@@ -17,17 +17,22 @@ const { SubMenu } = Menu;
 function Sidebar({ superOrg, permission, orgs, loading, applications }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const { space, loadingSpace } = useSelector((state) => {
-    const currentSpaceID = orgs[0]?.spaces.find((id)=>id===state.spaces.selected)
+    const currentSpaceID = orgs[0]?.spaces.find((id) => id === state.spaces.selected);
     return {
-      space: currentSpaceID ? state.spaces.details[currentSpaceID]: null,
-      loadingSpace: state.spaces.loading
-    }
-  })
+      space: currentSpaceID ? state.spaces.details[currentSpaceID] : null,
+      loadingSpace: state.spaces.loading,
+    };
+  });
 
-  let filteredMenuItems;
-  if(!loadingSpace){
-    if (space?.services?.length){
-        filteredMenuItems = [...sidebarMenu.filter((menuItem)=>(menuItem.isService && space?.services?.indexOf(maker(menuItem.title)) > -1)), ...sidebarMenu.filter((menuItem) => !menuItem.isService)]
+  let filteredMenuItems = [];
+  if (!loadingSpace) {
+    if (space?.services?.length) {
+      filteredMenuItems = [
+        ...sidebarMenu.filter(
+          (menuItem) => menuItem.isService && space?.services?.indexOf(maker(menuItem.title)) > -1,
+        ),
+        ...sidebarMenu.filter((menuItem) => !menuItem.isService),
+      ];
     }
   }
 
@@ -79,7 +84,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'claimants',
     'ratings',
     'organisations',
-    'menus', 
+    'menus',
     'fact-checks',
     'episodes',
     'podcasts',
