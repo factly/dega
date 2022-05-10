@@ -55,11 +55,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     setIsModalVisible(false);
   };
 
-  const onTagChange = (values) => {
-    
-  }
-
-  
   const copySchema = (textToCopy) => {
     // navigator clipboard api needs a secure context (https)
     if (navigator.clipboard && window.isSecureContext) {
