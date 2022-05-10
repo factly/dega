@@ -63,7 +63,7 @@ function MediaSelector({
               selected ? onChange(selected.id) : onChange(null);
             }}
           >
-           Ok
+            Ok
           </Button>,
         ]}
       >

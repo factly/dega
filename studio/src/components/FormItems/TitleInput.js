@@ -12,8 +12,7 @@ const TitleInput = ({ name = 'title', label = 'Title', onChange, inputProps, for
           required: true,
           message: `Please enter ${name}!`,
         },
-        { min: 3, message: 'Name must be minimum 3 characters.' },
-        { max: 50, message: 'Name must be maximum 50 characters.' },
+        { max: 500, message: 'Name must be maximum 500 characters.' },
       ]}
       {...formItemProps}
     >

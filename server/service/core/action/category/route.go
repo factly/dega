@@ -9,7 +9,7 @@ import (
 
 // category request body
 type category struct {
-	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	Name             string         `json:"name" validate:"required,max=500"`
 	Slug             string         `json:"slug"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`

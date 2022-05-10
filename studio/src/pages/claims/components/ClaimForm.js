@@ -133,7 +133,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                   required: true,
                   message: 'Please input the Claim!',
                 },
-                { min: 3, message: 'Claim must be minimum 3 characters.' },
                 { max: 5000, message: 'Claim must be maximum 5000 characters.' },
               ]}
             >

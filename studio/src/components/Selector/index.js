@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
@@ -21,7 +21,7 @@ function Selector({
     page: 1,
     limit: 5,
   });
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
 
   if (!value) {
@@ -38,10 +38,10 @@ function Selector({
 
   const onSearch = (value) => {
     if (value) {
-      setSearchValue(value)
+      setSearchValue(value);
       setQuery({ ...query, q: value });
     } else {
-      setSearchValue("")
+      setSearchValue('');
       setQuery({ page: query.page });
     }
   };
@@ -139,7 +139,7 @@ function Selector({
                 selectorType['create' + createEntity]({
                   name: query.q.trim(),
                 }),
-              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(""))
+              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(''))
             }
           >
             Create a {createEntity} '{query.q}'
