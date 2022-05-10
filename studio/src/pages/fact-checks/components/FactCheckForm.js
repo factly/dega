@@ -289,7 +289,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     required: true,
                     message: 'Please input the title!',
                   },
-                  { max: 500, message: 'Title must be maximum 150 characters.' },
+                  { max: 500, message: 'Title must be maximum 500 characters.' },
                 ]}
               >
                 <Input.TextArea
