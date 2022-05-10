@@ -9,7 +9,7 @@ import (
 
 // tag model
 type tag struct {
-	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	Name             string         `json:"name" validate:"required,max=500"`
 	Slug             string         `json:"slug"`
 	IsFeatured       bool           `json:"is_featured"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`

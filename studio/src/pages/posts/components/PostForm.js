@@ -219,8 +219,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     required: true,
                     message: 'Please input the title!',
                   },
-                  { min: 3, message: 'Title must be minimum 3 characters.' },
-                  { max: 150, message: 'Title must be maximum 150 characters.' },
+                  { max: 500, message: 'Title must be maximum 500 characters.' },
                 ]}
               >
                 <Input.TextArea
@@ -261,7 +260,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   name="excerpt"
                   label="Excerpt"
                   rules={[
-                    { min: 3, message: 'Title must be minimum 3 characters.' },
                     { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
                     {
                       message: 'Add Excerpt',
