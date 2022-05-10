@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation , useHistory } from 'react-router-dom';
 import { PageHeader as AntPageHeader } from 'antd';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
@@ -9,6 +9,7 @@ import { useSelector } from 'react-redux';
 function PageHeader() {
   const state = useSelector((state) => state);
   const location = useLocation();
+  const history = useHistory();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
   const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0];
 
@@ -77,6 +78,10 @@ function PageHeader() {
 
   const handleOnBack = () => {
     if (isBreadCrumbsHidden) {
+    if(['posts','fact-checks','pages'].includes(pathSnippets[0])&&pathSnippets[2]==='edit'){
+      history.push('/'+pathSnippets[0])
+      return
+    }  
       window.history.back();
     }
     return null;
