@@ -131,7 +131,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                       display: 'inline-block',
                       cursor: 'pointer',
                     }}
-                   onClick={() => handleBgClick()}
+                    onClick={() => handleBgClick()}
                   >
                     <div
                       style={{

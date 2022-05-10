@@ -249,7 +249,11 @@ function FactCheck({ formats }) {
     );
 
   return (
-    <FormatNotFound status="info" title="Fact-Check format not found" link="/advanced/formats/create" />
+    <FormatNotFound
+      status="info"
+      title="Fact-Check format not found"
+      link="/advanced/formats/create"
+    />
   );
 }
 
