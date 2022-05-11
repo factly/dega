@@ -7,6 +7,7 @@ import { getMedia } from '../../actions/media';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Media({ permission }) {
@@ -54,7 +55,9 @@ function Media({ permission }) {
     dispatch(getMedia(filters));
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Media'} />
       <Form

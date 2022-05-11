@@ -7,6 +7,7 @@ import { getTags } from '../../actions/tags';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Tags({ permission }) {
@@ -54,7 +55,9 @@ function Tags({ permission }) {
   const fetchTags = () => {
     dispatch(getTags(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Tags'} />
       <Form

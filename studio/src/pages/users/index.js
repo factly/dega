@@ -3,6 +3,7 @@ import { Space, Typography, Table, Tag } from 'antd';
 import { getUsers } from '../../actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Users() {
@@ -61,7 +62,9 @@ function Users() {
     },
   ];
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction={'vertical'}>
       <Helmet title={'Users'} />
       <Table
