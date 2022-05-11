@@ -173,17 +173,18 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
 	err = tx.Model(&result).Updates(model.Category{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Name:            category.Name,
-		Slug:            categorySlug,
-		Description:     category.Description,
-		HTMLDescription: description,
-		ParentID:        parentID,
-		MediumID:        mediumID,
-		MetaFields:      category.MetaFields,
-		Meta:            category.Meta,
-		HeaderCode:      category.HeaderCode,
-		FooterCode:      category.FooterCode,
+		Base:             config.Base{UpdatedByID: uint(uID)},
+		Name:             category.Name,
+		Slug:             categorySlug,
+		BackgroundColour: category.BackgroundColour,
+		Description:      category.Description,
+		HTMLDescription:  description,
+		ParentID:         parentID,
+		MediumID:         mediumID,
+		MetaFields:       category.MetaFields,
+		Meta:             category.Meta,
+		HeaderCode:       category.HeaderCode,
+		FooterCode:       category.FooterCode,
 	}).Preload("Medium").First(&result).Error
 
 	if err != nil {
@@ -195,13 +196,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "category",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
-		"meta_fields": result.MetaFields,
+		"id":                result.ID,
+		"kind":              "category",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"description":       result.Description,
+		"background_colour": result.BackgroundColour,
+		"space_id":          result.SpaceID,
+		"meta_fields":       result.MetaFields,
 	}
 
 	if config.SearchEnabled() {

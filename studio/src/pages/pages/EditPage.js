@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import getUserPermission from '../../utils/getUserPermission';
+import { Helmet } from 'react-helmet';
 
 function EditPage({ formats }) {
   const history = useHistory();
@@ -40,13 +41,16 @@ function EditPage({ formats }) {
     });
   };
   return (
-    <PageEditForm
-      data={page}
-      onCreate={onUpdate}
-      actions={actions}
-      format={formats.article}
-      page={true}
-    />
+    <>
+      <Helmet title={`${page?.title} - Edit Page`} />
+      <PageEditForm
+        data={page}
+        onCreate={onUpdate}
+        actions={actions}
+        format={formats.article}
+        page={true}
+      />
+    </>
   );
 }
 

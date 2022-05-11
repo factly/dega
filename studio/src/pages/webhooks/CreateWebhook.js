@@ -3,6 +3,7 @@ import WebhookCreateForm from './components/WebhookForm';
 import { useDispatch } from 'react-redux';
 import { addWebhook } from '../../actions/webhooks';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function CreateWebhook() {
   const history = useHistory();
@@ -10,6 +11,11 @@ function CreateWebhook() {
   const onCreate = (values) => {
     dispatch(addWebhook(values)).then(() => history.push('/advanced/webhooks'));
   };
-  return <WebhookCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Webhook'} />
+      <WebhookCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 export default CreateWebhook;

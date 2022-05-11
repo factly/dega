@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Skeleton } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditFormat() {
   const history = useHistory();
@@ -33,7 +34,12 @@ function EditFormat() {
     dispatch(updateFormat({ ...format, ...values }));
     history.push(`/advanced/formats/${id}/edit`);
   };
-  return <FormatEditForm data={format} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={`${format?.name} - Edit Format`} />
+      <FormatEditForm data={format} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditFormat;

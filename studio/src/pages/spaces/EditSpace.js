@@ -5,6 +5,7 @@ import { Skeleton } from 'antd';
 import { updateSpace } from '../../actions/spaces';
 import SpaceEditForm from './components/SpaceEditForm';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditSpace() {
   const history = useHistory();
@@ -30,7 +31,12 @@ function EditSpace() {
     return <RecordNotFound />;
   }
 
-  return <SpaceEditForm onCreate={onCreate} data={space} />;
+  return (
+    <>
+      <Helmet title={`${space?.name} - Edit Space`} />
+      <SpaceEditForm onCreate={onCreate} data={space} />
+    </>
+  );
 }
 
 export default EditSpace;

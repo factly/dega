@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Space, Button, Form, Input, Select, Row, Col } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import deepEqual from 'deep-equal';
 import CategoryList from './components/CategoryList';
 import Loader from '../../components/Loader';
@@ -57,6 +58,7 @@ function Categories({ permission }) {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Categories'} />
       <Form
         initialValues={filters}
         form={form}

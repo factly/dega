@@ -9,7 +9,7 @@ import (
 
 // rating model
 type rating struct {
-	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	Name             string         `json:"name" validate:"required,max=500"`
 	Slug             string         `json:"slug"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
 	TextColour       postgres.Jsonb `json:"text_colour" validate:"required" swaggertype:"primitive,string"`

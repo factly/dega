@@ -5,6 +5,7 @@ import MediaSelector from '../../components/MediaSelector/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSpace } from '../../actions/spaces';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function Branding() {
   const { Panel } = Collapse;
@@ -37,6 +38,7 @@ function Branding() {
   //! More Descriptive favicons and logo fields
   return (
     <div>
+      <Helmet title={'Branding'} />
       <Form
         layout="vertical"
         form={form}
@@ -131,16 +133,34 @@ function Branding() {
             <Form.Item name={['social_media_urls', 'twitter']} label="Twitter">
               <Input style={{ width: '100%' }} placeholder="https://www.twitter.com/users/factly" />
             </Form.Item>
-            <Form.Item name={['social_media_urls', 'pintrest']} label="Pintrest">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://www.pinterest.com/pages/factly"
-              />
-            </Form.Item>
             <Form.Item name={['social_media_urls', 'instagram']} label="Instagram">
               <Input
                 style={{ width: '100%' }}
                 placeholder="https://www.instagram.com/pages/factly"
+              />
+            </Form.Item>
+            <Form.Item name={['social_media_urls', 'github']} label="Github">
+              <Input
+                style={{ width: '100%' }}
+                placeholder="https://github.com/factly/"
+              />
+            </Form.Item>
+            <Form.Item name={['social_media_urls', 'youtube']} label="Youtube">
+              <Input
+                style={{ width: '100%' }}
+                placeholder="https://www.youtube.com/c/Factlyindia"
+              />
+            </Form.Item>
+            <Form.Item name={['social_media_urls', 'linkedin']} label="Linkedin">
+              <Input
+                style={{ width: '100%' }}
+                placeholder="https://www.linkedin.com/company/factlyindia/"
+              />
+            </Form.Item>
+            <Form.Item name={['social_media_urls', 'pinterest']} label="Pinterest">
+              <Input
+                style={{ width: '100%' }}
+                placeholder="https://www.pinterest.com/pages/factly"
               />
             </Form.Item>
           </Panel>

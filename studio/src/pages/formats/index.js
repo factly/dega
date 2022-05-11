@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../../actions/formats';
 import deepEqual from 'deep-equal';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Formats({ permission }) {
   const { actions } = permission;
@@ -44,8 +45,9 @@ function Formats({ permission }) {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Formats'} />
       <Row justify="end">
-        <Link key="1" to="/formats/create">
+        <Link key="1" to="/advanced/formats/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

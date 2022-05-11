@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"strings"
 
@@ -23,6 +24,7 @@ type requestBody struct {
 func CachingMiddleware() func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			log.Println(" CachingMiddleware entry")
 			body := requestBody{}
 			bodyBytes, _ := ioutil.ReadAll(r.Body)
 			err := json.Unmarshal(bodyBytes, &body)
@@ -61,6 +63,8 @@ func CachingMiddleware() func(http.Handler) http.Handler {
 
 			r.Body.Close()
 			r.Body = ioutil.NopCloser(bytes.NewBuffer(bodyBytes))
+
+			log.Println(" CachingMiddleware exit")
 			next.ServeHTTP(w, r)
 		})
 	}

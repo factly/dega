@@ -5,6 +5,7 @@ import { addPost } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function CreateFactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -18,7 +19,12 @@ function CreateFactCheck({ formats }) {
   };
 
   if (!formats.loading && formats.factcheck) {
-    return <FactCheckForm onCreate={onCreate} actions={actions} format={formats.factcheck} />;
+    return (
+      <>
+        <Helmet title={'Create FactCheck'} />
+        <FactCheckForm onCreate={onCreate} actions={actions} format={formats.factcheck} />
+      </>
+    );
   }
 
   return <FormatNotFound status="info" title="Fact-Check format not found" link="/formats" />;

@@ -6,6 +6,7 @@ import { updateClaim, getClaim } from '../../actions/claims';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function EditClaim() {
   const history = useHistory();
@@ -34,7 +35,12 @@ function EditClaim() {
   const onUpdate = (values) => {
     dispatch(updateClaim({ ...claim, ...values })).then(() => history.push(`/claims/${id}/edit`));
   };
-  return <ClaimEditForm data={claim} onCreate={onUpdate} />;
+  return (
+    <>
+      <Helmet title={'Edit Claim'} />
+      <ClaimEditForm data={claim} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditClaim;

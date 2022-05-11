@@ -4,6 +4,7 @@ import MonacoEditor from '../../components/MonacoEditor/index';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateSpace } from '../../actions/spaces';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
+import { Helmet } from 'react-helmet';
 
 function CodeInjection() {
   const id = useSelector((state) => state.spaces.selected);
@@ -35,6 +36,7 @@ function CodeInjection() {
 
   return (
     <div>
+      <Helmet title={'Code Injection'} />
       <Form
         form={form}
         layout="vertical"

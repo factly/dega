@@ -66,10 +66,16 @@ models:
     model: github.com/factly/dega-api/graph/models.MenusPaging
   Category:
     model: github.com/factly/dega-api/graph/models.Category
+    fields:
+        posts:
+          resolver: true
   CategoriesPaging:
     model: github.com/factly/dega-api/graph/models.CategoriesPaging
   Tag:
     model: github.com/factly/dega-api/graph/models.Tag
+    fields:
+        posts:
+          resolver: true
   TagsPaging:
     model: github.com/factly/dega-api/graph/models.TagsPaging
   Author:

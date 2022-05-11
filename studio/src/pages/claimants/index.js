@@ -8,6 +8,7 @@ import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Claimants({ permission }) {
   const { actions } = permission;
@@ -57,6 +58,7 @@ function Claimants({ permission }) {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Claimants'} />
       <Form
         initialValues={filters}
         form={form}

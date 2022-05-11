@@ -3,6 +3,7 @@ import { createPolicy } from '../../actions/policies';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import PolicyCreateForm from './components/PolicyForm';
+import { Helmet } from 'react-helmet';
 
 function CreatePolicy() {
   const history = useHistory();
@@ -16,7 +17,12 @@ function CreatePolicy() {
     dispatch(createPolicy(values)).then(() => history.push('/members/policies'));
   };
 
-  return <PolicyCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Policy'} />
+      <PolicyCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 
 export default CreatePolicy;

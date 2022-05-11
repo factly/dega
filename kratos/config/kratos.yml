@@ -1,4 +1,4 @@
-version: v0.5.0-alpha.1
+version: v0.8.0-alpha.3
 
 dsn: postgres://postgres:postgres@postgres:5432/kratos?sslmode=disable
 
@@ -61,12 +61,8 @@ secrets:
     - PLEASE-CHANGE-ME-I-AM-VERY-INSECURE
 
 hashers:
-  argon2:
-    parallelism: 1
-    memory: 131072
-    iterations: 2
-    salt_length: 16
-    key_length: 16
+  bcrypt:
+    cost: 4 ### cost should be 12 in production
 
 identity:
   default_schema_url: file:///etc/config/kratos/identity.schema.json

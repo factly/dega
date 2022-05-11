@@ -13,7 +13,6 @@ import { useDispatch } from 'react-redux';
 import { deletePost } from '../../actions/posts';
 import { Link } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
-import moment from 'moment';
 
 function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
   /**
@@ -49,9 +48,9 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
       </Link>
     ));
   };
-  const getAuthorsList = (ids) => {
-    return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
-  };
+  // const getAuthorsList = (ids) => {
+  //   return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
+  // };
   const columns = [
     {
       title: 'Title',

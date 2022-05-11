@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getWebhooks } from '../../actions/webhooks';
 import deepEqual from 'deep-equal';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Webhooks() {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -43,6 +44,7 @@ function Webhooks() {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Webhooks'} />
       <Row gutter={16} justify="end">
         <Link key="1" to="/advanced/webhooks/create">
           <Button type="primary">New Webhook</Button>

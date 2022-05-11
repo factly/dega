@@ -3,6 +3,7 @@ import OrganisationRequestCreateForm from './components/RequestForm';
 import { useDispatch } from 'react-redux';
 import { addOrganisationRequest } from '../../../actions/organisationRequests';
 import { useHistory } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function CreateOrganisationRequest() {
   const history = useHistory();
@@ -13,7 +14,12 @@ function CreateOrganisationRequest() {
       history.push('/admin/requests/organisations'),
     );
   };
-  return <OrganisationRequestCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Organisation Request'} />
+      <OrganisationRequestCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 
 export default CreateOrganisationRequest;

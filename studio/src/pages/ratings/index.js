@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getRatings } from '../../actions/ratings';
 import deepEqual from 'deep-equal';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Ratings({ permission }) {
   const { actions } = permission;
@@ -43,6 +44,7 @@ function Ratings({ permission }) {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Ratings'} />
       <Row justify="end">
         <Link key="1" to="/ratings/create">
           <Button

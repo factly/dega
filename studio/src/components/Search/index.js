@@ -1,4 +1,4 @@
-import { Input, Modal, List, Typography } from 'antd';
+import { Input, Modal, List, Typography, Empty } from 'antd';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -75,47 +75,51 @@ function Search({ collapsed }) {
           />
         </div>
 
-        {total > 0 && query.length > 0 ? (
-          <div style={{ height: 600, overflow: 'scroll' }}>
-            {searchEntities.map((entity, entityIndex) =>
-              data[entity].length > 0 ? (
-                <List
-                  key={entity}
-                  header={<h2>{entity.toLocaleUpperCase()}</h2>}
-                  dataSource={data[entity]}
-                  renderItem={(item, indexItem) => {
-                    return (
-                      <Link
-                        to={`/${entity === 'articles' ? 'posts' : entity}/${item.id}/edit`}
-                        onClick={() => setOpen(false)}
-                      >
-                        <List.Item
-                          style={
-                            indexItem === selected.indexItem && entityIndex === selected.entityIndex
-                              ? { backgroundColor: '#5468ff', padding: 5 }
-                              : {}
-                          }
+        {query.length > 0 &&
+          (total > 0 ? (
+            <div style={{ height: 600, overflow: 'scroll', marginTop: '1rem' }}>
+              {searchEntities.map((entity, entityIndex) =>
+                data[entity].length > 0 ? (
+                  <List
+                    key={entity}
+                    header={<h2>{entity.toLocaleUpperCase()}</h2>}
+                    dataSource={data[entity]}
+                    renderItem={(item, indexItem) => {
+                      return (
+                        <Link
+                          to={`/${entity === 'articles' ? 'posts' : entity}/${item.id}/edit`}
+                          onClick={() => setOpen(false)}
                         >
-                          <Typography.Text
+                          <List.Item
                             style={
                               indexItem === selected.indexItem &&
                               entityIndex === selected.entityIndex
-                                ? { color: '#fff' }
+                                ? { backgroundColor: '#5468ff', padding: 5 }
                                 : {}
                             }
-                            onMouseOver={() => setSelected({ indexItem, entityIndex })}
                           >
-                            {item.title || item.name || item.claim}
-                          </Typography.Text>
-                        </List.Item>
-                      </Link>
-                    );
-                  }}
-                />
-              ) : null,
-            )}
-          </div>
-        ) : null}
+                            <Typography.Text
+                              style={
+                                indexItem === selected.indexItem &&
+                                entityIndex === selected.entityIndex
+                                  ? { color: '#fff' }
+                                  : {}
+                              }
+                              onMouseOver={() => setSelected({ indexItem, entityIndex })}
+                            >
+                              {item.title || item.name || item.claim}
+                            </Typography.Text>
+                          </List.Item>
+                        </Link>
+                      );
+                    }}
+                  />
+                ) : null,
+              )}
+            </div>
+          ) : (
+            <Empty style={{ marginTop: '2rem' }} description="No Results Found" />
+          ))}
       </Modal>
     </div>
   );

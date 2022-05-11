@@ -6,6 +6,7 @@ import getUserPermission from '../../utils/getUserPermission';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInfo } from '../../actions/info';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 function Dashboard() {
   const { Title } = Typography;
@@ -28,6 +29,7 @@ function Dashboard() {
 
   return (
     <Space direction="vertical">
+      <Helmet title={'Dashboard'} />
       <Typography.Title level={2}>Dashboard</Typography.Title>
       <Row justify="start" gutter={[16, 16]}>
         <Col>

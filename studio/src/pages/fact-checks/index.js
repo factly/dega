@@ -13,6 +13,7 @@ import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function FactCheck({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -101,7 +102,7 @@ function FactCheck({ formats }) {
     setFilters({ ...filters, format: [formats.factcheck.id] });
     setFormatFlag(true);
   }
-  const { posts, total, loading, tags, categories, authors } = useSelector((state) => {
+  const { posts, total, loading, tags, categories } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       return deepEqual(item.query, params);
     });
@@ -161,6 +162,7 @@ function FactCheck({ formats }) {
     <Loader />
   ) : formats.factcheck ? (
     <Space direction="vertical">
+      <Helmet title={'Fact-checks'} />
       <Template format={formats.factcheck} />
       <Form
         initialValues={filters}

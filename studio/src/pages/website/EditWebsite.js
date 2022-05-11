@@ -5,6 +5,7 @@ import { updateSpace } from '../../actions/spaces';
 
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import WebsiteEditForm from './components/WebsiteEditForm';
+import { Helmet } from 'react-helmet';
 
 function EditWebsite() {
   const id = useSelector((state) => state.spaces.selected);
@@ -27,7 +28,12 @@ function EditWebsite() {
     return <RecordNotFound />;
   }
 
-  return <WebsiteEditForm onCreate={onCreate} data={space} />;
+  return (
+    <>
+      <Helmet title={'Edit Website'} />
+      <WebsiteEditForm onCreate={onCreate} data={space} />
+    </>
+  );
 }
 
 export default EditWebsite;

@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { createTag } from '../../actions/tags';
 import { useHistory } from 'react-router-dom';
 import TagCreateForm from './components/TagForm';
+import { Helmet } from 'react-helmet';
 
 function CreateTag() {
   const history = useHistory();
@@ -11,7 +12,12 @@ function CreateTag() {
   const onCreate = (values) => {
     dispatch(createTag(values)).then(() => history.push('/tags'));
   };
-  return <TagCreateForm onCreate={onCreate} />;
+  return (
+    <>
+      <Helmet title={'Create Tag'} />
+      <TagCreateForm onCreate={onCreate} />
+    </>
+  );
 }
 
 export default CreateTag;

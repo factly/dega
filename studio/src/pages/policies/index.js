@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getPolicies } from '../../actions/policies';
 import deepEqual from 'deep-equal';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
+
 function Policies() {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'policies', action: 'get', spaces });
@@ -45,6 +47,7 @@ function Policies() {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Policies'} />
       <Row gutter={16} justify="end">
         <Link to="/members/policies/create">
           <Button

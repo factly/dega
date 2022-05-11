@@ -13,7 +13,7 @@ import (
 
 // post request body
 type post struct {
-	Title            string         `json:"title" validate:"required,min=3,max=150"`
+	Title            string         `json:"title" validate:"required,max=500"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
 	Excerpt          string         `json:"excerpt"`

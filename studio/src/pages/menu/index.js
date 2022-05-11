@@ -7,6 +7,7 @@ import { getMenus } from '../../actions/menu';
 import deepEqual from 'deep-equal';
 import getUserPermission from '../../utils/getUserPermission';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Menu() {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -43,6 +44,7 @@ function Menu() {
     <Loader />
   ) : (
     <Space direction="vertical">
+      <Helmet title={'Menu'} />
       <Row justify="end">
         <Link to="/website/menus/create">
           <Button

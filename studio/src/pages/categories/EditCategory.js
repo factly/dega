@@ -5,7 +5,7 @@ import { updateCategory, getCategory } from '../../actions/categories';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
-
+import { Helmet } from 'react-helmet';
 function EditCategory() {
   const history = useHistory();
   const { id } = useParams();
@@ -33,7 +33,13 @@ function EditCategory() {
       history.push(`/categories/${id}/edit`),
     );
   };
-  if (category) return <CategoryEditForm data={category} onCreate={onUpdate} />;
+  if (category)
+    return (
+      <>
+        <Helmet title={`${category?.name} - Edit Category`} />
+        <CategoryEditForm data={category} onCreate={onUpdate} />
+      </>
+    );
 }
 
 export default EditCategory;

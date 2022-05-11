@@ -289,8 +289,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     required: true,
                     message: 'Please input the title!',
                   },
-                  { min: 3, message: 'Title must be minimum 3 characters.' },
-                  { max: 150, message: 'Title must be maximum 150 characters.' },
+                  { max: 500, message: 'Title must be maximum 500 characters.' },
                 ]}
               >
                 <Input.TextArea
@@ -340,12 +339,12 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 <Form.Item
                   name="excerpt"
                   label="Excerpt"
-                  rules={[
-                    { min: 3, message: 'Title must be minimum 3 characters.' },
-                    { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
-                  ]}
+                  rules={[{ max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' }]}
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                </Form.Item>
+                <Form.Item name="subtitle" label="Subtitle">
+                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
                 </Form.Item>
                 <SlugInput />
                 <Form.Item name="published_date" label="Published Date">

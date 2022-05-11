@@ -4,6 +4,7 @@ import { getUsers } from '../../actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader';
+import { Helmet } from 'react-helmet';
 
 function Users() {
   const dispatch = useDispatch();
@@ -65,6 +66,7 @@ function Users() {
     <Loader />
   ) : (
     <Space direction={'vertical'}>
+      <Helmet title={'Users'} />
       <Table
         bordered
         columns={columns}
