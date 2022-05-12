@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -145,47 +146,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
-
-	mediumID := &category.MediumID
-	result.MediumID = &category.MediumID
+	updateMap := map[string]interface{}{
+		"updated_at": time.Now(),
+		"updated_by_id": uID,
+		"name": category.Name,
+		"slug": categorySlug,
+		"description": category.Description,
+		"html_description": description,
+		"medium_id": category.MediumID,
+		"is_featured": category.IsFeatured,
+		"meta_fields": category.MetaFields,
+		"meta": category.Meta,
+		"parent_id": category.ParentID,
+		"header_code": category.HeaderCode,
+		"footer_code": category.FooterCode,
+	} 
 	if category.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
 	}
 
-	parentID := &category.ParentID
 	if category.ParentID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"parent_id": nil}).Error
-		parentID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["parent_id"] = nil
 	}
 
-	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
-	err = tx.Model(&result).Updates(model.Category{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Name:            category.Name,
-		Slug:            categorySlug,
-		Description:     category.Description,
-		HTMLDescription: description,
-		ParentID:        parentID,
-		MediumID:        mediumID,
-		MetaFields:      category.MetaFields,
-		Meta:            category.Meta,
-		HeaderCode:      category.HeaderCode,
-		FooterCode:      category.FooterCode,
-	}).Preload("Medium").First(&result).Error
-
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
