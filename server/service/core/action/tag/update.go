@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -125,32 +126,27 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	mediumID := &tag.MediumID
+	updateMap := map[string]interface{}{
+		"updated_at":       time.Now(),
+		"updated_by_id":    uint(uID),
+		"name":             tag.Name,
+		"slug":             tagSlug,
+		"description":      tag.Description,
+		"html_description": description,
+		"meta_fields":      tag.MetaFields,
+		"meta":             tag.Meta,
+		"header_code":      tag.HeaderCode,
+		"footer_code":      tag.FooterCode,
+		"medium_id":        tag.MediumID,
+		"is_featured":      tag.IsFeatured,
+	}
 	result.MediumID = &tag.MediumID
 	if tag.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
 	}
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
-	err = tx.Model(&result).Updates(model.Tag{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Name:            tag.Name,
-		Slug:            tagSlug,
-		Description:     tag.Description,
-		HTMLDescription: description,
-		MetaFields:      tag.MetaFields,
-		Meta:            tag.Meta,
-		HeaderCode:      tag.HeaderCode,
-		FooterCode:      tag.FooterCode,
-		MediumID:        mediumID,
-	}).Preload("Medium").First(&result).Error
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
