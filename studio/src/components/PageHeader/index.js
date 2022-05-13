@@ -11,7 +11,7 @@ function PageHeader() {
   const location = useLocation();
   const history = useHistory();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
-  const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0];
+  const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0]==="website"&&pathSnippets[1]==="menus"?pathSnippets[1]:pathSnippets[0]
 
   const isBreadCrumbsHidden =
     (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
