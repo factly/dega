@@ -175,21 +175,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updateMap := map[string]interface{}{
-		"base":             config.Base{UpdatedByID: uint(uID)},
-		"title":            post.Title,
-		"slug":             postSlug,
-		"subtitle":         post.Subtitle,
-		"excerpt":          post.Excerpt,
-		"description":      post.Description,
-		"html_description":  description,
-		"is_highlighted":    post.IsHighlighted,
-		"is_sticky":         post.IsSticky,
-		"format_id":         post.FormatID,
+		"updated_at":         time.Now(),
+		"updated_by_id":      uint(uID),
+		"title":              post.Title,
+		"slug":               postSlug,
+		"subtitle":           post.Subtitle,
+		"excerpt":            post.Excerpt,
+		"description":        post.Description,
+		"html_description":   description,
+		"is_highlighted":     post.IsHighlighted,
+		"is_sticky":          post.IsSticky,
+		"format_id":          post.FormatID,
 		"featured_medium_id": post.FeaturedMediumID,
-		"meta":             post.Meta,
-		"header_code":       post.HeaderCode,
-		"footer_code":       post.FooterCode,
-		"meta_fields":       post.MetaFields,
+		"meta":               post.Meta,
+		"header_code":        post.HeaderCode,
+		"footer_code":        post.FooterCode,
+		"meta_fields":        post.MetaFields,
 	}
 
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID

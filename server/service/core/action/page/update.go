@@ -170,7 +170,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"description":      page.Description,
 		"html_description":  description,
 		"is_highlighted":    page.IsHighlighted,
-		"Is_sticky":         page.IsSticky,
+		"is_sticky":         page.IsSticky,
 		"format_id":         page.FormatID,
 		"featured_medium_id": page.FeaturedMediumID,
 		"meta":             page.Meta,
