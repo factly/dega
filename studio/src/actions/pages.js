@@ -20,31 +20,31 @@ export const getPages = (query) => {
     dispatch(loadingPages());
     const params = new URLSearchParams();
 
-    if (query.category && query.category.length > 0) {
+    if (query?.category && query?.category?.length > 0) {
       query.category.map((each) => params.append('category', each));
     }
-    if (query.tag && query.tag.length > 0) {
+    if (query?.tag && query?.tag.length > 0) {
       query.tag.map((each) => params.append('tag', each));
     }
-    if (query.format && query.format.length > 0) {
+    if (query?.format && query?.format.length > 0) {
       query.format.map((each) => params.append('format', each));
     }
-    if (query.page) {
+    if (query?.page) {
       params.append('page', query.page);
     }
-    if (query.limit) {
+    if (query?.limit) {
       params.append('limit', query.limit);
     }
-    if (query.sort) {
+    if (query?.sort) {
       params.append('sort', query.sort);
     }
-    if (query.q) {
+    if (query?.q) {
       params.append('q', query.q);
     }
-    if (query.status) {
+    if (query?.status) {
       params.append('status', query.status);
     }
-    if (query.author) {
+    if (query?.author) {
       query.author.map((each) => params.append('author', each));
     }
 

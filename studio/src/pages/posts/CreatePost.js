@@ -1,7 +1,7 @@
 import React from 'react';
 import PostForm from './components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../../actions/posts';
+import { addPost, getPosts } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +18,17 @@ function CreatePost({ formats }) {
       if (post && post.id) history.push(`/posts/${post.id}/edit`);
     });
   };
+
+  const fetchPosts = () => {
+    dispatch(getPosts())
+  }
+
+  React.useEffect(() => {
+    fetchPosts();
+    // eslint-disable-next-line
+  }, [dispatch])
+
+
   if (!formats.loading && formats.article) {
     return (
       <>

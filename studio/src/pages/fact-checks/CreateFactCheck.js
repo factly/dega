@@ -1,7 +1,7 @@
 import React from 'react';
 import FactCheckForm from './components/FactCheckForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPost } from '../../actions/posts';
+import { addPost, getPosts } from '../../actions/posts';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
@@ -14,9 +14,18 @@ function CreateFactCheck({ formats }) {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addPost(values)).then((post) => {
-      if (post && post.id) history.push(`/fact-checks/${post.id}/edit`);
+      if (post && post.id) history.replace(`/fact-checks/${post.id}/edit`);
     });
   };
+
+  const fetchPosts = () => {
+    dispatch(getPosts())
+  }
+
+  React.useEffect(() => {
+    fetchPosts();
+    // eslint-disable-next-line
+  }, [dispatch])
 
   if (!formats.loading && formats.factcheck) {
     return (

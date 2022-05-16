@@ -1,7 +1,7 @@
 import React from 'react';
 import PageForm from '../posts/components/PostForm';
 import { useDispatch, useSelector } from 'react-redux';
-import { addPage } from '../../actions/pages';
+import { addPage, getPages } from '../../actions/pages';
 import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +18,16 @@ function CreatePage({ formats }) {
       if (page && page.id) history.push(`/pages/${page.id}/edit`);
     });
   };
+
+  const fetchPages = () => {
+    dispatch(getPages())
+  }
+
+  React.useEffect(() => {
+    fetchPages();
+    // eslint-disable-next-line
+  }, [dispatch])
+
   if (!formats.loading && formats.article) {
     return (
       <>
