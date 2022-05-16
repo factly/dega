@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
+function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
   const dispatch = useDispatch();
   const columns = [
     {
@@ -76,8 +76,7 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
           total: data.total,
           current: filters.page,
           pageSize: filters.limit,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
         }}
       />
     </Space>
