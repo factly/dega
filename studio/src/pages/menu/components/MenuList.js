@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { deleteMenu } from '../../../actions/menu';
 import { Space, Button, Popconfirm, Table } from 'antd';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
@@ -38,7 +38,7 @@ function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() =>
-              dispatch(deleteMenu(menus[0].id)).then(() => {
+              dispatch(deleteMenu(data.menus[0].id)).then(() => {
                 fetchMenus();
                 window.location.reload();
               })
