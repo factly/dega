@@ -106,10 +106,13 @@ function PageHeader() {
       )
     );
   };
+
   if (
     (state[entity] && !state[entity].loading) ||
-    ['members', 'advanced', 'website', 'admin'].includes(entity)
+    ['members', 'advanced', 'website', 'admin'].includes(entity) ||
+    location.pathname.split("/").pop() === 'create'
   )
+  
     return (
       <AntPageHeader
         ghost={false}
