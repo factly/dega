@@ -179,8 +179,6 @@ server/config.*
 # Coverage
 coverage
 
-# Companion
-/companion
 
 api/server
 server/server
