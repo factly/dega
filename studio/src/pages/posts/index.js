@@ -53,8 +53,9 @@ function Posts({ formats }) {
   };
   const history = useHistory();
 
-  const keys = ['format', 'page', 'limit', 'q', 'sort', 'tag', 'category', 'author', , 'status'];
+  const keys = ['format', 'page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
   const params = getUrlParams(query, keys);
+
   if (formats && !formats.loading && formats.article) {
     params['format'] = [formats.article.id];
   }
