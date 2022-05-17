@@ -159,11 +159,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setVisible(false);
-    setClaimID(0);
-  };
-
   const handleCancel = () => {
     setVisible(false);
     setClaimID(0);
@@ -219,9 +214,8 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       />
       {visible && (
         <Modal 
-          visible={visible} 
-          onOk={handleOk} 
-          onCancel={handleCancel} 
+          visible={visible}
+          onCancel={handleCancel}  
           maskClosable={false}
           footer={null}
         >
