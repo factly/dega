@@ -189,6 +189,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           pageSize: filters.limit ? filters.limit : 10,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

@@ -66,6 +66,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

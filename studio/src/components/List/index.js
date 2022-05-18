@@ -205,6 +205,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,
           onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>
