@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, List, Card } from 'antd';
 import { Link } from 'react-router-dom';
 
-function MediumList({ data, filters, setFilters, fetchMedia }) {
+function MediumList({ data, filters, setFilters }) {
   return (
     <Space direction={'vertical'}>
       <List
@@ -19,8 +19,10 @@ function MediumList({ data, filters, setFilters, fetchMedia }) {
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) => 
-            setFilters({ ...filters, page: pageNumber ? pageNumber : 1, limit: pageSize })
+          onChange: (pageNumber, pageSize) => {
+            setFilters({ ...filters, page: pageNumber || 1, limit: pageSize });
+          },
+          pageSizeOptions: ['10', '15', '20'],
         }}
         dataSource={data.media}
         renderItem={(item) => (

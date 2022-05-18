@@ -78,6 +78,7 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>
