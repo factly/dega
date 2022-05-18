@@ -118,7 +118,10 @@ function Selector({
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
       onPopupScroll={(e) => {
-        if (e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight) {
+        if (
+          e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
+          e.target.scrollTop + e.target.offsetHeight >= e.target.scrollHeight - 16
+        ) {
           if (details.length < total) {
             setQuery({ ...query, page: query.page + 1 });
           }

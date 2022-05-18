@@ -38,7 +38,7 @@ const AccountMenu = () => {
           description: 'Unable to logout',
         });
       });
-  }
+  };
 
   const accountMenu = (
     <Menu>
@@ -48,7 +48,7 @@ const AccountMenu = () => {
         </Link>
       </Menu.Item>
       <Menu.Item key="logout">
-        <Button onClick={handleLogout} icon={<LogoutOutlined/>} danger>
+        <Button onClick={handleLogout} icon={<LogoutOutlined />} danger>
           Logout
         </Button>
       </Menu.Item>

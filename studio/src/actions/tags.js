@@ -14,9 +14,9 @@ import getError from '../utils/getError';
 // action to fetch tags
 export const getTags = (query) => {
   return (dispatch, getState) => {
-    const currentSpaceID = getState().spaces?.selected
-    if(currentSpaceID===0){
-      return 
+    const currentSpaceID = getState().spaces?.selected;
+    if (currentSpaceID === 0) {
+      return;
     }
     dispatch(loadingTags());
     return axios

@@ -15,9 +15,9 @@ import getError from '../utils/getError';
 // action to fetch all categories
 export const getCategories = (query) => {
   return (dispatch, getState) => {
-    const currentSpaceID = getState().spaces?.selected
-    if(currentSpaceID===0){
-      return 
+    const currentSpaceID = getState().spaces?.selected;
+    if (currentSpaceID === 0) {
+      return;
     }
     dispatch(loadingCategories());
     return axios

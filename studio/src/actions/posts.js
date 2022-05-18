@@ -18,9 +18,9 @@ import getError from '../utils/getError';
 
 export const getPosts = (query) => {
   return (dispatch, getState) => {
-    const currentSpaceID = getState().spaces?.selected
-    if(currentSpaceID===0){
-      return 
+    const currentSpaceID = getState().spaces?.selected;
+    if (currentSpaceID === 0) {
+      return;
     }
     dispatch(loadingPosts());
 
