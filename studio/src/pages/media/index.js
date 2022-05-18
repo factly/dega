@@ -118,7 +118,6 @@ function Media({ permission }) {
         data={{ media: media, total: total, loading: loading }}
         filters={filters}
         setFilters={setFilters}
-        fetchMedia={fetchMedia}
       />
     </Space>
   );

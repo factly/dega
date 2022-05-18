@@ -73,6 +73,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+        pageSizeOptions: ['10', '15', '20'],
       }}
     />
   );

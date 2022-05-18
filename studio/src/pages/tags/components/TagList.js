@@ -63,6 +63,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>
