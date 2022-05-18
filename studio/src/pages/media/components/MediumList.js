@@ -19,8 +19,8 @@ function MediumList({ data, filters, setFilters, fetchMedia }) {
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          onChange: (pageNumber, pageSize) => 
+            setFilters({ ...filters, page: pageNumber ? pageNumber : 1, limit: pageSize })
         }}
         dataSource={data.media}
         renderItem={(item) => (
