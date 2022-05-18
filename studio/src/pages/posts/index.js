@@ -136,7 +136,7 @@ function Posts({ formats }) {
     });
   };
 
-  return formats.loading || loading ? (
+  return formats.loading ? (
     <Loader />
   ) : formats.article ? (
     <Space direction="vertical">
