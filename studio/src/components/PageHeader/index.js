@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useHistory } from 'react-router-dom';
 import { PageHeader as AntPageHeader } from 'antd';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
@@ -9,8 +9,14 @@ import { useSelector } from 'react-redux';
 function PageHeader() {
   const state = useSelector((state) => state);
   const location = useLocation();
+  const history = useHistory();
   const pathSnippets = location.pathname.split('/').filter((i) => i);
-  const entity = pathSnippets[0] === 'fact-checks' ? 'posts' : pathSnippets[0];
+  const entity =
+    pathSnippets[0] === 'fact-checks'
+      ? 'posts'
+      : pathSnippets[0] === 'website' && pathSnippets[1] === 'menus'
+      ? pathSnippets[1]
+      : pathSnippets[0];
 
   const isBreadCrumbsHidden =
     (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
@@ -77,6 +83,13 @@ function PageHeader() {
 
   const handleOnBack = () => {
     if (isBreadCrumbsHidden) {
+      if (
+        ['posts', 'fact-checks', 'pages'].includes(pathSnippets[0]) &&
+        pathSnippets[2] === 'edit'
+      ) {
+        history.push('/' + pathSnippets[0]);
+        return;
+      }
       window.history.back();
     }
     return null;
@@ -106,9 +119,11 @@ function PageHeader() {
       )
     );
   };
+
   if (
     (state[entity] && !state[entity].loading) ||
-    ['members', 'advanced', 'website', 'admin'].includes(entity)
+    ['members', 'advanced', 'website', 'admin'].includes(entity) ||
+    location.pathname.split('/').pop() === 'create'
   )
     return (
       <AntPageHeader

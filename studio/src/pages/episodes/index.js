@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import { getEpisodes } from '../../actions/episodes';
 import getUrlParams from '../../utils/getUrlParams';
 import Selector from '../../components/Selector';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Episodes({ permission }) {
@@ -89,7 +90,9 @@ function Episodes({ permission }) {
     });
     setFilters(filterValue);
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Episodes'} />
       <Form

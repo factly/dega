@@ -156,12 +156,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "tag",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
+		"id":                result.ID,
+		"kind":              "tag",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"description":       result.Description,
+		"background_colour": result.BackgroundColour,
+		"space_id":          result.SpaceID,
 	}
 
 	if config.SearchEnabled() {

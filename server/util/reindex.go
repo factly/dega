@@ -51,21 +51,24 @@ func ReindexAllEntities(spaceID uint) error {
 
 func AddPosts(spaceID uint) error {
 	posts := make([]model.Post, 0)
-	tx := config.DB.Model(&model.Post{}).Preload("Format").Preload("Tags").Preload("Categories")
+	tx := config.DB.Begin()
+	err := config.DB.Model(&model.Post{}).Where(&model.Post{
+		SpaceID: spaceID,
+	}).Preload("Format").Preload("Tags").Preload("Categories").Find(&posts).Error
 
-	if spaceID > 0 {
-		tx.Where("space_id IN (?)", spaceID)
+	if err!=nil{
+		tx.Rollback();
+		return err
 	}
-	tx.Find(&posts)
 
 	postAuthorMap := make(map[uint][]uint)
 	postAuthors := make([]model.PostAuthor, 0)
 
-	tx.Model(&model.PostAuthor{})
-	if spaceID > 0 {
-		tx.Where("space_id IN (?)", spaceID)
+	err = tx.Model(&model.PostAuthor{}).Find(&postAuthors).Error
+	if err!=nil{
+		tx.Rollback()
+		return err
 	}
-	tx.Find(&postAuthors)
 
 	for _, pa := range postAuthors {
 		postAuthorMap[pa.PostID] = append(postAuthorMap[pa.PostID], pa.AuthorID)
@@ -74,12 +77,11 @@ func AddPosts(spaceID uint) error {
 	postClaimsMap := make(map[uint][]uint)
 	postClaims := make([]factCheckModel.PostClaim, 0)
 
-	tx.Model(&factCheckModel.PostClaim{})
-	if spaceID > 0 {
-		tx.Where("space_id IN (?)", spaceID)
+	err = tx.Model(&factCheckModel.PostClaim{}).Find(&postClaims).Error
+	if err!=nil{
+		tx.Rollback()
+		return err
 	}
-	tx.Find(&postClaims)
-
 	for _, pc := range postClaims {
 		postClaimsMap[pc.PostID] = append(postClaimsMap[pc.PostID], pc.ClaimID)
 	}
@@ -136,8 +138,8 @@ func AddPosts(spaceID uint) error {
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliPostObjects)
-
+	_, err = meilisearchx.Client.Documents("dega").AddOrUpdate(meiliPostObjects)
+	tx.Commit();
 	return err
 }
 
@@ -198,11 +200,15 @@ func AddTags(spaceID uint) error {
 
 func AddMedium(spaceID uint) error {
 	medium := make([]model.Medium, 0)
-	tx := config.DB.Model(&model.Medium{})
-	if spaceID > 0 {
-		tx.Where("space_id IN (?)", spaceID)
+	tx := config.DB.Begin()
+	err := config.DB.Model(&model.Medium{}).Where(&model.Medium{
+		SpaceID: spaceID,
+	}).Find(&medium).Error
+	
+	if err!=nil{
+		tx.Rollback()
+		return err
 	}
-	tx.Find(&medium)
 
 	meiliMediumObjects := make([]map[string]interface{}, 0)
 	for _, m := range medium {
@@ -220,8 +226,8 @@ func AddMedium(spaceID uint) error {
 		meiliMediumObjects = append(meiliMediumObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliMediumObjects)
-
+	_, err = meilisearchx.Client.Documents("dega").AddOrUpdate(meiliMediumObjects)
+	tx.Commit()
 	return err
 }
 

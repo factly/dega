@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getClaimants } from '../../actions/claimants';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Claimants({ permission }) {
@@ -53,7 +54,9 @@ function Claimants({ permission }) {
   const fetchClaimants = () => {
     dispatch(getClaimants(filters));
   };
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Claimants'} />
       <Form

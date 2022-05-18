@@ -8,6 +8,7 @@ import deepEqual from 'deep-equal';
 import Selector from '../../components/Selector';
 import { getClaims } from '../../actions/claims';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Claims({ permission }) {
@@ -95,7 +96,9 @@ function Claims({ permission }) {
     setFilters(filterValue);
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Claims'} />
       <Form

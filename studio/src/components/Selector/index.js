@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
@@ -21,6 +21,7 @@ function Selector({
     page: 1,
     limit: 5,
   });
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
 
   if (!value) {
@@ -37,8 +38,10 @@ function Selector({
 
   const onSearch = (value) => {
     if (value) {
+      setSearchValue(value);
       setQuery({ ...query, q: value });
     } else {
+      setSearchValue('');
       setQuery({ page: query.page });
     }
   };
@@ -99,13 +102,14 @@ function Selector({
 
   return (
     <Select
-      allowClear={mode === 'mutliple' ? false : true}
+      allowClear={true}
       bordered
       listHeight={128}
       loading={loading}
       mode={mode}
       defaultValue={value}
       style={style}
+      searchValue={searchValue}
       value={value}
       placeholder={placeholder}
       onChange={(values) => onChange(values)}
@@ -114,7 +118,10 @@ function Selector({
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
       onPopupScroll={(e) => {
-        if (e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight) {
+        if (
+          e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
+          e.target.scrollTop + e.target.offsetHeight >= e.target.scrollHeight - 16
+        ) {
           if (details.length < total) {
             setQuery({ ...query, page: query.page + 1 });
           }
@@ -132,10 +139,10 @@ function Selector({
             }}
             onClick={() =>
               dispatch(
-                selectorType['add' + createEntity]({
+                selectorType['create' + createEntity]({
                   name: query.q.trim(),
                 }),
-              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true))
+              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(''))
             }
           >
             Create a {createEntity} '{query.q}'
@@ -148,6 +155,7 @@ function Selector({
         ) : null
       }
       getPopupContainer={(trigger) => trigger.parentNode}
+      autoClearSearchValue={true}
     >
       {details.map((item) => (
         <Select.Option value={item.id} key={entity + item.id}>

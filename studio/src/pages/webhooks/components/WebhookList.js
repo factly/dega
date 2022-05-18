@@ -1,39 +1,12 @@
 import React from 'react';
 import { Popconfirm, Button, Table, Tooltip } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getWebhooks, deleteWebhook } from '../../../actions/webhooks';
+import { useDispatch } from 'react-redux';
+import { deleteWebhook } from '../../../actions/webhooks';
 import { Link } from 'react-router-dom';
-import deepEqual from 'deep-equal';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function WebhookList({ actions }) {
+function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
   const dispatch = useDispatch();
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  const { webhooks, total, loading } = useSelector((state) => {
-    const node = state.webhooks.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        webhooks: node.data.map((element) => state.webhooks.details[element]),
-        total: node.total,
-        loading: state.webhooks.loading,
-      };
-    return { webhooks: [], total: 0, loading: state.webhooks.loading };
-  });
-
-  React.useEffect(() => {
-    fetchWebhooks();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchWebhooks = () => {
-    dispatch(getWebhooks(filters));
-  };
 
   const columns = [
     {
@@ -102,14 +75,15 @@ function WebhookList({ actions }) {
     <Table
       bordered
       columns={columns}
-      dataSource={webhooks}
-      loading={loading}
+      dataSource={data.webhooks}
+      loading={data.loading}
       rowKey={'id'}
       pagination={{
-        total: total,
+        total: data.total,
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+        pageSizeOptions: ['10', '15', '20'],
       }}
     />
   );

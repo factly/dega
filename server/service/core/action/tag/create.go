@@ -104,17 +104,18 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Tag{
-		Name:            tag.Name,
-		Slug:            slugx.Approve(&config.DB, tagSlug, sID, tableName),
-		Description:     tag.Description,
-		HTMLDescription: description,
-		SpaceID:         uint(sID),
-		MediumID:        mediumID,
-		IsFeatured:      tag.IsFeatured,
-		MetaFields:      tag.MetaFields,
-		Meta:            tag.Meta,
-		HeaderCode:      tag.HeaderCode,
-		FooterCode:      tag.FooterCode,
+		Name:             tag.Name,
+		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
+		BackgroundColour: tag.BackgroundColour,
+		Description:      tag.Description,
+		HTMLDescription:  description,
+		SpaceID:          uint(sID),
+		MediumID:         mediumID,
+		IsFeatured:       tag.IsFeatured,
+		MetaFields:       tag.MetaFields,
+		Meta:             tag.Meta,
+		HeaderCode:       tag.HeaderCode,
+		FooterCode:       tag.FooterCode,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
@@ -131,12 +132,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "tag",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
+		"id":                result.ID,
+		"kind":              "tag",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"background_colour": result.BackgroundColour,
+		"description":       result.Description,
+		"space_id":          result.SpaceID,
 	}
 
 	if config.SearchEnabled() {

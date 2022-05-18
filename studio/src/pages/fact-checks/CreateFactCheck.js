@@ -14,7 +14,7 @@ function CreateFactCheck({ formats }) {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(addPost(values)).then((post) => {
-      if (post && post.id) history.push(`/fact-checks/${post.id}/edit`);
+      if (post && post.id) history.replace(`/fact-checks/${post.id}/edit`);
     });
   };
 

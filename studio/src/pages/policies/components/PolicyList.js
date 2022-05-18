@@ -2,42 +2,12 @@ import React from 'react';
 import { Popconfirm, Button, Typography, Table, Avatar, Tooltip } from 'antd';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getPolicies, deletePolicy } from '../../../actions/policies';
-import { Link, useLocation } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { deletePolicy } from '../../../actions/policies';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function PolicyList({ actions }) {
+function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  query.set('page', filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  const { policies, total, loading } = useSelector((state) => {
-    const node = state.policies.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        policies: node.data.map((element) => state.policies.details[element]),
-        total: node.total,
-        loading: state.policies.loading,
-      };
-    return { policies: [], total: 0, loading: state.policies.loading };
-  });
-
-  React.useEffect(() => {
-    fetchPolicies();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchPolicies = () => {
-    dispatch(getPolicies(filters));
-  };
 
   const columns = [
     {
@@ -116,14 +86,15 @@ function PolicyList({ actions }) {
     <Table
       bordered
       columns={columns}
-      dataSource={policies}
-      loading={loading}
+      dataSource={data.policies}
+      loading={data.loading}
       rowKey={'name'}
       pagination={{
-        total: total,
+        total: data.total,
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+        pageSizeOptions: ['10', '15', '20'],
       }}
     />
   );

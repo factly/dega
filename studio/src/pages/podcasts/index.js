@@ -9,6 +9,7 @@ import { getPodcasts } from '../../actions/podcasts';
 import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Selector from '../../components/Selector';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 
 function Podcasts({ permission }) {
@@ -93,7 +94,9 @@ function Podcasts({ permission }) {
     setFilters(filterValue);
   };
 
-  return (
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Podcasts'} />
       <Form

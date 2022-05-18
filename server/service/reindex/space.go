@@ -49,31 +49,30 @@ func space(w http.ResponseWriter, r *http.Request) {
 
 	res, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
 		Filters: "space_id=" + fmt.Sprint(sID),
+		Limit:   100000,
 	})
 
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 
 	hits := res.Hits
 
-	if len(hits) == 0 {
-		renderx.JSON(w, http.StatusOK, nil)
-		return
-	}
+	if len(hits) > 0 {
 
-	objectIDs := make([]string, 0)
+		objectIDs := make([]string, 0)
 
-	for _, hit := range hits {
-		obj := hit.(map[string]interface{})
-		objectIDs = append(objectIDs, obj["object_id"].(string))
-	}
+		for _, hit := range hits {
+			obj := hit.(map[string]interface{})
+			objectIDs = append(objectIDs, obj["object_id"].(string))
+		}
 
-	_, err = meilisearchx.Client.Documents("dega").Deletes(objectIDs)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+		_, err = meilisearchx.Client.Documents("dega").Deletes(objectIDs)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	if err = util.ReindexAllEntities(uint(sID)); err != nil {

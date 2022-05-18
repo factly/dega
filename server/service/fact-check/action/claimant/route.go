@@ -9,7 +9,7 @@ import (
 
 // claimant model
 type claimant struct {
-	Name        string         `json:"name" validate:"required,min=3,max=50"`
+	Name        string         `json:"name" validate:"required,max=500"`
 	Slug        string         `json:"slug"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	TagLine     string         `json:"tag_line"`

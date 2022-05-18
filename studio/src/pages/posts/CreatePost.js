@@ -15,7 +15,7 @@ function CreatePost({ formats }) {
 
   const onCreate = (values) => {
     dispatch(addPost(values)).then((post) => {
-      if (post && post.id) history.push(`/posts/${post.id}/edit`);
+      if (post && post.id) history.replace(`/posts/${post.id}/edit`);
     });
   };
   if (!formats.loading && formats.article) {

@@ -17,7 +17,7 @@ import {
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
@@ -32,13 +32,18 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [status, setStatus] = useState(data.status ? data.status : 'draft');
   const dispatch = useDispatch();
   const [valueChange, setValueChange] = React.useState(false);
-
   const [metaDrawer, setMetaDrawer] = React.useState(false);
-
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
+
+  // const { tags, loading } = useSelector((state) => {
+  //   return {
+  //     tags: tagIDs?.length ? tagIDs.map((id) => state.tags.details[id]) : [],
+  //     loading: state.tags.loading
+  //   }
+  // })
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -46,7 +51,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const handleSchemaModalOk = () => {
     setIsModalVisible(false);
   };
-
   const handleSchemaModalCancel = () => {
     setIsModalVisible(false);
   };
@@ -215,8 +219,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     required: true,
                     message: 'Please input the title!',
                   },
-                  { min: 3, message: 'Title must be minimum 3 characters.' },
-                  { max: 150, message: 'Title must be maximum 150 characters.' },
+                  { max: 500, message: 'Title must be maximum 500 characters.' },
                 ]}
               >
                 <Input.TextArea
@@ -232,6 +235,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
+
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
@@ -251,11 +255,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name="featured_medium_id" label="Featured Image">
                   <MediaSelector />
                 </Form.Item>
+
                 <Form.Item
                   name="excerpt"
                   label="Excerpt"
                   rules={[
-                    { min: 3, message: 'Title must be minimum 3 characters.' },
                     { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
                     {
                       message: 'Add Excerpt',
@@ -264,6 +268,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
+
+                <Form.Item name="subtitle" label="Subtitle">
+                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                </Form.Item>
                 <SlugInput />
                 <Form.Item name="published_date" label="Published Date">
                   <DatePicker />
@@ -271,7 +279,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 <Form.Item name="categories" label="Categories">
                   <Selector mode="multiple" action="Categories" createEntity="Category" />
                 </Form.Item>
-
                 <Form.Item name="tags" label="Tags">
                   <Selector mode="multiple" action="Tags" createEntity="Tag" />
                 </Form.Item>

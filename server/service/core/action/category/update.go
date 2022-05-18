@@ -147,20 +147,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	updateMap := map[string]interface{}{
-		"updated_at": time.Now(),
-		"updated_by_id": uID,
-		"name": category.Name,
-		"slug": categorySlug,
-		"description": category.Description,
+		"updated_at":       time.Now(),
+		"updated_by_id":    uID,
+		"name":             category.Name,
+		"slug":             categorySlug,
+		"description":      category.Description,
 		"html_description": description,
-		"medium_id": category.MediumID,
-		"is_featured": category.IsFeatured,
-		"meta_fields": category.MetaFields,
-		"meta": category.Meta,
-		"parent_id": category.ParentID,
-		"header_code": category.HeaderCode,
-		"footer_code": category.FooterCode,
-	} 
+		"medium_id":        category.MediumID,
+		"is_featured":      category.IsFeatured,
+		"meta_fields":      category.MetaFields,
+		"meta":             category.Meta,
+		"parent_id":        category.ParentID,
+		"header_code":      category.HeaderCode,
+		"footer_code":      category.FooterCode,
+	}
 	if category.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}
@@ -179,13 +179,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "category",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"space_id":    result.SpaceID,
-		"meta_fields": result.MetaFields,
+		"id":                result.ID,
+		"kind":              "category",
+		"name":              result.Name,
+		"slug":              result.Slug,
+		"description":       result.Description,
+		"background_colour": result.BackgroundColour,
+		"space_id":          result.SpaceID,
+		"meta_fields":       result.MetaFields,
 	}
 
 	if config.SearchEnabled() {

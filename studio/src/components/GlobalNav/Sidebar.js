@@ -32,16 +32,13 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     }
   }
   const { navTheme } = useSelector((state) => state.settings);
-
   const [showCoreMenu, setCoreMenu] = useState(false);
-
   const onCollapse = (collapsed) => {
     collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };
   if (loading) {
     return null;
   }
-
   let resource = [
     'home',
     'dashboard',
@@ -52,7 +49,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'users',
     'spaces',
   ];
-
   let protectedResources = [
     'posts',
     'pages',
@@ -81,7 +77,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     borderRadius: '50px',
     padding: '0.25rem 0.5rem',
   };
-
   permission.forEach((each) => {
     if (each.resource === 'admin') {
       resource = resource.concat(protectedResources);
@@ -95,9 +90,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
       resource.push(each.resource);
     }
   });
-
   if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
-
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
@@ -117,7 +110,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         )
       ) : null;
     });
-
   return (
     <Sider
       breakpoint="xl"
@@ -154,7 +146,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         </Link>
         <Search collapsed={collapsed} />
       </div>
-
       <Menu
         theme={navTheme}
         mode="inline"
@@ -282,5 +273,4 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     </Sider>
   );
 }
-
 export default Sidebar;

@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/service/core/action/user"
+	"github.com/factly/dega-server/util"
 	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
@@ -43,7 +44,8 @@ type application struct {
 
 type spaceWithPermissions struct {
 	model.Space
-	Permissions []model.Permission `json:"permissions"`
+	Permissions     []model.Permission `json:"permissions"`
+	AllowedServices []string           `json:"services"`
 }
 
 // list - Get all spaces for a user
@@ -125,17 +127,26 @@ func my(w http.ResponseWriter, r *http.Request) {
 		spaceWithPermArr := []spaceWithPermissions{}
 		for _, space := range allSpaces {
 			if space.OrganisationID == int(each.ID) {
+				var services []string
+				services, err = util.GetAllowedServices(space.ID)
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.DBError()))
+					return
+				}
 				if each.Permission.Role != "owner" {
 					permissions := user.GetPermissions(int(each.ID), int(space.ID), uID, policyList)
 					spaceWithPerm := spaceWithPermissions{
-						Space:       space,
-						Permissions: permissions,
+						Space:           space,
+						Permissions:     permissions,
+						AllowedServices: services,
 					}
 					spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
 				} else {
 					adminSpaceWithPerm := spaceWithPermissions{
 						Space:       space,
 						Permissions: []model.Permission{adminPerm},
+						AllowedServices: services,
 					}
 					spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
 				}
