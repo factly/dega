@@ -10,6 +10,7 @@ import { getClaims } from '../../actions/claims';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 const { Option } = Select;
 
@@ -26,7 +27,7 @@ function Claims({ permission }) {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    if (form) form.setFieldsValue(params);
+    if (form) form.setFieldsValue(new Filters(params));
   }, [search]);
 
   useEffect(() => {
