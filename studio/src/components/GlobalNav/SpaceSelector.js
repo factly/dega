@@ -3,18 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Select, Avatar } from 'antd';
 import { setSelectedSpace } from '../../actions/spaces';
 import degaImg from '../../assets/dega.png';
-import { useHistory } from 'react-router-dom';
 
 const { Option, OptGroup } = Select;
 
 function SpaceSelector({ collapsed }) {
   const { orgs, details, selected } = useSelector((state) => state.spaces);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   const handleSpaceChange = (space) => {
     dispatch(setSelectedSpace(space));
-    history.push('/');
   };
 
   return (
