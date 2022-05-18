@@ -16,7 +16,11 @@ import { addFormats } from './formats';
 import getError from '../utils/getError';
 
 export const getPages = (query) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const currentSpaceID = getState().spaces?.selected
+    if(currentSpaceID===0){
+      return 
+    }
     dispatch(loadingPages());
     const params = new URLSearchParams();
 
