@@ -139,11 +139,10 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
           padding: collapsed ? '0 0.5rem' : '0 24px',
         }}
       >
-        <Link to="/">
-          <div className="menu-header" style={{}}>
-            <SpaceSelector collapsed={collapsed} />
-          </div>
-        </Link>
+        <div className="menu-header" style={{}}>
+          <SpaceSelector collapsed={collapsed} />
+        </div>
+
         <Search collapsed={collapsed} />
       </div>
       <Menu
