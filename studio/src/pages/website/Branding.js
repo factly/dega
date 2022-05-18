@@ -140,10 +140,7 @@ function Branding() {
               />
             </Form.Item>
             <Form.Item name={['social_media_urls', 'github']} label="Github">
-              <Input
-                style={{ width: '100%' }}
-                placeholder="https://github.com/factly/"
-              />
+              <Input style={{ width: '100%' }} placeholder="https://github.com/factly/" />
             </Form.Item>
             <Form.Item name={['social_media_urls', 'youtube']} label="Youtube">
               <Input
