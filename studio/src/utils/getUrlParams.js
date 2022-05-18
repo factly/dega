@@ -1,6 +1,10 @@
 function getUrlParams(query, filters) {
   const keys = filters ? filters : ['page', 'limit', 'q', 'sort'];
-  const params = {};
+  const params = {
+    sort: 'desc',
+    limit: 10,
+    page: 1,
+  };
   keys.forEach((key) => {
     if (query.get(key)) {
       if (
