@@ -40,6 +40,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deletePodcast(record.id)).then(() => fetchPodcasts())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

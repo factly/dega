@@ -59,6 +59,7 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteWebhook(record.id)).then(() => fetchWebhooks())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
