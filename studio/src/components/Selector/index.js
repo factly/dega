@@ -39,7 +39,7 @@ function Selector({
   const onSearch = (value) => {
     if (value) {
       setSearchValue(value);
-      setQuery({ ...query, q: value });
+      setQuery({ q: value, page: 1, limit: 5 });
     } else {
       setSearchValue('');
       setQuery({ page: query.page });
