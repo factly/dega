@@ -37,6 +37,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

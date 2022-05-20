@@ -52,6 +52,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

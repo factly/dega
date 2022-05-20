@@ -39,6 +39,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
