@@ -230,7 +230,7 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server:0.8.0
+    image: factly/kavach-server:0.23.0
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -247,6 +247,9 @@ services:
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_MODE=development
       - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
     restart: unless-stopped
     networks:
       - dega
@@ -256,7 +259,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server:0.8.0
+    image: factly/kavach-server:0.23.0
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -269,12 +272,20 @@ services:
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_MODE=development
       - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
     entrypoint: /app/kavach-server migrate
     networks:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:dev
+    image: factly/kavach-web:0.23.0-dev
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-web/config.js
+        target: /app/public/config.js
+
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
     restart: unless-stopped
