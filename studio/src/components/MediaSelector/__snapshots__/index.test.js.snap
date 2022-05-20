@@ -30,7 +30,7 @@ exports[`Media List component snapshot testing should match component with data 
             onClick={[Function]}
             type="primary"
           >
-            Confirm
+            Ok
           </ForwardRef(InternalButton)>,
         ]
       }
@@ -63,7 +63,7 @@ exports[`Media List component snapshot testing should match component with data 
               onClick={[Function]}
               type="primary"
             >
-              Confirm
+              Ok
             </ForwardRef(InternalButton)>,
           ]
         }
@@ -128,9 +128,11 @@ exports[`Media List component snapshot testing should match component with data 
                     }
                   }
                 >
-                  <Wave>
+                  <Wave
+                    disabled={false}
+                  >
                     <button
-                      className="ant-btn"
+                      className="ant-btn ant-btn-default"
                       onClick={[Function]}
                       style={
                         Object {
@@ -174,18 +176,22 @@ exports[`Media List component snapshot testing should match component with data 
                     Object {
                       "bottom": 0,
                       "left": 0,
+                      "maxWidth": "52px",
                       "position": "absolute",
                     }
                   }
                 >
-                  <Wave>
+                  <Wave
+                    disabled={false}
+                  >
                     <button
-                      className="ant-btn"
+                      className="ant-btn ant-btn-default"
                       onClick={[Function]}
                       style={
                         Object {
                           "bottom": 0,
                           "left": 0,
+                          "maxWidth": "52px",
                           "position": "absolute",
                         }
                       }
