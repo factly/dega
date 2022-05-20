@@ -172,6 +172,11 @@ exports[`Media List component snapshot testing should match component when loadi
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 2,
                     }
                   }
@@ -254,7 +259,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 }
                                               }
                                             >
-                                              <Card
+                                              <ForwardRef
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -310,7 +315,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                     }
                                                   />
                                                 </div>
-                                              </Card>
+                                              </ForwardRef>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -369,7 +374,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 }
                                               }
                                             >
-                                              <Card
+                                              <ForwardRef
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -425,7 +430,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                     }
                                                   />
                                                 </div>
-                                              </Card>
+                                              </ForwardRef>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -447,6 +452,13 @@ exports[`Media List component snapshot testing should match component when loadi
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={2}
                       >
                         <LocaleReceiver
@@ -459,7 +471,8 @@ exports[`Media List component snapshot testing should match component when loadi
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "",
+                              "page": "Page",
+                              "page_size": "Page Size",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -517,7 +530,8 @@ exports[`Media List component snapshot testing should match component when loadi
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "",
+                                "page": "Page",
+                                "page_size": "Page Size",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -535,6 +549,13 @@ exports[`Media List component snapshot testing should match component when loadi
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -667,7 +688,8 @@ exports[`Media List component snapshot testing should match component when loadi
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -792,7 +814,8 @@ exports[`Media List component snapshot testing should match component when loadi
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -802,9 +825,8 @@ exports[`Media List component snapshot testing should match component when loadi
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}
@@ -1009,6 +1031,11 @@ exports[`Media List component snapshot testing should match component with media
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 2,
                     }
                   }
@@ -1091,7 +1118,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 }
                                               }
                                             >
-                                              <Card
+                                              <ForwardRef
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -1147,7 +1174,7 @@ exports[`Media List component snapshot testing should match component with media
                                                     }
                                                   />
                                                 </div>
-                                              </Card>
+                                              </ForwardRef>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -1206,7 +1233,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 }
                                               }
                                             >
-                                              <Card
+                                              <ForwardRef
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -1262,7 +1289,7 @@ exports[`Media List component snapshot testing should match component with media
                                                     }
                                                   />
                                                 </div>
-                                              </Card>
+                                              </ForwardRef>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -1284,6 +1311,13 @@ exports[`Media List component snapshot testing should match component with media
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={2}
                       >
                         <LocaleReceiver
@@ -1296,7 +1330,8 @@ exports[`Media List component snapshot testing should match component with media
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "",
+                              "page": "Page",
+                              "page_size": "Page Size",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -1354,7 +1389,8 @@ exports[`Media List component snapshot testing should match component with media
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "",
+                                "page": "Page",
+                                "page_size": "Page Size",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -1372,6 +1408,13 @@ exports[`Media List component snapshot testing should match component with media
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -1504,7 +1547,8 @@ exports[`Media List component snapshot testing should match component with media
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -1629,7 +1673,8 @@ exports[`Media List component snapshot testing should match component with media
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -1639,9 +1684,8 @@ exports[`Media List component snapshot testing should match component with media
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}
@@ -1770,6 +1814,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 0,
                     }
                   }
@@ -1861,6 +1910,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={0}
                       >
                         <LocaleReceiver
@@ -1873,7 +1929,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "",
+                              "page": "Page",
+                              "page_size": "Page Size",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -1931,7 +1988,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "",
+                                "page": "Page",
+                                "page_size": "Page Size",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -1949,6 +2007,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -2070,7 +2135,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 </button>
                               </li>
                               <Pager
-                                className="ant-pagination-disabled"
+                                className="ant-pagination-item-disabled"
                                 itemRender={[Function]}
                                 key="noPager"
                                 locale={
@@ -2081,7 +2146,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -2089,21 +2155,21 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 }
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                page={0}
+                                page={1}
                                 rootPrefixCls="ant-pagination"
                                 showTitle={true}
                               >
                                 <li
-                                  className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
+                                  className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-disabled"
                                   onClick={[Function]}
                                   onKeyPress={[Function]}
                                   tabIndex="0"
-                                  title={0}
+                                  title={1}
                                 >
                                   <a
                                     rel="nofollow"
                                   >
-                                    0
+                                    1
                                   </a>
                                 </li>
                               </Pager>
@@ -2206,7 +2272,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "",
+                                    "page": "Page",
+                                    "page_size": "Page Size",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -2216,9 +2283,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}
