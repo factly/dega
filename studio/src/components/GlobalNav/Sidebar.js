@@ -9,11 +9,12 @@ import SpaceSelector from './SpaceSelector';
 import AccountMenu from './AccountMenu';
 import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Search from '../Search';
+import { maker } from '../../utils/sluger';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ superOrg, permission, orgs, loading, applications }) {
+function Sidebar({ superOrg, permission, orgs, loading, applications, services }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
 
@@ -110,6 +111,28 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         )
       ) : null;
     });
+
+  const getSubMenuItems = (menu, index, Icon) => (
+    <SubMenu key={index} title={menu.title} icon={<Icon />}>
+      {menu.submenu && menu.submenu.length > 0 ? (
+        <>
+          {menu.submenu.map((submenuItem, index) => {
+            return orgs[0]?.permission.role === 'owner' ? (
+              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                {getMenuItems(submenuItem.children, index, submenuItem.title)}
+              </SubMenu>
+            ) : (
+              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                {getMenuItems(submenuItem.children, index, submenuItem.title)}
+              </SubMenu>
+            );
+          })}
+        </>
+      ) : null}
+      {getMenuItems(menu.children, index, menu.title)}
+    </SubMenu>
+  );
+
   return (
     <Sider
       breakpoint="xl"
@@ -155,29 +178,17 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
       >
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
-          return menu.title === 'CORE' && !showCoreMenu ? null : (
-            <SubMenu key={index} title={menu.title} icon={<Icon />}>
-              {menu.submenu && menu.submenu.length > 0 ? (
-                <>
-                  {menu.submenu.map((submenuItem, index) => {
-                    return (
-                      // check with Harsha on roles and permissions
-                      orgs[0]?.permission.role === 'owner' ? (
-                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
-                        </SubMenu>
-                      ) : (
-                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
-                        </SubMenu>
-                      )
-                    );
-                  })}
-                </>
-              ) : null}
-              {getMenuItems(menu.children, index, menu.title)}
-            </SubMenu>
-          );
+          return menu.title === 'CORE' && !showCoreMenu
+            ? null
+            : !menu.isService
+            ? !menu.isAdmin
+              ? getSubMenuItems(menu, index, Icon)
+              : permission.filter((each) => each.resource === 'admin').length > 0
+              ? getSubMenuItems(menu, index, Icon)
+              : null
+            : services.includes(maker(menu.title))
+            ? getSubMenuItems(menu, index, Icon)
+            : null;
         })}
       </Menu>
       {!collapsed ? (
