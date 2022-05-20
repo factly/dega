@@ -16,7 +16,7 @@ function BasicLayout(props) {
   const { children } = props;
   const dispatch = useDispatch();
 
-  const { permission, orgs, loading, selected, applications } = useSelector((state) => {
+  const { permission, orgs, loading, selected, applications, services } = useSelector((state) => {
     const { selected, orgs, loading } = state.spaces;
 
     if (selected > 0) {
@@ -30,9 +30,17 @@ function BasicLayout(props) {
         orgs: orgs,
         loading: loading,
         selected: selected,
+        services: space.services,
       };
     }
-    return { orgs: orgs, loading: loading, permission: [], selected: selected, applications: [] };
+    return {
+      orgs: orgs,
+      loading: loading,
+      permission: [],
+      selected: selected,
+      applications: [],
+      services: ['core'],
+    };
   });
 
   const { type, message, description, time, redirect } = useSelector((state) => {
@@ -86,6 +94,7 @@ function BasicLayout(props) {
           loading={loading}
           superOrg={superOrg}
           applications={applications}
+          services={services}
         />
       )}
       <Layout style={{ background: '#fff' }}>
