@@ -108,7 +108,7 @@ function Claims({ permission }) {
         <Row justify="end" gutter={16}>
           <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
             <Form.Item name="q">
-              <Input placeholder="search post" />
+              <Input placeholder="search claims" />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit">Search</Button>
