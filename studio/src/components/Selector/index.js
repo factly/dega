@@ -159,7 +159,7 @@ function Selector({
     >
       {details.map((item) => (
         <Select.Option value={item.id} key={entity + item.id}>
-          {item[display]}
+          {item[display]?item[display]:(item['email']?item['email']:null)}
         </Select.Option>
       ))}
     </Select>

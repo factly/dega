@@ -45,7 +45,7 @@ function Posts({ formats }) {
               mode="multiple"
               action="Authors"
               placeholder="Filter Authors"
-              display={'email'}
+              display = 'display_name'
             />
           </Form.Item>
         </Col>,
