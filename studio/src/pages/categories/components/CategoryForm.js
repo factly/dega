@@ -120,7 +120,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item name="background_colour" label="Background Colour">
+              <Form.Item name="background_colour" label="Colour">
                 <div style={{ position: 'relative' }}>
                   <div
                     style={{
