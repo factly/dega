@@ -86,7 +86,7 @@ const TagForm = ({ onCreate, data = {} }) => {
                 <Form.Item label="Featured" name="is_featured" valuePropName="checked">
                   <Switch />
                 </Form.Item>
-                <Form.Item name="background_colour" label="Background Colour">
+                <Form.Item name="background_colour" label="Colour">
                   <div style={{ position: 'relative' }}>
                     <div
                       style={{
