@@ -14,24 +14,9 @@ import { maker } from '../../utils/sluger';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ superOrg, permission, orgs, loading, applications, services }) {
+function Sidebar({ superOrg, permission, orgs, loading, applications, services, menuKey }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
-
-  let key;
-  const location = useLocation();
-  const [enteredRoute, setRoute] = React.useState(null);
-  const [selectedmenu, setSelectedMenu] = React.useState('Dashboard.Home.0.0');
-  const pathSnippets = location.pathname.split('/').filter((i) => i);
-  var index;
-  for (index = 0; index < pathSnippets.length; index++) {
-    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-    const tempRoute = _.find(routes, { path: url });
-    if (tempRoute && enteredRoute === null) {
-      setRoute(tempRoute);
-      break;
-    }
-  }
   const { navTheme } = useSelector((state) => state.settings);
   const [showCoreMenu, setCoreMenu] = useState(false);
   const onCollapse = (collapsed) => {
@@ -97,13 +82,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
         route.isAdmin !== superOrg.is_admin ? null : (
-          <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
-            {
-              ((key = `${title}.${route.title}.${index}.${childIndex}`),
-              enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key
-                ? setSelectedMenu(key)
-                : null)
-            }
+          <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
             </Link>
@@ -174,7 +153,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
         className="slider-menu"
         defaultOpenKeys={['0', '1']}
         style={{ background: '#f0f2f5' }}
-        defaultSelectedKeys={[selectedmenu]}
+        selectedKeys={menuKey}
       >
         {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
