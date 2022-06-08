@@ -131,10 +131,10 @@ describe('media reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_MEDIUM', () => {
+  it('should handle GET_MEDIUM', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_MEDIUM,
+        type: types.GET_MEDIUM,
         payload: { id: 1, name: 'new medium' },
       }),
     ).toEqual({
@@ -143,7 +143,7 @@ describe('media reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_MEDIUM when details is non-empty', () => {
+  it('should handle GET_MEDIUM when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -152,7 +152,7 @@ describe('media reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_MEDIUM,
+          type: types.GET_MEDIUM,
           payload: { id: 2, name: 'new medium' },
         },
       ),
@@ -165,7 +165,7 @@ describe('media reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_MEDIUM when already exists', () => {
+  it('should handle UPDATE_MEDIUM when already exists', () => {
     expect(
       reducer(
         {
@@ -177,7 +177,7 @@ describe('media reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_MEDIUM,
+          type: types.UPDATE_MEDIUM,
           payload: { id: 2, name: 'updated medium' },
         },
       ),

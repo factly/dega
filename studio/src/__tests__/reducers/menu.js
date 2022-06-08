@@ -127,10 +127,10 @@ describe('Menu reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_MENU', () => {
+  it('should handle GET_MENU', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_MENU,
+        type: types.GET_MENU,
         payload: { id: 1, name: 'new menu' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('Menu reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_MENU when details is non-empty', () => {
+  it('should handle GET_MENU when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('Menu reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_MENU,
+          type: types.GET_MENU,
           payload: { id: 2, name: 'new menu' },
         },
       ),
@@ -161,7 +161,7 @@ describe('Menu reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_MENU when already exists', () => {
+  it('should handle UPDATE_MENU when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('Menu reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_MENU,
+          type: types.UPDATE_MENU,
           payload: { id: 2, name: 'updated menu' },
         },
       ),

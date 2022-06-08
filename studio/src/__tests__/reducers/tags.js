@@ -131,10 +131,10 @@ describe('tags reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_TAG', () => {
+  it('should handle GET_TAG', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_TAG,
+        type: types.GET_TAG,
         payload: { id: 1, name: 'new tag' },
       }),
     ).toEqual({
@@ -143,7 +143,7 @@ describe('tags reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_TAG when details is non-empty', () => {
+  it('should handle GET_TAG when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -152,7 +152,7 @@ describe('tags reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_TAG,
+          type: types.GET_TAG,
           payload: { id: 2, name: 'new tag' },
         },
       ),
@@ -165,7 +165,8 @@ describe('tags reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_TAG when already exists', () => {
+
+  it('should handle UPDATE_TAG when already exists', () => {
     expect(
       reducer(
         {
@@ -177,7 +178,7 @@ describe('tags reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_TAG,
+          type: types.UPDATE_TAG,
           payload: { id: 2, name: 'updated tag' },
         },
       ),

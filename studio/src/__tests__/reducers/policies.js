@@ -127,10 +127,10 @@ describe('policies reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_POLICY', () => {
+  it('should handle GET_POLICY', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_POLICY,
+        type: types.GET_POLICY,
         payload: { id: 1, name: 'new policy' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('policies reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_POLICY when details is non-empty', () => {
+  it('should handle GET_POLICY when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('policies reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_POLICY,
+          type: types.GET_POLICY,
           payload: { id: 2, name: 'new policy' },
         },
       ),
@@ -161,7 +161,7 @@ describe('policies reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_POLICY when already exists', () => {
+  it('should handle UPDATE_POLICY when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('policies reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_POLICY,
+          type: types.UPDATE_POLICY,
           payload: { id: 2, name: 'updated policy' },
         },
       ),

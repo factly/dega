@@ -127,10 +127,10 @@ describe('ratings reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_RATING', () => {
+  it('should handle GET_RATING', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_RATING,
+        type: types.GET_RATING,
         payload: { id: 1, name: 'new rating' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('ratings reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_RATING when details is non-empty', () => {
+  it('should handle GET_RATING when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('ratings reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_RATING,
+          type: types.GET_RATING,
           payload: { id: 2, name: 'new rating' },
         },
       ),
@@ -161,7 +161,7 @@ describe('ratings reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_RATING when already exists', () => {
+  it('should handle UPDATE_RATING when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('ratings reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_RATING,
+          type: types.UPDATE_RATING,
           payload: { id: 2, name: 'updated rating' },
         },
       ),
