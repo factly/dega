@@ -14,7 +14,8 @@ function PageHeader() {
   const entity =
     pathSnippets[0] === 'fact-checks'
       ? 'posts'
-      : pathSnippets[0] === 'website' && pathSnippets[1] === 'menus'
+      : (pathSnippets[0] === 'website' && pathSnippets[1] === 'menus') ||
+        (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'formats')
       ? pathSnippets[1]
       : pathSnippets[0];
 
