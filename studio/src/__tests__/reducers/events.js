@@ -127,10 +127,10 @@ describe('events reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_EVENT', () => {
+  it('should handle GET_EVENT', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_EVENT,
+        type: types.GET_EVENT,
         payload: { id: 1, name: 'new event' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('events reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_EVENT when details is non-empty', () => {
+  it('should handle GET_EVENT when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('events reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_EVENT,
+          type: types.GET_EVENT,
           payload: { id: 2, name: 'new event' },
         },
       ),
@@ -161,7 +161,7 @@ describe('events reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_EVENT when already exists', () => {
+  it('should handle UPDATE_EVENT when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('events reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_EVENT,
+          type: types.UPDATE_EVENT,
           payload: { id: 2, name: 'updated event' },
         },
       ),

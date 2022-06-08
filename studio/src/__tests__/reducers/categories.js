@@ -131,10 +131,10 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY', () => {
+  it('should handle GET_CATEGORY', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CATEGORY,
+        type: types.GET_CATEGORY,
         payload: { id: 1, name: 'new category' },
       }),
     ).toEqual({
@@ -143,7 +143,7 @@ describe('categories reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CATEGORY when details is non-empty', () => {
+  it('should handle GET_CATEGORY when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -152,7 +152,7 @@ describe('categories reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
+          type: types.GET_CATEGORY,
           payload: { id: 2, name: 'new category' },
         },
       ),
@@ -165,7 +165,7 @@ describe('categories reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_CATEGORY when already exists', () => {
+  it('should handle UPDATE_CATEGORY when already exists', () => {
     expect(
       reducer(
         {
@@ -177,7 +177,7 @@ describe('categories reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CATEGORY,
+          type: types.UPDATE_CATEGORY,
           payload: { id: 2, name: 'updated category' },
         },
       ),

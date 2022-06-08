@@ -131,10 +131,10 @@ describe('claims reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CLAIM', () => {
+  it('should handle GET_CLAIM', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CLAIM,
+        type: types.GET_CLAIM,
         payload: { id: 1, name: 'new claim' },
       }),
     ).toEqual({
@@ -143,7 +143,7 @@ describe('claims reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CLAIM when details is non-empty', () => {
+  it('should handle GET_CLAIM when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -152,7 +152,7 @@ describe('claims reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CLAIM,
+          type: types.GET_CLAIM,
           payload: { id: 2, name: 'new claim' },
         },
       ),
@@ -165,7 +165,7 @@ describe('claims reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_CLAIM when already exists', () => {
+  it('should handle UPDATE_CLAIM when already exists', () => {
     expect(
       reducer(
         {
@@ -177,7 +177,7 @@ describe('claims reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CLAIM,
+          type: types.UPDATE_CLAIM,
           payload: { id: 2, name: 'updated claim' },
         },
       ),
