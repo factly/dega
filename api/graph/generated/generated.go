@@ -228,7 +228,7 @@ type ComplexityRoot struct {
 		Claimants          func(childComplexity int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		Claims             func(childComplexity int, spaces []int, ratings []int, claimants []int, page *int, limit *int, sortBy *string, sortOrder *string) int
 		FeaturedCategories func(childComplexity int, featuredCount int, postLimit int) int
-		FeaturedTags       func(childComplexity int, featuredCount int, tagLimit int) int
+		FeaturedTags       func(childComplexity int, featuredCount int, postLimit int) int
 		Formats            func(childComplexity int, spaces []int, slugs []string) int
 		Menu               func(childComplexity int) int
 		Page               func(childComplexity int, id *int, slug *string) int
@@ -451,7 +451,7 @@ type QueryResolver interface {
 	Space(ctx context.Context) (*models.Space, error)
 	Menu(ctx context.Context) (*models.MenusPaging, error)
 	FeaturedCategories(ctx context.Context, featuredCount int, postLimit int) (*models.CategoriesPaging, error)
-	FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error)
+	FeaturedTags(ctx context.Context, featuredCount int, postLimit int) (*models.TagsPaging, error)
 	Categories(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.CategoriesPaging, error)
 	Category(ctx context.Context, id *int, slug *string) (*models.Category, error)
 	Tags(ctx context.Context, ids []int, spaces []int, page *int, limit *int, sortBy *string, sortOrder *string) (*models.TagsPaging, error)
@@ -1502,7 +1502,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Query.FeaturedTags(childComplexity, args["featuredCount"].(int), args["tagLimit"].(int)), true
+		return e.complexity.Query.FeaturedTags(childComplexity, args["featuredCount"].(int), args["postLimit"].(int)), true
 
 	case "Query.formats":
 		if e.complexity.Query.Formats == nil {
@@ -2617,7 +2617,7 @@ type Query {
 	space: Space
 	menu: MenusPaging
 	featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
-	featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
+	featuredTags(featuredCount: Int!, postLimit: Int!): TagsPaging
 	categories(
 		ids: [Int!]
 		spaces: [Int!]
@@ -2953,14 +2953,14 @@ func (ec *executionContext) field_Query_featuredTags_args(ctx context.Context, r
 	}
 	args["featuredCount"] = arg0
 	var arg1 int
-	if tmp, ok := rawArgs["tagLimit"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("tagLimit"))
+	if tmp, ok := rawArgs["postLimit"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("postLimit"))
 		arg1, err = ec.unmarshalNInt2int(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["tagLimit"] = arg1
+	args["postLimit"] = arg1
 	return args, nil
 }
 
@@ -7811,7 +7811,7 @@ func (ec *executionContext) _Query_featuredTags(ctx context.Context, field graph
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().FeaturedTags(rctx, args["featuredCount"].(int), args["tagLimit"].(int))
+		return ec.resolvers.Query().FeaturedTags(rctx, args["featuredCount"].(int), args["postLimit"].(int))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
