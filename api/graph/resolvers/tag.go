@@ -160,7 +160,7 @@ func (r *queryResolver) Tags(ctx context.Context, ids []int, spaces []int, page 
 	return result, nil
 }
 
-func (r *queryResolver) FeaturedTags(ctx context.Context, featuredCount int, tagLimit int) (*models.TagsPaging, error) {
+func (r *queryResolver) FeaturedTags(ctx context.Context, featuredCount int, postLimit int) (*models.TagsPaging, error) {
 	sID, err := validator.GetSpace(ctx)
 	if err != nil {
 		return nil, err
