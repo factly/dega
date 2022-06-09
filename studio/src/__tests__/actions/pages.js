@@ -500,6 +500,13 @@ describe('pages actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.PAGES_API + '/' + id);
   });
+  it('should not create actions for fetching pages when spaceID is 0 ', () => {
+    const query = { page: 1, limit: 5 };
+    const expectedActions = [];
+    const store = mockStore({ ...initialState, spaces: { selected: 0 } });
+    store.dispatch(actions.getPages(query));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
   it('should create actions to get page by id success without any optional fields', () => {
     const page = { ...page1 };
     page.categories = [];
