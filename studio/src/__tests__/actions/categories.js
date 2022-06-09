@@ -207,6 +207,13 @@ describe('categories actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API + '/' + id);
   });
+  it('should not create actions for fetching categories when spaceID is 0 ', () => {
+    const query = { page: 1, limit: 5 };
+    const expectedActions = [];
+    const store = mockStore({ ...initialState, spaces: { selected: 0 } });
+    store.dispatch(actions.getCategories(query));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
   it('should create actions to get category by id success', () => {
     const id = 1;
     const category = { id, name: 'Category' };
