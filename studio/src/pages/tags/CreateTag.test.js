@@ -46,8 +46,9 @@ describe('Tags create component', () => {
     },
     spaces: {
       orgs: [],
-      details: {},
+      details: { 1: { site_address: '' } },
       loading: true,
+      selected: 1,
     },
     media: {
       req: [],
