@@ -41,6 +41,7 @@ exports[`Categories Create Form component snapshot testing should match componen
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -92,6 +93,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -153,6 +155,7 @@ exports[`Categories Create Form component snapshot testing should match componen
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -166,6 +169,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -174,6 +178,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -188,6 +193,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -208,6 +214,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -377,6 +384,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -392,6 +400,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -407,6 +416,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -466,6 +476,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -521,6 +532,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -548,6 +560,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -587,6 +600,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -699,6 +713,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                             >
                               <div
                                 className="ant-row"
+                                role="row"
                                 style={
                                   Object {
                                     "marginLeft": -20,
@@ -715,6 +730,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-col-md-16"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -745,6 +761,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -788,6 +805,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -803,6 +821,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -830,6 +849,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -878,7 +898,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                               <Select
                                                                 allowClear={true}
                                                                 autoClearSearchValue={true}
-                                                                className=""
+                                                                className="ant-select-in-form-item"
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 defaultValue={
                                                                   Array [
@@ -920,7 +940,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                   activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                   activeValue={null}
                                                                   allowClear={true}
-                                                                  className=""
+                                                                  className="ant-select-in-form-item"
                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                   displayValues={
                                                                     Array [
@@ -957,7 +977,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                   transitionName="ant-slide-up"
                                                                 >
                                                                   <div
-                                                                    className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                                    className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                                     onBlur={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
@@ -1089,7 +1109,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                           activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                           activeValue={null}
                                                                           allowClear={true}
-                                                                          className=""
+                                                                          className="ant-select-in-form-item"
                                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                           displayValues={
                                                                             Array [
@@ -1189,7 +1209,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                               activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                               activeValue={null}
                                                                               allowClear={true}
-                                                                              className=""
+                                                                              className="ant-select-in-form-item"
                                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                               displayValues={
                                                                                 Array [
@@ -1595,6 +1615,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-col-md-5"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -1627,6 +1648,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -1670,6 +1692,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -1686,6 +1709,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -1714,6 +1738,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -1803,14 +1828,14 @@ exports[`Categories Create Form component snapshot testing should match componen
                               </div>
                             </Row>
                             <FormItem
-                              label="Background Colour"
+                              label="Colour"
                               name="background_colour"
                             >
                               <WrapperField
-                                label="Background Colour"
+                                label="Colour"
                                 messageVariables={
                                   Object {
-                                    "label": "Background Colour",
+                                    "label": "Colour",
                                   }
                                 }
                                 name="background_colour"
@@ -1825,6 +1850,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -1846,10 +1872,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     }
                                   }
                                   key="_background_colour"
-                                  label="Background Colour"
+                                  label="Colour"
                                   messageVariables={
                                     Object {
-                                      "label": "Background Colour",
+                                      "label": "Colour",
                                     }
                                   }
                                   name={
@@ -1868,11 +1894,12 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
                                         htmlFor="create-category_background_colour"
-                                        label="Background Colour"
+                                        label="Colour"
                                         name="background_colour"
                                         prefixCls="ant-form"
                                         required={false}
@@ -1883,21 +1910,22 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
                                               className=""
                                               htmlFor="create-category_background_colour"
-                                              title="Background Colour"
+                                              title="Colour"
                                             >
-                                              Background Colour
+                                              Colour
                                             </label>
                                           </div>
                                         </Col>
                                       </FormItemLabel>
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Background Colour"
+                                        label="Colour"
                                         name={Array []}
                                         prefixCls="ant-form"
                                         status=""
@@ -1910,6 +1938,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -2074,6 +2103,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -2129,6 +2159,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -2156,6 +2187,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -2195,6 +2227,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -2305,6 +2338,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -2335,6 +2369,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -2378,6 +2413,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -2393,6 +2429,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -2420,6 +2457,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -2784,6 +2822,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -2829,6 +2868,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -2872,6 +2912,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -2887,6 +2928,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -2914,6 +2956,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -3037,6 +3080,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -3049,6 +3093,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -3064,6 +3109,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -3649,6 +3695,7 @@ exports[`Categories Create Form component snapshot testing should match componen
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -3683,6 +3730,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -3727,6 +3775,7 @@ exports[`Categories Create Form component snapshot testing should match componen
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -3740,6 +3789,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -3748,6 +3798,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -3762,6 +3813,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -3782,6 +3834,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -3951,6 +4004,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -3966,6 +4020,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -3981,6 +4036,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -4040,6 +4096,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -4095,6 +4152,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -4122,6 +4180,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -4161,6 +4220,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -4269,6 +4329,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                             >
                               <div
                                 className="ant-row"
+                                role="row"
                                 style={
                                   Object {
                                     "marginLeft": -20,
@@ -4285,6 +4346,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-col-md-16"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -4315,6 +4377,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -4358,6 +4421,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -4373,6 +4437,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -4400,6 +4465,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -4448,7 +4514,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                               <Select
                                                                 allowClear={true}
                                                                 autoClearSearchValue={true}
-                                                                className=""
+                                                                className="ant-select-in-form-item"
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 defaultValue={
                                                                   Array [
@@ -4490,7 +4556,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                   activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                   activeValue={null}
                                                                   allowClear={true}
-                                                                  className=""
+                                                                  className="ant-select-in-form-item"
                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                   displayValues={
                                                                     Array [
@@ -4527,7 +4593,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                   transitionName="ant-slide-up"
                                                                 >
                                                                   <div
-                                                                    className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                                    className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                                     onBlur={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
@@ -4659,7 +4725,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                           activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                           activeValue={null}
                                                                           allowClear={true}
-                                                                          className=""
+                                                                          className="ant-select-in-form-item"
                                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                           displayValues={
                                                                             Array [
@@ -4759,7 +4825,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                                               activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                               activeValue={null}
                                                                               allowClear={true}
-                                                                              className=""
+                                                                              className="ant-select-in-form-item"
                                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                               displayValues={
                                                                                 Array [
@@ -5165,6 +5231,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 >
                                   <div
                                     className="ant-col ant-col-md-5"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -5197,6 +5264,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -5240,6 +5308,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -5256,6 +5325,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -5284,6 +5354,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -5373,14 +5444,14 @@ exports[`Categories Create Form component snapshot testing should match componen
                               </div>
                             </Row>
                             <FormItem
-                              label="Background Colour"
+                              label="Colour"
                               name="background_colour"
                             >
                               <WrapperField
-                                label="Background Colour"
+                                label="Colour"
                                 messageVariables={
                                   Object {
-                                    "label": "Background Colour",
+                                    "label": "Colour",
                                   }
                                 }
                                 name="background_colour"
@@ -5395,6 +5466,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -5416,10 +5488,10 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     }
                                   }
                                   key="_background_colour"
-                                  label="Background Colour"
+                                  label="Colour"
                                   messageVariables={
                                     Object {
-                                      "label": "Background Colour",
+                                      "label": "Colour",
                                     }
                                   }
                                   name={
@@ -5438,11 +5510,12 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
                                         htmlFor="create-category_background_colour"
-                                        label="Background Colour"
+                                        label="Colour"
                                         name="background_colour"
                                         prefixCls="ant-form"
                                         required={false}
@@ -5453,21 +5526,22 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
                                               className=""
                                               htmlFor="create-category_background_colour"
-                                              title="Background Colour"
+                                              title="Colour"
                                             >
-                                              Background Colour
+                                              Colour
                                             </label>
                                           </div>
                                         </Col>
                                       </FormItemLabel>
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Background Colour"
+                                        label="Colour"
                                         name={Array []}
                                         prefixCls="ant-form"
                                         status=""
@@ -5480,6 +5554,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -5644,6 +5719,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -5699,6 +5775,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -5726,6 +5803,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -5765,6 +5843,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -5875,6 +5954,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -5905,6 +5985,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -5948,6 +6029,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -5963,6 +6045,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -5990,6 +6073,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -6352,6 +6436,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -6397,6 +6482,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -6440,6 +6526,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -6455,6 +6542,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -6482,6 +6570,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -6577,6 +6666,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -6589,6 +6679,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -6604,6 +6695,7 @@ exports[`Categories Create Form component snapshot testing should match componen
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -7170,6 +7262,7 @@ exports[`Categories Create Form component snapshot testing should render the com
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -7204,6 +7297,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -7248,6 +7342,7 @@ exports[`Categories Create Form component snapshot testing should render the com
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -7261,6 +7356,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -7269,6 +7365,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -7283,6 +7380,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -7303,6 +7401,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -7472,6 +7571,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -7487,6 +7587,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -7502,6 +7603,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -7561,6 +7663,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -7616,6 +7719,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -7643,6 +7747,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -7682,6 +7787,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -7790,6 +7896,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                             >
                               <div
                                 className="ant-row"
+                                role="row"
                                 style={
                                   Object {
                                     "marginLeft": -20,
@@ -7806,6 +7913,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                 >
                                   <div
                                     className="ant-col ant-col-md-16"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -7836,6 +7944,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -7879,6 +7988,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -7894,6 +8004,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -7921,6 +8032,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -7969,7 +8081,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                               <Select
                                                                 allowClear={true}
                                                                 autoClearSearchValue={true}
-                                                                className=""
+                                                                className="ant-select-in-form-item"
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                 defaultValue={
                                                                   Array [
@@ -8011,7 +8123,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                   activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                   activeValue={null}
                                                                   allowClear={true}
-                                                                  className=""
+                                                                  className="ant-select-in-form-item"
                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                   displayValues={
                                                                     Array [
@@ -8048,7 +8160,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                   transitionName="ant-slide-up"
                                                                 >
                                                                   <div
-                                                                    className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                                    className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                                     onBlur={[Function]}
                                                                     onFocus={[Function]}
                                                                     onKeyDown={[Function]}
@@ -8180,7 +8292,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                           activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                           activeValue={null}
                                                                           allowClear={true}
-                                                                          className=""
+                                                                          className="ant-select-in-form-item"
                                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                           displayValues={
                                                                             Array [
@@ -8280,7 +8392,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                                               activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                               activeValue={null}
                                                                               allowClear={true}
-                                                                              className=""
+                                                                              className="ant-select-in-form-item"
                                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                               displayValues={
                                                                                 Array [
@@ -8686,6 +8798,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                 >
                                   <div
                                     className="ant-col ant-col-md-5"
+                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -8718,6 +8831,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -8761,6 +8875,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -8777,6 +8892,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -8805,6 +8921,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -8894,14 +9011,14 @@ exports[`Categories Create Form component snapshot testing should render the com
                               </div>
                             </Row>
                             <FormItem
-                              label="Background Colour"
+                              label="Colour"
                               name="background_colour"
                             >
                               <WrapperField
-                                label="Background Colour"
+                                label="Colour"
                                 messageVariables={
                                   Object {
-                                    "label": "Background Colour",
+                                    "label": "Colour",
                                   }
                                 }
                                 name="background_colour"
@@ -8916,6 +9033,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -8937,10 +9055,10 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     }
                                   }
                                   key="_background_colour"
-                                  label="Background Colour"
+                                  label="Colour"
                                   messageVariables={
                                     Object {
-                                      "label": "Background Colour",
+                                      "label": "Colour",
                                     }
                                   }
                                   name={
@@ -8959,11 +9077,12 @@ exports[`Categories Create Form component snapshot testing should render the com
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
                                         htmlFor="create-category_background_colour"
-                                        label="Background Colour"
+                                        label="Colour"
                                         name="background_colour"
                                         prefixCls="ant-form"
                                         required={false}
@@ -8974,21 +9093,22 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
                                               className=""
                                               htmlFor="create-category_background_colour"
-                                              title="Background Colour"
+                                              title="Colour"
                                             >
-                                              Background Colour
+                                              Colour
                                             </label>
                                           </div>
                                         </Col>
                                       </FormItemLabel>
                                       <FormItemInput
                                         errors={Array []}
-                                        label="Background Colour"
+                                        label="Colour"
                                         name={Array []}
                                         prefixCls="ant-form"
                                         status=""
@@ -9001,6 +9121,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -9165,6 +9286,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -9220,6 +9342,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -9247,6 +9370,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -9286,6 +9410,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -9396,6 +9521,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -9426,6 +9552,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         "itemRef": [Function],
                                         "name": "create-category",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -9469,6 +9596,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -9484,6 +9612,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -9511,6 +9640,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -9873,6 +10003,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -9918,6 +10049,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           "itemRef": [Function],
                                           "name": "create-category",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -9961,6 +10093,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -9976,6 +10109,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -10003,6 +10137,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -10098,6 +10233,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -10110,6 +10246,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -10125,6 +10262,7 @@ exports[`Categories Create Form component snapshot testing should render the com
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
