@@ -28,6 +28,7 @@ const filters = {
 };
 const setFilters = jest.fn();
 const fetchClaims = jest.fn();
+const onPagination = jest.fn();
 const info = {
   claims: [
     {
@@ -317,6 +318,7 @@ describe('Claims List component', () => {
                 filters={filters}
                 setFilters={setFilters}
                 fetchClaims={fetchClaims}
+                onPagination={onPagination}
               />
             </Router>
           </Provider>,

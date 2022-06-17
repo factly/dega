@@ -10,6 +10,7 @@ import { MinusCircleOutlined } from '@ant-design/icons';
 
 import '../../../matchMedia.mock';
 import ClaimCreateForm from './ClaimForm';
+import { SlugInput } from '../../../components/FormItems';
 
 jest.mock('@editorjs/editorjs');
 jest.mock('react-monaco-editor', () => {
@@ -221,7 +222,7 @@ describe('Claims Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(3).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
       });
       wrapper.update();
 
@@ -319,9 +320,9 @@ describe('Claims Create Form component', () => {
           .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
+          .find(SlugInput)
           .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
@@ -427,9 +428,9 @@ describe('Claims Create Form component', () => {
           .at(0)
           .simulate('change', { target: { value: 'claim' } });
         wrapper
+          .find(SlugInput)
           .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
@@ -475,7 +476,7 @@ describe('Claims Create Form component', () => {
         button.simulate('click');
       });
       wrapper.update();
-      expect(wrapper.find('FormList').find('Input').length).not.toBe(0);
+      expect(wrapper.find('FormList').find(Input).length).not.toBe(0);
     });
     it('should remove review sources input field on button click', () => {
       act(() => {
@@ -508,7 +509,7 @@ describe('Claims Create Form component', () => {
         button.simulate('click');
       });
       wrapper.update();
-      expect(wrapper.find('FormList').find('Input').length).not.toBe(0);
+      expect(wrapper.find('FormList').find(Input).length).not.toBe(0);
     });
     it('should remove claim sources input field on button click', () => {
       act(() => {
