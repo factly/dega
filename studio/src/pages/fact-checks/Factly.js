@@ -195,8 +195,8 @@ function Factly() {
             onChange={handleDateChange}
             allowClear
           > 
-            <Select.Option> latest </Select.Option>
-            <Select.Option> oldest</Select.Option>
+            <Select.Option value={'desc'}> latest </Select.Option>
+            <Select.Option value={'asc'}> oldest</Select.Option>
           </Select>
         </Form.Item>
       </div>
