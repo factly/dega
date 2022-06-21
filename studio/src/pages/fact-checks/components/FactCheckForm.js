@@ -215,7 +215,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       {visible && (
         <Modal visible={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
           <ClaimCreateForm
-            data={details[claimID]}
+            data={details?.[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
             width={560}
           />
