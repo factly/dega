@@ -44,6 +44,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                     "itemRef": [Function],
                     "name": "google-fact-check",
                   },
+                  "_init": true,
                   "getFieldError": [Function],
                   "getFieldInstance": [Function],
                   "getFieldValue": [Function],
@@ -81,6 +82,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                         "itemRef": [Function],
                         "name": "google-fact-check",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -170,6 +172,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -231,6 +234,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -263,6 +267,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -303,6 +308,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -443,6 +449,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -496,6 +503,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -520,6 +528,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -552,6 +561,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -859,7 +869,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                             onChange={[Function]}
                                           >
                                             <Select
-                                              className=""
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue="all"
                                               dropdownClassName=""
@@ -889,7 +899,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                 }
                                                 activeDescendantId="google-fact-check_language_list_0"
                                                 activeValue={null}
-                                                className=""
+                                                className="ant-select-in-form-item"
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 displayValues={
                                                   Array [
@@ -926,7 +936,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                 transitionName="ant-slide-up"
                                               >
                                                 <div
-                                                  className="ant-select ant-select-single ant-select-show-arrow"
+                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"
                                                   onBlur={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -1053,7 +1063,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                         }
                                                         activeDescendantId="google-fact-check_language_list_0"
                                                         activeValue={null}
-                                                        className=""
+                                                        className="ant-select-in-form-item"
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                         displayValues={
                                                           Array [
@@ -1155,7 +1165,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                                                             }
                                                             activeDescendantId="google-fact-check_language_list_0"
                                                             activeValue={null}
-                                                            className=""
+                                                            className="ant-select-in-form-item"
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             displayValues={
                                                               Array [
@@ -1472,6 +1482,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -1492,6 +1503,7 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                             >
                               <div
                                 className="ant-col ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -1642,325 +1654,332 @@ exports[`GoogleFactCheck component snapshot testing should match when component 
                 className="ant-list ant-list-vertical ant-list-split ant-list-bordered ant-list-loading google-fact-check-search-list"
               >
                 <Spin
-                  size="default"
                   spinning={true}
-                  wrapperClassName=""
                 >
-                  <div
-                    className="ant-spin-nested-loading"
+                  <Spin
+                    size="default"
+                    spinPrefixCls="ant-spin"
+                    spinning={true}
+                    wrapperClassName=""
                   >
                     <div
-                      key="loading"
+                      className="ant-spin-nested-loading"
                     >
                       <div
-                        className="ant-spin ant-spin-spinning"
+                        key="loading"
                       >
-                        <span
-                          className="ant-spin-dot ant-spin-dot-spin"
+                        <div
+                          aria-busy={true}
+                          aria-live="polite"
+                          className="ant-spin ant-spin-spinning"
                         >
-                          <i
-                            className="ant-spin-dot-item"
-                          />
-                          <i
-                            className="ant-spin-dot-item"
-                          />
-                          <i
-                            className="ant-spin-dot-item"
-                          />
-                          <i
-                            className="ant-spin-dot-item"
-                          />
-                        </span>
+                          <span
+                            className="ant-spin-dot ant-spin-dot-spin"
+                          >
+                            <i
+                              className="ant-spin-dot-item"
+                            />
+                            <i
+                              className="ant-spin-dot-item"
+                            />
+                            <i
+                              className="ant-spin-dot-item"
+                            />
+                            <i
+                              className="ant-spin-dot-item"
+                            />
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        className="ant-spin-container ant-spin-blur"
+                        key="container"
+                      >
+                        <ul
+                          className="ant-list-items"
+                        >
+                          <ForwardRef(InternalItem)
+                            key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                          >
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
+                            >
+                              <ForwardRef(Title)
+                                level={5}
+                              >
+                                <ForwardRef
+                                  component="h5"
+                                >
+                                  <ResizeObserver
+                                    disabled={true}
+                                    onResize={[Function]}
+                                  >
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
+                                        >
+                                          <Typography
+                                            className=""
+                                            component="h5"
+                                            onClick={null}
+                                            style={
+                                              Object {
+                                                "WebkitLineClamp": undefined,
+                                              }
+                                            }
+                                          >
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
+                                            >
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by Facebook posts:"
+                                                width={0}
+                                              >
+                                                Claim by Facebook posts:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
+                              >
+                                <ForwardRef
+                                  component="h4"
+                                >
+                                  <ResizeObserver
+                                    disabled={true}
+                                    onResize={[Function]}
+                                  >
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
+                                        >
+                                          <Typography
+                                            className=""
+                                            component="h4"
+                                            onClick={null}
+                                            style={
+                                              Object {
+                                                "WebkitLineClamp": undefined,
+                                              }
+                                            }
+                                          >
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
+                                            >
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                                                width={0}
+                                              >
+                                                Video shows Russian doctors celebrating the new COVID-19 vaccine.
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
+                                target="blank"
+                              >
+                                Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                          <ForwardRef(InternalItem)
+                            key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
+                          >
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
+                            >
+                              <ForwardRef(Title)
+                                level={5}
+                              >
+                                <ForwardRef
+                                  component="h5"
+                                >
+                                  <ResizeObserver
+                                    disabled={true}
+                                    onResize={[Function]}
+                                  >
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
+                                        >
+                                          <Typography
+                                            className=""
+                                            component="h5"
+                                            onClick={null}
+                                            style={
+                                              Object {
+                                                "WebkitLineClamp": undefined,
+                                              }
+                                            }
+                                          >
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
+                                            >
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by social media users:"
+                                                width={0}
+                                              >
+                                                Claim by social media users:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
+                              >
+                                <ForwardRef
+                                  component="h4"
+                                >
+                                  <ResizeObserver
+                                    disabled={true}
+                                    onResize={[Function]}
+                                  >
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
+                                        >
+                                          <Typography
+                                            className=""
+                                            component="h4"
+                                            onClick={null}
+                                            style={
+                                              Object {
+                                                "WebkitLineClamp": undefined,
+                                              }
+                                            }
+                                          >
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
+                                            >
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
+                                                width={0}
+                                              >
+                                                Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
+                                target="blank"
+                              >
+                                Fact check: False claim that Pelosi travels weekly on 200-seat ...
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                        </ul>
                       </div>
                     </div>
-                    <div
-                      className="ant-spin-container ant-spin-blur"
-                      key="container"
-                    >
-                      <ul
-                        className="ant-list-items"
-                      >
-                        <Item
-                          key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
-                        >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
-                          >
-                            <Title
-                              level={5}
-                            >
-                              <ForwardRef
-                                component="h5"
-                              >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
-                                >
-                                  <SingleObserver
-                                    disabled={true}
-                                    key="rc-observer-key-0"
-                                    onResize={[Function]}
-                                  >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
-                                        >
-                                          <h5
-                                            className="ant-typography"
-                                            onClick={null}
-                                            style={
-                                              Object {
-                                                "WebkitLineClamp": undefined,
-                                              }
-                                            }
-                                          >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by Facebook posts:"
-                                              width={0}
-                                            >
-                                              Claim by Facebook posts:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
-                              >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
-                                >
-                                  <SingleObserver
-                                    disabled={true}
-                                    key="rc-observer-key-0"
-                                    onResize={[Function]}
-                                  >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
-                                        >
-                                          <h4
-                                            className="ant-typography"
-                                            onClick={null}
-                                            style={
-                                              Object {
-                                                "WebkitLineClamp": undefined,
-                                              }
-                                            }
-                                          >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
-                                              width={0}
-                                            >
-                                              Video shows Russian doctors celebrating the new COVID-19 vaccine.
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
-                              >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
-                              target="blank"
-                            >
-                              Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
-                            </a>
-                          </li>
-                        </Item>
-                        <Item
-                          key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                        >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
-                          >
-                            <Title
-                              level={5}
-                            >
-                              <ForwardRef
-                                component="h5"
-                              >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
-                                >
-                                  <SingleObserver
-                                    disabled={true}
-                                    key="rc-observer-key-0"
-                                    onResize={[Function]}
-                                  >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
-                                        >
-                                          <h5
-                                            className="ant-typography"
-                                            onClick={null}
-                                            style={
-                                              Object {
-                                                "WebkitLineClamp": undefined,
-                                              }
-                                            }
-                                          >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by social media users:"
-                                              width={0}
-                                            >
-                                              Claim by social media users:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
-                              >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
-                                >
-                                  <SingleObserver
-                                    disabled={true}
-                                    key="rc-observer-key-0"
-                                    onResize={[Function]}
-                                  >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
-                                        >
-                                          <h4
-                                            className="ant-typography"
-                                            onClick={null}
-                                            style={
-                                              Object {
-                                                "WebkitLineClamp": undefined,
-                                              }
-                                            }
-                                          >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                                              width={0}
-                                            >
-                                              Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
-                              >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
-                              target="blank"
-                            >
-                              Fact check: False claim that Pelosi travels weekly on 200-seat ...
-                            </a>
-                          </li>
-                        </Item>
-                      </ul>
-                    </div>
-                  </div>
+                  </Spin>
                 </Spin>
               </div>
             </List>
@@ -2016,6 +2035,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                     "itemRef": [Function],
                     "name": "google-fact-check",
                   },
+                  "_init": true,
                   "getFieldError": [Function],
                   "getFieldInstance": [Function],
                   "getFieldValue": [Function],
@@ -2053,6 +2073,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                         "itemRef": [Function],
                         "name": "google-fact-check",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -2142,6 +2163,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -2203,6 +2225,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -2235,6 +2258,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -2275,6 +2299,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -2415,6 +2440,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -2468,6 +2494,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -2492,6 +2519,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -2524,6 +2552,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -2831,7 +2860,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                             onChange={[Function]}
                                           >
                                             <Select
-                                              className=""
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue="all"
                                               dropdownClassName=""
@@ -2861,7 +2890,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                 }
                                                 activeDescendantId="google-fact-check_language_list_0"
                                                 activeValue={null}
-                                                className=""
+                                                className="ant-select-in-form-item"
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 displayValues={
                                                   Array [
@@ -2898,7 +2927,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                 transitionName="ant-slide-up"
                                               >
                                                 <div
-                                                  className="ant-select ant-select-single ant-select-show-arrow"
+                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"
                                                   onBlur={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -3025,7 +3054,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                         }
                                                         activeDescendantId="google-fact-check_language_list_0"
                                                         activeValue={null}
-                                                        className=""
+                                                        className="ant-select-in-form-item"
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                         displayValues={
                                                           Array [
@@ -3127,7 +3156,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                                             }
                                                             activeDescendantId="google-fact-check_language_list_0"
                                                             activeValue={null}
-                                                            className=""
+                                                            className="ant-select-in-form-item"
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             displayValues={
                                                               Array [
@@ -3444,6 +3473,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -3464,6 +3494,7 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                             >
                               <div
                                 className="ant-col ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -3640,58 +3671,53 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                 className="ant-list ant-list-vertical ant-list-split ant-list-bordered ant-list-something-after-last-item google-fact-check-search-list"
               >
                 <Spin
-                  size="default"
                   spinning={false}
-                  wrapperClassName=""
                 >
-                  <div
-                    className="ant-spin-nested-loading"
+                  <Spin
+                    size="default"
+                    spinPrefixCls="ant-spin"
+                    spinning={false}
+                    wrapperClassName=""
                   >
                     <div
-                      className="ant-spin-container"
-                      key="container"
+                      className="ant-spin-nested-loading"
                     >
-                      <ul
-                        className="ant-list-items"
+                      <div
+                        className="ant-spin-container"
+                        key="container"
                       >
-                        <Item
-                          key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                        <ul
+                          className="ant-list-items"
                         >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
+                          <ForwardRef(InternalItem)
+                            key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
                           >
-                            <Title
-                              level={5}
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
                             >
-                              <ForwardRef
-                                component="h5"
+                              <ForwardRef(Title)
+                                level={5}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h5"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h5
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h5"
                                             onClick={null}
                                             style={
                                               Object {
@@ -3699,55 +3725,55 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by Facebook posts:"
-                                              width={0}
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Claim by Facebook posts:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by Facebook posts:"
+                                                width={0}
+                                              >
+                                                Claim by Facebook posts:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h4"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h4
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h4"
                                             onClick={null}
                                             style={
                                               Object {
@@ -3755,82 +3781,82 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
-                                              width={0}
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Video shows Russian doctors celebrating the new COVID-19 vaccine.
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                                                width={0}
+                                              >
+                                                Video shows Russian doctors celebrating the new COVID-19 vaccine.
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
+                                target="blank"
                               >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
-                              target="blank"
-                            >
-                              Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
-                            </a>
-                          </li>
-                        </Item>
-                        <Item
-                          key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                        >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
+                                Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                          <ForwardRef(InternalItem)
+                            key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
                           >
-                            <Title
-                              level={5}
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
                             >
-                              <ForwardRef
-                                component="h5"
+                              <ForwardRef(Title)
+                                level={5}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h5"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h5
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h5"
                                             onClick={null}
                                             style={
                                               Object {
@@ -3838,55 +3864,55 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by social media users:"
-                                              width={0}
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Claim by social media users:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by social media users:"
+                                                width={0}
+                                              >
+                                                Claim by social media users:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h4"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h4
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h4"
                                             onClick={null}
                                             style={
                                               Object {
@@ -3894,47 +3920,57 @@ exports[`GoogleFactCheck component snapshot testing should match when data 1`] =
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                                              width={0}
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
+                                                width={0}
+                                              >
+                                                Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
+                                target="blank"
                               >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
-                              target="blank"
-                            >
-                              Fact check: False claim that Pelosi travels weekly on 200-seat ...
-                            </a>
-                          </li>
-                        </Item>
-                      </ul>
+                                Fact check: False claim that Pelosi travels weekly on 200-seat ...
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
+                  </Spin>
                 </Spin>
                 <div
                   style={
@@ -4120,6 +4156,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                     "itemRef": [Function],
                     "name": "google-fact-check",
                   },
+                  "_init": true,
                   "getFieldError": [Function],
                   "getFieldInstance": [Function],
                   "getFieldValue": [Function],
@@ -4157,6 +4194,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                         "itemRef": [Function],
                         "name": "google-fact-check",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4246,6 +4284,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -4307,6 +4346,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -4339,6 +4379,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -4379,6 +4420,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -4519,6 +4561,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 "itemRef": [Function],
                                 "name": "google-fact-check",
                               },
+                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
@@ -4572,6 +4615,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={
                                 Object {
                                   "width": "25%",
@@ -4596,6 +4640,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-label"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -4628,6 +4673,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -4935,7 +4981,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                             onChange={[Function]}
                                           >
                                             <Select
-                                              className=""
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue="all"
                                               dropdownClassName=""
@@ -4965,7 +5011,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                 }
                                                 activeDescendantId="google-fact-check_language_list_0"
                                                 activeValue={null}
-                                                className=""
+                                                className="ant-select-in-form-item"
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                 displayValues={
                                                   Array [
@@ -5002,7 +5048,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                 transitionName="ant-slide-up"
                                               >
                                                 <div
-                                                  className="ant-select ant-select-single ant-select-show-arrow"
+                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"
                                                   onBlur={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -5129,7 +5175,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                         }
                                                         activeDescendantId="google-fact-check_language_list_0"
                                                         activeValue={null}
-                                                        className=""
+                                                        className="ant-select-in-form-item"
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                         displayValues={
                                                           Array [
@@ -5231,7 +5277,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                                             }
                                                             activeDescendantId="google-fact-check_language_list_0"
                                                             activeValue={null}
-                                                            className=""
+                                                            className="ant-select-in-form-item"
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                             displayValues={
                                                               Array [
@@ -5548,6 +5594,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -5568,6 +5615,7 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                             >
                               <div
                                 className="ant-col ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -5744,58 +5792,53 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                 className="ant-list ant-list-vertical ant-list-split ant-list-bordered ant-list-something-after-last-item google-fact-check-search-list"
               >
                 <Spin
-                  size="default"
                   spinning={false}
-                  wrapperClassName=""
                 >
-                  <div
-                    className="ant-spin-nested-loading"
+                  <Spin
+                    size="default"
+                    spinPrefixCls="ant-spin"
+                    spinning={false}
+                    wrapperClassName=""
                   >
                     <div
-                      className="ant-spin-container"
-                      key="container"
+                      className="ant-spin-nested-loading"
                     >
-                      <ul
-                        className="ant-list-items"
+                      <div
+                        className="ant-spin-container"
+                        key="container"
                       >
-                        <Item
-                          key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                        <ul
+                          className="ant-list-items"
                         >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
+                          <ForwardRef(InternalItem)
+                            key="Video shows Russian doctors celebrating the new COVID-19 vaccine."
                           >
-                            <Title
-                              level={5}
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
                             >
-                              <ForwardRef
-                                component="h5"
+                              <ForwardRef(Title)
+                                level={5}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h5"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h5
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h5"
                                             onClick={null}
                                             style={
                                               Object {
@@ -5803,55 +5846,55 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by Facebook posts:"
-                                              width={0}
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Claim by Facebook posts:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by Facebook posts:"
+                                                width={0}
+                                              >
+                                                Claim by Facebook posts:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h4"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h4
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h4"
                                             onClick={null}
                                             style={
                                               Object {
@@ -5859,82 +5902,82 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
-                                              width={0}
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Video shows Russian doctors celebrating the new COVID-19 vaccine.
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Video shows Russian doctors celebrating the new COVID-19 vaccine."
+                                                width={0}
+                                              >
+                                                Video shows Russian doctors celebrating the new COVID-19 vaccine.
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
+                                target="blank"
                               >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.boomlive.in/world/video-from-saudi-arabia-shared-as-russian-doctors-celebrating-covid-19-vaccine-9654"
-                              target="blank"
-                            >
-                              Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
-                            </a>
-                          </li>
-                        </Item>
-                        <Item
-                          key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                        >
-                          <li
-                            className="ant-list-item ant-list-item-no-flex"
+                                Video From Saudi Arabia Shared As Russian Doctors Celebrating COVID-19 Vaccine
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                          <ForwardRef(InternalItem)
+                            key="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
                           >
-                            <Title
-                              level={5}
+                            <li
+                              className="ant-list-item ant-list-item-no-flex"
                             >
-                              <ForwardRef
-                                component="h5"
+                              <ForwardRef(Title)
+                                level={5}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h5"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h5"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h5
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h5"
                                             onClick={null}
                                             style={
                                               Object {
@@ -5942,55 +5985,55 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Claim by social media users:"
-                                              width={0}
+                                            <h5
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Claim by social media users:
-                                            </Ellipsis>
-                                          </h5>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Title
-                              level={4}
-                            >
-                              <ForwardRef
-                                component="h4"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Claim by social media users:"
+                                                width={0}
+                                              >
+                                                Claim by social media users:
+                                              </Ellipsis>
+                                            </h5>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <ForwardRef(Title)
+                                level={4}
                               >
-                                <ResizeObserver
-                                  disabled={true}
-                                  onResize={[Function]}
+                                <ForwardRef
+                                  component="h4"
                                 >
-                                  <SingleObserver
+                                  <ResizeObserver
                                     disabled={true}
-                                    key="rc-observer-key-0"
                                     onResize={[Function]}
                                   >
-                                    <DomWrapper>
-                                      <EllipsisTooltip
-                                        enabledEllipsis={false}
-                                        isEllipsis={false}
-                                      >
-                                        <Typography
-                                          className=""
-                                          component="h4"
-                                          onClick={null}
-                                          style={
-                                            Object {
-                                              "WebkitLineClamp": undefined,
-                                            }
-                                          }
+                                    <SingleObserver
+                                      disabled={true}
+                                      key="rc-observer-key-0"
+                                      onResize={[Function]}
+                                    >
+                                      <DomWrapper>
+                                        <EllipsisTooltip
+                                          enabledEllipsis={false}
+                                          isEllipsis={false}
                                         >
-                                          <h4
-                                            className="ant-typography"
+                                          <Typography
+                                            className=""
+                                            component="h4"
                                             onClick={null}
                                             style={
                                               Object {
@@ -5998,47 +6041,57 @@ exports[`GoogleFactCheck component snapshot testing should render the component 
                                               }
                                             }
                                           >
-                                            <Ellipsis
-                                              enabledMeasure={false}
-                                              onEllipsis={[Function]}
-                                              rows={1}
-                                              text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
-                                              width={0}
+                                            <h4
+                                              className="ant-typography"
+                                              onClick={null}
+                                              style={
+                                                Object {
+                                                  "WebkitLineClamp": undefined,
+                                                }
+                                              }
                                             >
-                                              Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
-                                            </Ellipsis>
-                                          </h4>
-                                        </Typography>
-                                      </EllipsisTooltip>
-                                    </DomWrapper>
-                                  </SingleObserver>
-                                </ResizeObserver>
-                              </ForwardRef>
-                            </Title>
-                            <Typography>
-                              <article
-                                className="ant-typography"
+                                              <Ellipsis
+                                                enabledMeasure={false}
+                                                onEllipsis={[Function]}
+                                                rows={1}
+                                                text="Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel"
+                                                width={0}
+                                              >
+                                                Pelosi travels weekly to California on a 200-seat Boeing that costs millions annually in fuel
+                                              </Ellipsis>
+                                            </h4>
+                                          </Typography>
+                                        </EllipsisTooltip>
+                                      </DomWrapper>
+                                    </SingleObserver>
+                                  </ResizeObserver>
+                                </ForwardRef>
+                              </ForwardRef(Title)>
+                              <Typography>
+                                <article
+                                  className="ant-typography"
+                                >
+                                  <b>
+                                    BOOM
+                                  </b>
+                                   rating : 
+                                  <b>
+                                    False
+                                  </b>
+                                </article>
+                              </Typography>
+                              <a
+                                href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
+                                target="blank"
                               >
-                                <b>
-                                  BOOM
-                                </b>
-                                 rating : 
-                                <b>
-                                  False
-                                </b>
-                              </article>
-                            </Typography>
-                            <a
-                              href="https://www.usatoday.com/story/news/factcheck/2021/02/28/fact-check-false-claim-pelosi-travels-weekly-200-seat-plane/6860043002/"
-                              target="blank"
-                            >
-                              Fact check: False claim that Pelosi travels weekly on 200-seat ...
-                            </a>
-                          </li>
-                        </Item>
-                      </ul>
+                                Fact check: False claim that Pelosi travels weekly on 200-seat ...
+                              </a>
+                            </li>
+                          </ForwardRef(InternalItem)>
+                        </ul>
+                      </div>
                     </div>
-                  </div>
+                  </Spin>
                 </Spin>
                 <div
                   style={

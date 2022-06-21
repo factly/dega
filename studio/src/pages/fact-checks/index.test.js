@@ -13,7 +13,10 @@ import { getPosts } from '../../actions/posts';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -147,7 +150,7 @@ describe('FactCheck component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPosts).toHaveBeenCalledWith({ format: [2] });
+      expect(getPosts).toHaveBeenCalledWith({ format: [2], limit: 10, page: 1, sort: 'desc' });
       expect(getPosts).toHaveBeenCalledWith({
         page: 1,
         format: [2],
@@ -178,7 +181,7 @@ describe('FactCheck component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/fact-checks?limit=20&page=1&q=desc&category=1');
+      window.history.pushState({}, '', '/fact-checks?limit=20&page=1&sort=desc&category=1');
       const state2 = { ...state };
       state2.posts = {
         req: [
@@ -224,7 +227,7 @@ describe('FactCheck component', () => {
       expect(getPosts).toHaveBeenCalledWith({
         page: 1,
         limit: 20,
-        q: 'desc',
+        sort: 'desc',
         category: [1],
         format: [2],
       });
@@ -340,9 +343,8 @@ describe('FactCheck component', () => {
       act(() => {
         wrapper.update();
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')

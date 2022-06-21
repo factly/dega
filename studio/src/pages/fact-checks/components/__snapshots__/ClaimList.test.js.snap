@@ -18,7 +18,6 @@ exports[`Factcheck claim list component snapshot testing should render the compo
         "handleChangeWrapper": [Function],
         "isSubscribed": [Function],
         "notifyNestedSubs": [Function],
-        "onStateChange": [Function],
         "trySubscribe": [Function],
         "tryUnsubscribe": [Function],
       },
