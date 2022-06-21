@@ -32,6 +32,7 @@ import pages from './pagesReducer';
 import webhooks from './webhooksReducer';
 import profile from './profileReducer';
 import search from './searchReducer';
+import sachFactChecks from './sachFactChecksReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -66,6 +67,7 @@ const appReducer = combineReducers({
   webhooks,
   profile,
   search,
+  sachFactChecks
 });
 
 const rootReducer = (state, action) => {
