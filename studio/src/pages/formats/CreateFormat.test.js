@@ -44,6 +44,12 @@ describe('Formats create component', () => {
       details: {},
       loading: true,
     },
+    spaces: {
+      orgs: [],
+      details: { 1: { site_address: '' } },
+      loading: true,
+      selected: 1,
+    },
     media: {
       req: [],
       details: {},
@@ -83,7 +89,7 @@ describe('Formats create component', () => {
       wrapper.find(FormatCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.createFormat).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/formats');
+        expect(push).toHaveBeenCalledWith('/advanced/formats');
         expect(setReloadFlag).toHaveBeenCalledWith(true);
         done();
       }, 0);

@@ -61,6 +61,12 @@ describe('Formats edit component', () => {
           },
           loading: false,
         },
+        spaces: {
+          orgs: [],
+          details: { 1: { site_address: '' } },
+          loading: true,
+          selected: 1,
+        },
         media: {
           req: [],
           details: {},
@@ -131,6 +137,12 @@ describe('Formats edit component', () => {
             },
           },
           loading: false,
+        },
+        spaces: {
+          orgs: [],
+          details: { 1: { site_address: '' } },
+          loading: true,
+          selected: 1,
         },
         media: {
           req: [],
@@ -207,7 +219,7 @@ describe('Formats edit component', () => {
         description: 'description',
         test: 'test',
       });
-      expect(push).toHaveBeenCalledWith('/formats/1/edit');
+      expect(push).toHaveBeenCalledWith('/advanced/formats/1/edit');
     });
   });
 });

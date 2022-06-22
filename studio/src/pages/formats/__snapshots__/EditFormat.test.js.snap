@@ -432,6 +432,23 @@ exports[`Formats edit component snapshot testing should render the component 1`]
   }
 >
   <EditFormat>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Article - Edit Format"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Article - Edit Format"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Article - Edit Format"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <FormatForm
       data={
         Object {
@@ -450,9 +467,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
               "itemRef": [Function],
               "name": "create-format",
             },
+            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
+            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -490,9 +509,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                   "itemRef": [Function],
                   "name": "create-format",
                 },
+                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
+                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -540,6 +561,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
               >
                 <div
                   className="ant-row ant-row-center"
+                  role="row"
                   style={
                     Object {
                       "margin": "0 auto",
@@ -553,6 +575,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                   >
                     <div
                       className="ant-col ant-col-24"
+                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -561,6 +584,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-row-end"
+                          role="row"
                           style={
                             Object {
                               "marginLeft": -20,
@@ -575,6 +599,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-row ant-form-item"
+                                role="row"
                                 style={Object {}}
                               >
                                 <FormItemLabel
@@ -583,16 +608,19 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                 />
                                 <FormItemInput
                                   errors={Array []}
-                                  onDomErrorVisibleChange={[Function]}
+                                  name={Array []}
                                   prefixCls="ant-form"
                                   status=""
-                                  validateStatus=""
+                                  touched={false}
+                                  validating={false}
+                                  warnings={Array []}
                                 >
                                   <Col
                                     className="ant-form-item-control"
                                   >
                                     <div
                                       className="ant-col ant-form-item-control"
+                                      role="cell"
                                       style={Object {}}
                                     >
                                       <div
@@ -626,9 +654,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                     htmlType="button"
                                                     onClick={[Function]}
                                                   >
-                                                    <Wave>
+                                                    <Wave
+                                                      disabled={false}
+                                                    >
                                                       <button
-                                                        className="ant-btn"
+                                                        className="ant-btn ant-btn-default"
                                                         onClick={[Function]}
                                                         type="button"
                                                       >
@@ -678,7 +708,9 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                     htmlType="submit"
                                                     type="primary"
                                                   >
-                                                    <Wave>
+                                                    <Wave
+                                                      disabled={false}
+                                                    >
                                                       <button
                                                         className="ant-btn ant-btn-primary"
                                                         disabled={true}
@@ -719,15 +751,25 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         </div>
                                       </div>
                                       <ErrorList
+                                        className="ant-form-item-explain-connected"
                                         errors={Array []}
-                                        onDomErrorVisibleChange={[Function]}
+                                        helpStatus=""
+                                        warnings={Array []}
                                       >
                                         <CSSMotion
-                                          motionAppear={true}
+                                          motionAppear={false}
                                           motionDeadline={500}
+                                          motionEnter={false}
                                           motionName="ant-show-help"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
                                           onLeaveEnd={[Function]}
-                                          removeOnLeave={true}
+                                          onLeaveStart={[Function]}
                                           visible={false}
                                         >
                                           <DomWrapper />
@@ -748,6 +790,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                   >
                     <div
                       className="ant-col ant-col-24"
+                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -763,6 +806,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-row-space-around"
+                          role="row"
                           style={
                             Object {
                               "background": "#f0f2f5",
@@ -778,6 +822,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                           >
                             <div
                               className="ant-col ant-col-12"
+                              role="cell"
                               style={
                                 Object {
                                   "paddingLeft": 20,
@@ -813,7 +858,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                   }
                                   name="name"
-                                  onReset={[Function]}
+                                  onMetaChange={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -840,9 +885,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           "itemRef": [Function],
                                           "name": "create-format",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
+                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -871,7 +918,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         "name",
                                       ]
                                     }
-                                    onReset={[Function]}
+                                    onMetaChange={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -898,6 +945,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -929,6 +977,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -944,12 +993,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         <FormItemInput
                                           errors={Array []}
                                           label="Format Name"
-                                          name={
-                                            Array [
-                                              "name",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
+                                          name={Array []}
                                           prefixCls="ant-form"
                                           rules={
                                             Array [
@@ -969,14 +1013,15 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           }
                                           status=""
                                           touched={false}
-                                          validateStatus=""
                                           validating={false}
+                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -986,18 +1031,54 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={2}
+                                                    update={
+                                                      <ForwardRef
+                                                        onChange={[Function]}
+                                                      />
+                                                    }
                                                     value="Article"
                                                   >
-                                                    <Input
+                                                    <ForwardRef
                                                       id="create-format_name"
                                                       onChange={[Function]}
-                                                      type="text"
                                                       value="Article"
                                                     >
-                                                      <ClearableLabeledInput
-                                                        bordered={true}
-                                                        element={
+                                                      <ForwardRef
+                                                        affixWrapperClassName=""
+                                                        groupClassName=""
+                                                        id="create-format_name"
+                                                        inputClassName=""
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        prefixCls="ant-input"
+                                                        value="Article"
+                                                        wrapperClassName=""
+                                                      >
+                                                        <BaseInput
+                                                          affixWrapperClassName=""
+                                                          focused={false}
+                                                          groupClassName=""
+                                                          handleReset={[Function]}
+                                                          id="create-format_name"
+                                                          inputElement={
+                                                            <input
+                                                              className="ant-input"
+                                                              id="create-format_name"
+                                                              onBlur={[Function]}
+                                                              onChange={[Function]}
+                                                              onFocus={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              type="text"
+                                                              value="Article"
+                                                            />
+                                                          }
+                                                          prefixCls="ant-input"
+                                                          suffix={null}
+                                                          triggerFocus={[Function]}
+                                                          value="Article"
+                                                          wrapperClassName=""
+                                                        >
                                                           <input
                                                             className="ant-input"
                                                             id="create-format_name"
@@ -1008,42 +1089,32 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                             type="text"
                                                             value="Article"
                                                           />
-                                                        }
-                                                        focused={false}
-                                                        handleReset={[Function]}
-                                                        id="create-format_name"
-                                                        inputType="input"
-                                                        onChange={[Function]}
-                                                        prefixCls="ant-input"
-                                                        triggerFocus={[Function]}
-                                                        type="text"
-                                                        value="Article"
-                                                      >
-                                                        <input
-                                                          className="ant-input"
-                                                          id="create-format_name"
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          type="text"
-                                                          value="Article"
-                                                        />
-                                                      </ClearableLabeledInput>
-                                                    </Input>
+                                                        </BaseInput>
+                                                      </ForwardRef>
+                                                    </ForwardRef>
                                                   </Component>
                                                 </div>
                                               </div>
                                               <ErrorList
+                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
+                                                helpStatus=""
+                                                warnings={Array []}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={true}
+                                                  motionAppear={false}
                                                   motionDeadline={500}
+                                                  motionEnter={false}
                                                   motionName="ant-show-help"
+                                                  onAppearActive={[Function]}
+                                                  onAppearEnd={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterEnd={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
+                                                  onLeaveStart={[Function]}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -1057,31 +1128,10 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                   </Field>
                                 </WrapperField>
                               </FormItem>
-                              <FormItem
-                                label="Slug"
-                                name="slug"
-                                rules={
-                                  Array [
-                                    Object {
-                                      "message": "Please input the slug!",
-                                      "required": true,
-                                    },
-                                    Object {
-                                      "message": "Please enter valid slug!",
-                                      "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                    },
-                                  ]
-                                }
-                              >
-                                <WrapperField
+                              <SlugInput>
+                                <FormItem
                                   label="Slug"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Slug",
-                                    }
-                                  }
                                   name="slug"
-                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -1094,48 +1144,16 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                       },
                                     ]
                                   }
-                                  trigger="onChange"
-                                  validateTrigger="onChange"
                                 >
-                                  <Field
-                                    fieldContext={
-                                      Object {
-                                        "__INTERNAL__": Object {
-                                          "itemRef": [Function],
-                                          "name": "create-format",
-                                        },
-                                        "getFieldError": [Function],
-                                        "getFieldInstance": [Function],
-                                        "getFieldValue": [Function],
-                                        "getFieldsError": [Function],
-                                        "getFieldsValue": [Function],
-                                        "getInternalHooks": [Function],
-                                        "isFieldTouched": [Function],
-                                        "isFieldValidating": [Function],
-                                        "isFieldsTouched": [Function],
-                                        "isFieldsValidating": [Function],
-                                        "resetFields": [Function],
-                                        "scrollToField": [Function],
-                                        "setFields": [Function],
-                                        "setFieldsValue": [Function],
-                                        "submit": [Function],
-                                        "validateFields": [Function],
-                                        "validateTrigger": "onChange",
-                                      }
-                                    }
-                                    key="_slug"
+                                  <WrapperField
                                     label="Slug"
                                     messageVariables={
                                       Object {
                                         "label": "Slug",
                                       }
                                     }
-                                    name={
-                                      Array [
-                                        "slug",
-                                      ]
-                                    }
-                                    onReset={[Function]}
+                                    name="slug"
+                                    onMetaChange={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -1150,165 +1168,242 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                     trigger="onChange"
                                     validateTrigger="onChange"
-                                    valuePropName="value"
                                   >
-                                    <Row
-                                      className="ant-form-item"
-                                      key="row"
+                                    <Field
+                                      fieldContext={
+                                        Object {
+                                          "__INTERNAL__": Object {
+                                            "itemRef": [Function],
+                                            "name": "create-format",
+                                          },
+                                          "_init": true,
+                                          "getFieldError": [Function],
+                                          "getFieldInstance": [Function],
+                                          "getFieldValue": [Function],
+                                          "getFieldWarning": [Function],
+                                          "getFieldsError": [Function],
+                                          "getFieldsValue": [Function],
+                                          "getInternalHooks": [Function],
+                                          "isFieldTouched": [Function],
+                                          "isFieldValidating": [Function],
+                                          "isFieldsTouched": [Function],
+                                          "isFieldsValidating": [Function],
+                                          "resetFields": [Function],
+                                          "scrollToField": [Function],
+                                          "setFields": [Function],
+                                          "setFieldsValue": [Function],
+                                          "submit": [Function],
+                                          "validateFields": [Function],
+                                          "validateTrigger": "onChange",
+                                        }
+                                      }
+                                      key="_slug"
+                                      label="Slug"
+                                      messageVariables={
+                                        Object {
+                                          "label": "Slug",
+                                        }
+                                      }
+                                      name={
+                                        Array [
+                                          "slug",
+                                        ]
+                                      }
+                                      onMetaChange={[Function]}
+                                      rules={
+                                        Array [
+                                          Object {
+                                            "message": "Please input the slug!",
+                                            "required": true,
+                                          },
+                                          Object {
+                                            "message": "Please enter valid slug!",
+                                            "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                          },
+                                        ]
+                                      }
+                                      trigger="onChange"
+                                      validateTrigger="onChange"
+                                      valuePropName="value"
                                     >
-                                      <div
-                                        className="ant-row ant-form-item"
-                                        style={Object {}}
+                                      <Row
+                                        className="ant-form-item"
+                                        key="row"
                                       >
-                                        <FormItemLabel
-                                          htmlFor="create-format_slug"
-                                          label="Slug"
-                                          name="slug"
-                                          prefixCls="ant-form"
-                                          required={true}
-                                          requiredMark={true}
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please input the slug!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Please enter valid slug!",
-                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                              },
-                                            ]
-                                          }
+                                        <div
+                                          className="ant-row ant-form-item"
+                                          role="row"
+                                          style={Object {}}
                                         >
-                                          <Col
-                                            className="ant-form-item-label"
+                                          <FormItemLabel
+                                            htmlFor="create-format_slug"
+                                            label="Slug"
+                                            name="slug"
+                                            prefixCls="ant-form"
+                                            required={true}
+                                            requiredMark={true}
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please input the slug!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "message": "Please enter valid slug!",
+                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                },
+                                              ]
+                                            }
                                           >
-                                            <div
-                                              className="ant-col ant-form-item-label"
-                                              style={Object {}}
-                                            >
-                                              <label
-                                                className="ant-form-item-required"
-                                                htmlFor="create-format_slug"
-                                                title="Slug"
-                                              >
-                                                Slug
-                                              </label>
-                                            </div>
-                                          </Col>
-                                        </FormItemLabel>
-                                        <FormItemInput
-                                          errors={Array []}
-                                          label="Slug"
-                                          name={
-                                            Array [
-                                              "slug",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
-                                          prefixCls="ant-form"
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please input the slug!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Please enter valid slug!",
-                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                              },
-                                            ]
-                                          }
-                                          status=""
-                                          touched={false}
-                                          validateStatus=""
-                                          validating={false}
-                                        >
-                                          <Col
-                                            className="ant-form-item-control"
-                                          >
-                                            <div
-                                              className="ant-col ant-form-item-control"
-                                              style={Object {}}
+                                            <Col
+                                              className="ant-form-item-label"
                                             >
                                               <div
-                                                className="ant-form-item-control-input"
+                                                className="ant-col ant-form-item-label"
+                                                role="cell"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className="ant-form-item-required"
+                                                  htmlFor="create-format_slug"
+                                                  title="Slug"
+                                                >
+                                                  Slug
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
+                                          <FormItemInput
+                                            errors={Array []}
+                                            label="Slug"
+                                            name={Array []}
+                                            prefixCls="ant-form"
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please input the slug!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "message": "Please enter valid slug!",
+                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                },
+                                              ]
+                                            }
+                                            status=""
+                                            touched={false}
+                                            validating={false}
+                                            warnings={Array []}
+                                          >
+                                            <Col
+                                              className="ant-form-item-control"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-control"
+                                                role="cell"
+                                                style={Object {}}
                                               >
                                                 <div
-                                                  className="ant-form-item-control-input-content"
+                                                  className="ant-form-item-control-input"
                                                 >
-                                                  <Component
-                                                    update={2}
-                                                    value="article"
+                                                  <div
+                                                    className="ant-form-item-control-input-content"
                                                   >
-                                                    <Input
-                                                      id="create-format_slug"
-                                                      onChange={[Function]}
-                                                      type="text"
+                                                    <Component
+                                                      update={<ForwardRef />}
                                                       value="article"
                                                     >
-                                                      <ClearableLabeledInput
-                                                        bordered={true}
-                                                        element={
-                                                          <input
-                                                            className="ant-input"
-                                                            id="create-format_slug"
-                                                            onBlur={[Function]}
-                                                            onChange={[Function]}
-                                                            onFocus={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            type="text"
-                                                            value="article"
-                                                          />
-                                                        }
-                                                        focused={false}
-                                                        handleReset={[Function]}
+                                                      <ForwardRef
                                                         id="create-format_slug"
-                                                        inputType="input"
                                                         onChange={[Function]}
-                                                        prefixCls="ant-input"
-                                                        triggerFocus={[Function]}
-                                                        type="text"
                                                         value="article"
                                                       >
-                                                        <input
-                                                          className="ant-input"
+                                                        <ForwardRef
+                                                          affixWrapperClassName=""
+                                                          groupClassName=""
                                                           id="create-format_slug"
+                                                          inputClassName=""
                                                           onBlur={[Function]}
                                                           onChange={[Function]}
                                                           onFocus={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          type="text"
+                                                          prefixCls="ant-input"
                                                           value="article"
-                                                        />
-                                                      </ClearableLabeledInput>
-                                                    </Input>
-                                                  </Component>
+                                                          wrapperClassName=""
+                                                        >
+                                                          <BaseInput
+                                                            affixWrapperClassName=""
+                                                            focused={false}
+                                                            groupClassName=""
+                                                            handleReset={[Function]}
+                                                            id="create-format_slug"
+                                                            inputElement={
+                                                              <input
+                                                                className="ant-input"
+                                                                id="create-format_slug"
+                                                                onBlur={[Function]}
+                                                                onChange={[Function]}
+                                                                onFocus={[Function]}
+                                                                onKeyDown={[Function]}
+                                                                type="text"
+                                                                value="article"
+                                                              />
+                                                            }
+                                                            prefixCls="ant-input"
+                                                            suffix={null}
+                                                            triggerFocus={[Function]}
+                                                            value="article"
+                                                            wrapperClassName=""
+                                                          >
+                                                            <input
+                                                              className="ant-input"
+                                                              id="create-format_slug"
+                                                              onBlur={[Function]}
+                                                              onChange={[Function]}
+                                                              onFocus={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              type="text"
+                                                              value="article"
+                                                            />
+                                                          </BaseInput>
+                                                        </ForwardRef>
+                                                      </ForwardRef>
+                                                    </Component>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                              <ErrorList
-                                                errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
-                                              >
-                                                <CSSMotion
-                                                  motionAppear={true}
-                                                  motionDeadline={500}
-                                                  motionName="ant-show-help"
-                                                  onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <ErrorList
+                                                  className="ant-form-item-explain-connected"
+                                                  errors={Array []}
+                                                  helpStatus=""
+                                                  warnings={Array []}
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </ErrorList>
-                                            </div>
-                                          </Col>
-                                        </FormItemInput>
-                                      </div>
-                                    </Row>
-                                  </Field>
-                                </WrapperField>
-                              </FormItem>
+                                                  <CSSMotion
+                                                    motionAppear={false}
+                                                    motionDeadline={500}
+                                                    motionEnter={false}
+                                                    motionName="ant-show-help"
+                                                    onAppearActive={[Function]}
+                                                    onAppearEnd={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterEnd={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveEnd={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </ErrorList>
+                                              </div>
+                                            </Col>
+                                          </FormItemInput>
+                                        </div>
+                                      </Row>
+                                    </Field>
+                                  </WrapperField>
+                                </FormItem>
+                              </SlugInput>
                               <FormItem
                                 label="Featured"
                                 name="is_featured"
@@ -1322,7 +1417,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                   }
                                   name="is_featured"
-                                  onReset={[Function]}
+                                  onMetaChange={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="checked"
@@ -1334,9 +1429,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           "itemRef": [Function],
                                           "name": "create-format",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
+                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1365,7 +1462,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         "is_featured",
                                       ]
                                     }
-                                    onReset={[Function]}
+                                    onMetaChange={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="checked"
@@ -1376,6 +1473,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1392,6 +1490,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1407,24 +1506,20 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         <FormItemInput
                                           errors={Array []}
                                           label="Featured"
-                                          name={
-                                            Array [
-                                              "is_featured",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
+                                          name={Array []}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
-                                          validateStatus=""
                                           validating={false}
                                           valuePropName="checked"
+                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1434,7 +1529,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={2}
+                                                    update={<ForwardRef />}
                                                   >
                                                     <Switch
                                                       id="create-format_is_featured"
@@ -1477,15 +1572,25 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                 </div>
                                               </div>
                                               <ErrorList
+                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
+                                                helpStatus=""
+                                                warnings={Array []}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={true}
+                                                  motionAppear={false}
                                                   motionDeadline={500}
+                                                  motionEnter={false}
                                                   motionName="ant-show-help"
+                                                  onAppearActive={[Function]}
+                                                  onAppearEnd={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterEnd={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
+                                                  onLeaveStart={[Function]}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -1506,6 +1611,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                           >
                             <div
                               className="ant-col ant-col-10"
+                              role="cell"
                               style={
                                 Object {
                                   "paddingLeft": 20,
@@ -1525,7 +1631,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                   }
                                   name="medium_id"
-                                  onReset={[Function]}
+                                  onMetaChange={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                 >
@@ -1536,9 +1642,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           "itemRef": [Function],
                                           "name": "create-format",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
+                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1567,7 +1675,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         "medium_id",
                                       ]
                                     }
-                                    onReset={[Function]}
+                                    onMetaChange={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="value"
@@ -1578,6 +1686,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1593,6 +1702,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1608,23 +1718,19 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         <FormItemInput
                                           errors={Array []}
                                           label="Featured Image"
-                                          name={
-                                            Array [
-                                              "medium_id",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
+                                          name={Array []}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
-                                          validateStatus=""
                                           validating={false}
+                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1634,7 +1740,16 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={2}
+                                                    update={
+                                                      <MediaSelector
+                                                        containerStyles={
+                                                          Object {
+                                                            "justifyContent": "start",
+                                                          }
+                                                        }
+                                                        maxWidth="350px"
+                                                      />
+                                                    }
                                                   >
                                                     <MediaSelector
                                                       containerStyles={
@@ -1660,7 +1775,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                               onClick={[Function]}
                                                               type="primary"
                                                             >
-                                                              Confirm
+                                                              Ok
                                                             </ForwardRef(InternalButton)>,
                                                           ]
                                                         }
@@ -1693,7 +1808,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                                 onClick={[Function]}
                                                                 type="primary"
                                                               >
-                                                                Confirm
+                                                                Ok
                                                               </ForwardRef(InternalButton)>,
                                                             ]
                                                           }
@@ -1758,9 +1873,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                                       }
                                                                     }
                                                                   >
-                                                                    <Wave>
+                                                                    <Wave
+                                                                      disabled={false}
+                                                                    >
                                                                       <button
-                                                                        className="ant-btn"
+                                                                        className="ant-btn ant-btn-default"
                                                                         onClick={[Function]}
                                                                         style={
                                                                           Object {
@@ -1825,15 +1942,25 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                 </div>
                                               </div>
                                               <ErrorList
+                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
+                                                helpStatus=""
+                                                warnings={Array []}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={true}
+                                                  motionAppear={false}
                                                   motionDeadline={500}
+                                                  motionEnter={false}
                                                   motionName="ant-show-help"
+                                                  onAppearActive={[Function]}
+                                                  onAppearEnd={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterEnd={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
+                                                  onLeaveStart={[Function]}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -1860,6 +1987,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                           >
                             <div
                               className="ant-col ant-col-12"
+                              role="cell"
                               style={
                                 Object {
                                   "marginLeft": "20px",
@@ -1881,7 +2009,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                   }
                                   name="description"
-                                  onReset={[Function]}
+                                  onMetaChange={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                 >
@@ -1892,9 +2020,11 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           "itemRef": [Function],
                                           "name": "create-format",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
+                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1923,7 +2053,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         "description",
                                       ]
                                     }
-                                    onReset={[Function]}
+                                    onMetaChange={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="value"
@@ -1934,6 +2064,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1949,6 +2080,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1964,23 +2096,19 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         <FormItemInput
                                           errors={Array []}
                                           label="Description"
-                                          name={
-                                            Array [
-                                              "description",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
+                                          name={Array []}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
-                                          validateStatus=""
                                           validating={false}
+                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1990,7 +2118,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={2}
+                                                    update={<ForwardRef />}
                                                     value="description"
                                                   >
                                                     <ForwardRef
@@ -2040,16 +2168,24 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                               disabled={true}
                                                               onResize={[Function]}
                                                             >
-                                                              <textarea
-                                                                className="ant-input"
-                                                                id="create-format_description"
-                                                                onChange={[Function]}
-                                                                onCompositionEnd={[Function]}
-                                                                onCompositionStart={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                style={Object {}}
-                                                                value="description"
-                                                              />
+                                                              <SingleObserver
+                                                                disabled={true}
+                                                                key="rc-observer-key-0"
+                                                                onResize={[Function]}
+                                                              >
+                                                                <DomWrapper>
+                                                                  <textarea
+                                                                    className="ant-input"
+                                                                    id="create-format_description"
+                                                                    onChange={[Function]}
+                                                                    onCompositionEnd={[Function]}
+                                                                    onCompositionStart={[Function]}
+                                                                    onKeyDown={[Function]}
+                                                                    style={Object {}}
+                                                                    value="description"
+                                                                  />
+                                                                </DomWrapper>
+                                                              </SingleObserver>
                                                             </ResizeObserver>
                                                           </ResizableTextArea>
                                                         </TextArea>
@@ -2059,15 +2195,25 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                                 </div>
                                               </div>
                                               <ErrorList
+                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
+                                                helpStatus=""
+                                                warnings={Array []}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={true}
+                                                  motionAppear={false}
                                                   motionDeadline={500}
+                                                  motionEnter={false}
                                                   motionName="ant-show-help"
+                                                  onAppearActive={[Function]}
+                                                  onAppearEnd={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterEnd={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
+                                                  onLeaveStart={[Function]}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -2092,6 +2238,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                   >
                     <div
                       className="ant-col ant-col-24"
+                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -2104,6 +2251,7 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row"
+                          role="row"
                           style={
                             Object {
                               "background": "#f0f2f5",
@@ -2112,93 +2260,63 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                             }
                           }
                         >
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
+                          <MetaForm>
                             <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
                               expandIcon={[Function]}
                               expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
                               style={
                                 Object {
                                   "width": "100%",
                                 }
                               }
                             >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
+                              <Collapse
+                                accordion={false}
+                                className="ant-collapse-icon-position-right"
+                                destroyInactivePanel={false}
+                                expandIcon={[Function]}
+                                expandIconPosition="right"
+                                onChange={[Function]}
+                                openMotion={
+                                  Object {
+                                    "leavedClassName": "ant-collapse-content-hidden",
+                                    "motionAppear": false,
+                                    "motionDeadline": 500,
+                                    "motionName": "ant-motion-collapse",
+                                    "onAppearActive": [Function],
+                                    "onAppearEnd": [Function],
+                                    "onAppearStart": [Function],
+                                    "onEnterActive": [Function],
+                                    "onEnterEnd": [Function],
+                                    "onEnterStart": [Function],
+                                    "onLeaveActive": [Function],
+                                    "onLeaveEnd": [Function],
+                                    "onLeaveStart": [Function],
+                                  }
+                                }
+                                prefixCls="ant-collapse"
                                 style={
                                   Object {
                                     "width": "100%",
                                   }
                                 }
                               >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Meta Data"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
+                                <div
+                                  className="ant-collapse ant-collapse-icon-position-right"
+                                  role={null}
+                                  style={
                                     Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
+                                      "width": "100%",
                                     }
                                   }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
                                 >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Meta Data"
-                                    headerClass=""
                                     isActive={false}
+                                    key="0"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -2219,170 +2337,121 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                     panelKey="0"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Meta Data"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="0"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
+                                          <div>
+                                            <Button
+                                              className="ant-collapse-arrow"
                                             >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                              <Wave
+                                                disabled={false}
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <button
+                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
+                                                  onClick={[Function]}
+                                                  type="button"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Meta Data
+                                                  <LoadingIcon
+                                                    existIcon={false}
+                                                    loading={false}
+                                                    prefixCls="ant-btn"
+                                                  >
+                                                    <CSSMotion
+                                                      motionName="ant-btn-loading-icon-motion"
+                                                      onAppearActive={[Function]}
+                                                      onAppearStart={[Function]}
+                                                      onEnterActive={[Function]}
+                                                      onEnterStart={[Function]}
+                                                      onLeaveActive={[Function]}
+                                                      onLeaveStart={[Function]}
+                                                      removeOnLeave={true}
+                                                      visible={false}
+                                                    >
+                                                      <DomWrapper />
+                                                    </CSSMotion>
+                                                  </LoadingIcon>
+                                                  <span
+                                                    key=".0"
+                                                  >
+                                                    Expand
+                                                  </span>
+                                                </button>
+                                              </Wave>
+                                            </Button>
+                                          </div>
+                                          Meta Data
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
-                            </Collapse>
-                          </Collapse>
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
-                            <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
-                              expandIcon={[Function]}
-                              expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
-                              style={
-                                Object {
-                                  "width": "100%",
-                                }
-                              }
-                            >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
-                                style={
-                                  Object {
-                                    "width": "100%",
-                                  }
-                                }
-                              >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Code Injection"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
-                                    Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
-                                    }
-                                  }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
-                                >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Code Injection"
-                                    headerClass=""
                                     isActive={false}
+                                    key="1"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -2401,172 +2470,175 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                         "onLeaveStart": [Function],
                                       }
                                     }
-                                    panelKey="0"
+                                    panelKey="1"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Code Injection"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="1"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
+                                          <div>
+                                            <Button
+                                              className="ant-collapse-arrow"
                                             >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                              <Wave
+                                                disabled={false}
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <button
+                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
+                                                  onClick={[Function]}
+                                                  type="button"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Code Injection
+                                                  <LoadingIcon
+                                                    existIcon={false}
+                                                    loading={false}
+                                                    prefixCls="ant-btn"
+                                                  >
+                                                    <CSSMotion
+                                                      motionName="ant-btn-loading-icon-motion"
+                                                      onAppearActive={[Function]}
+                                                      onAppearStart={[Function]}
+                                                      onEnterActive={[Function]}
+                                                      onEnterStart={[Function]}
+                                                      onLeaveActive={[Function]}
+                                                      onLeaveStart={[Function]}
+                                                      removeOnLeave={true}
+                                                      visible={false}
+                                                    >
+                                                      <DomWrapper />
+                                                    </CSSMotion>
+                                                  </LoadingIcon>
+                                                  <span
+                                                    key=".0"
+                                                  >
+                                                    Expand
+                                                  </span>
+                                                </button>
+                                              </Wave>
+                                            </Button>
+                                          </div>
+                                          Code Injection
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
+                                </div>
+                              </Collapse>
                             </Collapse>
-                          </Collapse>
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
                             <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
                               expandIcon={[Function]}
                               expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
                               style={
                                 Object {
                                   "width": "100%",
                                 }
                               }
                             >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
+                              <Collapse
+                                accordion={false}
+                                className="ant-collapse-icon-position-right"
+                                destroyInactivePanel={false}
+                                expandIcon={[Function]}
+                                expandIconPosition="right"
+                                onChange={[Function]}
+                                openMotion={
+                                  Object {
+                                    "leavedClassName": "ant-collapse-content-hidden",
+                                    "motionAppear": false,
+                                    "motionDeadline": 500,
+                                    "motionName": "ant-motion-collapse",
+                                    "onAppearActive": [Function],
+                                    "onAppearEnd": [Function],
+                                    "onAppearStart": [Function],
+                                    "onEnterActive": [Function],
+                                    "onEnterEnd": [Function],
+                                    "onEnterStart": [Function],
+                                    "onLeaveActive": [Function],
+                                    "onLeaveEnd": [Function],
+                                    "onLeaveStart": [Function],
+                                  }
+                                }
+                                prefixCls="ant-collapse"
                                 style={
                                   Object {
                                     "width": "100%",
                                   }
                                 }
                               >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Meta Fields"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
+                                <div
+                                  className="ant-collapse ant-collapse-icon-position-right"
+                                  role={null}
+                                  style={
                                     Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
+                                      "width": "100%",
                                     }
                                   }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
                                 >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Meta Fields"
-                                    headerClass=""
                                     isActive={false}
+                                    key="0"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -2587,83 +2659,118 @@ exports[`Formats edit component snapshot testing should render the component 1`]
                                     }
                                     panelKey="0"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Meta Fields"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="0"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
+                                          <div>
+                                            <Button
+                                              className="ant-collapse-arrow"
                                             >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                              <Wave
+                                                disabled={false}
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <button
+                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
+                                                  onClick={[Function]}
+                                                  type="button"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Meta Fields
+                                                  <LoadingIcon
+                                                    existIcon={false}
+                                                    loading={false}
+                                                    prefixCls="ant-btn"
+                                                  >
+                                                    <CSSMotion
+                                                      motionName="ant-btn-loading-icon-motion"
+                                                      onAppearActive={[Function]}
+                                                      onAppearStart={[Function]}
+                                                      onEnterActive={[Function]}
+                                                      onEnterStart={[Function]}
+                                                      onLeaveActive={[Function]}
+                                                      onLeaveStart={[Function]}
+                                                      removeOnLeave={true}
+                                                      visible={false}
+                                                    >
+                                                      <DomWrapper />
+                                                    </CSSMotion>
+                                                  </LoadingIcon>
+                                                  <span
+                                                    key=".0"
+                                                  >
+                                                    Expand
+                                                  </span>
+                                                </button>
+                                              </Wave>
+                                            </Button>
+                                          </div>
+                                          Meta Fields
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
+                                </div>
+                              </Collapse>
                             </Collapse>
-                          </Collapse>
+                          </MetaForm>
                         </div>
                       </Row>
                     </div>
