@@ -66,6 +66,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
             "itemRef": [Function],
             "name": "creat-rating",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -142,6 +143,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 "itemRef": [Function],
                 "name": "creat-rating",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -228,6 +230,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -241,6 +244,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -249,6 +253,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -263,6 +268,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -283,6 +289,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -452,6 +459,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -467,6 +475,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -482,6 +491,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -541,6 +551,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -596,6 +607,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -623,6 +635,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -662,6 +675,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -817,6 +831,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -872,6 +887,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -899,6 +915,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -938,6 +955,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1080,6 +1098,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -1131,6 +1150,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -1154,6 +1174,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -1189,6 +1210,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -1212,7 +1234,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                     value={3}
                                                   >
                                                     <InputNumber
-                                                      className=""
+                                                      className="ant-input-number-in-form-item"
                                                       downHandler={
                                                         <ForwardRef(DownOutlined)
                                                           className="ant-input-number-handler-down-inner"
@@ -1230,7 +1252,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                       value={3}
                                                     >
                                                       <div
-                                                        className="ant-input-number"
+                                                        className="ant-input-number ant-input-number-in-form-item"
                                                         onBlur={[Function]}
                                                         onCompositionEnd={[Function]}
                                                         onCompositionStart={[Function]}
@@ -1506,6 +1528,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -1549,6 +1572,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -1564,6 +1588,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -1591,6 +1616,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -1778,6 +1804,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -1821,6 +1848,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -1836,6 +1864,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -1863,6 +1892,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -1999,6 +2029,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               >
                                 <div
                                   className="ant-row ant-form-item preview-container"
+                                  role="row"
                                   style={
                                     Object {
                                       "marginBottom": "1rem",
@@ -2024,6 +2055,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -2062,6 +2094,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -2131,6 +2164,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -2161,6 +2195,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -2204,6 +2239,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -2219,6 +2255,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -2246,6 +2283,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -2610,6 +2648,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -2656,6 +2695,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -2699,6 +2739,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -2714,6 +2755,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -2741,6 +2783,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -2864,6 +2907,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -2876,6 +2920,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -3432,6 +3477,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
             "itemRef": [Function],
             "name": "creat-rating",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -3466,6 +3512,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 "itemRef": [Function],
                 "name": "creat-rating",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -3510,6 +3557,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -3523,6 +3571,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -3531,6 +3580,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -3545,6 +3595,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -3565,6 +3616,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -3734,6 +3786,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -3749,6 +3802,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -3764,6 +3818,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -3823,6 +3878,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -3878,6 +3934,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -3905,6 +3962,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -3944,6 +4002,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -4095,6 +4154,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -4150,6 +4210,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -4177,6 +4238,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -4216,6 +4278,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -4354,6 +4417,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -4405,6 +4469,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -4428,6 +4493,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -4463,6 +4529,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -4484,7 +4551,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                     onChange={[Function]}
                                                   >
                                                     <InputNumber
-                                                      className=""
+                                                      className="ant-input-number-in-form-item"
                                                       downHandler={
                                                         <ForwardRef(DownOutlined)
                                                           className="ant-input-number-handler-down-inner"
@@ -4501,7 +4568,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                                       }
                                                     >
                                                       <div
-                                                        className="ant-input-number"
+                                                        className="ant-input-number ant-input-number-in-form-item"
                                                         onBlur={[Function]}
                                                         onCompositionEnd={[Function]}
                                                         onCompositionStart={[Function]}
@@ -4777,6 +4844,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -4820,6 +4888,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -4835,6 +4904,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -4862,6 +4932,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -4999,6 +5070,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -5042,6 +5114,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -5057,6 +5130,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -5084,6 +5158,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -5220,6 +5295,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                               >
                                 <div
                                   className="ant-row ant-form-item preview-container"
+                                  role="row"
                                   style={
                                     Object {
                                       "marginBottom": "1rem",
@@ -5245,6 +5321,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -5283,6 +5360,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -5352,6 +5430,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -5382,6 +5461,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -5425,6 +5505,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -5440,6 +5521,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -5467,6 +5549,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -5829,6 +5912,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -5875,6 +5959,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -5918,6 +6003,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -5933,6 +6019,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -5960,6 +6047,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -6055,6 +6143,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -6067,6 +6156,7 @@ exports[`Ratings Create Form component snapshot testing should match component w
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -6621,6 +6711,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
             "itemRef": [Function],
             "name": "creat-rating",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -6655,6 +6746,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 "itemRef": [Function],
                 "name": "creat-rating",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -6699,6 +6791,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
             >
               <div
                 className="ant-row ant-row-center"
+                role="row"
                 style={
                   Object {
                     "margin": "0 auto",
@@ -6712,6 +6805,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -6720,6 +6814,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                     >
                       <div
                         className="ant-row ant-row-end"
+                        role="row"
                         style={
                           Object {
                             "marginLeft": -20,
@@ -6734,6 +6829,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                           >
                             <div
                               className="ant-row ant-form-item"
+                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -6754,6 +6850,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
+                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -6923,6 +7020,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -6938,6 +7036,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                     >
                       <div
                         className="ant-row ant-row-space-around"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
@@ -6953,6 +7052,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -7012,6 +7112,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -7067,6 +7168,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -7094,6 +7196,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -7133,6 +7236,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -7284,6 +7388,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -7339,6 +7444,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -7366,6 +7472,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -7405,6 +7512,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -7543,6 +7651,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -7594,6 +7703,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -7617,6 +7727,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -7652,6 +7763,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -7673,7 +7785,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                                     onChange={[Function]}
                                                   >
                                                     <InputNumber
-                                                      className=""
+                                                      className="ant-input-number-in-form-item"
                                                       downHandler={
                                                         <ForwardRef(DownOutlined)
                                                           className="ant-input-number-handler-down-inner"
@@ -7690,7 +7802,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                                       }
                                                     >
                                                       <div
-                                                        className="ant-input-number"
+                                                        className="ant-input-number ant-input-number-in-form-item"
                                                         onBlur={[Function]}
                                                         onCompositionEnd={[Function]}
                                                         onCompositionStart={[Function]}
@@ -7966,6 +8078,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -8009,6 +8122,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -8024,6 +8138,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -8051,6 +8166,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -8188,6 +8304,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -8231,6 +8348,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -8246,6 +8364,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -8273,6 +8392,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -8409,6 +8529,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                               >
                                 <div
                                   className="ant-row ant-form-item preview-container"
+                                  role="row"
                                   style={
                                     Object {
                                       "marginBottom": "1rem",
@@ -8434,6 +8555,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -8472,6 +8594,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
+                                        role="cell"
                                         style={
                                           Object {
                                             "paddingLeft": 8,
@@ -8541,6 +8664,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                         >
                           <div
                             className="ant-col ant-col-10"
+                            role="cell"
                             style={
                               Object {
                                 "paddingLeft": 20,
@@ -8571,6 +8695,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         "itemRef": [Function],
                                         "name": "creat-rating",
                                       },
+                                      "_init": true,
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
@@ -8614,6 +8739,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                   >
                                     <div
                                       className="ant-row ant-form-item"
+                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -8629,6 +8755,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-label"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <label
@@ -8656,6 +8783,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
+                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -9018,6 +9146,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                         >
                           <div
                             className="ant-col ant-col-12"
+                            role="cell"
                             style={
                               Object {
                                 "marginLeft": "20px",
@@ -9064,6 +9193,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           "itemRef": [Function],
                                           "name": "creat-rating",
                                         },
+                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
@@ -9107,6 +9237,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                     >
                                       <div
                                         className="ant-row ant-form-item"
+                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -9122,6 +9253,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -9149,6 +9281,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
+                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -9244,6 +9377,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                 >
                   <div
                     className="ant-col ant-col-24"
+                    role="cell"
                     style={Object {}}
                   >
                     <Row
@@ -9256,6 +9390,7 @@ exports[`Ratings Create Form component snapshot testing should render the compon
                     >
                       <div
                         className="ant-row"
+                        role="row"
                         style={
                           Object {
                             "background": "#f0f2f5",
