@@ -14,6 +14,23 @@ exports[`Episode create component snapshot testing should render the component 1
   }
 >
   <CreateEpisode>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Create Episode"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Create Episode"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Create Episode"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <EpisodeForm
       onCreate={[Function]}
     >
@@ -24,9 +41,11 @@ exports[`Episode create component snapshot testing should render the component 1
               "itemRef": [Function],
               "name": "create-category",
             },
+            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
+            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -67,9 +86,11 @@ exports[`Episode create component snapshot testing should render the component 1
                   "itemRef": [Function],
                   "name": "create-category",
                 },
+                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
+                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -113,302 +134,290 @@ exports[`Episode create component snapshot testing should render the component 1
                     }
                   }
                 >
-                  <FormItem
-                    label="Title"
-                    name="title"
-                    rules={
-                      Array [
-                        Object {
-                          "message": "Please enter the title!",
-                          "required": true,
-                        },
-                        Object {
-                          "message": "Name must be minimum 3 characters.",
-                          "min": 3,
-                        },
-                        Object {
-                          "max": 50,
-                          "message": "Name must be maximum 50 characters.",
-                        },
-                      ]
-                    }
+                  <TitleInput
+                    onChange={[Function]}
                   >
-                    <WrapperField
+                    <FormItem
                       label="Title"
-                      messageVariables={
-                        Object {
-                          "label": "Title",
-                        }
-                      }
                       name="title"
-                      onReset={[Function]}
                       rules={
                         Array [
                           Object {
-                            "message": "Please enter the title!",
+                            "message": "Please enter title!",
                             "required": true,
                           },
                           Object {
-                            "message": "Name must be minimum 3 characters.",
-                            "min": 3,
-                          },
-                          Object {
-                            "max": 50,
-                            "message": "Name must be maximum 50 characters.",
+                            "max": 500,
+                            "message": "Name must be maximum 500 characters.",
                           },
                         ]
                       }
-                      trigger="onChange"
-                      validateTrigger="onChange"
                     >
-                      <Field
-                        fieldContext={
-                          Object {
-                            "__INTERNAL__": Object {
-                              "itemRef": [Function],
-                              "name": "create-category",
-                            },
-                            "getFieldError": [Function],
-                            "getFieldInstance": [Function],
-                            "getFieldValue": [Function],
-                            "getFieldsError": [Function],
-                            "getFieldsValue": [Function],
-                            "getInternalHooks": [Function],
-                            "isFieldTouched": [Function],
-                            "isFieldValidating": [Function],
-                            "isFieldsTouched": [Function],
-                            "isFieldsValidating": [Function],
-                            "resetFields": [Function],
-                            "scrollToField": [Function],
-                            "setFields": [Function],
-                            "setFieldsValue": [Function],
-                            "submit": [Function],
-                            "validateFields": [Function],
-                            "validateTrigger": "onChange",
-                          }
-                        }
-                        key="_title"
+                      <WrapperField
                         label="Title"
                         messageVariables={
                           Object {
                             "label": "Title",
                           }
                         }
-                        name={
-                          Array [
-                            "title",
-                          ]
-                        }
-                        onReset={[Function]}
+                        name="title"
+                        onMetaChange={[Function]}
                         rules={
                           Array [
                             Object {
-                              "message": "Please enter the title!",
+                              "message": "Please enter title!",
                               "required": true,
                             },
                             Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
+                              "max": 500,
+                              "message": "Name must be maximum 500 characters.",
                             },
                           ]
                         }
                         trigger="onChange"
                         validateTrigger="onChange"
-                        valuePropName="value"
                       >
-                        <Row
-                          className="ant-form-item"
-                          key="row"
+                        <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-category",
+                              },
+                              "_init": true,
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldWarning": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
+                          key="_title"
+                          label="Title"
+                          messageVariables={
+                            Object {
+                              "label": "Title",
+                            }
+                          }
+                          name={
+                            Array [
+                              "title",
+                            ]
+                          }
+                          onMetaChange={[Function]}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                          valuePropName="value"
                         >
-                          <div
-                            className="ant-row ant-form-item"
-                            style={Object {}}
+                          <Row
+                            className="ant-form-item"
+                            key="row"
                           >
-                            <FormItemLabel
-                              htmlFor="create-category_title"
-                              label="Title"
-                              name="title"
-                              prefixCls="ant-form"
-                              required={true}
-                              requiredMark={true}
-                              rules={
-                                Array [
-                                  Object {
-                                    "message": "Please enter the title!",
-                                    "required": true,
-                                  },
-                                  Object {
-                                    "message": "Name must be minimum 3 characters.",
-                                    "min": 3,
-                                  },
-                                  Object {
-                                    "max": 50,
-                                    "message": "Name must be maximum 50 characters.",
-                                  },
-                                ]
-                              }
+                            <div
+                              className="ant-row ant-form-item"
+                              role="row"
+                              style={Object {}}
                             >
-                              <Col
-                                className="ant-form-item-label"
-                                span={24}
+                              <FormItemLabel
+                                htmlFor="create-category_title"
+                                label="Title"
+                                name="title"
+                                prefixCls="ant-form"
+                                required={true}
+                                requiredMark={true}
+                                rules={
+                                  Array [
+                                    Object {
+                                      "message": "Please enter title!",
+                                      "required": true,
+                                    },
+                                    Object {
+                                      "max": 500,
+                                      "message": "Name must be maximum 500 characters.",
+                                    },
+                                  ]
+                                }
                               >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-label"
-                                  style={Object {}}
-                                >
-                                  <label
-                                    className="ant-form-item-required"
-                                    htmlFor="create-category_title"
-                                    title="Title"
-                                  >
-                                    Title
-                                  </label>
-                                </div>
-                              </Col>
-                            </FormItemLabel>
-                            <FormItemInput
-                              errors={Array []}
-                              label="Title"
-                              name={
-                                Array [
-                                  "title",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
-                              prefixCls="ant-form"
-                              rules={
-                                Array [
-                                  Object {
-                                    "message": "Please enter the title!",
-                                    "required": true,
-                                  },
-                                  Object {
-                                    "message": "Name must be minimum 3 characters.",
-                                    "min": 3,
-                                  },
-                                  Object {
-                                    "max": 50,
-                                    "message": "Name must be maximum 50 characters.",
-                                  },
-                                ]
-                              }
-                              status=""
-                              touched={false}
-                              validateStatus=""
-                              validating={false}
-                            >
-                              <Col
-                                className="ant-form-item-control"
-                                span={24}
-                              >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-control"
-                                  style={Object {}}
+                                <Col
+                                  className="ant-form-item-label"
+                                  span={24}
                                 >
                                   <div
-                                    className="ant-form-item-control-input"
+                                    className="ant-col ant-col-24 ant-form-item-label"
+                                    role="cell"
+                                    style={Object {}}
+                                  >
+                                    <label
+                                      className="ant-form-item-required"
+                                      htmlFor="create-category_title"
+                                      title="Title"
+                                    >
+                                      Title
+                                    </label>
+                                  </div>
+                                </Col>
+                              </FormItemLabel>
+                              <FormItemInput
+                                errors={Array []}
+                                label="Title"
+                                name={Array []}
+                                prefixCls="ant-form"
+                                rules={
+                                  Array [
+                                    Object {
+                                      "message": "Please enter title!",
+                                      "required": true,
+                                    },
+                                    Object {
+                                      "max": 500,
+                                      "message": "Name must be maximum 500 characters.",
+                                    },
+                                  ]
+                                }
+                                status=""
+                                touched={false}
+                                validating={false}
+                                warnings={Array []}
+                              >
+                                <Col
+                                  className="ant-form-item-control"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-control"
+                                    role="cell"
+                                    style={Object {}}
                                   >
                                     <div
-                                      className="ant-form-item-control-input-content"
+                                      className="ant-form-item-control-input"
                                     >
-                                      <Component
-                                        update={1}
+                                      <div
+                                        className="ant-form-item-control-input-content"
                                       >
-                                        <Input
-                                          id="create-category_title"
-                                          onChange={[Function]}
-                                          type="text"
+                                        <Component
+                                          update={
+                                            <ForwardRef
+                                              onChange={[Function]}
+                                            />
+                                          }
                                         >
-                                          <ClearableLabeledInput
-                                            bordered={true}
-                                            element={
-                                              <input
-                                                className="ant-input"
-                                                id="create-category_title"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onKeyDown={[Function]}
-                                                type="text"
-                                              />
-                                            }
-                                            focused={false}
-                                            handleReset={[Function]}
+                                          <ForwardRef
                                             id="create-category_title"
-                                            inputType="input"
                                             onChange={[Function]}
-                                            prefixCls="ant-input"
-                                            triggerFocus={[Function]}
-                                            type="text"
-                                            value=""
                                           >
-                                            <input
-                                              className="ant-input"
+                                            <ForwardRef
+                                              affixWrapperClassName=""
+                                              groupClassName=""
                                               id="create-category_title"
+                                              inputClassName=""
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onKeyDown={[Function]}
-                                              type="text"
-                                              value=""
-                                            />
-                                          </ClearableLabeledInput>
-                                        </Input>
-                                      </Component>
+                                              prefixCls="ant-input"
+                                              wrapperClassName=""
+                                            >
+                                              <BaseInput
+                                                affixWrapperClassName=""
+                                                focused={false}
+                                                groupClassName=""
+                                                handleReset={[Function]}
+                                                id="create-category_title"
+                                                inputElement={
+                                                  <input
+                                                    className="ant-input"
+                                                    id="create-category_title"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    type="text"
+                                                  />
+                                                }
+                                                prefixCls="ant-input"
+                                                suffix={null}
+                                                triggerFocus={[Function]}
+                                                value=""
+                                                wrapperClassName=""
+                                              >
+                                                <input
+                                                  className="ant-input"
+                                                  id="create-category_title"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  type="text"
+                                                  value=""
+                                                />
+                                              </BaseInput>
+                                            </ForwardRef>
+                                          </ForwardRef>
+                                        </Component>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <ErrorList
-                                    errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
-                                  >
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="ant-show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      className="ant-form-item-explain-connected"
+                                      errors={Array []}
+                                      helpStatus=""
+                                      warnings={Array []}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
-                                  </ErrorList>
-                                </div>
-                              </Col>
-                            </FormItemInput>
-                          </div>
-                        </Row>
-                      </Field>
-                    </WrapperField>
-                  </FormItem>
-                  <FormItem
-                    label="Slug"
-                    name="slug"
-                    rules={
-                      Array [
-                        Object {
-                          "message": "Please input the slug!",
-                          "required": true,
-                        },
-                        Object {
-                          "message": "Please enter valid slug!",
-                          "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                        },
-                      ]
-                    }
-                  >
-                    <WrapperField
+                                      <CSSMotion
+                                        motionAppear={false}
+                                        motionDeadline={500}
+                                        motionEnter={false}
+                                        motionName="ant-show-help"
+                                        onAppearActive={[Function]}
+                                        onAppearEnd={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterEnd={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveEnd={[Function]}
+                                        onLeaveStart={[Function]}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
+                                  </div>
+                                </Col>
+                              </FormItemInput>
+                            </div>
+                          </Row>
+                        </Field>
+                      </WrapperField>
+                    </FormItem>
+                  </TitleInput>
+                  <SlugInput>
+                    <FormItem
                       label="Slug"
-                      messageVariables={
-                        Object {
-                          "label": "Slug",
-                        }
-                      }
                       name="slug"
-                      onReset={[Function]}
                       rules={
                         Array [
                           Object {
@@ -421,48 +430,16 @@ exports[`Episode create component snapshot testing should render the component 1
                           },
                         ]
                       }
-                      trigger="onChange"
-                      validateTrigger="onChange"
                     >
-                      <Field
-                        fieldContext={
-                          Object {
-                            "__INTERNAL__": Object {
-                              "itemRef": [Function],
-                              "name": "create-category",
-                            },
-                            "getFieldError": [Function],
-                            "getFieldInstance": [Function],
-                            "getFieldValue": [Function],
-                            "getFieldsError": [Function],
-                            "getFieldsValue": [Function],
-                            "getInternalHooks": [Function],
-                            "isFieldTouched": [Function],
-                            "isFieldValidating": [Function],
-                            "isFieldsTouched": [Function],
-                            "isFieldsValidating": [Function],
-                            "resetFields": [Function],
-                            "scrollToField": [Function],
-                            "setFields": [Function],
-                            "setFieldsValue": [Function],
-                            "submit": [Function],
-                            "validateFields": [Function],
-                            "validateTrigger": "onChange",
-                          }
-                        }
-                        key="_slug"
+                      <WrapperField
                         label="Slug"
                         messageVariables={
                           Object {
                             "label": "Slug",
                           }
                         }
-                        name={
-                          Array [
-                            "slug",
-                          ]
-                        }
-                        onReset={[Function]}
+                        name="slug"
+                        onMetaChange={[Function]}
                         rules={
                           Array [
                             Object {
@@ -477,164 +454,240 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                         trigger="onChange"
                         validateTrigger="onChange"
-                        valuePropName="value"
                       >
-                        <Row
-                          className="ant-form-item"
-                          key="row"
+                        <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-category",
+                              },
+                              "_init": true,
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldWarning": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
+                          key="_slug"
+                          label="Slug"
+                          messageVariables={
+                            Object {
+                              "label": "Slug",
+                            }
+                          }
+                          name={
+                            Array [
+                              "slug",
+                            ]
+                          }
+                          onMetaChange={[Function]}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please input the slug!",
+                                "required": true,
+                              },
+                              Object {
+                                "message": "Please enter valid slug!",
+                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                              },
+                            ]
+                          }
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                          valuePropName="value"
                         >
-                          <div
-                            className="ant-row ant-form-item"
-                            style={Object {}}
+                          <Row
+                            className="ant-form-item"
+                            key="row"
                           >
-                            <FormItemLabel
-                              htmlFor="create-category_slug"
-                              label="Slug"
-                              name="slug"
-                              prefixCls="ant-form"
-                              required={true}
-                              requiredMark={true}
-                              rules={
-                                Array [
-                                  Object {
-                                    "message": "Please input the slug!",
-                                    "required": true,
-                                  },
-                                  Object {
-                                    "message": "Please enter valid slug!",
-                                    "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                  },
-                                ]
-                              }
+                            <div
+                              className="ant-row ant-form-item"
+                              role="row"
+                              style={Object {}}
                             >
-                              <Col
-                                className="ant-form-item-label"
-                                span={24}
+                              <FormItemLabel
+                                htmlFor="create-category_slug"
+                                label="Slug"
+                                name="slug"
+                                prefixCls="ant-form"
+                                required={true}
+                                requiredMark={true}
+                                rules={
+                                  Array [
+                                    Object {
+                                      "message": "Please input the slug!",
+                                      "required": true,
+                                    },
+                                    Object {
+                                      "message": "Please enter valid slug!",
+                                      "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                    },
+                                  ]
+                                }
                               >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-label"
-                                  style={Object {}}
-                                >
-                                  <label
-                                    className="ant-form-item-required"
-                                    htmlFor="create-category_slug"
-                                    title="Slug"
-                                  >
-                                    Slug
-                                  </label>
-                                </div>
-                              </Col>
-                            </FormItemLabel>
-                            <FormItemInput
-                              errors={Array []}
-                              label="Slug"
-                              name={
-                                Array [
-                                  "slug",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
-                              prefixCls="ant-form"
-                              rules={
-                                Array [
-                                  Object {
-                                    "message": "Please input the slug!",
-                                    "required": true,
-                                  },
-                                  Object {
-                                    "message": "Please enter valid slug!",
-                                    "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                  },
-                                ]
-                              }
-                              status=""
-                              touched={false}
-                              validateStatus=""
-                              validating={false}
-                            >
-                              <Col
-                                className="ant-form-item-control"
-                                span={24}
-                              >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-control"
-                                  style={Object {}}
+                                <Col
+                                  className="ant-form-item-label"
+                                  span={24}
                                 >
                                   <div
-                                    className="ant-form-item-control-input"
+                                    className="ant-col ant-col-24 ant-form-item-label"
+                                    role="cell"
+                                    style={Object {}}
+                                  >
+                                    <label
+                                      className="ant-form-item-required"
+                                      htmlFor="create-category_slug"
+                                      title="Slug"
+                                    >
+                                      Slug
+                                    </label>
+                                  </div>
+                                </Col>
+                              </FormItemLabel>
+                              <FormItemInput
+                                errors={Array []}
+                                label="Slug"
+                                name={Array []}
+                                prefixCls="ant-form"
+                                rules={
+                                  Array [
+                                    Object {
+                                      "message": "Please input the slug!",
+                                      "required": true,
+                                    },
+                                    Object {
+                                      "message": "Please enter valid slug!",
+                                      "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                    },
+                                  ]
+                                }
+                                status=""
+                                touched={false}
+                                validating={false}
+                                warnings={Array []}
+                              >
+                                <Col
+                                  className="ant-form-item-control"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-control"
+                                    role="cell"
+                                    style={Object {}}
                                   >
                                     <div
-                                      className="ant-form-item-control-input-content"
+                                      className="ant-form-item-control-input"
                                     >
-                                      <Component
-                                        update={1}
+                                      <div
+                                        className="ant-form-item-control-input-content"
                                       >
-                                        <Input
-                                          id="create-category_slug"
-                                          onChange={[Function]}
-                                          type="text"
+                                        <Component
+                                          update={<ForwardRef />}
                                         >
-                                          <ClearableLabeledInput
-                                            bordered={true}
-                                            element={
-                                              <input
-                                                className="ant-input"
-                                                id="create-category_slug"
-                                                onBlur={[Function]}
-                                                onChange={[Function]}
-                                                onFocus={[Function]}
-                                                onKeyDown={[Function]}
-                                                type="text"
-                                              />
-                                            }
-                                            focused={false}
-                                            handleReset={[Function]}
+                                          <ForwardRef
                                             id="create-category_slug"
-                                            inputType="input"
                                             onChange={[Function]}
-                                            prefixCls="ant-input"
-                                            triggerFocus={[Function]}
-                                            type="text"
-                                            value=""
                                           >
-                                            <input
-                                              className="ant-input"
+                                            <ForwardRef
+                                              affixWrapperClassName=""
+                                              groupClassName=""
                                               id="create-category_slug"
+                                              inputClassName=""
                                               onBlur={[Function]}
                                               onChange={[Function]}
                                               onFocus={[Function]}
-                                              onKeyDown={[Function]}
-                                              type="text"
-                                              value=""
-                                            />
-                                          </ClearableLabeledInput>
-                                        </Input>
-                                      </Component>
+                                              prefixCls="ant-input"
+                                              wrapperClassName=""
+                                            >
+                                              <BaseInput
+                                                affixWrapperClassName=""
+                                                focused={false}
+                                                groupClassName=""
+                                                handleReset={[Function]}
+                                                id="create-category_slug"
+                                                inputElement={
+                                                  <input
+                                                    className="ant-input"
+                                                    id="create-category_slug"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    type="text"
+                                                  />
+                                                }
+                                                prefixCls="ant-input"
+                                                suffix={null}
+                                                triggerFocus={[Function]}
+                                                value=""
+                                                wrapperClassName=""
+                                              >
+                                                <input
+                                                  className="ant-input"
+                                                  id="create-category_slug"
+                                                  onBlur={[Function]}
+                                                  onChange={[Function]}
+                                                  onFocus={[Function]}
+                                                  onKeyDown={[Function]}
+                                                  type="text"
+                                                  value=""
+                                                />
+                                              </BaseInput>
+                                            </ForwardRef>
+                                          </ForwardRef>
+                                        </Component>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <ErrorList
-                                    errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
-                                  >
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="ant-show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      className="ant-form-item-explain-connected"
+                                      errors={Array []}
+                                      helpStatus=""
+                                      warnings={Array []}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
-                                  </ErrorList>
-                                </div>
-                              </Col>
-                            </FormItemInput>
-                          </div>
-                        </Row>
-                      </Field>
-                    </WrapperField>
-                  </FormItem>
+                                      <CSSMotion
+                                        motionAppear={false}
+                                        motionDeadline={500}
+                                        motionEnter={false}
+                                        motionName="ant-show-help"
+                                        onAppearActive={[Function]}
+                                        onAppearEnd={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterEnd={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveEnd={[Function]}
+                                        onLeaveStart={[Function]}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
+                                  </div>
+                                </Col>
+                              </FormItemInput>
+                            </div>
+                          </Row>
+                        </Field>
+                      </WrapperField>
+                    </FormItem>
+                  </SlugInput>
                   <FormItem
                     label="Podcasts"
                     name="podcast"
@@ -647,7 +700,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="podcast"
-                      onReset={[Function]}
+                      onMetaChange={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -658,9 +711,11 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
+                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -689,7 +744,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "podcast",
                           ]
                         }
-                        onReset={[Function]}
+                        onMetaChange={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -700,6 +755,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -716,6 +772,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -731,17 +788,12 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Podcasts"
-                              name={
-                                Array [
-                                  "podcast",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
+                              name={Array []}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
-                              validateStatus=""
                               validating={false}
+                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -749,6 +801,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -758,7 +811,12 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={1}
+                                        update={
+                                          <Selector
+                                            action="Podcasts"
+                                            display="title"
+                                          />
+                                        }
                                       >
                                         <Selector
                                           action="Podcasts"
@@ -768,6 +826,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                         >
                                           <ForwardRef(InternalSelect)
                                             allowClear={true}
+                                            autoClearSearchValue={true}
                                             bordered={true}
                                             defaultValue={
                                               Array [
@@ -783,6 +842,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             onPopupScroll={[Function]}
                                             onSearch={[Function]}
                                             placeholder="Select podcasts"
+                                            searchValue=""
                                             value={
                                               Array [
                                                 Array [],
@@ -791,7 +851,8 @@ exports[`Episode create component snapshot testing should render the component 1
                                           >
                                             <Select
                                               allowClear={true}
-                                              className=""
+                                              autoClearSearchValue={true}
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue={
                                                 Array [
@@ -811,8 +872,10 @@ exports[`Episode create component snapshot testing should render the component 1
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select podcasts"
+                                              placement="bottomLeft"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
+                                              searchValue=""
                                               transitionName="ant-slide-up"
                                               value={
                                                 Array [
@@ -820,39 +883,55 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 ]
                                               }
                                             >
-                                              <ForwardRef(Select)
+                                              <BaseSelect
+                                                OptionList={
+                                                  Object {
+                                                    "$$typeof": Symbol(react.forward_ref),
+                                                    "displayName": "OptionList",
+                                                    "render": [Function],
+                                                  }
+                                                }
+                                                activeDescendantId="rc_select_TEST_OR_SSR_list_0"
+                                                activeValue={null}
                                                 allowClear={true}
-                                                className=""
+                                                className="ant-select-in-form-item"
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                defaultValue={
+                                                displayValues={
                                                   Array [
-                                                    Array [],
+                                                    Object {
+                                                      "disabled": undefined,
+                                                      "key": undefined,
+                                                      "label": undefined,
+                                                      "value": undefined,
+                                                    },
                                                   ]
                                                 }
                                                 dropdownClassName=""
-                                                filterOption={[Function]}
+                                                dropdownMatchSelectWidth={true}
+                                                emptyOptions={false}
                                                 getPopupContainer={[Function]}
+                                                id="rc_select_TEST_OR_SSR"
                                                 inputIcon={[Function]}
-                                                listHeight={128}
-                                                listItemHeight={24}
                                                 loading={false}
-                                                menuItemSelectedIcon={null}
                                                 notFoundContent={null}
-                                                onChange={[Function]}
-                                                onPopupScroll={[Function]}
-                                                onSearch={[Function]}
-                                                placeholder="Select podcasts"
-                                                prefixCls="ant-select"
-                                                removeIcon={<ForwardRef(CloseOutlined) />}
-                                                transitionName="ant-slide-up"
-                                                value={
+                                                omitDomProps={
                                                   Array [
-                                                    Array [],
+                                                    "inputValue",
                                                   ]
                                                 }
+                                                onDisplayValuesChange={[Function]}
+                                                onPopupScroll={[Function]}
+                                                onSearch={[Function]}
+                                                onSearchSplit={[Function]}
+                                                placeholder="Select podcasts"
+                                                placement="bottomLeft"
+                                                prefixCls="ant-select"
+                                                removeIcon={<ForwardRef(CloseOutlined) />}
+                                                searchValue=""
+                                                transitionName="ant-slide-up"
                                               >
                                                 <div
-                                                  className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                   onBlur={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -862,56 +941,13 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   <SelectTrigger
                                                     containerWidth={null}
                                                     dropdownClassName=""
+                                                    dropdownMatchSelectWidth={true}
                                                     empty={false}
                                                     getPopupContainer={[Function]}
                                                     getTriggerDOMNode={[Function]}
-                                                    popupElement={
-                                                      <ForwardRef(OptionList)
-                                                        childrenAsData={true}
-                                                        defaultActiveFirstOption={true}
-                                                        flattenOptions={
-                                                          Array [
-                                                            Object {
-                                                              "data": Object {
-                                                                "children": "Podcast-1",
-                                                                "key": "podcasts1",
-                                                                "value": 1,
-                                                              },
-                                                              "groupOption": false,
-                                                              "key": "podcasts1",
-                                                            },
-                                                          ]
-                                                        }
-                                                        height={128}
-                                                        id="rc_select_TEST_OR_SSR"
-                                                        itemHeight={24}
-                                                        menuItemSelectedIcon={null}
-                                                        multiple={false}
-                                                        notFoundContent={null}
-                                                        onActiveValue={[Function]}
-                                                        onMouseEnter={[Function]}
-                                                        onScroll={[Function]}
-                                                        onSelect={[Function]}
-                                                        onToggleOpen={[Function]}
-                                                        options={
-                                                          Array [
-                                                            Object {
-                                                              "children": "Podcast-1",
-                                                              "key": "podcasts1",
-                                                              "value": 1,
-                                                            },
-                                                          ]
-                                                        }
-                                                        prefixCls="ant-select"
-                                                        searchValue=""
-                                                        values={
-                                                          Set {
-                                                            Array [],
-                                                          }
-                                                        }
-                                                        virtual={true}
-                                                      />
-                                                    }
+                                                    onPopupMouseEnter={[Function]}
+                                                    placement="bottomLeft"
+                                                    popupElement={<ForwardRef(OptionList) />}
                                                     prefixCls="ant-select"
                                                     transitionName="ant-slide-up"
                                                   >
@@ -995,52 +1031,10 @@ exports[`Episode create component snapshot testing should render the component 1
                                                       onPopupAlign={[Function]}
                                                       onPopupVisibleChange={[Function]}
                                                       popup={
-                                                        <div>
-                                                          <ForwardRef(OptionList)
-                                                            childrenAsData={true}
-                                                            defaultActiveFirstOption={true}
-                                                            flattenOptions={
-                                                              Array [
-                                                                Object {
-                                                                  "data": Object {
-                                                                    "children": "Podcast-1",
-                                                                    "key": "podcasts1",
-                                                                    "value": 1,
-                                                                  },
-                                                                  "groupOption": false,
-                                                                  "key": "podcasts1",
-                                                                },
-                                                              ]
-                                                            }
-                                                            height={128}
-                                                            id="rc_select_TEST_OR_SSR"
-                                                            itemHeight={24}
-                                                            menuItemSelectedIcon={null}
-                                                            multiple={false}
-                                                            notFoundContent={null}
-                                                            onActiveValue={[Function]}
-                                                            onMouseEnter={[Function]}
-                                                            onScroll={[Function]}
-                                                            onSelect={[Function]}
-                                                            onToggleOpen={[Function]}
-                                                            options={
-                                                              Array [
-                                                                Object {
-                                                                  "children": "Podcast-1",
-                                                                  "key": "podcasts1",
-                                                                  "value": 1,
-                                                                },
-                                                              ]
-                                                            }
-                                                            prefixCls="ant-select"
-                                                            searchValue=""
-                                                            values={
-                                                              Set {
-                                                                Array [],
-                                                              }
-                                                            }
-                                                            virtual={true}
-                                                          />
+                                                        <div
+                                                          onMouseEnter={[Function]}
+                                                        >
+                                                          <ForwardRef(OptionList) />
                                                         </div>
                                                       }
                                                       popupAlign={Object {}}
@@ -1057,14 +1051,26 @@ exports[`Episode create component snapshot testing should render the component 1
                                                       showAction={Array []}
                                                     >
                                                       <Selector
-                                                        accessibilityIndex={0}
+                                                        OptionList={
+                                                          Object {
+                                                            "$$typeof": Symbol(react.forward_ref),
+                                                            "displayName": "OptionList",
+                                                            "render": [Function],
+                                                          }
+                                                        }
+                                                        activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                         activeValue={null}
                                                         allowClear={true}
-                                                        className=""
+                                                        className="ant-select-in-form-item"
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                        defaultValue={
+                                                        displayValues={
                                                           Array [
-                                                            Array [],
+                                                            Object {
+                                                              "disabled": undefined,
+                                                              "key": undefined,
+                                                              "label": undefined,
+                                                              "value": undefined,
+                                                            },
                                                           ]
                                                         }
                                                         domRef={
@@ -1099,44 +1105,42 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           }
                                                         }
                                                         dropdownClassName=""
-                                                        filterOption={[Function]}
+                                                        dropdownMatchSelectWidth={true}
+                                                        emptyOptions={false}
                                                         getPopupContainer={[Function]}
                                                         id="rc_select_TEST_OR_SSR"
                                                         inputElement={null}
                                                         inputIcon={[Function]}
                                                         key="trigger"
-                                                        listHeight={128}
-                                                        listItemHeight={24}
                                                         loading={false}
-                                                        menuItemSelectedIcon={null}
-                                                        multiple={false}
                                                         notFoundContent={null}
-                                                        onChange={[Function]}
+                                                        omitDomProps={
+                                                          Array [
+                                                            "inputValue",
+                                                          ]
+                                                        }
+                                                        onDisplayValuesChange={[Function]}
                                                         onPopupScroll={[Function]}
+                                                        onRemove={[Function]}
                                                         onSearch={[Function]}
+                                                        onSearchSplit={[Function]}
                                                         onSearchSubmit={[Function]}
-                                                        onSelect={[Function]}
                                                         onToggleOpen={[Function]}
                                                         placeholder="Select podcasts"
+                                                        placement="bottomLeft"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                         searchValue=""
                                                         showSearch={false}
                                                         tokenWithEnter={false}
                                                         transitionName="ant-slide-up"
-                                                        value={
-                                                          Array [
-                                                            Array [],
-                                                          ]
-                                                        }
                                                         values={
                                                           Array [
                                                             Object {
                                                               "disabled": undefined,
-                                                              "isCacheable": true,
-                                                              "key": Array [],
-                                                              "label": Array [],
-                                                              "value": Array [],
+                                                              "key": undefined,
+                                                              "label": undefined,
+                                                              "value": undefined,
                                                             },
                                                           ]
                                                         }
@@ -1147,14 +1151,26 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
-                                                            accessibilityIndex={0}
+                                                            OptionList={
+                                                              Object {
+                                                                "$$typeof": Symbol(react.forward_ref),
+                                                                "displayName": "OptionList",
+                                                                "render": [Function],
+                                                              }
+                                                            }
+                                                            activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                             activeValue={null}
                                                             allowClear={true}
-                                                            className=""
+                                                            className="ant-select-in-form-item"
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                            defaultValue={
+                                                            displayValues={
                                                               Array [
-                                                                Array [],
+                                                                Object {
+                                                                  "disabled": undefined,
+                                                                  "key": undefined,
+                                                                  "label": undefined,
+                                                                  "value": undefined,
+                                                                },
                                                               ]
                                                             }
                                                             domRef={
@@ -1189,7 +1205,8 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             }
                                                             dropdownClassName=""
-                                                            filterOption={[Function]}
+                                                            dropdownMatchSelectWidth={true}
+                                                            emptyOptions={false}
                                                             getPopupContainer={[Function]}
                                                             id="rc_select_TEST_OR_SSR"
                                                             inputElement={null}
@@ -1214,13 +1231,14 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 />,
                                                               }
                                                             }
-                                                            listHeight={128}
-                                                            listItemHeight={24}
                                                             loading={false}
-                                                            menuItemSelectedIcon={null}
-                                                            multiple={false}
                                                             notFoundContent={null}
-                                                            onChange={[Function]}
+                                                            omitDomProps={
+                                                              Array [
+                                                                "inputValue",
+                                                              ]
+                                                            }
+                                                            onDisplayValuesChange={[Function]}
                                                             onInputChange={[Function]}
                                                             onInputCompositionEnd={[Function]}
                                                             onInputCompositionStart={[Function]}
@@ -1228,30 +1246,26 @@ exports[`Episode create component snapshot testing should render the component 1
                                                             onInputMouseDown={[Function]}
                                                             onInputPaste={[Function]}
                                                             onPopupScroll={[Function]}
+                                                            onRemove={[Function]}
                                                             onSearch={[Function]}
+                                                            onSearchSplit={[Function]}
                                                             onSearchSubmit={[Function]}
-                                                            onSelect={[Function]}
                                                             onToggleOpen={[Function]}
                                                             placeholder="Select podcasts"
+                                                            placement="bottomLeft"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
                                                             showSearch={false}
                                                             tokenWithEnter={false}
                                                             transitionName="ant-slide-up"
-                                                            value={
-                                                              Array [
-                                                                Array [],
-                                                              ]
-                                                            }
                                                             values={
                                                               Array [
                                                                 Object {
                                                                   "disabled": undefined,
-                                                                  "isCacheable": true,
-                                                                  "key": Array [],
-                                                                  "label": Array [],
-                                                                  "value": Array [],
+                                                                  "key": undefined,
+                                                                  "label": undefined,
+                                                                  "value": undefined,
                                                                 },
                                                               ]
                                                             }
@@ -1260,7 +1274,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               className="ant-select-selection-search"
                                                             >
                                                               <Input
-                                                                accessibilityIndex={0}
+                                                                activeDescendantId="rc_select_TEST_OR_SSR_list_0"
                                                                 attrs={Object {}}
                                                                 editable={false}
                                                                 id="rc_select_TEST_OR_SSR"
@@ -1502,7 +1516,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                     </span>
                                                   </TransBtn>
                                                 </div>
-                                              </ForwardRef(Select)>
+                                              </BaseSelect>
                                             </Select>
                                           </ForwardRef(InternalSelect)>
                                         </Selector>
@@ -1510,15 +1524,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
+                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
+                                    helpStatus=""
+                                    warnings={Array []}
                                   >
                                     <CSSMotion
-                                      motionAppear={true}
+                                      motionAppear={false}
                                       motionDeadline={500}
+                                      motionEnter={false}
                                       motionName="ant-show-help"
+                                      onAppearActive={[Function]}
+                                      onAppearEnd={[Function]}
+                                      onAppearStart={[Function]}
+                                      onEnterActive={[Function]}
+                                      onEnterEnd={[Function]}
+                                      onEnterStart={[Function]}
+                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
+                                      onLeaveStart={[Function]}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -1539,6 +1563,7 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1547,10 +1572,12 @@ exports[`Episode create component snapshot testing should render the component 1
                         />
                         <FormItemInput
                           errors={Array []}
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
-                          validateStatus=""
+                          touched={false}
+                          validating={false}
+                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1558,6 +1585,7 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-24 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1584,7 +1612,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             }
                                           }
                                           name="season"
-                                          onReset={[Function]}
+                                          onMetaChange={[Function]}
                                           trigger="onChange"
                                           validateTrigger="onChange"
                                         >
@@ -1595,9 +1623,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   "itemRef": [Function],
                                                   "name": "create-category",
                                                 },
+                                                "_init": true,
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
                                                 "getFieldValue": [Function],
+                                                "getFieldWarning": [Function],
                                                 "getFieldsError": [Function],
                                                 "getFieldsValue": [Function],
                                                 "getInternalHooks": [Function],
@@ -1626,7 +1656,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 "season",
                                               ]
                                             }
-                                            onReset={[Function]}
+                                            onMetaChange={[Function]}
                                             trigger="onChange"
                                             validateTrigger="onChange"
                                             valuePropName="value"
@@ -1637,6 +1667,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             >
                                               <div
                                                 className="ant-row ant-form-item"
+                                                role="row"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -1652,6 +1683,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-label"
+                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <label
@@ -1667,23 +1699,19 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 <FormItemInput
                                                   errors={Array []}
                                                   label="Season"
-                                                  name={
-                                                    Array [
-                                                      "season",
-                                                    ]
-                                                  }
-                                                  onDomErrorVisibleChange={[Function]}
+                                                  name={Array []}
                                                   prefixCls="ant-form"
                                                   status=""
                                                   touched={false}
-                                                  validateStatus=""
                                                   validating={false}
+                                                  warnings={Array []}
                                                 >
                                                   <Col
                                                     className="ant-form-item-control"
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-control"
+                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <div
@@ -1693,7 +1721,16 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={1}
+                                                            update={
+                                                              <ForwardRef
+                                                                placeholder="Input season"
+                                                                style={
+                                                                  Object {
+                                                                    "width": "100%",
+                                                                  }
+                                                                }
+                                                              />
+                                                            }
                                                           >
                                                             <ForwardRef
                                                               id="create-category_season"
@@ -1706,7 +1743,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             >
                                                               <InputNumber
-                                                                className=""
+                                                                className="ant-input-number-in-form-item"
                                                                 downHandler={
                                                                   <ForwardRef(DownOutlined)
                                                                     className="ant-input-number-handler-down-inner"
@@ -1728,7 +1765,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 }
                                                               >
                                                                 <div
-                                                                  className="ant-input-number"
+                                                                  className="ant-input-number ant-input-number-in-form-item"
                                                                   onBlur={[Function]}
                                                                   onCompositionEnd={[Function]}
                                                                   onCompositionStart={[Function]}
@@ -1954,15 +1991,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                                         </div>
                                                       </div>
                                                       <ErrorList
+                                                        className="ant-form-item-explain-connected"
                                                         errors={Array []}
-                                                        onDomErrorVisibleChange={[Function]}
+                                                        helpStatus=""
+                                                        warnings={Array []}
                                                       >
                                                         <CSSMotion
-                                                          motionAppear={true}
+                                                          motionAppear={false}
                                                           motionDeadline={500}
+                                                          motionEnter={false}
                                                           motionName="ant-show-help"
+                                                          onAppearActive={[Function]}
+                                                          onAppearEnd={[Function]}
+                                                          onAppearStart={[Function]}
+                                                          onEnterActive={[Function]}
+                                                          onEnterEnd={[Function]}
+                                                          onEnterStart={[Function]}
+                                                          onLeaveActive={[Function]}
                                                           onLeaveEnd={[Function]}
-                                                          removeOnLeave={true}
+                                                          onLeaveStart={[Function]}
                                                           visible={false}
                                                         >
                                                           <DomWrapper />
@@ -1988,7 +2035,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             }
                                           }
                                           name="episode"
-                                          onReset={[Function]}
+                                          onMetaChange={[Function]}
                                           trigger="onChange"
                                           validateTrigger="onChange"
                                         >
@@ -1999,9 +2046,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   "itemRef": [Function],
                                                   "name": "create-category",
                                                 },
+                                                "_init": true,
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
                                                 "getFieldValue": [Function],
+                                                "getFieldWarning": [Function],
                                                 "getFieldsError": [Function],
                                                 "getFieldsValue": [Function],
                                                 "getInternalHooks": [Function],
@@ -2030,7 +2079,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 "episode",
                                               ]
                                             }
-                                            onReset={[Function]}
+                                            onMetaChange={[Function]}
                                             trigger="onChange"
                                             validateTrigger="onChange"
                                             valuePropName="value"
@@ -2041,6 +2090,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             >
                                               <div
                                                 className="ant-row ant-form-item"
+                                                role="row"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -2056,6 +2106,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-label"
+                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <label
@@ -2071,23 +2122,19 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 <FormItemInput
                                                   errors={Array []}
                                                   label="Episode"
-                                                  name={
-                                                    Array [
-                                                      "episode",
-                                                    ]
-                                                  }
-                                                  onDomErrorVisibleChange={[Function]}
+                                                  name={Array []}
                                                   prefixCls="ant-form"
                                                   status=""
                                                   touched={false}
-                                                  validateStatus=""
                                                   validating={false}
+                                                  warnings={Array []}
                                                 >
                                                   <Col
                                                     className="ant-form-item-control"
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-control"
+                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <div
@@ -2097,7 +2144,16 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={1}
+                                                            update={
+                                                              <ForwardRef
+                                                                placeholder="Input episode"
+                                                                style={
+                                                                  Object {
+                                                                    "width": "100%",
+                                                                  }
+                                                                }
+                                                              />
+                                                            }
                                                           >
                                                             <ForwardRef
                                                               id="create-category_episode"
@@ -2110,7 +2166,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             >
                                                               <InputNumber
-                                                                className=""
+                                                                className="ant-input-number-in-form-item"
                                                                 downHandler={
                                                                   <ForwardRef(DownOutlined)
                                                                     className="ant-input-number-handler-down-inner"
@@ -2132,7 +2188,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 }
                                                               >
                                                                 <div
-                                                                  className="ant-input-number"
+                                                                  className="ant-input-number ant-input-number-in-form-item"
                                                                   onBlur={[Function]}
                                                                   onCompositionEnd={[Function]}
                                                                   onCompositionStart={[Function]}
@@ -2358,15 +2414,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                                         </div>
                                                       </div>
                                                       <ErrorList
+                                                        className="ant-form-item-explain-connected"
                                                         errors={Array []}
-                                                        onDomErrorVisibleChange={[Function]}
+                                                        helpStatus=""
+                                                        warnings={Array []}
                                                       >
                                                         <CSSMotion
-                                                          motionAppear={true}
+                                                          motionAppear={false}
                                                           motionDeadline={500}
+                                                          motionEnter={false}
                                                           motionName="ant-show-help"
+                                                          onAppearActive={[Function]}
+                                                          onAppearEnd={[Function]}
+                                                          onAppearStart={[Function]}
+                                                          onEnterActive={[Function]}
+                                                          onEnterEnd={[Function]}
+                                                          onEnterStart={[Function]}
+                                                          onLeaveActive={[Function]}
                                                           onLeaveEnd={[Function]}
-                                                          removeOnLeave={true}
+                                                          onLeaveStart={[Function]}
                                                           visible={false}
                                                         >
                                                           <DomWrapper />
@@ -2385,15 +2451,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -2417,7 +2493,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="type"
-                      onReset={[Function]}
+                      onMetaChange={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -2428,9 +2504,11 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
+                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -2459,7 +2537,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "type",
                           ]
                         }
-                        onReset={[Function]}
+                        onMetaChange={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -2470,6 +2548,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -2486,6 +2565,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -2501,17 +2581,12 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Type of Episode"
-                              name={
-                                Array [
-                                  "type",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
+                              name={Array []}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
-                              validateStatus=""
                               validating={false}
+                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -2519,6 +2594,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -2528,7 +2604,27 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={1}
+                                        update={
+                                          <UNDEFINED
+                                            defaultValue="full"
+                                          >
+                                            <ForwardRef(RadioButton)
+                                              value="full"
+                                            >
+                                              Full
+                                            </ForwardRef(RadioButton)>
+                                            <ForwardRef(RadioButton)
+                                              value="trailer"
+                                            >
+                                              Trailer
+                                            </ForwardRef(RadioButton)>
+                                            <ForwardRef(RadioButton)
+                                              value="bonus"
+                                            >
+                                              Bonus
+                                            </ForwardRef(RadioButton)>
+                                          </UNDEFINED>
+                                        }
                                       >
                                         <ForwardRef
                                           defaultValue="full"
@@ -2543,13 +2639,12 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="full"
                                             >
                                               <Radio
-                                                checked={true}
-                                                prefixCls="ant-radio-button"
+                                                prefixCls="ant-radio"
                                                 type="radio"
                                                 value="full"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-checked ant-radio-button-wrapper-in-form-item"
                                                 >
                                                   <Checkbox
                                                     checked={true}
@@ -2597,13 +2692,12 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="trailer"
                                             >
                                               <Radio
-                                                checked={false}
-                                                prefixCls="ant-radio-button"
+                                                prefixCls="ant-radio"
                                                 type="radio"
                                                 value="trailer"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper"
+                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                                 >
                                                   <Checkbox
                                                     checked={false}
@@ -2651,13 +2745,12 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="bonus"
                                             >
                                               <Radio
-                                                checked={false}
-                                                prefixCls="ant-radio-button"
+                                                prefixCls="ant-radio"
                                                 type="radio"
                                                 value="bonus"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper"
+                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                                 >
                                                   <Checkbox
                                                     checked={false}
@@ -2707,15 +2800,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
+                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
+                                    helpStatus=""
+                                    warnings={Array []}
                                   >
                                     <CSSMotion
-                                      motionAppear={true}
+                                      motionAppear={false}
                                       motionDeadline={500}
+                                      motionEnter={false}
                                       motionName="ant-show-help"
+                                      onAppearActive={[Function]}
+                                      onAppearEnd={[Function]}
+                                      onAppearStart={[Function]}
+                                      onEnterActive={[Function]}
+                                      onEnterEnd={[Function]}
+                                      onEnterStart={[Function]}
+                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
+                                      onLeaveStart={[Function]}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -2729,355 +2832,717 @@ exports[`Episode create component snapshot testing should render the component 1
                       </Field>
                     </WrapperField>
                   </FormItem>
-                  <FormItem
-                    label="Description"
-                    name="description"
-                  >
-                    <WrapperField
-                      label="Description"
-                      messageVariables={
-                        Object {
-                          "label": "Description",
-                        }
+                  <DescriptionInput
+                    inputProps={
+                      Object {
+                        "placeholder": "Enter Description...",
+                        "style": Object {
+                          "width": "600px",
+                        },
                       }
+                    }
+                  >
+                    <FormItem
+                      label="Description"
                       name="description"
-                      onReset={[Function]}
-                      trigger="onChange"
-                      validateTrigger="onChange"
                     >
-                      <Field
-                        fieldContext={
-                          Object {
-                            "__INTERNAL__": Object {
-                              "itemRef": [Function],
-                              "name": "create-category",
-                            },
-                            "getFieldError": [Function],
-                            "getFieldInstance": [Function],
-                            "getFieldValue": [Function],
-                            "getFieldsError": [Function],
-                            "getFieldsValue": [Function],
-                            "getInternalHooks": [Function],
-                            "isFieldTouched": [Function],
-                            "isFieldValidating": [Function],
-                            "isFieldsTouched": [Function],
-                            "isFieldsValidating": [Function],
-                            "resetFields": [Function],
-                            "scrollToField": [Function],
-                            "setFields": [Function],
-                            "setFieldsValue": [Function],
-                            "submit": [Function],
-                            "validateFields": [Function],
-                            "validateTrigger": "onChange",
-                          }
-                        }
-                        key="_description"
+                      <WrapperField
                         label="Description"
                         messageVariables={
                           Object {
                             "label": "Description",
                           }
                         }
-                        name={
-                          Array [
-                            "description",
-                          ]
-                        }
-                        onReset={[Function]}
+                        name="description"
+                        onMetaChange={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
-                        valuePropName="value"
                       >
-                        <Row
-                          className="ant-form-item"
-                          key="row"
+                        <Field
+                          fieldContext={
+                            Object {
+                              "__INTERNAL__": Object {
+                                "itemRef": [Function],
+                                "name": "create-category",
+                              },
+                              "_init": true,
+                              "getFieldError": [Function],
+                              "getFieldInstance": [Function],
+                              "getFieldValue": [Function],
+                              "getFieldWarning": [Function],
+                              "getFieldsError": [Function],
+                              "getFieldsValue": [Function],
+                              "getInternalHooks": [Function],
+                              "isFieldTouched": [Function],
+                              "isFieldValidating": [Function],
+                              "isFieldsTouched": [Function],
+                              "isFieldsValidating": [Function],
+                              "resetFields": [Function],
+                              "scrollToField": [Function],
+                              "setFields": [Function],
+                              "setFieldsValue": [Function],
+                              "submit": [Function],
+                              "validateFields": [Function],
+                              "validateTrigger": "onChange",
+                            }
+                          }
+                          key="_description"
+                          label="Description"
+                          messageVariables={
+                            Object {
+                              "label": "Description",
+                            }
+                          }
+                          name={
+                            Array [
+                              "description",
+                            ]
+                          }
+                          onMetaChange={[Function]}
+                          trigger="onChange"
+                          validateTrigger="onChange"
+                          valuePropName="value"
                         >
-                          <div
-                            className="ant-row ant-form-item"
-                            style={Object {}}
+                          <Row
+                            className="ant-form-item"
+                            key="row"
                           >
-                            <FormItemLabel
-                              htmlFor="create-category_description"
-                              label="Description"
-                              name="description"
-                              prefixCls="ant-form"
-                              required={false}
-                              requiredMark={true}
+                            <div
+                              className="ant-row ant-form-item"
+                              role="row"
+                              style={Object {}}
                             >
-                              <Col
-                                className="ant-form-item-label"
-                                span={24}
+                              <FormItemLabel
+                                htmlFor="create-category_description"
+                                label="Description"
+                                name="description"
+                                prefixCls="ant-form"
+                                required={false}
+                                requiredMark={true}
                               >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-label"
-                                  style={Object {}}
-                                >
-                                  <label
-                                    className=""
-                                    htmlFor="create-category_description"
-                                    title="Description"
-                                  >
-                                    Description
-                                  </label>
-                                </div>
-                              </Col>
-                            </FormItemLabel>
-                            <FormItemInput
-                              errors={Array []}
-                              label="Description"
-                              name={
-                                Array [
-                                  "description",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
-                              prefixCls="ant-form"
-                              status=""
-                              touched={false}
-                              validateStatus=""
-                              validating={false}
-                            >
-                              <Col
-                                className="ant-form-item-control"
-                                span={24}
-                              >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-control"
-                                  style={Object {}}
+                                <Col
+                                  className="ant-form-item-label"
+                                  span={24}
                                 >
                                   <div
-                                    className="ant-form-item-control-input"
+                                    className="ant-col ant-col-24 ant-form-item-label"
+                                    role="cell"
+                                    style={Object {}}
+                                  >
+                                    <label
+                                      className=""
+                                      htmlFor="create-category_description"
+                                      title="Description"
+                                    >
+                                      Description
+                                    </label>
+                                  </div>
+                                </Col>
+                              </FormItemLabel>
+                              <FormItemInput
+                                errors={Array []}
+                                label="Description"
+                                name={Array []}
+                                prefixCls="ant-form"
+                                status=""
+                                touched={false}
+                                validating={false}
+                                warnings={Array []}
+                              >
+                                <Col
+                                  className="ant-form-item-control"
+                                  span={24}
+                                >
+                                  <div
+                                    className="ant-col ant-col-24 ant-form-item-control"
+                                    role="cell"
+                                    style={Object {}}
                                   >
                                     <div
-                                      className="ant-form-item-control-input-content"
+                                      className="ant-form-item-control-input"
                                     >
-                                      <Component
-                                        update={1}
+                                      <div
+                                        className="ant-form-item-control-input-content"
                                       >
-                                        <Editor
-                                          id="create-category_description"
-                                          onChange={[Function]}
-                                          placeholder="Enter Description..."
-                                          style={
-                                            Object {
-                                              "width": "600px",
-                                            }
+                                        <Component
+                                          update={
+                                            <Editor
+                                              onChange={[Function]}
+                                              placeholder="Enter Description..."
+                                              style={
+                                                Object {
+                                                  "width": "600px",
+                                                }
+                                              }
+                                            />
                                           }
                                         >
-                                          <div
+                                          <Editor
+                                            id="create-category_description"
+                                            onChange={[Function]}
+                                            placeholder="Enter Description..."
                                             style={
                                               Object {
                                                 "width": "600px",
                                               }
                                             }
-                                          />
-                                        </Editor>
-                                      </Component>
+                                          >
+                                            <div
+                                              style={
+                                                Object {
+                                                  "width": "600px",
+                                                }
+                                              }
+                                            />
+                                          </Editor>
+                                        </Component>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <ErrorList
-                                    errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
-                                  >
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="ant-show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
+                                    <ErrorList
+                                      className="ant-form-item-explain-connected"
+                                      errors={Array []}
+                                      helpStatus=""
+                                      warnings={Array []}
                                     >
-                                      <DomWrapper />
-                                    </CSSMotion>
-                                  </ErrorList>
-                                </div>
-                              </Col>
-                            </FormItemInput>
-                          </div>
-                        </Row>
-                      </Field>
-                    </WrapperField>
-                  </FormItem>
-                  <FormItem
-                    label="Metafields"
-                    name="meta_fields"
-                  >
-                    <WrapperField
-                      label="Metafields"
-                      messageVariables={
+                                      <CSSMotion
+                                        motionAppear={false}
+                                        motionDeadline={500}
+                                        motionEnter={false}
+                                        motionName="ant-show-help"
+                                        onAppearActive={[Function]}
+                                        onAppearEnd={[Function]}
+                                        onAppearStart={[Function]}
+                                        onEnterActive={[Function]}
+                                        onEnterEnd={[Function]}
+                                        onEnterStart={[Function]}
+                                        onLeaveActive={[Function]}
+                                        onLeaveEnd={[Function]}
+                                        onLeaveStart={[Function]}
+                                        visible={false}
+                                      >
+                                        <DomWrapper />
+                                      </CSSMotion>
+                                    </ErrorList>
+                                  </div>
+                                </Col>
+                              </FormItemInput>
+                            </div>
+                          </Row>
+                        </Field>
+                      </WrapperField>
+                    </FormItem>
+                  </DescriptionInput>
+                  <MetaForm>
+                    <Collapse
+                      expandIcon={[Function]}
+                      expandIconPosition="right"
+                      style={
                         Object {
-                          "label": "Metafields",
+                          "width": "100%",
                         }
                       }
-                      name="meta_fields"
-                      onReset={[Function]}
-                      trigger="onChange"
-                      validateTrigger="onChange"
                     >
-                      <Field
-                        fieldContext={
+                      <Collapse
+                        accordion={false}
+                        className="ant-collapse-icon-position-right"
+                        destroyInactivePanel={false}
+                        expandIcon={[Function]}
+                        expandIconPosition="right"
+                        onChange={[Function]}
+                        openMotion={
                           Object {
-                            "__INTERNAL__": Object {
-                              "itemRef": [Function],
-                              "name": "create-category",
-                            },
-                            "getFieldError": [Function],
-                            "getFieldInstance": [Function],
-                            "getFieldValue": [Function],
-                            "getFieldsError": [Function],
-                            "getFieldsValue": [Function],
-                            "getInternalHooks": [Function],
-                            "isFieldTouched": [Function],
-                            "isFieldValidating": [Function],
-                            "isFieldsTouched": [Function],
-                            "isFieldsValidating": [Function],
-                            "resetFields": [Function],
-                            "scrollToField": [Function],
-                            "setFields": [Function],
-                            "setFieldsValue": [Function],
-                            "submit": [Function],
-                            "validateFields": [Function],
-                            "validateTrigger": "onChange",
+                            "leavedClassName": "ant-collapse-content-hidden",
+                            "motionAppear": false,
+                            "motionDeadline": 500,
+                            "motionName": "ant-motion-collapse",
+                            "onAppearActive": [Function],
+                            "onAppearEnd": [Function],
+                            "onAppearStart": [Function],
+                            "onEnterActive": [Function],
+                            "onEnterEnd": [Function],
+                            "onEnterStart": [Function],
+                            "onLeaveActive": [Function],
+                            "onLeaveEnd": [Function],
+                            "onLeaveStart": [Function],
                           }
                         }
-                        key="_meta_fields"
-                        label="Metafields"
-                        messageVariables={
+                        prefixCls="ant-collapse"
+                        style={
                           Object {
-                            "label": "Metafields",
+                            "width": "100%",
                           }
                         }
-                        name={
-                          Array [
-                            "meta_fields",
-                          ]
-                        }
-                        onReset={[Function]}
-                        trigger="onChange"
-                        validateTrigger="onChange"
-                        valuePropName="value"
                       >
-                        <Row
-                          className="ant-form-item"
-                          key="row"
+                        <div
+                          className="ant-collapse ant-collapse-icon-position-right"
+                          role={null}
+                          style={
+                            Object {
+                              "width": "100%",
+                            }
+                          }
                         >
-                          <div
-                            className="ant-row ant-form-item"
-                            style={Object {}}
-                          >
-                            <FormItemLabel
-                              htmlFor="create-category_meta_fields"
-                              label="Metafields"
-                              name="meta_fields"
-                              prefixCls="ant-form"
-                              required={false}
-                              requiredMark={true}
-                            >
-                              <Col
-                                className="ant-form-item-label"
-                                span={24}
-                              >
-                                <div
-                                  className="ant-col ant-col-24 ant-form-item-label"
-                                  style={Object {}}
-                                >
-                                  <label
-                                    className=""
-                                    htmlFor="create-category_meta_fields"
-                                    title="Metafields"
-                                  >
-                                    Metafields
-                                  </label>
-                                </div>
-                              </Col>
-                            </FormItemLabel>
-                            <FormItemInput
-                              errors={Array []}
-                              label="Metafields"
-                              name={
-                                Array [
-                                  "meta_fields",
-                                ]
+                          <CollapsePanel
+                            accordion={false}
+                            destroyInactivePanel={false}
+                            expandIcon={[Function]}
+                            header="Meta Data"
+                            isActive={false}
+                            key="0"
+                            onItemClick={[Function]}
+                            openMotion={
+                              Object {
+                                "leavedClassName": "ant-collapse-content-hidden",
+                                "motionAppear": false,
+                                "motionDeadline": 500,
+                                "motionName": "ant-motion-collapse",
+                                "onAppearActive": [Function],
+                                "onAppearEnd": [Function],
+                                "onAppearStart": [Function],
+                                "onEnterActive": [Function],
+                                "onEnterEnd": [Function],
+                                "onEnterStart": [Function],
+                                "onLeaveActive": [Function],
+                                "onLeaveEnd": [Function],
+                                "onLeaveStart": [Function],
                               }
-                              onDomErrorVisibleChange={[Function]}
-                              prefixCls="ant-form"
-                              status=""
-                              touched={false}
-                              validateStatus=""
-                              validating={false}
+                            }
+                            panelKey="0"
+                            prefixCls="ant-collapse"
+                          >
+                            <CollapsePanel
+                              accordion={false}
+                              className=""
+                              destroyInactivePanel={false}
+                              expandIcon={[Function]}
+                              forceRender={false}
+                              header="Meta Data"
+                              headerClass=""
+                              isActive={false}
+                              onItemClick={[Function]}
+                              openMotion={
+                                Object {
+                                  "leavedClassName": "ant-collapse-content-hidden",
+                                  "motionAppear": false,
+                                  "motionDeadline": 500,
+                                  "motionName": "ant-motion-collapse",
+                                  "onAppearActive": [Function],
+                                  "onAppearEnd": [Function],
+                                  "onAppearStart": [Function],
+                                  "onEnterActive": [Function],
+                                  "onEnterEnd": [Function],
+                                  "onEnterStart": [Function],
+                                  "onLeaveActive": [Function],
+                                  "onLeaveEnd": [Function],
+                                  "onLeaveStart": [Function],
+                                }
+                              }
+                              panelKey="0"
+                              prefixCls="ant-collapse"
+                              showArrow={true}
                             >
-                              <Col
-                                className="ant-form-item-control"
-                                span={24}
+                              <div
+                                className="ant-collapse-item"
                               >
                                 <div
-                                  className="ant-col ant-col-24 ant-form-item-control"
-                                  style={Object {}}
+                                  aria-expanded={false}
+                                  className="ant-collapse-header"
+                                  onClick={[Function]}
+                                  onKeyPress={[Function]}
+                                  role="button"
+                                  tabIndex={0}
                                 >
-                                  <div
-                                    className="ant-form-item-control-input"
-                                  >
-                                    <div
-                                      className="ant-form-item-control-input-content"
+                                  <div>
+                                    <Button
+                                      className="ant-collapse-arrow"
                                     >
-                                      <Component
-                                        update={1}
+                                      <Wave
+                                        disabled={false}
                                       >
-                                        <MONACOEditor
-                                          id="create-category_meta_fields"
-                                          language="json"
-                                          onChange={[Function]}
+                                        <button
+                                          className="ant-btn ant-btn-default ant-collapse-arrow"
+                                          onClick={[Function]}
+                                          type="button"
                                         >
-                                          <MonacoEditor
-                                            height="240"
-                                            language="json"
-                                            onChange={[Function]}
-                                            options={
-                                              Object {
-                                                "autoClosingBrackets": "auto",
-                                                "autoClosingQuotes": "auto",
-                                                "cursorBlinking": "smooth",
-                                                "folding": true,
-                                                "lineNumbersMinChars": 4,
-                                                "minimap": Object {
-                                                  "enabled": false,
-                                                },
-                                                "scrollBeyondLastLine": false,
-                                                "theme": "vs-dark",
-                                                "wordWrap": "on",
-                                              }
-                                            }
-                                            width={440}
+                                          <LoadingIcon
+                                            existIcon={false}
+                                            loading={false}
+                                            prefixCls="ant-btn"
                                           >
-                                            <div />
-                                          </MonacoEditor>
-                                        </MONACOEditor>
-                                      </Component>
-                                    </div>
+                                            <CSSMotion
+                                              motionName="ant-btn-loading-icon-motion"
+                                              onAppearActive={[Function]}
+                                              onAppearStart={[Function]}
+                                              onEnterActive={[Function]}
+                                              onEnterStart={[Function]}
+                                              onLeaveActive={[Function]}
+                                              onLeaveStart={[Function]}
+                                              removeOnLeave={true}
+                                              visible={false}
+                                            >
+                                              <DomWrapper />
+                                            </CSSMotion>
+                                          </LoadingIcon>
+                                          <span
+                                            key=".0"
+                                          >
+                                            Expand
+                                          </span>
+                                        </button>
+                                      </Wave>
+                                    </Button>
                                   </div>
-                                  <ErrorList
-                                    errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
-                                  >
-                                    <CSSMotion
-                                      motionAppear={true}
-                                      motionDeadline={500}
-                                      motionName="ant-show-help"
-                                      onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
-                                      visible={false}
-                                    >
-                                      <DomWrapper />
-                                    </CSSMotion>
-                                  </ErrorList>
+                                  Meta Data
                                 </div>
-                              </Col>
-                            </FormItemInput>
-                          </div>
-                        </Row>
-                      </Field>
-                    </WrapperField>
-                  </FormItem>
+                                <CSSMotion
+                                  forceRender={false}
+                                  leavedClassName="ant-collapse-content-hidden"
+                                  motionAppear={false}
+                                  motionDeadline={500}
+                                  motionName="ant-motion-collapse"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveEnd={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={false}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </div>
+                            </CollapsePanel>
+                          </CollapsePanel>
+                          <CollapsePanel
+                            accordion={false}
+                            destroyInactivePanel={false}
+                            expandIcon={[Function]}
+                            header="Code Injection"
+                            isActive={false}
+                            key="1"
+                            onItemClick={[Function]}
+                            openMotion={
+                              Object {
+                                "leavedClassName": "ant-collapse-content-hidden",
+                                "motionAppear": false,
+                                "motionDeadline": 500,
+                                "motionName": "ant-motion-collapse",
+                                "onAppearActive": [Function],
+                                "onAppearEnd": [Function],
+                                "onAppearStart": [Function],
+                                "onEnterActive": [Function],
+                                "onEnterEnd": [Function],
+                                "onEnterStart": [Function],
+                                "onLeaveActive": [Function],
+                                "onLeaveEnd": [Function],
+                                "onLeaveStart": [Function],
+                              }
+                            }
+                            panelKey="1"
+                            prefixCls="ant-collapse"
+                          >
+                            <CollapsePanel
+                              accordion={false}
+                              className=""
+                              destroyInactivePanel={false}
+                              expandIcon={[Function]}
+                              forceRender={false}
+                              header="Code Injection"
+                              headerClass=""
+                              isActive={false}
+                              onItemClick={[Function]}
+                              openMotion={
+                                Object {
+                                  "leavedClassName": "ant-collapse-content-hidden",
+                                  "motionAppear": false,
+                                  "motionDeadline": 500,
+                                  "motionName": "ant-motion-collapse",
+                                  "onAppearActive": [Function],
+                                  "onAppearEnd": [Function],
+                                  "onAppearStart": [Function],
+                                  "onEnterActive": [Function],
+                                  "onEnterEnd": [Function],
+                                  "onEnterStart": [Function],
+                                  "onLeaveActive": [Function],
+                                  "onLeaveEnd": [Function],
+                                  "onLeaveStart": [Function],
+                                }
+                              }
+                              panelKey="1"
+                              prefixCls="ant-collapse"
+                              showArrow={true}
+                            >
+                              <div
+                                className="ant-collapse-item"
+                              >
+                                <div
+                                  aria-expanded={false}
+                                  className="ant-collapse-header"
+                                  onClick={[Function]}
+                                  onKeyPress={[Function]}
+                                  role="button"
+                                  tabIndex={0}
+                                >
+                                  <div>
+                                    <Button
+                                      className="ant-collapse-arrow"
+                                    >
+                                      <Wave
+                                        disabled={false}
+                                      >
+                                        <button
+                                          className="ant-btn ant-btn-default ant-collapse-arrow"
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          <LoadingIcon
+                                            existIcon={false}
+                                            loading={false}
+                                            prefixCls="ant-btn"
+                                          >
+                                            <CSSMotion
+                                              motionName="ant-btn-loading-icon-motion"
+                                              onAppearActive={[Function]}
+                                              onAppearStart={[Function]}
+                                              onEnterActive={[Function]}
+                                              onEnterStart={[Function]}
+                                              onLeaveActive={[Function]}
+                                              onLeaveStart={[Function]}
+                                              removeOnLeave={true}
+                                              visible={false}
+                                            >
+                                              <DomWrapper />
+                                            </CSSMotion>
+                                          </LoadingIcon>
+                                          <span
+                                            key=".0"
+                                          >
+                                            Expand
+                                          </span>
+                                        </button>
+                                      </Wave>
+                                    </Button>
+                                  </div>
+                                  Code Injection
+                                </div>
+                                <CSSMotion
+                                  forceRender={false}
+                                  leavedClassName="ant-collapse-content-hidden"
+                                  motionAppear={false}
+                                  motionDeadline={500}
+                                  motionName="ant-motion-collapse"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveEnd={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={false}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </div>
+                            </CollapsePanel>
+                          </CollapsePanel>
+                        </div>
+                      </Collapse>
+                    </Collapse>
+                    <Collapse
+                      expandIcon={[Function]}
+                      expandIconPosition="right"
+                      style={
+                        Object {
+                          "width": "100%",
+                        }
+                      }
+                    >
+                      <Collapse
+                        accordion={false}
+                        className="ant-collapse-icon-position-right"
+                        destroyInactivePanel={false}
+                        expandIcon={[Function]}
+                        expandIconPosition="right"
+                        onChange={[Function]}
+                        openMotion={
+                          Object {
+                            "leavedClassName": "ant-collapse-content-hidden",
+                            "motionAppear": false,
+                            "motionDeadline": 500,
+                            "motionName": "ant-motion-collapse",
+                            "onAppearActive": [Function],
+                            "onAppearEnd": [Function],
+                            "onAppearStart": [Function],
+                            "onEnterActive": [Function],
+                            "onEnterEnd": [Function],
+                            "onEnterStart": [Function],
+                            "onLeaveActive": [Function],
+                            "onLeaveEnd": [Function],
+                            "onLeaveStart": [Function],
+                          }
+                        }
+                        prefixCls="ant-collapse"
+                        style={
+                          Object {
+                            "width": "100%",
+                          }
+                        }
+                      >
+                        <div
+                          className="ant-collapse ant-collapse-icon-position-right"
+                          role={null}
+                          style={
+                            Object {
+                              "width": "100%",
+                            }
+                          }
+                        >
+                          <CollapsePanel
+                            accordion={false}
+                            destroyInactivePanel={false}
+                            expandIcon={[Function]}
+                            header="Meta Fields"
+                            isActive={false}
+                            key="0"
+                            onItemClick={[Function]}
+                            openMotion={
+                              Object {
+                                "leavedClassName": "ant-collapse-content-hidden",
+                                "motionAppear": false,
+                                "motionDeadline": 500,
+                                "motionName": "ant-motion-collapse",
+                                "onAppearActive": [Function],
+                                "onAppearEnd": [Function],
+                                "onAppearStart": [Function],
+                                "onEnterActive": [Function],
+                                "onEnterEnd": [Function],
+                                "onEnterStart": [Function],
+                                "onLeaveActive": [Function],
+                                "onLeaveEnd": [Function],
+                                "onLeaveStart": [Function],
+                              }
+                            }
+                            panelKey="0"
+                            prefixCls="ant-collapse"
+                          >
+                            <CollapsePanel
+                              accordion={false}
+                              className=""
+                              destroyInactivePanel={false}
+                              expandIcon={[Function]}
+                              forceRender={false}
+                              header="Meta Fields"
+                              headerClass=""
+                              isActive={false}
+                              onItemClick={[Function]}
+                              openMotion={
+                                Object {
+                                  "leavedClassName": "ant-collapse-content-hidden",
+                                  "motionAppear": false,
+                                  "motionDeadline": 500,
+                                  "motionName": "ant-motion-collapse",
+                                  "onAppearActive": [Function],
+                                  "onAppearEnd": [Function],
+                                  "onAppearStart": [Function],
+                                  "onEnterActive": [Function],
+                                  "onEnterEnd": [Function],
+                                  "onEnterStart": [Function],
+                                  "onLeaveActive": [Function],
+                                  "onLeaveEnd": [Function],
+                                  "onLeaveStart": [Function],
+                                }
+                              }
+                              panelKey="0"
+                              prefixCls="ant-collapse"
+                              showArrow={true}
+                            >
+                              <div
+                                className="ant-collapse-item"
+                              >
+                                <div
+                                  aria-expanded={false}
+                                  className="ant-collapse-header"
+                                  onClick={[Function]}
+                                  onKeyPress={[Function]}
+                                  role="button"
+                                  tabIndex={0}
+                                >
+                                  <div>
+                                    <Button
+                                      className="ant-collapse-arrow"
+                                    >
+                                      <Wave
+                                        disabled={false}
+                                      >
+                                        <button
+                                          className="ant-btn ant-btn-default ant-collapse-arrow"
+                                          onClick={[Function]}
+                                          type="button"
+                                        >
+                                          <LoadingIcon
+                                            existIcon={false}
+                                            loading={false}
+                                            prefixCls="ant-btn"
+                                          >
+                                            <CSSMotion
+                                              motionName="ant-btn-loading-icon-motion"
+                                              onAppearActive={[Function]}
+                                              onAppearStart={[Function]}
+                                              onEnterActive={[Function]}
+                                              onEnterStart={[Function]}
+                                              onLeaveActive={[Function]}
+                                              onLeaveStart={[Function]}
+                                              removeOnLeave={true}
+                                              visible={false}
+                                            >
+                                              <DomWrapper />
+                                            </CSSMotion>
+                                          </LoadingIcon>
+                                          <span
+                                            key=".0"
+                                          >
+                                            Expand
+                                          </span>
+                                        </button>
+                                      </Wave>
+                                    </Button>
+                                  </div>
+                                  Meta Fields
+                                </div>
+                                <CSSMotion
+                                  forceRender={false}
+                                  leavedClassName="ant-collapse-content-hidden"
+                                  motionAppear={false}
+                                  motionDeadline={500}
+                                  motionName="ant-motion-collapse"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
+                                  onLeaveEnd={[Function]}
+                                  onLeaveStart={[Function]}
+                                  removeOnLeave={false}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </div>
+                            </CollapsePanel>
+                          </CollapsePanel>
+                        </div>
+                      </Collapse>
+                    </Collapse>
+                  </MetaForm>
                   <FormItem
                     wrapperCol={
                       Object {
@@ -3092,6 +3557,7 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -3106,10 +3572,12 @@ exports[`Episode create component snapshot testing should render the component 1
                         />
                         <FormItemInput
                           errors={Array []}
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
-                          validateStatus=""
+                          touched={false}
+                          validating={false}
+                          warnings={Array []}
                           wrapperCol={
                             Object {
                               "offset": 10,
@@ -3124,6 +3592,7 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -3158,7 +3627,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                             htmlType="submit"
                                             type="primary"
                                           >
-                                            <Wave>
+                                            <Wave
+                                              disabled={false}
+                                            >
                                               <button
                                                 className="ant-btn ant-btn-primary"
                                                 disabled={true}
@@ -3210,9 +3681,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                             htmlType="button"
                                             onClick={[Function]}
                                           >
-                                            <Wave>
+                                            <Wave
+                                              disabled={false}
+                                            >
                                               <button
-                                                className="ant-btn"
+                                                className="ant-btn ant-btn-default"
                                                 onClick={[Function]}
                                                 type="button"
                                               >
@@ -3250,15 +3723,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -3291,7 +3774,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="medium_id"
-                      onReset={[Function]}
+                      onMetaChange={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -3302,9 +3785,11 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
+                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -3333,7 +3818,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "medium_id",
                           ]
                         }
-                        onReset={[Function]}
+                        onMetaChange={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -3344,6 +3829,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -3360,6 +3846,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -3375,17 +3862,12 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Featured Image"
-                              name={
-                                Array [
-                                  "medium_id",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
+                              name={Array []}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
-                              validateStatus=""
                               validating={false}
+                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -3393,6 +3875,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -3402,7 +3885,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={1}
+                                        update={<MediaSelector />}
                                       >
                                         <MediaSelector
                                           id="create-category_medium_id"
@@ -3422,7 +3905,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   onClick={[Function]}
                                                   type="primary"
                                                 >
-                                                  Confirm
+                                                  Ok
                                                 </ForwardRef(InternalButton)>,
                                               ]
                                             }
@@ -3455,7 +3938,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                     onClick={[Function]}
                                                     type="primary"
                                                   >
-                                                    Confirm
+                                                    Ok
                                                   </ForwardRef(InternalButton)>,
                                                 ]
                                               }
@@ -3520,9 +4003,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           }
                                                         }
                                                       >
-                                                        <Wave>
+                                                        <Wave
+                                                          disabled={false}
+                                                        >
                                                           <button
-                                                            className="ant-btn"
+                                                            className="ant-btn ant-btn-default"
                                                             onClick={[Function]}
                                                             style={
                                                               Object {
@@ -3586,15 +4071,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
+                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
+                                    helpStatus=""
+                                    warnings={Array []}
                                   >
                                     <CSSMotion
-                                      motionAppear={true}
+                                      motionAppear={false}
                                       motionDeadline={500}
+                                      motionEnter={false}
                                       motionName="ant-show-help"
+                                      onAppearActive={[Function]}
+                                      onAppearEnd={[Function]}
+                                      onAppearStart={[Function]}
+                                      onEnterActive={[Function]}
+                                      onEnterEnd={[Function]}
+                                      onEnterStart={[Function]}
+                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
+                                      onLeaveStart={[Function]}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -3620,7 +4115,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="audio_url"
-                      onReset={[Function]}
+                      onMetaChange={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -3631,9 +4126,11 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
+                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -3662,7 +4159,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "audio_url",
                           ]
                         }
-                        onReset={[Function]}
+                        onMetaChange={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -3673,6 +4170,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -3689,6 +4187,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -3704,17 +4203,12 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Audio"
-                              name={
-                                Array [
-                                  "audio_url",
-                                ]
-                              }
-                              onDomErrorVisibleChange={[Function]}
+                              name={Array []}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
-                              validateStatus=""
                               validating={false}
+                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -3722,6 +4216,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -3731,7 +4226,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={1}
+                                        update={
+                                          <Audio
+                                            onUpload={[Function]}
+                                          />
+                                        }
                                       >
                                         <Audio
                                           id="create-category_audio_url"
@@ -3880,9 +4379,11 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           <Button
                                                             onClick={[Function]}
                                                           >
-                                                            <Wave>
+                                                            <Wave
+                                                              disabled={false}
+                                                            >
                                                               <button
-                                                                className="ant-btn"
+                                                                className="ant-btn ant-btn-default"
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -3926,15 +4427,25 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
+                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
+                                    helpStatus=""
+                                    warnings={Array []}
                                   >
                                     <CSSMotion
-                                      motionAppear={true}
+                                      motionAppear={false}
                                       motionDeadline={500}
+                                      motionEnter={false}
                                       motionName="ant-show-help"
+                                      onAppearActive={[Function]}
+                                      onAppearEnd={[Function]}
+                                      onAppearStart={[Function]}
+                                      onEnterActive={[Function]}
+                                      onEnterEnd={[Function]}
+                                      onEnterStart={[Function]}
+                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
+                                      onLeaveStart={[Function]}
                                       visible={false}
                                     >
                                       <DomWrapper />

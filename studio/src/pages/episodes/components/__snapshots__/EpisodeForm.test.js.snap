@@ -47,6 +47,7 @@ exports[`Episode Form component snapshot testing should match component with dat
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -114,6 +115,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -234,6 +236,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -289,6 +292,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -317,6 +321,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -357,6 +362,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -512,6 +518,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -567,6 +574,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -595,6 +603,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -635,6 +644,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -761,6 +771,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -804,6 +815,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -820,6 +832,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -848,6 +861,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -898,7 +912,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                           <Select
                                             allowClear={true}
                                             autoClearSearchValue={true}
-                                            className=""
+                                            className="ant-select-in-form-item"
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
                                               Array [
@@ -940,7 +954,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                               activeDescendantId="undefined_list_0"
                                               activeValue={null}
                                               allowClear={true}
-                                              className=""
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               displayValues={
                                                 Array [
@@ -976,7 +990,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                               transitionName="ant-slide-up"
                                             >
                                               <div
-                                                className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                 onBlur={[Function]}
                                                 onFocus={[Function]}
                                                 onKeyDown={[Function]}
@@ -1106,7 +1120,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                       activeDescendantId="undefined_list_0"
                                                       activeValue={null}
                                                       allowClear={true}
-                                                      className=""
+                                                      className="ant-select-in-form-item"
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       displayValues={
                                                         Array [
@@ -1205,7 +1219,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                           activeDescendantId="undefined_list_0"
                                                           activeValue={null}
                                                           allowClear={true}
-                                                          className=""
+                                                          className="ant-select-in-form-item"
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           displayValues={
                                                             Array [
@@ -1604,6 +1618,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1625,6 +1640,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                         >
                           <div
                             className="ant-col ant-col-24 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1662,6 +1678,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -1705,6 +1722,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -1720,6 +1738,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -1747,6 +1766,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -1780,7 +1800,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                             value={1}
                                                           >
                                                             <InputNumber
-                                                              className=""
+                                                              className="ant-input-number-in-form-item"
                                                               downHandler={
                                                                 <ForwardRef(DownOutlined)
                                                                   className="ant-input-number-handler-down-inner"
@@ -1803,7 +1823,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                               value={1}
                                                             >
                                                               <div
-                                                                className="ant-input-number"
+                                                                className="ant-input-number ant-input-number-in-form-item"
                                                                 onBlur={[Function]}
                                                                 onCompositionEnd={[Function]}
                                                                 onCompositionStart={[Function]}
@@ -2084,6 +2104,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -2127,6 +2148,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -2142,6 +2164,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -2169,6 +2192,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -2202,7 +2226,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                             value={1}
                                                           >
                                                             <InputNumber
-                                                              className=""
+                                                              className="ant-input-number-in-form-item"
                                                               downHandler={
                                                                 <ForwardRef(DownOutlined)
                                                                   className="ant-input-number-handler-down-inner"
@@ -2225,7 +2249,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                                                               value={1}
                                                             >
                                                               <div
-                                                                className="ant-input-number"
+                                                                className="ant-input-number ant-input-number-in-form-item"
                                                                 onBlur={[Function]}
                                                                 onCompositionEnd={[Function]}
                                                                 onCompositionStart={[Function]}
@@ -2541,6 +2565,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -2584,6 +2609,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -2600,6 +2626,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -2628,6 +2655,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -2674,13 +2702,12 @@ exports[`Episode Form component snapshot testing should match component with dat
                                             value="full"
                                           >
                                             <Radio
-                                              checked={true}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="full"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-checked ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={true}
@@ -2728,13 +2755,12 @@ exports[`Episode Form component snapshot testing should match component with dat
                                             value="trailer"
                                           >
                                             <Radio
-                                              checked={false}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="trailer"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={false}
@@ -2782,13 +2808,12 @@ exports[`Episode Form component snapshot testing should match component with dat
                                             value="bonus"
                                           >
                                             <Radio
-                                              checked={false}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="bonus"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={false}
@@ -2903,6 +2928,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -2946,6 +2972,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -2962,6 +2989,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -2990,6 +3018,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -3619,6 +3648,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -3653,6 +3683,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                         >
                           <div
                             className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -3845,6 +3876,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -3888,6 +3920,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -3904,6 +3937,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -3932,6 +3966,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -4184,6 +4219,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -4227,6 +4263,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -4243,6 +4280,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -4271,6 +4309,7 @@ exports[`Episode Form component snapshot testing should match component with dat
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -4614,6 +4653,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -4658,6 +4698,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -4755,6 +4796,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -4810,6 +4852,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -4838,6 +4881,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -4878,6 +4922,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -5029,6 +5074,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -5084,6 +5130,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -5112,6 +5159,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -5152,6 +5200,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -5274,6 +5323,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -5317,6 +5367,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -5333,6 +5384,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -5361,6 +5413,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -5411,7 +5464,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                           <Select
                                             allowClear={true}
                                             autoClearSearchValue={true}
-                                            className=""
+                                            className="ant-select-in-form-item"
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
                                               Array [
@@ -5453,7 +5506,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                               activeDescendantId="undefined_list_0"
                                               activeValue={null}
                                               allowClear={true}
-                                              className=""
+                                              className="ant-select-in-form-item"
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               displayValues={
                                                 Array [
@@ -5489,7 +5542,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                               transitionName="ant-slide-up"
                                             >
                                               <div
-                                                className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                 onBlur={[Function]}
                                                 onFocus={[Function]}
                                                 onKeyDown={[Function]}
@@ -5619,7 +5672,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                       activeDescendantId="undefined_list_0"
                                                       activeValue={null}
                                                       allowClear={true}
-                                                      className=""
+                                                      className="ant-select-in-form-item"
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       displayValues={
                                                         Array [
@@ -5718,7 +5771,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                           activeDescendantId="undefined_list_0"
                                                           activeValue={null}
                                                           allowClear={true}
-                                                          className=""
+                                                          className="ant-select-in-form-item"
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           displayValues={
                                                             Array [
@@ -6117,6 +6170,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -6138,6 +6192,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                         >
                           <div
                             className="ant-col ant-col-24 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -6175,6 +6230,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -6218,6 +6274,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -6233,6 +6290,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -6260,6 +6318,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -6291,7 +6350,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                             }
                                                           >
                                                             <InputNumber
-                                                              className=""
+                                                              className="ant-input-number-in-form-item"
                                                               downHandler={
                                                                 <ForwardRef(DownOutlined)
                                                                   className="ant-input-number-handler-down-inner"
@@ -6313,7 +6372,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                               }
                                                             >
                                                               <div
-                                                                className="ant-input-number"
+                                                                className="ant-input-number ant-input-number-in-form-item"
                                                                 onBlur={[Function]}
                                                                 onCompositionEnd={[Function]}
                                                                 onCompositionStart={[Function]}
@@ -6594,6 +6653,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 "itemRef": [Function],
                                                 "name": "create-category",
                                               },
+                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
@@ -6637,6 +6697,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                           >
                                             <div
                                               className="ant-row ant-form-item"
+                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -6652,6 +6713,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -6679,6 +6741,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
+                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -6710,7 +6773,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                             }
                                                           >
                                                             <InputNumber
-                                                              className=""
+                                                              className="ant-input-number-in-form-item"
                                                               downHandler={
                                                                 <ForwardRef(DownOutlined)
                                                                   className="ant-input-number-handler-down-inner"
@@ -6732,7 +6795,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                                               }
                                                             >
                                                               <div
-                                                                className="ant-input-number"
+                                                                className="ant-input-number ant-input-number-in-form-item"
                                                                 onBlur={[Function]}
                                                                 onCompositionEnd={[Function]}
                                                                 onCompositionStart={[Function]}
@@ -7048,6 +7111,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -7091,6 +7155,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -7107,6 +7172,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -7135,6 +7201,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -7179,13 +7246,12 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                             value="full"
                                           >
                                             <Radio
-                                              checked={true}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="full"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-checked ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={true}
@@ -7233,13 +7299,12 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                             value="trailer"
                                           >
                                             <Radio
-                                              checked={false}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="trailer"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={false}
@@ -7287,13 +7352,12 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                                             value="bonus"
                                           >
                                             <Radio
-                                              checked={false}
-                                              prefixCls="ant-radio-button"
+                                              prefixCls="ant-radio"
                                               type="radio"
                                               value="bonus"
                                             >
                                               <label
-                                                className="ant-radio-button-wrapper"
+                                                className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
                                               >
                                                 <Checkbox
                                                   checked={false}
@@ -7408,6 +7472,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               "itemRef": [Function],
                               "name": "create-category",
                             },
+                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
@@ -7451,6 +7516,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -7467,6 +7533,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -7495,6 +7562,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -8096,6 +8164,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -8130,6 +8199,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                         >
                           <div
                             className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -8322,6 +8392,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -8365,6 +8436,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -8381,6 +8453,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -8409,6 +8482,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
@@ -8659,6 +8733,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             "itemRef": [Function],
                             "name": "create-category",
                           },
+                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
@@ -8702,6 +8777,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                       >
                         <div
                           className="ant-row ant-form-item"
+                          role="row"
                           style={Object {}}
                         >
                           <FormItemLabel
@@ -8718,6 +8794,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-label"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <label
@@ -8746,6 +8823,7 @@ exports[`Episode Form component snapshot testing should render the component 1`]
                             >
                               <div
                                 className="ant-col ant-col-24 ant-form-item-control"
+                                role="cell"
                                 style={Object {}}
                               >
                                 <div
