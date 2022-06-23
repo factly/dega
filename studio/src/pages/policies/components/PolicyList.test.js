@@ -15,12 +15,47 @@ import { getPolicies, deletePolicy } from '../../../actions/policies';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
-
+const setFilters = jest.fn();
+const fetchPolicies = jest.fn();
+const filters = {
+  page: 1,
+  limit: 20,
+};
+let info = {
+  policies: [
+    {
+      id: '1',
+      name: 'Test',
+      description: '',
+      permissions: [
+        {
+          resource: 'tags',
+          actions: ['get'],
+        },
+      ],
+      users: [
+        {
+          id: 1,
+          created_at: '2020-09-23T11:06:11.308302Z',
+          updated_at: '2020-09-23T11:36:09.244259Z',
+          deleted_at: null,
+          email: 'ross@gmail.com',
+          first_name: 'Ross',
+          last_name: 'Geller',
+          birth_date: '1997-12-23T17:05:55+05:30',
+          gender: 'male',
+        },
+      ],
+    },
+  ],
+  total: 1,
+  loading: false,
+};
 let state = {
   policies: {
     req: [
       {
-        data: ['1'],
+        data: ['1', '2'],
         query: {
           page: 1,
           limit: 20,
@@ -49,6 +84,30 @@ let state = {
             first_name: 'Ross',
             last_name: 'Geller',
             birth_date: '1997-12-23T17:05:55+05:30',
+            gender: 'male',
+          },
+        ],
+      },
+      2: {
+        id: '2',
+        name: 'Test-2',
+        description: '',
+        permissions: [
+          {
+            resource: 'categories',
+            actions: ['get'],
+          },
+        ],
+        users: [
+          {
+            id: 2,
+            created_at: '2020-10-23T11:06:11.308302Z',
+            updated_at: '2020-10-23T11:36:09.244259Z',
+            deleted_at: null,
+            email: 'ross2@gmail.com',
+            first_name: 'Ross',
+            last_name: 'Geller',
+            birth_date: '1995-12-23T17:05:55+05:30',
             gender: 'male',
           },
         ],
@@ -124,17 +183,23 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList actions={['update', 'delete']} />
+              <PolicyList
+                setFilters={setFilters}
+                fetchPolicies={fetchPolicies}
+                filters={filters}
+                data={info}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
 
       const table = wrapper.find(Table);
-      table.props().pagination.onChange(2);
+      table.props().pagination.onChange(1);
       wrapper.update();
       const updatedTable = wrapper.find(Table);
-      expect(updatedTable.props().pagination.current).toEqual(2);
+      expect(updatedTable.props().pagination.current).toEqual(1);
     });
     it('should delete policy', () => {
       store = mockStore(state);
@@ -143,7 +208,13 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList actions={['update', 'delete']} />
+              <PolicyList
+                setFilters={setFilters}
+                fetchPolicies={fetchPolicies}
+                filters={filters}
+                data={info}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -158,7 +229,7 @@ describe('Policies List component', () => {
         .simulate('click');
       expect(deletePolicy).toHaveBeenCalled();
       expect(deletePolicy).toHaveBeenCalledWith('1');
-      expect(getPolicies).toHaveBeenCalledWith({ page: 1, limit: 20 });
+      //  expect(getPolicies).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit policy', () => {
       store = mockStore(state);
@@ -167,14 +238,20 @@ describe('Policies List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList actions={['update', 'delete']} />
+              <PolicyList
+                setFilters={setFilters}
+                fetchPolicies={fetchPolicies}
+                filters={filters}
+                data={info}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('Test');
-      expect(link.prop('to')).toEqual('/policies/1/edit');
+      expect(link.prop('to')).toEqual('/members/policies/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -183,11 +260,19 @@ describe('Policies List component', () => {
         },
       });
       let wrapper;
+      const info2 = { ...info };
+      info2.policies = [];
       act(() => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PolicyList actions={['update', 'delete']} />
+              <PolicyList
+                setFilters={setFilters}
+                fetchPolicies={fetchPolicies}
+                filters={filters}
+                data={info2}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
