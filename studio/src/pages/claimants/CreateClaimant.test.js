@@ -32,6 +32,7 @@ jest.mock('react-router-dom', () => ({
 jest.mock('../../actions/claimants', () => ({
   getClaimants: jest.fn(),
   createCategory: jest.fn(),
+  createClaimant: jest.fn(),
 }));
 
 describe('Claimants create component', () => {
@@ -51,7 +52,8 @@ describe('Claimants create component', () => {
     },
     spaces: {
       orgs: [],
-      details: {},
+      details: { 1: { site_address: '' } },
+      selected: 1,
       loading: true,
     },
   });
@@ -87,7 +89,7 @@ describe('Claimants create component', () => {
       });
       wrapper.find(ClaimantCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
-        expect(actions.createCategory).toHaveBeenCalledWith({ test: 'test' });
+        expect(actions.createClaimant).toHaveBeenCalledWith({ test: 'test' });
         expect(push).toHaveBeenCalledWith('/claimants');
         done();
       }, 0);

@@ -179,7 +179,12 @@ describe('Claimants Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper
+          .find('TitleInput')
+          .find('FormItem')
+          .find('FormItemInput')
+          .find('BaseInput')
+          .find('input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -204,7 +209,7 @@ describe('Claimants Create Form component', () => {
     });
     it('should submit form with updated data', (done) => {
       act(() => {
-        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
       });
       wrapper.update();
 
@@ -224,14 +229,18 @@ describe('Claimants Create Form component', () => {
             },
           });
         wrapper
+          .find('TitleInput')
           .find('FormItem')
-          .at(1)
-          .find('Input')
+          .find('FormItemInput')
+          .find('BaseInput')
+          .find('input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
+          .find('SlugInput')
           .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('FormItemInput')
+          .find('BaseInput')
+          .find('input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
