@@ -606,7 +606,7 @@ const routes = {
   sach: {
     path: '/fact-checks/sach',
     Component: Factly,
-    title: 'Factly',
+    title: 'Sach',
   },
   users: {
     path: '/members/users',

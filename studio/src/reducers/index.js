@@ -67,7 +67,7 @@ const appReducer = combineReducers({
   webhooks,
   profile,
   search,
-  sachFactChecks
+  sachFactChecks,
 });
 
 const rootReducer = (state, action) => {

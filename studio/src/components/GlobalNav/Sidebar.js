@@ -49,6 +49,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
     'policies',
     'users',
     'spaces',
+    'sach'
   ];
   let protectedResources = [
     'posts',
