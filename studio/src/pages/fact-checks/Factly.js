@@ -98,7 +98,6 @@ function Factly() {
       <Form name="sach-form" form={form} onFinish={handleFinish} layout={'inline'}>
         <Form.Item
           name="query"
-          label="Search"
           style={{ width: '40%' }}
         >
           <Input
