@@ -13,7 +13,10 @@ import CreateOrganisationRequestForm from './components/RequestForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -91,7 +94,7 @@ describe('Organisation Request create component', () => {
       wrapper.find(CreateOrganisationRequestForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addOrganisationRequest).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/requests/organisations');
+        expect(push).toHaveBeenCalledWith('/admin/requests/organisations');
         done();
       }, 0);
     });

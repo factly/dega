@@ -10,7 +10,10 @@ import SpaceRequestForm from './RequestForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useSelector: jest.fn(),
