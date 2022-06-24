@@ -603,11 +603,11 @@ const routes = {
     Component: GoogleFactCheck,
     title: 'Google',
   },
-  // factly: {
-  //   path: '/fact-checks/factly',
-  //   Component: Factly,
-  //   title: 'Factly',
-  // },
+  sach: {
+    path: '/fact-checks/sach',
+    Component: Factly,
+    title: 'Sach',
+  },
   users: {
     path: '/members/users',
     Component: Users,
@@ -756,7 +756,7 @@ export const sidebarMenu = [
       routes.claimants,
       routes.ratings,
       routes.googleFactCheck,
-      // routes.factly,
+      routes.sach,
     ],
     isService: true,
   },
