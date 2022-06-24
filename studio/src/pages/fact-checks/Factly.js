@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography, Space, Input, Form, Select, Button, Skeleton } from 'antd';
+import { Typography, Space, Input, Form, Select, Button, Skeleton, Row } from 'antd';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSachFactChecks, getSachFilters } from '../../actions/sachFactChecks';
@@ -113,15 +113,26 @@ function Factly() {
       <div
         style={{
           display: 'flex',
-          gap: '8px',
           marginTop: '20px',
         }}
       >
-        <Form.Item label="Language" style={{ width: '15%' }}>
+        <div
+          style={{
+            display:'flex',
+            flexDirection:'column',
+            width:'30%',
+            gap:'8px'
+          }}
+        >
+          Languages: 
           <Select
             name="selectedLanguage"
             placeholder={'Select Language'}
             mode="multiple"
+            style={{
+                maxWidth:'260px',
+                maxHeight:'40px'  
+              }}
             onChange={handleLanguageChange}
           >
             {languages.map((lang) => (
@@ -130,12 +141,21 @@ function Factly() {
               </Select.Option>
             ))}
           </Select>
-        </Form.Item>
-        <Form.Item style={{ width: '15%' }} label="Country">
+        </div>
+        <div
+          style={{
+            display:'flex',
+            flexDirection:'column',
+            width:'30%',
+            gap:'8px'
+          }}
+        >
+          Countries: 
           <Select
             name="selectedCountry"
             placeholder={'Select Country'}
             mode="multiple"
+            style={{width:'80%'}}
             onChange={handleCountryChange}
           >
             {publisherCountries.map((country) => (
@@ -144,38 +164,59 @@ function Factly() {
               </Select.Option>
             ))}
           </Select>
-        </Form.Item>
-        <Form.Item style={{ width: '15%' }} label="Publisher">
-          <Select
-            name="selectedPublisher"
-            placeholder={'Select Publisher'}
-            mode="multiple"
-            onChange={handlePublisherChange}
-          >
-            {publisherList.map((publisher) => (
-              <Select.Option value={publisher} key={publisher}>
-                {publisher}
-              </Select.Option>
-            ))}
-          </Select>
-        </Form.Item>
-        <Form.Item style={{ width: '15%' }} label="Sort by date">
-          <Select
-            name="selectedDateOrder"
-            placeholder={'Sort by date'}
-            mode="multiple"
-            onChange={handleDateChange}
-            allowClear
-          >
-            <Select.Option value={'desc'}> latest </Select.Option>
-            <Select.Option value={'asc'}> oldest</Select.Option>
-          </Select>
-        </Form.Item>
+        </div>
+        <div
+          style={{
+            display:'flex',
+            flexDirection:'column',
+            width:'30%',
+            gap:'8px'
+          }}
+        >
+        Publishers: 
+        <Select
+          name="selectedPublisher"
+          placeholder={'Select Publisher'}
+          mode="multiple"
+          style={{width:'80%'}}
+          onChange={handlePublisherChange}
+        >
+          {publisherList.map((publisher) => (
+            <Select.Option value={publisher} key={publisher}>
+              {publisher}
+            </Select.Option>
+          ))}
+        </Select>
+        </div>
+        <div
+          style={{
+            display:'flex',
+            flexDirection:'column',
+            width:'30%',
+            gap:'8px'
+          }}
+        >
+        Sort by date: 
+        <Select
+          name="selectedDateOrder"
+          placeholder={'Sort by date'}
+          onChange={handleDateChange}
+          style={{width:'80%'}}
+          allowClear
+        >
+          <Select.Option value={'desc'}> latest </Select.Option>
+          <Select.Option value={'asc'}> oldest</Select.Option>
+        </Select>
+        </div>
       </div>
       {
         (loading) ? <Skeleton/> :
         (
-          <div>
+          <div
+            style={{
+              marginTop:'20px'
+            }}
+          >
             {factChecks?.length
         ? factChecks.map((factCheck, index) => (
             <FactCheck
