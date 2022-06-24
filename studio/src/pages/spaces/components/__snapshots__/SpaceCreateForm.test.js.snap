@@ -21,6 +21,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
             "itemRef": [Function],
             "name": "create-space",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -67,6 +68,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                 "itemRef": [Function],
                 "name": "create-space",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -116,6 +118,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -129,6 +132,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-8 ant-form-item-label"
+                        role="cell"
                         style={Object {}}
                       >
                         <label
@@ -156,6 +160,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-8 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div
@@ -209,6 +214,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             "itemRef": [Function],
                                             "name": "create-space",
                                           },
+                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
@@ -892,6 +898,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             "itemRef": [Function],
                                             "name": "create-space",
                                           },
+                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
@@ -1126,6 +1133,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           "itemRef": [Function],
                           "name": "create-space",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
@@ -1181,6 +1189,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1209,6 +1218,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -1249,6 +1259,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1371,6 +1382,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1414,6 +1426,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1430,6 +1443,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1458,6 +1472,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1579,6 +1594,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1622,6 +1638,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1638,6 +1655,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1666,6 +1684,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1787,6 +1806,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1830,6 +1850,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1846,6 +1867,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1874,6 +1896,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1995,6 +2018,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -2038,6 +2062,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -2054,6 +2079,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -2082,6 +2108,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -2230,6 +2257,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -2273,6 +2301,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -2289,6 +2318,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -2317,6 +2347,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -2414,6 +2445,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -2448,6 +2480,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div
@@ -2559,6 +2592,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
             "itemRef": [Function],
             "name": "create-space",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -2605,6 +2639,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                 "itemRef": [Function],
                 "name": "create-space",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -2654,6 +2689,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -2667,6 +2703,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-8 ant-form-item-label"
+                        role="cell"
                         style={Object {}}
                       >
                         <label
@@ -2694,6 +2731,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-8 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div
@@ -2747,6 +2785,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             "itemRef": [Function],
                                             "name": "create-space",
                                           },
+                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
@@ -3430,6 +3469,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             "itemRef": [Function],
                                             "name": "create-space",
                                           },
+                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
@@ -3664,6 +3704,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           "itemRef": [Function],
                           "name": "create-space",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
@@ -3719,6 +3760,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -3747,6 +3789,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -3787,6 +3830,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -3909,6 +3953,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -3952,6 +3997,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -3968,6 +4014,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -3996,6 +4043,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4117,6 +4165,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4160,6 +4209,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4176,6 +4226,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4204,6 +4255,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4325,6 +4377,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4368,6 +4421,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4384,6 +4438,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4412,6 +4467,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4533,6 +4589,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4576,6 +4633,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4592,6 +4650,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4620,6 +4679,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4768,6 +4828,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "itemRef": [Function],
                         "name": "create-space",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4811,6 +4872,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4827,6 +4889,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4855,6 +4918,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4952,6 +5016,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -4986,6 +5051,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     >
                       <div
                         className="ant-col ant-col-16 ant-col-offset-8 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div

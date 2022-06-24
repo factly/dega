@@ -21,23 +21,6 @@ const data = {
     version: '2.19.0',
   },
   site_address: 'site_address',
-  logo_id: 1,
-  logo_mobile_id: 1,
-  fav_icon_id: 1,
-  mobile_icon_id: 1,
-  social_media_urls: {
-    facebook: 'fb.com',
-    twitter: 'twitter.com',
-    pintrest: 'pinterest.com',
-    instagram: 'instagram.com',
-  },
-  analytics: {
-    plausible: {
-      domain: 'domain',
-      embed_code: 'embed-code',
-      server_url: 'url',
-    },
-  },
 };
 
 jest.mock('@editorjs/editorjs');
@@ -140,14 +123,14 @@ describe('Space Edit Form component', () => {
       }, 0);
     });
     it('should submit form with given data', (done) => {
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-        wrapper.find(Collapse).at(2).props().onChange();
-        wrapper.find(Collapse).at(3).props().onChange();
-        wrapper.find(Collapse).at(4).props().onChange();
-      });
-      wrapper.update();
+      // act(() => {
+      //   wrapper.find(Collapse).at(0).props().onChange();
+      //   wrapper.find(Collapse).at(1).props().onChange();
+      //   wrapper.find(Collapse).at(2).props().onChange();
+      //   wrapper.find(Collapse).at(3).props().onChange();
+      //   wrapper.find(Collapse).at(4).props().onChange();
+      // });
+      // wrapper.update();
       act(() => {
         const submitButtom = wrapper.find(Button).at(0);
         submitButtom.simulate('submit');
@@ -168,23 +151,6 @@ describe('Space Edit Form component', () => {
             version: '2.19.0',
           },
           site_address: 'site_address',
-          logo_id: 1,
-          logo_mobile_id: 1,
-          fav_icon_id: 1,
-          mobile_icon_id: 1,
-          social_media_urls: {
-            facebook: 'fb.com',
-            twitter: 'twitter.com',
-            pintrest: 'pinterest.com',
-            instagram: 'instagram.com',
-          },
-          analytics: {
-            plausible: {
-              domain: 'domain',
-              embed_code: 'embed-code',
-              server_url: 'url',
-            },
-          },
         });
         done();
       }, 0);
@@ -201,14 +167,14 @@ describe('Space Edit Form component', () => {
           </Provider>,
         );
       });
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-        wrapper.find(Collapse).at(2).props().onChange();
-        wrapper.find(Collapse).at(3).props().onChange();
-        wrapper.find(Collapse).at(4).props().onChange();
-      });
-      wrapper.update();
+      // act(() => {
+      //   wrapper.find(Collapse).at(0).props().onChange();
+      //   wrapper.find(Collapse).at(1).props().onChange();
+      //   wrapper.find(Collapse).at(2).props().onChange();
+      //   wrapper.find(Collapse).at(3).props().onChange();
+      //   wrapper.find(Collapse).at(4).props().onChange();
+      // });
+      // wrapper.update();
       act(() => {
         wrapper
           .find('FormItem')
@@ -218,84 +184,77 @@ describe('Space Edit Form component', () => {
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
+          .find('input')
+          .at(2)
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
-          .find('FormItem')
-          .at(4)
-          .find('Input')
+          .find('input')
+          .at(3)
           .simulate('change', { target: { value: 'new site title' } });
         wrapper
-          .find('FormItem')
-          .at(5)
-          .find('Input')
+          .find('input')
+          .at(4)
           .simulate('change', { target: { value: 'new tag line' } });
         wrapper
-          .find('FormItem')
-          .at(7)
           .find('TextArea')
           .at(0)
           .simulate('change', { target: { value: 'New Description' } });
         wrapper
-          .find('FormItem')
-          .at(6)
-          .find('Input')
+          .find('input')
+          .at(5)
           .simulate('change', { target: { value: 'new site address' } });
-        wrapper
-          .find('FormItem')
-          .at(9)
-          .find('MediaSelector')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 2 } });
-        wrapper
-          .find('FormItem')
-          .at(10)
-          .find('MediaSelector')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 3 } });
-        wrapper
-          .find('FormItem')
-          .at(11)
-          .find('MediaSelector')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 4 } });
-        wrapper
-          .find('FormItem')
-          .at(12)
-          .find('MediaSelector')
-          .at(0)
-          .props()
-          .onChange({ target: { value: 5 } });
-        wrapper
-          .find('FormItem')
-          .at(13)
-          .find('Input')
-          .simulate('change', { target: { value: 'm.fb.com' } });
-        wrapper
-          .find('FormItem')
-          .at(14)
-          .find('Input')
-          .simulate('change', { target: { value: 'm.twitter.com' } });
-        wrapper
-          .find('FormItem')
-          .at(15)
-          .find('Input')
-          .simulate('change', { target: { value: 'm.pin.com' } });
-        wrapper
-          .find('FormItem')
-          .at(16)
-          .find('Input')
-          .simulate('change', { target: { value: 'm.insta.com' } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(9)
+        //   .find('MediaSelector')
+        //   .at(0)
+        //   .props()
+        //   .onChange({ target: { value: 2 } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(10)
+        //   .find('MediaSelector')
+        //   .at(0)
+        //   .props()
+        //   .onChange({ target: { value: 3 } });
+        //  wrapper
+        //   .find('FormItem')
+        //   .at(11)
+        //   .find('MediaSelector')
+        //   .at(0)
+        //   .props()
+        //   .onChange({ target: { value: 4 } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(12)
+        //   .find('MediaSelector')
+        //   .at(0)
+        //   .props()
+        //   .onChange({ target: { value: 5 } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(13)
+        //   .find('Input')
+        //   .simulate('change', { target: { value: 'm.fb.com' } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(14)
+        //   .find('Input')
+        //   .simulate('change', { target: { value: 'm.twitter.com' } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(15)
+        //   .find('Input')
+        //   .simulate('change', { target: { value: 'm.pin.com' } });
+        // wrapper
+        //   .find('FormItem')
+        //   .at(16)
+        //   .find('Input')
+        //   .simulate('change', { target: { value: 'm.insta.com' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -315,54 +274,29 @@ describe('Space Edit Form component', () => {
             sample: 'testing',
           },
           site_address: 'new site address',
-          logo_id: 2,
-          logo_mobile_id: 3,
-          fav_icon_id: 4,
-          mobile_icon_id: 5,
-          social_media_urls: {
-            facebook: 'm.fb.com',
-            twitter: 'm.twitter.com',
-            pintrest: 'm.pin.com',
-            instagram: 'm.insta.com',
-          },
-          analytics: {
-            plausible: {
-              domain: 'domain',
-              embed_code: 'embed-code',
-              server_url: 'url',
-            },
-          },
         });
         done();
       }, 0);
     });
     it('should highlight form fields with error', () => {
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-        wrapper.find(Collapse).at(2).props().onChange();
-        wrapper.find(Collapse).at(3).props().onChange();
-        wrapper.find(Collapse).at(4).props().onChange();
-      });
       wrapper.update();
       act(() => {
         wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
+          .find('input')
+          .at(2)
           .simulate('change', { target: { value: '' } });
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
       });
       //collapse the panel
-      act(() => {
-        wrapper.find(Collapse).at(0).props().onChange();
-        wrapper.find(Collapse).at(1).props().onChange();
-        wrapper.find(Collapse).at(2).props().onChange();
-        wrapper.find(Collapse).at(3).props().onChange();
-        wrapper.find(Collapse).at(4).props().onChange();
-      });
+      // act(() => {
+      //   wrapper.find(Collapse).at(0).props().onChange();
+      //   wrapper.find(Collapse).at(1).props().onChange();
+      //   wrapper.find(Collapse).at(2).props().onChange();
+      //   wrapper.find(Collapse).at(3).props().onChange();
+      //   wrapper.find(Collapse).at(4).props().onChange();
+      // });
       expect(props.onCreate).not.toHaveBeenCalled();
     });
   });

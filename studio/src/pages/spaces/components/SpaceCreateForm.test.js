@@ -121,24 +121,20 @@ describe('Spaces Create Form component', () => {
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
+          .find('input')
+          .at(2)
           .simulate('change', { target: { value: 'slug' } });
         wrapper
-          .find('FormItem')
-          .at(4)
-          .find('Input')
+          .find('input')
+          .at(3)
           .simulate('change', { target: { value: 'site title' } });
         wrapper
-          .find('FormItem')
-          .at(5)
-          .find('Input')
+          .find('input')
+          .at(4)
           .simulate('change', { target: { value: 'tag line' } });
         wrapper
           .find('FormItem')
@@ -154,9 +150,8 @@ describe('Spaces Create Form component', () => {
           .props()
           .onChange({ target: { value: '{"sample":"testing"}' } });
         wrapper
-          .find('FormItem')
-          .at(6)
-          .find('Input')
+          .find('input')
+          .at(5)
           .simulate('change', { target: { value: 'site address' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -191,24 +186,20 @@ describe('Spaces Create Form component', () => {
           .props()
           .onChange({ target: { value: 2 } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
+          .find('input')
+          .at(2)
           .simulate('change', { target: { value: 'slug' } });
         wrapper
-          .find('FormItem')
-          .at(4)
-          .find('Input')
+          .find('input')
+          .at(3)
           .simulate('change', { target: { value: 'site title' } });
         wrapper
-          .find('FormItem')
-          .at(5)
-          .find('Input')
+          .find('input')
+          .at(4)
           .simulate('change', { target: { value: 'tag line' } });
         wrapper
           .find('FormItem')
@@ -217,9 +208,8 @@ describe('Spaces Create Form component', () => {
           .at(0)
           .simulate('change', { target: { value: 'New Description' } });
         wrapper
-          .find('FormItem')
-          .at(6)
-          .find('Input')
+          .find('input')
+          .at(5)
           .simulate('change', { target: { value: 'site address' } });
 
         const submitButtom = wrapper.find('Button').at(0);

@@ -9,6 +9,8 @@ exports[`Spaces List component snapshot testing should match component when load
   >
     <div>
       <div
+        aria-busy={true}
+        aria-live="polite"
         className="ant-spin ant-spin-spinning"
       >
         <span
