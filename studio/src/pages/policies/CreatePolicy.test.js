@@ -18,7 +18,10 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useHistory: jest.fn(),
@@ -75,7 +78,7 @@ describe('Policies create component', () => {
       wrapper.find(PolicyCreateForm).props().onCreate({ users: [], permissions: [] });
       setTimeout(() => {
         expect(actions.createPolicy).toHaveBeenCalledWith({ permissions: [], users: [] });
-        expect(push).toHaveBeenCalledWith('/policies');
+        expect(push).toHaveBeenCalledWith('/members/policies');
         done();
       }, 0);
     });
@@ -102,7 +105,7 @@ describe('Policies create component', () => {
           permissions: [{ resource: 'posts', actions: ['create', 'update'] }],
           users: [],
         });
-        expect(push).toHaveBeenCalledWith('/policies');
+        expect(push).toHaveBeenCalledWith('/members/policies');
         done();
       }, 0);
     });

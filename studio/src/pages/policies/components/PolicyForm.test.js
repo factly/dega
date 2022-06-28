@@ -17,6 +17,11 @@ jest.mock('react-redux', () => ({
   useDispatch: jest.fn(),
 }));
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
@@ -162,9 +167,8 @@ describe('Policy Create Form component', () => {
     it('should submit form with added data', (done) => {
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'name' } });
         wrapper
           .find('FormItem')
