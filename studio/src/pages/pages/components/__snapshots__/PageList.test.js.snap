@@ -507,6 +507,11 @@ exports[`Page List component snapshot testing should match when component loadin
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 3,
                     }
                   }
@@ -1635,6 +1640,11 @@ exports[`Page List component snapshot testing should match when component loadin
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 3,
                               }
                             }
@@ -2749,6 +2759,11 @@ exports[`Page List component snapshot testing should match when component loadin
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
                                       "total": 3,
                                     },
                                     "prefixCls": "ant-table",
@@ -9728,6 +9743,13 @@ exports[`Page List component snapshot testing should match when component loadin
                             current={1}
                             onChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             total={3}
                           >
                             <LocaleReceiver
@@ -9816,6 +9838,13 @@ exports[`Page List component snapshot testing should match when component loadin
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
                                 pageSize={20}
+                                pageSizeOptions={
+                                  Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ]
+                                }
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -10083,9 +10112,8 @@ exports[`Page List component snapshot testing should match when component loadin
                                     pageSizeOptions={
                                       Array [
                                         "10",
+                                        "15",
                                         "20",
-                                        "50",
-                                        "100",
                                       ]
                                     }
                                     quickGo={null}
@@ -10627,6 +10655,11 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 3,
                     }
                   }
@@ -11755,6 +11788,11 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 3,
                               }
                             }
@@ -12869,6 +12907,11 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
                                       "total": 3,
                                     },
                                     "prefixCls": "ant-table",
@@ -19848,6 +19891,13 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                             current={1}
                             onChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             total={3}
                           >
                             <LocaleReceiver
@@ -19936,6 +19986,13 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
                                 pageSize={20}
+                                pageSizeOptions={
+                                  Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ]
+                                }
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -20203,9 +20260,8 @@ exports[`Page List component snapshot testing should match with pages 1`] = `
                                     pageSizeOptions={
                                       Array [
                                         "10",
+                                        "15",
                                         "20",
-                                        "50",
-                                        "100",
                                       ]
                                     }
                                     quickGo={null}
@@ -20389,6 +20445,11 @@ exports[`Page List component snapshot testing should render the component 1`] = 
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 0,
                     }
                   }
@@ -20554,6 +20615,11 @@ exports[`Page List component snapshot testing should render the component 1`] = 
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 0,
                               }
                             }
@@ -20709,6 +20775,11 @@ exports[`Page List component snapshot testing should render the component 1`] = 
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
                                       "total": 0,
                                     },
                                     "prefixCls": "ant-table",

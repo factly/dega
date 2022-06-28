@@ -26,6 +26,11 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 jest.mock('../../actions/pages', () => ({
   getPages: jest.fn(),
   addPage: jest.fn(),
@@ -136,7 +141,7 @@ describe('Page component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPages).toHaveBeenCalledWith({});
+      expect(getPages).toHaveBeenCalledWith({ limit: 10, page: 1, sort: 'desc' });
     });
     it('should display FormatNotFound if format not found', () => {
       const tree = mount(
@@ -162,7 +167,7 @@ describe('Page component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/pages?limit=20&page=1&q=desc&author=1');
+      window.history.pushState({}, '', '/pages?limit=20&page=1&sort=desc&author=1');
       const state2 = { ...state };
       state2.pages = {
         req: [
@@ -171,7 +176,7 @@ describe('Page component', () => {
             query: {
               page: 1,
               limit: 20,
-              q: 'desc',
+              sort: 'desc',
               author: [1],
             },
             total: 1,
@@ -240,7 +245,7 @@ describe('Page component', () => {
           </Provider>,
         );
       });
-      expect(getPages).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', author: [1] });
+      expect(getPages).toHaveBeenCalledWith({ page: 1, limit: 20, sort: 'desc', author: [1] });
     });
     it('should submit filters', () => {
       store = mockStore({
@@ -328,9 +333,8 @@ describe('Page component', () => {
       wrapper.update();
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')
