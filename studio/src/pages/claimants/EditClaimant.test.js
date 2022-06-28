@@ -188,8 +188,9 @@ describe('Claimants edit component', () => {
         },
         spaces: {
           orgs: [],
-          details: {},
+          details: { 1: { site_address: '' } },
           loading: true,
+          selected: 1,
         },
       });
     });
