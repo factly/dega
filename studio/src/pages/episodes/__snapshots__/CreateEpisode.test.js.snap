@@ -41,11 +41,9 @@ exports[`Episode create component snapshot testing should render the component 1
               "itemRef": [Function],
               "name": "create-category",
             },
-            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
-            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -86,11 +84,9 @@ exports[`Episode create component snapshot testing should render the component 1
                   "itemRef": [Function],
                   "name": "create-category",
                 },
-                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
-                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -161,7 +157,7 @@ exports[`Episode create component snapshot testing should render the component 1
                           }
                         }
                         name="title"
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         rules={
                           Array [
                             Object {
@@ -184,11 +180,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
-                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
-                              "getFieldWarning": [Function],
                               "getFieldsError": [Function],
                               "getFieldsValue": [Function],
                               "getInternalHooks": [Function],
@@ -217,7 +211,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               "title",
                             ]
                           }
-                          onMetaChange={[Function]}
+                          onReset={[Function]}
                           rules={
                             Array [
                               Object {
@@ -240,7 +234,6 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-row ant-form-item"
-                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -269,7 +262,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-label"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -285,7 +277,12 @@ exports[`Episode create component snapshot testing should render the component 1
                               <FormItemInput
                                 errors={Array []}
                                 label="Title"
-                                name={Array []}
+                                name={
+                                  Array [
+                                    "title",
+                                  ]
+                                }
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 rules={
                                   Array [
@@ -301,8 +298,8 @@ exports[`Episode create component snapshot testing should render the component 1
                                 }
                                 status=""
                                 touched={false}
+                                validateStatus=""
                                 validating={false}
-                                warnings={Array []}
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -310,7 +307,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-control"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -320,50 +316,16 @@ exports[`Episode create component snapshot testing should render the component 1
                                         className="ant-form-item-control-input-content"
                                       >
                                         <Component
-                                          update={
-                                            <ForwardRef
-                                              onChange={[Function]}
-                                            />
-                                          }
+                                          update={1}
                                         >
-                                          <ForwardRef
+                                          <Input
                                             id="create-category_title"
                                             onChange={[Function]}
+                                            type="text"
                                           >
-                                            <ForwardRef
-                                              affixWrapperClassName=""
-                                              groupClassName=""
-                                              id="create-category_title"
-                                              inputClassName=""
-                                              onBlur={[Function]}
-                                              onChange={[Function]}
-                                              onFocus={[Function]}
-                                              prefixCls="ant-input"
-                                              wrapperClassName=""
-                                            >
-                                              <BaseInput
-                                                affixWrapperClassName=""
-                                                focused={false}
-                                                groupClassName=""
-                                                handleReset={[Function]}
-                                                id="create-category_title"
-                                                inputElement={
-                                                  <input
-                                                    className="ant-input"
-                                                    id="create-category_title"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyDown={[Function]}
-                                                    type="text"
-                                                  />
-                                                }
-                                                prefixCls="ant-input"
-                                                suffix={null}
-                                                triggerFocus={[Function]}
-                                                value=""
-                                                wrapperClassName=""
-                                              >
+                                            <ClearableLabeledInput
+                                              bordered={true}
+                                              element={
                                                 <input
                                                   className="ant-input"
                                                   id="create-category_title"
@@ -372,34 +334,43 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
                                                   type="text"
-                                                  value=""
                                                 />
-                                              </BaseInput>
-                                            </ForwardRef>
-                                          </ForwardRef>
+                                              }
+                                              focused={false}
+                                              handleReset={[Function]}
+                                              id="create-category_title"
+                                              inputType="input"
+                                              onChange={[Function]}
+                                              prefixCls="ant-input"
+                                              triggerFocus={[Function]}
+                                              type="text"
+                                              value=""
+                                            >
+                                              <input
+                                                className="ant-input"
+                                                id="create-category_title"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                type="text"
+                                                value=""
+                                              />
+                                            </ClearableLabeledInput>
+                                          </Input>
                                         </Component>
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -439,7 +410,7 @@ exports[`Episode create component snapshot testing should render the component 1
                           }
                         }
                         name="slug"
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         rules={
                           Array [
                             Object {
@@ -462,11 +433,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
-                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
-                              "getFieldWarning": [Function],
                               "getFieldsError": [Function],
                               "getFieldsValue": [Function],
                               "getInternalHooks": [Function],
@@ -495,7 +464,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               "slug",
                             ]
                           }
-                          onMetaChange={[Function]}
+                          onReset={[Function]}
                           rules={
                             Array [
                               Object {
@@ -518,7 +487,6 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-row ant-form-item"
-                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -547,7 +515,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-label"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -563,7 +530,12 @@ exports[`Episode create component snapshot testing should render the component 1
                               <FormItemInput
                                 errors={Array []}
                                 label="Slug"
-                                name={Array []}
+                                name={
+                                  Array [
+                                    "slug",
+                                  ]
+                                }
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 rules={
                                   Array [
@@ -579,8 +551,8 @@ exports[`Episode create component snapshot testing should render the component 1
                                 }
                                 status=""
                                 touched={false}
+                                validateStatus=""
                                 validating={false}
-                                warnings={Array []}
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -588,7 +560,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-control"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -598,46 +569,16 @@ exports[`Episode create component snapshot testing should render the component 1
                                         className="ant-form-item-control-input-content"
                                       >
                                         <Component
-                                          update={<ForwardRef />}
+                                          update={1}
                                         >
-                                          <ForwardRef
+                                          <Input
                                             id="create-category_slug"
                                             onChange={[Function]}
+                                            type="text"
                                           >
-                                            <ForwardRef
-                                              affixWrapperClassName=""
-                                              groupClassName=""
-                                              id="create-category_slug"
-                                              inputClassName=""
-                                              onBlur={[Function]}
-                                              onChange={[Function]}
-                                              onFocus={[Function]}
-                                              prefixCls="ant-input"
-                                              wrapperClassName=""
-                                            >
-                                              <BaseInput
-                                                affixWrapperClassName=""
-                                                focused={false}
-                                                groupClassName=""
-                                                handleReset={[Function]}
-                                                id="create-category_slug"
-                                                inputElement={
-                                                  <input
-                                                    className="ant-input"
-                                                    id="create-category_slug"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyDown={[Function]}
-                                                    type="text"
-                                                  />
-                                                }
-                                                prefixCls="ant-input"
-                                                suffix={null}
-                                                triggerFocus={[Function]}
-                                                value=""
-                                                wrapperClassName=""
-                                              >
+                                            <ClearableLabeledInput
+                                              bordered={true}
+                                              element={
                                                 <input
                                                   className="ant-input"
                                                   id="create-category_slug"
@@ -646,34 +587,43 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
                                                   type="text"
-                                                  value=""
                                                 />
-                                              </BaseInput>
-                                            </ForwardRef>
-                                          </ForwardRef>
+                                              }
+                                              focused={false}
+                                              handleReset={[Function]}
+                                              id="create-category_slug"
+                                              inputType="input"
+                                              onChange={[Function]}
+                                              prefixCls="ant-input"
+                                              triggerFocus={[Function]}
+                                              type="text"
+                                              value=""
+                                            >
+                                              <input
+                                                className="ant-input"
+                                                id="create-category_slug"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                type="text"
+                                                value=""
+                                              />
+                                            </ClearableLabeledInput>
+                                          </Input>
                                         </Component>
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -700,7 +650,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="podcast"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -711,11 +661,9 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -744,7 +692,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "podcast",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -755,7 +703,6 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -772,7 +719,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -788,12 +734,17 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Podcasts"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "podcast",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -801,7 +752,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -811,12 +761,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={
-                                          <Selector
-                                            action="Podcasts"
-                                            display="title"
-                                          />
-                                        }
+                                        update={1}
                                       >
                                         <Selector
                                           action="Podcasts"
@@ -852,7 +797,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             <Select
                                               allowClear={true}
                                               autoClearSearchValue={true}
-                                              className="ant-select-in-form-item"
+                                              className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue={
                                                 Array [
@@ -872,7 +817,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                               onPopupScroll={[Function]}
                                               onSearch={[Function]}
                                               placeholder="Select podcasts"
-                                              placement="bottomLeft"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                               searchValue=""
@@ -883,55 +827,41 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 ]
                                               }
                                             >
-                                              <BaseSelect
-                                                OptionList={
-                                                  Object {
-                                                    "$$typeof": Symbol(react.forward_ref),
-                                                    "displayName": "OptionList",
-                                                    "render": [Function],
-                                                  }
-                                                }
-                                                activeDescendantId="rc_select_TEST_OR_SSR_list_0"
-                                                activeValue={null}
+                                              <ForwardRef(Select)
                                                 allowClear={true}
-                                                className="ant-select-in-form-item"
+                                                autoClearSearchValue={true}
+                                                className=""
                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                displayValues={
+                                                defaultValue={
                                                   Array [
-                                                    Object {
-                                                      "disabled": undefined,
-                                                      "key": undefined,
-                                                      "label": undefined,
-                                                      "value": undefined,
-                                                    },
+                                                    Array [],
                                                   ]
                                                 }
                                                 dropdownClassName=""
-                                                dropdownMatchSelectWidth={true}
-                                                emptyOptions={false}
+                                                filterOption={[Function]}
                                                 getPopupContainer={[Function]}
-                                                id="rc_select_TEST_OR_SSR"
                                                 inputIcon={[Function]}
+                                                listHeight={128}
+                                                listItemHeight={24}
                                                 loading={false}
+                                                menuItemSelectedIcon={null}
                                                 notFoundContent={null}
-                                                omitDomProps={
-                                                  Array [
-                                                    "inputValue",
-                                                  ]
-                                                }
-                                                onDisplayValuesChange={[Function]}
+                                                onChange={[Function]}
                                                 onPopupScroll={[Function]}
                                                 onSearch={[Function]}
-                                                onSearchSplit={[Function]}
                                                 placeholder="Select podcasts"
-                                                placement="bottomLeft"
                                                 prefixCls="ant-select"
                                                 removeIcon={<ForwardRef(CloseOutlined) />}
                                                 searchValue=""
                                                 transitionName="ant-slide-up"
+                                                value={
+                                                  Array [
+                                                    Array [],
+                                                  ]
+                                                }
                                               >
                                                 <div
-                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                  className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                   onBlur={[Function]}
                                                   onFocus={[Function]}
                                                   onKeyDown={[Function]}
@@ -941,13 +871,56 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   <SelectTrigger
                                                     containerWidth={null}
                                                     dropdownClassName=""
-                                                    dropdownMatchSelectWidth={true}
                                                     empty={false}
                                                     getPopupContainer={[Function]}
                                                     getTriggerDOMNode={[Function]}
-                                                    onPopupMouseEnter={[Function]}
-                                                    placement="bottomLeft"
-                                                    popupElement={<ForwardRef(OptionList) />}
+                                                    popupElement={
+                                                      <ForwardRef(OptionList)
+                                                        childrenAsData={true}
+                                                        defaultActiveFirstOption={true}
+                                                        flattenOptions={
+                                                          Array [
+                                                            Object {
+                                                              "data": Object {
+                                                                "children": "Podcast-1",
+                                                                "key": "podcasts1",
+                                                                "value": 1,
+                                                              },
+                                                              "groupOption": false,
+                                                              "key": "podcasts1",
+                                                            },
+                                                          ]
+                                                        }
+                                                        height={128}
+                                                        id="rc_select_TEST_OR_SSR"
+                                                        itemHeight={24}
+                                                        menuItemSelectedIcon={null}
+                                                        multiple={false}
+                                                        notFoundContent={null}
+                                                        onActiveValue={[Function]}
+                                                        onMouseEnter={[Function]}
+                                                        onScroll={[Function]}
+                                                        onSelect={[Function]}
+                                                        onToggleOpen={[Function]}
+                                                        options={
+                                                          Array [
+                                                            Object {
+                                                              "children": "Podcast-1",
+                                                              "key": "podcasts1",
+                                                              "value": 1,
+                                                            },
+                                                          ]
+                                                        }
+                                                        prefixCls="ant-select"
+                                                        searchValue=""
+                                                        values={
+                                                          Set {
+                                                            Array [],
+                                                          }
+                                                        }
+                                                        virtual={true}
+                                                      />
+                                                    }
                                                     prefixCls="ant-select"
                                                     transitionName="ant-slide-up"
                                                   >
@@ -1031,10 +1004,52 @@ exports[`Episode create component snapshot testing should render the component 1
                                                       onPopupAlign={[Function]}
                                                       onPopupVisibleChange={[Function]}
                                                       popup={
-                                                        <div
-                                                          onMouseEnter={[Function]}
-                                                        >
-                                                          <ForwardRef(OptionList) />
+                                                        <div>
+                                                          <ForwardRef(OptionList)
+                                                            childrenAsData={true}
+                                                            defaultActiveFirstOption={true}
+                                                            flattenOptions={
+                                                              Array [
+                                                                Object {
+                                                                  "data": Object {
+                                                                    "children": "Podcast-1",
+                                                                    "key": "podcasts1",
+                                                                    "value": 1,
+                                                                  },
+                                                                  "groupOption": false,
+                                                                  "key": "podcasts1",
+                                                                },
+                                                              ]
+                                                            }
+                                                            height={128}
+                                                            id="rc_select_TEST_OR_SSR"
+                                                            itemHeight={24}
+                                                            menuItemSelectedIcon={null}
+                                                            multiple={false}
+                                                            notFoundContent={null}
+                                                            onActiveValue={[Function]}
+                                                            onMouseEnter={[Function]}
+                                                            onScroll={[Function]}
+                                                            onSelect={[Function]}
+                                                            onToggleOpen={[Function]}
+                                                            options={
+                                                              Array [
+                                                                Object {
+                                                                  "children": "Podcast-1",
+                                                                  "key": "podcasts1",
+                                                                  "value": 1,
+                                                                },
+                                                              ]
+                                                            }
+                                                            prefixCls="ant-select"
+                                                            searchValue=""
+                                                            values={
+                                                              Set {
+                                                                Array [],
+                                                              }
+                                                            }
+                                                            virtual={true}
+                                                          />
                                                         </div>
                                                       }
                                                       popupAlign={Object {}}
@@ -1051,26 +1066,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                                       showAction={Array []}
                                                     >
                                                       <Selector
-                                                        OptionList={
-                                                          Object {
-                                                            "$$typeof": Symbol(react.forward_ref),
-                                                            "displayName": "OptionList",
-                                                            "render": [Function],
-                                                          }
-                                                        }
-                                                        activeDescendantId="rc_select_TEST_OR_SSR_list_0"
+                                                        accessibilityIndex={0}
                                                         activeValue={null}
                                                         allowClear={true}
-                                                        className="ant-select-in-form-item"
+                                                        autoClearSearchValue={true}
+                                                        className=""
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                        displayValues={
+                                                        defaultValue={
                                                           Array [
-                                                            Object {
-                                                              "disabled": undefined,
-                                                              "key": undefined,
-                                                              "label": undefined,
-                                                              "value": undefined,
-                                                            },
+                                                            Array [],
                                                           ]
                                                         }
                                                         domRef={
@@ -1105,42 +1109,44 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           }
                                                         }
                                                         dropdownClassName=""
-                                                        dropdownMatchSelectWidth={true}
-                                                        emptyOptions={false}
+                                                        filterOption={[Function]}
                                                         getPopupContainer={[Function]}
                                                         id="rc_select_TEST_OR_SSR"
                                                         inputElement={null}
                                                         inputIcon={[Function]}
                                                         key="trigger"
+                                                        listHeight={128}
+                                                        listItemHeight={24}
                                                         loading={false}
+                                                        menuItemSelectedIcon={null}
+                                                        multiple={false}
                                                         notFoundContent={null}
-                                                        omitDomProps={
-                                                          Array [
-                                                            "inputValue",
-                                                          ]
-                                                        }
-                                                        onDisplayValuesChange={[Function]}
+                                                        onChange={[Function]}
                                                         onPopupScroll={[Function]}
-                                                        onRemove={[Function]}
                                                         onSearch={[Function]}
-                                                        onSearchSplit={[Function]}
                                                         onSearchSubmit={[Function]}
+                                                        onSelect={[Function]}
                                                         onToggleOpen={[Function]}
                                                         placeholder="Select podcasts"
-                                                        placement="bottomLeft"
                                                         prefixCls="ant-select"
                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                         searchValue=""
                                                         showSearch={false}
                                                         tokenWithEnter={false}
                                                         transitionName="ant-slide-up"
+                                                        value={
+                                                          Array [
+                                                            Array [],
+                                                          ]
+                                                        }
                                                         values={
                                                           Array [
                                                             Object {
                                                               "disabled": undefined,
-                                                              "key": undefined,
-                                                              "label": undefined,
-                                                              "value": undefined,
+                                                              "isCacheable": true,
+                                                              "key": Array [],
+                                                              "label": Array [],
+                                                              "value": Array [],
                                                             },
                                                           ]
                                                         }
@@ -1151,26 +1157,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           onMouseDown={[Function]}
                                                         >
                                                           <SingleSelector
-                                                            OptionList={
-                                                              Object {
-                                                                "$$typeof": Symbol(react.forward_ref),
-                                                                "displayName": "OptionList",
-                                                                "render": [Function],
-                                                              }
-                                                            }
-                                                            activeDescendantId="rc_select_TEST_OR_SSR_list_0"
+                                                            accessibilityIndex={0}
                                                             activeValue={null}
                                                             allowClear={true}
-                                                            className="ant-select-in-form-item"
+                                                            autoClearSearchValue={true}
+                                                            className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                            displayValues={
+                                                            defaultValue={
                                                               Array [
-                                                                Object {
-                                                                  "disabled": undefined,
-                                                                  "key": undefined,
-                                                                  "label": undefined,
-                                                                  "value": undefined,
-                                                                },
+                                                                Array [],
                                                               ]
                                                             }
                                                             domRef={
@@ -1205,8 +1200,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             }
                                                             dropdownClassName=""
-                                                            dropdownMatchSelectWidth={true}
-                                                            emptyOptions={false}
+                                                            filterOption={[Function]}
                                                             getPopupContainer={[Function]}
                                                             id="rc_select_TEST_OR_SSR"
                                                             inputElement={null}
@@ -1231,14 +1225,13 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 />,
                                                               }
                                                             }
+                                                            listHeight={128}
+                                                            listItemHeight={24}
                                                             loading={false}
+                                                            menuItemSelectedIcon={null}
+                                                            multiple={false}
                                                             notFoundContent={null}
-                                                            omitDomProps={
-                                                              Array [
-                                                                "inputValue",
-                                                              ]
-                                                            }
-                                                            onDisplayValuesChange={[Function]}
+                                                            onChange={[Function]}
                                                             onInputChange={[Function]}
                                                             onInputCompositionEnd={[Function]}
                                                             onInputCompositionStart={[Function]}
@@ -1246,26 +1239,30 @@ exports[`Episode create component snapshot testing should render the component 1
                                                             onInputMouseDown={[Function]}
                                                             onInputPaste={[Function]}
                                                             onPopupScroll={[Function]}
-                                                            onRemove={[Function]}
                                                             onSearch={[Function]}
-                                                            onSearchSplit={[Function]}
                                                             onSearchSubmit={[Function]}
+                                                            onSelect={[Function]}
                                                             onToggleOpen={[Function]}
                                                             placeholder="Select podcasts"
-                                                            placement="bottomLeft"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             searchValue=""
                                                             showSearch={false}
                                                             tokenWithEnter={false}
                                                             transitionName="ant-slide-up"
+                                                            value={
+                                                              Array [
+                                                                Array [],
+                                                              ]
+                                                            }
                                                             values={
                                                               Array [
                                                                 Object {
                                                                   "disabled": undefined,
-                                                                  "key": undefined,
-                                                                  "label": undefined,
-                                                                  "value": undefined,
+                                                                  "isCacheable": true,
+                                                                  "key": Array [],
+                                                                  "label": Array [],
+                                                                  "value": Array [],
                                                                 },
                                                               ]
                                                             }
@@ -1274,7 +1271,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               className="ant-select-selection-search"
                                                             >
                                                               <Input
-                                                                activeDescendantId="rc_select_TEST_OR_SSR_list_0"
+                                                                accessibilityIndex={0}
                                                                 attrs={Object {}}
                                                                 editable={false}
                                                                 id="rc_select_TEST_OR_SSR"
@@ -1516,7 +1513,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                     </span>
                                                   </TransBtn>
                                                 </div>
-                                              </BaseSelect>
+                                              </ForwardRef(Select)>
                                             </Select>
                                           </ForwardRef(InternalSelect)>
                                         </Selector>
@@ -1524,25 +1521,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -1563,7 +1550,6 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1572,12 +1558,10 @@ exports[`Episode create component snapshot testing should render the component 1
                         />
                         <FormItemInput
                           errors={Array []}
-                          name={Array []}
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
-                          touched={false}
-                          validating={false}
-                          warnings={Array []}
+                          validateStatus=""
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1585,7 +1569,6 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-24 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1612,7 +1595,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             }
                                           }
                                           name="season"
-                                          onMetaChange={[Function]}
+                                          onReset={[Function]}
                                           trigger="onChange"
                                           validateTrigger="onChange"
                                         >
@@ -1623,11 +1606,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   "itemRef": [Function],
                                                   "name": "create-category",
                                                 },
-                                                "_init": true,
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
                                                 "getFieldValue": [Function],
-                                                "getFieldWarning": [Function],
                                                 "getFieldsError": [Function],
                                                 "getFieldsValue": [Function],
                                                 "getInternalHooks": [Function],
@@ -1656,7 +1637,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 "season",
                                               ]
                                             }
-                                            onMetaChange={[Function]}
+                                            onReset={[Function]}
                                             trigger="onChange"
                                             validateTrigger="onChange"
                                             valuePropName="value"
@@ -1667,7 +1648,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                             >
                                               <div
                                                 className="ant-row ant-form-item"
-                                                role="row"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -1683,7 +1663,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-label"
-                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <label
@@ -1699,19 +1678,23 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 <FormItemInput
                                                   errors={Array []}
                                                   label="Season"
-                                                  name={Array []}
+                                                  name={
+                                                    Array [
+                                                      "season",
+                                                    ]
+                                                  }
+                                                  onDomErrorVisibleChange={[Function]}
                                                   prefixCls="ant-form"
                                                   status=""
                                                   touched={false}
+                                                  validateStatus=""
                                                   validating={false}
-                                                  warnings={Array []}
                                                 >
                                                   <Col
                                                     className="ant-form-item-control"
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-control"
-                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <div
@@ -1721,16 +1704,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={
-                                                              <ForwardRef
-                                                                placeholder="Input season"
-                                                                style={
-                                                                  Object {
-                                                                    "width": "100%",
-                                                                  }
-                                                                }
-                                                              />
-                                                            }
+                                                            update={1}
                                                           >
                                                             <ForwardRef
                                                               id="create-category_season"
@@ -1743,7 +1717,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             >
                                                               <InputNumber
-                                                                className="ant-input-number-in-form-item"
+                                                                className=""
                                                                 downHandler={
                                                                   <ForwardRef(DownOutlined)
                                                                     className="ant-input-number-handler-down-inner"
@@ -1765,7 +1739,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 }
                                                               >
                                                                 <div
-                                                                  className="ant-input-number ant-input-number-in-form-item"
+                                                                  className="ant-input-number"
                                                                   onBlur={[Function]}
                                                                   onCompositionEnd={[Function]}
                                                                   onCompositionStart={[Function]}
@@ -1991,25 +1965,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                                         </div>
                                                       </div>
                                                       <ErrorList
-                                                        className="ant-form-item-explain-connected"
                                                         errors={Array []}
-                                                        helpStatus=""
-                                                        warnings={Array []}
+                                                        onDomErrorVisibleChange={[Function]}
                                                       >
                                                         <CSSMotion
-                                                          motionAppear={false}
+                                                          motionAppear={true}
                                                           motionDeadline={500}
-                                                          motionEnter={false}
                                                           motionName="ant-show-help"
-                                                          onAppearActive={[Function]}
-                                                          onAppearEnd={[Function]}
-                                                          onAppearStart={[Function]}
-                                                          onEnterActive={[Function]}
-                                                          onEnterEnd={[Function]}
-                                                          onEnterStart={[Function]}
-                                                          onLeaveActive={[Function]}
                                                           onLeaveEnd={[Function]}
-                                                          onLeaveStart={[Function]}
+                                                          removeOnLeave={true}
                                                           visible={false}
                                                         >
                                                           <DomWrapper />
@@ -2035,7 +1999,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             }
                                           }
                                           name="episode"
-                                          onMetaChange={[Function]}
+                                          onReset={[Function]}
                                           trigger="onChange"
                                           validateTrigger="onChange"
                                         >
@@ -2046,11 +2010,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   "itemRef": [Function],
                                                   "name": "create-category",
                                                 },
-                                                "_init": true,
                                                 "getFieldError": [Function],
                                                 "getFieldInstance": [Function],
                                                 "getFieldValue": [Function],
-                                                "getFieldWarning": [Function],
                                                 "getFieldsError": [Function],
                                                 "getFieldsValue": [Function],
                                                 "getInternalHooks": [Function],
@@ -2079,7 +2041,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 "episode",
                                               ]
                                             }
-                                            onMetaChange={[Function]}
+                                            onReset={[Function]}
                                             trigger="onChange"
                                             validateTrigger="onChange"
                                             valuePropName="value"
@@ -2090,7 +2052,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                             >
                                               <div
                                                 className="ant-row ant-form-item"
-                                                role="row"
                                                 style={Object {}}
                                               >
                                                 <FormItemLabel
@@ -2106,7 +2067,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-label"
-                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <label
@@ -2122,19 +2082,23 @@ exports[`Episode create component snapshot testing should render the component 1
                                                 <FormItemInput
                                                   errors={Array []}
                                                   label="Episode"
-                                                  name={Array []}
+                                                  name={
+                                                    Array [
+                                                      "episode",
+                                                    ]
+                                                  }
+                                                  onDomErrorVisibleChange={[Function]}
                                                   prefixCls="ant-form"
                                                   status=""
                                                   touched={false}
+                                                  validateStatus=""
                                                   validating={false}
-                                                  warnings={Array []}
                                                 >
                                                   <Col
                                                     className="ant-form-item-control"
                                                   >
                                                     <div
                                                       className="ant-col ant-form-item-control"
-                                                      role="cell"
                                                       style={Object {}}
                                                     >
                                                       <div
@@ -2144,16 +2108,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           className="ant-form-item-control-input-content"
                                                         >
                                                           <Component
-                                                            update={
-                                                              <ForwardRef
-                                                                placeholder="Input episode"
-                                                                style={
-                                                                  Object {
-                                                                    "width": "100%",
-                                                                  }
-                                                                }
-                                                              />
-                                                            }
+                                                            update={1}
                                                           >
                                                             <ForwardRef
                                                               id="create-category_episode"
@@ -2166,7 +2121,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                               }
                                                             >
                                                               <InputNumber
-                                                                className="ant-input-number-in-form-item"
+                                                                className=""
                                                                 downHandler={
                                                                   <ForwardRef(DownOutlined)
                                                                     className="ant-input-number-handler-down-inner"
@@ -2188,7 +2143,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                                                 }
                                                               >
                                                                 <div
-                                                                  className="ant-input-number ant-input-number-in-form-item"
+                                                                  className="ant-input-number"
                                                                   onBlur={[Function]}
                                                                   onCompositionEnd={[Function]}
                                                                   onCompositionStart={[Function]}
@@ -2414,25 +2369,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                                         </div>
                                                       </div>
                                                       <ErrorList
-                                                        className="ant-form-item-explain-connected"
                                                         errors={Array []}
-                                                        helpStatus=""
-                                                        warnings={Array []}
+                                                        onDomErrorVisibleChange={[Function]}
                                                       >
                                                         <CSSMotion
-                                                          motionAppear={false}
+                                                          motionAppear={true}
                                                           motionDeadline={500}
-                                                          motionEnter={false}
                                                           motionName="ant-show-help"
-                                                          onAppearActive={[Function]}
-                                                          onAppearEnd={[Function]}
-                                                          onAppearStart={[Function]}
-                                                          onEnterActive={[Function]}
-                                                          onEnterEnd={[Function]}
-                                                          onEnterStart={[Function]}
-                                                          onLeaveActive={[Function]}
                                                           onLeaveEnd={[Function]}
-                                                          onLeaveStart={[Function]}
+                                                          removeOnLeave={true}
                                                           visible={false}
                                                         >
                                                           <DomWrapper />
@@ -2451,25 +2396,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -2493,7 +2428,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="type"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -2504,11 +2439,9 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -2537,7 +2470,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "type",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -2548,7 +2481,6 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -2565,7 +2497,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -2581,12 +2512,17 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Type of Episode"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "type",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -2594,7 +2530,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -2604,27 +2539,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={
-                                          <UNDEFINED
-                                            defaultValue="full"
-                                          >
-                                            <ForwardRef(RadioButton)
-                                              value="full"
-                                            >
-                                              Full
-                                            </ForwardRef(RadioButton)>
-                                            <ForwardRef(RadioButton)
-                                              value="trailer"
-                                            >
-                                              Trailer
-                                            </ForwardRef(RadioButton)>
-                                            <ForwardRef(RadioButton)
-                                              value="bonus"
-                                            >
-                                              Bonus
-                                            </ForwardRef(RadioButton)>
-                                          </UNDEFINED>
-                                        }
+                                        update={1}
                                       >
                                         <ForwardRef
                                           defaultValue="full"
@@ -2639,12 +2554,13 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="full"
                                             >
                                               <Radio
-                                                prefixCls="ant-radio"
+                                                checked={true}
+                                                prefixCls="ant-radio-button"
                                                 type="radio"
                                                 value="full"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-checked ant-radio-button-wrapper-in-form-item"
+                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-checked"
                                                 >
                                                   <Checkbox
                                                     checked={true}
@@ -2692,12 +2608,13 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="trailer"
                                             >
                                               <Radio
-                                                prefixCls="ant-radio"
+                                                checked={false}
+                                                prefixCls="ant-radio-button"
                                                 type="radio"
                                                 value="trailer"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
+                                                  className="ant-radio-button-wrapper"
                                                 >
                                                   <Checkbox
                                                     checked={false}
@@ -2745,12 +2662,13 @@ exports[`Episode create component snapshot testing should render the component 1
                                               value="bonus"
                                             >
                                               <Radio
-                                                prefixCls="ant-radio"
+                                                checked={false}
+                                                prefixCls="ant-radio-button"
                                                 type="radio"
                                                 value="bonus"
                                               >
                                                 <label
-                                                  className="ant-radio-button-wrapper ant-radio-button-wrapper-in-form-item"
+                                                  className="ant-radio-button-wrapper"
                                                 >
                                                   <Checkbox
                                                     checked={false}
@@ -2800,25 +2718,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -2854,7 +2762,7 @@ exports[`Episode create component snapshot testing should render the component 1
                           }
                         }
                         name="description"
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                       >
@@ -2865,11 +2773,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                 "itemRef": [Function],
                                 "name": "create-category",
                               },
-                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
-                              "getFieldWarning": [Function],
                               "getFieldsError": [Function],
                               "getFieldsValue": [Function],
                               "getInternalHooks": [Function],
@@ -2898,7 +2804,7 @@ exports[`Episode create component snapshot testing should render the component 1
                               "description",
                             ]
                           }
-                          onMetaChange={[Function]}
+                          onReset={[Function]}
                           trigger="onChange"
                           validateTrigger="onChange"
                           valuePropName="value"
@@ -2909,7 +2815,6 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-row ant-form-item"
-                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -2926,7 +2831,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-label"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <label
@@ -2942,12 +2846,17 @@ exports[`Episode create component snapshot testing should render the component 1
                               <FormItemInput
                                 errors={Array []}
                                 label="Description"
-                                name={Array []}
+                                name={
+                                  Array [
+                                    "description",
+                                  ]
+                                }
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 status=""
                                 touched={false}
+                                validateStatus=""
                                 validating={false}
-                                warnings={Array []}
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -2955,7 +2864,6 @@ exports[`Episode create component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24 ant-form-item-control"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -2965,17 +2873,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                         className="ant-form-item-control-input-content"
                                       >
                                         <Component
-                                          update={
-                                            <Editor
-                                              onChange={[Function]}
-                                              placeholder="Enter Description..."
-                                              style={
-                                                Object {
-                                                  "width": "600px",
-                                                }
-                                              }
-                                            />
-                                          }
+                                          update={1}
                                         >
                                           <Editor
                                             id="create-category_description"
@@ -2999,25 +2897,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -3044,6 +2932,7 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <Collapse
                         accordion={false}
+                        bordered={true}
                         className="ant-collapse-icon-position-right"
                         destroyInactivePanel={false}
                         expandIcon={[Function]}
@@ -3152,46 +3041,42 @@ exports[`Episode create component snapshot testing should render the component 1
                                   role="button"
                                   tabIndex={0}
                                 >
-                                  <div>
-                                    <Button
-                                      className="ant-collapse-arrow"
-                                    >
-                                      <Wave
-                                        disabled={false}
+                                  <Button
+                                    className="ant-collapse-arrow"
+                                  >
+                                    <Wave>
+                                      <button
+                                        className="ant-btn ant-collapse-arrow"
+                                        onClick={[Function]}
+                                        type="button"
                                       >
-                                        <button
-                                          className="ant-btn ant-btn-default ant-collapse-arrow"
-                                          onClick={[Function]}
-                                          type="button"
+                                        <LoadingIcon
+                                          existIcon={false}
+                                          loading={false}
+                                          prefixCls="ant-btn"
                                         >
-                                          <LoadingIcon
-                                            existIcon={false}
-                                            loading={false}
-                                            prefixCls="ant-btn"
+                                          <CSSMotion
+                                            motionName="ant-btn-loading-icon-motion"
+                                            onAppearActive={[Function]}
+                                            onAppearStart={[Function]}
+                                            onEnterActive={[Function]}
+                                            onEnterStart={[Function]}
+                                            onLeaveActive={[Function]}
+                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
                                           >
-                                            <CSSMotion
-                                              motionName="ant-btn-loading-icon-motion"
-                                              onAppearActive={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
-                                              onLeaveStart={[Function]}
-                                              removeOnLeave={true}
-                                              visible={false}
-                                            >
-                                              <DomWrapper />
-                                            </CSSMotion>
-                                          </LoadingIcon>
-                                          <span
-                                            key=".0"
-                                          >
-                                            Expand
-                                          </span>
-                                        </button>
-                                      </Wave>
-                                    </Button>
-                                  </div>
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </LoadingIcon>
+                                        <span
+                                          key=".0"
+                                        >
+                                          Expand
+                                        </span>
+                                      </button>
+                                    </Wave>
+                                  </Button>
                                   Meta Data
                                 </div>
                                 <CSSMotion
@@ -3287,46 +3172,42 @@ exports[`Episode create component snapshot testing should render the component 1
                                   role="button"
                                   tabIndex={0}
                                 >
-                                  <div>
-                                    <Button
-                                      className="ant-collapse-arrow"
-                                    >
-                                      <Wave
-                                        disabled={false}
+                                  <Button
+                                    className="ant-collapse-arrow"
+                                  >
+                                    <Wave>
+                                      <button
+                                        className="ant-btn ant-collapse-arrow"
+                                        onClick={[Function]}
+                                        type="button"
                                       >
-                                        <button
-                                          className="ant-btn ant-btn-default ant-collapse-arrow"
-                                          onClick={[Function]}
-                                          type="button"
+                                        <LoadingIcon
+                                          existIcon={false}
+                                          loading={false}
+                                          prefixCls="ant-btn"
                                         >
-                                          <LoadingIcon
-                                            existIcon={false}
-                                            loading={false}
-                                            prefixCls="ant-btn"
+                                          <CSSMotion
+                                            motionName="ant-btn-loading-icon-motion"
+                                            onAppearActive={[Function]}
+                                            onAppearStart={[Function]}
+                                            onEnterActive={[Function]}
+                                            onEnterStart={[Function]}
+                                            onLeaveActive={[Function]}
+                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
                                           >
-                                            <CSSMotion
-                                              motionName="ant-btn-loading-icon-motion"
-                                              onAppearActive={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
-                                              onLeaveStart={[Function]}
-                                              removeOnLeave={true}
-                                              visible={false}
-                                            >
-                                              <DomWrapper />
-                                            </CSSMotion>
-                                          </LoadingIcon>
-                                          <span
-                                            key=".0"
-                                          >
-                                            Expand
-                                          </span>
-                                        </button>
-                                      </Wave>
-                                    </Button>
-                                  </div>
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </LoadingIcon>
+                                        <span
+                                          key=".0"
+                                        >
+                                          Expand
+                                        </span>
+                                      </button>
+                                    </Wave>
+                                  </Button>
                                   Code Injection
                                 </div>
                                 <CSSMotion
@@ -3366,6 +3247,7 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <Collapse
                         accordion={false}
+                        bordered={true}
                         className="ant-collapse-icon-position-right"
                         destroyInactivePanel={false}
                         expandIcon={[Function]}
@@ -3474,46 +3356,42 @@ exports[`Episode create component snapshot testing should render the component 1
                                   role="button"
                                   tabIndex={0}
                                 >
-                                  <div>
-                                    <Button
-                                      className="ant-collapse-arrow"
-                                    >
-                                      <Wave
-                                        disabled={false}
+                                  <Button
+                                    className="ant-collapse-arrow"
+                                  >
+                                    <Wave>
+                                      <button
+                                        className="ant-btn ant-collapse-arrow"
+                                        onClick={[Function]}
+                                        type="button"
                                       >
-                                        <button
-                                          className="ant-btn ant-btn-default ant-collapse-arrow"
-                                          onClick={[Function]}
-                                          type="button"
+                                        <LoadingIcon
+                                          existIcon={false}
+                                          loading={false}
+                                          prefixCls="ant-btn"
                                         >
-                                          <LoadingIcon
-                                            existIcon={false}
-                                            loading={false}
-                                            prefixCls="ant-btn"
+                                          <CSSMotion
+                                            motionName="ant-btn-loading-icon-motion"
+                                            onAppearActive={[Function]}
+                                            onAppearStart={[Function]}
+                                            onEnterActive={[Function]}
+                                            onEnterStart={[Function]}
+                                            onLeaveActive={[Function]}
+                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
+                                            visible={false}
                                           >
-                                            <CSSMotion
-                                              motionName="ant-btn-loading-icon-motion"
-                                              onAppearActive={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
-                                              onLeaveStart={[Function]}
-                                              removeOnLeave={true}
-                                              visible={false}
-                                            >
-                                              <DomWrapper />
-                                            </CSSMotion>
-                                          </LoadingIcon>
-                                          <span
-                                            key=".0"
-                                          >
-                                            Expand
-                                          </span>
-                                        </button>
-                                      </Wave>
-                                    </Button>
-                                  </div>
+                                            <DomWrapper />
+                                          </CSSMotion>
+                                        </LoadingIcon>
+                                        <span
+                                          key=".0"
+                                        >
+                                          Expand
+                                        </span>
+                                      </button>
+                                    </Wave>
+                                  </Button>
                                   Meta Fields
                                 </div>
                                 <CSSMotion
@@ -3557,7 +3435,6 @@ exports[`Episode create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -3572,12 +3449,10 @@ exports[`Episode create component snapshot testing should render the component 1
                         />
                         <FormItemInput
                           errors={Array []}
-                          name={Array []}
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
-                          touched={false}
-                          validating={false}
-                          warnings={Array []}
+                          validateStatus=""
                           wrapperCol={
                             Object {
                               "offset": 10,
@@ -3592,7 +3467,6 @@ exports[`Episode create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -3627,9 +3501,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                             htmlType="submit"
                                             type="primary"
                                           >
-                                            <Wave
-                                              disabled={false}
-                                            >
+                                            <Wave>
                                               <button
                                                 className="ant-btn ant-btn-primary"
                                                 disabled={true}
@@ -3681,11 +3553,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                             htmlType="button"
                                             onClick={[Function]}
                                           >
-                                            <Wave
-                                              disabled={false}
-                                            >
+                                            <Wave>
                                               <button
-                                                className="ant-btn ant-btn-default"
+                                                className="ant-btn"
                                                 onClick={[Function]}
                                                 type="button"
                                               >
@@ -3723,25 +3593,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -3774,7 +3634,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="medium_id"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -3785,11 +3645,9 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -3818,7 +3676,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "medium_id",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -3829,7 +3687,6 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -3846,7 +3703,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -3862,12 +3718,17 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Featured Image"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "medium_id",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -3875,7 +3736,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -3885,7 +3745,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={<MediaSelector />}
+                                        update={1}
                                       >
                                         <MediaSelector
                                           id="create-category_medium_id"
@@ -4003,11 +3863,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           }
                                                         }
                                                       >
-                                                        <Wave
-                                                          disabled={false}
-                                                        >
+                                                        <Wave>
                                                           <button
-                                                            className="ant-btn ant-btn-default"
+                                                            className="ant-btn"
                                                             onClick={[Function]}
                                                             style={
                                                               Object {
@@ -4071,25 +3929,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -4115,7 +3963,7 @@ exports[`Episode create component snapshot testing should render the component 1
                         }
                       }
                       name="audio_url"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       trigger="onChange"
                       validateTrigger="onChange"
                     >
@@ -4126,11 +3974,9 @@ exports[`Episode create component snapshot testing should render the component 1
                               "itemRef": [Function],
                               "name": "create-category",
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -4159,7 +4005,7 @@ exports[`Episode create component snapshot testing should render the component 1
                             "audio_url",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         trigger="onChange"
                         validateTrigger="onChange"
                         valuePropName="value"
@@ -4170,7 +4016,6 @@ exports[`Episode create component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -4187,7 +4032,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -4203,12 +4047,17 @@ exports[`Episode create component snapshot testing should render the component 1
                             <FormItemInput
                               errors={Array []}
                               label="Audio"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "audio_url",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -4216,7 +4065,6 @@ exports[`Episode create component snapshot testing should render the component 1
                               >
                                 <div
                                   className="ant-col ant-col-24 ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -4226,11 +4074,7 @@ exports[`Episode create component snapshot testing should render the component 1
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={
-                                          <Audio
-                                            onUpload={[Function]}
-                                          />
-                                        }
+                                        update={1}
                                       >
                                         <Audio
                                           id="create-category_audio_url"
@@ -4379,11 +4223,9 @@ exports[`Episode create component snapshot testing should render the component 1
                                                           <Button
                                                             onClick={[Function]}
                                                           >
-                                                            <Wave
-                                                              disabled={false}
-                                                            >
+                                                            <Wave>
                                                               <button
-                                                                className="ant-btn ant-btn-default"
+                                                                className="ant-btn"
                                                                 onClick={[Function]}
                                                                 type="button"
                                                               >
@@ -4427,25 +4269,15 @@ exports[`Episode create component snapshot testing should render the component 1
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
