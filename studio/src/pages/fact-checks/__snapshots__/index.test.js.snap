@@ -83,6 +83,41 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Fact-checks"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Fact-checks"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Fact-checks"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <Template
                   format={
                     Object {
@@ -97,8 +132,8 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -141,6 +176,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                       "format": Array [
                         2,
                       ],
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
                     }
                   }
                   name="filters"
@@ -185,6 +223,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                           "format": Array [
                             2,
                           ],
+                          "limit": 10,
+                          "page": 1,
+                          "sort": "desc",
                         }
                       }
                       name="filters"
@@ -692,7 +733,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: All",
-                                                                            "key": null,
+                                                                            "key": "all",
                                                                             "value": "all",
                                                                           },
                                                                           "groupOption": false,
@@ -701,7 +742,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Draft",
-                                                                            "key": null,
+                                                                            "key": "draft",
                                                                             "value": "draft",
                                                                           },
                                                                           "groupOption": false,
@@ -710,7 +751,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Publish",
-                                                                            "key": null,
+                                                                            "key": "publish",
                                                                             "value": "publish",
                                                                           },
                                                                           "groupOption": false,
@@ -719,7 +760,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Ready to Publish",
-                                                                            "key": null,
+                                                                            "key": "ready",
                                                                             "value": "ready",
                                                                           },
                                                                           "groupOption": false,
@@ -745,22 +786,22 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       Array [
                                                                         Object {
                                                                           "children": "Status: All",
-                                                                          "key": null,
+                                                                          "key": "all",
                                                                           "value": "all",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Draft",
-                                                                          "key": null,
+                                                                          "key": "draft",
                                                                           "value": "draft",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Publish",
-                                                                          "key": null,
+                                                                          "key": "publish",
                                                                           "value": "publish",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Ready to Publish",
-                                                                          "key": null,
+                                                                          "key": "ready",
                                                                           "value": "ready",
                                                                         },
                                                                       ]
@@ -866,7 +907,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: All",
-                                                                                "key": null,
+                                                                                "key": "all",
                                                                                 "value": "all",
                                                                               },
                                                                               "groupOption": false,
@@ -875,7 +916,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Draft",
-                                                                                "key": null,
+                                                                                "key": "draft",
                                                                                 "value": "draft",
                                                                               },
                                                                               "groupOption": false,
@@ -884,7 +925,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Publish",
-                                                                                "key": null,
+                                                                                "key": "publish",
                                                                                 "value": "publish",
                                                                               },
                                                                               "groupOption": false,
@@ -893,7 +934,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Ready to Publish",
-                                                                                "key": null,
+                                                                                "key": "ready",
                                                                                 "value": "ready",
                                                                               },
                                                                               "groupOption": false,
@@ -919,22 +960,22 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           Array [
                                                                             Object {
                                                                               "children": "Status: All",
-                                                                              "key": null,
+                                                                              "key": "all",
                                                                               "value": "all",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Draft",
-                                                                              "key": null,
+                                                                              "key": "draft",
                                                                               "value": "draft",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Publish",
-                                                                              "key": null,
+                                                                              "key": "publish",
                                                                               "value": "publish",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Ready to Publish",
-                                                                              "key": null,
+                                                                              "key": "ready",
                                                                               "value": "ready",
                                                                             },
                                                                           ]
@@ -1445,6 +1486,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                   >
                                                     <Component
                                                       update={2}
+                                                      value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="desc"
@@ -1455,6 +1497,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             "width": "100%",
                                                           }
                                                         }
+                                                        value="desc"
                                                       >
                                                         <Select
                                                           className=""
@@ -1480,6 +1523,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             }
                                                           }
                                                           transitionName="ant-slide-up"
+                                                          value="desc"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -1505,6 +1549,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               }
                                                             }
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -1533,7 +1578,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Sort By: Latest",
-                                                                            "key": null,
+                                                                            "key": "desc",
                                                                             "value": "desc",
                                                                           },
                                                                           "groupOption": false,
@@ -1542,7 +1587,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Sort By: Old",
-                                                                            "key": null,
+                                                                            "key": "asc",
                                                                             "value": "asc",
                                                                           },
                                                                           "groupOption": false,
@@ -1568,12 +1613,12 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       Array [
                                                                         Object {
                                                                           "children": "Sort By: Latest",
-                                                                          "key": null,
+                                                                          "key": "desc",
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
                                                                           "children": "Sort By: Old",
-                                                                          "key": null,
+                                                                          "key": "asc",
                                                                           "value": "asc",
                                                                         },
                                                                       ]
@@ -1679,7 +1724,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Sort By: Latest",
-                                                                                "key": null,
+                                                                                "key": "desc",
                                                                                 "value": "desc",
                                                                               },
                                                                               "groupOption": false,
@@ -1688,7 +1733,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Sort By: Old",
-                                                                                "key": null,
+                                                                                "key": "asc",
                                                                                 "value": "asc",
                                                                               },
                                                                               "groupOption": false,
@@ -1714,12 +1759,12 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           Array [
                                                                             Object {
                                                                               "children": "Sort By: Latest",
-                                                                              "key": null,
+                                                                              "key": "desc",
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
                                                                               "children": "Sort By: Old",
-                                                                              "key": null,
+                                                                              "key": "asc",
                                                                               "value": "asc",
                                                                             },
                                                                           ]
@@ -1818,6 +1863,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     }
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -1929,6 +1975,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         }
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -2326,8 +2373,8 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={2}
-              key="ant-space-item-2"
+              index={3}
+              key="ant-space-item-3"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -2352,6 +2399,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                       "format": Array [
                         2,
                       ],
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
                     }
                   }
                   format={
@@ -2361,7 +2411,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                       "slug": "fact-check",
                     }
                   }
-                  setFilters={[Function]}
+                  onPagination={[Function]}
                 >
                   <Space
                     direction="vertical"
@@ -2437,9 +2487,14 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                             }
                             pagination={
                               Object {
-                                "current": undefined,
+                                "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 10,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 0,
                               }
                             }
@@ -2646,9 +2701,14 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                       }
                                       pagination={
                                         Object {
-                                          "current": undefined,
+                                          "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 10,
+                                          "pageSizeOptions": Array [
+                                            "10",
+                                            "15",
+                                            "20",
+                                          ],
                                           "total": 0,
                                         }
                                       }
@@ -2845,9 +2905,14 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                 0,
                                               },
                                               "pagination": Object {
-                                                "current": undefined,
+                                                "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 10,
+                                                "pageSizeOptions": Array [
+                                                  "10",
+                                                  "15",
+                                                  "20",
+                                                ],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -3659,6 +3724,41 @@ exports[`FactCheck component snapshot testing should render the component with d
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Fact-checks"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Fact-checks"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Fact-checks"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <Template
                   format={
                     Object {
@@ -3673,8 +3773,8 @@ exports[`FactCheck component snapshot testing should render the component with d
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -3717,6 +3817,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                       "format": Array [
                         2,
                       ],
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
                     }
                   }
                   name="filters"
@@ -3761,6 +3864,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                           "format": Array [
                             2,
                           ],
+                          "limit": 10,
+                          "page": 1,
+                          "sort": "desc",
                         }
                       }
                       name="filters"
@@ -4268,7 +4374,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: All",
-                                                                            "key": null,
+                                                                            "key": "all",
                                                                             "value": "all",
                                                                           },
                                                                           "groupOption": false,
@@ -4277,7 +4383,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Draft",
-                                                                            "key": null,
+                                                                            "key": "draft",
                                                                             "value": "draft",
                                                                           },
                                                                           "groupOption": false,
@@ -4286,7 +4392,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Publish",
-                                                                            "key": null,
+                                                                            "key": "publish",
                                                                             "value": "publish",
                                                                           },
                                                                           "groupOption": false,
@@ -4295,7 +4401,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Status: Ready to Publish",
-                                                                            "key": null,
+                                                                            "key": "ready",
                                                                             "value": "ready",
                                                                           },
                                                                           "groupOption": false,
@@ -4321,22 +4427,22 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       Array [
                                                                         Object {
                                                                           "children": "Status: All",
-                                                                          "key": null,
+                                                                          "key": "all",
                                                                           "value": "all",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Draft",
-                                                                          "key": null,
+                                                                          "key": "draft",
                                                                           "value": "draft",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Publish",
-                                                                          "key": null,
+                                                                          "key": "publish",
                                                                           "value": "publish",
                                                                         },
                                                                         Object {
                                                                           "children": "Status: Ready to Publish",
-                                                                          "key": null,
+                                                                          "key": "ready",
                                                                           "value": "ready",
                                                                         },
                                                                       ]
@@ -4442,7 +4548,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: All",
-                                                                                "key": null,
+                                                                                "key": "all",
                                                                                 "value": "all",
                                                                               },
                                                                               "groupOption": false,
@@ -4451,7 +4557,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Draft",
-                                                                                "key": null,
+                                                                                "key": "draft",
                                                                                 "value": "draft",
                                                                               },
                                                                               "groupOption": false,
@@ -4460,7 +4566,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Publish",
-                                                                                "key": null,
+                                                                                "key": "publish",
                                                                                 "value": "publish",
                                                                               },
                                                                               "groupOption": false,
@@ -4469,7 +4575,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Status: Ready to Publish",
-                                                                                "key": null,
+                                                                                "key": "ready",
                                                                                 "value": "ready",
                                                                               },
                                                                               "groupOption": false,
@@ -4495,22 +4601,22 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           Array [
                                                                             Object {
                                                                               "children": "Status: All",
-                                                                              "key": null,
+                                                                              "key": "all",
                                                                               "value": "all",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Draft",
-                                                                              "key": null,
+                                                                              "key": "draft",
                                                                               "value": "draft",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Publish",
-                                                                              "key": null,
+                                                                              "key": "publish",
                                                                               "value": "publish",
                                                                             },
                                                                             Object {
                                                                               "children": "Status: Ready to Publish",
-                                                                              "key": null,
+                                                                              "key": "ready",
                                                                               "value": "ready",
                                                                             },
                                                                           ]
@@ -5021,6 +5127,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                   >
                                                     <Component
                                                       update={2}
+                                                      value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="desc"
@@ -5031,6 +5138,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             "width": "100%",
                                                           }
                                                         }
+                                                        value="desc"
                                                       >
                                                         <Select
                                                           className=""
@@ -5056,6 +5164,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             }
                                                           }
                                                           transitionName="ant-slide-up"
+                                                          value="desc"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -5081,6 +5190,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               }
                                                             }
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -5109,7 +5219,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Sort By: Latest",
-                                                                            "key": null,
+                                                                            "key": "desc",
                                                                             "value": "desc",
                                                                           },
                                                                           "groupOption": false,
@@ -5118,7 +5228,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "data": Object {
                                                                             "children": "Sort By: Old",
-                                                                            "key": null,
+                                                                            "key": "asc",
                                                                             "value": "asc",
                                                                           },
                                                                           "groupOption": false,
@@ -5144,12 +5254,12 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       Array [
                                                                         Object {
                                                                           "children": "Sort By: Latest",
-                                                                          "key": null,
+                                                                          "key": "desc",
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
                                                                           "children": "Sort By: Old",
-                                                                          "key": null,
+                                                                          "key": "asc",
                                                                           "value": "asc",
                                                                         },
                                                                       ]
@@ -5255,7 +5365,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Sort By: Latest",
-                                                                                "key": null,
+                                                                                "key": "desc",
                                                                                 "value": "desc",
                                                                               },
                                                                               "groupOption": false,
@@ -5264,7 +5374,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "data": Object {
                                                                                 "children": "Sort By: Old",
-                                                                                "key": null,
+                                                                                "key": "asc",
                                                                                 "value": "asc",
                                                                               },
                                                                               "groupOption": false,
@@ -5290,12 +5400,12 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           Array [
                                                                             Object {
                                                                               "children": "Sort By: Latest",
-                                                                              "key": null,
+                                                                              "key": "desc",
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
                                                                               "children": "Sort By: Old",
-                                                                              "key": null,
+                                                                              "key": "asc",
                                                                               "value": "asc",
                                                                             },
                                                                           ]
@@ -5394,6 +5504,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     }
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -5505,6 +5616,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         }
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -5902,8 +6014,8 @@ exports[`FactCheck component snapshot testing should render the component with d
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={2}
-              key="ant-space-item-2"
+              index={3}
+              key="ant-space-item-3"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -5928,6 +6040,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                       "format": Array [
                         2,
                       ],
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
                     }
                   }
                   format={
@@ -5937,7 +6052,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                       "slug": "fact-check",
                     }
                   }
-                  setFilters={[Function]}
+                  onPagination={[Function]}
                 >
                   <Space
                     direction="vertical"
@@ -6013,9 +6128,14 @@ exports[`FactCheck component snapshot testing should render the component with d
                             }
                             pagination={
                               Object {
-                                "current": undefined,
+                                "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 10,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 0,
                               }
                             }
@@ -6222,9 +6342,14 @@ exports[`FactCheck component snapshot testing should render the component with d
                                       }
                                       pagination={
                                         Object {
-                                          "current": undefined,
+                                          "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 10,
+                                          "pageSizeOptions": Array [
+                                            "10",
+                                            "15",
+                                            "20",
+                                          ],
                                           "total": 0,
                                         }
                                       }
@@ -6421,9 +6546,14 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                 0,
                                               },
                                               "pagination": Object {
-                                                "current": undefined,
+                                                "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 10,
+                                                "pageSizeOptions": Array [
+                                                  "10",
+                                                  "15",
+                                                  "20",
+                                                ],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
