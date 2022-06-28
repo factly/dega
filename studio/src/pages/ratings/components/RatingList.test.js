@@ -15,7 +15,41 @@ import { getRatings, deleteRating } from '../../../actions/ratings';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
-
+let query = {
+  page: 1,
+  limit: 20,
+};
+let dataSource = {
+  ratings: [
+    {
+      id: 2,
+      created_at: '2020-10-01T06:25:37.717922Z',
+      updated_at: '2020-10-01T06:25:37.717922Z',
+      deleted_at: null,
+      name: 'True',
+      slug: 'true',
+      description: '',
+      numeric_value: 5,
+      medium_id: 0,
+      space_id: 1,
+      background_colour: { hex: '#108040' },
+    },
+    {
+      id: 1,
+      created_at: '2020-10-01T06:25:47.227933Z',
+      updated_at: '2020-10-01T06:25:47.227933Z',
+      deleted_at: null,
+      name: 'False',
+      slug: 'false',
+      description: '',
+      numeric_value: 1,
+      medium_id: 0,
+      space_id: 1,
+    },
+  ],
+  total: 2,
+  loading: false,
+};
 let state = {
   ratings: {
     req: [
@@ -67,7 +101,7 @@ jest.mock('../../../actions/ratings', () => ({
   getRatings: jest.fn(),
   deleteRating: jest.fn(),
 }));
-
+const setFilters = jest.fn();
 describe('Ratings List component', () => {
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -81,7 +115,12 @@ describe('Ratings List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <RatingList actions={['update', 'delete']} />
+            <RatingList
+              data={dataSource}
+              setFilters={setFilters}
+              filters={query}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -93,7 +132,12 @@ describe('Ratings List component', () => {
       const tree = shallow(
         <Provider store={store}>
           <Router>
-            <RatingList actions={['update', 'delete']} />
+            <RatingList
+              data={dataSource}
+              setFilters={setFilters}
+              filters={query}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -105,7 +149,12 @@ describe('Ratings List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <RatingList actions={['update', 'delete']} />
+            <RatingList
+              data={dataSource}
+              filters={query}
+              setFilters={setFilters}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -125,7 +174,12 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList actions={['update', 'delete']} />
+              <RatingList
+                data={dataSource}
+                setFilters={setFilters}
+                filters={query}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -141,7 +195,12 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList actions={['update', 'delete']} />
+              <RatingList
+                data={dataSource}
+                filters={query}
+                setFilters={setFilters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -157,7 +216,6 @@ describe('Ratings List component', () => {
 
       expect(deleteRating).toHaveBeenCalled();
       expect(deleteRating).toHaveBeenCalledWith(2);
-      expect(getRatings).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit rating', () => {
       store = mockStore(state);
@@ -166,13 +224,18 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList actions={['update', 'delete']} />
+              <RatingList
+                data={dataSource}
+                filters={query}
+                setFilters={setFilters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
       const link = wrapper.find(Link).at(0);
-      expect(link.text()).toEqual('False');
+      expect(link.text()).toEqual('True');
       expect(link.prop('to')).toEqual('/ratings/2/edit');
     });
     it('should have no delete and edit buttons', () => {
@@ -186,7 +249,12 @@ describe('Ratings List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <RatingList actions={['update', 'delete']} />
+              <RatingList
+                data={{ ratings: [], loading: false, total: 0 }}
+                filters={query}
+                setFilters={setFilters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );

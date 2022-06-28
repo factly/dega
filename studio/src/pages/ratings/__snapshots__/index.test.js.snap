@@ -1,11 +1,104 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Ratings List component should render loader component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/undefined/undefined/undefined/undefined/undefined/undefined/undefined/undefined/",
+            "search": "?page=1",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Ratings
+        permission={
+          Object {
+            "actions": Array [
+              "create",
+            ],
+          }
+        }
+      >
+        <Loader>
+          <div
+            style={
+              Object {
+                "alignItems": "center",
+                "display": "flex",
+                "height": "100vh",
+                "justifyContent": "center",
+                "padding": "2rem",
+                "position": "absolute",
+                "width": "100%",
+              }
+            }
+          >
+            <Spin
+              size="large"
+              spinning={true}
+              wrapperClassName=""
+            >
+              <div
+                className="ant-spin ant-spin-lg ant-spin-spinning"
+              >
+                <span
+                  className="ant-spin-dot ant-spin-dot-spin"
+                >
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
+            </Spin>
+          </div>
+        </Loader>
+      </Ratings>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
+
 exports[`Ratings List component should render the component 1`] = `
 <Provider
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -57,6 +150,41 @@ exports[`Ratings List component should render the component 1`] = `
               direction="vertical"
               index={0}
               key="ant-space-item-0"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Ratings"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Ratings"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Ratings"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -135,8 +263,8 @@ exports[`Ratings List component should render the component 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -150,6 +278,21 @@ exports[`Ratings List component should render the component 1`] = `
                       "create",
                     ]
                   }
+                  data={
+                    Object {
+                      "loading": false,
+                      "ratings": Array [],
+                      "total": 0,
+                    }
+                  }
+                  fetchRatings={[Function]}
+                  filters={
+                    Object {
+                      "limit": 20,
+                      "page": 1,
+                    }
+                  }
+                  setFilters={[Function]}
                 >
                   <Table
                     bordered={true}
@@ -186,12 +329,19 @@ exports[`Ratings List component should render the component 1`] = `
                         },
                       ]
                     }
+                    dataSource={Array []}
+                    loading={false}
                     pagination={
                       Object {
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
-                        "total": undefined,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "total": 0,
                       }
                     }
                     rowKey="id"
@@ -248,6 +398,7 @@ exports[`Ratings List component should render the component 1`] = `
                                 ]
                               }
                               data={Array []}
+                              dataSource={Array []}
                               emptyText={
                                 <Context.Consumer>
                                   [Function]
@@ -377,12 +528,18 @@ exports[`Ratings List component should render the component 1`] = `
                                   },
                                 }
                               }
+                              loading={false}
                               pagination={
                                 Object {
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
-                                  "total": undefined,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
+                                  "total": 0,
                                 }
                               }
                               prefixCls="ant-table"
@@ -432,7 +589,7 @@ exports[`Ratings List component should render the component 1`] = `
                                         },
                                       ],
                                       "data": Array [],
-                                      "dataSource": undefined,
+                                      "dataSource": Array [],
                                       "direction": undefined,
                                       "emptyText": <Context.Consumer>
                                         [Function]
@@ -557,13 +714,18 @@ exports[`Ratings List component should render the component 1`] = `
                                           </div>,
                                         },
                                       },
-                                      "loading": undefined,
+                                      "loading": false,
                                       "mergedExpandedKeys": Set {},
                                       "pagination": Object {
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
-                                        "total": undefined,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
+                                        "total": 0,
                                       },
                                       "prefixCls": "ant-table",
                                       "rowClassName": [Function],
@@ -1242,7 +1404,7 @@ exports[`Ratings List component should render the component with data 1`] = `
   store={
     Object {
       "clearActions": [Function],
-      "dispatch": [MockFunction],
+      "dispatch": [Function],
       "getActions": [Function],
       "getState": [Function],
       "replaceReducer": [Function],
@@ -1264,7 +1426,7 @@ exports[`Ratings List component should render the component with data 1`] = `
           "listen": [Function],
           "location": Object {
             "hash": "",
-            "pathname": "/undefined/",
+            "pathname": "/undefined/undefined/",
             "search": "?page=1",
             "state": undefined,
           },
@@ -1294,6 +1456,41 @@ exports[`Ratings List component should render the component with data 1`] = `
               direction="vertical"
               index={0}
               key="ant-space-item-0"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Ratings"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Ratings"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Ratings"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1372,8 +1569,8 @@ exports[`Ratings List component should render the component with data 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1387,6 +1584,53 @@ exports[`Ratings List component should render the component with data 1`] = `
                       "create",
                     ]
                   }
+                  data={
+                    Object {
+                      "loading": false,
+                      "ratings": Array [
+                        Object {
+                          "created_at": "2022-05-05T06:31:22.492Z",
+                          "created_by_id": 34,
+                          "deleted_at": null,
+                          "description": Object {
+                            "blocks": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "verygood",
+                                },
+                                "id": "84XfO28Gol",
+                                "type": "paragraph",
+                              },
+                            ],
+                            "time": 1651732083960,
+                            "version": "2.22.1",
+                          },
+                          "footer_code": "",
+                          "header_code": "",
+                          "html_description": "<p>verygood</p>",
+                          "id": 7,
+                          "medium_id": null,
+                          "meta": null,
+                          "meta_fields": null,
+                          "name": "verygood",
+                          "numeric_value": 35,
+                          "slug": "verygoo",
+                          "space_id": 2,
+                          "updated_at": "2022-05-05T06:57:13.091323Z",
+                          "updated_by_id": 34,
+                        },
+                      ],
+                      "total": 1,
+                    }
+                  }
+                  fetchRatings={[Function]}
+                  filters={
+                    Object {
+                      "limit": 20,
+                      "page": 1,
+                    }
+                  }
+                  setFilters={[Function]}
                 >
                   <Table
                     bordered={true}
@@ -1426,11 +1670,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                     dataSource={
                       Array [
                         Object {
-                          "description": "description",
-                          "id": 1,
-                          "name": "rating",
-                          "numeric_value": 3,
-                          "slug": "slug",
+                          "created_at": "2022-05-05T06:31:22.492Z",
+                          "created_by_id": 34,
+                          "deleted_at": null,
+                          "description": Object {
+                            "blocks": Array [
+                              Object {
+                                "data": Object {
+                                  "text": "verygood",
+                                },
+                                "id": "84XfO28Gol",
+                                "type": "paragraph",
+                              },
+                            ],
+                            "time": 1651732083960,
+                            "version": "2.22.1",
+                          },
+                          "footer_code": "",
+                          "header_code": "",
+                          "html_description": "<p>verygood</p>",
+                          "id": 7,
+                          "medium_id": null,
+                          "meta": null,
+                          "meta_fields": null,
+                          "name": "verygood",
+                          "numeric_value": 35,
+                          "slug": "verygoo",
+                          "space_id": 2,
+                          "updated_at": "2022-05-05T06:57:13.091323Z",
+                          "updated_by_id": 34,
                         },
                       ]
                     }
@@ -1440,6 +1708,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
                         "total": 1,
                       }
                     }
@@ -1499,22 +1772,70 @@ exports[`Ratings List component should render the component with data 1`] = `
                               data={
                                 Array [
                                   Object {
-                                    "description": "description",
-                                    "id": 1,
-                                    "name": "rating",
-                                    "numeric_value": 3,
-                                    "slug": "slug",
+                                    "created_at": "2022-05-05T06:31:22.492Z",
+                                    "created_by_id": 34,
+                                    "deleted_at": null,
+                                    "description": Object {
+                                      "blocks": Array [
+                                        Object {
+                                          "data": Object {
+                                            "text": "verygood",
+                                          },
+                                          "id": "84XfO28Gol",
+                                          "type": "paragraph",
+                                        },
+                                      ],
+                                      "time": 1651732083960,
+                                      "version": "2.22.1",
+                                    },
+                                    "footer_code": "",
+                                    "header_code": "",
+                                    "html_description": "<p>verygood</p>",
+                                    "id": 7,
+                                    "medium_id": null,
+                                    "meta": null,
+                                    "meta_fields": null,
+                                    "name": "verygood",
+                                    "numeric_value": 35,
+                                    "slug": "verygoo",
+                                    "space_id": 2,
+                                    "updated_at": "2022-05-05T06:57:13.091323Z",
+                                    "updated_by_id": 34,
                                   },
                                 ]
                               }
                               dataSource={
                                 Array [
                                   Object {
-                                    "description": "description",
-                                    "id": 1,
-                                    "name": "rating",
-                                    "numeric_value": 3,
-                                    "slug": "slug",
+                                    "created_at": "2022-05-05T06:31:22.492Z",
+                                    "created_by_id": 34,
+                                    "deleted_at": null,
+                                    "description": Object {
+                                      "blocks": Array [
+                                        Object {
+                                          "data": Object {
+                                            "text": "verygood",
+                                          },
+                                          "id": "84XfO28Gol",
+                                          "type": "paragraph",
+                                        },
+                                      ],
+                                      "time": 1651732083960,
+                                      "version": "2.22.1",
+                                    },
+                                    "footer_code": "",
+                                    "header_code": "",
+                                    "html_description": "<p>verygood</p>",
+                                    "id": 7,
+                                    "medium_id": null,
+                                    "meta": null,
+                                    "meta_fields": null,
+                                    "name": "verygood",
+                                    "numeric_value": 35,
+                                    "slug": "verygoo",
+                                    "space_id": 2,
+                                    "updated_at": "2022-05-05T06:57:13.091323Z",
+                                    "updated_by_id": 34,
                                   },
                                 ]
                               }
@@ -1588,28 +1909,27 @@ exports[`Ratings List component should render the component with data 1`] = `
                                         >
                                           <tr
                                             class="ant-table-row ant-table-row-level-0"
-                                            data-row-key="1"
+                                            data-row-key="7"
                                           >
                                             <td
                                               class="ant-table-cell"
                                             >
                                               <a
-                                                class="ant-dropdown-link"
-                                                href="/ratings/1/edit"
+                                                href="/ratings/7/edit"
                                                 style="margin-right: 8px;"
                                               >
-                                                rating
+                                                verygood
                                               </a>
                                             </td>
                                             <td
                                               class="ant-table-cell"
                                             >
-                                              slug
+                                              verygoo
                                             </td>
                                             <td
                                               class="ant-table-cell"
                                             >
-                                              3
+                                              35
                                             </td>
                                             <td
                                               class="ant-table-cell"
@@ -1617,20 +1937,21 @@ exports[`Ratings List component should render the component with data 1`] = `
                                               <div
                                                 style="width: 100px; border: 1px solid black; padding: 0.5rem; text-align: center;"
                                               >
-                                                rating
+                                                verygood
                                               </div>
                                             </td>
                                             <td
                                               class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                               style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <a
-                                                class="ant-dropdown-link"
-                                                href="/"
+                                              <span
+                                                class="ant-popover-disabled-compatible-wrapper"
+                                                style="display: inline-block; cursor: not-allowed;"
                                               >
                                                 <button
                                                   class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                   disabled=""
+                                                  style="pointer-events: none;"
                                                   type="button"
                                                 >
                                                   <span
@@ -1653,7 +1974,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     </svg>
                                                   </span>
                                                 </button>
-                                              </a>
+                                              </span>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -1668,6 +1989,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
                                   "total": 1,
                                 }
                               }
@@ -1719,20 +2045,68 @@ exports[`Ratings List component should render the component with data 1`] = `
                                       ],
                                       "data": Array [
                                         Object {
-                                          "description": "description",
-                                          "id": 1,
-                                          "name": "rating",
-                                          "numeric_value": 3,
-                                          "slug": "slug",
+                                          "created_at": "2022-05-05T06:31:22.492Z",
+                                          "created_by_id": 34,
+                                          "deleted_at": null,
+                                          "description": Object {
+                                            "blocks": Array [
+                                              Object {
+                                                "data": Object {
+                                                  "text": "verygood",
+                                                },
+                                                "id": "84XfO28Gol",
+                                                "type": "paragraph",
+                                              },
+                                            ],
+                                            "time": 1651732083960,
+                                            "version": "2.22.1",
+                                          },
+                                          "footer_code": "",
+                                          "header_code": "",
+                                          "html_description": "<p>verygood</p>",
+                                          "id": 7,
+                                          "medium_id": null,
+                                          "meta": null,
+                                          "meta_fields": null,
+                                          "name": "verygood",
+                                          "numeric_value": 35,
+                                          "slug": "verygoo",
+                                          "space_id": 2,
+                                          "updated_at": "2022-05-05T06:57:13.091323Z",
+                                          "updated_by_id": 34,
                                         },
                                       ],
                                       "dataSource": Array [
                                         Object {
-                                          "description": "description",
-                                          "id": 1,
-                                          "name": "rating",
-                                          "numeric_value": 3,
-                                          "slug": "slug",
+                                          "created_at": "2022-05-05T06:31:22.492Z",
+                                          "created_by_id": 34,
+                                          "deleted_at": null,
+                                          "description": Object {
+                                            "blocks": Array [
+                                              Object {
+                                                "data": Object {
+                                                  "text": "verygood",
+                                                },
+                                                "id": "84XfO28Gol",
+                                                "type": "paragraph",
+                                              },
+                                            ],
+                                            "time": 1651732083960,
+                                            "version": "2.22.1",
+                                          },
+                                          "footer_code": "",
+                                          "header_code": "",
+                                          "html_description": "<p>verygood</p>",
+                                          "id": 7,
+                                          "medium_id": null,
+                                          "meta": null,
+                                          "meta_fields": null,
+                                          "name": "verygood",
+                                          "numeric_value": 35,
+                                          "slug": "verygoo",
+                                          "space_id": 2,
+                                          "updated_at": "2022-05-05T06:57:13.091323Z",
+                                          "updated_by_id": 34,
                                         },
                                       ],
                                       "direction": undefined,
@@ -1801,28 +2175,27 @@ exports[`Ratings List component should render the component with data 1`] = `
                                               >
                                                 <tr
                                                   class="ant-table-row ant-table-row-level-0"
-                                                  data-row-key="1"
+                                                  data-row-key="7"
                                                 >
                                                   <td
                                                     class="ant-table-cell"
                                                   >
                                                     <a
-                                                      class="ant-dropdown-link"
-                                                      href="/ratings/1/edit"
+                                                      href="/ratings/7/edit"
                                                       style="margin-right: 8px;"
                                                     >
-                                                      rating
+                                                      verygood
                                                     </a>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
                                                   >
-                                                    slug
+                                                    verygoo
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
                                                   >
-                                                    3
+                                                    35
                                                   </td>
                                                   <td
                                                     class="ant-table-cell"
@@ -1830,20 +2203,21 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     <div
                                                       style="width: 100px; border: 1px solid black; padding: 0.5rem; text-align: center;"
                                                     >
-                                                      rating
+                                                      verygood
                                                     </div>
                                                   </td>
                                                   <td
                                                     class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <a
-                                                      class="ant-dropdown-link"
-                                                      href="/"
+                                                    <span
+                                                      class="ant-popover-disabled-compatible-wrapper"
+                                                      style="display: inline-block; cursor: not-allowed;"
                                                     >
                                                       <button
                                                         class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                         disabled=""
+                                                        style="pointer-events: none;"
                                                         type="button"
                                                       >
                                                         <span
@@ -1866,7 +2240,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                           </svg>
                                                         </span>
                                                       </button>
-                                                    </a>
+                                                    </span>
                                                   </td>
                                                 </tr>
                                               </tbody>
@@ -1880,6 +2254,11 @@ exports[`Ratings List component should render the component with data 1`] = `
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
                                         "total": 1,
                                       },
                                       "prefixCls": "ant-table",
@@ -2430,11 +2809,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                           data={
                                             Array [
                                               Object {
-                                                "description": "description",
-                                                "id": 1,
-                                                "name": "rating",
-                                                "numeric_value": 3,
-                                                "slug": "slug",
+                                                "created_at": "2022-05-05T06:31:22.492Z",
+                                                "created_by_id": 34,
+                                                "deleted_at": null,
+                                                "description": Object {
+                                                  "blocks": Array [
+                                                    Object {
+                                                      "data": Object {
+                                                        "text": "verygood",
+                                                      },
+                                                      "id": "84XfO28Gol",
+                                                      "type": "paragraph",
+                                                    },
+                                                  ],
+                                                  "time": 1651732083960,
+                                                  "version": "2.22.1",
+                                                },
+                                                "footer_code": "",
+                                                "header_code": "",
+                                                "html_description": "<p>verygood</p>",
+                                                "id": 7,
+                                                "medium_id": null,
+                                                "meta": null,
+                                                "meta_fields": null,
+                                                "name": "verygood",
+                                                "numeric_value": 35,
+                                                "slug": "verygoo",
+                                                "space_id": 2,
+                                                "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                "updated_by_id": 34,
                                               },
                                             ]
                                           }
@@ -2452,23 +2855,47 @@ exports[`Ratings List component should render the component with data 1`] = `
                                               expandedKeys={Set {}}
                                               getRowKey={[Function]}
                                               index={0}
-                                              key="1"
+                                              key="7"
                                               record={
                                                 Object {
-                                                  "description": "description",
-                                                  "id": 1,
-                                                  "name": "rating",
-                                                  "numeric_value": 3,
-                                                  "slug": "slug",
+                                                  "created_at": "2022-05-05T06:31:22.492Z",
+                                                  "created_by_id": 34,
+                                                  "deleted_at": null,
+                                                  "description": Object {
+                                                    "blocks": Array [
+                                                      Object {
+                                                        "data": Object {
+                                                          "text": "verygood",
+                                                        },
+                                                        "id": "84XfO28Gol",
+                                                        "type": "paragraph",
+                                                      },
+                                                    ],
+                                                    "time": 1651732083960,
+                                                    "version": "2.22.1",
+                                                  },
+                                                  "footer_code": "",
+                                                  "header_code": "",
+                                                  "html_description": "<p>verygood</p>",
+                                                  "id": 7,
+                                                  "medium_id": null,
+                                                  "meta": null,
+                                                  "meta_fields": null,
+                                                  "name": "verygood",
+                                                  "numeric_value": 35,
+                                                  "slug": "verygoo",
+                                                  "space_id": 2,
+                                                  "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                  "updated_by_id": 34,
                                                 }
                                               }
-                                              recordKey={1}
+                                              recordKey={7}
                                               rowComponent="tr"
-                                              rowKey={1}
+                                              rowKey={7}
                                             >
                                               <tr
                                                 className="ant-table-row ant-table-row-level-0"
-                                                data-row-key={1}
+                                                data-row-key={7}
                                                 onClick={[Function]}
                                                 style={Object {}}
                                               >
@@ -2484,11 +2911,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   prefixCls="ant-table"
                                                   record={
                                                     Object {
-                                                      "description": "description",
-                                                      "id": 1,
-                                                      "name": "rating",
-                                                      "numeric_value": 3,
-                                                      "slug": "slug",
+                                                      "created_at": "2022-05-05T06:31:22.492Z",
+                                                      "created_by_id": 34,
+                                                      "deleted_at": null,
+                                                      "description": Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "verygood",
+                                                            },
+                                                            "id": "84XfO28Gol",
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1651732083960,
+                                                        "version": "2.22.1",
+                                                      },
+                                                      "footer_code": "",
+                                                      "header_code": "",
+                                                      "html_description": "<p>verygood</p>",
+                                                      "id": 7,
+                                                      "medium_id": null,
+                                                      "meta": null,
+                                                      "meta_fields": null,
+                                                      "name": "verygood",
+                                                      "numeric_value": 35,
+                                                      "slug": "verygoo",
+                                                      "space_id": 2,
+                                                      "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                      "updated_by_id": 34,
                                                     }
                                                   }
                                                   render={[Function]}
@@ -2500,17 +2951,15 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     style={Object {}}
                                                   >
                                                     <Link
-                                                      className="ant-dropdown-link"
                                                       style={
                                                         Object {
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/ratings/1/edit"
+                                                      to="/ratings/7/edit"
                                                     >
                                                       <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/ratings/1/edit"
+                                                        href="/ratings/7/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -2519,8 +2968,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                         }
                                                       >
                                                         <a
-                                                          className="ant-dropdown-link"
-                                                          href="/ratings/1/edit"
+                                                          href="/ratings/7/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
@@ -2528,7 +2976,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                             }
                                                           }
                                                         >
-                                                          rating
+                                                          verygood
                                                         </a>
                                                       </LinkAnchor>
                                                     </Link>
@@ -2546,11 +2994,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   prefixCls="ant-table"
                                                   record={
                                                     Object {
-                                                      "description": "description",
-                                                      "id": 1,
-                                                      "name": "rating",
-                                                      "numeric_value": 3,
-                                                      "slug": "slug",
+                                                      "created_at": "2022-05-05T06:31:22.492Z",
+                                                      "created_by_id": 34,
+                                                      "deleted_at": null,
+                                                      "description": Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "verygood",
+                                                            },
+                                                            "id": "84XfO28Gol",
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1651732083960,
+                                                        "version": "2.22.1",
+                                                      },
+                                                      "footer_code": "",
+                                                      "header_code": "",
+                                                      "html_description": "<p>verygood</p>",
+                                                      "id": 7,
+                                                      "medium_id": null,
+                                                      "meta": null,
+                                                      "meta_fields": null,
+                                                      "name": "verygood",
+                                                      "numeric_value": 35,
+                                                      "slug": "verygoo",
+                                                      "space_id": 2,
+                                                      "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                      "updated_by_id": 34,
                                                     }
                                                   }
                                                 >
@@ -2560,7 +3032,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    slug
+                                                    verygoo
                                                   </td>
                                                 </Cell>
                                                 <Cell
@@ -2575,11 +3047,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   prefixCls="ant-table"
                                                   record={
                                                     Object {
-                                                      "description": "description",
-                                                      "id": 1,
-                                                      "name": "rating",
-                                                      "numeric_value": 3,
-                                                      "slug": "slug",
+                                                      "created_at": "2022-05-05T06:31:22.492Z",
+                                                      "created_by_id": 34,
+                                                      "deleted_at": null,
+                                                      "description": Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "verygood",
+                                                            },
+                                                            "id": "84XfO28Gol",
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1651732083960,
+                                                        "version": "2.22.1",
+                                                      },
+                                                      "footer_code": "",
+                                                      "header_code": "",
+                                                      "html_description": "<p>verygood</p>",
+                                                      "id": 7,
+                                                      "medium_id": null,
+                                                      "meta": null,
+                                                      "meta_fields": null,
+                                                      "name": "verygood",
+                                                      "numeric_value": 35,
+                                                      "slug": "verygoo",
+                                                      "space_id": 2,
+                                                      "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                      "updated_by_id": 34,
                                                     }
                                                   }
                                                 >
@@ -2589,7 +3085,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     rowSpan={null}
                                                     style={Object {}}
                                                   >
-                                                    3
+                                                    35
                                                   </td>
                                                 </Cell>
                                                 <Cell
@@ -2604,11 +3100,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   prefixCls="ant-table"
                                                   record={
                                                     Object {
-                                                      "description": "description",
-                                                      "id": 1,
-                                                      "name": "rating",
-                                                      "numeric_value": 3,
-                                                      "slug": "slug",
+                                                      "created_at": "2022-05-05T06:31:22.492Z",
+                                                      "created_by_id": 34,
+                                                      "deleted_at": null,
+                                                      "description": Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "verygood",
+                                                            },
+                                                            "id": "84XfO28Gol",
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1651732083960,
+                                                        "version": "2.22.1",
+                                                      },
+                                                      "footer_code": "",
+                                                      "header_code": "",
+                                                      "html_description": "<p>verygood</p>",
+                                                      "id": 7,
+                                                      "medium_id": null,
+                                                      "meta": null,
+                                                      "meta_fields": null,
+                                                      "name": "verygood",
+                                                      "numeric_value": 35,
+                                                      "slug": "verygoo",
+                                                      "space_id": 2,
+                                                      "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                      "updated_by_id": 34,
                                                     }
                                                   }
                                                   render={[Function]}
@@ -2631,7 +3151,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                         }
                                                       }
                                                     >
-                                                      rating
+                                                      verygood
                                                     </div>
                                                   </td>
                                                 </Cell>
@@ -2649,11 +3169,35 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                   prefixCls="ant-table"
                                                   record={
                                                     Object {
-                                                      "description": "description",
-                                                      "id": 1,
-                                                      "name": "rating",
-                                                      "numeric_value": 3,
-                                                      "slug": "slug",
+                                                      "created_at": "2022-05-05T06:31:22.492Z",
+                                                      "created_by_id": 34,
+                                                      "deleted_at": null,
+                                                      "description": Object {
+                                                        "blocks": Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "text": "verygood",
+                                                            },
+                                                            "id": "84XfO28Gol",
+                                                            "type": "paragraph",
+                                                          },
+                                                        ],
+                                                        "time": 1651732083960,
+                                                        "version": "2.22.1",
+                                                      },
+                                                      "footer_code": "",
+                                                      "header_code": "",
+                                                      "html_description": "<p>verygood</p>",
+                                                      "id": 7,
+                                                      "medium_id": null,
+                                                      "meta": null,
+                                                      "meta_fields": null,
+                                                      "name": "verygood",
+                                                      "numeric_value": 35,
+                                                      "slug": "verygoo",
+                                                      "space_id": 2,
+                                                      "updated_at": "2022-05-05T06:57:13.091323Z",
+                                                      "updated_by_id": 34,
                                                     }
                                                   }
                                                   render={[Function]}
@@ -2671,7 +3215,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                     }
                                                   >
                                                     <ForwardRef
-                                                      disabled={false}
+                                                      disabled={true}
                                                       icon={<ForwardRef(ExclamationCircleFilled) />}
                                                       okType="primary"
                                                       onConfirm={[Function]}
@@ -2682,7 +3226,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                       <Tooltip
                                                         arrowPointAtCenter={false}
                                                         autoAdjustOverflow={true}
-                                                        disabled={false}
+                                                        disabled={true}
                                                         icon={<ForwardRef(ExclamationCircleFilled) />}
                                                         mouseEnterDelay={0.1}
                                                         mouseLeaveDelay={0.1}
@@ -2950,7 +3494,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                               },
                                                             }
                                                           }
-                                                          disabled={false}
+                                                          disabled={true}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
                                                           motion={
                                                             Object {
@@ -3231,7 +3775,7 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                             }
                                                             defaultPopupVisible={false}
                                                             destroyPopupOnHide={false}
-                                                            disabled={false}
+                                                            disabled={true}
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
@@ -3276,46 +3820,75 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                             title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Link
-                                                              className="ant-dropdown-link"
+                                                            <span
+                                                              className="ant-popover-disabled-compatible-wrapper"
                                                               key="trigger"
                                                               onClick={[Function]}
-                                                              onKeyDown={[Function]}
                                                               onMouseDown={[Function]}
                                                               onTouchStart={[Function]}
-                                                              to=""
+                                                              style={
+                                                                Object {
+                                                                  "cursor": "not-allowed",
+                                                                  "display": "inline-block",
+                                                                  "width": null,
+                                                                }
+                                                              }
                                                             >
-                                                              <LinkAnchor
-                                                                className="ant-dropdown-link"
-                                                                href="/"
-                                                                navigate={[Function]}
-                                                                onClick={[Function]}
+                                                              <Button
+                                                                className={null}
+                                                                disabled={true}
+                                                                icon={<ForwardRef(DeleteOutlined) />}
                                                                 onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
+                                                                style={
+                                                                  Object {
+                                                                    "pointerEvents": "none",
+                                                                  }
+                                                                }
+                                                                type="danger"
                                                               >
-                                                                <a
-                                                                  className="ant-dropdown-link"
-                                                                  href="/"
-                                                                  onClick={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  onMouseDown={[Function]}
-                                                                  onTouchStart={[Function]}
-                                                                >
-                                                                  <Button
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-danger ant-btn-icon-only"
                                                                     disabled={true}
-                                                                    icon={<ForwardRef(DeleteOutlined) />}
-                                                                    type="danger"
+                                                                    onClick={[Function]}
+                                                                    onKeyDown={[Function]}
+                                                                    style={
+                                                                      Object {
+                                                                        "pointerEvents": "none",
+                                                                      }
+                                                                    }
+                                                                    type="button"
                                                                   >
-                                                                    <Wave>
-                                                                      <button
-                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                        disabled={true}
-                                                                        onClick={[Function]}
-                                                                        type="button"
+                                                                    <ForwardRef(DeleteOutlined)>
+                                                                      <AntdIcon
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
                                                                       >
-                                                                        <ForwardRef(DeleteOutlined)>
-                                                                          <AntdIcon
+                                                                        <span
+                                                                          aria-label="delete"
+                                                                          className="anticon anticon-delete"
+                                                                          role="img"
+                                                                        >
+                                                                          <IconReact
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -3338,59 +3911,29 @@ exports[`Ratings List component should render the component with data 1`] = `
                                                                               }
                                                                             }
                                                                           >
-                                                                            <span
-                                                                              aria-label="delete"
-                                                                              className="anticon anticon-delete"
-                                                                              role="img"
+                                                                            <svg
+                                                                              aria-hidden="true"
+                                                                              data-icon="delete"
+                                                                              fill="currentColor"
+                                                                              focusable="false"
+                                                                              height="1em"
+                                                                              key="svg-delete"
+                                                                              viewBox="64 64 896 896"
+                                                                              width="1em"
                                                                             >
-                                                                              <IconReact
-                                                                                icon={
-                                                                                  Object {
-                                                                                    "icon": Object {
-                                                                                      "attrs": Object {
-                                                                                        "focusable": "false",
-                                                                                        "viewBox": "64 64 896 896",
-                                                                                      },
-                                                                                      "children": Array [
-                                                                                        Object {
-                                                                                          "attrs": Object {
-                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                          },
-                                                                                          "tag": "path",
-                                                                                        },
-                                                                                      ],
-                                                                                      "tag": "svg",
-                                                                                    },
-                                                                                    "name": "delete",
-                                                                                    "theme": "outlined",
-                                                                                  }
-                                                                                }
-                                                                              >
-                                                                                <svg
-                                                                                  aria-hidden="true"
-                                                                                  data-icon="delete"
-                                                                                  fill="currentColor"
-                                                                                  focusable="false"
-                                                                                  height="1em"
-                                                                                  key="svg-delete"
-                                                                                  viewBox="64 64 896 896"
-                                                                                  width="1em"
-                                                                                >
-                                                                                  <path
-                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                    key="svg-delete-svg-0"
-                                                                                  />
-                                                                                </svg>
-                                                                              </IconReact>
-                                                                            </span>
-                                                                          </AntdIcon>
-                                                                        </ForwardRef(DeleteOutlined)>
-                                                                      </button>
-                                                                    </Wave>
-                                                                  </Button>
-                                                                </a>
-                                                              </LinkAnchor>
-                                                            </Link>
+                                                                              <path
+                                                                                d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                                key="svg-delete-svg-0"
+                                                                              />
+                                                                            </svg>
+                                                                          </IconReact>
+                                                                        </span>
+                                                                      </AntdIcon>
+                                                                    </ForwardRef(DeleteOutlined)>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </span>
                                                           </Trigger>
                                                         </ForwardRef(Tooltip)>
                                                       </Tooltip>
@@ -3412,6 +3955,13 @@ exports[`Ratings List component should render the component with data 1`] = `
                               current={1}
                               onChange={[Function]}
                               pageSize={20}
+                              pageSizeOptions={
+                                Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ]
+                              }
                               total={1}
                             >
                               <LocaleReceiver
@@ -3500,6 +4050,13 @@ exports[`Ratings List component should render the component with data 1`] = `
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={20}
+                                  pageSizeOptions={
+                                    Array [
+                                      "10",
+                                      "15",
+                                      "20",
+                                    ]
+                                  }
                                   prefixCls="ant-pagination"
                                   prevIcon={
                                     <button
@@ -3767,9 +4324,8 @@ exports[`Ratings List component should render the component with data 1`] = `
                                       pageSizeOptions={
                                         Array [
                                           "10",
+                                          "15",
                                           "20",
-                                          "50",
-                                          "100",
                                         ]
                                       }
                                       quickGo={null}
