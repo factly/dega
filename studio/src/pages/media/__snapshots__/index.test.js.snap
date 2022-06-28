@@ -1,5 +1,98 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Media List component snapshot testing should render loader component 1`] = `
+<Provider
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+>
+  <BrowserRouter>
+    <Router
+      history={
+        Object {
+          "action": "POP",
+          "block": [Function],
+          "createHref": [Function],
+          "go": [Function],
+          "goBack": [Function],
+          "goForward": [Function],
+          "length": 1,
+          "listen": [Function],
+          "location": Object {
+            "hash": "",
+            "pathname": "/",
+            "search": "",
+            "state": undefined,
+          },
+          "push": [Function],
+          "replace": [Function],
+        }
+      }
+    >
+      <Media
+        permission={
+          Object {
+            "actions": Array [
+              "create",
+            ],
+          }
+        }
+      >
+        <Loader>
+          <div
+            style={
+              Object {
+                "alignItems": "center",
+                "display": "flex",
+                "height": "100vh",
+                "justifyContent": "center",
+                "padding": "2rem",
+                "position": "absolute",
+                "width": "100%",
+              }
+            }
+          >
+            <Spin
+              size="large"
+              spinning={true}
+              wrapperClassName=""
+            >
+              <div
+                className="ant-spin ant-spin-lg ant-spin-spinning"
+              >
+                <span
+                  className="ant-spin-dot ant-spin-dot-spin"
+                >
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
+            </Spin>
+          </div>
+        </Loader>
+      </Media>
+    </Router>
+  </BrowserRouter>
+</Provider>
+`;
+
 exports[`Media List component snapshot testing should render the component 1`] = `
 <Provider
   store={
@@ -68,6 +161,41 @@ exports[`Media List component snapshot testing should render the component 1`] =
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Media"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Media"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Media"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <ForwardRef(InternalForm)
                   form={
                     Object {
@@ -93,7 +221,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={Object {}}
+                  initialValues={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -132,7 +266,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         }
                       }
                       id="filters"
-                      initialValues={Object {}}
+                      initialValues={
+                        Object {
+                          "limit": 10,
+                          "page": 1,
+                          "sort": "desc",
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -569,11 +709,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                   >
                                                     <Component
                                                       update={2}
+                                                      value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
+                                                        value="desc"
                                                       >
                                                         <Select
                                                           className=""
@@ -594,6 +736,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
+                                                          value="desc"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -614,6 +757,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -917,6 +1061,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -1023,6 +1168,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -1299,8 +1445,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1321,8 +1467,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                       "total": 0,
                     }
                   }
-                  fetchMedia={[Function]}
-                  filters={Object {}}
+                  filters={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   setFilters={[Function]}
                 >
                   <Space
@@ -1359,9 +1510,14 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             }
                             pagination={
                               Object {
-                                "current": undefined,
+                                "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 10,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 0,
                               }
                             }
@@ -1449,9 +1605,17 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 className="ant-list-pagination"
                               >
                                 <Pagination
+                                  current={0}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={10}
+                                  pageSizeOptions={
+                                    Array [
+                                      "10",
+                                      "15",
+                                      "20",
+                                    ]
+                                  }
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -1473,6 +1637,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                   >
                                     <Pagination
                                       className=""
+                                      current={0}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -1539,6 +1704,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
                                       pageSize={10}
+                                      pageSizeOptions={
+                                        Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ]
+                                      }
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -1786,6 +1958,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         </li>
                                         <Options
                                           changeSize={null}
+                                          current={0}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -1805,9 +1978,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           pageSizeOptions={
                                             Array [
                                               "10",
+                                              "15",
                                               "20",
-                                              "50",
-                                              "100",
                                             ]
                                           }
                                           quickGo={null}
@@ -1913,6 +2085,41 @@ exports[`Media List component snapshot testing should render the component with 
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Media"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Media"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Media"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <ForwardRef(InternalForm)
                   form={
                     Object {
@@ -1938,7 +2145,13 @@ exports[`Media List component snapshot testing should render the component with 
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={Object {}}
+                  initialValues={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -1977,7 +2190,13 @@ exports[`Media List component snapshot testing should render the component with 
                         }
                       }
                       id="filters"
-                      initialValues={Object {}}
+                      initialValues={
+                        Object {
+                          "limit": 10,
+                          "page": 1,
+                          "sort": "desc",
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -2414,11 +2633,13 @@ exports[`Media List component snapshot testing should render the component with 
                                                   >
                                                     <Component
                                                       update={2}
+                                                      value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
+                                                        value="desc"
                                                       >
                                                         <Select
                                                           className=""
@@ -2439,6 +2660,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
+                                                          value="desc"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -2459,6 +2681,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -2762,6 +2985,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -2868,6 +3092,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -3144,8 +3369,8 @@ exports[`Media List component snapshot testing should render the component with 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -3175,8 +3400,13 @@ exports[`Media List component snapshot testing should render the component with 
                       "total": 1,
                     }
                   }
-                  fetchMedia={[Function]}
-                  filters={Object {}}
+                  filters={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   setFilters={[Function]}
                 >
                   <Space
@@ -3224,9 +3454,14 @@ exports[`Media List component snapshot testing should render the component with 
                             }
                             pagination={
                               Object {
-                                "current": undefined,
+                                "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 10,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
                                 "total": 1,
                               }
                             }
@@ -3383,9 +3618,17 @@ exports[`Media List component snapshot testing should render the component with 
                                 className="ant-list-pagination"
                               >
                                 <Pagination
+                                  current={1}
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={10}
+                                  pageSizeOptions={
+                                    Array [
+                                      "10",
+                                      "15",
+                                      "20",
+                                    ]
+                                  }
                                   total={1}
                                 >
                                   <LocaleReceiver
@@ -3407,6 +3650,7 @@ exports[`Media List component snapshot testing should render the component with 
                                   >
                                     <Pagination
                                       className=""
+                                      current={1}
                                       defaultCurrent={1}
                                       defaultPageSize={10}
                                       hideOnSinglePage={false}
@@ -3473,6 +3717,13 @@ exports[`Media List component snapshot testing should render the component with 
                                       onChange={[Function]}
                                       onShowSizeChange={[Function]}
                                       pageSize={10}
+                                      pageSizeOptions={
+                                        Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ]
+                                      }
                                       prefixCls="ant-pagination"
                                       prevIcon={
                                         <button
@@ -3594,7 +3845,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           </button>
                                         </li>
                                         <Pager
-                                          active={false}
+                                          active={true}
                                           itemRender={[Function]}
                                           key="1"
                                           locale={
@@ -3618,7 +3869,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           showTitle={true}
                                         >
                                           <li
-                                            className="ant-pagination-item ant-pagination-item-1"
+                                            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-active"
                                             onClick={[Function]}
                                             onKeyPress={[Function]}
                                             tabIndex="0"
@@ -3720,6 +3971,7 @@ exports[`Media List component snapshot testing should render the component with 
                                         </li>
                                         <Options
                                           changeSize={null}
+                                          current={1}
                                           goButton={false}
                                           locale={
                                             Object {
@@ -3739,9 +3991,8 @@ exports[`Media List component snapshot testing should render the component with 
                                           pageSizeOptions={
                                             Array [
                                               "10",
+                                              "15",
                                               "20",
-                                              "50",
-                                              "100",
                                             ]
                                           }
                                           quickGo={null}

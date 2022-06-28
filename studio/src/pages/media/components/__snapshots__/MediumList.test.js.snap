@@ -259,7 +259,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 }
                                               }
                                             >
-                                              <ForwardRef
+                                              <Card
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -315,7 +315,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                     }
                                                   />
                                                 </div>
-                                              </ForwardRef>
+                                              </Card>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -374,7 +374,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 }
                                               }
                                             >
-                                              <ForwardRef
+                                              <Card
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -383,7 +383,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 cover={
                                                   <img
                                                     alt="ALT"
-                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                     style={
                                                       Object {
                                                         "height": "220px",
@@ -408,7 +408,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                   >
                                                     <img
                                                       alt="ALT"
-                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                       style={
                                                         Object {
                                                           "height": "220px",
@@ -430,7 +430,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                     }
                                                   />
                                                 </div>
-                                              </ForwardRef>
+                                              </Card>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -471,8 +471,7 @@ exports[`Media List component snapshot testing should match component when loadi
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "Page",
-                              "page_size": "Page Size",
+                              "page": "",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -530,8 +529,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "Page",
-                                "page_size": "Page Size",
+                                "page": "",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -688,8 +686,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -814,8 +811,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -1118,7 +1114,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 }
                                               }
                                             >
-                                              <ForwardRef
+                                              <Card
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -1174,7 +1170,7 @@ exports[`Media List component snapshot testing should match component with media
                                                     }
                                                   />
                                                 </div>
-                                              </ForwardRef>
+                                              </Card>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -1233,7 +1229,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 }
                                               }
                                             >
-                                              <ForwardRef
+                                              <Card
                                                 bodyStyle={
                                                   Object {
                                                     "padding": 0,
@@ -1242,7 +1238,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 cover={
                                                   <img
                                                     alt="ALT"
-                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                     style={
                                                       Object {
                                                         "height": "220px",
@@ -1267,7 +1263,7 @@ exports[`Media List component snapshot testing should match component with media
                                                   >
                                                     <img
                                                       alt="ALT"
-                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                       style={
                                                         Object {
                                                           "height": "220px",
@@ -1289,7 +1285,7 @@ exports[`Media List component snapshot testing should match component with media
                                                     }
                                                   />
                                                 </div>
-                                              </ForwardRef>
+                                              </Card>
                                             </a>
                                           </LinkAnchor>
                                         </Link>
@@ -1330,8 +1326,7 @@ exports[`Media List component snapshot testing should match component with media
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "Page",
-                              "page_size": "Page Size",
+                              "page": "",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -1389,8 +1384,7 @@ exports[`Media List component snapshot testing should match component with media
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "Page",
-                                "page_size": "Page Size",
+                                "page": "",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -1547,8 +1541,7 @@ exports[`Media List component snapshot testing should match component with media
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -1673,8 +1666,7 @@ exports[`Media List component snapshot testing should match component with media
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -1929,8 +1921,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               "next_3": "Next 3 Pages",
                               "next_5": "Next 5 Pages",
                               "next_page": "Next Page",
-                              "page": "Page",
-                              "page_size": "Page Size",
+                              "page": "",
                               "prev_3": "Previous 3 Pages",
                               "prev_5": "Previous 5 Pages",
                               "prev_page": "Previous Page",
@@ -1988,8 +1979,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "Page",
-                                "page_size": "Page Size",
+                                "page": "",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -2135,7 +2125,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 </button>
                               </li>
                               <Pager
-                                className="ant-pagination-item-disabled"
+                                className="ant-pagination-disabled"
                                 itemRender={[Function]}
                                 key="noPager"
                                 locale={
@@ -2146,8 +2136,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",
@@ -2155,21 +2144,21 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 }
                                 onClick={[Function]}
                                 onKeyPress={[Function]}
-                                page={1}
+                                page={0}
                                 rootPrefixCls="ant-pagination"
                                 showTitle={true}
                               >
                                 <li
-                                  className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-disabled"
+                                  className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
                                   onClick={[Function]}
                                   onKeyPress={[Function]}
                                   tabIndex="0"
-                                  title={1}
+                                  title={0}
                                 >
                                   <a
                                     rel="nofollow"
                                   >
-                                    1
+                                    0
                                   </a>
                                 </li>
                               </Pager>
@@ -2272,8 +2261,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                     "next_3": "Next 3 Pages",
                                     "next_5": "Next 5 Pages",
                                     "next_page": "Next Page",
-                                    "page": "Page",
-                                    "page_size": "Page Size",
+                                    "page": "",
                                     "prev_3": "Previous 3 Pages",
                                     "prev_5": "Previous 5 Pages",
                                     "prev_page": "Previous Page",

@@ -34,7 +34,11 @@ let state = {
     req: [
       {
         data: [1],
-        query: {},
+        query: {
+          sort: 'desc',
+          limit: 10,
+          page: 1,
+        },
         total: 1,
       },
     ],
@@ -89,7 +93,29 @@ describe('Media List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getMedia).toHaveBeenCalledWith({});
+      expect(getMedia).toHaveBeenCalledWith({
+        limit: 10,
+        page: 1,
+        sort: 'desc',
+      });
+    });
+    it('should render loader component', () => {
+      const loadingState = {
+        media: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      };
+      store = mockStore(loadingState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Media permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
@@ -101,7 +127,7 @@ describe('Media List component', () => {
     it('should handle url search params', () => {
       store = mockStore(state);
       let wrapper;
-      window.history.pushState({}, '', '/media?limit=20&page=1&q=desc');
+      window.history.pushState({}, '', '/media?limit=20&page=1&sort=desc');
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -111,7 +137,7 @@ describe('Media List component', () => {
           </Provider>,
         );
       });
-      expect(getMedia).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
+      expect(getMedia).toHaveBeenCalledWith({ page: 1, limit: 20, sort: 'desc' });
     });
 
     it('should submit filters', () => {
@@ -126,9 +152,8 @@ describe('Media List component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'pic' } });
         wrapper
           .find('FormItem')
