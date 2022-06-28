@@ -43,20 +43,20 @@ const initialState = {
   redirect: {
     code: 200,
   },
-  search:{
-    details:{
-      articles:[],
-      categories:[],
-      claims:[],
-     "fact-checks":[],
-      media:[],
-      pages:[],
-      ratings:[],
-      tags:[],
-      total:0,
-    } ,
+  search: {
+    details: {
+      articles: [],
+      categories: [],
+      claims: [],
+      'fact-checks': [],
+      media: [],
+      pages: [],
+      ratings: [],
+      tags: [],
+      total: 0,
+    },
     loading: true,
-     req: [],
+    req: [],
   },
   episodes: {
     req: [],

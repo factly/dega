@@ -2,6 +2,7 @@ package space
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -144,8 +145,8 @@ func my(w http.ResponseWriter, r *http.Request) {
 					spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
 				} else {
 					adminSpaceWithPerm := spaceWithPermissions{
-						Space:       space,
-						Permissions: []model.Permission{adminPerm},
+						Space:           space,
+						Permissions:     []model.Permission{adminPerm},
 						AllowedServices: services,
 					}
 					spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
@@ -153,8 +154,8 @@ func my(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 		each.Spaces = spaceWithPermArr
+		fmt.Println("this is a space", each.Spaces)
 		result = append(result, each)
 	}
-
 	renderx.JSON(w, http.StatusOK, result)
 }

@@ -5,12 +5,11 @@ import (
 	"log"
 	"time"
 
-	"gorm.io/gorm/logger"
-
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 // DB - gorm DB
@@ -20,21 +19,15 @@ var DB *gorm.DB
 func SetupDB() {
 
 	fmt.Println("connecting to database ...")
-
-	dbString := fmt.Sprint("host=", viper.GetString("database_host"), " ",
-		"user=", viper.GetString("database_user"), " ",
-		"password=", viper.GetString("database_password"), " ",
-		"dbname=", viper.GetString("database_name"), " ",
-		"port=", viper.GetInt("database_port"), " ",
-		"sslmode=", viper.GetString("database_ssl_mode"))
-
+	// dbString := "postgresql://root@crdb:26257/dega?sslmode=disable"
+	// dbString := "postgresql://root@crdb:26257/dega?sslmode=disable"
+	dbString := fmt.Sprintf("postgresql://root@%s:%s/%s?sslmode=%s", viper.GetString("database_host"), viper.GetString("database_port"), viper.GetString("database_name"), viper.GetString("database_ssl_mode"))
 	var err error
 
-	var dialector gorm.Dialector
 	// if Sqlite() {
 	// 	dialector = sqlite.Open(viper.GetString("sqlite_db_path"))
 	// } else {
-	dialector = postgres.Open(dbString)
+	dialector := postgres.Open(dbString)
 	//}
 
 	DB, err = gorm.Open(dialector, &gorm.Config{

@@ -18,6 +18,18 @@ services:
     networks:
       - dega
 
+  
+  crdb:  #cockroach db
+    image: cockroachdb/cockroach:latest
+    ports: 
+      - "26257:26257"
+      - "8090:8080"
+    command: start-single-node --insecure
+    volumes: 
+      - ./cockroach-data/:/cockroach/cockroach-data
+    networks:
+      - dega
+
   ###########################################################################
   #######                        MINIO                                #######
   ###########################################################################
@@ -301,6 +313,7 @@ services:
       - keto
       - kratos
       - kavach-server
+      - crdb
     ports:
       - 7789:8000
       - 7788:8001
@@ -324,6 +337,7 @@ services:
       - keto
       - kratos
       - kavach-server
+      - crdb
     build:
       context: ./server
       dockerfile: Dockerfile.migrate
