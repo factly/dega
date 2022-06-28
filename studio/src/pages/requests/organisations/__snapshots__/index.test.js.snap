@@ -60,6 +60,41 @@ exports[`Organisation Request list should render the component 1`] = `
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Organisation Requests"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Organisation Requests"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Organisation Requests"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <Row
                   gutter={16}
                   justify="end"
@@ -75,14 +110,14 @@ exports[`Organisation Request list should render the component 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/organisations/create"
+                      to="/admin/requests/organisations/create"
                     >
                       <LinkAnchor
-                        href="/requests/organisations/create"
+                        href="/admin/requests/organisations/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/organisations/create"
+                          href="/admin/requests/organisations/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -131,8 +166,8 @@ exports[`Organisation Request list should render the component 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -179,6 +214,11 @@ exports[`Organisation Request list should render the component 1`] = `
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
                         "total": 0,
                       }
                     }
@@ -362,6 +402,11 @@ exports[`Organisation Request list should render the component 1`] = `
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
                                   "total": 0,
                                 }
                               }
@@ -533,6 +578,11 @@ exports[`Organisation Request list should render the component 1`] = `
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",
@@ -1201,6 +1251,41 @@ exports[`Organisation Request list should render the component with data 1`] = `
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Organisation Requests"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Organisation Requests"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Organisation Requests"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <Row
                   gutter={16}
                   justify="end"
@@ -1216,14 +1301,14 @@ exports[`Organisation Request list should render the component with data 1`] = `
                   >
                     <Link
                       key="1"
-                      to="/requests/organisations/create"
+                      to="/admin/requests/organisations/create"
                     >
                       <LinkAnchor
-                        href="/requests/organisations/create"
+                        href="/admin/requests/organisations/create"
                         navigate={[Function]}
                       >
                         <a
-                          href="/requests/organisations/create"
+                          href="/admin/requests/organisations/create"
                           onClick={[Function]}
                         >
                           <Button
@@ -1272,8 +1357,8 @@ exports[`Organisation Request list should render the component with data 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1320,6 +1405,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
                         "total": 0,
                       }
                     }
@@ -1503,6 +1593,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
                                   "total": 0,
                                 }
                               }
@@ -1674,6 +1769,11 @@ exports[`Organisation Request list should render the component with data 1`] = `
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",
