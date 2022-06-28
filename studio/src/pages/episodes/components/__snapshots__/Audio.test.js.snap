@@ -146,11 +146,9 @@ exports[`Audio Component snapshot testing should render the component 1`] = `
                   <Button
                     onClick={[Function]}
                   >
-                    <Wave
-                      disabled={false}
-                    >
+                    <Wave>
                       <button
-                        className="ant-btn ant-btn-default"
+                        className="ant-btn"
                         onClick={[Function]}
                         type="button"
                       >
@@ -334,11 +332,9 @@ exports[`Audio Component snapshot testing should render the component with url 1
                   <Button
                     onClick={[Function]}
                   >
-                    <Wave
-                      disabled={false}
-                    >
+                    <Wave>
                       <button
-                        className="ant-btn ant-btn-default"
+                        className="ant-btn"
                         onClick={[Function]}
                         type="button"
                       >
@@ -405,11 +401,9 @@ exports[`Audio Component snapshot testing should render the component with url 1
                   <Button
                     onClick={[Function]}
                   >
-                    <Wave
-                      disabled={false}
-                    >
+                    <Wave>
                       <button
-                        className="ant-btn ant-btn-default"
+                        className="ant-btn"
                         onClick={[Function]}
                         type="button"
                       >
