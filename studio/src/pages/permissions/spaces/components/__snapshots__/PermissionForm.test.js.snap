@@ -34,6 +34,7 @@ exports[`Space Permission Form component snapshot testing should match component
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -86,6 +87,7 @@ exports[`Space Permission Form component snapshot testing should match component
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -150,6 +152,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -193,6 +196,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -209,6 +213,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -237,6 +242,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -255,7 +261,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     value={8}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -272,7 +278,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       value={8}
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -563,6 +569,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -614,6 +621,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -638,6 +646,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -674,6 +683,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -697,7 +707,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     value={10}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -715,7 +725,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       value={10}
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -1007,6 +1017,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1058,6 +1069,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1082,6 +1094,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1118,6 +1131,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1141,7 +1155,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     value={10}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -1159,7 +1173,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       value={10}
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -1437,6 +1451,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1480,6 +1495,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1497,6 +1513,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1526,6 +1543,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1638,6 +1656,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -1681,6 +1700,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -1698,6 +1718,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -1727,6 +1748,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -1828,6 +1850,7 @@ exports[`Space Permission Form component snapshot testing should match component
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -1862,6 +1885,7 @@ exports[`Space Permission Form component snapshot testing should match component
                     >
                       <div
                         className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div
@@ -2051,6 +2075,7 @@ exports[`Space Permission Form component snapshot testing should match component
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -2093,6 +2118,7 @@ exports[`Space Permission Form component snapshot testing should match component
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -2147,6 +2173,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -2190,6 +2217,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -2206,6 +2234,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -2234,6 +2263,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -2250,7 +2280,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -2266,7 +2296,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -2557,6 +2587,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -2608,6 +2639,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -2632,6 +2664,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -2668,6 +2701,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -2689,7 +2723,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -2706,7 +2740,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -2998,6 +3032,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -3049,6 +3084,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -3073,6 +3109,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -3109,6 +3146,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -3130,7 +3168,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -3147,7 +3185,7 @@ exports[`Space Permission Form component snapshot testing should match component
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -3425,6 +3463,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -3468,6 +3507,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -3485,6 +3525,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -3514,6 +3555,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -3623,6 +3665,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -3666,6 +3709,7 @@ exports[`Space Permission Form component snapshot testing should match component
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -3683,6 +3727,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -3712,6 +3757,7 @@ exports[`Space Permission Form component snapshot testing should match component
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -3810,6 +3856,7 @@ exports[`Space Permission Form component snapshot testing should match component
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -3844,6 +3891,7 @@ exports[`Space Permission Form component snapshot testing should match component
                     >
                       <div
                         className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div
@@ -4033,6 +4081,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
             "itemRef": [Function],
             "name": "create-category",
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
@@ -4075,6 +4124,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                 "itemRef": [Function],
                 "name": "create-category",
               },
+              "_init": true,
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
@@ -4129,6 +4179,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4172,6 +4223,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4188,6 +4240,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4216,6 +4269,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4232,7 +4286,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -4248,7 +4302,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -4539,6 +4593,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -4590,6 +4645,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -4614,6 +4670,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -4650,6 +4707,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -4671,7 +4729,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -4688,7 +4746,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -4980,6 +5038,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -5031,6 +5090,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -5055,6 +5115,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -5091,6 +5152,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -5112,7 +5174,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                     onChange={[Function]}
                                   >
                                     <InputNumber
-                                      className=""
+                                      className="ant-input-number-in-form-item"
                                       downHandler={
                                         <ForwardRef(DownOutlined)
                                           className="ant-input-number-handler-down-inner"
@@ -5129,7 +5191,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                                       }
                                     >
                                       <div
-                                        className="ant-input-number"
+                                        className="ant-input-number ant-input-number-in-form-item"
                                         onBlur={[Function]}
                                         onCompositionEnd={[Function]}
                                         onCompositionStart={[Function]}
@@ -5407,6 +5469,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -5450,6 +5513,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -5467,6 +5531,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -5496,6 +5561,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -5605,6 +5671,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         "itemRef": [Function],
                         "name": "create-category",
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
@@ -5648,6 +5715,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                   >
                     <div
                       className="ant-row ant-form-item"
+                      role="row"
                       style={Object {}}
                     >
                       <FormItemLabel
@@ -5665,6 +5733,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-10 ant-form-item-label"
+                            role="cell"
                             style={Object {}}
                           >
                             <label
@@ -5694,6 +5763,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                         >
                           <div
                             className="ant-col ant-col-8 ant-form-item-control"
+                            role="cell"
                             style={Object {}}
                           >
                             <div
@@ -5792,6 +5862,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
               >
                 <div
                   className="ant-row ant-form-item"
+                  role="row"
                   style={Object {}}
                 >
                   <FormItemLabel
@@ -5826,6 +5897,7 @@ exports[`Space Permission Form component snapshot testing should render the comp
                     >
                       <div
                         className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                        role="cell"
                         style={Object {}}
                       >
                         <div

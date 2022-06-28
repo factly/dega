@@ -205,7 +205,7 @@ describe('Space Permission Edit component', () => {
           media: 10,
           posts: 10,
         });
-        expect(push).toHaveBeenCalledWith('/permissions/spaces');
+        expect(push).toHaveBeenCalledWith('/admin/permissions/spaces');
         done();
       }, 0);
     });
