@@ -33,13 +33,13 @@ function EditCategory() {
       history.push(`/categories/${id}/edit`),
     );
   };
-  if (category)
-    return (
-      <>
-        <Helmet title={`${category?.name} - Edit Category`} />
-        <CategoryEditForm data={category} onCreate={onUpdate} />
-      </>
-    );
+
+  return (
+    <>
+      <Helmet title={`${category?.name} - Edit Category`} />
+      <CategoryEditForm data={category} onCreate={onUpdate} />
+    </>
+  );
 }
 
 export default EditCategory;
