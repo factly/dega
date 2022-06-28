@@ -24,7 +24,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -70,7 +69,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -143,12 +141,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   <FormItemInput
                     errors={Array []}
                     label="Name"
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                   >
                     <Col
                       className="ant-form-item-control"
@@ -190,7 +186,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                     }
                                     name="organisation_id"
                                     noStyle={true}
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -212,7 +208,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -241,7 +236,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         ]
                                       }
                                       noStyle={true}
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -255,22 +250,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       valuePropName="value"
                                     >
                                       <Component
-                                        update={
-                                          <ForwardRef(InternalSelect)
-                                            placeholder="Select organisation"
-                                            style={
-                                              Object {
-                                                "width": "40%",
-                                              }
-                                            }
-                                          >
-                                            <Option
-                                              value={2}
-                                            >
-                                              Organization 2
-                                            </Option>
-                                          </ForwardRef(InternalSelect)>
-                                        }
+                                        update={1}
                                       >
                                         <ForwardRef(InternalSelect)
                                           id="create-space_organisation_id"
@@ -298,7 +278,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             }
                                             onChange={[Function]}
                                             placeholder="Select organisation"
-                                            placement="bottomLeft"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             style={
@@ -308,42 +287,24 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             }
                                             transitionName="ant-slide-up"
                                           >
-                                            <BaseSelect
-                                              OptionList={
-                                                Object {
-                                                  "$$typeof": Symbol(react.forward_ref),
-                                                  "displayName": "OptionList",
-                                                  "render": [Function],
-                                                }
-                                              }
-                                              activeDescendantId="create-space_organisation_id_list_0"
-                                              activeValue={null}
+                                            <ForwardRef(Select)
                                               className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                              displayValues={Array []}
                                               dropdownClassName=""
-                                              dropdownMatchSelectWidth={true}
-                                              emptyOptions={false}
                                               id="create-space_organisation_id"
                                               inputIcon={[Function]}
+                                              listHeight={256}
+                                              listItemHeight={24}
+                                              menuItemSelectedIcon={null}
                                               notFoundContent={
                                                 <Context.Consumer>
                                                   [Function]
                                                 </Context.Consumer>
                                               }
-                                              omitDomProps={
-                                                Array [
-                                                  "inputValue",
-                                                ]
-                                              }
-                                              onDisplayValuesChange={[Function]}
-                                              onSearch={[Function]}
-                                              onSearchSplit={[Function]}
+                                              onChange={[Function]}
                                               placeholder="Select organisation"
-                                              placement="bottomLeft"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                              searchValue=""
                                               style={
                                                 Object {
                                                   "width": "40%",
@@ -367,12 +328,54 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                 <SelectTrigger
                                                   containerWidth={null}
                                                   dropdownClassName=""
-                                                  dropdownMatchSelectWidth={true}
                                                   empty={false}
                                                   getTriggerDOMNode={[Function]}
-                                                  onPopupMouseEnter={[Function]}
-                                                  placement="bottomLeft"
-                                                  popupElement={<ForwardRef(OptionList) />}
+                                                  popupElement={
+                                                    <ForwardRef(OptionList)
+                                                      childrenAsData={true}
+                                                      defaultActiveFirstOption={true}
+                                                      flattenOptions={
+                                                        Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "children": "Organization 2",
+                                                              "key": "2",
+                                                              "value": 2,
+                                                            },
+                                                            "groupOption": false,
+                                                            "key": "2",
+                                                          },
+                                                        ]
+                                                      }
+                                                      height={256}
+                                                      id="create-space_organisation_id"
+                                                      itemHeight={24}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
+                                                      notFoundContent={
+                                                        <Context.Consumer>
+                                                          [Function]
+                                                        </Context.Consumer>
+                                                      }
+                                                      onActiveValue={[Function]}
+                                                      onMouseEnter={[Function]}
+                                                      onSelect={[Function]}
+                                                      onToggleOpen={[Function]}
+                                                      options={
+                                                        Array [
+                                                          Object {
+                                                            "children": "Organization 2",
+                                                            "key": "2",
+                                                            "value": 2,
+                                                          },
+                                                        ]
+                                                      }
+                                                      prefixCls="ant-select"
+                                                      searchValue=""
+                                                      values={Set {}}
+                                                      virtual={true}
+                                                    />
+                                                  }
                                                   prefixCls="ant-select"
                                                   transitionName="ant-slide-up"
                                                 >
@@ -455,10 +458,51 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     onPopupAlign={[Function]}
                                                     onPopupVisibleChange={[Function]}
                                                     popup={
-                                                      <div
-                                                        onMouseEnter={[Function]}
-                                                      >
-                                                        <ForwardRef(OptionList) />
+                                                      <div>
+                                                        <ForwardRef(OptionList)
+                                                          childrenAsData={true}
+                                                          defaultActiveFirstOption={true}
+                                                          flattenOptions={
+                                                            Array [
+                                                              Object {
+                                                                "data": Object {
+                                                                  "children": "Organization 2",
+                                                                  "key": "2",
+                                                                  "value": 2,
+                                                                },
+                                                                "groupOption": false,
+                                                                "key": "2",
+                                                              },
+                                                            ]
+                                                          }
+                                                          height={256}
+                                                          id="create-space_organisation_id"
+                                                          itemHeight={24}
+                                                          menuItemSelectedIcon={null}
+                                                          multiple={false}
+                                                          notFoundContent={
+                                                            <Context.Consumer>
+                                                              [Function]
+                                                            </Context.Consumer>
+                                                          }
+                                                          onActiveValue={[Function]}
+                                                          onMouseEnter={[Function]}
+                                                          onSelect={[Function]}
+                                                          onToggleOpen={[Function]}
+                                                          options={
+                                                            Array [
+                                                              Object {
+                                                                "children": "Organization 2",
+                                                                "key": "2",
+                                                                "value": 2,
+                                                              },
+                                                            ]
+                                                          }
+                                                          prefixCls="ant-select"
+                                                          searchValue=""
+                                                          values={Set {}}
+                                                          virtual={true}
+                                                        />
                                                       </div>
                                                     }
                                                     popupAlign={Object {}}
@@ -475,18 +519,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     showAction={Array []}
                                                   >
                                                     <Selector
-                                                      OptionList={
-                                                        Object {
-                                                          "$$typeof": Symbol(react.forward_ref),
-                                                          "displayName": "OptionList",
-                                                          "render": [Function],
-                                                        }
-                                                      }
-                                                      activeDescendantId="create-space_organisation_id_list_0"
+                                                      accessibilityIndex={0}
                                                       activeValue={null}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                      displayValues={Array []}
                                                       domRef={
                                                         Object {
                                                           "current": <div
@@ -521,30 +557,25 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         }
                                                       }
                                                       dropdownClassName=""
-                                                      dropdownMatchSelectWidth={true}
-                                                      emptyOptions={false}
                                                       id="create-space_organisation_id"
                                                       inputElement={null}
                                                       inputIcon={[Function]}
                                                       key="trigger"
+                                                      listHeight={256}
+                                                      listItemHeight={24}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
                                                       notFoundContent={
                                                         <Context.Consumer>
                                                           [Function]
                                                         </Context.Consumer>
                                                       }
-                                                      omitDomProps={
-                                                        Array [
-                                                          "inputValue",
-                                                        ]
-                                                      }
-                                                      onDisplayValuesChange={[Function]}
-                                                      onRemove={[Function]}
+                                                      onChange={[Function]}
                                                       onSearch={[Function]}
-                                                      onSearchSplit={[Function]}
                                                       onSearchSubmit={[Function]}
+                                                      onSelect={[Function]}
                                                       onToggleOpen={[Function]}
                                                       placeholder="Select organisation"
-                                                      placement="bottomLeft"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
                                                       searchValue=""
@@ -564,18 +595,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         onMouseDown={[Function]}
                                                       >
                                                         <SingleSelector
-                                                          OptionList={
-                                                            Object {
-                                                              "$$typeof": Symbol(react.forward_ref),
-                                                              "displayName": "OptionList",
-                                                              "render": [Function],
-                                                            }
-                                                          }
-                                                          activeDescendantId="create-space_organisation_id_list_0"
+                                                          accessibilityIndex={0}
                                                           activeValue={null}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                          displayValues={Array []}
                                                           domRef={
                                                             Object {
                                                               "current": <div
@@ -610,8 +633,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             }
                                                           }
                                                           dropdownClassName=""
-                                                          dropdownMatchSelectWidth={true}
-                                                          emptyOptions={false}
                                                           id="create-space_organisation_id"
                                                           inputElement={null}
                                                           inputIcon={[Function]}
@@ -635,30 +656,27 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                               />,
                                                             }
                                                           }
+                                                          listHeight={256}
+                                                          listItemHeight={24}
+                                                          menuItemSelectedIcon={null}
+                                                          multiple={false}
                                                           notFoundContent={
                                                             <Context.Consumer>
                                                               [Function]
                                                             </Context.Consumer>
                                                           }
-                                                          omitDomProps={
-                                                            Array [
-                                                              "inputValue",
-                                                            ]
-                                                          }
-                                                          onDisplayValuesChange={[Function]}
+                                                          onChange={[Function]}
                                                           onInputChange={[Function]}
                                                           onInputCompositionEnd={[Function]}
                                                           onInputCompositionStart={[Function]}
                                                           onInputKeyDown={[Function]}
                                                           onInputMouseDown={[Function]}
                                                           onInputPaste={[Function]}
-                                                          onRemove={[Function]}
                                                           onSearch={[Function]}
-                                                          onSearchSplit={[Function]}
                                                           onSearchSubmit={[Function]}
+                                                          onSelect={[Function]}
                                                           onToggleOpen={[Function]}
                                                           placeholder="Select organisation"
-                                                          placement="bottomLeft"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           searchValue=""
@@ -676,7 +694,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             className="ant-select-selection-search"
                                                           >
                                                             <Input
-                                                              activeDescendantId="create-space_organisation_id_list_0"
+                                                              accessibilityIndex={0}
                                                               attrs={Object {}}
                                                               editable={false}
                                                               id="create-space_organisation_id"
@@ -830,7 +848,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   </span>
                                                 </TransBtn>
                                               </div>
-                                            </BaseSelect>
+                                            </ForwardRef(Select)>
                                           </Select>
                                         </ForwardRef(InternalSelect)>
                                       </Component>
@@ -865,7 +883,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                     }
                                     name="name"
                                     noStyle={true}
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -895,7 +913,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -924,7 +941,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         ]
                                       }
                                       noStyle={true}
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -946,19 +963,9 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       valuePropName="value"
                                     >
                                       <Component
-                                        update={
-                                          <ForwardRef
-                                            onChange={[Function]}
-                                            placeholder="Input name"
-                                            style={
-                                              Object {
-                                                "width": "60%",
-                                              }
-                                            }
-                                          />
-                                        }
+                                        update={1}
                                       >
-                                        <ForwardRef
+                                        <Input
                                           id="create-space_name"
                                           onChange={[Function]}
                                           placeholder="Input name"
@@ -967,59 +974,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                               "width": "60%",
                                             }
                                           }
+                                          type="text"
                                         >
-                                          <ForwardRef
-                                            affixWrapperClassName=""
-                                            groupClassName=""
-                                            id="create-space_name"
-                                            inputClassName=""
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            placeholder="Input name"
-                                            prefixCls="ant-input"
-                                            style={
-                                              Object {
-                                                "width": "60%",
-                                              }
-                                            }
-                                            wrapperClassName=""
-                                          >
-                                            <BaseInput
-                                              affixWrapperClassName=""
-                                              focused={false}
-                                              groupClassName=""
-                                              handleReset={[Function]}
-                                              id="create-space_name"
-                                              inputElement={
-                                                <input
-                                                  className="ant-input"
-                                                  id="create-space_name"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Input name"
-                                                  style={
-                                                    Object {
-                                                      "width": "60%",
-                                                    }
-                                                  }
-                                                  type="text"
-                                                />
-                                              }
-                                              placeholder="Input name"
-                                              prefixCls="ant-input"
-                                              style={
-                                                Object {
-                                                  "width": "60%",
-                                                }
-                                              }
-                                              suffix={null}
-                                              triggerFocus={[Function]}
-                                              value=""
-                                              wrapperClassName=""
-                                            >
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
                                               <input
                                                 className="ant-input"
                                                 id="create-space_name"
@@ -1034,11 +993,42 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   }
                                                 }
                                                 type="text"
-                                                value=""
                                               />
-                                            </BaseInput>
-                                          </ForwardRef>
-                                        </ForwardRef>
+                                            }
+                                            focused={false}
+                                            handleReset={[Function]}
+                                            id="create-space_name"
+                                            inputType="input"
+                                            onChange={[Function]}
+                                            placeholder="Input name"
+                                            prefixCls="ant-input"
+                                            style={
+                                              Object {
+                                                "width": "60%",
+                                              }
+                                            }
+                                            triggerFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                          >
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_name"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Input name"
+                                              style={
+                                                Object {
+                                                  "width": "60%",
+                                                }
+                                              }
+                                              type="text"
+                                              value=""
+                                            />
+                                          </ClearableLabeledInput>
+                                        </Input>
                                       </Component>
                                     </Field>
                                   </WrapperField>
@@ -1048,25 +1038,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />
@@ -1103,7 +1083,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     }
                   }
                   name="slug"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   rules={
                     Array [
                       Object {
@@ -1129,7 +1109,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -1158,7 +1137,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "slug",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
@@ -1224,7 +1203,12 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         <FormItemInput
                           errors={Array []}
                           label="Slug"
-                          name={Array []}
+                          name={
+                            Array [
+                              "slug",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           rules={
                             Array [
@@ -1240,8 +1224,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           }
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1258,46 +1242,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={<ForwardRef />}
+                                    update={1}
                                   >
-                                    <ForwardRef
+                                    <Input
                                       id="create-space_slug"
                                       onChange={[Function]}
+                                      type="text"
                                     >
-                                      <ForwardRef
-                                        affixWrapperClassName=""
-                                        groupClassName=""
-                                        id="create-space_slug"
-                                        inputClassName=""
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        prefixCls="ant-input"
-                                        wrapperClassName=""
-                                      >
-                                        <BaseInput
-                                          affixWrapperClassName=""
-                                          focused={false}
-                                          groupClassName=""
-                                          handleReset={[Function]}
-                                          id="create-space_slug"
-                                          inputElement={
-                                            <input
-                                              className="ant-input"
-                                              id="create-space_slug"
-                                              onBlur={[Function]}
-                                              onChange={[Function]}
-                                              onFocus={[Function]}
-                                              onKeyDown={[Function]}
-                                              type="text"
-                                            />
-                                          }
-                                          prefixCls="ant-input"
-                                          suffix={null}
-                                          triggerFocus={[Function]}
-                                          value=""
-                                          wrapperClassName=""
-                                        >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
                                           <input
                                             className="ant-input"
                                             id="create-space_slug"
@@ -1306,34 +1260,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             onFocus={[Function]}
                                             onKeyDown={[Function]}
                                             type="text"
-                                            value=""
                                           />
-                                        </BaseInput>
-                                      </ForwardRef>
-                                    </ForwardRef>
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-space_slug"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="create-space_slug"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
                                   </Component>
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -1360,7 +1323,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="site_title"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1374,7 +1337,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1403,7 +1365,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "site_title",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1445,12 +1407,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Title"
-                        name={Array []}
+                        name={
+                          Array [
+                            "site_title",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1467,46 +1434,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_site_title"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_site_title"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_site_title"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_site_title"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_site_title"
@@ -1515,34 +1452,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_site_title"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_site_title"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1568,7 +1514,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="tag_line"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1582,7 +1528,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1611,7 +1556,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "tag_line",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1653,12 +1598,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Tag line"
-                        name={Array []}
+                        name={
+                          Array [
+                            "tag_line",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1675,46 +1625,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_tag_line"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_tag_line"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_tag_line"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_tag_line"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_tag_line"
@@ -1723,34 +1643,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_tag_line"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_tag_line"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1776,7 +1705,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="site_address"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1790,7 +1719,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1819,7 +1747,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "site_address",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1861,12 +1789,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Website"
-                        name={Array []}
+                        name={
+                          Array [
+                            "site_address",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1883,46 +1816,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_site_address"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_site_address"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_site_address"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_site_address"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_site_address"
@@ -1931,34 +1834,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_site_address"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_site_address"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1984,7 +1896,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="description"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1998,7 +1910,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -2027,7 +1938,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "description",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -2069,12 +1980,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Description"
-                        name={Array []}
+                        name={
+                          Array [
+                            "description",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -2091,11 +2007,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <ForwardRef
-                                      placeholder="Enter Description..."
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <ForwardRef
                                     id="create-space_description"
@@ -2147,25 +2059,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             disabled={true}
                                             onResize={[Function]}
                                           >
-                                            <SingleObserver
-                                              disabled={true}
-                                              key="rc-observer-key-0"
-                                              onResize={[Function]}
-                                            >
-                                              <DomWrapper>
-                                                <textarea
-                                                  className="ant-input"
-                                                  id="create-space_description"
-                                                  onChange={[Function]}
-                                                  onCompositionEnd={[Function]}
-                                                  onCompositionStart={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Enter Description..."
-                                                  style={Object {}}
-                                                  value=""
-                                                />
-                                              </DomWrapper>
-                                            </SingleObserver>
+                                            <textarea
+                                              className="ant-input"
+                                              id="create-space_description"
+                                              onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Enter Description..."
+                                              style={Object {}}
+                                              value=""
+                                            />
                                           </ResizeObserver>
                                         </ResizableTextArea>
                                       </TextArea>
@@ -2175,25 +2079,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -2219,7 +2113,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="meta_fields"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -2233,7 +2127,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -2262,7 +2155,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "meta_fields",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -2304,12 +2197,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Metafields"
-                        name={Array []}
+                        name={
+                          Array [
+                            "meta_fields",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -2326,11 +2224,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <MONACOEditor
-                                      language="json"
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <MONACOEditor
                                     id="create-space_meta_fields"
@@ -2368,25 +2262,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -2428,12 +2312,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   />
                   <FormItemInput
                     errors={Array []}
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                     wrapperCol={
                       Object {
                         "offset": 8,
@@ -2460,9 +2342,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               htmlType="submit"
                               type="primary"
                             >
-                              <Wave
-                                disabled={false}
-                              >
+                              <Wave>
                                 <button
                                   className="ant-btn ant-btn-primary"
                                   onClick={[Function]}
@@ -2498,25 +2378,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />
@@ -2562,7 +2432,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -2608,7 +2477,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -2681,12 +2549,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   <FormItemInput
                     errors={Array []}
                     label="Name"
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                   >
                     <Col
                       className="ant-form-item-control"
@@ -2728,7 +2594,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                     }
                                     name="organisation_id"
                                     noStyle={true}
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -2750,7 +2616,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -2779,7 +2644,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         ]
                                       }
                                       noStyle={true}
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -2793,22 +2658,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       valuePropName="value"
                                     >
                                       <Component
-                                        update={
-                                          <ForwardRef(InternalSelect)
-                                            placeholder="Select organisation"
-                                            style={
-                                              Object {
-                                                "width": "40%",
-                                              }
-                                            }
-                                          >
-                                            <Option
-                                              value={2}
-                                            >
-                                              Organization 2
-                                            </Option>
-                                          </ForwardRef(InternalSelect)>
-                                        }
+                                        update={1}
                                       >
                                         <ForwardRef(InternalSelect)
                                           id="create-space_organisation_id"
@@ -2836,7 +2686,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             }
                                             onChange={[Function]}
                                             placeholder="Select organisation"
-                                            placement="bottomLeft"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                             style={
@@ -2846,42 +2695,24 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             }
                                             transitionName="ant-slide-up"
                                           >
-                                            <BaseSelect
-                                              OptionList={
-                                                Object {
-                                                  "$$typeof": Symbol(react.forward_ref),
-                                                  "displayName": "OptionList",
-                                                  "render": [Function],
-                                                }
-                                              }
-                                              activeDescendantId="create-space_organisation_id_list_0"
-                                              activeValue={null}
+                                            <ForwardRef(Select)
                                               className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                              displayValues={Array []}
                                               dropdownClassName=""
-                                              dropdownMatchSelectWidth={true}
-                                              emptyOptions={false}
                                               id="create-space_organisation_id"
                                               inputIcon={[Function]}
+                                              listHeight={256}
+                                              listItemHeight={24}
+                                              menuItemSelectedIcon={null}
                                               notFoundContent={
                                                 <Context.Consumer>
                                                   [Function]
                                                 </Context.Consumer>
                                               }
-                                              omitDomProps={
-                                                Array [
-                                                  "inputValue",
-                                                ]
-                                              }
-                                              onDisplayValuesChange={[Function]}
-                                              onSearch={[Function]}
-                                              onSearchSplit={[Function]}
+                                              onChange={[Function]}
                                               placeholder="Select organisation"
-                                              placement="bottomLeft"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
-                                              searchValue=""
                                               style={
                                                 Object {
                                                   "width": "40%",
@@ -2905,12 +2736,54 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                 <SelectTrigger
                                                   containerWidth={null}
                                                   dropdownClassName=""
-                                                  dropdownMatchSelectWidth={true}
                                                   empty={false}
                                                   getTriggerDOMNode={[Function]}
-                                                  onPopupMouseEnter={[Function]}
-                                                  placement="bottomLeft"
-                                                  popupElement={<ForwardRef(OptionList) />}
+                                                  popupElement={
+                                                    <ForwardRef(OptionList)
+                                                      childrenAsData={true}
+                                                      defaultActiveFirstOption={true}
+                                                      flattenOptions={
+                                                        Array [
+                                                          Object {
+                                                            "data": Object {
+                                                              "children": "Organization 2",
+                                                              "key": "2",
+                                                              "value": 2,
+                                                            },
+                                                            "groupOption": false,
+                                                            "key": "2",
+                                                          },
+                                                        ]
+                                                      }
+                                                      height={256}
+                                                      id="create-space_organisation_id"
+                                                      itemHeight={24}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
+                                                      notFoundContent={
+                                                        <Context.Consumer>
+                                                          [Function]
+                                                        </Context.Consumer>
+                                                      }
+                                                      onActiveValue={[Function]}
+                                                      onMouseEnter={[Function]}
+                                                      onSelect={[Function]}
+                                                      onToggleOpen={[Function]}
+                                                      options={
+                                                        Array [
+                                                          Object {
+                                                            "children": "Organization 2",
+                                                            "key": "2",
+                                                            "value": 2,
+                                                          },
+                                                        ]
+                                                      }
+                                                      prefixCls="ant-select"
+                                                      searchValue=""
+                                                      values={Set {}}
+                                                      virtual={true}
+                                                    />
+                                                  }
                                                   prefixCls="ant-select"
                                                   transitionName="ant-slide-up"
                                                 >
@@ -2993,10 +2866,51 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     onPopupAlign={[Function]}
                                                     onPopupVisibleChange={[Function]}
                                                     popup={
-                                                      <div
-                                                        onMouseEnter={[Function]}
-                                                      >
-                                                        <ForwardRef(OptionList) />
+                                                      <div>
+                                                        <ForwardRef(OptionList)
+                                                          childrenAsData={true}
+                                                          defaultActiveFirstOption={true}
+                                                          flattenOptions={
+                                                            Array [
+                                                              Object {
+                                                                "data": Object {
+                                                                  "children": "Organization 2",
+                                                                  "key": "2",
+                                                                  "value": 2,
+                                                                },
+                                                                "groupOption": false,
+                                                                "key": "2",
+                                                              },
+                                                            ]
+                                                          }
+                                                          height={256}
+                                                          id="create-space_organisation_id"
+                                                          itemHeight={24}
+                                                          menuItemSelectedIcon={null}
+                                                          multiple={false}
+                                                          notFoundContent={
+                                                            <Context.Consumer>
+                                                              [Function]
+                                                            </Context.Consumer>
+                                                          }
+                                                          onActiveValue={[Function]}
+                                                          onMouseEnter={[Function]}
+                                                          onSelect={[Function]}
+                                                          onToggleOpen={[Function]}
+                                                          options={
+                                                            Array [
+                                                              Object {
+                                                                "children": "Organization 2",
+                                                                "key": "2",
+                                                                "value": 2,
+                                                              },
+                                                            ]
+                                                          }
+                                                          prefixCls="ant-select"
+                                                          searchValue=""
+                                                          values={Set {}}
+                                                          virtual={true}
+                                                        />
                                                       </div>
                                                     }
                                                     popupAlign={Object {}}
@@ -3013,18 +2927,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                     showAction={Array []}
                                                   >
                                                     <Selector
-                                                      OptionList={
-                                                        Object {
-                                                          "$$typeof": Symbol(react.forward_ref),
-                                                          "displayName": "OptionList",
-                                                          "render": [Function],
-                                                        }
-                                                      }
-                                                      activeDescendantId="create-space_organisation_id_list_0"
+                                                      accessibilityIndex={0}
                                                       activeValue={null}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                      displayValues={Array []}
                                                       domRef={
                                                         Object {
                                                           "current": <div
@@ -3059,30 +2965,25 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         }
                                                       }
                                                       dropdownClassName=""
-                                                      dropdownMatchSelectWidth={true}
-                                                      emptyOptions={false}
                                                       id="create-space_organisation_id"
                                                       inputElement={null}
                                                       inputIcon={[Function]}
                                                       key="trigger"
+                                                      listHeight={256}
+                                                      listItemHeight={24}
+                                                      menuItemSelectedIcon={null}
+                                                      multiple={false}
                                                       notFoundContent={
                                                         <Context.Consumer>
                                                           [Function]
                                                         </Context.Consumer>
                                                       }
-                                                      omitDomProps={
-                                                        Array [
-                                                          "inputValue",
-                                                        ]
-                                                      }
-                                                      onDisplayValuesChange={[Function]}
-                                                      onRemove={[Function]}
+                                                      onChange={[Function]}
                                                       onSearch={[Function]}
-                                                      onSearchSplit={[Function]}
                                                       onSearchSubmit={[Function]}
+                                                      onSelect={[Function]}
                                                       onToggleOpen={[Function]}
                                                       placeholder="Select organisation"
-                                                      placement="bottomLeft"
                                                       prefixCls="ant-select"
                                                       removeIcon={<ForwardRef(CloseOutlined) />}
                                                       searchValue=""
@@ -3102,18 +3003,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                         onMouseDown={[Function]}
                                                       >
                                                         <SingleSelector
-                                                          OptionList={
-                                                            Object {
-                                                              "$$typeof": Symbol(react.forward_ref),
-                                                              "displayName": "OptionList",
-                                                              "render": [Function],
-                                                            }
-                                                          }
-                                                          activeDescendantId="create-space_organisation_id_list_0"
+                                                          accessibilityIndex={0}
                                                           activeValue={null}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                          displayValues={Array []}
                                                           domRef={
                                                             Object {
                                                               "current": <div
@@ -3148,8 +3041,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             }
                                                           }
                                                           dropdownClassName=""
-                                                          dropdownMatchSelectWidth={true}
-                                                          emptyOptions={false}
                                                           id="create-space_organisation_id"
                                                           inputElement={null}
                                                           inputIcon={[Function]}
@@ -3173,30 +3064,27 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                               />,
                                                             }
                                                           }
+                                                          listHeight={256}
+                                                          listItemHeight={24}
+                                                          menuItemSelectedIcon={null}
+                                                          multiple={false}
                                                           notFoundContent={
                                                             <Context.Consumer>
                                                               [Function]
                                                             </Context.Consumer>
                                                           }
-                                                          omitDomProps={
-                                                            Array [
-                                                              "inputValue",
-                                                            ]
-                                                          }
-                                                          onDisplayValuesChange={[Function]}
+                                                          onChange={[Function]}
                                                           onInputChange={[Function]}
                                                           onInputCompositionEnd={[Function]}
                                                           onInputCompositionStart={[Function]}
                                                           onInputKeyDown={[Function]}
                                                           onInputMouseDown={[Function]}
                                                           onInputPaste={[Function]}
-                                                          onRemove={[Function]}
                                                           onSearch={[Function]}
-                                                          onSearchSplit={[Function]}
                                                           onSearchSubmit={[Function]}
+                                                          onSelect={[Function]}
                                                           onToggleOpen={[Function]}
                                                           placeholder="Select organisation"
-                                                          placement="bottomLeft"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           searchValue=""
@@ -3214,7 +3102,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                             className="ant-select-selection-search"
                                                           >
                                                             <Input
-                                                              activeDescendantId="create-space_organisation_id_list_0"
+                                                              accessibilityIndex={0}
                                                               attrs={Object {}}
                                                               editable={false}
                                                               id="create-space_organisation_id"
@@ -3368,7 +3256,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   </span>
                                                 </TransBtn>
                                               </div>
-                                            </BaseSelect>
+                                            </ForwardRef(Select)>
                                           </Select>
                                         </ForwardRef(InternalSelect)>
                                       </Component>
@@ -3403,7 +3291,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                     }
                                     name="name"
                                     noStyle={true}
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -3433,7 +3321,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -3462,7 +3349,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                         ]
                                       }
                                       noStyle={true}
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -3484,19 +3371,9 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                       valuePropName="value"
                                     >
                                       <Component
-                                        update={
-                                          <ForwardRef
-                                            onChange={[Function]}
-                                            placeholder="Input name"
-                                            style={
-                                              Object {
-                                                "width": "60%",
-                                              }
-                                            }
-                                          />
-                                        }
+                                        update={1}
                                       >
-                                        <ForwardRef
+                                        <Input
                                           id="create-space_name"
                                           onChange={[Function]}
                                           placeholder="Input name"
@@ -3505,59 +3382,11 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                               "width": "60%",
                                             }
                                           }
+                                          type="text"
                                         >
-                                          <ForwardRef
-                                            affixWrapperClassName=""
-                                            groupClassName=""
-                                            id="create-space_name"
-                                            inputClassName=""
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            placeholder="Input name"
-                                            prefixCls="ant-input"
-                                            style={
-                                              Object {
-                                                "width": "60%",
-                                              }
-                                            }
-                                            wrapperClassName=""
-                                          >
-                                            <BaseInput
-                                              affixWrapperClassName=""
-                                              focused={false}
-                                              groupClassName=""
-                                              handleReset={[Function]}
-                                              id="create-space_name"
-                                              inputElement={
-                                                <input
-                                                  className="ant-input"
-                                                  id="create-space_name"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Input name"
-                                                  style={
-                                                    Object {
-                                                      "width": "60%",
-                                                    }
-                                                  }
-                                                  type="text"
-                                                />
-                                              }
-                                              placeholder="Input name"
-                                              prefixCls="ant-input"
-                                              style={
-                                                Object {
-                                                  "width": "60%",
-                                                }
-                                              }
-                                              suffix={null}
-                                              triggerFocus={[Function]}
-                                              value=""
-                                              wrapperClassName=""
-                                            >
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
                                               <input
                                                 className="ant-input"
                                                 id="create-space_name"
@@ -3572,11 +3401,42 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                                   }
                                                 }
                                                 type="text"
-                                                value=""
                                               />
-                                            </BaseInput>
-                                          </ForwardRef>
-                                        </ForwardRef>
+                                            }
+                                            focused={false}
+                                            handleReset={[Function]}
+                                            id="create-space_name"
+                                            inputType="input"
+                                            onChange={[Function]}
+                                            placeholder="Input name"
+                                            prefixCls="ant-input"
+                                            style={
+                                              Object {
+                                                "width": "60%",
+                                              }
+                                            }
+                                            triggerFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                          >
+                                            <input
+                                              className="ant-input"
+                                              id="create-space_name"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Input name"
+                                              style={
+                                                Object {
+                                                  "width": "60%",
+                                                }
+                                              }
+                                              type="text"
+                                              value=""
+                                            />
+                                          </ClearableLabeledInput>
+                                        </Input>
                                       </Component>
                                     </Field>
                                   </WrapperField>
@@ -3586,25 +3446,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />
@@ -3641,7 +3491,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                     }
                   }
                   name="slug"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   rules={
                     Array [
                       Object {
@@ -3667,7 +3517,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -3696,7 +3545,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         "slug",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
@@ -3762,7 +3611,12 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                         <FormItemInput
                           errors={Array []}
                           label="Slug"
-                          name={Array []}
+                          name={
+                            Array [
+                              "slug",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           rules={
                             Array [
@@ -3778,8 +3632,8 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           }
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -3796,46 +3650,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={<ForwardRef />}
+                                    update={1}
                                   >
-                                    <ForwardRef
+                                    <Input
                                       id="create-space_slug"
                                       onChange={[Function]}
+                                      type="text"
                                     >
-                                      <ForwardRef
-                                        affixWrapperClassName=""
-                                        groupClassName=""
-                                        id="create-space_slug"
-                                        inputClassName=""
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        prefixCls="ant-input"
-                                        wrapperClassName=""
-                                      >
-                                        <BaseInput
-                                          affixWrapperClassName=""
-                                          focused={false}
-                                          groupClassName=""
-                                          handleReset={[Function]}
-                                          id="create-space_slug"
-                                          inputElement={
-                                            <input
-                                              className="ant-input"
-                                              id="create-space_slug"
-                                              onBlur={[Function]}
-                                              onChange={[Function]}
-                                              onFocus={[Function]}
-                                              onKeyDown={[Function]}
-                                              type="text"
-                                            />
-                                          }
-                                          prefixCls="ant-input"
-                                          suffix={null}
-                                          triggerFocus={[Function]}
-                                          value=""
-                                          wrapperClassName=""
-                                        >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
                                           <input
                                             className="ant-input"
                                             id="create-space_slug"
@@ -3844,34 +3668,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             onFocus={[Function]}
                                             onKeyDown={[Function]}
                                             type="text"
-                                            value=""
                                           />
-                                        </BaseInput>
-                                      </ForwardRef>
-                                    </ForwardRef>
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-space_slug"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
+                                        <input
+                                          className="ant-input"
+                                          id="create-space_slug"
+                                          onBlur={[Function]}
+                                          onChange={[Function]}
+                                          onFocus={[Function]}
+                                          onKeyDown={[Function]}
+                                          type="text"
+                                          value=""
+                                        />
+                                      </ClearableLabeledInput>
+                                    </Input>
                                   </Component>
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -3898,7 +3731,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="site_title"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -3912,7 +3745,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -3941,7 +3773,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "site_title",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -3983,12 +3815,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Title"
-                        name={Array []}
+                        name={
+                          Array [
+                            "site_title",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -4005,46 +3842,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_site_title"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_site_title"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_site_title"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_site_title"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_site_title"
@@ -4053,34 +3860,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_site_title"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_site_title"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -4106,7 +3922,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="tag_line"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -4120,7 +3936,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -4149,7 +3964,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "tag_line",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -4191,12 +4006,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Tag line"
-                        name={Array []}
+                        name={
+                          Array [
+                            "tag_line",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -4213,46 +4033,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_tag_line"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_tag_line"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_tag_line"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_tag_line"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_tag_line"
@@ -4261,34 +4051,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_tag_line"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_tag_line"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -4314,7 +4113,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="site_address"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -4328,7 +4127,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -4357,7 +4155,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "site_address",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -4399,12 +4197,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Website"
-                        name={Array []}
+                        name={
+                          Array [
+                            "site_address",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -4421,46 +4224,16 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={<ForwardRef />}
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-space_site_address"
                                     onChange={[Function]}
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-space_site_address"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-space_site_address"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-space_site_address"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                          />
-                                        }
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-space_site_address"
@@ -4469,34 +4242,43 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-space_site_address"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-space_site_address"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -4522,7 +4304,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="description"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -4536,7 +4318,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -4565,7 +4346,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "description",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -4607,12 +4388,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Description"
-                        name={Array []}
+                        name={
+                          Array [
+                            "description",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -4629,11 +4415,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <ForwardRef
-                                      placeholder="Enter Description..."
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <ForwardRef
                                     id="create-space_description"
@@ -4685,25 +4467,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                             disabled={true}
                                             onResize={[Function]}
                                           >
-                                            <SingleObserver
-                                              disabled={true}
-                                              key="rc-observer-key-0"
-                                              onResize={[Function]}
-                                            >
-                                              <DomWrapper>
-                                                <textarea
-                                                  className="ant-input"
-                                                  id="create-space_description"
-                                                  onChange={[Function]}
-                                                  onCompositionEnd={[Function]}
-                                                  onCompositionStart={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Enter Description..."
-                                                  style={Object {}}
-                                                  value=""
-                                                />
-                                              </DomWrapper>
-                                            </SingleObserver>
+                                            <textarea
+                                              className="ant-input"
+                                              id="create-space_description"
+                                              onChange={[Function]}
+                                              onCompositionEnd={[Function]}
+                                              onCompositionStart={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Enter Description..."
+                                              style={Object {}}
+                                              value=""
+                                            />
                                           </ResizeObserver>
                                         </ResizableTextArea>
                                       </TextArea>
@@ -4713,25 +4487,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -4757,7 +4521,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   }
                 }
                 name="meta_fields"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -4771,7 +4535,6 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -4800,7 +4563,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       "meta_fields",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -4842,12 +4605,17 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                       <FormItemInput
                         errors={Array []}
                         label="Metafields"
-                        name={Array []}
+                        name={
+                          Array [
+                            "meta_fields",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -4864,11 +4632,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <MONACOEditor
-                                      language="json"
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <MONACOEditor
                                     id="create-space_meta_fields"
@@ -4906,25 +4670,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -4966,12 +4720,10 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                   />
                   <FormItemInput
                     errors={Array []}
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                     wrapperCol={
                       Object {
                         "offset": 8,
@@ -4998,9 +4750,7 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                               htmlType="submit"
                               type="primary"
                             >
-                              <Wave
-                                disabled={false}
-                              >
+                              <Wave>
                                 <button
                                   className="ant-btn ant-btn-primary"
                                   onClick={[Function]}
@@ -5036,25 +4786,15 @@ exports[`Spaces Create Form component snapshot testing should render the compone
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />

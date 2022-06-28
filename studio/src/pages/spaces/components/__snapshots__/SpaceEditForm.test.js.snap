@@ -12,15 +12,22 @@ exports[`Space Edit Form component snapshot testing should match component with 
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
         "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
@@ -28,13 +35,6 @@ exports[`Space Edit Form component snapshot testing should match component with 
   <SpaceEditForm
     data={
       Object {
-        "analytics": Object {
-          "plausible": Object {
-            "domain": "domain",
-            "embed_code": "embed-code",
-            "server_url": "url",
-          },
-        },
         "description": Object {
           "blocks": Array [
             Object {
@@ -47,21 +47,11 @@ exports[`Space Edit Form component snapshot testing should match component with 
           "time": 1613715908408,
           "version": "2.19.0",
         },
-        "fav_icon_id": 1,
-        "logo_id": 1,
-        "logo_mobile_id": 1,
-        "mobile_icon_id": 1,
         "name": "name",
         "organisation_id": 1,
         "site_address": "site_address",
         "site_title": "site_title",
         "slug": "slug",
-        "social_media_urls": Object {
-          "facebook": "fb.com",
-          "instagram": "instagram.com",
-          "pintrest": "pinterest.com",
-          "twitter": "twitter.com",
-        },
         "tag_line": "tag_line",
       }
     }
@@ -82,15 +72,22 @@ exports[`Space Edit Form component snapshot testing should render the component 
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
         "onStateChange": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
