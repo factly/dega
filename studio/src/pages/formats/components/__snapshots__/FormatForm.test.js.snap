@@ -33,7 +33,6 @@ exports[`Formats Create Form component snapshot testing should match component w
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -73,7 +72,6 @@ exports[`Formats Create Form component snapshot testing should match component w
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -163,12 +161,10 @@ exports[`Formats Create Form component snapshot testing should match component w
                               />
                               <FormItemInput
                                 errors={Array []}
-                                name={Array []}
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 status=""
-                                touched={false}
-                                validating={false}
-                                warnings={Array []}
+                                validateStatus=""
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -208,11 +204,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   htmlType="button"
                                                   onClick={[Function]}
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-default"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="button"
                                                     >
@@ -262,9 +256,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   htmlType="submit"
                                                   type="primary"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
                                                       className="ant-btn ant-btn-primary"
                                                       disabled={true}
@@ -305,25 +297,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -409,7 +391,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="name"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 rules={
                                   Array [
                                     Object {
@@ -439,7 +421,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -468,7 +449,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "name",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -541,7 +522,12 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Format Name"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "name",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         rules={
                                           Array [
@@ -561,8 +547,8 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         }
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -578,54 +564,18 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <ForwardRef
-                                                      onChange={[Function]}
-                                                    />
-                                                  }
+                                                  update={1}
                                                   value="name"
                                                 >
-                                                  <ForwardRef
+                                                  <Input
                                                     id="create-format_name"
                                                     onChange={[Function]}
+                                                    type="text"
                                                     value="name"
                                                   >
-                                                    <ForwardRef
-                                                      affixWrapperClassName=""
-                                                      groupClassName=""
-                                                      id="create-format_name"
-                                                      inputClassName=""
-                                                      onBlur={[Function]}
-                                                      onChange={[Function]}
-                                                      onFocus={[Function]}
-                                                      prefixCls="ant-input"
-                                                      value="name"
-                                                      wrapperClassName=""
-                                                    >
-                                                      <BaseInput
-                                                        affixWrapperClassName=""
-                                                        focused={false}
-                                                        groupClassName=""
-                                                        handleReset={[Function]}
-                                                        id="create-format_name"
-                                                        inputElement={
-                                                          <input
-                                                            className="ant-input"
-                                                            id="create-format_name"
-                                                            onBlur={[Function]}
-                                                            onChange={[Function]}
-                                                            onFocus={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            type="text"
-                                                            value="name"
-                                                          />
-                                                        }
-                                                        prefixCls="ant-input"
-                                                        suffix={null}
-                                                        triggerFocus={[Function]}
-                                                        value="name"
-                                                        wrapperClassName=""
-                                                      >
+                                                    <ClearableLabeledInput
+                                                      bordered={true}
+                                                      element={
                                                         <input
                                                           className="ant-input"
                                                           id="create-format_name"
@@ -636,32 +586,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                           type="text"
                                                           value="name"
                                                         />
-                                                      </BaseInput>
-                                                    </ForwardRef>
-                                                  </ForwardRef>
+                                                      }
+                                                      focused={false}
+                                                      handleReset={[Function]}
+                                                      id="create-format_name"
+                                                      inputType="input"
+                                                      onChange={[Function]}
+                                                      prefixCls="ant-input"
+                                                      triggerFocus={[Function]}
+                                                      type="text"
+                                                      value="name"
+                                                    >
+                                                      <input
+                                                        className="ant-input"
+                                                        id="create-format_name"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        type="text"
+                                                        value="name"
+                                                      />
+                                                    </ClearableLabeledInput>
+                                                  </Input>
                                                 </Component>
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -700,7 +660,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                     }
                                   }
                                   name="slug"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -726,7 +686,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -755,7 +714,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         "slug",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -820,7 +779,12 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         <FormItemInput
                                           errors={Array []}
                                           label="Slug"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "slug",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           rules={
                                             Array [
@@ -836,8 +800,8 @@ exports[`Formats Create Form component snapshot testing should match component w
                                           }
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
@@ -853,50 +817,18 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={<ForwardRef />}
+                                                    update={1}
                                                     value="slug"
                                                   >
-                                                    <ForwardRef
+                                                    <Input
                                                       id="create-format_slug"
                                                       onChange={[Function]}
+                                                      type="text"
                                                       value="slug"
                                                     >
-                                                      <ForwardRef
-                                                        affixWrapperClassName=""
-                                                        groupClassName=""
-                                                        id="create-format_slug"
-                                                        inputClassName=""
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        prefixCls="ant-input"
-                                                        value="slug"
-                                                        wrapperClassName=""
-                                                      >
-                                                        <BaseInput
-                                                          affixWrapperClassName=""
-                                                          focused={false}
-                                                          groupClassName=""
-                                                          handleReset={[Function]}
-                                                          id="create-format_slug"
-                                                          inputElement={
-                                                            <input
-                                                              className="ant-input"
-                                                              id="create-format_slug"
-                                                              onBlur={[Function]}
-                                                              onChange={[Function]}
-                                                              onFocus={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              type="text"
-                                                              value="slug"
-                                                            />
-                                                          }
-                                                          prefixCls="ant-input"
-                                                          suffix={null}
-                                                          triggerFocus={[Function]}
-                                                          value="slug"
-                                                          wrapperClassName=""
-                                                        >
+                                                      <ClearableLabeledInput
+                                                        bordered={true}
+                                                        element={
                                                           <input
                                                             className="ant-input"
                                                             id="create-format_slug"
@@ -907,32 +839,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                             type="text"
                                                             value="slug"
                                                           />
-                                                        </BaseInput>
-                                                      </ForwardRef>
-                                                    </ForwardRef>
+                                                        }
+                                                        focused={false}
+                                                        handleReset={[Function]}
+                                                        id="create-format_slug"
+                                                        inputType="input"
+                                                        onChange={[Function]}
+                                                        prefixCls="ant-input"
+                                                        triggerFocus={[Function]}
+                                                        type="text"
+                                                        value="slug"
+                                                      >
+                                                        <input
+                                                          className="ant-input"
+                                                          id="create-format_slug"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          type="text"
+                                                          value="slug"
+                                                        />
+                                                      </ClearableLabeledInput>
+                                                    </Input>
                                                   </Component>
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -960,7 +902,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="is_featured"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                                 valuePropName="checked"
@@ -975,7 +917,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -1004,7 +945,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "is_featured",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="checked"
@@ -1046,13 +987,18 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "is_featured",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
                                         valuePropName="checked"
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -1068,7 +1014,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                 >
                                                   <Switch
                                                     id="create-format_is_featured"
@@ -1111,25 +1057,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -1169,7 +1105,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="medium_id"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -1183,7 +1119,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -1212,7 +1147,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "medium_id",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -1253,12 +1188,17 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured Image"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "medium_id",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -1274,16 +1214,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <MediaSelector
-                                                      containerStyles={
-                                                        Object {
-                                                          "justifyContent": "start",
-                                                        }
-                                                      }
-                                                      maxWidth="350px"
-                                                    />
-                                                  }
+                                                  update={1}
                                                 >
                                                   <MediaSelector
                                                     containerStyles={
@@ -1407,11 +1338,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -1460,11 +1389,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -1582,25 +1509,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -1648,7 +1565,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="description"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -1662,7 +1579,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -1691,7 +1607,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "description",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -1732,12 +1648,17 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Description"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "description",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -1753,7 +1674,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                   value="description"
                                                 >
                                                   <ForwardRef
@@ -1803,24 +1724,16 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                             disabled={true}
                                                             onResize={[Function]}
                                                           >
-                                                            <SingleObserver
-                                                              disabled={true}
-                                                              key="rc-observer-key-0"
-                                                              onResize={[Function]}
-                                                            >
-                                                              <DomWrapper>
-                                                                <textarea
-                                                                  className="ant-input"
-                                                                  id="create-format_description"
-                                                                  onChange={[Function]}
-                                                                  onCompositionEnd={[Function]}
-                                                                  onCompositionStart={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  style={Object {}}
-                                                                  value="description"
-                                                                />
-                                                              </DomWrapper>
-                                                            </SingleObserver>
+                                                            <textarea
+                                                              className="ant-input"
+                                                              id="create-format_description"
+                                                              onChange={[Function]}
+                                                              onCompositionEnd={[Function]}
+                                                              onCompositionStart={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              style={Object {}}
+                                                              value="description"
+                                                            />
                                                           </ResizeObserver>
                                                         </ResizableTextArea>
                                                       </TextArea>
@@ -1830,25 +1743,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -1905,6 +1808,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -2013,46 +1917,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Data
                                       </div>
                                       <CSSMotion
@@ -2148,46 +2048,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Code Injection
                                       </div>
                                       <CSSMotion
@@ -2227,6 +2123,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -2335,46 +2232,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Fields
                                       </div>
                                       <CSSMotion
@@ -2444,7 +2337,6 @@ exports[`Formats Create Form component snapshot testing should match component w
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -2478,7 +2370,6 @@ exports[`Formats Create Form component snapshot testing should match component w
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -2562,12 +2453,10 @@ exports[`Formats Create Form component snapshot testing should match component w
                               />
                               <FormItemInput
                                 errors={Array []}
-                                name={Array []}
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 status=""
-                                touched={false}
-                                validating={false}
-                                warnings={Array []}
+                                validateStatus=""
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -2607,11 +2496,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   htmlType="button"
                                                   onClick={[Function]}
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-default"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="button"
                                                     >
@@ -2661,9 +2548,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   htmlType="submit"
                                                   type="primary"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
                                                       className="ant-btn ant-btn-primary"
                                                       disabled={true}
@@ -2704,25 +2589,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -2808,7 +2683,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="name"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 rules={
                                   Array [
                                     Object {
@@ -2838,7 +2713,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -2867,7 +2741,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "name",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -2940,7 +2814,12 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Format Name"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "name",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         rules={
                                           Array [
@@ -2960,8 +2839,8 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         }
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -2977,50 +2856,16 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <ForwardRef
-                                                      onChange={[Function]}
-                                                    />
-                                                  }
+                                                  update={1}
                                                 >
-                                                  <ForwardRef
+                                                  <Input
                                                     id="create-format_name"
                                                     onChange={[Function]}
+                                                    type="text"
                                                   >
-                                                    <ForwardRef
-                                                      affixWrapperClassName=""
-                                                      groupClassName=""
-                                                      id="create-format_name"
-                                                      inputClassName=""
-                                                      onBlur={[Function]}
-                                                      onChange={[Function]}
-                                                      onFocus={[Function]}
-                                                      prefixCls="ant-input"
-                                                      wrapperClassName=""
-                                                    >
-                                                      <BaseInput
-                                                        affixWrapperClassName=""
-                                                        focused={false}
-                                                        groupClassName=""
-                                                        handleReset={[Function]}
-                                                        id="create-format_name"
-                                                        inputElement={
-                                                          <input
-                                                            className="ant-input"
-                                                            id="create-format_name"
-                                                            onBlur={[Function]}
-                                                            onChange={[Function]}
-                                                            onFocus={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            type="text"
-                                                          />
-                                                        }
-                                                        prefixCls="ant-input"
-                                                        suffix={null}
-                                                        triggerFocus={[Function]}
-                                                        value=""
-                                                        wrapperClassName=""
-                                                      >
+                                                    <ClearableLabeledInput
+                                                      bordered={true}
+                                                      element={
                                                         <input
                                                           className="ant-input"
                                                           id="create-format_name"
@@ -3029,34 +2874,43 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                           onFocus={[Function]}
                                                           onKeyDown={[Function]}
                                                           type="text"
-                                                          value=""
                                                         />
-                                                      </BaseInput>
-                                                    </ForwardRef>
-                                                  </ForwardRef>
+                                                      }
+                                                      focused={false}
+                                                      handleReset={[Function]}
+                                                      id="create-format_name"
+                                                      inputType="input"
+                                                      onChange={[Function]}
+                                                      prefixCls="ant-input"
+                                                      triggerFocus={[Function]}
+                                                      type="text"
+                                                      value=""
+                                                    >
+                                                      <input
+                                                        className="ant-input"
+                                                        id="create-format_name"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      />
+                                                    </ClearableLabeledInput>
+                                                  </Input>
                                                 </Component>
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -3095,7 +2949,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                     }
                                   }
                                   name="slug"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -3121,7 +2975,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -3150,7 +3003,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         "slug",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -3215,7 +3068,12 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         <FormItemInput
                                           errors={Array []}
                                           label="Slug"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "slug",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           rules={
                                             Array [
@@ -3231,8 +3089,8 @@ exports[`Formats Create Form component snapshot testing should match component w
                                           }
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
@@ -3248,46 +3106,16 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={<ForwardRef />}
+                                                    update={1}
                                                   >
-                                                    <ForwardRef
+                                                    <Input
                                                       id="create-format_slug"
                                                       onChange={[Function]}
+                                                      type="text"
                                                     >
-                                                      <ForwardRef
-                                                        affixWrapperClassName=""
-                                                        groupClassName=""
-                                                        id="create-format_slug"
-                                                        inputClassName=""
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        prefixCls="ant-input"
-                                                        wrapperClassName=""
-                                                      >
-                                                        <BaseInput
-                                                          affixWrapperClassName=""
-                                                          focused={false}
-                                                          groupClassName=""
-                                                          handleReset={[Function]}
-                                                          id="create-format_slug"
-                                                          inputElement={
-                                                            <input
-                                                              className="ant-input"
-                                                              id="create-format_slug"
-                                                              onBlur={[Function]}
-                                                              onChange={[Function]}
-                                                              onFocus={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              type="text"
-                                                            />
-                                                          }
-                                                          prefixCls="ant-input"
-                                                          suffix={null}
-                                                          triggerFocus={[Function]}
-                                                          value=""
-                                                          wrapperClassName=""
-                                                        >
+                                                      <ClearableLabeledInput
+                                                        bordered={true}
+                                                        element={
                                                           <input
                                                             className="ant-input"
                                                             id="create-format_slug"
@@ -3296,34 +3124,43 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                             onFocus={[Function]}
                                                             onKeyDown={[Function]}
                                                             type="text"
-                                                            value=""
                                                           />
-                                                        </BaseInput>
-                                                      </ForwardRef>
-                                                    </ForwardRef>
+                                                        }
+                                                        focused={false}
+                                                        handleReset={[Function]}
+                                                        id="create-format_slug"
+                                                        inputType="input"
+                                                        onChange={[Function]}
+                                                        prefixCls="ant-input"
+                                                        triggerFocus={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      >
+                                                        <input
+                                                          className="ant-input"
+                                                          id="create-format_slug"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        />
+                                                      </ClearableLabeledInput>
+                                                    </Input>
                                                   </Component>
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -3351,7 +3188,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="is_featured"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                                 valuePropName="checked"
@@ -3366,7 +3203,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -3395,7 +3231,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "is_featured",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="checked"
@@ -3437,13 +3273,18 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "is_featured",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
                                         valuePropName="checked"
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -3459,7 +3300,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                 >
                                                   <Switch
                                                     id="create-format_is_featured"
@@ -3502,25 +3343,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -3560,7 +3391,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="medium_id"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -3574,7 +3405,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -3603,7 +3433,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "medium_id",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -3644,12 +3474,17 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured Image"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "medium_id",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -3665,16 +3500,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <MediaSelector
-                                                      containerStyles={
-                                                        Object {
-                                                          "justifyContent": "start",
-                                                        }
-                                                      }
-                                                      maxWidth="350px"
-                                                    />
-                                                  }
+                                                  update={1}
                                                 >
                                                   <MediaSelector
                                                     containerStyles={
@@ -3798,11 +3624,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -3851,11 +3675,9 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -3973,25 +3795,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -4039,7 +3851,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                   }
                                 }
                                 name="description"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -4053,7 +3865,6 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -4082,7 +3893,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       "description",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -4123,12 +3934,17 @@ exports[`Formats Create Form component snapshot testing should match component w
                                       <FormItemInput
                                         errors={Array []}
                                         label="Description"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "description",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -4144,7 +3960,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                 >
                                                   <ForwardRef
                                                     id="create-format_description"
@@ -4191,24 +4007,16 @@ exports[`Formats Create Form component snapshot testing should match component w
                                                             disabled={true}
                                                             onResize={[Function]}
                                                           >
-                                                            <SingleObserver
-                                                              disabled={true}
-                                                              key="rc-observer-key-0"
-                                                              onResize={[Function]}
-                                                            >
-                                                              <DomWrapper>
-                                                                <textarea
-                                                                  className="ant-input"
-                                                                  id="create-format_description"
-                                                                  onChange={[Function]}
-                                                                  onCompositionEnd={[Function]}
-                                                                  onCompositionStart={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  style={Object {}}
-                                                                  value=""
-                                                                />
-                                                              </DomWrapper>
-                                                            </SingleObserver>
+                                                            <textarea
+                                                              className="ant-input"
+                                                              id="create-format_description"
+                                                              onChange={[Function]}
+                                                              onCompositionEnd={[Function]}
+                                                              onCompositionStart={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              style={Object {}}
+                                                              value=""
+                                                            />
                                                           </ResizeObserver>
                                                         </ResizableTextArea>
                                                       </TextArea>
@@ -4218,25 +4026,15 @@ exports[`Formats Create Form component snapshot testing should match component w
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -4293,6 +4091,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -4401,46 +4200,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Data
                                       </div>
                                       <CSSMotion
@@ -4536,46 +4331,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Code Injection
                                       </div>
                                       <CSSMotion
@@ -4615,6 +4406,7 @@ exports[`Formats Create Form component snapshot testing should match component w
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -4723,46 +4515,42 @@ exports[`Formats Create Form component snapshot testing should match component w
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Fields
                                       </div>
                                       <CSSMotion
@@ -4830,7 +4618,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -4864,7 +4651,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -4948,12 +4734,10 @@ exports[`Formats Create Form component snapshot testing should render the compon
                               />
                               <FormItemInput
                                 errors={Array []}
-                                name={Array []}
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 status=""
-                                touched={false}
-                                validating={false}
-                                warnings={Array []}
+                                validateStatus=""
                               >
                                 <Col
                                   className="ant-form-item-control"
@@ -4993,11 +4777,9 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                   htmlType="button"
                                                   onClick={[Function]}
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-default"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="button"
                                                     >
@@ -5047,9 +4829,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                   htmlType="submit"
                                                   type="primary"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
                                                       className="ant-btn ant-btn-primary"
                                                       disabled={true}
@@ -5090,25 +4870,15 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
@@ -5194,7 +4964,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                   }
                                 }
                                 name="name"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 rules={
                                   Array [
                                     Object {
@@ -5224,7 +4994,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -5253,7 +5022,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "name",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -5326,7 +5095,12 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       <FormItemInput
                                         errors={Array []}
                                         label="Format Name"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "name",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         rules={
                                           Array [
@@ -5346,8 +5120,8 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         }
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -5363,50 +5137,16 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <ForwardRef
-                                                      onChange={[Function]}
-                                                    />
-                                                  }
+                                                  update={1}
                                                 >
-                                                  <ForwardRef
+                                                  <Input
                                                     id="create-format_name"
                                                     onChange={[Function]}
+                                                    type="text"
                                                   >
-                                                    <ForwardRef
-                                                      affixWrapperClassName=""
-                                                      groupClassName=""
-                                                      id="create-format_name"
-                                                      inputClassName=""
-                                                      onBlur={[Function]}
-                                                      onChange={[Function]}
-                                                      onFocus={[Function]}
-                                                      prefixCls="ant-input"
-                                                      wrapperClassName=""
-                                                    >
-                                                      <BaseInput
-                                                        affixWrapperClassName=""
-                                                        focused={false}
-                                                        groupClassName=""
-                                                        handleReset={[Function]}
-                                                        id="create-format_name"
-                                                        inputElement={
-                                                          <input
-                                                            className="ant-input"
-                                                            id="create-format_name"
-                                                            onBlur={[Function]}
-                                                            onChange={[Function]}
-                                                            onFocus={[Function]}
-                                                            onKeyDown={[Function]}
-                                                            type="text"
-                                                          />
-                                                        }
-                                                        prefixCls="ant-input"
-                                                        suffix={null}
-                                                        triggerFocus={[Function]}
-                                                        value=""
-                                                        wrapperClassName=""
-                                                      >
+                                                    <ClearableLabeledInput
+                                                      bordered={true}
+                                                      element={
                                                         <input
                                                           className="ant-input"
                                                           id="create-format_name"
@@ -5415,34 +5155,43 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                           onFocus={[Function]}
                                                           onKeyDown={[Function]}
                                                           type="text"
-                                                          value=""
                                                         />
-                                                      </BaseInput>
-                                                    </ForwardRef>
-                                                  </ForwardRef>
+                                                      }
+                                                      focused={false}
+                                                      handleReset={[Function]}
+                                                      id="create-format_name"
+                                                      inputType="input"
+                                                      onChange={[Function]}
+                                                      prefixCls="ant-input"
+                                                      triggerFocus={[Function]}
+                                                      type="text"
+                                                      value=""
+                                                    >
+                                                      <input
+                                                        className="ant-input"
+                                                        id="create-format_name"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      />
+                                                    </ClearableLabeledInput>
+                                                  </Input>
                                                 </Component>
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -5481,7 +5230,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                     }
                                   }
                                   name="slug"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -5507,7 +5256,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -5536,7 +5284,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         "slug",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -5601,7 +5349,12 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         <FormItemInput
                                           errors={Array []}
                                           label="Slug"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "slug",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           rules={
                                             Array [
@@ -5617,8 +5370,8 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                           }
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
@@ -5634,46 +5387,16 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={<ForwardRef />}
+                                                    update={1}
                                                   >
-                                                    <ForwardRef
+                                                    <Input
                                                       id="create-format_slug"
                                                       onChange={[Function]}
+                                                      type="text"
                                                     >
-                                                      <ForwardRef
-                                                        affixWrapperClassName=""
-                                                        groupClassName=""
-                                                        id="create-format_slug"
-                                                        inputClassName=""
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        prefixCls="ant-input"
-                                                        wrapperClassName=""
-                                                      >
-                                                        <BaseInput
-                                                          affixWrapperClassName=""
-                                                          focused={false}
-                                                          groupClassName=""
-                                                          handleReset={[Function]}
-                                                          id="create-format_slug"
-                                                          inputElement={
-                                                            <input
-                                                              className="ant-input"
-                                                              id="create-format_slug"
-                                                              onBlur={[Function]}
-                                                              onChange={[Function]}
-                                                              onFocus={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              type="text"
-                                                            />
-                                                          }
-                                                          prefixCls="ant-input"
-                                                          suffix={null}
-                                                          triggerFocus={[Function]}
-                                                          value=""
-                                                          wrapperClassName=""
-                                                        >
+                                                      <ClearableLabeledInput
+                                                        bordered={true}
+                                                        element={
                                                           <input
                                                             className="ant-input"
                                                             id="create-format_slug"
@@ -5682,34 +5405,43 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                             onFocus={[Function]}
                                                             onKeyDown={[Function]}
                                                             type="text"
-                                                            value=""
                                                           />
-                                                        </BaseInput>
-                                                      </ForwardRef>
-                                                    </ForwardRef>
+                                                        }
+                                                        focused={false}
+                                                        handleReset={[Function]}
+                                                        id="create-format_slug"
+                                                        inputType="input"
+                                                        onChange={[Function]}
+                                                        prefixCls="ant-input"
+                                                        triggerFocus={[Function]}
+                                                        type="text"
+                                                        value=""
+                                                      >
+                                                        <input
+                                                          className="ant-input"
+                                                          id="create-format_slug"
+                                                          onBlur={[Function]}
+                                                          onChange={[Function]}
+                                                          onFocus={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        />
+                                                      </ClearableLabeledInput>
+                                                    </Input>
                                                   </Component>
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -5737,7 +5469,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                   }
                                 }
                                 name="is_featured"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                                 valuePropName="checked"
@@ -5752,7 +5484,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -5781,7 +5512,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "is_featured",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="checked"
@@ -5823,13 +5554,18 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "is_featured",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
                                         valuePropName="checked"
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -5845,7 +5581,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                 >
                                                   <Switch
                                                     id="create-format_is_featured"
@@ -5888,25 +5624,15 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -5946,7 +5672,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                   }
                                 }
                                 name="medium_id"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -5960,7 +5686,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -5989,7 +5714,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "medium_id",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -6030,12 +5755,17 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       <FormItemInput
                                         errors={Array []}
                                         label="Featured Image"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "medium_id",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -6051,16 +5781,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={
-                                                    <MediaSelector
-                                                      containerStyles={
-                                                        Object {
-                                                          "justifyContent": "start",
-                                                        }
-                                                      }
-                                                      maxWidth="350px"
-                                                    />
-                                                  }
+                                                  update={1}
                                                 >
                                                   <MediaSelector
                                                     containerStyles={
@@ -6184,11 +5905,9 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -6237,11 +5956,9 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                                     }
                                                                   }
                                                                 >
-                                                                  <Wave
-                                                                    disabled={false}
-                                                                  >
+                                                                  <Wave>
                                                                     <button
-                                                                      className="ant-btn ant-btn-default"
+                                                                      className="ant-btn"
                                                                       onClick={[Function]}
                                                                       style={
                                                                         Object {
@@ -6359,25 +6076,15 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -6425,7 +6132,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                   }
                                 }
                                 name="description"
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 trigger="onChange"
                                 validateTrigger="onChange"
                               >
@@ -6439,7 +6146,6 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "getFieldError": [Function],
                                       "getFieldInstance": [Function],
                                       "getFieldValue": [Function],
-                                      "getFieldWarning": [Function],
                                       "getFieldsError": [Function],
                                       "getFieldsValue": [Function],
                                       "getInternalHooks": [Function],
@@ -6468,7 +6174,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       "description",
                                     ]
                                   }
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="value"
@@ -6509,12 +6215,17 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                       <FormItemInput
                                         errors={Array []}
                                         label="Description"
-                                        name={Array []}
+                                        name={
+                                          Array [
+                                            "description",
+                                          ]
+                                        }
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
                                         touched={false}
+                                        validateStatus=""
                                         validating={false}
-                                        warnings={Array []}
                                       >
                                         <Col
                                           className="ant-form-item-control"
@@ -6530,7 +6241,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                 className="ant-form-item-control-input-content"
                                               >
                                                 <Component
-                                                  update={<ForwardRef />}
+                                                  update={1}
                                                 >
                                                   <ForwardRef
                                                     id="create-format_description"
@@ -6577,24 +6288,16 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                                             disabled={true}
                                                             onResize={[Function]}
                                                           >
-                                                            <SingleObserver
-                                                              disabled={true}
-                                                              key="rc-observer-key-0"
-                                                              onResize={[Function]}
-                                                            >
-                                                              <DomWrapper>
-                                                                <textarea
-                                                                  className="ant-input"
-                                                                  id="create-format_description"
-                                                                  onChange={[Function]}
-                                                                  onCompositionEnd={[Function]}
-                                                                  onCompositionStart={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  style={Object {}}
-                                                                  value=""
-                                                                />
-                                                              </DomWrapper>
-                                                            </SingleObserver>
+                                                            <textarea
+                                                              className="ant-input"
+                                                              id="create-format_description"
+                                                              onChange={[Function]}
+                                                              onCompositionEnd={[Function]}
+                                                              onCompositionStart={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              style={Object {}}
+                                                              value=""
+                                                            />
                                                           </ResizeObserver>
                                                         </ResizableTextArea>
                                                       </TextArea>
@@ -6604,25 +6307,15 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -6679,6 +6372,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -6787,46 +6481,42 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Data
                                       </div>
                                       <CSSMotion
@@ -6922,46 +6612,42 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Code Injection
                                       </div>
                                       <CSSMotion
@@ -7001,6 +6687,7 @@ exports[`Formats Create Form component snapshot testing should render the compon
                           >
                             <Collapse
                               accordion={false}
+                              bordered={true}
                               className="ant-collapse-icon-position-right"
                               destroyInactivePanel={false}
                               expandIcon={[Function]}
@@ -7109,46 +6796,42 @@ exports[`Formats Create Form component snapshot testing should render the compon
                                         role="button"
                                         tabIndex={0}
                                       >
-                                        <div>
-                                          <Button
-                                            className="ant-collapse-arrow"
-                                          >
-                                            <Wave
-                                              disabled={false}
+                                        <Button
+                                          className="ant-collapse-arrow"
+                                        >
+                                          <Wave>
+                                            <button
+                                              className="ant-btn ant-collapse-arrow"
+                                              onClick={[Function]}
+                                              type="button"
                                             >
-                                              <button
-                                                className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                onClick={[Function]}
-                                                type="button"
+                                              <LoadingIcon
+                                                existIcon={false}
+                                                loading={false}
+                                                prefixCls="ant-btn"
                                               >
-                                                <LoadingIcon
-                                                  existIcon={false}
-                                                  loading={false}
-                                                  prefixCls="ant-btn"
+                                                <CSSMotion
+                                                  motionName="ant-btn-loading-icon-motion"
+                                                  onAppearActive={[Function]}
+                                                  onAppearStart={[Function]}
+                                                  onEnterActive={[Function]}
+                                                  onEnterStart={[Function]}
+                                                  onLeaveActive={[Function]}
+                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
                                                 >
-                                                  <CSSMotion
-                                                    motionName="ant-btn-loading-icon-motion"
-                                                    onAppearActive={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
-                                                    onLeaveStart={[Function]}
-                                                    removeOnLeave={true}
-                                                    visible={false}
-                                                  >
-                                                    <DomWrapper />
-                                                  </CSSMotion>
-                                                </LoadingIcon>
-                                                <span
-                                                  key=".0"
-                                                >
-                                                  Expand
-                                                </span>
-                                              </button>
-                                            </Wave>
-                                          </Button>
-                                        </div>
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </LoadingIcon>
+                                              <span
+                                                key=".0"
+                                              >
+                                                Expand
+                                              </span>
+                                            </button>
+                                          </Wave>
+                                        </Button>
                                         Meta Fields
                                       </div>
                                       <CSSMotion
