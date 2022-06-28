@@ -61,36 +61,29 @@ exports[`Media List component snapshot testing should render loader component 1`
           >
             <Spin
               size="large"
+              spinning={true}
+              wrapperClassName=""
             >
-              <Spin
-                size="large"
-                spinPrefixCls="ant-spin"
-                spinning={true}
-                wrapperClassName=""
+              <div
+                className="ant-spin ant-spin-lg ant-spin-spinning"
               >
-                <div
-                  aria-busy={true}
-                  aria-live="polite"
-                  className="ant-spin ant-spin-lg ant-spin-spinning"
+                <span
+                  className="ant-spin-dot ant-spin-dot-spin"
                 >
-                  <span
-                    className="ant-spin-dot ant-spin-dot-spin"
-                  >
-                    <i
-                      className="ant-spin-dot-item"
-                    />
-                    <i
-                      className="ant-spin-dot-item"
-                    />
-                    <i
-                      className="ant-spin-dot-item"
-                    />
-                    <i
-                      className="ant-spin-dot-item"
-                    />
-                  </span>
-                </div>
-              </Spin>
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                  <i
+                    className="ant-spin-dot-item"
+                  />
+                </span>
+              </div>
             </Spin>
           </div>
         </Loader>
@@ -210,11 +203,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         "itemRef": [Function],
                         "name": "filters",
                       },
-                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -256,11 +247,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             "itemRef": [Function],
                             "name": "filters",
                           },
-                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
-                          "getFieldWarning": [Function],
                           "getFieldsError": [Function],
                           "getFieldsValue": [Function],
                           "getInternalHooks": [Function],
@@ -318,7 +307,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         >
                           <div
                             className="ant-row ant-row-end"
-                            role="row"
                             style={
                               Object {
                                 "marginBottom": "1rem",
@@ -337,7 +325,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             >
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "display": "flex",
@@ -357,7 +344,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       }
                                     }
                                     name="q"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -368,11 +355,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                             "itemRef": [Function],
                                             "name": "filters",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -400,7 +385,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           "q",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -411,7 +396,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -423,19 +407,23 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           />
                                           <FormItemInput
                                             errors={Array []}
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "q",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -445,54 +433,17 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <ForwardRef
-                                                          placeholder="Search media"
-                                                        />
-                                                      }
+                                                      update={2}
                                                     >
-                                                      <ForwardRef
+                                                      <Input
                                                         id="filters_q"
                                                         onChange={[Function]}
                                                         placeholder="Search media"
+                                                        type="text"
                                                       >
-                                                        <ForwardRef
-                                                          affixWrapperClassName=""
-                                                          groupClassName=""
-                                                          id="filters_q"
-                                                          inputClassName=""
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          placeholder="Search media"
-                                                          prefixCls="ant-input"
-                                                          wrapperClassName=""
-                                                        >
-                                                          <BaseInput
-                                                            affixWrapperClassName=""
-                                                            focused={false}
-                                                            groupClassName=""
-                                                            handleReset={[Function]}
-                                                            id="filters_q"
-                                                            inputElement={
-                                                              <input
-                                                                className="ant-input"
-                                                                id="filters_q"
-                                                                onBlur={[Function]}
-                                                                onChange={[Function]}
-                                                                onFocus={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                placeholder="Search media"
-                                                                type="text"
-                                                              />
-                                                            }
-                                                            placeholder="Search media"
-                                                            prefixCls="ant-input"
-                                                            suffix={null}
-                                                            triggerFocus={[Function]}
-                                                            value=""
-                                                            wrapperClassName=""
-                                                          >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
                                                             <input
                                                               className="ant-input"
                                                               id="filters_q"
@@ -502,34 +453,45 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                               onKeyDown={[Function]}
                                                               placeholder="Search media"
                                                               type="text"
-                                                              value=""
                                                             />
-                                                          </BaseInput>
-                                                        </ForwardRef>
-                                                      </ForwardRef>
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="filters_q"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          placeholder="Search media"
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        >
+                                                          <input
+                                                            className="ant-input"
+                                                            id="filters_q"
+                                                            onBlur={[Function]}
+                                                            onChange={[Function]}
+                                                            onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            placeholder="Search media"
+                                                            type="text"
+                                                            value=""
+                                                          />
+                                                        </ClearableLabeledInput>
+                                                      </Input>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -550,7 +512,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                   >
                                     <div
                                       className="ant-row ant-form-item"
-                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -559,19 +520,16 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       />
                                       <FormItemInput
                                         errors={Array []}
-                                        name={Array []}
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
-                                        touched={false}
-                                        validating={false}
-                                        warnings={Array []}
+                                        validateStatus=""
                                       >
                                         <Col
                                           className="ant-form-item-control"
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
-                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -583,11 +541,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                 <Button
                                                   htmlType="submit"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-default"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="submit"
                                                     >
@@ -621,25 +577,15 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -656,7 +602,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             <Col>
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "paddingLeft": 8,
@@ -674,7 +619,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       }
                                     }
                                     name="sort"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -685,11 +630,9 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                             "itemRef": [Function],
                                             "name": "filters",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -717,7 +660,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           "sort",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -728,7 +671,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -740,19 +682,23 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           />
                                           <FormItemInput
                                             errors={Array []}
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "sort",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -762,22 +708,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <ForwardRef(InternalSelect)
-                                                          defaultValue="desc"
-                                                        >
-                                                          <Option
-                                                            value="desc"
-                                                          >
-                                                            Sort By: Latest
-                                                          </Option>
-                                                          <Option
-                                                            value="asc"
-                                                          >
-                                                            Sort By:Old
-                                                          </Option>
-                                                        </ForwardRef(InternalSelect)>
-                                                      }
+                                                      update={2}
                                                       value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
@@ -787,7 +718,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                         value="desc"
                                                       >
                                                         <Select
-                                                          className="ant-select-in-form-item"
+                                                          className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue="desc"
                                                           dropdownClassName=""
@@ -802,60 +733,34 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
-                                                          placement="bottomLeft"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
                                                           value="desc"
                                                         >
-                                                          <BaseSelect
-                                                            OptionList={
-                                                              Object {
-                                                                "$$typeof": Symbol(react.forward_ref),
-                                                                "displayName": "OptionList",
-                                                                "render": [Function],
-                                                              }
-                                                            }
-                                                            activeDescendantId="filters_sort_list_0"
-                                                            activeValue={null}
-                                                            className="ant-select-in-form-item"
+                                                          <ForwardRef(Select)
+                                                            className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                            displayValues={
-                                                              Array [
-                                                                Object {
-                                                                  "disabled": undefined,
-                                                                  "key": "desc",
-                                                                  "label": "Sort By: Latest",
-                                                                  "value": "desc",
-                                                                },
-                                                              ]
-                                                            }
+                                                            defaultValue="desc"
                                                             dropdownClassName=""
-                                                            dropdownMatchSelectWidth={true}
-                                                            emptyOptions={false}
                                                             id="filters_sort"
                                                             inputIcon={[Function]}
+                                                            listHeight={256}
+                                                            listItemHeight={24}
+                                                            menuItemSelectedIcon={null}
                                                             notFoundContent={
                                                               <Context.Consumer>
                                                                 [Function]
                                                               </Context.Consumer>
                                                             }
-                                                            omitDomProps={
-                                                              Array [
-                                                                "inputValue",
-                                                              ]
-                                                            }
-                                                            onDisplayValuesChange={[Function]}
-                                                            onSearch={[Function]}
-                                                            onSearchSplit={[Function]}
-                                                            placement="bottomLeft"
+                                                            onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            searchValue=""
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
-                                                              className="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"
+                                                              className="ant-select ant-select-single ant-select-show-arrow"
                                                               onBlur={[Function]}
                                                               onFocus={[Function]}
                                                               onKeyDown={[Function]}
@@ -865,12 +770,72 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                               <SelectTrigger
                                                                 containerWidth={null}
                                                                 dropdownClassName=""
-                                                                dropdownMatchSelectWidth={true}
                                                                 empty={false}
                                                                 getTriggerDOMNode={[Function]}
-                                                                onPopupMouseEnter={[Function]}
-                                                                placement="bottomLeft"
-                                                                popupElement={<ForwardRef(OptionList) />}
+                                                                popupElement={
+                                                                  <ForwardRef(OptionList)
+                                                                    childrenAsData={true}
+                                                                    defaultActiveFirstOption={true}
+                                                                    flattenOptions={
+                                                                      Array [
+                                                                        Object {
+                                                                          "data": Object {
+                                                                            "children": "Sort By: Latest",
+                                                                            "key": null,
+                                                                            "value": "desc",
+                                                                          },
+                                                                          "groupOption": false,
+                                                                          "key": "desc",
+                                                                        },
+                                                                        Object {
+                                                                          "data": Object {
+                                                                            "children": "Sort By:Old",
+                                                                            "key": null,
+                                                                            "value": "asc",
+                                                                          },
+                                                                          "groupOption": false,
+                                                                          "key": "asc",
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                    height={256}
+                                                                    id="filters_sort"
+                                                                    itemHeight={24}
+                                                                    menuItemSelectedIcon={null}
+                                                                    multiple={false}
+                                                                    notFoundContent={
+                                                                      <Context.Consumer>
+                                                                        [Function]
+                                                                      </Context.Consumer>
+                                                                    }
+                                                                    onActiveValue={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onSelect={[Function]}
+                                                                    onToggleOpen={[Function]}
+                                                                    options={
+                                                                      Array [
+                                                                        Object {
+                                                                          "children": "Sort By: Latest",
+                                                                          "key": null,
+                                                                          "value": "desc",
+                                                                        },
+                                                                        Object {
+                                                                          "children": "Sort By:Old",
+                                                                          "key": null,
+                                                                          "value": "asc",
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                    prefixCls="ant-select"
+                                                                    searchValue=""
+                                                                    values={
+                                                                      Set {
+                                                                        "desc",
+                                                                      }
+                                                                    }
+                                                                    virtual={true}
+                                                                  />
+                                                                }
                                                                 prefixCls="ant-select"
                                                                 transitionName="ant-slide-up"
                                                               >
@@ -953,10 +918,69 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                   onPopupAlign={[Function]}
                                                                   onPopupVisibleChange={[Function]}
                                                                   popup={
-                                                                    <div
-                                                                      onMouseEnter={[Function]}
-                                                                    >
-                                                                      <ForwardRef(OptionList) />
+                                                                    <div>
+                                                                      <ForwardRef(OptionList)
+                                                                        childrenAsData={true}
+                                                                        defaultActiveFirstOption={true}
+                                                                        flattenOptions={
+                                                                          Array [
+                                                                            Object {
+                                                                              "data": Object {
+                                                                                "children": "Sort By: Latest",
+                                                                                "key": null,
+                                                                                "value": "desc",
+                                                                              },
+                                                                              "groupOption": false,
+                                                                              "key": "desc",
+                                                                            },
+                                                                            Object {
+                                                                              "data": Object {
+                                                                                "children": "Sort By:Old",
+                                                                                "key": null,
+                                                                                "value": "asc",
+                                                                              },
+                                                                              "groupOption": false,
+                                                                              "key": "asc",
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        height={256}
+                                                                        id="filters_sort"
+                                                                        itemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
+                                                                        notFoundContent={
+                                                                          <Context.Consumer>
+                                                                            [Function]
+                                                                          </Context.Consumer>
+                                                                        }
+                                                                        onActiveValue={[Function]}
+                                                                        onMouseEnter={[Function]}
+                                                                        onSelect={[Function]}
+                                                                        onToggleOpen={[Function]}
+                                                                        options={
+                                                                          Array [
+                                                                            Object {
+                                                                              "children": "Sort By: Latest",
+                                                                              "key": null,
+                                                                              "value": "desc",
+                                                                            },
+                                                                            Object {
+                                                                              "children": "Sort By:Old",
+                                                                              "key": null,
+                                                                              "value": "asc",
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        prefixCls="ant-select"
+                                                                        searchValue=""
+                                                                        values={
+                                                                          Set {
+                                                                            "desc",
+                                                                          }
+                                                                        }
+                                                                        virtual={true}
+                                                                      />
                                                                     </div>
                                                                   }
                                                                   popupAlign={Object {}}
@@ -973,27 +997,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                   showAction={Array []}
                                                                 >
                                                                   <Selector
-                                                                    OptionList={
-                                                                      Object {
-                                                                        "$$typeof": Symbol(react.forward_ref),
-                                                                        "displayName": "OptionList",
-                                                                        "render": [Function],
-                                                                      }
-                                                                    }
-                                                                    activeDescendantId="filters_sort_list_0"
+                                                                    accessibilityIndex={0}
                                                                     activeValue={null}
-                                                                    className="ant-select-in-form-item"
+                                                                    className=""
                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                    displayValues={
-                                                                      Array [
-                                                                        Object {
-                                                                          "disabled": undefined,
-                                                                          "key": "desc",
-                                                                          "label": "Sort By: Latest",
-                                                                          "value": "desc",
-                                                                        },
-                                                                      ]
-                                                                    }
+                                                                    defaultValue="desc"
                                                                     domRef={
                                                                       Object {
                                                                         "current": <div
@@ -1029,35 +1037,31 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                       }
                                                                     }
                                                                     dropdownClassName=""
-                                                                    dropdownMatchSelectWidth={true}
-                                                                    emptyOptions={false}
                                                                     id="filters_sort"
                                                                     inputElement={null}
                                                                     inputIcon={[Function]}
                                                                     key="trigger"
+                                                                    listHeight={256}
+                                                                    listItemHeight={24}
+                                                                    menuItemSelectedIcon={null}
+                                                                    multiple={false}
                                                                     notFoundContent={
                                                                       <Context.Consumer>
                                                                         [Function]
                                                                       </Context.Consumer>
                                                                     }
-                                                                    omitDomProps={
-                                                                      Array [
-                                                                        "inputValue",
-                                                                      ]
-                                                                    }
-                                                                    onDisplayValuesChange={[Function]}
-                                                                    onRemove={[Function]}
+                                                                    onChange={[Function]}
                                                                     onSearch={[Function]}
-                                                                    onSearchSplit={[Function]}
                                                                     onSearchSubmit={[Function]}
+                                                                    onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
-                                                                    placement="bottomLeft"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -1075,27 +1079,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                       onMouseDown={[Function]}
                                                                     >
                                                                       <SingleSelector
-                                                                        OptionList={
-                                                                          Object {
-                                                                            "$$typeof": Symbol(react.forward_ref),
-                                                                            "displayName": "OptionList",
-                                                                            "render": [Function],
-                                                                          }
-                                                                        }
-                                                                        activeDescendantId="filters_sort_list_0"
+                                                                        accessibilityIndex={0}
                                                                         activeValue={null}
-                                                                        className="ant-select-in-form-item"
+                                                                        className=""
                                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                        displayValues={
-                                                                          Array [
-                                                                            Object {
-                                                                              "disabled": undefined,
-                                                                              "key": "desc",
-                                                                              "label": "Sort By: Latest",
-                                                                              "value": "desc",
-                                                                            },
-                                                                          ]
-                                                                        }
+                                                                        defaultValue="desc"
                                                                         domRef={
                                                                           Object {
                                                                             "current": <div
@@ -1131,8 +1119,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                           }
                                                                         }
                                                                         dropdownClassName=""
-                                                                        dropdownMatchSelectWidth={true}
-                                                                        emptyOptions={false}
                                                                         id="filters_sort"
                                                                         inputElement={null}
                                                                         inputIcon={[Function]}
@@ -1156,35 +1142,33 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                             />,
                                                                           }
                                                                         }
+                                                                        listHeight={256}
+                                                                        listItemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
                                                                         notFoundContent={
                                                                           <Context.Consumer>
                                                                             [Function]
                                                                           </Context.Consumer>
                                                                         }
-                                                                        omitDomProps={
-                                                                          Array [
-                                                                            "inputValue",
-                                                                          ]
-                                                                        }
-                                                                        onDisplayValuesChange={[Function]}
+                                                                        onChange={[Function]}
                                                                         onInputChange={[Function]}
                                                                         onInputCompositionEnd={[Function]}
                                                                         onInputCompositionStart={[Function]}
                                                                         onInputKeyDown={[Function]}
                                                                         onInputMouseDown={[Function]}
                                                                         onInputPaste={[Function]}
-                                                                        onRemove={[Function]}
                                                                         onSearch={[Function]}
-                                                                        onSearchSplit={[Function]}
                                                                         onSearchSubmit={[Function]}
+                                                                        onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
-                                                                        placement="bottomLeft"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -1200,7 +1184,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                           className="ant-select-selection-search"
                                                                         >
                                                                           <Input
-                                                                            activeDescendantId="filters_sort_list_0"
+                                                                            accessibilityIndex={0}
                                                                             attrs={Object {}}
                                                                             editable={false}
                                                                             id="filters_sort"
@@ -1355,32 +1339,22 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                                                 </span>
                                                               </TransBtn>
                                                             </div>
-                                                          </BaseSelect>
+                                                          </ForwardRef(Select)>
                                                         </Select>
                                                       </ForwardRef(InternalSelect)>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -1399,7 +1373,6 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             <Col>
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "paddingLeft": 8,
@@ -1422,9 +1395,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         disabled={false}
                                         type="primary"
                                       >
-                                        <Wave
-                                          disabled={false}
-                                        >
+                                        <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
                                             disabled={false}
@@ -1556,84 +1527,79 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               className="ant-list ant-list-split ant-list-grid ant-list-something-after-last-item"
                             >
                               <Spin
+                                size="default"
                                 spinning={false}
+                                wrapperClassName=""
                               >
-                                <Spin
-                                  size="default"
-                                  spinPrefixCls="ant-spin"
-                                  spinning={false}
-                                  wrapperClassName=""
+                                <div
+                                  className="ant-spin-nested-loading"
                                 >
                                   <div
-                                    className="ant-spin-nested-loading"
+                                    className="ant-spin-container"
+                                    key="container"
                                   >
                                     <div
-                                      className="ant-spin-container"
-                                      key="container"
+                                      className="ant-list-empty-text"
                                     >
-                                      <div
-                                        className="ant-list-empty-text"
+                                      <Empty
+                                        image={<Simple />}
                                       >
-                                        <Empty
-                                          image={<Simple />}
+                                        <LocaleReceiver
+                                          componentName="Empty"
                                         >
-                                          <LocaleReceiver
-                                            componentName="Empty"
+                                          <div
+                                            className="ant-empty ant-empty-normal"
                                           >
                                             <div
-                                              className="ant-empty ant-empty-normal"
+                                              className="ant-empty-image"
                                             >
-                                              <div
-                                                className="ant-empty-image"
-                                              >
-                                                <Simple>
-                                                  <svg
-                                                    className="ant-empty-img-simple"
-                                                    height="41"
-                                                    viewBox="0 0 64 41"
-                                                    width="64"
-                                                    xmlns="http://www.w3.org/2000/svg"
+                                              <Simple>
+                                                <svg
+                                                  className="ant-empty-img-simple"
+                                                  height="41"
+                                                  viewBox="0 0 64 41"
+                                                  width="64"
+                                                  xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                  <g
+                                                    fill="none"
+                                                    fillRule="evenodd"
+                                                    transform="translate(0 1)"
                                                   >
+                                                    <ellipse
+                                                      className="ant-empty-img-simple-ellipse"
+                                                      cx="32"
+                                                      cy="33"
+                                                      rx="32"
+                                                      ry="7"
+                                                    />
                                                     <g
-                                                      fill="none"
-                                                      fillRule="evenodd"
-                                                      transform="translate(0 1)"
+                                                      className="ant-empty-img-simple-g"
+                                                      fillRule="nonzero"
                                                     >
-                                                      <ellipse
-                                                        className="ant-empty-img-simple-ellipse"
-                                                        cx="32"
-                                                        cy="33"
-                                                        rx="32"
-                                                        ry="7"
+                                                      <path
+                                                        d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
                                                       />
-                                                      <g
-                                                        className="ant-empty-img-simple-g"
-                                                        fillRule="nonzero"
-                                                      >
-                                                        <path
-                                                          d="M55 12.76L44.854 1.258C44.367.474 43.656 0 42.907 0H21.093c-.749 0-1.46.474-1.947 1.257L9 12.761V22h46v-9.24z"
-                                                        />
-                                                        <path
-                                                          className="ant-empty-img-simple-path"
-                                                          d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
-                                                        />
-                                                      </g>
+                                                      <path
+                                                        className="ant-empty-img-simple-path"
+                                                        d="M41.613 15.931c0-1.605.994-2.93 2.227-2.931H55v18.137C55 33.26 53.68 35 52.05 35h-40.1C10.32 35 9 33.259 9 31.137V13h11.16c1.233 0 2.227 1.323 2.227 2.928v.022c0 1.605 1.005 2.901 2.237 2.901h14.752c1.232 0 2.237-1.308 2.237-2.913v-.007z"
+                                                      />
                                                     </g>
-                                                  </svg>
-                                                </Simple>
-                                              </div>
-                                              <div
-                                                className="ant-empty-description"
-                                              >
-                                                No Data
-                                              </div>
+                                                  </g>
+                                                </svg>
+                                              </Simple>
                                             </div>
-                                          </LocaleReceiver>
-                                        </Empty>
-                                      </div>
+                                            <div
+                                              className="ant-empty-description"
+                                            >
+                                              No Data
+                                            </div>
+                                          </div>
+                                        </LocaleReceiver>
+                                      </Empty>
                                     </div>
                                   </div>
-                                </Spin>
+                                </div>
                               </Spin>
                               <div
                                 className="ant-list-pagination"
@@ -1662,8 +1628,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         "next_3": "Next 3 Pages",
                                         "next_5": "Next 5 Pages",
                                         "next_page": "Next Page",
-                                        "page": "Page",
-                                        "page_size": "Page Size",
+                                        "page": "",
                                         "prev_3": "Previous 3 Pages",
                                         "prev_5": "Previous 5 Pages",
                                         "prev_page": "Previous Page",
@@ -1721,8 +1686,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           "next_3": "Next 3 Pages",
                                           "next_5": "Next 5 Pages",
                                           "next_page": "Next Page",
-                                          "page": "Page",
-                                          "page_size": "Page Size",
+                                          "page": "",
                                           "prev_3": "Previous 3 Pages",
                                           "prev_5": "Previous 5 Pages",
                                           "prev_page": "Previous Page",
@@ -1757,7 +1721,15 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           <ForwardRef(LeftOutlined) />
                                         </button>
                                       }
-                                      selectComponentClass={[Function]}
+                                      selectComponentClass={
+                                        Object {
+                                          "$$typeof": Symbol(react.forward_ref),
+                                          "OptGroup": [Function],
+                                          "Option": [Function],
+                                          "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                          "render": [Function],
+                                        }
+                                      }
                                       selectPrefixCls="ant-select"
                                       showLessItems={false}
                                       showPrevNextJumpers={true}
@@ -1860,7 +1832,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           </button>
                                         </li>
                                         <Pager
-                                          className="ant-pagination-item-disabled"
+                                          className="ant-pagination-disabled"
                                           itemRender={[Function]}
                                           key="noPager"
                                           locale={
@@ -1871,8 +1843,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                               "next_3": "Next 3 Pages",
                                               "next_5": "Next 5 Pages",
                                               "next_page": "Next Page",
-                                              "page": "Page",
-                                              "page_size": "Page Size",
+                                              "page": "",
                                               "prev_3": "Previous 3 Pages",
                                               "prev_5": "Previous 5 Pages",
                                               "prev_page": "Previous Page",
@@ -1880,21 +1851,21 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           }
                                           onClick={[Function]}
                                           onKeyPress={[Function]}
-                                          page={1}
+                                          page={0}
                                           rootPrefixCls="ant-pagination"
                                           showTitle={true}
                                         >
                                           <li
-                                            className="ant-pagination-item ant-pagination-item-1 ant-pagination-item-disabled"
+                                            className="ant-pagination-item ant-pagination-item-0 ant-pagination-disabled ant-pagination-item-disabled"
                                             onClick={[Function]}
                                             onKeyPress={[Function]}
                                             tabIndex="0"
-                                            title={1}
+                                            title={0}
                                           >
                                             <a
                                               rel="nofollow"
                                             >
-                                              1
+                                              0
                                             </a>
                                           </li>
                                         </Pager>
@@ -1997,8 +1968,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                               "next_3": "Next 3 Pages",
                                               "next_5": "Next 5 Pages",
                                               "next_page": "Next Page",
-                                              "page": "Page",
-                                              "page_size": "Page Size",
+                                              "page": "",
                                               "prev_3": "Previous 3 Pages",
                                               "prev_5": "Previous 5 Pages",
                                               "prev_page": "Previous Page",
@@ -2014,7 +1984,15 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                           }
                                           quickGo={null}
                                           rootPrefixCls="ant-pagination"
-                                          selectComponentClass={[Function]}
+                                          selectComponentClass={
+                                            Object {
+                                              "$$typeof": Symbol(react.forward_ref),
+                                              "OptGroup": [Function],
+                                              "Option": [Function],
+                                              "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                              "render": [Function],
+                                            }
+                                          }
                                           selectPrefixCls="ant-select"
                                         />
                                       </ul>
@@ -2149,11 +2127,9 @@ exports[`Media List component snapshot testing should render the component with 
                         "itemRef": [Function],
                         "name": "filters",
                       },
-                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -2195,11 +2171,9 @@ exports[`Media List component snapshot testing should render the component with 
                             "itemRef": [Function],
                             "name": "filters",
                           },
-                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
-                          "getFieldWarning": [Function],
                           "getFieldsError": [Function],
                           "getFieldsValue": [Function],
                           "getInternalHooks": [Function],
@@ -2257,7 +2231,6 @@ exports[`Media List component snapshot testing should render the component with 
                         >
                           <div
                             className="ant-row ant-row-end"
-                            role="row"
                             style={
                               Object {
                                 "marginBottom": "1rem",
@@ -2276,7 +2249,6 @@ exports[`Media List component snapshot testing should render the component with 
                             >
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "display": "flex",
@@ -2296,7 +2268,7 @@ exports[`Media List component snapshot testing should render the component with 
                                       }
                                     }
                                     name="q"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -2307,11 +2279,9 @@ exports[`Media List component snapshot testing should render the component with 
                                             "itemRef": [Function],
                                             "name": "filters",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -2339,7 +2309,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           "q",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -2350,7 +2320,6 @@ exports[`Media List component snapshot testing should render the component with 
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -2362,19 +2331,23 @@ exports[`Media List component snapshot testing should render the component with 
                                           />
                                           <FormItemInput
                                             errors={Array []}
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "q",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -2384,54 +2357,17 @@ exports[`Media List component snapshot testing should render the component with 
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <ForwardRef
-                                                          placeholder="Search media"
-                                                        />
-                                                      }
+                                                      update={2}
                                                     >
-                                                      <ForwardRef
+                                                      <Input
                                                         id="filters_q"
                                                         onChange={[Function]}
                                                         placeholder="Search media"
+                                                        type="text"
                                                       >
-                                                        <ForwardRef
-                                                          affixWrapperClassName=""
-                                                          groupClassName=""
-                                                          id="filters_q"
-                                                          inputClassName=""
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          placeholder="Search media"
-                                                          prefixCls="ant-input"
-                                                          wrapperClassName=""
-                                                        >
-                                                          <BaseInput
-                                                            affixWrapperClassName=""
-                                                            focused={false}
-                                                            groupClassName=""
-                                                            handleReset={[Function]}
-                                                            id="filters_q"
-                                                            inputElement={
-                                                              <input
-                                                                className="ant-input"
-                                                                id="filters_q"
-                                                                onBlur={[Function]}
-                                                                onChange={[Function]}
-                                                                onFocus={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                placeholder="Search media"
-                                                                type="text"
-                                                              />
-                                                            }
-                                                            placeholder="Search media"
-                                                            prefixCls="ant-input"
-                                                            suffix={null}
-                                                            triggerFocus={[Function]}
-                                                            value=""
-                                                            wrapperClassName=""
-                                                          >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
                                                             <input
                                                               className="ant-input"
                                                               id="filters_q"
@@ -2441,34 +2377,45 @@ exports[`Media List component snapshot testing should render the component with 
                                                               onKeyDown={[Function]}
                                                               placeholder="Search media"
                                                               type="text"
-                                                              value=""
                                                             />
-                                                          </BaseInput>
-                                                        </ForwardRef>
-                                                      </ForwardRef>
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="filters_q"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          placeholder="Search media"
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        >
+                                                          <input
+                                                            className="ant-input"
+                                                            id="filters_q"
+                                                            onBlur={[Function]}
+                                                            onChange={[Function]}
+                                                            onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            placeholder="Search media"
+                                                            type="text"
+                                                            value=""
+                                                          />
+                                                        </ClearableLabeledInput>
+                                                      </Input>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -2489,7 +2436,6 @@ exports[`Media List component snapshot testing should render the component with 
                                   >
                                     <div
                                       className="ant-row ant-form-item"
-                                      role="row"
                                       style={Object {}}
                                     >
                                       <FormItemLabel
@@ -2498,19 +2444,16 @@ exports[`Media List component snapshot testing should render the component with 
                                       />
                                       <FormItemInput
                                         errors={Array []}
-                                        name={Array []}
+                                        onDomErrorVisibleChange={[Function]}
                                         prefixCls="ant-form"
                                         status=""
-                                        touched={false}
-                                        validating={false}
-                                        warnings={Array []}
+                                        validateStatus=""
                                       >
                                         <Col
                                           className="ant-form-item-control"
                                         >
                                           <div
                                             className="ant-col ant-form-item-control"
-                                            role="cell"
                                             style={Object {}}
                                           >
                                             <div
@@ -2522,11 +2465,9 @@ exports[`Media List component snapshot testing should render the component with 
                                                 <Button
                                                   htmlType="submit"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
-                                                      className="ant-btn ant-btn-default"
+                                                      className="ant-btn"
                                                       onClick={[Function]}
                                                       type="submit"
                                                     >
@@ -2560,25 +2501,15 @@ exports[`Media List component snapshot testing should render the component with 
                                               </div>
                                             </div>
                                             <ErrorList
-                                              className="ant-form-item-explain-connected"
                                               errors={Array []}
-                                              helpStatus=""
-                                              warnings={Array []}
+                                              onDomErrorVisibleChange={[Function]}
                                             >
                                               <CSSMotion
-                                                motionAppear={false}
+                                                motionAppear={true}
                                                 motionDeadline={500}
-                                                motionEnter={false}
                                                 motionName="ant-show-help"
-                                                onAppearActive={[Function]}
-                                                onAppearEnd={[Function]}
-                                                onAppearStart={[Function]}
-                                                onEnterActive={[Function]}
-                                                onEnterEnd={[Function]}
-                                                onEnterStart={[Function]}
-                                                onLeaveActive={[Function]}
                                                 onLeaveEnd={[Function]}
-                                                onLeaveStart={[Function]}
+                                                removeOnLeave={true}
                                                 visible={false}
                                               >
                                                 <DomWrapper />
@@ -2595,7 +2526,6 @@ exports[`Media List component snapshot testing should render the component with 
                             <Col>
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "paddingLeft": 8,
@@ -2613,7 +2543,7 @@ exports[`Media List component snapshot testing should render the component with 
                                       }
                                     }
                                     name="sort"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -2624,11 +2554,9 @@ exports[`Media List component snapshot testing should render the component with 
                                             "itemRef": [Function],
                                             "name": "filters",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -2656,7 +2584,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           "sort",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -2667,7 +2595,6 @@ exports[`Media List component snapshot testing should render the component with 
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -2679,19 +2606,23 @@ exports[`Media List component snapshot testing should render the component with 
                                           />
                                           <FormItemInput
                                             errors={Array []}
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "sort",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -2701,22 +2632,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <ForwardRef(InternalSelect)
-                                                          defaultValue="desc"
-                                                        >
-                                                          <Option
-                                                            value="desc"
-                                                          >
-                                                            Sort By: Latest
-                                                          </Option>
-                                                          <Option
-                                                            value="asc"
-                                                          >
-                                                            Sort By:Old
-                                                          </Option>
-                                                        </ForwardRef(InternalSelect)>
-                                                      }
+                                                      update={2}
                                                       value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
@@ -2726,7 +2642,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                         value="desc"
                                                       >
                                                         <Select
-                                                          className="ant-select-in-form-item"
+                                                          className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue="desc"
                                                           dropdownClassName=""
@@ -2741,60 +2657,34 @@ exports[`Media List component snapshot testing should render the component with 
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
-                                                          placement="bottomLeft"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
                                                           value="desc"
                                                         >
-                                                          <BaseSelect
-                                                            OptionList={
-                                                              Object {
-                                                                "$$typeof": Symbol(react.forward_ref),
-                                                                "displayName": "OptionList",
-                                                                "render": [Function],
-                                                              }
-                                                            }
-                                                            activeDescendantId="filters_sort_list_0"
-                                                            activeValue={null}
-                                                            className="ant-select-in-form-item"
+                                                          <ForwardRef(Select)
+                                                            className=""
                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                            displayValues={
-                                                              Array [
-                                                                Object {
-                                                                  "disabled": undefined,
-                                                                  "key": "desc",
-                                                                  "label": "Sort By: Latest",
-                                                                  "value": "desc",
-                                                                },
-                                                              ]
-                                                            }
+                                                            defaultValue="desc"
                                                             dropdownClassName=""
-                                                            dropdownMatchSelectWidth={true}
-                                                            emptyOptions={false}
                                                             id="filters_sort"
                                                             inputIcon={[Function]}
+                                                            listHeight={256}
+                                                            listItemHeight={24}
+                                                            menuItemSelectedIcon={null}
                                                             notFoundContent={
                                                               <Context.Consumer>
                                                                 [Function]
                                                               </Context.Consumer>
                                                             }
-                                                            omitDomProps={
-                                                              Array [
-                                                                "inputValue",
-                                                              ]
-                                                            }
-                                                            onDisplayValuesChange={[Function]}
-                                                            onSearch={[Function]}
-                                                            onSearchSplit={[Function]}
-                                                            placement="bottomLeft"
+                                                            onChange={[Function]}
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
-                                                            searchValue=""
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
-                                                              className="ant-select ant-select-in-form-item ant-select-single ant-select-show-arrow"
+                                                              className="ant-select ant-select-single ant-select-show-arrow"
                                                               onBlur={[Function]}
                                                               onFocus={[Function]}
                                                               onKeyDown={[Function]}
@@ -2804,12 +2694,72 @@ exports[`Media List component snapshot testing should render the component with 
                                                               <SelectTrigger
                                                                 containerWidth={null}
                                                                 dropdownClassName=""
-                                                                dropdownMatchSelectWidth={true}
                                                                 empty={false}
                                                                 getTriggerDOMNode={[Function]}
-                                                                onPopupMouseEnter={[Function]}
-                                                                placement="bottomLeft"
-                                                                popupElement={<ForwardRef(OptionList) />}
+                                                                popupElement={
+                                                                  <ForwardRef(OptionList)
+                                                                    childrenAsData={true}
+                                                                    defaultActiveFirstOption={true}
+                                                                    flattenOptions={
+                                                                      Array [
+                                                                        Object {
+                                                                          "data": Object {
+                                                                            "children": "Sort By: Latest",
+                                                                            "key": null,
+                                                                            "value": "desc",
+                                                                          },
+                                                                          "groupOption": false,
+                                                                          "key": "desc",
+                                                                        },
+                                                                        Object {
+                                                                          "data": Object {
+                                                                            "children": "Sort By:Old",
+                                                                            "key": null,
+                                                                            "value": "asc",
+                                                                          },
+                                                                          "groupOption": false,
+                                                                          "key": "asc",
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                    height={256}
+                                                                    id="filters_sort"
+                                                                    itemHeight={24}
+                                                                    menuItemSelectedIcon={null}
+                                                                    multiple={false}
+                                                                    notFoundContent={
+                                                                      <Context.Consumer>
+                                                                        [Function]
+                                                                      </Context.Consumer>
+                                                                    }
+                                                                    onActiveValue={[Function]}
+                                                                    onMouseEnter={[Function]}
+                                                                    onSelect={[Function]}
+                                                                    onToggleOpen={[Function]}
+                                                                    options={
+                                                                      Array [
+                                                                        Object {
+                                                                          "children": "Sort By: Latest",
+                                                                          "key": null,
+                                                                          "value": "desc",
+                                                                        },
+                                                                        Object {
+                                                                          "children": "Sort By:Old",
+                                                                          "key": null,
+                                                                          "value": "asc",
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                    prefixCls="ant-select"
+                                                                    searchValue=""
+                                                                    values={
+                                                                      Set {
+                                                                        "desc",
+                                                                      }
+                                                                    }
+                                                                    virtual={true}
+                                                                  />
+                                                                }
                                                                 prefixCls="ant-select"
                                                                 transitionName="ant-slide-up"
                                                               >
@@ -2892,10 +2842,69 @@ exports[`Media List component snapshot testing should render the component with 
                                                                   onPopupAlign={[Function]}
                                                                   onPopupVisibleChange={[Function]}
                                                                   popup={
-                                                                    <div
-                                                                      onMouseEnter={[Function]}
-                                                                    >
-                                                                      <ForwardRef(OptionList) />
+                                                                    <div>
+                                                                      <ForwardRef(OptionList)
+                                                                        childrenAsData={true}
+                                                                        defaultActiveFirstOption={true}
+                                                                        flattenOptions={
+                                                                          Array [
+                                                                            Object {
+                                                                              "data": Object {
+                                                                                "children": "Sort By: Latest",
+                                                                                "key": null,
+                                                                                "value": "desc",
+                                                                              },
+                                                                              "groupOption": false,
+                                                                              "key": "desc",
+                                                                            },
+                                                                            Object {
+                                                                              "data": Object {
+                                                                                "children": "Sort By:Old",
+                                                                                "key": null,
+                                                                                "value": "asc",
+                                                                              },
+                                                                              "groupOption": false,
+                                                                              "key": "asc",
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        height={256}
+                                                                        id="filters_sort"
+                                                                        itemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
+                                                                        notFoundContent={
+                                                                          <Context.Consumer>
+                                                                            [Function]
+                                                                          </Context.Consumer>
+                                                                        }
+                                                                        onActiveValue={[Function]}
+                                                                        onMouseEnter={[Function]}
+                                                                        onSelect={[Function]}
+                                                                        onToggleOpen={[Function]}
+                                                                        options={
+                                                                          Array [
+                                                                            Object {
+                                                                              "children": "Sort By: Latest",
+                                                                              "key": null,
+                                                                              "value": "desc",
+                                                                            },
+                                                                            Object {
+                                                                              "children": "Sort By:Old",
+                                                                              "key": null,
+                                                                              "value": "asc",
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        prefixCls="ant-select"
+                                                                        searchValue=""
+                                                                        values={
+                                                                          Set {
+                                                                            "desc",
+                                                                          }
+                                                                        }
+                                                                        virtual={true}
+                                                                      />
                                                                     </div>
                                                                   }
                                                                   popupAlign={Object {}}
@@ -2912,27 +2921,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                   showAction={Array []}
                                                                 >
                                                                   <Selector
-                                                                    OptionList={
-                                                                      Object {
-                                                                        "$$typeof": Symbol(react.forward_ref),
-                                                                        "displayName": "OptionList",
-                                                                        "render": [Function],
-                                                                      }
-                                                                    }
-                                                                    activeDescendantId="filters_sort_list_0"
+                                                                    accessibilityIndex={0}
                                                                     activeValue={null}
-                                                                    className="ant-select-in-form-item"
+                                                                    className=""
                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                    displayValues={
-                                                                      Array [
-                                                                        Object {
-                                                                          "disabled": undefined,
-                                                                          "key": "desc",
-                                                                          "label": "Sort By: Latest",
-                                                                          "value": "desc",
-                                                                        },
-                                                                      ]
-                                                                    }
+                                                                    defaultValue="desc"
                                                                     domRef={
                                                                       Object {
                                                                         "current": <div
@@ -2968,35 +2961,31 @@ exports[`Media List component snapshot testing should render the component with 
                                                                       }
                                                                     }
                                                                     dropdownClassName=""
-                                                                    dropdownMatchSelectWidth={true}
-                                                                    emptyOptions={false}
                                                                     id="filters_sort"
                                                                     inputElement={null}
                                                                     inputIcon={[Function]}
                                                                     key="trigger"
+                                                                    listHeight={256}
+                                                                    listItemHeight={24}
+                                                                    menuItemSelectedIcon={null}
+                                                                    multiple={false}
                                                                     notFoundContent={
                                                                       <Context.Consumer>
                                                                         [Function]
                                                                       </Context.Consumer>
                                                                     }
-                                                                    omitDomProps={
-                                                                      Array [
-                                                                        "inputValue",
-                                                                      ]
-                                                                    }
-                                                                    onDisplayValuesChange={[Function]}
-                                                                    onRemove={[Function]}
+                                                                    onChange={[Function]}
                                                                     onSearch={[Function]}
-                                                                    onSearchSplit={[Function]}
                                                                     onSearchSubmit={[Function]}
+                                                                    onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
-                                                                    placement="bottomLeft"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
                                                                     showSearch={false}
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
@@ -3014,27 +3003,11 @@ exports[`Media List component snapshot testing should render the component with 
                                                                       onMouseDown={[Function]}
                                                                     >
                                                                       <SingleSelector
-                                                                        OptionList={
-                                                                          Object {
-                                                                            "$$typeof": Symbol(react.forward_ref),
-                                                                            "displayName": "OptionList",
-                                                                            "render": [Function],
-                                                                          }
-                                                                        }
-                                                                        activeDescendantId="filters_sort_list_0"
+                                                                        accessibilityIndex={0}
                                                                         activeValue={null}
-                                                                        className="ant-select-in-form-item"
+                                                                        className=""
                                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                        displayValues={
-                                                                          Array [
-                                                                            Object {
-                                                                              "disabled": undefined,
-                                                                              "key": "desc",
-                                                                              "label": "Sort By: Latest",
-                                                                              "value": "desc",
-                                                                            },
-                                                                          ]
-                                                                        }
+                                                                        defaultValue="desc"
                                                                         domRef={
                                                                           Object {
                                                                             "current": <div
@@ -3070,8 +3043,6 @@ exports[`Media List component snapshot testing should render the component with 
                                                                           }
                                                                         }
                                                                         dropdownClassName=""
-                                                                        dropdownMatchSelectWidth={true}
-                                                                        emptyOptions={false}
                                                                         id="filters_sort"
                                                                         inputElement={null}
                                                                         inputIcon={[Function]}
@@ -3095,35 +3066,33 @@ exports[`Media List component snapshot testing should render the component with 
                                                                             />,
                                                                           }
                                                                         }
+                                                                        listHeight={256}
+                                                                        listItemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
                                                                         notFoundContent={
                                                                           <Context.Consumer>
                                                                             [Function]
                                                                           </Context.Consumer>
                                                                         }
-                                                                        omitDomProps={
-                                                                          Array [
-                                                                            "inputValue",
-                                                                          ]
-                                                                        }
-                                                                        onDisplayValuesChange={[Function]}
+                                                                        onChange={[Function]}
                                                                         onInputChange={[Function]}
                                                                         onInputCompositionEnd={[Function]}
                                                                         onInputCompositionStart={[Function]}
                                                                         onInputKeyDown={[Function]}
                                                                         onInputMouseDown={[Function]}
                                                                         onInputPaste={[Function]}
-                                                                        onRemove={[Function]}
                                                                         onSearch={[Function]}
-                                                                        onSearchSplit={[Function]}
                                                                         onSearchSubmit={[Function]}
+                                                                        onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
-                                                                        placement="bottomLeft"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
                                                                         showSearch={false}
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
@@ -3139,7 +3108,7 @@ exports[`Media List component snapshot testing should render the component with 
                                                                           className="ant-select-selection-search"
                                                                         >
                                                                           <Input
-                                                                            activeDescendantId="filters_sort_list_0"
+                                                                            accessibilityIndex={0}
                                                                             attrs={Object {}}
                                                                             editable={false}
                                                                             id="filters_sort"
@@ -3294,32 +3263,22 @@ exports[`Media List component snapshot testing should render the component with 
                                                                 </span>
                                                               </TransBtn>
                                                             </div>
-                                                          </BaseSelect>
+                                                          </ForwardRef(Select)>
                                                         </Select>
                                                       </ForwardRef(InternalSelect)>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -3338,7 +3297,6 @@ exports[`Media List component snapshot testing should render the component with 
                             <Col>
                               <div
                                 className="ant-col"
-                                role="cell"
                                 style={
                                   Object {
                                     "paddingLeft": 8,
@@ -3361,9 +3319,7 @@ exports[`Media List component snapshot testing should render the component with 
                                         disabled={false}
                                         type="primary"
                                       >
-                                        <Wave
-                                          disabled={false}
-                                        >
+                                        <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
                                             disabled={false}
@@ -3515,92 +3471,111 @@ exports[`Media List component snapshot testing should render the component with 
                               className="ant-list ant-list-split ant-list-grid ant-list-something-after-last-item"
                             >
                               <Spin
+                                size="default"
                                 spinning={false}
+                                wrapperClassName=""
                               >
-                                <Spin
-                                  size="default"
-                                  spinPrefixCls="ant-spin"
-                                  spinning={false}
-                                  wrapperClassName=""
+                                <div
+                                  className="ant-spin-nested-loading"
                                 >
                                   <div
-                                    className="ant-spin-nested-loading"
+                                    className="ant-spin-container"
+                                    key="container"
                                   >
-                                    <div
-                                      className="ant-spin-container"
-                                      key="container"
+                                    <Row
+                                      gutter={16}
                                     >
-                                      <Row
-                                        gutter={16}
+                                      <div
+                                        className="ant-row"
+                                        style={
+                                          Object {
+                                            "marginLeft": -8,
+                                            "marginRight": -8,
+                                          }
+                                        }
                                       >
                                         <div
-                                          className="ant-row"
-                                          role="row"
-                                          style={
-                                            Object {
-                                              "marginLeft": -8,
-                                              "marginRight": -8,
-                                            }
-                                          }
+                                          key="list-item-0/.0"
                                         >
-                                          <div
-                                            key="list-item-0/.0"
-                                          >
-                                            <ForwardRef(InternalItem)>
-                                              <Col
-                                                flex={1}
+                                          <Item>
+                                            <Col
+                                              flex={1}
+                                            >
+                                              <div
+                                                className="ant-col"
+                                                style={
+                                                  Object {
+                                                    "flex": "1 1 auto",
+                                                    "paddingLeft": 8,
+                                                    "paddingRight": 8,
+                                                  }
+                                                }
                                               >
                                                 <div
-                                                  className="ant-col"
-                                                  role="cell"
-                                                  style={
-                                                    Object {
-                                                      "flex": "1 1 auto",
-                                                      "paddingLeft": 8,
-                                                      "paddingRight": 8,
-                                                    }
-                                                  }
+                                                  className="ant-list-item"
                                                 >
-                                                  <div
-                                                    className="ant-list-item"
+                                                  <Link
+                                                    style={
+                                                      Object {
+                                                        "marginRight": 8,
+                                                      }
+                                                    }
+                                                    to={
+                                                      Object {
+                                                        "pathname": "/media/1/edit",
+                                                      }
+                                                    }
                                                   >
-                                                    <Link
+                                                    <LinkAnchor
+                                                      href="/media/1/edit"
+                                                      navigate={[Function]}
                                                       style={
                                                         Object {
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to={
-                                                        Object {
-                                                          "pathname": "/media/1/edit",
-                                                        }
-                                                      }
                                                     >
-                                                      <LinkAnchor
+                                                      <a
                                                         href="/media/1/edit"
-                                                        navigate={[Function]}
+                                                        onClick={[Function]}
                                                         style={
                                                           Object {
                                                             "marginRight": 8,
                                                           }
                                                         }
                                                       >
-                                                        <a
-                                                          href="/media/1/edit"
-                                                          onClick={[Function]}
-                                                          style={
+                                                        <Card
+                                                          bodyStyle={
                                                             Object {
-                                                              "marginRight": 8,
+                                                              "padding": 0,
                                                             }
                                                           }
-                                                        >
-                                                          <ForwardRef
-                                                            bodyStyle={
-                                                              Object {
-                                                                "padding": 0,
+                                                          cover={
+                                                            <img
+                                                              alt="ALT"
+                                                              src=""
+                                                              style={
+                                                                Object {
+                                                                  "height": "220px",
+                                                                  "maxWidth": "100%",
+                                                                  "objectFit": "cover",
+                                                                  "objectPosition": "center center",
+                                                                  "width": "100%",
+                                                                }
                                                               }
-                                                            }
-                                                            cover={
+                                                              title="name"
+                                                            />
+                                                          }
+                                                          hoverable={true}
+                                                          key="some-url"
+                                                          size="default"
+                                                        >
+                                                          <div
+                                                            className="ant-card ant-card-bordered ant-card-hoverable ant-card-default"
+                                                          >
+                                                            <div
+                                                              className="ant-card-cover"
+                                                            >
                                                               <img
                                                                 alt="ALT"
                                                                 src=""
@@ -3615,55 +3590,29 @@ exports[`Media List component snapshot testing should render the component with 
                                                                 }
                                                                 title="name"
                                                               />
-                                                            }
-                                                            hoverable={true}
-                                                            key="some-url"
-                                                            size="default"
-                                                          >
-                                                            <div
-                                                              className="ant-card ant-card-bordered ant-card-hoverable ant-card-default"
-                                                            >
-                                                              <div
-                                                                className="ant-card-cover"
-                                                              >
-                                                                <img
-                                                                  alt="ALT"
-                                                                  src=""
-                                                                  style={
-                                                                    Object {
-                                                                      "height": "220px",
-                                                                      "maxWidth": "100%",
-                                                                      "objectFit": "cover",
-                                                                      "objectPosition": "center center",
-                                                                      "width": "100%",
-                                                                    }
-                                                                  }
-                                                                  title="name"
-                                                                />
-                                                              </div>
-                                                              <div
-                                                                className="ant-card-body"
-                                                                style={
-                                                                  Object {
-                                                                    "padding": 0,
-                                                                  }
-                                                                }
-                                                              />
                                                             </div>
-                                                          </ForwardRef>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
-                                                  </div>
+                                                            <div
+                                                              className="ant-card-body"
+                                                              style={
+                                                                Object {
+                                                                  "padding": 0,
+                                                                }
+                                                              }
+                                                            />
+                                                          </div>
+                                                        </Card>
+                                                      </a>
+                                                    </LinkAnchor>
+                                                  </Link>
                                                 </div>
-                                              </Col>
-                                            </ForwardRef(InternalItem)>
-                                          </div>
+                                              </div>
+                                            </Col>
+                                          </Item>
                                         </div>
-                                      </Row>
-                                    </div>
+                                      </div>
+                                    </Row>
                                   </div>
-                                </Spin>
+                                </div>
                               </Spin>
                               <div
                                 className="ant-list-pagination"
@@ -3692,8 +3641,7 @@ exports[`Media List component snapshot testing should render the component with 
                                         "next_3": "Next 3 Pages",
                                         "next_5": "Next 5 Pages",
                                         "next_page": "Next Page",
-                                        "page": "Page",
-                                        "page_size": "Page Size",
+                                        "page": "",
                                         "prev_3": "Previous 3 Pages",
                                         "prev_5": "Previous 5 Pages",
                                         "prev_page": "Previous Page",
@@ -3751,8 +3699,7 @@ exports[`Media List component snapshot testing should render the component with 
                                           "next_3": "Next 3 Pages",
                                           "next_5": "Next 5 Pages",
                                           "next_page": "Next Page",
-                                          "page": "Page",
-                                          "page_size": "Page Size",
+                                          "page": "",
                                           "prev_3": "Previous 3 Pages",
                                           "prev_5": "Previous 5 Pages",
                                           "prev_page": "Previous Page",
@@ -3787,7 +3734,15 @@ exports[`Media List component snapshot testing should render the component with 
                                           <ForwardRef(LeftOutlined) />
                                         </button>
                                       }
-                                      selectComponentClass={[Function]}
+                                      selectComponentClass={
+                                        Object {
+                                          "$$typeof": Symbol(react.forward_ref),
+                                          "OptGroup": [Function],
+                                          "Option": [Function],
+                                          "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                          "render": [Function],
+                                        }
+                                      }
                                       selectPrefixCls="ant-select"
                                       showLessItems={false}
                                       showPrevNextJumpers={true}
@@ -3901,8 +3856,7 @@ exports[`Media List component snapshot testing should render the component with 
                                               "next_3": "Next 3 Pages",
                                               "next_5": "Next 5 Pages",
                                               "next_page": "Next Page",
-                                              "page": "Page",
-                                              "page_size": "Page Size",
+                                              "page": "",
                                               "prev_3": "Previous 3 Pages",
                                               "prev_5": "Previous 5 Pages",
                                               "prev_page": "Previous Page",
@@ -4027,8 +3981,7 @@ exports[`Media List component snapshot testing should render the component with 
                                               "next_3": "Next 3 Pages",
                                               "next_5": "Next 5 Pages",
                                               "next_page": "Next Page",
-                                              "page": "Page",
-                                              "page_size": "Page Size",
+                                              "page": "",
                                               "prev_3": "Previous 3 Pages",
                                               "prev_5": "Previous 5 Pages",
                                               "prev_page": "Previous Page",
@@ -4044,7 +3997,15 @@ exports[`Media List component snapshot testing should render the component with 
                                           }
                                           quickGo={null}
                                           rootPrefixCls="ant-pagination"
-                                          selectComponentClass={[Function]}
+                                          selectComponentClass={
+                                            Object {
+                                              "$$typeof": Symbol(react.forward_ref),
+                                              "OptGroup": [Function],
+                                              "Option": [Function],
+                                              "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
+                                              "render": [Function],
+                                            }
+                                          }
                                           selectPrefixCls="ant-select"
                                         />
                                       </ul>

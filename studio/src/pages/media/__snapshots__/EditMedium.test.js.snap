@@ -490,7 +490,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
         >
           <div
             className="ant-row"
-            role="row"
             style={
               Object {
                 "marginBottom": -10,
@@ -522,7 +521,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
             >
               <div
                 className="ant-col ant-col-24"
-                role="cell"
                 style={
                   Object {
                     "paddingBottom": 10,
@@ -544,11 +542,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                       onClick={[Function]}
                     >
                       <Button>
-                        <Wave
-                          disabled={false}
-                        >
+                        <Wave>
                           <button
-                            className="ant-btn ant-btn-default"
+                            className="ant-btn"
                             onClick={[Function]}
                             type="button"
                           >
@@ -662,7 +658,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
             >
               <div
                 className="ant-col ant-col-12"
-                role="cell"
                 style={
                   Object {
                     "paddingBottom": 10,
@@ -692,7 +687,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
             >
               <div
                 className="ant-col ant-col-12"
-                role="cell"
                 style={
                   Object {
                     "paddingBottom": 10,
@@ -709,11 +703,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                         "itemRef": [Function],
                         "name": "create-space",
                       },
-                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -753,11 +745,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                             "itemRef": [Function],
                             "name": "create-space",
                           },
-                          "_init": true,
                           "getFieldError": [Function],
                           "getFieldInstance": [Function],
                           "getFieldValue": [Function],
-                          "getFieldWarning": [Function],
                           "getFieldsError": [Function],
                           "getFieldsValue": [Function],
                           "getInternalHooks": [Function],
@@ -828,7 +818,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                 }
                               }
                               name="name"
-                              onMetaChange={[Function]}
+                              onReset={[Function]}
                               rules={
                                 Array [
                                   Object {
@@ -851,11 +841,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                       "itemRef": [Function],
                                       "name": "create-space",
                                     },
-                                    "_init": true,
                                     "getFieldError": [Function],
                                     "getFieldInstance": [Function],
                                     "getFieldValue": [Function],
-                                    "getFieldWarning": [Function],
                                     "getFieldsError": [Function],
                                     "getFieldsValue": [Function],
                                     "getInternalHooks": [Function],
@@ -884,7 +872,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     "name",
                                   ]
                                 }
-                                onMetaChange={[Function]}
+                                onReset={[Function]}
                                 rules={
                                   Array [
                                     Object {
@@ -907,7 +895,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                 >
                                   <div
                                     className="ant-row ant-form-item"
-                                    role="row"
                                     style={Object {}}
                                   >
                                     <FormItemLabel
@@ -935,7 +922,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                       >
                                         <div
                                           className="ant-col ant-form-item-label"
-                                          role="cell"
                                           style={Object {}}
                                         >
                                           <label
@@ -951,7 +937,12 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     <FormItemInput
                                       errors={Array []}
                                       label="Name"
-                                      name={Array []}
+                                      name={
+                                        Array [
+                                          "name",
+                                        ]
+                                      }
+                                      onDomErrorVisibleChange={[Function]}
                                       prefixCls="ant-form"
                                       rules={
                                         Array [
@@ -967,15 +958,14 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                       }
                                       status=""
                                       touched={false}
+                                      validateStatus=""
                                       validating={false}
-                                      warnings={Array []}
                                     >
                                       <Col
                                         className="ant-form-item-control"
                                       >
                                         <div
                                           className="ant-col ant-form-item-control"
-                                          role="cell"
                                           style={Object {}}
                                         >
                                           <div
@@ -985,58 +975,20 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                               className="ant-form-item-control-input-content"
                                             >
                                               <Component
-                                                update={
-                                                  <ForwardRef
-                                                    disabled={true}
-                                                  />
-                                                }
+                                                update={2}
                                                 value="name"
                                               >
-                                                <ForwardRef
+                                                <Input
                                                   disabled={true}
                                                   id="create-space_name"
                                                   onChange={[Function]}
+                                                  type="text"
                                                   value="name"
                                                 >
-                                                  <ForwardRef
-                                                    affixWrapperClassName=""
+                                                  <ClearableLabeledInput
+                                                    bordered={true}
                                                     disabled={true}
-                                                    groupClassName=""
-                                                    id="create-space_name"
-                                                    inputClassName=""
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    prefixCls="ant-input"
-                                                    value="name"
-                                                    wrapperClassName=""
-                                                  >
-                                                    <BaseInput
-                                                      affixWrapperClassName=""
-                                                      disabled={true}
-                                                      focused={false}
-                                                      groupClassName=""
-                                                      handleReset={[Function]}
-                                                      id="create-space_name"
-                                                      inputElement={
-                                                        <input
-                                                          className="ant-input ant-input-disabled"
-                                                          disabled={true}
-                                                          id="create-space_name"
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          type="text"
-                                                          value="name"
-                                                        />
-                                                      }
-                                                      prefixCls="ant-input"
-                                                      suffix={null}
-                                                      triggerFocus={[Function]}
-                                                      value="name"
-                                                      wrapperClassName=""
-                                                    >
+                                                    element={
                                                       <input
                                                         className="ant-input ant-input-disabled"
                                                         disabled={true}
@@ -1048,32 +1000,43 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         type="text"
                                                         value="name"
                                                       />
-                                                    </BaseInput>
-                                                  </ForwardRef>
-                                                </ForwardRef>
+                                                    }
+                                                    focused={false}
+                                                    handleReset={[Function]}
+                                                    id="create-space_name"
+                                                    inputType="input"
+                                                    onChange={[Function]}
+                                                    prefixCls="ant-input"
+                                                    triggerFocus={[Function]}
+                                                    type="text"
+                                                    value="name"
+                                                  >
+                                                    <input
+                                                      className="ant-input ant-input-disabled"
+                                                      disabled={true}
+                                                      id="create-space_name"
+                                                      onBlur={[Function]}
+                                                      onChange={[Function]}
+                                                      onFocus={[Function]}
+                                                      onKeyDown={[Function]}
+                                                      type="text"
+                                                      value="name"
+                                                    />
+                                                  </ClearableLabeledInput>
+                                                </Input>
                                               </Component>
                                             </div>
                                           </div>
                                           <ErrorList
-                                            className="ant-form-item-explain-connected"
                                             errors={Array []}
-                                            helpStatus=""
-                                            warnings={Array []}
+                                            onDomErrorVisibleChange={[Function]}
                                           >
                                             <CSSMotion
-                                              motionAppear={false}
+                                              motionAppear={true}
                                               motionDeadline={500}
-                                              motionEnter={false}
                                               motionName="ant-show-help"
-                                              onAppearActive={[Function]}
-                                              onAppearEnd={[Function]}
-                                              onAppearStart={[Function]}
-                                              onEnterActive={[Function]}
-                                              onEnterEnd={[Function]}
-                                              onEnterStart={[Function]}
-                                              onLeaveActive={[Function]}
                                               onLeaveEnd={[Function]}
-                                              onLeaveStart={[Function]}
+                                              removeOnLeave={true}
                                               visible={false}
                                             >
                                               <DomWrapper />
@@ -1100,7 +1063,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               }
                             }
                             name="alt_text"
-                            onMetaChange={[Function]}
+                            onReset={[Function]}
                             trigger="onChange"
                             validateTrigger="onChange"
                           >
@@ -1111,11 +1074,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     "itemRef": [Function],
                                     "name": "create-space",
                                   },
-                                  "_init": true,
                                   "getFieldError": [Function],
                                   "getFieldInstance": [Function],
                                   "getFieldValue": [Function],
-                                  "getFieldWarning": [Function],
                                   "getFieldsError": [Function],
                                   "getFieldsValue": [Function],
                                   "getInternalHooks": [Function],
@@ -1144,7 +1105,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   "alt_text",
                                 ]
                               }
-                              onMetaChange={[Function]}
+                              onReset={[Function]}
                               trigger="onChange"
                               validateTrigger="onChange"
                               valuePropName="value"
@@ -1155,7 +1116,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               >
                                 <div
                                   className="ant-row ant-form-item"
-                                  role="row"
                                   style={Object {}}
                                 >
                                   <FormItemLabel
@@ -1171,7 +1131,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <label
@@ -1187,19 +1146,23 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   <FormItemInput
                                     errors={Array []}
                                     label="Alt Text"
-                                    name={Array []}
+                                    name={
+                                      Array [
+                                        "alt_text",
+                                      ]
+                                    }
+                                    onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
                                     status=""
                                     touched={false}
+                                    validateStatus=""
                                     validating={false}
-                                    warnings={Array []}
                                   >
                                     <Col
                                       className="ant-form-item-control"
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <div
@@ -1209,54 +1172,18 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                             className="ant-form-item-control-input-content"
                                           >
                                             <Component
-                                              update={
-                                                <ForwardRef
-                                                  disabled={true}
-                                                />
-                                              }
+                                              update={2}
                                             >
-                                              <ForwardRef
+                                              <Input
                                                 disabled={true}
                                                 id="create-space_alt_text"
                                                 onChange={[Function]}
+                                                type="text"
                                               >
-                                                <ForwardRef
-                                                  affixWrapperClassName=""
+                                                <ClearableLabeledInput
+                                                  bordered={true}
                                                   disabled={true}
-                                                  groupClassName=""
-                                                  id="create-space_alt_text"
-                                                  inputClassName=""
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  prefixCls="ant-input"
-                                                  wrapperClassName=""
-                                                >
-                                                  <BaseInput
-                                                    affixWrapperClassName=""
-                                                    disabled={true}
-                                                    focused={false}
-                                                    groupClassName=""
-                                                    handleReset={[Function]}
-                                                    id="create-space_alt_text"
-                                                    inputElement={
-                                                      <input
-                                                        className="ant-input ant-input-disabled"
-                                                        disabled={true}
-                                                        id="create-space_alt_text"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        type="text"
-                                                      />
-                                                    }
-                                                    prefixCls="ant-input"
-                                                    suffix={null}
-                                                    triggerFocus={[Function]}
-                                                    value=""
-                                                    wrapperClassName=""
-                                                  >
+                                                  element={
                                                     <input
                                                       className="ant-input ant-input-disabled"
                                                       disabled={true}
@@ -1266,34 +1193,44 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       onFocus={[Function]}
                                                       onKeyDown={[Function]}
                                                       type="text"
-                                                      value=""
                                                     />
-                                                  </BaseInput>
-                                                </ForwardRef>
-                                              </ForwardRef>
+                                                  }
+                                                  focused={false}
+                                                  handleReset={[Function]}
+                                                  id="create-space_alt_text"
+                                                  inputType="input"
+                                                  onChange={[Function]}
+                                                  prefixCls="ant-input"
+                                                  triggerFocus={[Function]}
+                                                  type="text"
+                                                  value=""
+                                                >
+                                                  <input
+                                                    className="ant-input ant-input-disabled"
+                                                    disabled={true}
+                                                    id="create-space_alt_text"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    type="text"
+                                                    value=""
+                                                  />
+                                                </ClearableLabeledInput>
+                                              </Input>
                                             </Component>
                                           </div>
                                         </div>
                                         <ErrorList
-                                          className="ant-form-item-explain-connected"
                                           errors={Array []}
-                                          helpStatus=""
-                                          warnings={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
                                           <CSSMotion
-                                            motionAppear={false}
+                                            motionAppear={true}
                                             motionDeadline={500}
-                                            motionEnter={false}
                                             motionName="ant-show-help"
-                                            onAppearActive={[Function]}
-                                            onAppearEnd={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterEnd={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
                                             onLeaveEnd={[Function]}
-                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
                                             visible={false}
                                           >
                                             <DomWrapper />
@@ -1319,7 +1256,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               }
                             }
                             name="caption"
-                            onMetaChange={[Function]}
+                            onReset={[Function]}
                             trigger="onChange"
                             validateTrigger="onChange"
                           >
@@ -1330,11 +1267,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     "itemRef": [Function],
                                     "name": "create-space",
                                   },
-                                  "_init": true,
                                   "getFieldError": [Function],
                                   "getFieldInstance": [Function],
                                   "getFieldValue": [Function],
-                                  "getFieldWarning": [Function],
                                   "getFieldsError": [Function],
                                   "getFieldsValue": [Function],
                                   "getInternalHooks": [Function],
@@ -1363,7 +1298,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   "caption",
                                 ]
                               }
-                              onMetaChange={[Function]}
+                              onReset={[Function]}
                               trigger="onChange"
                               validateTrigger="onChange"
                               valuePropName="value"
@@ -1374,7 +1309,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               >
                                 <div
                                   className="ant-row ant-form-item"
-                                  role="row"
                                   style={Object {}}
                                 >
                                   <FormItemLabel
@@ -1390,7 +1324,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <label
@@ -1406,19 +1339,23 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   <FormItemInput
                                     errors={Array []}
                                     label="Caption"
-                                    name={Array []}
+                                    name={
+                                      Array [
+                                        "caption",
+                                      ]
+                                    }
+                                    onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
                                     status=""
                                     touched={false}
+                                    validateStatus=""
                                     validating={false}
-                                    warnings={Array []}
                                   >
                                     <Col
                                       className="ant-form-item-control"
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <div
@@ -1428,58 +1365,20 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                             className="ant-form-item-control-input-content"
                                           >
                                             <Component
-                                              update={
-                                                <ForwardRef
-                                                  disabled={true}
-                                                />
-                                              }
+                                              update={2}
                                               value="caption"
                                             >
-                                              <ForwardRef
+                                              <Input
                                                 disabled={true}
                                                 id="create-space_caption"
                                                 onChange={[Function]}
+                                                type="text"
                                                 value="caption"
                                               >
-                                                <ForwardRef
-                                                  affixWrapperClassName=""
+                                                <ClearableLabeledInput
+                                                  bordered={true}
                                                   disabled={true}
-                                                  groupClassName=""
-                                                  id="create-space_caption"
-                                                  inputClassName=""
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  prefixCls="ant-input"
-                                                  value="caption"
-                                                  wrapperClassName=""
-                                                >
-                                                  <BaseInput
-                                                    affixWrapperClassName=""
-                                                    disabled={true}
-                                                    focused={false}
-                                                    groupClassName=""
-                                                    handleReset={[Function]}
-                                                    id="create-space_caption"
-                                                    inputElement={
-                                                      <input
-                                                        className="ant-input ant-input-disabled"
-                                                        disabled={true}
-                                                        id="create-space_caption"
-                                                        onBlur={[Function]}
-                                                        onChange={[Function]}
-                                                        onFocus={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        type="text"
-                                                        value="caption"
-                                                      />
-                                                    }
-                                                    prefixCls="ant-input"
-                                                    suffix={null}
-                                                    triggerFocus={[Function]}
-                                                    value="caption"
-                                                    wrapperClassName=""
-                                                  >
+                                                  element={
                                                     <input
                                                       className="ant-input ant-input-disabled"
                                                       disabled={true}
@@ -1491,32 +1390,43 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       type="text"
                                                       value="caption"
                                                     />
-                                                  </BaseInput>
-                                                </ForwardRef>
-                                              </ForwardRef>
+                                                  }
+                                                  focused={false}
+                                                  handleReset={[Function]}
+                                                  id="create-space_caption"
+                                                  inputType="input"
+                                                  onChange={[Function]}
+                                                  prefixCls="ant-input"
+                                                  triggerFocus={[Function]}
+                                                  type="text"
+                                                  value="caption"
+                                                >
+                                                  <input
+                                                    className="ant-input ant-input-disabled"
+                                                    disabled={true}
+                                                    id="create-space_caption"
+                                                    onBlur={[Function]}
+                                                    onChange={[Function]}
+                                                    onFocus={[Function]}
+                                                    onKeyDown={[Function]}
+                                                    type="text"
+                                                    value="caption"
+                                                  />
+                                                </ClearableLabeledInput>
+                                              </Input>
                                             </Component>
                                           </div>
                                         </div>
                                         <ErrorList
-                                          className="ant-form-item-explain-connected"
                                           errors={Array []}
-                                          helpStatus=""
-                                          warnings={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
                                           <CSSMotion
-                                            motionAppear={false}
+                                            motionAppear={true}
                                             motionDeadline={500}
-                                            motionEnter={false}
                                             motionName="ant-show-help"
-                                            onAppearActive={[Function]}
-                                            onAppearEnd={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterEnd={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
                                             onLeaveEnd={[Function]}
-                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
                                             visible={false}
                                           >
                                             <DomWrapper />
@@ -1542,7 +1452,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               }
                             }
                             name="description"
-                            onMetaChange={[Function]}
+                            onReset={[Function]}
                             trigger="onChange"
                             validateTrigger="onChange"
                           >
@@ -1553,11 +1463,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     "itemRef": [Function],
                                     "name": "create-space",
                                   },
-                                  "_init": true,
                                   "getFieldError": [Function],
                                   "getFieldInstance": [Function],
                                   "getFieldValue": [Function],
-                                  "getFieldWarning": [Function],
                                   "getFieldsError": [Function],
                                   "getFieldsValue": [Function],
                                   "getInternalHooks": [Function],
@@ -1586,7 +1494,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   "description",
                                 ]
                               }
-                              onMetaChange={[Function]}
+                              onReset={[Function]}
                               trigger="onChange"
                               validateTrigger="onChange"
                               valuePropName="value"
@@ -1597,7 +1505,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               >
                                 <div
                                   className="ant-row ant-form-item"
-                                  role="row"
                                   style={Object {}}
                                 >
                                   <FormItemLabel
@@ -1613,7 +1520,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <label
@@ -1629,19 +1535,23 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   <FormItemInput
                                     errors={Array []}
                                     label="Description"
-                                    name={Array []}
+                                    name={
+                                      Array [
+                                        "description",
+                                      ]
+                                    }
+                                    onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
                                     status=""
                                     touched={false}
+                                    validateStatus=""
                                     validating={false}
-                                    warnings={Array []}
                                   >
                                     <Col
                                       className="ant-form-item-control"
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <div
@@ -1651,17 +1561,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                             className="ant-form-item-control-input-content"
                                           >
                                             <Component
-                                              update={
-                                                <ForwardRef
-                                                  autoSize={
-                                                    Object {
-                                                      "maxRows": 6,
-                                                      "minRows": 3,
-                                                    }
-                                                  }
-                                                  disabled={true}
-                                                />
-                                              }
+                                              update={2}
                                               value="description"
                                             >
                                               <ForwardRef
@@ -1746,25 +1646,26 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         disabled={false}
                                                         onResize={[Function]}
                                                       >
-                                                        <SingleObserver
-                                                          disabled={false}
-                                                          key="rc-observer-key-0"
-                                                          onResize={[Function]}
-                                                        >
-                                                          <DomWrapper>
-                                                            <textarea
-                                                              className="ant-input ant-input-disabled"
-                                                              disabled={true}
-                                                              id="create-space_description"
-                                                              onChange={[Function]}
-                                                              onCompositionEnd={[Function]}
-                                                              onCompositionStart={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              style={Object {}}
-                                                              value="description"
-                                                            />
-                                                          </DomWrapper>
-                                                        </SingleObserver>
+                                                        <textarea
+                                                          className="ant-input ant-input-disabled"
+                                                          disabled={true}
+                                                          id="create-space_description"
+                                                          onChange={[Function]}
+                                                          onCompositionEnd={[Function]}
+                                                          onCompositionStart={[Function]}
+                                                          onKeyDown={[Function]}
+                                                          style={
+                                                            Object {
+                                                              "height": -24,
+                                                              "maxHeight": -24,
+                                                              "minHeight": -12,
+                                                              "overflowX": "hidden",
+                                                              "overflowY": "hidden",
+                                                              "resize": "none",
+                                                            }
+                                                          }
+                                                          value="description"
+                                                        />
                                                       </ResizeObserver>
                                                     </ResizableTextArea>
                                                   </TextArea>
@@ -1774,25 +1675,15 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           </div>
                                         </div>
                                         <ErrorList
-                                          className="ant-form-item-explain-connected"
                                           errors={Array []}
-                                          helpStatus=""
-                                          warnings={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
                                           <CSSMotion
-                                            motionAppear={false}
+                                            motionAppear={true}
                                             motionDeadline={500}
-                                            motionEnter={false}
                                             motionName="ant-show-help"
-                                            onAppearActive={[Function]}
-                                            onAppearEnd={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterEnd={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
                                             onLeaveEnd={[Function]}
-                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
                                             visible={false}
                                           >
                                             <DomWrapper />
@@ -1818,7 +1709,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               }
                             }
                             name="meta_fields"
-                            onMetaChange={[Function]}
+                            onReset={[Function]}
                             trigger="onChange"
                             validateTrigger="onChange"
                           >
@@ -1829,11 +1720,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     "itemRef": [Function],
                                     "name": "create-space",
                                   },
-                                  "_init": true,
                                   "getFieldError": [Function],
                                   "getFieldInstance": [Function],
                                   "getFieldValue": [Function],
-                                  "getFieldWarning": [Function],
                                   "getFieldsError": [Function],
                                   "getFieldsValue": [Function],
                                   "getInternalHooks": [Function],
@@ -1862,7 +1751,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   "meta_fields",
                                 ]
                               }
-                              onMetaChange={[Function]}
+                              onReset={[Function]}
                               trigger="onChange"
                               validateTrigger="onChange"
                               valuePropName="value"
@@ -1873,7 +1762,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               >
                                 <div
                                   className="ant-row ant-form-item"
-                                  role="row"
                                   style={Object {}}
                                 >
                                   <FormItemLabel
@@ -1889,7 +1777,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                     >
                                       <div
                                         className="ant-col ant-form-item-label"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <label
@@ -1905,19 +1792,23 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                   <FormItemInput
                                     errors={Array []}
                                     label="Metafields"
-                                    name={Array []}
+                                    name={
+                                      Array [
+                                        "meta_fields",
+                                      ]
+                                    }
+                                    onDomErrorVisibleChange={[Function]}
                                     prefixCls="ant-form"
                                     status=""
                                     touched={false}
+                                    validateStatus=""
                                     validating={false}
-                                    warnings={Array []}
                                   >
                                     <Col
                                       className="ant-form-item-control"
                                     >
                                       <div
                                         className="ant-col ant-form-item-control"
-                                        role="cell"
                                         style={Object {}}
                                       >
                                         <div
@@ -1927,11 +1818,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                             className="ant-form-item-control-input-content"
                                           >
                                             <Component
-                                              update={
-                                                <MONACOEditor
-                                                  language="json"
-                                                />
-                                              }
+                                              update={2}
                                             >
                                               <MONACOEditor
                                                 id="create-space_meta_fields"
@@ -1969,25 +1856,15 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                           </div>
                                         </div>
                                         <ErrorList
-                                          className="ant-form-item-explain-connected"
                                           errors={Array []}
-                                          helpStatus=""
-                                          warnings={Array []}
+                                          onDomErrorVisibleChange={[Function]}
                                         >
                                           <CSSMotion
-                                            motionAppear={false}
+                                            motionAppear={true}
                                             motionDeadline={500}
-                                            motionEnter={false}
                                             motionName="ant-show-help"
-                                            onAppearActive={[Function]}
-                                            onAppearEnd={[Function]}
-                                            onAppearStart={[Function]}
-                                            onEnterActive={[Function]}
-                                            onEnterEnd={[Function]}
-                                            onEnterStart={[Function]}
-                                            onLeaveActive={[Function]}
                                             onLeaveEnd={[Function]}
-                                            onLeaveStart={[Function]}
+                                            removeOnLeave={true}
                                             visible={false}
                                           >
                                             <DomWrapper />
@@ -2008,7 +1885,6 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                           >
                             <div
                               className="ant-row ant-form-item"
-                              role="row"
                               style={Object {}}
                             >
                               <FormItemLabel
@@ -2017,19 +1893,16 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                               />
                               <FormItemInput
                                 errors={Array []}
-                                name={Array []}
+                                onDomErrorVisibleChange={[Function]}
                                 prefixCls="ant-form"
                                 status=""
-                                touched={false}
-                                validating={false}
-                                warnings={Array []}
+                                validateStatus=""
                               >
                                 <Col
                                   className="ant-form-item-control"
                                 >
                                   <div
                                     className="ant-col ant-form-item-control"
-                                    role="cell"
                                     style={Object {}}
                                   >
                                     <div
@@ -2690,9 +2563,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                             }
                                                             type="danger"
                                                           >
-                                                            <Wave
-                                                              disabled={false}
-                                                            >
+                                                            <Wave>
                                                               <button
                                                                 className="ant-btn ant-btn-danger"
                                                                 disabled={true}
@@ -2756,9 +2627,7 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                   htmlType="submit"
                                                   type="primary"
                                                 >
-                                                  <Wave
-                                                    disabled={false}
-                                                  >
+                                                  <Wave>
                                                     <button
                                                       className="ant-btn ant-btn-primary"
                                                       disabled={true}
@@ -2799,25 +2668,15 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                       </div>
                                     </div>
                                     <ErrorList
-                                      className="ant-form-item-explain-connected"
                                       errors={Array []}
-                                      helpStatus=""
-                                      warnings={Array []}
+                                      onDomErrorVisibleChange={[Function]}
                                     >
                                       <CSSMotion
-                                        motionAppear={false}
+                                        motionAppear={true}
                                         motionDeadline={500}
-                                        motionEnter={false}
                                         motionName="ant-show-help"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
                                         onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
+                                        removeOnLeave={true}
                                         visible={false}
                                       >
                                         <DomWrapper />
