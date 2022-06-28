@@ -40,11 +40,9 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                     "itemRef": [Function],
                     "name": "reindex",
                   },
-                  "_init": true,
                   "getFieldError": [Function],
                   "getFieldInstance": [Function],
                   "getFieldValue": [Function],
-                  "getFieldWarning": [Function],
                   "getFieldsError": [Function],
                   "getFieldsValue": [Function],
                   "getInternalHooks": [Function],
@@ -72,11 +70,9 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                         "itemRef": [Function],
                         "name": "reindex",
                       },
-                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -114,7 +110,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-row-center"
-                        role="row"
                         style={
                           Object {
                             "margin": "0 auto",
@@ -128,7 +123,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                         >
                           <div
                             className="ant-col ant-col-24"
-                            role="cell"
                             style={Object {}}
                           >
                             <Row
@@ -144,7 +138,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                             >
                               <div
                                 className="ant-row ant-row-end"
-                                role="row"
                                 style={
                                   Object {
                                     "background": "#f0f2f5",
@@ -169,7 +162,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                             >
                               <div
                                 className="ant-row ant-row-space-around"
-                                role="row"
                                 style={
                                   Object {
                                     "background": "#f0f2f5",
@@ -185,7 +177,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                 >
                                   <div
                                     className="ant-col ant-col-24"
-                                    role="cell"
                                     style={
                                       Object {
                                         "paddingLeft": 20,
@@ -205,7 +196,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                           }
                                         }
                                         name="organisation_id"
-                                        onMetaChange={[Function]}
+                                        onReset={[Function]}
                                         trigger="onChange"
                                         validateTrigger="onChange"
                                       >
@@ -216,11 +207,9 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                 "itemRef": [Function],
                                                 "name": "reindex",
                                               },
-                                              "_init": true,
                                               "getFieldError": [Function],
                                               "getFieldInstance": [Function],
                                               "getFieldValue": [Function],
-                                              "getFieldWarning": [Function],
                                               "getFieldsError": [Function],
                                               "getFieldsValue": [Function],
                                               "getInternalHooks": [Function],
@@ -249,7 +238,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                               "organisation_id",
                                             ]
                                           }
-                                          onMetaChange={[Function]}
+                                          onReset={[Function]}
                                           trigger="onChange"
                                           validateTrigger="onChange"
                                           valuePropName="value"
@@ -260,7 +249,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                           >
                                             <div
                                               className="ant-row ant-form-item"
-                                              role="row"
                                               style={Object {}}
                                             >
                                               <FormItemLabel
@@ -276,7 +264,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-label"
-                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <label
@@ -292,19 +279,23 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                               <FormItemInput
                                                 errors={Array []}
                                                 label="Organisation"
-                                                name={Array []}
+                                                name={
+                                                  Array [
+                                                    "organisation_id",
+                                                  ]
+                                                }
+                                                onDomErrorVisibleChange={[Function]}
                                                 prefixCls="ant-form"
                                                 status=""
                                                 touched={false}
+                                                validateStatus=""
                                                 validating={false}
-                                                warnings={Array []}
                                               >
                                                 <Col
                                                   className="ant-form-item-control"
                                                 >
                                                   <div
                                                     className="ant-col ant-form-item-control"
-                                                    role="cell"
                                                     style={Object {}}
                                                   >
                                                     <div
@@ -314,25 +305,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                         className="ant-form-item-control-input-content"
                                                       >
                                                         <Component
-                                                          update={
-                                                            <ForwardRef(InternalSelect)
-                                                              allowClear={true}
-                                                              bordered={true}
-                                                              defaultValue={
-                                                                Array [
-                                                                  34,
-                                                                ]
-                                                              }
-                                                              listHeight={128}
-                                                              onChange={[Function]}
-                                                            >
-                                                              <Option
-                                                                value={34}
-                                                              >
-                                                                test
-                                                              </Option>
-                                                            </ForwardRef(InternalSelect)>
-                                                          }
+                                                          update={1}
                                                         >
                                                           <ForwardRef(InternalSelect)
                                                             allowClear={true}
@@ -348,7 +321,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                           >
                                                             <Select
                                                               allowClear={true}
-                                                              className="ant-select-in-form-item"
+                                                              className=""
                                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                               defaultValue={
                                                                 Array [
@@ -367,60 +340,37 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                 </Context.Consumer>
                                                               }
                                                               onChange={[Function]}
-                                                              placement="bottomLeft"
                                                               prefixCls="ant-select"
                                                               removeIcon={<ForwardRef(CloseOutlined) />}
                                                               transitionName="ant-slide-up"
                                                             >
-                                                              <BaseSelect
-                                                                OptionList={
-                                                                  Object {
-                                                                    "$$typeof": Symbol(react.forward_ref),
-                                                                    "displayName": "OptionList",
-                                                                    "render": [Function],
-                                                                  }
-                                                                }
-                                                                activeDescendantId="reindex_organisation_id_list_0"
-                                                                activeValue={null}
+                                                              <ForwardRef(Select)
                                                                 allowClear={true}
-                                                                className="ant-select-in-form-item"
+                                                                className=""
                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                displayValues={
+                                                                defaultValue={
                                                                   Array [
-                                                                    Object {
-                                                                      "disabled": undefined,
-                                                                      "key": "34",
-                                                                      "label": "test",
-                                                                      "value": 34,
-                                                                    },
+                                                                    34,
                                                                   ]
                                                                 }
                                                                 dropdownClassName=""
-                                                                dropdownMatchSelectWidth={true}
-                                                                emptyOptions={false}
                                                                 id="reindex_organisation_id"
                                                                 inputIcon={[Function]}
+                                                                listHeight={128}
+                                                                listItemHeight={24}
+                                                                menuItemSelectedIcon={null}
                                                                 notFoundContent={
                                                                   <Context.Consumer>
                                                                     [Function]
                                                                   </Context.Consumer>
                                                                 }
-                                                                omitDomProps={
-                                                                  Array [
-                                                                    "inputValue",
-                                                                  ]
-                                                                }
-                                                                onDisplayValuesChange={[Function]}
-                                                                onSearch={[Function]}
-                                                                onSearchSplit={[Function]}
-                                                                placement="bottomLeft"
+                                                                onChange={[Function]}
                                                                 prefixCls="ant-select"
                                                                 removeIcon={<ForwardRef(CloseOutlined) />}
-                                                                searchValue=""
                                                                 transitionName="ant-slide-up"
                                                               >
                                                                 <div
-                                                                  className="ant-select ant-select-in-form-item ant-select-single ant-select-allow-clear ant-select-show-arrow"
+                                                                  className="ant-select ant-select-single ant-select-allow-clear ant-select-show-arrow"
                                                                   onBlur={[Function]}
                                                                   onFocus={[Function]}
                                                                   onKeyDown={[Function]}
@@ -430,12 +380,58 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                   <SelectTrigger
                                                                     containerWidth={null}
                                                                     dropdownClassName=""
-                                                                    dropdownMatchSelectWidth={true}
                                                                     empty={false}
                                                                     getTriggerDOMNode={[Function]}
-                                                                    onPopupMouseEnter={[Function]}
-                                                                    placement="bottomLeft"
-                                                                    popupElement={<ForwardRef(OptionList) />}
+                                                                    popupElement={
+                                                                      <ForwardRef(OptionList)
+                                                                        childrenAsData={true}
+                                                                        defaultActiveFirstOption={true}
+                                                                        flattenOptions={
+                                                                          Array [
+                                                                            Object {
+                                                                              "data": Object {
+                                                                                "children": "test",
+                                                                                "key": "34",
+                                                                                "value": 34,
+                                                                              },
+                                                                              "groupOption": false,
+                                                                              "key": "34",
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        height={128}
+                                                                        id="reindex_organisation_id"
+                                                                        itemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
+                                                                        notFoundContent={
+                                                                          <Context.Consumer>
+                                                                            [Function]
+                                                                          </Context.Consumer>
+                                                                        }
+                                                                        onActiveValue={[Function]}
+                                                                        onMouseEnter={[Function]}
+                                                                        onSelect={[Function]}
+                                                                        onToggleOpen={[Function]}
+                                                                        options={
+                                                                          Array [
+                                                                            Object {
+                                                                              "children": "test",
+                                                                              "key": "34",
+                                                                              "value": 34,
+                                                                            },
+                                                                          ]
+                                                                        }
+                                                                        prefixCls="ant-select"
+                                                                        searchValue=""
+                                                                        values={
+                                                                          Set {
+                                                                            34,
+                                                                          }
+                                                                        }
+                                                                        virtual={true}
+                                                                      />
+                                                                    }
                                                                     prefixCls="ant-select"
                                                                     transitionName="ant-slide-up"
                                                                   >
@@ -518,10 +514,55 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                       onPopupAlign={[Function]}
                                                                       onPopupVisibleChange={[Function]}
                                                                       popup={
-                                                                        <div
-                                                                          onMouseEnter={[Function]}
-                                                                        >
-                                                                          <ForwardRef(OptionList) />
+                                                                        <div>
+                                                                          <ForwardRef(OptionList)
+                                                                            childrenAsData={true}
+                                                                            defaultActiveFirstOption={true}
+                                                                            flattenOptions={
+                                                                              Array [
+                                                                                Object {
+                                                                                  "data": Object {
+                                                                                    "children": "test",
+                                                                                    "key": "34",
+                                                                                    "value": 34,
+                                                                                  },
+                                                                                  "groupOption": false,
+                                                                                  "key": "34",
+                                                                                },
+                                                                              ]
+                                                                            }
+                                                                            height={128}
+                                                                            id="reindex_organisation_id"
+                                                                            itemHeight={24}
+                                                                            menuItemSelectedIcon={null}
+                                                                            multiple={false}
+                                                                            notFoundContent={
+                                                                              <Context.Consumer>
+                                                                                [Function]
+                                                                              </Context.Consumer>
+                                                                            }
+                                                                            onActiveValue={[Function]}
+                                                                            onMouseEnter={[Function]}
+                                                                            onSelect={[Function]}
+                                                                            onToggleOpen={[Function]}
+                                                                            options={
+                                                                              Array [
+                                                                                Object {
+                                                                                  "children": "test",
+                                                                                  "key": "34",
+                                                                                  "value": 34,
+                                                                                },
+                                                                              ]
+                                                                            }
+                                                                            prefixCls="ant-select"
+                                                                            searchValue=""
+                                                                            values={
+                                                                              Set {
+                                                                                34,
+                                                                              }
+                                                                            }
+                                                                            virtual={true}
+                                                                          />
                                                                         </div>
                                                                       }
                                                                       popupAlign={Object {}}
@@ -538,26 +579,14 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                       showAction={Array []}
                                                                     >
                                                                       <Selector
-                                                                        OptionList={
-                                                                          Object {
-                                                                            "$$typeof": Symbol(react.forward_ref),
-                                                                            "displayName": "OptionList",
-                                                                            "render": [Function],
-                                                                          }
-                                                                        }
-                                                                        activeDescendantId="reindex_organisation_id_list_0"
+                                                                        accessibilityIndex={0}
                                                                         activeValue={null}
                                                                         allowClear={true}
-                                                                        className="ant-select-in-form-item"
+                                                                        className=""
                                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                        displayValues={
+                                                                        defaultValue={
                                                                           Array [
-                                                                            Object {
-                                                                              "disabled": undefined,
-                                                                              "key": "34",
-                                                                              "label": "test",
-                                                                              "value": 34,
-                                                                            },
+                                                                            34,
                                                                           ]
                                                                         }
                                                                         domRef={
@@ -595,29 +624,24 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                           }
                                                                         }
                                                                         dropdownClassName=""
-                                                                        dropdownMatchSelectWidth={true}
-                                                                        emptyOptions={false}
                                                                         id="reindex_organisation_id"
                                                                         inputElement={null}
                                                                         inputIcon={[Function]}
                                                                         key="trigger"
+                                                                        listHeight={128}
+                                                                        listItemHeight={24}
+                                                                        menuItemSelectedIcon={null}
+                                                                        multiple={false}
                                                                         notFoundContent={
                                                                           <Context.Consumer>
                                                                             [Function]
                                                                           </Context.Consumer>
                                                                         }
-                                                                        omitDomProps={
-                                                                          Array [
-                                                                            "inputValue",
-                                                                          ]
-                                                                        }
-                                                                        onDisplayValuesChange={[Function]}
-                                                                        onRemove={[Function]}
+                                                                        onChange={[Function]}
                                                                         onSearch={[Function]}
-                                                                        onSearchSplit={[Function]}
                                                                         onSearchSubmit={[Function]}
+                                                                        onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
-                                                                        placement="bottomLeft"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -628,7 +652,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                           Array [
                                                                             Object {
                                                                               "disabled": undefined,
-                                                                              "key": "34",
+                                                                              "key": 34,
                                                                               "label": "test",
                                                                               "value": 34,
                                                                             },
@@ -641,26 +665,14 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                           onMouseDown={[Function]}
                                                                         >
                                                                           <SingleSelector
-                                                                            OptionList={
-                                                                              Object {
-                                                                                "$$typeof": Symbol(react.forward_ref),
-                                                                                "displayName": "OptionList",
-                                                                                "render": [Function],
-                                                                              }
-                                                                            }
-                                                                            activeDescendantId="reindex_organisation_id_list_0"
+                                                                            accessibilityIndex={0}
                                                                             activeValue={null}
                                                                             allowClear={true}
-                                                                            className="ant-select-in-form-item"
+                                                                            className=""
                                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
-                                                                            displayValues={
+                                                                            defaultValue={
                                                                               Array [
-                                                                                Object {
-                                                                                  "disabled": undefined,
-                                                                                  "key": "34",
-                                                                                  "label": "test",
-                                                                                  "value": 34,
-                                                                                },
+                                                                                34,
                                                                               ]
                                                                             }
                                                                             domRef={
@@ -698,8 +710,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                               }
                                                                             }
                                                                             dropdownClassName=""
-                                                                            dropdownMatchSelectWidth={true}
-                                                                            emptyOptions={false}
                                                                             id="reindex_organisation_id"
                                                                             inputElement={null}
                                                                             inputIcon={[Function]}
@@ -723,29 +733,26 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                                 />,
                                                                               }
                                                                             }
+                                                                            listHeight={128}
+                                                                            listItemHeight={24}
+                                                                            menuItemSelectedIcon={null}
+                                                                            multiple={false}
                                                                             notFoundContent={
                                                                               <Context.Consumer>
                                                                                 [Function]
                                                                               </Context.Consumer>
                                                                             }
-                                                                            omitDomProps={
-                                                                              Array [
-                                                                                "inputValue",
-                                                                              ]
-                                                                            }
-                                                                            onDisplayValuesChange={[Function]}
+                                                                            onChange={[Function]}
                                                                             onInputChange={[Function]}
                                                                             onInputCompositionEnd={[Function]}
                                                                             onInputCompositionStart={[Function]}
                                                                             onInputKeyDown={[Function]}
                                                                             onInputMouseDown={[Function]}
                                                                             onInputPaste={[Function]}
-                                                                            onRemove={[Function]}
                                                                             onSearch={[Function]}
-                                                                            onSearchSplit={[Function]}
                                                                             onSearchSubmit={[Function]}
+                                                                            onSelect={[Function]}
                                                                             onToggleOpen={[Function]}
-                                                                            placement="bottomLeft"
                                                                             prefixCls="ant-select"
                                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                                             searchValue=""
@@ -756,7 +763,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                               Array [
                                                                                 Object {
                                                                                   "disabled": undefined,
-                                                                                  "key": "34",
+                                                                                  "key": 34,
                                                                                   "label": "test",
                                                                                   "value": 34,
                                                                                 },
@@ -767,7 +774,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                               className="ant-select-selection-search"
                                                                             >
                                                                               <Input
-                                                                                activeDescendantId="reindex_organisation_id_list_0"
+                                                                                accessibilityIndex={0}
                                                                                 attrs={Object {}}
                                                                                 editable={false}
                                                                                 id="reindex_organisation_id"
@@ -1012,32 +1019,22 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                                                     </span>
                                                                   </TransBtn>
                                                                 </div>
-                                                              </BaseSelect>
+                                                              </ForwardRef(Select)>
                                                             </Select>
                                                           </ForwardRef(InternalSelect)>
                                                         </Component>
                                                       </div>
                                                     </div>
                                                     <ErrorList
-                                                      className="ant-form-item-explain-connected"
                                                       errors={Array []}
-                                                      helpStatus=""
-                                                      warnings={Array []}
+                                                      onDomErrorVisibleChange={[Function]}
                                                     >
                                                       <CSSMotion
-                                                        motionAppear={false}
+                                                        motionAppear={true}
                                                         motionDeadline={500}
-                                                        motionEnter={false}
                                                         motionName="ant-show-help"
-                                                        onAppearActive={[Function]}
-                                                        onAppearEnd={[Function]}
-                                                        onAppearStart={[Function]}
-                                                        onEnterActive={[Function]}
-                                                        onEnterEnd={[Function]}
-                                                        onEnterStart={[Function]}
-                                                        onLeaveActive={[Function]}
                                                         onLeaveEnd={[Function]}
-                                                        onLeaveStart={[Function]}
+                                                        removeOnLeave={true}
                                                         visible={false}
                                                       >
                                                         <DomWrapper />
@@ -1056,7 +1053,6 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                     >
                                       <div
                                         className="ant-row ant-row-end"
-                                        role="row"
                                         style={Object {}}
                                       >
                                         <Button
@@ -1064,9 +1060,7 @@ exports[`Spaces Reindex component snapshot testing should render the component 1
                                           onClick={[Function]}
                                           type="primary"
                                         >
-                                          <Wave
-                                            disabled={false}
-                                          >
+                                          <Wave>
                                             <button
                                               className="ant-btn ant-btn-primary"
                                               disabled={true}

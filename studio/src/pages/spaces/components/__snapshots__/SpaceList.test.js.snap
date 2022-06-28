@@ -9,8 +9,6 @@ exports[`Spaces List component snapshot testing should match component when load
   >
     <div>
       <div
-        aria-busy={true}
-        aria-live="polite"
         className="ant-spin ant-spin-spinning"
       >
         <span
@@ -103,8 +101,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -113,8 +109,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -123,8 +117,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -133,8 +125,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -143,8 +133,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -153,8 +141,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <th
                     className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={
                       Object {
@@ -182,8 +168,6 @@ exports[`Spaces List component snapshot testing should match component when load
                   <td
                     className="ant-table-cell"
                     colSpan={6}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -324,8 +308,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -334,8 +316,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -344,8 +324,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -354,8 +332,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -364,8 +340,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -374,8 +348,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <th
                     className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={
                       Object {
@@ -401,8 +373,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -411,8 +381,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -431,8 +399,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -441,8 +407,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -451,8 +415,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -461,8 +423,6 @@ exports[`Spaces List component snapshot testing should match component with spac
                   <td
                     className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={
                       Object {
@@ -680,8 +640,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -690,8 +648,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -700,8 +656,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -710,8 +664,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -720,8 +672,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >
@@ -730,8 +680,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <th
                     className="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                     colSpan={null}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={
                       Object {
@@ -759,8 +707,6 @@ exports[`Spaces List component snapshot testing should render the component 1`] 
                   <td
                     className="ant-table-cell"
                     colSpan={6}
-                    onMouseEnter={[Function]}
-                    onMouseLeave={[Function]}
                     rowSpan={null}
                     style={Object {}}
                   >

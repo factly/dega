@@ -12,14 +12,22 @@ exports[`Space Edit Form component snapshot testing should match component with 
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
@@ -64,14 +72,22 @@ exports[`Space Edit Form component snapshot testing should render the component 
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
