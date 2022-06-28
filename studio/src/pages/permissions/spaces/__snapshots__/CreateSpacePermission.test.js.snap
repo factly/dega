@@ -24,11 +24,9 @@ exports[`Space permission create component snapshot testing should render the co
               "itemRef": [Function],
               "name": "create-category",
             },
-            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
-            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -67,11 +65,9 @@ exports[`Space permission create component snapshot testing should render the co
                   "itemRef": [Function],
                   "name": "create-category",
                 },
-                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
-                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -111,7 +107,7 @@ exports[`Space permission create component snapshot testing should render the co
                     }
                   }
                   name="space_id"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                 >
@@ -122,11 +118,9 @@ exports[`Space permission create component snapshot testing should render the co
                           "itemRef": [Function],
                           "name": "create-category",
                         },
-                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -155,7 +149,7 @@ exports[`Space permission create component snapshot testing should render the co
                         "space_id",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="value"
@@ -166,7 +160,6 @@ exports[`Space permission create component snapshot testing should render the co
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -183,7 +176,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-label"
-                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -199,12 +191,17 @@ exports[`Space permission create component snapshot testing should render the co
                         <FormItemInput
                           errors={Array []}
                           label="Space"
-                          name={Array []}
+                          name={
+                            Array [
+                              "space_id",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -212,7 +209,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -222,14 +218,14 @@ exports[`Space permission create component snapshot testing should render the co
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={<ForwardRef />}
+                                    update={1}
                                   >
                                     <ForwardRef
                                       id="create-category_space_id"
                                       onChange={[Function]}
                                     >
                                       <InputNumber
-                                        className="ant-input-number-in-form-item"
+                                        className=""
                                         downHandler={
                                           <ForwardRef(DownOutlined)
                                             className="ant-input-number-handler-down-inner"
@@ -245,7 +241,7 @@ exports[`Space permission create component snapshot testing should render the co
                                         }
                                       >
                                         <div
-                                          className="ant-input-number ant-input-number-in-form-item"
+                                          className="ant-input-number"
                                           onBlur={[Function]}
                                           onCompositionEnd={[Function]}
                                           onCompositionStart={[Function]}
@@ -465,25 +461,15 @@ exports[`Space permission create component snapshot testing should render the co
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -517,7 +503,7 @@ exports[`Space permission create component snapshot testing should render the co
                     }
                   }
                   name="posts"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   rules={
                     Array [
                       Object {
@@ -536,11 +522,9 @@ exports[`Space permission create component snapshot testing should render the co
                           "itemRef": [Function],
                           "name": "create-category",
                         },
-                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -569,7 +553,7 @@ exports[`Space permission create component snapshot testing should render the co
                         "posts",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
@@ -588,7 +572,6 @@ exports[`Space permission create component snapshot testing should render the co
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -613,7 +596,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-label"
-                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -629,7 +611,12 @@ exports[`Space permission create component snapshot testing should render the co
                         <FormItemInput
                           errors={Array []}
                           label="Posts"
-                          name={Array []}
+                          name={
+                            Array [
+                              "posts",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           rules={
                             Array [
@@ -641,8 +628,8 @@ exports[`Space permission create component snapshot testing should render the co
                           }
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -650,7 +637,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -660,11 +646,7 @@ exports[`Space permission create component snapshot testing should render the co
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={
-                                      <ForwardRef
-                                        min={-1}
-                                      />
-                                    }
+                                    update={1}
                                   >
                                     <ForwardRef
                                       id="create-category_posts"
@@ -672,7 +654,7 @@ exports[`Space permission create component snapshot testing should render the co
                                       onChange={[Function]}
                                     >
                                       <InputNumber
-                                        className="ant-input-number-in-form-item"
+                                        className=""
                                         downHandler={
                                           <ForwardRef(DownOutlined)
                                             className="ant-input-number-handler-down-inner"
@@ -689,7 +671,7 @@ exports[`Space permission create component snapshot testing should render the co
                                         }
                                       >
                                         <div
-                                          className="ant-input-number ant-input-number-in-form-item"
+                                          className="ant-input-number"
                                           onBlur={[Function]}
                                           onCompositionEnd={[Function]}
                                           onCompositionStart={[Function]}
@@ -910,25 +892,15 @@ exports[`Space permission create component snapshot testing should render the co
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -962,7 +934,7 @@ exports[`Space permission create component snapshot testing should render the co
                     }
                   }
                   name="media"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   rules={
                     Array [
                       Object {
@@ -981,11 +953,9 @@ exports[`Space permission create component snapshot testing should render the co
                           "itemRef": [Function],
                           "name": "create-category",
                         },
-                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -1014,7 +984,7 @@ exports[`Space permission create component snapshot testing should render the co
                         "media",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
@@ -1033,7 +1003,6 @@ exports[`Space permission create component snapshot testing should render the co
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1058,7 +1027,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-label"
-                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -1074,7 +1042,12 @@ exports[`Space permission create component snapshot testing should render the co
                         <FormItemInput
                           errors={Array []}
                           label="Media"
-                          name={Array []}
+                          name={
+                            Array [
+                              "media",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           rules={
                             Array [
@@ -1086,8 +1059,8 @@ exports[`Space permission create component snapshot testing should render the co
                           }
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1095,7 +1068,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1105,11 +1077,7 @@ exports[`Space permission create component snapshot testing should render the co
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={
-                                      <ForwardRef
-                                        min={-1}
-                                      />
-                                    }
+                                    update={1}
                                   >
                                     <ForwardRef
                                       id="create-category_media"
@@ -1117,7 +1085,7 @@ exports[`Space permission create component snapshot testing should render the co
                                       onChange={[Function]}
                                     >
                                       <InputNumber
-                                        className="ant-input-number-in-form-item"
+                                        className=""
                                         downHandler={
                                           <ForwardRef(DownOutlined)
                                             className="ant-input-number-handler-down-inner"
@@ -1134,7 +1102,7 @@ exports[`Space permission create component snapshot testing should render the co
                                         }
                                       >
                                         <div
-                                          className="ant-input-number ant-input-number-in-form-item"
+                                          className="ant-input-number"
                                           onBlur={[Function]}
                                           onCompositionEnd={[Function]}
                                           onCompositionStart={[Function]}
@@ -1355,25 +1323,15 @@ exports[`Space permission create component snapshot testing should render the co
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -1400,7 +1358,7 @@ exports[`Space permission create component snapshot testing should render the co
                     }
                   }
                   name="fact_check"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="checked"
@@ -1412,11 +1370,9 @@ exports[`Space permission create component snapshot testing should render the co
                           "itemRef": [Function],
                           "name": "create-category",
                         },
-                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -1445,7 +1401,7 @@ exports[`Space permission create component snapshot testing should render the co
                         "fact_check",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="checked"
@@ -1456,7 +1412,6 @@ exports[`Space permission create component snapshot testing should render the co
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1474,7 +1429,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-label"
-                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -1490,13 +1444,18 @@ exports[`Space permission create component snapshot testing should render the co
                         <FormItemInput
                           errors={Array []}
                           label="Fact Check"
-                          name={Array []}
+                          name={
+                            Array [
+                              "fact_check",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
                           valuePropName="checked"
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1504,7 +1463,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1514,7 +1472,7 @@ exports[`Space permission create component snapshot testing should render the co
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={<ForwardRef />}
+                                    update={1}
                                   >
                                     <Switch
                                       id="create-category_fact_check"
@@ -1557,25 +1515,15 @@ exports[`Space permission create component snapshot testing should render the co
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -1602,7 +1550,7 @@ exports[`Space permission create component snapshot testing should render the co
                     }
                   }
                   name="podcast"
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="checked"
@@ -1614,11 +1562,9 @@ exports[`Space permission create component snapshot testing should render the co
                           "itemRef": [Function],
                           "name": "create-category",
                         },
-                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
-                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -1647,7 +1593,7 @@ exports[`Space permission create component snapshot testing should render the co
                         "podcast",
                       ]
                     }
-                    onMetaChange={[Function]}
+                    onReset={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="checked"
@@ -1658,7 +1604,6 @@ exports[`Space permission create component snapshot testing should render the co
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -1676,7 +1621,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-label"
-                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -1692,13 +1636,18 @@ exports[`Space permission create component snapshot testing should render the co
                         <FormItemInput
                           errors={Array []}
                           label="Podcast"
-                          name={Array []}
+                          name={
+                            Array [
+                              "podcast",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
+                          validateStatus=""
                           validating={false}
                           valuePropName="checked"
-                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -1706,7 +1655,6 @@ exports[`Space permission create component snapshot testing should render the co
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -1716,7 +1664,7 @@ exports[`Space permission create component snapshot testing should render the co
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={<ForwardRef />}
+                                    update={1}
                                   >
                                     <Switch
                                       id="create-category_podcast"
@@ -1759,25 +1707,15 @@ exports[`Space permission create component snapshot testing should render the co
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -1805,7 +1743,6 @@ exports[`Space permission create component snapshot testing should render the co
                 >
                   <div
                     className="ant-row ant-form-item"
-                    role="row"
                     style={Object {}}
                   >
                     <FormItemLabel
@@ -1820,12 +1757,10 @@ exports[`Space permission create component snapshot testing should render the co
                     />
                     <FormItemInput
                       errors={Array []}
-                      name={Array []}
+                      onDomErrorVisibleChange={[Function]}
                       prefixCls="ant-form"
                       status=""
-                      touched={false}
-                      validating={false}
-                      warnings={Array []}
+                      validateStatus=""
                       wrapperCol={
                         Object {
                           "offset": 10,
@@ -1840,7 +1775,6 @@ exports[`Space permission create component snapshot testing should render the co
                       >
                         <div
                           className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
-                          role="cell"
                           style={Object {}}
                         >
                           <div
@@ -1874,9 +1808,7 @@ exports[`Space permission create component snapshot testing should render the co
                                         htmlType="submit"
                                         type="primary"
                                       >
-                                        <Wave
-                                          disabled={false}
-                                        >
+                                        <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
                                             onClick={[Function]}
@@ -1927,11 +1859,9 @@ exports[`Space permission create component snapshot testing should render the co
                                         htmlType="button"
                                         onClick={[Function]}
                                       >
-                                        <Wave
-                                          disabled={false}
-                                        >
+                                        <Wave>
                                           <button
-                                            className="ant-btn ant-btn-default"
+                                            className="ant-btn"
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -1969,25 +1899,15 @@ exports[`Space permission create component snapshot testing should render the co
                             </div>
                           </div>
                           <ErrorList
-                            className="ant-form-item-explain-connected"
                             errors={Array []}
-                            helpStatus=""
-                            warnings={Array []}
+                            onDomErrorVisibleChange={[Function]}
                           >
                             <CSSMotion
-                              motionAppear={false}
+                              motionAppear={true}
                               motionDeadline={500}
-                              motionEnter={false}
                               motionName="ant-show-help"
-                              onAppearActive={[Function]}
-                              onAppearEnd={[Function]}
-                              onAppearStart={[Function]}
-                              onEnterActive={[Function]}
-                              onEnterEnd={[Function]}
-                              onEnterStart={[Function]}
-                              onLeaveActive={[Function]}
                               onLeaveEnd={[Function]}
-                              onLeaveStart={[Function]}
+                              removeOnLeave={true}
                               visible={false}
                             >
                               <DomWrapper />
