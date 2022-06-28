@@ -71,9 +71,9 @@ describe('Tags List component', () => {
         },
         spaces: {
           orgs: [],
-          details: {},
+          details: { 1: { site_address: '' } },
           loading: true,
-          selected: false,
+          selected: 1,
         },
         media: {
           req: [],
@@ -159,9 +159,9 @@ describe('Tags List component', () => {
         },
         spaces: {
           orgs: [],
-          details: {},
+          details: { 1: { site_address: '' } },
           loading: true,
-          selected: false,
+          selected: 1,
         },
         media: {
           req: [],
