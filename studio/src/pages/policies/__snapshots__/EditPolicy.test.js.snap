@@ -12,14 +12,22 @@ exports[`Policies edit component snapshot testing should match component with em
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
@@ -40,14 +48,22 @@ exports[`Policies edit component snapshot testing should match skeleton while lo
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
@@ -68,14 +84,22 @@ exports[`Policies edit component snapshot testing should render the component 1`
         "replaceReducer": [Function],
         "subscribe": [Function],
       },
-      "subscription": Object {
-        "addNestedSub": [Function],
-        "getListeners": [Function],
+      "subscription": Subscription {
         "handleChangeWrapper": [Function],
-        "isSubscribed": [Function],
-        "notifyNestedSubs": [Function],
-        "trySubscribe": [Function],
-        "tryUnsubscribe": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [MockFunction],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
       },
     }
   }
