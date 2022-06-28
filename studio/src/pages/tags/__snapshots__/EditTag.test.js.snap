@@ -478,11 +478,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               "itemRef": [Function],
               "name": "create-tag",
             },
-            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
-            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -531,11 +529,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   "itemRef": [Function],
                   "name": "create-tag",
                 },
-                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
-                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -594,7 +590,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
               >
                 <div
                   className="ant-row ant-row-center"
-                  role="row"
                   style={
                     Object {
                       "margin": "0 auto",
@@ -608,7 +603,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   >
                     <div
                       className="ant-col ant-col-24"
-                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -617,7 +611,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       >
                         <div
                           className="ant-row ant-row-end"
-                          role="row"
                           style={
                             Object {
                               "marginLeft": -20,
@@ -632,7 +625,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             >
                               <div
                                 className="ant-row ant-form-item"
-                                role="row"
                                 style={Object {}}
                               >
                                 <FormItemLabel
@@ -641,19 +633,16 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                 />
                                 <FormItemInput
                                   errors={Array []}
-                                  name={Array []}
+                                  onDomErrorVisibleChange={[Function]}
                                   prefixCls="ant-form"
                                   status=""
-                                  touched={false}
-                                  validating={false}
-                                  warnings={Array []}
+                                  validateStatus=""
                                 >
                                   <Col
                                     className="ant-form-item-control"
                                   >
                                     <div
                                       className="ant-col ant-form-item-control"
-                                      role="cell"
                                       style={Object {}}
                                     >
                                       <div
@@ -687,11 +676,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     htmlType="button"
                                                     onClick={[Function]}
                                                   >
-                                                    <Wave
-                                                      disabled={false}
-                                                    >
+                                                    <Wave>
                                                       <button
-                                                        className="ant-btn ant-btn-default"
+                                                        className="ant-btn"
                                                         onClick={[Function]}
                                                         type="button"
                                                       >
@@ -741,9 +728,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     htmlType="submit"
                                                     type="primary"
                                                   >
-                                                    <Wave
-                                                      disabled={false}
-                                                    >
+                                                    <Wave>
                                                       <button
                                                         className="ant-btn ant-btn-primary"
                                                         disabled={true}
@@ -784,25 +769,15 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         </div>
                                       </div>
                                       <ErrorList
-                                        className="ant-form-item-explain-connected"
                                         errors={Array []}
-                                        helpStatus=""
-                                        warnings={Array []}
+                                        onDomErrorVisibleChange={[Function]}
                                       >
                                         <CSSMotion
-                                          motionAppear={false}
+                                          motionAppear={true}
                                           motionDeadline={500}
-                                          motionEnter={false}
                                           motionName="ant-show-help"
-                                          onAppearActive={[Function]}
-                                          onAppearEnd={[Function]}
-                                          onAppearStart={[Function]}
-                                          onEnterActive={[Function]}
-                                          onEnterEnd={[Function]}
-                                          onEnterStart={[Function]}
-                                          onLeaveActive={[Function]}
                                           onLeaveEnd={[Function]}
-                                          onLeaveStart={[Function]}
+                                          removeOnLeave={true}
                                           visible={false}
                                         >
                                           <DomWrapper />
@@ -823,7 +798,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   >
                     <div
                       className="ant-col ant-col-24"
-                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -839,7 +813,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       >
                         <div
                           className="ant-row ant-row-space-around"
-                          role="row"
                           style={
                             Object {
                               "background": "#f0f2f5",
@@ -855,7 +828,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                           >
                             <div
                               className="ant-col ant-col-12"
-                              role="cell"
                               style={
                                 Object {
                                   "paddingLeft": 20,
@@ -892,7 +864,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       }
                                     }
                                     name="name"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -915,11 +887,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             "itemRef": [Function],
                                             "name": "create-tag",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -948,7 +918,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "name",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -971,7 +941,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -999,7 +968,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             >
                                               <div
                                                 className="ant-col ant-form-item-label"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <label
@@ -1015,7 +983,12 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           <FormItemInput
                                             errors={Array []}
                                             label="Tag Name"
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "name",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             rules={
                                               Array [
@@ -1031,15 +1004,14 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             }
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -1049,54 +1021,18 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <ForwardRef
-                                                          onChange={[Function]}
-                                                        />
-                                                      }
+                                                      update={2}
                                                       value="Tag-1"
                                                     >
-                                                      <ForwardRef
+                                                      <Input
                                                         id="create-tag_name"
                                                         onChange={[Function]}
+                                                        type="text"
                                                         value="Tag-1"
                                                       >
-                                                        <ForwardRef
-                                                          affixWrapperClassName=""
-                                                          groupClassName=""
-                                                          id="create-tag_name"
-                                                          inputClassName=""
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          prefixCls="ant-input"
-                                                          value="Tag-1"
-                                                          wrapperClassName=""
-                                                        >
-                                                          <BaseInput
-                                                            affixWrapperClassName=""
-                                                            focused={false}
-                                                            groupClassName=""
-                                                            handleReset={[Function]}
-                                                            id="create-tag_name"
-                                                            inputElement={
-                                                              <input
-                                                                className="ant-input"
-                                                                id="create-tag_name"
-                                                                onBlur={[Function]}
-                                                                onChange={[Function]}
-                                                                onFocus={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                type="text"
-                                                                value="Tag-1"
-                                                              />
-                                                            }
-                                                            prefixCls="ant-input"
-                                                            suffix={null}
-                                                            triggerFocus={[Function]}
-                                                            value="Tag-1"
-                                                            wrapperClassName=""
-                                                          >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
                                                             <input
                                                               className="ant-input"
                                                               id="create-tag_name"
@@ -1107,32 +1043,42 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                               type="text"
                                                               value="Tag-1"
                                                             />
-                                                          </BaseInput>
-                                                        </ForwardRef>
-                                                      </ForwardRef>
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="create-tag_name"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value="Tag-1"
+                                                        >
+                                                          <input
+                                                            className="ant-input"
+                                                            id="create-tag_name"
+                                                            onBlur={[Function]}
+                                                            onChange={[Function]}
+                                                            onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            type="text"
+                                                            value="Tag-1"
+                                                          />
+                                                        </ClearableLabeledInput>
+                                                      </Input>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -1172,7 +1118,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       }
                                     }
                                     name="slug"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
@@ -1195,11 +1141,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             "itemRef": [Function],
                                             "name": "create-tag",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -1228,7 +1172,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "slug",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       rules={
                                         Array [
                                           Object {
@@ -1251,7 +1195,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -1279,7 +1222,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             >
                                               <div
                                                 className="ant-col ant-form-item-label"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <label
@@ -1295,7 +1237,12 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           <FormItemInput
                                             errors={Array []}
                                             label="Slug"
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "slug",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             rules={
                                               Array [
@@ -1311,15 +1258,14 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             }
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -1329,50 +1275,18 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={<ForwardRef />}
+                                                      update={2}
                                                       value="tag-1"
                                                     >
-                                                      <ForwardRef
+                                                      <Input
                                                         id="create-tag_slug"
                                                         onChange={[Function]}
+                                                        type="text"
                                                         value="tag-1"
                                                       >
-                                                        <ForwardRef
-                                                          affixWrapperClassName=""
-                                                          groupClassName=""
-                                                          id="create-tag_slug"
-                                                          inputClassName=""
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          prefixCls="ant-input"
-                                                          value="tag-1"
-                                                          wrapperClassName=""
-                                                        >
-                                                          <BaseInput
-                                                            affixWrapperClassName=""
-                                                            focused={false}
-                                                            groupClassName=""
-                                                            handleReset={[Function]}
-                                                            id="create-tag_slug"
-                                                            inputElement={
-                                                              <input
-                                                                className="ant-input"
-                                                                id="create-tag_slug"
-                                                                onBlur={[Function]}
-                                                                onChange={[Function]}
-                                                                onFocus={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                type="text"
-                                                                value="tag-1"
-                                                              />
-                                                            }
-                                                            prefixCls="ant-input"
-                                                            suffix={null}
-                                                            triggerFocus={[Function]}
-                                                            value="tag-1"
-                                                            wrapperClassName=""
-                                                          >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
                                                             <input
                                                               className="ant-input"
                                                               id="create-tag_slug"
@@ -1383,32 +1297,42 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                               type="text"
                                                               value="tag-1"
                                                             />
-                                                          </BaseInput>
-                                                        </ForwardRef>
-                                                      </ForwardRef>
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="create-tag_slug"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value="tag-1"
+                                                        >
+                                                          <input
+                                                            className="ant-input"
+                                                            id="create-tag_slug"
+                                                            onBlur={[Function]}
+                                                            onChange={[Function]}
+                                                            onFocus={[Function]}
+                                                            onKeyDown={[Function]}
+                                                            type="text"
+                                                            value="tag-1"
+                                                          />
+                                                        </ClearableLabeledInput>
+                                                      </Input>
                                                     </Component>
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -1436,7 +1360,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     }
                                   }
                                   name="is_featured"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                   valuePropName="checked"
@@ -1448,11 +1372,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "itemRef": [Function],
                                           "name": "create-tag",
                                         },
-                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1481,7 +1403,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         "is_featured",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="checked"
@@ -1492,7 +1414,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     >
                                       <div
                                         className="ant-row ant-form-item"
-                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1509,7 +1430,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1525,20 +1445,24 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         <FormItemInput
                                           errors={Array []}
                                           label="Featured"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "is_featured",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
                                           valuePropName="checked"
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1548,7 +1472,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={<ForwardRef />}
+                                                    update={2}
                                                   >
                                                     <Switch
                                                       id="create-tag_is_featured"
@@ -1591,25 +1515,15 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -1635,7 +1549,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     }
                                   }
                                   name="background_colour"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                 >
@@ -1646,11 +1560,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "itemRef": [Function],
                                           "name": "create-tag",
                                         },
-                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1679,7 +1591,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         "background_colour",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="value"
@@ -1690,7 +1602,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     >
                                       <div
                                         className="ant-row ant-form-item"
-                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1706,7 +1617,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1722,19 +1632,23 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         <FormItemInput
                                           errors={Array []}
                                           label="Colour"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "background_colour",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1744,40 +1658,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={
-                                                      <div
-                                                        style={
-                                                          Object {
-                                                            "position": "relative",
-                                                          }
-                                                        }
-                                                      >
-                                                        <div
-                                                          onClick={[Function]}
-                                                          style={
-                                                            Object {
-                                                              "background": "#fff",
-                                                              "borderRadius": "1px",
-                                                              "boxShadow": "0 0 0 1px rgba(0,0,0,.1)",
-                                                              "cursor": "pointer",
-                                                              "display": "inline-block",
-                                                              "padding": "5px",
-                                                            }
-                                                          }
-                                                        >
-                                                          <div
-                                                            style={
-                                                              Object {
-                                                                "background": "null",
-                                                                "borderRadius": "2px",
-                                                                "height": "24px",
-                                                                "width": "100px",
-                                                              }
-                                                            }
-                                                          />
-                                                        </div>
-                                                      </div>
-                                                    }
+                                                    update={2}
                                                   >
                                                     <div
                                                       id="create-tag_background_colour"
@@ -1817,25 +1698,15 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -1856,7 +1727,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                           >
                             <div
                               className="ant-col ant-col-10"
-                              role="cell"
                               style={
                                 Object {
                                   "paddingLeft": 20,
@@ -1876,7 +1746,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     }
                                   }
                                   name="medium_id"
-                                  onMetaChange={[Function]}
+                                  onReset={[Function]}
                                   trigger="onChange"
                                   validateTrigger="onChange"
                                 >
@@ -1887,11 +1757,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "itemRef": [Function],
                                           "name": "create-tag",
                                         },
-                                        "_init": true,
                                         "getFieldError": [Function],
                                         "getFieldInstance": [Function],
                                         "getFieldValue": [Function],
-                                        "getFieldWarning": [Function],
                                         "getFieldsError": [Function],
                                         "getFieldsValue": [Function],
                                         "getInternalHooks": [Function],
@@ -1920,7 +1788,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         "medium_id",
                                       ]
                                     }
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                     valuePropName="value"
@@ -1931,7 +1799,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                     >
                                       <div
                                         className="ant-row ant-form-item"
-                                        role="row"
                                         style={Object {}}
                                       >
                                         <FormItemLabel
@@ -1947,7 +1814,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           >
                                             <div
                                               className="ant-col ant-form-item-label"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <label
@@ -1963,19 +1829,23 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                         <FormItemInput
                                           errors={Array []}
                                           label="Featured Image"
-                                          name={Array []}
+                                          name={
+                                            Array [
+                                              "medium_id",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
                                           prefixCls="ant-form"
                                           status=""
                                           touched={false}
+                                          validateStatus=""
                                           validating={false}
-                                          warnings={Array []}
                                         >
                                           <Col
                                             className="ant-form-item-control"
                                           >
                                             <div
                                               className="ant-col ant-form-item-control"
-                                              role="cell"
                                               style={Object {}}
                                             >
                                               <div
@@ -1985,16 +1855,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   className="ant-form-item-control-input-content"
                                                 >
                                                   <Component
-                                                    update={
-                                                      <MediaSelector
-                                                        containerStyles={
-                                                          Object {
-                                                            "justifyContent": "start",
-                                                          }
-                                                        }
-                                                        maxWidth="350px"
-                                                      />
-                                                    }
+                                                    update={2}
                                                   >
                                                     <MediaSelector
                                                       containerStyles={
@@ -2118,11 +1979,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                                       }
                                                                     }
                                                                   >
-                                                                    <Wave
-                                                                      disabled={false}
-                                                                    >
+                                                                    <Wave>
                                                                       <button
-                                                                        className="ant-btn ant-btn-default"
+                                                                        className="ant-btn"
                                                                         onClick={[Function]}
                                                                         style={
                                                                           Object {
@@ -2187,25 +2046,15 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                 </div>
                                               </div>
                                               <ErrorList
-                                                className="ant-form-item-explain-connected"
                                                 errors={Array []}
-                                                helpStatus=""
-                                                warnings={Array []}
+                                                onDomErrorVisibleChange={[Function]}
                                               >
                                                 <CSSMotion
-                                                  motionAppear={false}
+                                                  motionAppear={true}
                                                   motionDeadline={500}
-                                                  motionEnter={false}
                                                   motionName="ant-show-help"
-                                                  onAppearActive={[Function]}
-                                                  onAppearEnd={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterEnd={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
                                                   onLeaveEnd={[Function]}
-                                                  onLeaveStart={[Function]}
+                                                  removeOnLeave={true}
                                                   visible={false}
                                                 >
                                                   <DomWrapper />
@@ -2232,7 +2081,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                           >
                             <div
                               className="ant-col ant-col-12"
-                              role="cell"
                               style={
                                 Object {
                                   "marginLeft": "20px",
@@ -2268,7 +2116,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       }
                                     }
                                     name="description"
-                                    onMetaChange={[Function]}
+                                    onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
                                   >
@@ -2279,11 +2127,9 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             "itemRef": [Function],
                                             "name": "create-tag",
                                           },
-                                          "_init": true,
                                           "getFieldError": [Function],
                                           "getFieldInstance": [Function],
                                           "getFieldValue": [Function],
-                                          "getFieldWarning": [Function],
                                           "getFieldsError": [Function],
                                           "getFieldsValue": [Function],
                                           "getInternalHooks": [Function],
@@ -2312,7 +2158,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           "description",
                                         ]
                                       }
-                                      onMetaChange={[Function]}
+                                      onReset={[Function]}
                                       trigger="onChange"
                                       validateTrigger="onChange"
                                       valuePropName="value"
@@ -2323,7 +2169,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                       >
                                         <div
                                           className="ant-row ant-form-item"
-                                          role="row"
                                           style={Object {}}
                                         >
                                           <FormItemLabel
@@ -2339,7 +2184,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                             >
                                               <div
                                                 className="ant-col ant-form-item-label"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <label
@@ -2355,19 +2199,23 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           <FormItemInput
                                             errors={Array []}
                                             label="Description"
-                                            name={Array []}
+                                            name={
+                                              Array [
+                                                "description",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
                                             prefixCls="ant-form"
                                             status=""
                                             touched={false}
+                                            validateStatus=""
                                             validating={false}
-                                            warnings={Array []}
                                           >
                                             <Col
                                               className="ant-form-item-control"
                                             >
                                               <div
                                                 className="ant-col ant-form-item-control"
-                                                role="cell"
                                                 style={Object {}}
                                               >
                                                 <div
@@ -2377,20 +2225,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                     className="ant-form-item-control-input-content"
                                                   >
                                                     <Component
-                                                      update={
-                                                        <Editor
-                                                          basic={true}
-                                                          onChange={[Function]}
-                                                          placeholder="Enter Description..."
-                                                          style={
-                                                            Object {
-                                                              "background": "#fff",
-                                                              "padding": "0.5rem 0.75rem",
-                                                              "width": "600px",
-                                                            }
-                                                          }
-                                                        />
-                                                      }
+                                                      update={2}
                                                       value={
                                                         Object {
                                                           "blocks": Array [
@@ -2447,25 +2282,15 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                                   </div>
                                                 </div>
                                                 <ErrorList
-                                                  className="ant-form-item-explain-connected"
                                                   errors={Array []}
-                                                  helpStatus=""
-                                                  warnings={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
                                                   <CSSMotion
-                                                    motionAppear={false}
+                                                    motionAppear={true}
                                                     motionDeadline={500}
-                                                    motionEnter={false}
                                                     motionName="ant-show-help"
-                                                    onAppearActive={[Function]}
-                                                    onAppearEnd={[Function]}
-                                                    onAppearStart={[Function]}
-                                                    onEnterActive={[Function]}
-                                                    onEnterEnd={[Function]}
-                                                    onEnterStart={[Function]}
-                                                    onLeaveActive={[Function]}
                                                     onLeaveEnd={[Function]}
-                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
                                                     visible={false}
                                                   >
                                                     <DomWrapper />
@@ -2491,7 +2316,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   >
                     <div
                       className="ant-col ant-col-24"
-                      role="cell"
                       style={Object {}}
                     >
                       <Row
@@ -2504,7 +2328,6 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                       >
                         <div
                           className="ant-row"
-                          role="row"
                           style={
                             Object {
                               "background": "#f0f2f5",
@@ -2525,6 +2348,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             >
                               <Collapse
                                 accordion={false}
+                                bordered={true}
                                 className="ant-collapse-icon-position-right"
                                 destroyInactivePanel={false}
                                 expandIcon={[Function]}
@@ -2633,46 +2457,42 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           role="button"
                                           tabIndex={0}
                                         >
-                                          <div>
-                                            <Button
-                                              className="ant-collapse-arrow"
-                                            >
-                                              <Wave
-                                                disabled={false}
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <button
-                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                  onClick={[Function]}
-                                                  type="button"
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <LoadingIcon
-                                                    existIcon={false}
-                                                    loading={false}
-                                                    prefixCls="ant-btn"
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
                                                   >
-                                                    <CSSMotion
-                                                      motionName="ant-btn-loading-icon-motion"
-                                                      onAppearActive={[Function]}
-                                                      onAppearStart={[Function]}
-                                                      onEnterActive={[Function]}
-                                                      onEnterStart={[Function]}
-                                                      onLeaveActive={[Function]}
-                                                      onLeaveStart={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
-                                                    >
-                                                      <DomWrapper />
-                                                    </CSSMotion>
-                                                  </LoadingIcon>
-                                                  <span
-                                                    key=".0"
-                                                  >
-                                                    Expand
-                                                  </span>
-                                                </button>
-                                              </Wave>
-                                            </Button>
-                                          </div>
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
                                           Meta Data
                                         </div>
                                         <CSSMotion
@@ -2768,46 +2588,42 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           role="button"
                                           tabIndex={0}
                                         >
-                                          <div>
-                                            <Button
-                                              className="ant-collapse-arrow"
-                                            >
-                                              <Wave
-                                                disabled={false}
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <button
-                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                  onClick={[Function]}
-                                                  type="button"
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <LoadingIcon
-                                                    existIcon={false}
-                                                    loading={false}
-                                                    prefixCls="ant-btn"
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
                                                   >
-                                                    <CSSMotion
-                                                      motionName="ant-btn-loading-icon-motion"
-                                                      onAppearActive={[Function]}
-                                                      onAppearStart={[Function]}
-                                                      onEnterActive={[Function]}
-                                                      onEnterStart={[Function]}
-                                                      onLeaveActive={[Function]}
-                                                      onLeaveStart={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
-                                                    >
-                                                      <DomWrapper />
-                                                    </CSSMotion>
-                                                  </LoadingIcon>
-                                                  <span
-                                                    key=".0"
-                                                  >
-                                                    Expand
-                                                  </span>
-                                                </button>
-                                              </Wave>
-                                            </Button>
-                                          </div>
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
                                           Code Injection
                                         </div>
                                         <CSSMotion
@@ -2847,6 +2663,7 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                             >
                               <Collapse
                                 accordion={false}
+                                bordered={true}
                                 className="ant-collapse-icon-position-right"
                                 destroyInactivePanel={false}
                                 expandIcon={[Function]}
@@ -2955,46 +2772,42 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                                           role="button"
                                           tabIndex={0}
                                         >
-                                          <div>
-                                            <Button
-                                              className="ant-collapse-arrow"
-                                            >
-                                              <Wave
-                                                disabled={false}
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <button
-                                                  className="ant-btn ant-btn-default ant-collapse-arrow"
-                                                  onClick={[Function]}
-                                                  type="button"
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <LoadingIcon
-                                                    existIcon={false}
-                                                    loading={false}
-                                                    prefixCls="ant-btn"
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
                                                   >
-                                                    <CSSMotion
-                                                      motionName="ant-btn-loading-icon-motion"
-                                                      onAppearActive={[Function]}
-                                                      onAppearStart={[Function]}
-                                                      onEnterActive={[Function]}
-                                                      onEnterStart={[Function]}
-                                                      onLeaveActive={[Function]}
-                                                      onLeaveStart={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
-                                                    >
-                                                      <DomWrapper />
-                                                    </CSSMotion>
-                                                  </LoadingIcon>
-                                                  <span
-                                                    key=".0"
-                                                  >
-                                                    Expand
-                                                  </span>
-                                                </button>
-                                              </Wave>
-                                            </Button>
-                                          </div>
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
                                           Meta Fields
                                         </div>
                                         <CSSMotion
