@@ -19,7 +19,7 @@ function Factly() {
   const [pageNum, setPageNum] = useState(1);
   const [totalMatches, setTotalMatches] = useState(0);
   let languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
-  const pageLimit = 20
+  const pageLimit = 20;
   const fetchFilters = () => {
     dispatch(getSachFilters(setLanguages, setPublishersList, setPublisherCountries));
   };
@@ -75,13 +75,13 @@ function Factly() {
 
   const handleNext = () => {
     setPageNum((previousPageNum) => previousPageNum + 1);
-    window.scrollTo({top: 0, left: 0});
+    window.scrollTo({ top: 0, left: 0 });
   };
 
   const handlePrevious = () => {
     if (pageNum > 1) {
       setPageNum((previousPageNum) => previousPageNum - 1);
-      window.scrollTo({top: 0, left: 0});
+      window.scrollTo({ top: 0, left: 0 });
     }
   };
 
@@ -96,10 +96,7 @@ function Factly() {
     <Space direction="vertical" size="medium">
       <Typography.Title> Sach </Typography.Title>
       <Form name="sach-form" form={form} onFinish={handleFinish} layout={'inline'}>
-        <Form.Item
-          name="query"
-          style={{ width: '40%' }}
-        >
+        <Form.Item name="query" style={{ width: '40%' }}>
           <Input
             placeholder={'Search for Fact-Checks about a person or topic or a specific claim'}
             allowClear
@@ -118,21 +115,21 @@ function Factly() {
       >
         <div
           style={{
-            display:'flex',
-            flexDirection:'column',
-            width:'30%',
-            gap:'8px'
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            gap: '8px',
           }}
         >
-          Languages: 
+          Languages:
           <Select
             name="selectedLanguage"
             placeholder={'Select Language'}
             mode="multiple"
             style={{
-                maxWidth:'260px',
-                maxHeight:'40px'  
-              }}
+              maxWidth: '260px',
+              maxHeight: '40px',
+            }}
             onChange={handleLanguageChange}
           >
             {languages.map((lang) => (
@@ -144,18 +141,18 @@ function Factly() {
         </div>
         <div
           style={{
-            display:'flex',
-            flexDirection:'column',
-            width:'30%',
-            gap:'8px'
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            gap: '8px',
           }}
         >
-          Countries: 
+          Countries:
           <Select
             name="selectedCountry"
             placeholder={'Select Country'}
             mode="multiple"
-            style={{width:'80%'}}
+            style={{ width: '80%' }}
             onChange={handleCountryChange}
           >
             {publisherCountries.map((country) => (
@@ -167,101 +164,101 @@ function Factly() {
         </div>
         <div
           style={{
-            display:'flex',
-            flexDirection:'column',
-            width:'30%',
-            gap:'8px'
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            gap: '8px',
           }}
         >
-        Publishers: 
-        <Select
-          name="selectedPublisher"
-          placeholder={'Select Publisher'}
-          mode="multiple"
-          style={{width:'80%'}}
-          onChange={handlePublisherChange}
-        >
-          {publisherList.map((publisher) => (
-            <Select.Option value={publisher} key={publisher}>
-              {publisher}
-            </Select.Option>
-          ))}
-        </Select>
+          Publishers:
+          <Select
+            name="selectedPublisher"
+            placeholder={'Select Publisher'}
+            mode="multiple"
+            style={{ width: '80%' }}
+            onChange={handlePublisherChange}
+          >
+            {publisherList.map((publisher) => (
+              <Select.Option value={publisher} key={publisher}>
+                {publisher}
+              </Select.Option>
+            ))}
+          </Select>
         </div>
         <div
           style={{
-            display:'flex',
-            flexDirection:'column',
-            width:'30%',
-            gap:'8px'
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            gap: '8px',
           }}
         >
-        Sort by date: 
-        <Select
-          name="selectedDateOrder"
-          placeholder={'Sort by date'}
-          onChange={handleDateChange}
-          style={{width:'80%'}}
-          allowClear
-        >
-          <Select.Option value={'desc'}> latest </Select.Option>
-          <Select.Option value={'asc'}> oldest</Select.Option>
-        </Select>
+          Sort by date:
+          <Select
+            name="selectedDateOrder"
+            placeholder={'Sort by date'}
+            onChange={handleDateChange}
+            style={{ width: '80%' }}
+            allowClear
+          >
+            <Select.Option value={'desc'}> latest </Select.Option>
+            <Select.Option value={'asc'}> oldest</Select.Option>
+          </Select>
         </div>
       </div>
-      {
-        (loading) ? <Skeleton/> :
-        (
-          <div
-            style={{
-              marginTop:'20px'
-            }}
-          >
-            {factChecks?.length
-        ? factChecks.map((factCheck, index) => (
-            <FactCheck
-              factCheck={factCheck}
-              key={index}
-              // active={true}
-              // setActiveFactCheck={setActiveFactCheck}
-            />
-          ))
-        : null}
-      {totalMatches > pageLimit ? (
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          marginTop: '20px',
-          gap: "10px",
-        }}>
-          {pageNum > 1 ? (
-            <Button 
-              onClick={handlePrevious} 
-              type="primary" 
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          {factChecks?.length
+            ? factChecks.map((factCheck, index) => (
+                <FactCheck
+                  factCheck={factCheck}
+                  key={index}
+                  // active={true}
+                  // setActiveFactCheck={setActiveFactCheck}
+                />
+              ))
+            : null}
+          {totalMatches > pageLimit ? (
+            <div
               style={{
-                marginRight:"auto"
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '20px',
+                gap: '10px',
               }}
-              >
-              Previous
-            </Button>
-          ) : null}
-          {pageNum * pageLimit < totalMatches ? (
-            <Button 
-              onClick={handleNext} 
-              type="primary"
-              style={{
-                marginLeft:"auto"
-              }}
-              >
-              Next 
-            </Button>
+            >
+              {pageNum > 1 ? (
+                <Button
+                  onClick={handlePrevious}
+                  type="primary"
+                  style={{
+                    marginRight: 'auto',
+                  }}
+                >
+                  Previous
+                </Button>
+              ) : null}
+              {pageNum * pageLimit < totalMatches ? (
+                <Button
+                  onClick={handleNext}
+                  type="primary"
+                  style={{
+                    marginLeft: 'auto',
+                  }}
+                >
+                  Next
+                </Button>
+              ) : null}
+            </div>
           ) : null}
         </div>
-      ) : null}
-          </div>
-        )
-      }
-      
+      )}
     </Space>
   );
 }
