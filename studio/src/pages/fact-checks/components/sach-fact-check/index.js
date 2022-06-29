@@ -12,11 +12,7 @@ const FactCheck = ({ factCheck, setActiveFactCheck }) => {
       </a>
       <div className={'ClaimContainer'}>
         <div className={'ClaimTextContainer'}>
-          <h3
-            className={'ClaimTextStyle'}
-          >
-            Claim :
-          </h3>
+          <h3 className={'ClaimTextStyle'}>Claim :</h3>
           <p className={'ClaimText'}>{factCheck?.claims?.[0].text}</p>
         </div>
         <div className={'ClaimDetailsContainer'}>

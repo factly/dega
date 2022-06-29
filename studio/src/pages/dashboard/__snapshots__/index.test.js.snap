@@ -60,6 +60,41 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Dashboard"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Dashboard"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Dashboard"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <Title
                   level={2}
                 >
@@ -102,8 +137,8 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1362,8 +1397,8 @@ exports[`Dashboard component snapshot testing should render the component 1`] = 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={2}
-              key="ant-space-item-2"
+              index={3}
+              key="ant-space-item-3"
               marginDirection="marginRight"
               wrap={false}
             >
