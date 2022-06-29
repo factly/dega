@@ -19,8 +19,6 @@ var DB *gorm.DB
 func SetupDB() {
 
 	fmt.Println("connecting to database ...")
-	// dbString := "postgresql://root@crdb:26257/dega?sslmode=disable"
-	// dbString := "postgresql://root@crdb:26257/dega?sslmode=disable"
 	dbString := fmt.Sprintf("postgresql://root@%s:%s/%s?sslmode=%s", viper.GetString("database_host"), viper.GetString("database_port"), viper.GetString("database_name"), viper.GetString("database_ssl_mode"))
 	var err error
 

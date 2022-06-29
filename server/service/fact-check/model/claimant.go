@@ -18,7 +18,7 @@ type Claimant struct {
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
 	TagLine         string         `gorm:"column:tag_line" json:"tag_line"`
-	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
+	MediumID        *uint          `gorm:"column:medium_id;type:INT4;default:NULL" json:"medium_id"`
 	Medium          *model.Medium  `json:"medium"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`

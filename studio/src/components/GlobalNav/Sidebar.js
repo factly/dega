@@ -49,7 +49,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
     'policies',
     'users',
     'spaces',
-    'sach'
+    'sach',
   ];
   let protectedResources = [
     'posts',
@@ -86,7 +86,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
         setCoreMenu(true);
       }
     } else {
-      if (!showCoreMenu && protectedResources.includes(each.resource)) {
+      if (!showCoreMenu && protectedResources?.includes(each.resource)) {
         setCoreMenu(true);
       }
       resource.push(each.resource);
@@ -95,7 +95,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
   if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
-      return resource.includes(route.title.toLowerCase()) ? (
+      return resource?.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
         route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
@@ -187,7 +187,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services }
               : permission.filter((each) => each.resource === 'admin').length > 0
               ? getSubMenuItems(menu, index, Icon)
               : null
-            : services.includes(maker(menu.title))
+            : services?.includes(maker(menu.title))
             ? getSubMenuItems(menu, index, Icon)
             : null;
         })}

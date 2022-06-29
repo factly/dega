@@ -30,17 +30,7 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 			}
 			space := &model.Space{}
 			space.ID = uint(sID)
-			var count int64
-			err = config.DB.Model(&model.Space{}).Find(&model.Space{
-				Base: config.Base{
-					ID: uint(sID),
-				},
-			}).Count(&count).Error
 
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
-			}
 			err = config.DB.First(space).Error
 
 			if err != nil {
