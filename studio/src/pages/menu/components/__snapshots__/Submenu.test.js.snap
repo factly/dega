@@ -14,7 +14,6 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -71,7 +70,6 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -116,12 +114,10 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                             />
                             <FormItemInput
                               errors={Array []}
-                              name={Array []}
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
-                              touched={false}
-                              validating={false}
-                              warnings={Array []}
+                              validateStatus=""
                             >
                               <Col
                                 className="ant-form-item-control"
@@ -139,11 +135,9 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                       <Button
                                         onClick={[Function]}
                                       >
-                                        <Wave
-                                          disabled={false}
-                                        >
+                                        <Wave>
                                           <button
-                                            className="ant-btn ant-btn-default"
+                                            className="ant-btn"
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -293,25 +287,15 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />

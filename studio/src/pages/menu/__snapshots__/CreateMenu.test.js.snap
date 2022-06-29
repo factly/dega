@@ -15,6 +15,23 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
 >
   <CreateMenu>
     <div>
+      <HelmetWrapper
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Create Menu"
+      >
+        <SideEffect(NullComponent)
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Create Menu"
+        >
+          <NullComponent
+            defer={true}
+            encodeSpecialCharacters={true}
+            title="Create Menu"
+          />
+        </SideEffect(NullComponent)>
+      </HelmetWrapper>
       <MenuForm
         onCreate={[Function]}
       >
@@ -700,6 +717,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                                   "enabled": false,
                                                 },
                                                 "scrollBeyondLastLine": false,
+                                                "scrollbar": Object {
+                                                  "alwaysConsumeMouseWheel": false,
+                                                },
                                                 "theme": "vs-dark",
                                                 "wordWrap": "on",
                                               }

@@ -128,11 +128,9 @@ exports[`Media List component snapshot testing should match component with data 
                     }
                   }
                 >
-                  <Wave
-                    disabled={false}
-                  >
+                  <Wave>
                     <button
-                      className="ant-btn ant-btn-default"
+                      className="ant-btn"
                       onClick={[Function]}
                       style={
                         Object {
@@ -181,11 +179,9 @@ exports[`Media List component snapshot testing should match component with data 
                     }
                   }
                 >
-                  <Wave
-                    disabled={false}
-                  >
+                  <Wave>
                     <button
-                      className="ant-btn ant-btn-default"
+                      className="ant-btn"
                       onClick={[Function]}
                       style={
                         Object {

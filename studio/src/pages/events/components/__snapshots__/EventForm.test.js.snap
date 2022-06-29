@@ -31,7 +31,6 @@ exports[`Event form component snapshot testing should match component with data 
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -77,7 +76,6 @@ exports[`Event form component snapshot testing should match component with data 
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -121,7 +119,7 @@ exports[`Event form component snapshot testing should match component with data 
                   }
                 }
                 name="name"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -135,7 +133,6 @@ exports[`Event form component snapshot testing should match component with data 
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -164,7 +161,7 @@ exports[`Event form component snapshot testing should match component with data 
                       "name",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -206,12 +203,17 @@ exports[`Event form component snapshot testing should match component with data 
                       <FormItemInput
                         errors={Array []}
                         label="Name"
-                        name={Array []}
+                        name={
+                          Array [
+                            "name",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -228,58 +230,19 @@ exports[`Event form component snapshot testing should match component with data 
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <ForwardRef
-                                      placeholder="Enter name"
-                                    />
-                                  }
+                                  update={1}
                                   value="event"
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-event_name"
                                     onChange={[Function]}
                                     placeholder="Enter name"
+                                    type="text"
                                     value="event"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-event_name"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      placeholder="Enter name"
-                                      prefixCls="ant-input"
-                                      value="event"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-event_name"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-event_name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            placeholder="Enter name"
-                                            type="text"
-                                            value="event"
-                                          />
-                                        }
-                                        placeholder="Enter name"
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value="event"
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-event_name"
@@ -291,32 +254,44 @@ exports[`Event form component snapshot testing should match component with data 
                                           type="text"
                                           value="event"
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-event_name"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      placeholder="Enter name"
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value="event"
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-event_name"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        placeholder="Enter name"
+                                        type="text"
+                                        value="event"
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -342,7 +317,7 @@ exports[`Event form component snapshot testing should match component with data 
                   }
                 }
                 name="tags"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -356,7 +331,6 @@ exports[`Event form component snapshot testing should match component with data 
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -385,7 +359,7 @@ exports[`Event form component snapshot testing should match component with data 
                       "tags",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -427,12 +401,17 @@ exports[`Event form component snapshot testing should match component with data 
                       <FormItemInput
                         errors={Array []}
                         label="Tags"
-                        name={Array []}
+                        name={
+                          Array [
+                            "tags",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -449,11 +428,7 @@ exports[`Event form component snapshot testing should match component with data 
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <MONACOEditor
-                                      language="json"
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
@@ -491,25 +466,15 @@ exports[`Event form component snapshot testing should match component with data 
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -551,12 +516,10 @@ exports[`Event form component snapshot testing should match component with data 
                   />
                   <FormItemInput
                     errors={Array []}
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                     wrapperCol={
                       Object {
                         "offset": 10,
@@ -604,9 +567,7 @@ exports[`Event form component snapshot testing should match component with data 
                                       htmlType="submit"
                                       type="primary"
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
                                           onClick={[Function]}
@@ -657,11 +618,9 @@ exports[`Event form component snapshot testing should match component with data 
                                       htmlType="button"
                                       onClick={[Function]}
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
-                                          className="ant-btn ant-btn-default"
+                                          className="ant-btn"
                                           onClick={[Function]}
                                           type="button"
                                         >
@@ -699,25 +658,15 @@ exports[`Event form component snapshot testing should match component with data 
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />
@@ -763,7 +712,6 @@ exports[`Event form component snapshot testing should match component with empty
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -805,7 +753,6 @@ exports[`Event form component snapshot testing should match component with empty
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -845,7 +792,7 @@ exports[`Event form component snapshot testing should match component with empty
                   }
                 }
                 name="name"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -859,7 +806,6 @@ exports[`Event form component snapshot testing should match component with empty
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -888,7 +834,7 @@ exports[`Event form component snapshot testing should match component with empty
                       "name",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -930,12 +876,17 @@ exports[`Event form component snapshot testing should match component with empty
                       <FormItemInput
                         errors={Array []}
                         label="Name"
-                        name={Array []}
+                        name={
+                          Array [
+                            "name",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -952,54 +903,17 @@ exports[`Event form component snapshot testing should match component with empty
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <ForwardRef
-                                      placeholder="Enter name"
-                                    />
-                                  }
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-event_name"
                                     onChange={[Function]}
                                     placeholder="Enter name"
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-event_name"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      placeholder="Enter name"
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-event_name"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-event_name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            placeholder="Enter name"
-                                            type="text"
-                                          />
-                                        }
-                                        placeholder="Enter name"
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-event_name"
@@ -1009,34 +923,45 @@ exports[`Event form component snapshot testing should match component with empty
                                           onKeyDown={[Function]}
                                           placeholder="Enter name"
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-event_name"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      placeholder="Enter name"
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-event_name"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        placeholder="Enter name"
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1062,7 +987,7 @@ exports[`Event form component snapshot testing should match component with empty
                   }
                 }
                 name="tags"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1076,7 +1001,6 @@ exports[`Event form component snapshot testing should match component with empty
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1105,7 +1029,7 @@ exports[`Event form component snapshot testing should match component with empty
                       "tags",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1147,12 +1071,17 @@ exports[`Event form component snapshot testing should match component with empty
                       <FormItemInput
                         errors={Array []}
                         label="Tags"
-                        name={Array []}
+                        name={
+                          Array [
+                            "tags",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1169,11 +1098,7 @@ exports[`Event form component snapshot testing should match component with empty
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <MONACOEditor
-                                      language="json"
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
@@ -1211,25 +1136,15 @@ exports[`Event form component snapshot testing should match component with empty
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1271,12 +1186,10 @@ exports[`Event form component snapshot testing should match component with empty
                   />
                   <FormItemInput
                     errors={Array []}
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                     wrapperCol={
                       Object {
                         "offset": 10,
@@ -1324,9 +1237,7 @@ exports[`Event form component snapshot testing should match component with empty
                                       htmlType="submit"
                                       type="primary"
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
                                           onClick={[Function]}
@@ -1377,11 +1288,9 @@ exports[`Event form component snapshot testing should match component with empty
                                       htmlType="button"
                                       onClick={[Function]}
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
-                                          className="ant-btn ant-btn-default"
+                                          className="ant-btn"
                                           onClick={[Function]}
                                           type="button"
                                         >
@@ -1419,25 +1328,15 @@ exports[`Event form component snapshot testing should match component with empty
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />
@@ -1481,7 +1380,6 @@ exports[`Event form component snapshot testing should render the component 1`] =
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
-          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -1523,7 +1421,6 @@ exports[`Event form component snapshot testing should render the component 1`] =
               "getFieldError": [Function],
               "getFieldInstance": [Function],
               "getFieldValue": [Function],
-              "getFieldWarning": [Function],
               "getFieldsError": [Function],
               "getFieldsValue": [Function],
               "getInternalHooks": [Function],
@@ -1563,7 +1460,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                   }
                 }
                 name="name"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1577,7 +1474,6 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1606,7 +1502,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       "name",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1648,12 +1544,17 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       <FormItemInput
                         errors={Array []}
                         label="Name"
-                        name={Array []}
+                        name={
+                          Array [
+                            "name",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1670,54 +1571,17 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <ForwardRef
-                                      placeholder="Enter name"
-                                    />
-                                  }
+                                  update={1}
                                 >
-                                  <ForwardRef
+                                  <Input
                                     id="create-event_name"
                                     onChange={[Function]}
                                     placeholder="Enter name"
+                                    type="text"
                                   >
-                                    <ForwardRef
-                                      affixWrapperClassName=""
-                                      groupClassName=""
-                                      id="create-event_name"
-                                      inputClassName=""
-                                      onBlur={[Function]}
-                                      onChange={[Function]}
-                                      onFocus={[Function]}
-                                      placeholder="Enter name"
-                                      prefixCls="ant-input"
-                                      wrapperClassName=""
-                                    >
-                                      <BaseInput
-                                        affixWrapperClassName=""
-                                        focused={false}
-                                        groupClassName=""
-                                        handleReset={[Function]}
-                                        id="create-event_name"
-                                        inputElement={
-                                          <input
-                                            className="ant-input"
-                                            id="create-event_name"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            placeholder="Enter name"
-                                            type="text"
-                                          />
-                                        }
-                                        placeholder="Enter name"
-                                        prefixCls="ant-input"
-                                        suffix={null}
-                                        triggerFocus={[Function]}
-                                        value=""
-                                        wrapperClassName=""
-                                      >
+                                    <ClearableLabeledInput
+                                      bordered={true}
+                                      element={
                                         <input
                                           className="ant-input"
                                           id="create-event_name"
@@ -1727,34 +1591,45 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                           onKeyDown={[Function]}
                                           placeholder="Enter name"
                                           type="text"
-                                          value=""
                                         />
-                                      </BaseInput>
-                                    </ForwardRef>
-                                  </ForwardRef>
+                                      }
+                                      focused={false}
+                                      handleReset={[Function]}
+                                      id="create-event_name"
+                                      inputType="input"
+                                      onChange={[Function]}
+                                      placeholder="Enter name"
+                                      prefixCls="ant-input"
+                                      triggerFocus={[Function]}
+                                      type="text"
+                                      value=""
+                                    >
+                                      <input
+                                        className="ant-input"
+                                        id="create-event_name"
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        onKeyDown={[Function]}
+                                        placeholder="Enter name"
+                                        type="text"
+                                        value=""
+                                      />
+                                    </ClearableLabeledInput>
+                                  </Input>
                                 </Component>
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1780,7 +1655,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                   }
                 }
                 name="tags"
-                onMetaChange={[Function]}
+                onReset={[Function]}
                 trigger="onChange"
                 validateTrigger="onChange"
               >
@@ -1794,7 +1669,6 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
-                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -1823,7 +1697,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       "tags",
                     ]
                   }
-                  onMetaChange={[Function]}
+                  onReset={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="value"
@@ -1865,12 +1739,17 @@ exports[`Event form component snapshot testing should render the component 1`] =
                       <FormItemInput
                         errors={Array []}
                         label="Tags"
-                        name={Array []}
+                        name={
+                          Array [
+                            "tags",
+                          ]
+                        }
+                        onDomErrorVisibleChange={[Function]}
                         prefixCls="ant-form"
                         status=""
                         touched={false}
+                        validateStatus=""
                         validating={false}
-                        warnings={Array []}
                       >
                         <Col
                           className="ant-form-item-control"
@@ -1887,11 +1766,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                 className="ant-form-item-control-input-content"
                               >
                                 <Component
-                                  update={
-                                    <MONACOEditor
-                                      language="json"
-                                    />
-                                  }
+                                  update={1}
                                 >
                                   <MONACOEditor
                                     id="create-event_tags"
@@ -1929,25 +1804,15 @@ exports[`Event form component snapshot testing should render the component 1`] =
                               </div>
                             </div>
                             <ErrorList
-                              className="ant-form-item-explain-connected"
                               errors={Array []}
-                              helpStatus=""
-                              warnings={Array []}
+                              onDomErrorVisibleChange={[Function]}
                             >
                               <CSSMotion
-                                motionAppear={false}
+                                motionAppear={true}
                                 motionDeadline={500}
-                                motionEnter={false}
                                 motionName="ant-show-help"
-                                onAppearActive={[Function]}
-                                onAppearEnd={[Function]}
-                                onAppearStart={[Function]}
-                                onEnterActive={[Function]}
-                                onEnterEnd={[Function]}
-                                onEnterStart={[Function]}
-                                onLeaveActive={[Function]}
                                 onLeaveEnd={[Function]}
-                                onLeaveStart={[Function]}
+                                removeOnLeave={true}
                                 visible={false}
                               >
                                 <DomWrapper />
@@ -1989,12 +1854,10 @@ exports[`Event form component snapshot testing should render the component 1`] =
                   />
                   <FormItemInput
                     errors={Array []}
-                    name={Array []}
+                    onDomErrorVisibleChange={[Function]}
                     prefixCls="ant-form"
                     status=""
-                    touched={false}
-                    validating={false}
-                    warnings={Array []}
+                    validateStatus=""
                     wrapperCol={
                       Object {
                         "offset": 10,
@@ -2042,9 +1905,7 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                       htmlType="submit"
                                       type="primary"
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
                                           className="ant-btn ant-btn-primary"
                                           onClick={[Function]}
@@ -2095,11 +1956,9 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                       htmlType="button"
                                       onClick={[Function]}
                                     >
-                                      <Wave
-                                        disabled={false}
-                                      >
+                                      <Wave>
                                         <button
-                                          className="ant-btn ant-btn-default"
+                                          className="ant-btn"
                                           onClick={[Function]}
                                           type="button"
                                         >
@@ -2137,25 +1996,15 @@ exports[`Event form component snapshot testing should render the component 1`] =
                           </div>
                         </div>
                         <ErrorList
-                          className="ant-form-item-explain-connected"
                           errors={Array []}
-                          helpStatus=""
-                          warnings={Array []}
+                          onDomErrorVisibleChange={[Function]}
                         >
                           <CSSMotion
-                            motionAppear={false}
+                            motionAppear={true}
                             motionDeadline={500}
-                            motionEnter={false}
                             motionName="ant-show-help"
-                            onAppearActive={[Function]}
-                            onAppearEnd={[Function]}
-                            onAppearStart={[Function]}
-                            onEnterActive={[Function]}
-                            onEnterEnd={[Function]}
-                            onEnterStart={[Function]}
-                            onLeaveActive={[Function]}
                             onLeaveEnd={[Function]}
-                            onLeaveStart={[Function]}
+                            removeOnLeave={true}
                             visible={false}
                           >
                             <DomWrapper />

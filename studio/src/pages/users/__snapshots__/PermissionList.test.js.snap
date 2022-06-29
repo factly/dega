@@ -102,6 +102,41 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Permission List"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Permission List"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Permission List"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <div
                   key="categories"
                 >
@@ -362,8 +397,8 @@ exports[`Tags List component snapshot testing should render the component 1`] = 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -673,7 +708,44 @@ exports[`Tags List component snapshot testing should render without data 1`] = `
       <PermissionList>
         <Space
           direction="vertical"
-        />
+        >
+          <div
+            className="ant-space ant-space-vertical"
+            style={Object {}}
+          >
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={0}
+              key="ant-space-item-0"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={Object {}}
+              >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Permission List"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Permission List"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Permission List"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+          </div>
+        </Space>
       </PermissionList>
     </Router>
   </BrowserRouter>
