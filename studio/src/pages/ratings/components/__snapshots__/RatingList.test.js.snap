@@ -75,6 +75,7 @@ exports[`Ratings List component snapshot testing should match component when loa
           "total": 2,
         }
       }
+      fetchRatings={[MockFunction]}
       filters={
         Object {
           "limit": 20,
@@ -165,6 +166,7 @@ exports[`Ratings List component snapshot testing should match component with rat
             "total": 2,
           }
         }
+        fetchRatings={[MockFunction]}
         filters={
           Object {
             "limit": 20,
@@ -3903,6 +3905,7 @@ exports[`Ratings List component snapshot testing should render the component 1`]
           "total": 2,
         }
       }
+      fetchRatings={[MockFunction]}
       filters={
         Object {
           "limit": 20,

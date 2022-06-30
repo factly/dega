@@ -102,6 +102,7 @@ jest.mock('../../../actions/ratings', () => ({
   deleteRating: jest.fn(),
 }));
 const setFilters = jest.fn();
+const fetchRatings = jest.fn();
 describe('Ratings List component', () => {
   describe('snapshot testing', () => {
     beforeEach(() => {
@@ -116,6 +117,7 @@ describe('Ratings List component', () => {
         <Provider store={store}>
           <Router>
             <RatingList
+              fetchRatings={fetchRatings}
               data={dataSource}
               setFilters={setFilters}
               filters={query}
@@ -133,6 +135,7 @@ describe('Ratings List component', () => {
         <Provider store={store}>
           <Router>
             <RatingList
+              fetchRatings={fetchRatings}
               data={dataSource}
               setFilters={setFilters}
               filters={query}
@@ -150,6 +153,7 @@ describe('Ratings List component', () => {
         <Provider store={store}>
           <Router>
             <RatingList
+              fetchRatings={fetchRatings}
               data={dataSource}
               filters={query}
               setFilters={setFilters}
@@ -175,6 +179,7 @@ describe('Ratings List component', () => {
           <Provider store={store}>
             <Router>
               <RatingList
+                fetchRatings={fetchRatings}
                 data={dataSource}
                 setFilters={setFilters}
                 filters={query}
@@ -196,6 +201,7 @@ describe('Ratings List component', () => {
           <Provider store={store}>
             <Router>
               <RatingList
+                fetchRatings={fetchRatings}
                 data={dataSource}
                 filters={query}
                 setFilters={setFilters}
@@ -225,6 +231,7 @@ describe('Ratings List component', () => {
           <Provider store={store}>
             <Router>
               <RatingList
+                fetchRatings={fetchRatings}
                 data={dataSource}
                 filters={query}
                 setFilters={setFilters}
@@ -250,6 +257,7 @@ describe('Ratings List component', () => {
           <Provider store={store}>
             <Router>
               <RatingList
+                fetchRatings={fetchRatings}
                 data={{ ratings: [], loading: false, total: 0 }}
                 filters={query}
                 setFilters={setFilters}
