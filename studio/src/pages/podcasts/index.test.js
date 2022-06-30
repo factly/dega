@@ -154,7 +154,7 @@ describe('Podcast component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPodcasts).toHaveBeenCalledWith({});
+      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 10, sort: 'desc' });
     });
   });
   describe('component testing', () => {
@@ -186,7 +186,13 @@ describe('Podcast component', () => {
         expect(submitButtom.text()).toBe('Search');
         submitButtom.simulate('submit');
       });
-      expect(getPodcasts).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', category: [1] });
+      expect(getPodcasts).toHaveBeenCalledWith({
+        page: 1,
+        limit: 20,
+        q: 'desc',
+        category: [1],
+        sort: 'desc',
+      });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -204,9 +210,8 @@ describe('Podcast component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'podcast' } });
         wrapper
           .find('FormItem')
