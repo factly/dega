@@ -21,7 +21,7 @@ exports[`website component snapshot testing should render the component 1`] = `
       <Link
         to="/website/general"
       >
-        <ForwardRef
+        <Card
           hoverable={true}
         >
           <Meta
@@ -41,7 +41,7 @@ exports[`website component snapshot testing should render the component 1`] = `
             description="Basic Site Details and Site Meta Data"
             title="General"
           />
-        </ForwardRef>
+        </Card>
       </Link>
     </Col>
     <Col
@@ -50,7 +50,7 @@ exports[`website component snapshot testing should render the component 1`] = `
       <Link
         to="/website/branding"
       >
-        <ForwardRef
+        <Card
           hoverable={true}
         >
           <Meta
@@ -73,7 +73,7 @@ exports[`website component snapshot testing should render the component 1`] = `
             description="Update site logos, icons and design tokens"
             title="Branding"
           />
-        </ForwardRef>
+        </Card>
       </Link>
     </Col>
     <Col
@@ -82,7 +82,7 @@ exports[`website component snapshot testing should render the component 1`] = `
       <Link
         to="/website/menus"
       >
-        <ForwardRef
+        <Card
           hoverable={true}
         >
           <Meta
@@ -105,7 +105,7 @@ exports[`website component snapshot testing should render the component 1`] = `
             description="Setup Menus"
             title="Navigation"
           />
-        </ForwardRef>
+        </Card>
       </Link>
     </Col>
     <Col
@@ -114,7 +114,7 @@ exports[`website component snapshot testing should render the component 1`] = `
       <Link
         to="/website/code-injection"
       >
-        <ForwardRef
+        <Card
           hoverable={true}
         >
           <Meta
@@ -137,7 +137,7 @@ exports[`website component snapshot testing should render the component 1`] = `
             description="Add code to your site"
             title="Code Injection"
           />
-        </ForwardRef>
+        </Card>
       </Link>
     </Col>
     <Col
@@ -146,7 +146,7 @@ exports[`website component snapshot testing should render the component 1`] = `
       <Link
         to="/website/analytics"
       >
-        <ForwardRef
+        <Card
           hoverable={true}
         >
           <Meta
@@ -169,7 +169,7 @@ exports[`website component snapshot testing should render the component 1`] = `
             description="View Analytics for your site"
             title="Analytics"
           />
-        </ForwardRef>
+        </Card>
       </Link>
     </Col>
   </Row>
