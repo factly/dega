@@ -41,9 +41,11 @@ exports[`Webhook create component snapshot testing should render the component 1
               "itemRef": [Function],
               "name": "create-webhook",
             },
+            "_init": true,
             "getFieldError": [Function],
             "getFieldInstance": [Function],
             "getFieldValue": [Function],
+            "getFieldWarning": [Function],
             "getFieldsError": [Function],
             "getFieldsValue": [Function],
             "getInternalHooks": [Function],
@@ -83,9 +85,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                   "itemRef": [Function],
                   "name": "create-webhook",
                 },
+                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
+                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -126,7 +130,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     }
                   }
                   name="name"
-                  onReset={[Function]}
+                  onMetaChange={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                 >
@@ -137,9 +141,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                           "itemRef": [Function],
                           "name": "create-webhook",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
+                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -168,7 +174,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                         "name",
                       ]
                     }
-                    onReset={[Function]}
+                    onMetaChange={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="value"
@@ -179,6 +185,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -195,6 +202,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -210,17 +218,12 @@ exports[`Webhook create component snapshot testing should render the component 1
                         <FormItemInput
                           errors={Array []}
                           label="Name"
-                          name={
-                            Array [
-                              "name",
-                            ]
-                          }
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
-                          validateStatus=""
                           validating={false}
+                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -228,6 +231,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -237,16 +241,46 @@ exports[`Webhook create component snapshot testing should render the component 1
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={1}
+                                    update={<ForwardRef />}
                                   >
-                                    <Input
+                                    <ForwardRef
                                       id="create-webhook_name"
                                       onChange={[Function]}
-                                      type="text"
                                     >
-                                      <ClearableLabeledInput
-                                        bordered={true}
-                                        element={
+                                      <ForwardRef
+                                        affixWrapperClassName=""
+                                        groupClassName=""
+                                        id="create-webhook_name"
+                                        inputClassName=""
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        prefixCls="ant-input"
+                                        wrapperClassName=""
+                                      >
+                                        <BaseInput
+                                          affixWrapperClassName=""
+                                          focused={false}
+                                          groupClassName=""
+                                          handleReset={[Function]}
+                                          id="create-webhook_name"
+                                          inputElement={
+                                            <input
+                                              className="ant-input"
+                                              id="create-webhook_name"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              type="text"
+                                            />
+                                          }
+                                          prefixCls="ant-input"
+                                          suffix={null}
+                                          triggerFocus={[Function]}
+                                          value=""
+                                          wrapperClassName=""
+                                        >
                                           <input
                                             className="ant-input"
                                             id="create-webhook_name"
@@ -255,43 +289,34 @@ exports[`Webhook create component snapshot testing should render the component 1
                                             onFocus={[Function]}
                                             onKeyDown={[Function]}
                                             type="text"
+                                            value=""
                                           />
-                                        }
-                                        focused={false}
-                                        handleReset={[Function]}
-                                        id="create-webhook_name"
-                                        inputType="input"
-                                        onChange={[Function]}
-                                        prefixCls="ant-input"
-                                        triggerFocus={[Function]}
-                                        type="text"
-                                        value=""
-                                      >
-                                        <input
-                                          className="ant-input"
-                                          id="create-webhook_name"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          onKeyDown={[Function]}
-                                          type="text"
-                                          value=""
-                                        />
-                                      </ClearableLabeledInput>
-                                    </Input>
+                                        </BaseInput>
+                                      </ForwardRef>
+                                    </ForwardRef>
                                   </Component>
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -317,7 +342,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     }
                   }
                   name="url"
-                  onReset={[Function]}
+                  onMetaChange={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                 >
@@ -328,9 +353,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                           "itemRef": [Function],
                           "name": "create-webhook",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
+                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -359,7 +386,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                         "url",
                       ]
                     }
-                    onReset={[Function]}
+                    onMetaChange={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="value"
@@ -370,6 +397,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -386,6 +414,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -401,17 +430,12 @@ exports[`Webhook create component snapshot testing should render the component 1
                         <FormItemInput
                           errors={Array []}
                           label="Url"
-                          name={
-                            Array [
-                              "url",
-                            ]
-                          }
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
-                          validateStatus=""
                           validating={false}
+                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -419,6 +443,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -428,16 +453,46 @@ exports[`Webhook create component snapshot testing should render the component 1
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={1}
+                                    update={<ForwardRef />}
                                   >
-                                    <Input
+                                    <ForwardRef
                                       id="create-webhook_url"
                                       onChange={[Function]}
-                                      type="text"
                                     >
-                                      <ClearableLabeledInput
-                                        bordered={true}
-                                        element={
+                                      <ForwardRef
+                                        affixWrapperClassName=""
+                                        groupClassName=""
+                                        id="create-webhook_url"
+                                        inputClassName=""
+                                        onBlur={[Function]}
+                                        onChange={[Function]}
+                                        onFocus={[Function]}
+                                        prefixCls="ant-input"
+                                        wrapperClassName=""
+                                      >
+                                        <BaseInput
+                                          affixWrapperClassName=""
+                                          focused={false}
+                                          groupClassName=""
+                                          handleReset={[Function]}
+                                          id="create-webhook_url"
+                                          inputElement={
+                                            <input
+                                              className="ant-input"
+                                              id="create-webhook_url"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              type="text"
+                                            />
+                                          }
+                                          prefixCls="ant-input"
+                                          suffix={null}
+                                          triggerFocus={[Function]}
+                                          value=""
+                                          wrapperClassName=""
+                                        >
                                           <input
                                             className="ant-input"
                                             id="create-webhook_url"
@@ -446,43 +501,34 @@ exports[`Webhook create component snapshot testing should render the component 1
                                             onFocus={[Function]}
                                             onKeyDown={[Function]}
                                             type="text"
+                                            value=""
                                           />
-                                        }
-                                        focused={false}
-                                        handleReset={[Function]}
-                                        id="create-webhook_url"
-                                        inputType="input"
-                                        onChange={[Function]}
-                                        prefixCls="ant-input"
-                                        triggerFocus={[Function]}
-                                        type="text"
-                                        value=""
-                                      >
-                                        <input
-                                          className="ant-input"
-                                          id="create-webhook_url"
-                                          onBlur={[Function]}
-                                          onChange={[Function]}
-                                          onFocus={[Function]}
-                                          onKeyDown={[Function]}
-                                          type="text"
-                                          value=""
-                                        />
-                                      </ClearableLabeledInput>
-                                    </Input>
+                                        </BaseInput>
+                                      </ForwardRef>
+                                    </ForwardRef>
                                   </Component>
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -509,7 +555,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     }
                   }
                   name="enabled"
-                  onReset={[Function]}
+                  onMetaChange={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                   valuePropName="checked"
@@ -521,9 +567,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                           "itemRef": [Function],
                           "name": "create-webhook",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
+                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -552,7 +600,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                         "enabled",
                       ]
                     }
-                    onReset={[Function]}
+                    onMetaChange={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="checked"
@@ -563,6 +611,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -580,6 +629,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -595,18 +645,13 @@ exports[`Webhook create component snapshot testing should render the component 1
                         <FormItemInput
                           errors={Array []}
                           label="Enable"
-                          name={
-                            Array [
-                              "enabled",
-                            ]
-                          }
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
-                          validateStatus=""
                           validating={false}
                           valuePropName="checked"
+                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -614,6 +659,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -623,7 +669,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={1}
+                                    update={<ForwardRef />}
                                   >
                                     <Switch
                                       id="create-webhook_enabled"
@@ -666,15 +712,25 @@ exports[`Webhook create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -700,7 +756,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     }
                   }
                   name="events"
-                  onReset={[Function]}
+                  onMetaChange={[Function]}
                   trigger="onChange"
                   validateTrigger="onChange"
                 >
@@ -711,9 +767,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                           "itemRef": [Function],
                           "name": "create-webhook",
                         },
+                        "_init": true,
                         "getFieldError": [Function],
                         "getFieldInstance": [Function],
                         "getFieldValue": [Function],
+                        "getFieldWarning": [Function],
                         "getFieldsError": [Function],
                         "getFieldsValue": [Function],
                         "getInternalHooks": [Function],
@@ -742,7 +800,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                         "events",
                       ]
                     }
-                    onReset={[Function]}
+                    onMetaChange={[Function]}
                     trigger="onChange"
                     validateTrigger="onChange"
                     valuePropName="value"
@@ -753,6 +811,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     >
                       <div
                         className="ant-row ant-form-item"
+                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -769,6 +828,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-8 ant-form-item-label"
+                              role="cell"
                               style={Object {}}
                             >
                               <label
@@ -784,17 +844,12 @@ exports[`Webhook create component snapshot testing should render the component 1
                         <FormItemInput
                           errors={Array []}
                           label="Events"
-                          name={
-                            Array [
-                              "events",
-                            ]
-                          }
-                          onDomErrorVisibleChange={[Function]}
+                          name={Array []}
                           prefixCls="ant-form"
                           status=""
                           touched={false}
-                          validateStatus=""
                           validating={false}
+                          warnings={Array []}
                         >
                           <Col
                             className="ant-form-item-control"
@@ -802,6 +857,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                           >
                             <div
                               className="ant-col ant-col-10 ant-form-item-control"
+                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -811,7 +867,18 @@ exports[`Webhook create component snapshot testing should render the component 1
                                   className="ant-form-item-control-input-content"
                                 >
                                   <Component
-                                    update={1}
+                                    update={
+                                      <UNDEFINED>
+                                        <ForwardRef
+                                          gutter={
+                                            Array [
+                                              4,
+                                              16,
+                                            ]
+                                          }
+                                        />
+                                      </UNDEFINED>
+                                    }
                                   >
                                     <ForwardRef(InternalCheckboxGroup)
                                       id="create-webhook_events"
@@ -831,6 +898,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                                         >
                                           <div
                                             className="ant-row"
+                                            role="row"
                                             style={
                                               Object {
                                                 "marginBottom": -8,
@@ -847,15 +915,25 @@ exports[`Webhook create component snapshot testing should render the component 1
                                 </div>
                               </div>
                               <ErrorList
+                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                onDomErrorVisibleChange={[Function]}
+                                helpStatus=""
+                                warnings={Array []}
                               >
                                 <CSSMotion
-                                  motionAppear={true}
+                                  motionAppear={false}
                                   motionDeadline={500}
+                                  motionEnter={false}
                                   motionName="ant-show-help"
+                                  onAppearActive={[Function]}
+                                  onAppearEnd={[Function]}
+                                  onAppearStart={[Function]}
+                                  onEnterActive={[Function]}
+                                  onEnterEnd={[Function]}
+                                  onEnterStart={[Function]}
+                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  removeOnLeave={true}
+                                  onLeaveStart={[Function]}
                                   visible={false}
                                 >
                                   <DomWrapper />
@@ -897,6 +975,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                 >
                   <div
                     className="ant-row ant-form-item"
+                    role="row"
                     style={
                       Object {
                         "alignItems": "center",
@@ -924,7 +1003,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                     />
                     <FormItemInput
                       errors={Array []}
-                      onDomErrorVisibleChange={[Function]}
+                      name={Array []}
                       prefixCls="ant-form"
                       status=""
                       style={
@@ -934,7 +1013,9 @@ exports[`Webhook create component snapshot testing should render the component 1
                           "justifyContent": "center",
                         }
                       }
-                      validateStatus=""
+                      touched={false}
+                      validating={false}
+                      warnings={Array []}
                       wrapperCol={
                         Object {
                           "offset": 2,
@@ -949,6 +1030,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                       >
                         <div
                           className="ant-col ant-col-10 ant-col-offset-2 ant-form-item-control"
+                          role="cell"
                           style={Object {}}
                         >
                           <div
@@ -966,9 +1048,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                                   }
                                 }
                               >
-                                <Wave>
+                                <Wave
+                                  disabled={false}
+                                >
                                   <button
-                                    className="ant-btn ant-btn-sm"
+                                    className="ant-btn ant-btn-default ant-btn-sm"
                                     onClick={[Function]}
                                     style={
                                       Object {
@@ -1007,15 +1091,25 @@ exports[`Webhook create component snapshot testing should render the component 1
                             </div>
                           </div>
                           <ErrorList
+                            className="ant-form-item-explain-connected"
                             errors={Array []}
-                            onDomErrorVisibleChange={[Function]}
+                            helpStatus=""
+                            warnings={Array []}
                           >
                             <CSSMotion
-                              motionAppear={true}
+                              motionAppear={false}
                               motionDeadline={500}
+                              motionEnter={false}
                               motionName="ant-show-help"
+                              onAppearActive={[Function]}
+                              onAppearEnd={[Function]}
+                              onAppearStart={[Function]}
+                              onEnterActive={[Function]}
+                              onEnterEnd={[Function]}
+                              onEnterStart={[Function]}
+                              onLeaveActive={[Function]}
                               onLeaveEnd={[Function]}
-                              removeOnLeave={true}
+                              onLeaveStart={[Function]}
                               visible={false}
                             >
                               <DomWrapper />
@@ -1041,6 +1135,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                 >
                   <div
                     className="ant-row ant-form-item"
+                    role="row"
                     style={Object {}}
                   >
                     <FormItemLabel
@@ -1055,10 +1150,12 @@ exports[`Webhook create component snapshot testing should render the component 1
                     />
                     <FormItemInput
                       errors={Array []}
-                      onDomErrorVisibleChange={[Function]}
+                      name={Array []}
                       prefixCls="ant-form"
                       status=""
-                      validateStatus=""
+                      touched={false}
+                      validating={false}
+                      warnings={Array []}
                       wrapperCol={
                         Object {
                           "offset": 10,
@@ -1073,6 +1170,7 @@ exports[`Webhook create component snapshot testing should render the component 1
                       >
                         <div
                           className="ant-col ant-col-14 ant-col-offset-10 ant-form-item-control"
+                          role="cell"
                           style={Object {}}
                         >
                           <div
@@ -1107,7 +1205,9 @@ exports[`Webhook create component snapshot testing should render the component 1
                                         htmlType="submit"
                                         type="primary"
                                       >
-                                        <Wave>
+                                        <Wave
+                                          disabled={false}
+                                        >
                                           <button
                                             className="ant-btn ant-btn-primary"
                                             disabled={true}
@@ -1159,9 +1259,11 @@ exports[`Webhook create component snapshot testing should render the component 1
                                         htmlType="button"
                                         onClick={[Function]}
                                       >
-                                        <Wave>
+                                        <Wave
+                                          disabled={false}
+                                        >
                                           <button
-                                            className="ant-btn"
+                                            className="ant-btn ant-btn-default"
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -1199,15 +1301,25 @@ exports[`Webhook create component snapshot testing should render the component 1
                             </div>
                           </div>
                           <ErrorList
+                            className="ant-form-item-explain-connected"
                             errors={Array []}
-                            onDomErrorVisibleChange={[Function]}
+                            helpStatus=""
+                            warnings={Array []}
                           >
                             <CSSMotion
-                              motionAppear={true}
+                              motionAppear={false}
                               motionDeadline={500}
+                              motionEnter={false}
                               motionName="ant-show-help"
+                              onAppearActive={[Function]}
+                              onAppearEnd={[Function]}
+                              onAppearStart={[Function]}
+                              onEnterActive={[Function]}
+                              onEnterEnd={[Function]}
+                              onEnterStart={[Function]}
+                              onLeaveActive={[Function]}
                               onLeaveEnd={[Function]}
-                              removeOnLeave={true}
+                              onLeaveStart={[Function]}
                               visible={false}
                             >
                               <DomWrapper />

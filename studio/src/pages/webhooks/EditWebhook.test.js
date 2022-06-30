@@ -163,7 +163,7 @@ describe('Webhook edit component', () => {
           url: 'newurl',
           events: [1],
         });
-        expect(push).toHaveBeenCalledWith('/webhooks/1/edit');
+        expect(push).toHaveBeenCalledWith('/advanced/webhooks/1/edit');
         done();
       }, 0);
     });

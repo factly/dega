@@ -158,7 +158,7 @@ describe('Webhook form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(1);
@@ -207,14 +207,12 @@ describe('Webhook form component', () => {
       });
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(1)
-          .find('Input')
           .simulate('change', { target: { value: 'new url' } });
         wrapper.find('FormItem').at(2).find('Switch').at(0).props().onChange(false);
 
@@ -252,14 +250,12 @@ describe('Webhook form component', () => {
       });
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(1)
-          .find('Input')
           .simulate('change', { target: { value: 'new url' } });
         wrapper.find('FormItem').at(2).find('Switch').at(0).props().onChange(false);
 
