@@ -1,0 +1,177 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`website component snapshot testing should render the component 1`] = `
+<div>
+  <HelmetWrapper
+    defer={true}
+    encodeSpecialCharacters={true}
+    title="Website"
+  />
+  <Row
+    gutter={
+      Array [
+        16,
+        16,
+      ]
+    }
+  >
+    <Col
+      span={12}
+    >
+      <Link
+        to="/website/general"
+      >
+        <Card
+          hoverable={true}
+        >
+          <Meta
+            avatar={
+              <ForwardRef(InternalAvatar)
+                icon={<ForwardRef(DeploymentUnitOutlined) />}
+                shape="circle"
+                size="default"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "color": "#ffb41f",
+                  }
+                }
+              />
+            }
+            description="Basic Site Details and Site Meta Data"
+            title="General"
+          />
+        </Card>
+      </Link>
+    </Col>
+    <Col
+      span={12}
+    >
+      <Link
+        to="/website/branding"
+      >
+        <Card
+          hoverable={true}
+        >
+          <Meta
+            avatar={
+              <ForwardRef(InternalAvatar)
+                icon={
+                  <ForwardRef(TagsTwoTone)
+                    twoToneColor="#51bbf6"
+                  />
+                }
+                shape="circle"
+                size="default"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+              />
+            }
+            description="Update site logos, icons and design tokens"
+            title="Branding"
+          />
+        </Card>
+      </Link>
+    </Col>
+    <Col
+      span={12}
+    >
+      <Link
+        to="/website/menus"
+      >
+        <Card
+          hoverable={true}
+        >
+          <Meta
+            avatar={
+              <ForwardRef(InternalAvatar)
+                icon={
+                  <ForwardRef(CompassTwoTone)
+                    twoToneColor="#7b2feb"
+                  />
+                }
+                shape="circle"
+                size="default"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+              />
+            }
+            description="Setup Menus"
+            title="Navigation"
+          />
+        </Card>
+      </Link>
+    </Col>
+    <Col
+      span={12}
+    >
+      <Link
+        to="/website/code-injection"
+      >
+        <Card
+          hoverable={true}
+        >
+          <Meta
+            avatar={
+              <ForwardRef(InternalAvatar)
+                icon={
+                  <ForwardRef(ApiTwoTone)
+                    twoToneColor="#30cf43"
+                  />
+                }
+                shape="circle"
+                size="default"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+              />
+            }
+            description="Add code to your site"
+            title="Code Injection"
+          />
+        </Card>
+      </Link>
+    </Col>
+    <Col
+      span={12}
+    >
+      <Link
+        to="/website/analytics"
+      >
+        <Card
+          hoverable={true}
+        >
+          <Meta
+            avatar={
+              <ForwardRef(InternalAvatar)
+                icon={
+                  <ForwardRef(FundTwoTone)
+                    twoToneColor="#fb2d8d"
+                  />
+                }
+                shape="circle"
+                size="default"
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                  }
+                }
+              />
+            }
+            description="View Analytics for your site"
+            title="Analytics"
+          />
+        </Card>
+      </Link>
+    </Col>
+  </Row>
+</div>
+`;
