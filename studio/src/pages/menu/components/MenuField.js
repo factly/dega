@@ -30,7 +30,9 @@ function MenuField({ field }) {
           ]}
         >
           <Input
-            ref={(input) => setInputRef(input)}
+            ref={(input) => {
+              if (input?.props) setInputRef(input);
+            }}
             placeholder="Enter Label"
             onChange={(e) => handleInputChange(e)}
           />
