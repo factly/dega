@@ -59,6 +59,7 @@ exports[`Menu List component snapshot testing should match component when loadin
             "total": 2,
           }
         }
+        fetchMenus={[MockFunction]}
         filters={
           Object {
             "limit": 1,
@@ -2106,6 +2107,7 @@ exports[`Menu List component snapshot testing should render the component 1`] = 
             "total": 2,
           }
         }
+        fetchMenus={[MockFunction]}
         filters={
           Object {
             "limit": 1,
