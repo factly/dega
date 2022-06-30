@@ -43,11 +43,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                   "itemRef": [Function],
                   "name": undefined,
                 },
-                "_init": true,
                 "getFieldError": [Function],
                 "getFieldInstance": [Function],
                 "getFieldValue": [Function],
-                "getFieldWarning": [Function],
                 "getFieldsError": [Function],
                 "getFieldsValue": [Function],
                 "getInternalHooks": [Function],
@@ -76,11 +74,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                       "itemRef": [Function],
                       "name": undefined,
                     },
-                    "_init": true,
                     "getFieldError": [Function],
                     "getFieldInstance": [Function],
                     "getFieldValue": [Function],
-                    "getFieldWarning": [Function],
                     "getFieldsError": [Function],
                     "getFieldsValue": [Function],
                     "getInternalHooks": [Function],
@@ -126,7 +122,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         }
                       }
                       name="name"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       rules={
                         Array [
                           Object {
@@ -145,11 +141,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               "itemRef": [Function],
                               "name": undefined,
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -178,7 +172,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             "name",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         rules={
                           Array [
                             Object {
@@ -197,7 +191,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -221,7 +214,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               >
                                 <div
                                   className="ant-col ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -237,7 +229,12 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             <FormItemInput
                               errors={Array []}
                               label="Name"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "name",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               rules={
                                 Array [
@@ -249,15 +246,14 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               }
                               status=""
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
                               >
                                 <div
                                   className="ant-col ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -267,54 +263,17 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={
-                                          <ForwardRef
-                                            placeholder="Enter name"
-                                          />
-                                        }
+                                        update={1}
                                       >
-                                        <ForwardRef
+                                        <Input
                                           id="name"
                                           onChange={[Function]}
                                           placeholder="Enter name"
+                                          type="text"
                                         >
-                                          <ForwardRef
-                                            affixWrapperClassName=""
-                                            groupClassName=""
-                                            id="name"
-                                            inputClassName=""
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            placeholder="Enter name"
-                                            prefixCls="ant-input"
-                                            wrapperClassName=""
-                                          >
-                                            <BaseInput
-                                              affixWrapperClassName=""
-                                              focused={false}
-                                              groupClassName=""
-                                              handleReset={[Function]}
-                                              id="name"
-                                              inputElement={
-                                                <input
-                                                  className="ant-input"
-                                                  id="name"
-                                                  onBlur={[Function]}
-                                                  onChange={[Function]}
-                                                  onFocus={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Enter name"
-                                                  type="text"
-                                                />
-                                              }
-                                              placeholder="Enter name"
-                                              prefixCls="ant-input"
-                                              suffix={null}
-                                              triggerFocus={[Function]}
-                                              value=""
-                                              wrapperClassName=""
-                                            >
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
                                               <input
                                                 className="ant-input"
                                                 id="name"
@@ -324,34 +283,45 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                                 onKeyDown={[Function]}
                                                 placeholder="Enter name"
                                                 type="text"
-                                                value=""
                                               />
-                                            </BaseInput>
-                                          </ForwardRef>
-                                        </ForwardRef>
+                                            }
+                                            focused={false}
+                                            handleReset={[Function]}
+                                            id="name"
+                                            inputType="input"
+                                            onChange={[Function]}
+                                            placeholder="Enter name"
+                                            prefixCls="ant-input"
+                                            triggerFocus={[Function]}
+                                            type="text"
+                                            value=""
+                                          >
+                                            <input
+                                              className="ant-input"
+                                              id="name"
+                                              onBlur={[Function]}
+                                              onChange={[Function]}
+                                              onFocus={[Function]}
+                                              onKeyDown={[Function]}
+                                              placeholder="Enter name"
+                                              type="text"
+                                              value=""
+                                            />
+                                          </ClearableLabeledInput>
+                                        </Input>
                                       </Component>
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -383,11 +353,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                 "itemRef": [Function],
                                 "name": undefined,
                               },
-                              "_init": true,
                               "getFieldError": [Function],
                               "getFieldInstance": [Function],
                               "getFieldValue": [Function],
-                              "getFieldWarning": [Function],
                               "getFieldsError": [Function],
                               "getFieldsValue": [Function],
                               "getInternalHooks": [Function],
@@ -418,11 +386,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             <Button
                               onClick={[Function]}
                             >
-                              <Wave
-                                disabled={false}
-                              >
+                              <Wave>
                                 <button
-                                  className="ant-btn ant-btn-default"
+                                  className="ant-btn"
                                   onClick={[Function]}
                                   type="button"
                                 >
@@ -591,7 +557,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         }
                       }
                       name="meta_fields"
-                      onMetaChange={[Function]}
+                      onReset={[Function]}
                       style={
                         Object {
                           "marginTop": "20px",
@@ -607,11 +573,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               "itemRef": [Function],
                               "name": undefined,
                             },
-                            "_init": true,
                             "getFieldError": [Function],
                             "getFieldInstance": [Function],
                             "getFieldValue": [Function],
-                            "getFieldWarning": [Function],
                             "getFieldsError": [Function],
                             "getFieldsValue": [Function],
                             "getInternalHooks": [Function],
@@ -640,7 +604,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             "meta_fields",
                           ]
                         }
-                        onMetaChange={[Function]}
+                        onReset={[Function]}
                         style={
                           Object {
                             "marginTop": "20px",
@@ -661,7 +625,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         >
                           <div
                             className="ant-row ant-form-item"
-                            role="row"
                             style={
                               Object {
                                 "marginTop": "20px",
@@ -686,7 +649,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                               >
                                 <div
                                   className="ant-col ant-form-item-label"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <label
@@ -702,7 +664,12 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                             <FormItemInput
                               errors={Array []}
                               label="Metafields"
-                              name={Array []}
+                              name={
+                                Array [
+                                  "meta_fields",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
                               prefixCls="ant-form"
                               status=""
                               style={
@@ -711,15 +678,14 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                 }
                               }
                               touched={false}
+                              validateStatus=""
                               validating={false}
-                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
                               >
                                 <div
                                   className="ant-col ant-form-item-control"
-                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -729,11 +695,7 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                       className="ant-form-item-control-input-content"
                                     >
                                       <Component
-                                        update={
-                                          <MONACOEditor
-                                            language="json"
-                                          />
-                                        }
+                                        update={1}
                                       >
                                         <MONACOEditor
                                           id="meta_fields"
@@ -771,25 +733,15 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                     </div>
                                   </div>
                                   <ErrorList
-                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    helpStatus=""
-                                    warnings={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
                                     <CSSMotion
-                                      motionAppear={false}
+                                      motionAppear={true}
                                       motionDeadline={500}
-                                      motionEnter={false}
                                       motionName="ant-show-help"
-                                      onAppearActive={[Function]}
-                                      onAppearEnd={[Function]}
-                                      onAppearStart={[Function]}
-                                      onEnterActive={[Function]}
-                                      onEnterEnd={[Function]}
-                                      onEnterStart={[Function]}
-                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      onLeaveStart={[Function]}
+                                      removeOnLeave={true}
                                       visible={false}
                                     >
                                       <DomWrapper />
@@ -810,7 +762,6 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                     >
                       <div
                         className="ant-row ant-form-item"
-                        role="row"
                         style={Object {}}
                       >
                         <FormItemLabel
@@ -819,19 +770,16 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                         />
                         <FormItemInput
                           errors={Array []}
-                          name={Array []}
+                          onDomErrorVisibleChange={[Function]}
                           prefixCls="ant-form"
                           status=""
-                          touched={false}
-                          validating={false}
-                          warnings={Array []}
+                          validateStatus=""
                         >
                           <Col
                             className="ant-form-item-control"
                           >
                             <div
                               className="ant-col ant-form-item-control"
-                              role="cell"
                               style={Object {}}
                             >
                               <div
@@ -844,11 +792,9 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                     disabled={true}
                                     htmlType="submit"
                                   >
-                                    <Wave
-                                      disabled={false}
-                                    >
+                                    <Wave>
                                       <button
-                                        className="ant-btn ant-btn-default"
+                                        className="ant-btn"
                                         disabled={true}
                                         onClick={[Function]}
                                         type="submit"
@@ -883,25 +829,15 @@ exports[`Menus create component snapshot testing should render the componet 1`] 
                                 </div>
                               </div>
                               <ErrorList
-                                className="ant-form-item-explain-connected"
                                 errors={Array []}
-                                helpStatus=""
-                                warnings={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
                                 <CSSMotion
-                                  motionAppear={false}
+                                  motionAppear={true}
                                   motionDeadline={500}
-                                  motionEnter={false}
                                   motionName="ant-show-help"
-                                  onAppearActive={[Function]}
-                                  onAppearEnd={[Function]}
-                                  onAppearStart={[Function]}
-                                  onEnterActive={[Function]}
-                                  onEnterEnd={[Function]}
-                                  onEnterStart={[Function]}
-                                  onLeaveActive={[Function]}
                                   onLeaveEnd={[Function]}
-                                  onLeaveStart={[Function]}
+                                  removeOnLeave={true}
                                   visible={false}
                                 >
                                   <DomWrapper />
