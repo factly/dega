@@ -73,6 +73,10 @@ const initialState = {
     details: {},
     loading: true,
   },
+  sachFactChecks: {
+    details: [],
+    loading: true,
+  },
   spacePermissions: {
     req: [],
     details: {},
