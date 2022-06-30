@@ -43,14 +43,44 @@ exports[`Media List component snapshot testing should match component with data 
               }
             }
           >
-            <Input
+            <ForwardRef
               onChange={[Function]}
               placeholder="Search Media"
-              type="text"
             >
-              <ClearableLabeledInput
-                bordered={true}
-                element={
+              <ForwardRef
+                affixWrapperClassName=""
+                groupClassName=""
+                inputClassName=""
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                placeholder="Search Media"
+                prefixCls="ant-input"
+                wrapperClassName=""
+              >
+                <BaseInput
+                  affixWrapperClassName=""
+                  focused={false}
+                  groupClassName=""
+                  handleReset={[Function]}
+                  inputElement={
+                    <input
+                      className="ant-input"
+                      onBlur={[Function]}
+                      onChange={[Function]}
+                      onFocus={[Function]}
+                      onKeyDown={[Function]}
+                      placeholder="Search Media"
+                      type="text"
+                    />
+                  }
+                  placeholder="Search Media"
+                  prefixCls="ant-input"
+                  suffix={null}
+                  triggerFocus={[Function]}
+                  value=""
+                  wrapperClassName=""
+                >
                   <input
                     className="ant-input"
                     onBlur={[Function]}
@@ -59,30 +89,11 @@ exports[`Media List component snapshot testing should match component with data 
                     onKeyDown={[Function]}
                     placeholder="Search Media"
                     type="text"
+                    value=""
                   />
-                }
-                focused={false}
-                handleReset={[Function]}
-                inputType="input"
-                onChange={[Function]}
-                placeholder="Search Media"
-                prefixCls="ant-input"
-                triggerFocus={[Function]}
-                type="text"
-                value=""
-              >
-                <input
-                  className="ant-input"
-                  onBlur={[Function]}
-                  onChange={[Function]}
-                  onFocus={[Function]}
-                  onKeyDown={[Function]}
-                  placeholder="Search Media"
-                  type="text"
-                  value=""
-                />
-              </ClearableLabeledInput>
-            </Input>
+                </BaseInput>
+              </ForwardRef>
+            </ForwardRef>
           </div>
         </Item>
         <Item
@@ -138,119 +149,114 @@ exports[`Media List component snapshot testing should match component with data 
                 className="ant-list ant-list-split ant-list-grid ant-list-something-after-last-item"
               >
                 <Spin
-                  size="default"
                   spinning={false}
-                  wrapperClassName=""
                 >
-                  <div
-                    className="ant-spin-nested-loading"
+                  <Spin
+                    size="default"
+                    spinPrefixCls="ant-spin"
+                    spinning={false}
+                    wrapperClassName=""
                   >
                     <div
-                      className="ant-spin-container"
-                      key="container"
+                      className="ant-spin-nested-loading"
                     >
-                      <Row
-                        gutter={16}
+                      <div
+                        className="ant-spin-container"
+                        key="container"
                       >
-                        <div
-                          className="ant-row"
-                          style={
-                            Object {
-                              "marginLeft": -8,
-                              "marginRight": -8,
-                            }
-                          }
+                        <Row
+                          gutter={16}
                         >
                           <div
-                            key="list-item-0/.0"
+                            className="ant-row"
+                            role="row"
+                            style={
+                              Object {
+                                "marginLeft": -8,
+                                "marginRight": -8,
+                              }
+                            }
                           >
-                            <Item>
-                              <Col
-                                flex={1}
-                              >
-                                <div
-                                  className="ant-col"
-                                  style={
-                                    Object {
-                                      "flex": "1 1 auto",
-                                      "paddingLeft": 8,
-                                      "paddingRight": 8,
-                                    }
-                                  }
+                            <div
+                              key="list-item-0/.0"
+                            >
+                              <ForwardRef(InternalItem)>
+                                <Col
+                                  flex={1}
                                 >
                                   <div
-                                    className="ant-list-item"
+                                    className="ant-col"
+                                    role="cell"
+                                    style={
+                                      Object {
+                                        "flex": "1 1 auto",
+                                        "paddingLeft": 8,
+                                        "paddingRight": 8,
+                                      }
+                                    }
                                   >
                                     <div
-                                      style={
-                                        Object {
-                                          "position": "relative",
-                                        }
-                                      }
+                                      className="ant-list-item"
                                     >
-                                      <Avatar
-                                        onClick={[Function]}
-                                        shape="square"
-                                        size={174}
+                                      <div
                                         style={
                                           Object {
-                                            "border": "2px solid #1890ff",
-                                            "opacity": "0.7",
-                                            "padding": "0.5rem",
+                                            "position": "relative",
                                           }
                                         }
                                       >
-                                        <span
-                                          className="ant-avatar ant-avatar-square"
+                                        <Avatar
                                           onClick={[Function]}
+                                          shape="square"
+                                          size={174}
                                           style={
                                             Object {
                                               "border": "2px solid #1890ff",
-                                              "fontSize": 18,
-                                              "height": 174,
-                                              "lineHeight": "174px",
                                               "opacity": "0.7",
                                               "padding": "0.5rem",
-                                              "width": 174,
                                             }
                                           }
                                         >
-                                          <ResizeObserver
-                                            onResize={[Function]}
-                                          >
-                                            <span
-                                              className="ant-avatar-string"
-                                              style={
-                                                Object {
-                                                  "WebkitTransform": "scale(1) translateX(-50%)",
-                                                  "lineHeight": "174px",
-                                                  "msTransform": "scale(1) translateX(-50%)",
-                                                  "transform": "scale(1) translateX(-50%)",
-                                                }
+                                          <span
+                                            className="ant-avatar ant-avatar-square"
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "border": "2px solid #1890ff",
+                                                "fontSize": 18,
+                                                "height": 174,
+                                                "lineHeight": "174px",
+                                                "opacity": "0.7",
+                                                "padding": "0.5rem",
+                                                "width": 174,
                                               }
-                                            />
-                                          </ResizeObserver>
-                                        </span>
-                                      </Avatar>
-                                      <ForwardRef(CheckCircleTwoTone)
-                                        style={
-                                          Object {
-                                            "fontSize": "2.5rem",
-                                            "position": "absolute",
-                                            "right": 8,
-                                            "top": 8,
-                                          }
-                                        }
-                                        twoToneColor="#52c41a"
-                                      >
-                                        <AntdIcon
-                                          icon={
-                                            Object {
-                                              "icon": [Function],
-                                              "name": "check-circle",
-                                              "theme": "twotone",
                                             }
-                                          }
+                                          >
+                                            <ResizeObserver
+                                              onResize={[Function]}
+                                            >
+                                              <SingleObserver
+                                                key="rc-observer-key-0"
+                                                onResize={[Function]}
+                                              >
+                                                <DomWrapper>
+                                                  <span
+                                                    className="ant-avatar-string"
+                                                    style={
+                                                      Object {
+                                                        "WebkitTransform": "scale(1) translateX(-50%)",
+                                                        "lineHeight": "174px",
+                                                        "msTransform": "scale(1) translateX(-50%)",
+                                                        "transform": "scale(1) translateX(-50%)",
+                                                      }
+                                                    }
+                                                  />
+                                                </DomWrapper>
+                                              </SingleObserver>
+                                            </ResizeObserver>
+                                          </span>
+                                        </Avatar>
+                                        <ForwardRef(CheckCircleTwoTone)
                                           style={
                                             Object {
                                               "fontSize": "2.5rem",
@@ -261,10 +267,14 @@ exports[`Media List component snapshot testing should match component with data 
                                           }
                                           twoToneColor="#52c41a"
                                         >
-                                          <span
-                                            aria-label="check-circle"
-                                            className="anticon anticon-check-circle"
-                                            role="img"
+                                          <AntdIcon
+                                            icon={
+                                              Object {
+                                                "icon": [Function],
+                                                "name": "check-circle",
+                                                "theme": "twotone",
+                                              }
+                                            }
                                             style={
                                               Object {
                                                 "fontSize": "2.5rem",
@@ -273,132 +283,155 @@ exports[`Media List component snapshot testing should match component with data 
                                                 "top": 8,
                                               }
                                             }
+                                            twoToneColor="#52c41a"
                                           >
-                                            <IconReact
-                                              icon={
+                                            <span
+                                              aria-label="check-circle"
+                                              className="anticon anticon-check-circle"
+                                              role="img"
+                                              style={
                                                 Object {
-                                                  "icon": [Function],
-                                                  "name": "check-circle",
-                                                  "theme": "twotone",
+                                                  "fontSize": "2.5rem",
+                                                  "position": "absolute",
+                                                  "right": 8,
+                                                  "top": 8,
                                                 }
                                               }
-                                              primaryColor="#52c41a"
                                             >
-                                              <svg
-                                                aria-hidden="true"
-                                                data-icon="check-circle"
-                                                fill="currentColor"
-                                                focusable="false"
-                                                height="1em"
-                                                key="svg-check-circle"
-                                                viewBox="64 64 896 896"
-                                                width="1em"
+                                              <IconReact
+                                                icon={
+                                                  Object {
+                                                    "icon": [Function],
+                                                    "name": "check-circle",
+                                                    "theme": "twotone",
+                                                  }
+                                                }
+                                                primaryColor="#52c41a"
                                               >
-                                                <path
-                                                  d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
-                                                  fill="#52c41a"
-                                                  key="svg-check-circle-svg-0"
-                                                />
-                                                <path
-                                                  d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372zm193.4 225.7l-210.6 292a31.8 31.8 0 01-51.7 0L318.5 484.9c-3.8-5.3 0-12.7 6.5-12.7h46.9c10.3 0 19.9 5 25.9 13.3l71.2 98.8 157.2-218c6-8.4 15.7-13.3 25.9-13.3H699c6.5 0 10.3 7.4 6.4 12.7z"
-                                                  fill="#f6ffed"
-                                                  key="svg-check-circle-svg-1"
-                                                />
-                                                <path
-                                                  d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"
-                                                  fill="#52c41a"
-                                                  key="svg-check-circle-svg-2"
-                                                />
-                                              </svg>
-                                            </IconReact>
-                                          </span>
-                                        </AntdIcon>
-                                      </ForwardRef(CheckCircleTwoTone)>
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="check-circle"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  key="svg-check-circle"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
+                                                >
+                                                  <path
+                                                    d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm0 820c-205.4 0-372-166.6-372-372s166.6-372 372-372 372 166.6 372 372-166.6 372-372 372z"
+                                                    fill="#52c41a"
+                                                    key="svg-check-circle-svg-0"
+                                                  />
+                                                  <path
+                                                    d="M512 140c-205.4 0-372 166.6-372 372s166.6 372 372 372 372-166.6 372-372-166.6-372-372-372zm193.4 225.7l-210.6 292a31.8 31.8 0 01-51.7 0L318.5 484.9c-3.8-5.3 0-12.7 6.5-12.7h46.9c10.3 0 19.9 5 25.9 13.3l71.2 98.8 157.2-218c6-8.4 15.7-13.3 25.9-13.3H699c6.5 0 10.3 7.4 6.4 12.7z"
+                                                    fill="#f6ffed"
+                                                    key="svg-check-circle-svg-1"
+                                                  />
+                                                  <path
+                                                    d="M699 353h-46.9c-10.2 0-19.9 4.9-25.9 13.3L469 584.3l-71.2-98.8c-6-8.3-15.6-13.3-25.9-13.3H325c-6.5 0-10.3 7.4-6.5 12.7l124.6 172.8a31.8 31.8 0 0051.7 0l210.6-292c3.9-5.3.1-12.7-6.4-12.7z"
+                                                    fill="#52c41a"
+                                                    key="svg-check-circle-svg-2"
+                                                  />
+                                                </svg>
+                                              </IconReact>
+                                            </span>
+                                          </AntdIcon>
+                                        </ForwardRef(CheckCircleTwoTone)>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </Col>
-                            </Item>
-                          </div>
-                          <div
-                            key="list-item-1/.1"
-                          >
-                            <Item>
-                              <Col
-                                flex={1}
-                              >
-                                <div
-                                  className="ant-col"
-                                  style={
-                                    Object {
-                                      "flex": "1 1 auto",
-                                      "paddingLeft": 8,
-                                      "paddingRight": 8,
-                                    }
-                                  }
+                                </Col>
+                              </ForwardRef(InternalItem)>
+                            </div>
+                            <div
+                              key="list-item-1/.1"
+                            >
+                              <ForwardRef(InternalItem)>
+                                <Col
+                                  flex={1}
                                 >
                                   <div
-                                    className="ant-list-item"
+                                    className="ant-col"
+                                    role="cell"
+                                    style={
+                                      Object {
+                                        "flex": "1 1 auto",
+                                        "paddingLeft": 8,
+                                        "paddingRight": 8,
+                                      }
+                                    }
                                   >
                                     <div
-                                      style={
-                                        Object {
-                                          "position": "relative",
-                                        }
-                                      }
+                                      className="ant-list-item"
                                     >
-                                      <Avatar
-                                        onClick={[Function]}
-                                        shape="square"
-                                        size={174}
+                                      <div
                                         style={
                                           Object {
-                                            "border": "2px solid transparent",
-                                            "padding": "0.5rem",
+                                            "position": "relative",
                                           }
                                         }
                                       >
-                                        <span
-                                          className="ant-avatar ant-avatar-square"
+                                        <Avatar
                                           onClick={[Function]}
+                                          shape="square"
+                                          size={174}
                                           style={
                                             Object {
                                               "border": "2px solid transparent",
-                                              "fontSize": 18,
-                                              "height": 174,
-                                              "lineHeight": "174px",
                                               "padding": "0.5rem",
-                                              "width": 174,
                                             }
                                           }
                                         >
-                                          <ResizeObserver
-                                            onResize={[Function]}
-                                          >
-                                            <span
-                                              className="ant-avatar-string"
-                                              style={
-                                                Object {
-                                                  "WebkitTransform": "scale(1) translateX(-50%)",
-                                                  "lineHeight": "174px",
-                                                  "msTransform": "scale(1) translateX(-50%)",
-                                                  "transform": "scale(1) translateX(-50%)",
-                                                }
+                                          <span
+                                            className="ant-avatar ant-avatar-square"
+                                            onClick={[Function]}
+                                            style={
+                                              Object {
+                                                "border": "2px solid transparent",
+                                                "fontSize": 18,
+                                                "height": 174,
+                                                "lineHeight": "174px",
+                                                "padding": "0.5rem",
+                                                "width": 174,
                                               }
-                                            />
-                                          </ResizeObserver>
-                                        </span>
-                                      </Avatar>
+                                            }
+                                          >
+                                            <ResizeObserver
+                                              onResize={[Function]}
+                                            >
+                                              <SingleObserver
+                                                key="rc-observer-key-0"
+                                                onResize={[Function]}
+                                              >
+                                                <DomWrapper>
+                                                  <span
+                                                    className="ant-avatar-string"
+                                                    style={
+                                                      Object {
+                                                        "WebkitTransform": "scale(1) translateX(-50%)",
+                                                        "lineHeight": "174px",
+                                                        "msTransform": "scale(1) translateX(-50%)",
+                                                        "transform": "scale(1) translateX(-50%)",
+                                                      }
+                                                    }
+                                                  />
+                                                </DomWrapper>
+                                              </SingleObserver>
+                                            </ResizeObserver>
+                                          </span>
+                                        </Avatar>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                              </Col>
-                            </Item>
+                                </Col>
+                              </ForwardRef(InternalItem)>
+                            </div>
                           </div>
-                        </div>
-                      </Row>
+                        </Row>
+                      </div>
                     </div>
-                  </div>
+                  </Spin>
                 </Spin>
                 <div
                   className="ant-list-pagination"
@@ -420,7 +453,8 @@ exports[`Media List component snapshot testing should match component with data 
                           "next_3": "Next 3 Pages",
                           "next_5": "Next 5 Pages",
                           "next_page": "Next Page",
-                          "page": "",
+                          "page": "Page",
+                          "page_size": "Page Size",
                           "prev_3": "Previous 3 Pages",
                           "prev_5": "Previous 5 Pages",
                           "prev_page": "Previous Page",
@@ -478,7 +512,8 @@ exports[`Media List component snapshot testing should match component with data 
                             "next_3": "Next 3 Pages",
                             "next_5": "Next 5 Pages",
                             "next_page": "Next Page",
-                            "page": "",
+                            "page": "Page",
+                            "page_size": "Page Size",
                             "prev_3": "Previous 3 Pages",
                             "prev_5": "Previous 5 Pages",
                             "prev_page": "Previous Page",
@@ -506,15 +541,7 @@ exports[`Media List component snapshot testing should match component with data 
                             <ForwardRef(LeftOutlined) />
                           </button>
                         }
-                        selectComponentClass={
-                          Object {
-                            "$$typeof": Symbol(react.forward_ref),
-                            "OptGroup": [Function],
-                            "Option": [Function],
-                            "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
-                            "render": [Function],
-                          }
-                        }
+                        selectComponentClass={[Function]}
                         selectPrefixCls="ant-select"
                         showLessItems={false}
                         showPrevNextJumpers={true}
@@ -628,7 +655,8 @@ exports[`Media List component snapshot testing should match component with data 
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "",
+                                "page": "Page",
+                                "page_size": "Page Size",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -753,7 +781,8 @@ exports[`Media List component snapshot testing should match component with data 
                                 "next_3": "Next 3 Pages",
                                 "next_5": "Next 5 Pages",
                                 "next_page": "Next Page",
-                                "page": "",
+                                "page": "Page",
+                                "page_size": "Page Size",
                                 "prev_3": "Previous 3 Pages",
                                 "prev_5": "Previous 5 Pages",
                                 "prev_page": "Previous Page",
@@ -770,15 +799,7 @@ exports[`Media List component snapshot testing should match component with data 
                             }
                             quickGo={null}
                             rootPrefixCls="ant-pagination"
-                            selectComponentClass={
-                              Object {
-                                "$$typeof": Symbol(react.forward_ref),
-                                "OptGroup": [Function],
-                                "Option": [Function],
-                                "SECRET_COMBOBOX_MODE_DO_NOT_USE": "SECRET_COMBOBOX_MODE_DO_NOT_USE",
-                                "render": [Function],
-                              }
-                            }
+                            selectComponentClass={[Function]}
                             selectPrefixCls="ant-select"
                           />
                         </ul>

@@ -115,7 +115,7 @@ describe('Media List component', () => {
         );
       });
       act(() => {
-        wrapper.find('Input').simulate('change', { target: { value: 'Medium -1' } });
+        wrapper.find('input').simulate('change', { target: { value: 'Medium -1' } });
       });
       wrapper.find('Avatar').at(0).simulate('click');
       expect(onSelect).toHaveBeenCalledWith({
@@ -152,7 +152,7 @@ describe('Media List component', () => {
         );
       });
       act(() => {
-        wrapper.find('Input').simulate('change', { target: { value: '' } });
+        wrapper.find('input').simulate('change', { target: { value: '' } });
       });
 
       wrapper.find('Avatar').at(0).simulate('click');
