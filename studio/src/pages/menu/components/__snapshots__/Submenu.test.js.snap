@@ -11,9 +11,11 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
             "itemRef": [Function],
             "name": undefined,
           },
+          "_init": true,
           "getFieldError": [Function],
           "getFieldInstance": [Function],
           "getFieldValue": [Function],
+          "getFieldWarning": [Function],
           "getFieldsError": [Function],
           "getFieldsValue": [Function],
           "getInternalHooks": [Function],
@@ -67,9 +69,11 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                         "itemRef": [Function],
                         "name": undefined,
                       },
+                      "_init": true,
                       "getFieldError": [Function],
                       "getFieldInstance": [Function],
                       "getFieldValue": [Function],
+                      "getFieldWarning": [Function],
                       "getFieldsError": [Function],
                       "getFieldsValue": [Function],
                       "getInternalHooks": [Function],
@@ -106,6 +110,7 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                         >
                           <div
                             className="ant-row ant-form-item"
+                            role="row"
                             style={Object {}}
                           >
                             <FormItemLabel
@@ -114,16 +119,19 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                             />
                             <FormItemInput
                               errors={Array []}
-                              onDomErrorVisibleChange={[Function]}
+                              name={Array []}
                               prefixCls="ant-form"
                               status=""
-                              validateStatus=""
+                              touched={false}
+                              validating={false}
+                              warnings={Array []}
                             >
                               <Col
                                 className="ant-form-item-control"
                               >
                                 <div
                                   className="ant-col ant-form-item-control"
+                                  role="cell"
                                   style={Object {}}
                                 >
                                   <div
@@ -135,9 +143,11 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                       <Button
                                         onClick={[Function]}
                                       >
-                                        <Wave>
+                                        <Wave
+                                          disabled={false}
+                                        >
                                           <button
-                                            className="ant-btn"
+                                            className="ant-btn ant-btn-default"
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -287,15 +297,25 @@ exports[`Submenu component snapshot testing should render the component 1`] = `
                                     </div>
                                   </div>
                                   <ErrorList
+                                    className="ant-form-item-explain-connected"
                                     errors={Array []}
-                                    onDomErrorVisibleChange={[Function]}
+                                    helpStatus=""
+                                    warnings={Array []}
                                   >
                                     <CSSMotion
-                                      motionAppear={true}
+                                      motionAppear={false}
                                       motionDeadline={500}
+                                      motionEnter={false}
                                       motionName="ant-show-help"
+                                      onAppearActive={[Function]}
+                                      onAppearEnd={[Function]}
+                                      onAppearStart={[Function]}
+                                      onEnterActive={[Function]}
+                                      onEnterEnd={[Function]}
+                                      onEnterStart={[Function]}
+                                      onLeaveActive={[Function]}
                                       onLeaveEnd={[Function]}
-                                      removeOnLeave={true}
+                                      onLeaveStart={[Function]}
                                       visible={false}
                                     >
                                       <DomWrapper />

@@ -71,7 +71,7 @@ describe('Menus create component', () => {
       wrapper.find(MenuCreateForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.createMenu).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/menus');
+        expect(push).toHaveBeenCalledWith('/website/menus');
         done();
       }, 0);
     });
