@@ -75,6 +75,21 @@ describe('Sidebar component', () => {
       loading: false,
       selected: 1,
     },
+    search: {
+      req: [],
+      details: {
+        articles: [],
+        'fact-checks': [],
+        pages: [],
+        claims: [],
+        tags: [],
+        categories: [],
+        media: [],
+        ratings: [],
+        total: 0,
+      },
+      loading: true,
+    },
     admin: {
       organisation: {
         id: 1,
@@ -92,6 +107,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
               superOrg={{ id: 1, is_admin: true }}
@@ -111,6 +127,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [], permission: { role: 'owner' } }]}
               superOrg={{ id: 1, is_admin: true }}
@@ -133,6 +150,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['create'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
               superOrg={{ id: 1, is_admin: true }}
@@ -157,6 +175,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'admin' }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}
               superOrg={{ id: 1, is_admin: true }}
@@ -181,6 +200,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               permission={[{ resource: 'posts', actions: ['update'] }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'member' } }]}
               superOrg={{ id: 1 }}
@@ -205,6 +225,7 @@ describe('Sidebar component', () => {
         <Provider store={store}>
           <Router>
             <Sidebar
+              services={['core', 'fact-checking', 'podcast']}
               loading={true}
               permission={[{ resource: 'admin' }]}
               orgs={[{ id: 1, spaces: [1], permission: { role: 'owner' } }]}

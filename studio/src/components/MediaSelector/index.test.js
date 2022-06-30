@@ -107,6 +107,7 @@ describe('Media List component', () => {
       store.dispatch = jest.fn(() => ({}));
       mockedDispatch = jest.fn(() => Promise.resolve({}));
       useDispatch.mockReturnValue(mockedDispatch);
+      window.REACT_APP_COMPANION_URL = 'http://127.0.0.1:3020';
     });
     afterEach(() => {
       wrapper.unmount();
@@ -140,15 +141,20 @@ describe('Media List component', () => {
       const selectButton = wrapper.find('Button').at(0);
       expect(selectButton.text()).toBe('');
       selectButton.simulate('click');
+      wrapper
+        .find(Radio.Group)
+        .at(0)
+        .props()
+        .onChange({ target: { value: 'library' } });
+      wrapper.update();
       wrapper.find('Avatar').at(1).simulate('click');
       const okButton = wrapper.find('Button').at(1);
-      expect(okButton.text()).toBe('Confirm');
+      expect(okButton.text()).toBe('Ok');
       okButton.simulate('click');
       expect(onChange).toHaveBeenCalledWith(2);
     });
     it('should handle Tab change and unselect image', () => {
       const onChange = jest.fn();
-      window.REACT_APP_COMPANION_URL = 'http://127.0.0.1:3020';
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -157,15 +163,19 @@ describe('Media List component', () => {
         );
       });
       const selectButton = wrapper.find('Button').at(0);
-      expect(selectButton.text()).toBe('');
+
       selectButton.simulate('click');
-      wrapper.find('Avatar').at(0).simulate('click');
+
       wrapper
         .find(Radio.Group)
         .at(0)
         .props()
-        .onChange({ target: { value: 'upload' } });
+        .onChange({ target: { value: 'library' } });
+      wrapper.update();
+
+      wrapper.find('Avatar').at(0).simulate('click');
       wrapper.find('Modal').props().onCancel();
+
       expect(onChange).not.toHaveBeenCalled();
     });
     it('should handle media upload', (done) => {

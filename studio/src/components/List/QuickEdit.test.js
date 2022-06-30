@@ -32,6 +32,10 @@ jest.mock('../../actions/posts', () => ({
 jest.mock('../../actions/pages', () => ({
   updatePage: jest.fn(),
 }));
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -368,7 +372,7 @@ describe('Quick Edit component', () => {
       });
 
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('TextArea').at(0);
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'Updated title' } });
       });
       act(() => {
@@ -441,7 +445,7 @@ describe('Quick Edit component', () => {
       });
 
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('TextArea').at(0);
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'Updated title' } });
       });
       act(() => {

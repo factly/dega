@@ -55,37 +55,50 @@ exports[`Categories List component Snapshot testing should render the component 
         onPopupScroll={[Function]}
         onSearch={[Function]}
         placeholder="Select categories"
+        placement="bottomLeft"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
         searchValue=""
         transitionName="ant-slide-up"
         value={Array []}
       >
-        <ForwardRef(Select)
+        <BaseSelect
+          OptionList={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "displayName": "OptionList",
+              "render": [Function],
+            }
+          }
+          activeDescendantId="undefined_list_0"
+          activeValue={null}
           allowClear={true}
-          autoClearSearchValue={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
-          defaultValue={Array []}
+          displayValues={Array []}
           dropdownClassName=""
-          filterOption={[Function]}
+          dropdownMatchSelectWidth={true}
+          emptyOptions={true}
           getPopupContainer={[Function]}
           inputIcon={[Function]}
-          listHeight={128}
-          listItemHeight={24}
           loading={false}
-          menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
           mode="multiple"
           notFoundContent={null}
-          onChange={[Function]}
+          omitDomProps={
+            Array [
+              "inputValue",
+            ]
+          }
+          onDisplayValuesChange={[Function]}
           onPopupScroll={[Function]}
           onSearch={[Function]}
+          onSearchSplit={[Function]}
           placeholder="Select categories"
+          placement="bottomLeft"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
           searchValue=""
           transitionName="ant-slide-up"
-          value={Array []}
         >
           <div
             className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -98,31 +111,13 @@ exports[`Categories List component Snapshot testing should render the component 
             <SelectTrigger
               containerWidth={null}
               dropdownClassName=""
+              dropdownMatchSelectWidth={true}
               empty={true}
               getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
-              popupElement={
-                <ForwardRef(OptionList)
-                  childrenAsData={true}
-                  defaultActiveFirstOption={true}
-                  flattenOptions={Array []}
-                  height={128}
-                  itemHeight={24}
-                  menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
-                  multiple={true}
-                  notFoundContent={null}
-                  onActiveValue={[Function]}
-                  onMouseEnter={[Function]}
-                  onScroll={[Function]}
-                  onSelect={[Function]}
-                  onToggleOpen={[Function]}
-                  options={Array []}
-                  prefixCls="ant-select"
-                  searchValue=""
-                  values={Set {}}
-                  virtual={true}
-                />
-              }
+              onPopupMouseEnter={[Function]}
+              placement="bottomLeft"
+              popupElement={<ForwardRef(OptionList) />}
               prefixCls="ant-select"
               transitionName="ant-slide-up"
               visible={false}
@@ -207,27 +202,10 @@ exports[`Categories List component Snapshot testing should render the component 
                 onPopupAlign={[Function]}
                 onPopupVisibleChange={[Function]}
                 popup={
-                  <div>
-                    <ForwardRef(OptionList)
-                      childrenAsData={true}
-                      defaultActiveFirstOption={true}
-                      flattenOptions={Array []}
-                      height={128}
-                      itemHeight={24}
-                      menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
-                      multiple={true}
-                      notFoundContent={null}
-                      onActiveValue={[Function]}
-                      onMouseEnter={[Function]}
-                      onScroll={[Function]}
-                      onSelect={[Function]}
-                      onToggleOpen={[Function]}
-                      options={Array []}
-                      prefixCls="ant-select"
-                      searchValue=""
-                      values={Set {}}
-                      virtual={true}
-                    />
+                  <div
+                    onMouseEnter={[Function]}
+                  >
+                    <ForwardRef(OptionList) />
                   </div>
                 }
                 popupAlign={Object {}}
@@ -245,13 +223,19 @@ exports[`Categories List component Snapshot testing should render the component 
                 showAction={Array []}
               >
                 <Selector
-                  accessibilityIndex={0}
+                  OptionList={
+                    Object {
+                      "$$typeof": Symbol(react.forward_ref),
+                      "displayName": "OptionList",
+                      "render": [Function],
+                    }
+                  }
+                  activeDescendantId="undefined_list_0"
                   activeValue={null}
                   allowClear={true}
-                  autoClearSearchValue={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
-                  defaultValue={Array []}
+                  displayValues={Array []}
                   domRef={
                     Object {
                       "current": <div
@@ -303,32 +287,35 @@ exports[`Categories List component Snapshot testing should render the component 
                     }
                   }
                   dropdownClassName=""
-                  filterOption={[Function]}
+                  dropdownMatchSelectWidth={true}
+                  emptyOptions={true}
                   getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
-                  listHeight={128}
-                  listItemHeight={24}
                   loading={false}
-                  menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   mode="multiple"
-                  multiple={true}
                   notFoundContent={null}
-                  onChange={[Function]}
+                  omitDomProps={
+                    Array [
+                      "inputValue",
+                    ]
+                  }
+                  onDisplayValuesChange={[Function]}
                   onPopupScroll={[Function]}
+                  onRemove={[Function]}
                   onSearch={[Function]}
+                  onSearchSplit={[Function]}
                   onSearchSubmit={[Function]}
-                  onSelect={[Function]}
                   onToggleOpen={[Function]}
                   placeholder="Select categories"
+                  placement="bottomLeft"
                   prefixCls="ant-select"
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={true}
                   tokenWithEnter={false}
                   transitionName="ant-slide-up"
-                  value={Array []}
                   values={Array []}
                 >
                   <div
@@ -337,13 +324,19 @@ exports[`Categories List component Snapshot testing should render the component 
                     onMouseDown={[Function]}
                   >
                     <SelectSelector
-                      accessibilityIndex={0}
+                      OptionList={
+                        Object {
+                          "$$typeof": Symbol(react.forward_ref),
+                          "displayName": "OptionList",
+                          "render": [Function],
+                        }
+                      }
+                      activeDescendantId="undefined_list_0"
                       activeValue={null}
                       allowClear={true}
-                      autoClearSearchValue={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
-                      defaultValue={Array []}
+                      displayValues={Array []}
                       domRef={
                         Object {
                           "current": <div
@@ -395,7 +388,8 @@ exports[`Categories List component Snapshot testing should render the component 
                         }
                       }
                       dropdownClassName=""
-                      filterOption={[Function]}
+                      dropdownMatchSelectWidth={true}
+                      emptyOptions={true}
                       getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
@@ -419,14 +413,15 @@ exports[`Categories List component Snapshot testing should render the component 
                           />,
                         }
                       }
-                      listHeight={128}
-                      listItemHeight={24}
                       loading={false}
-                      menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       mode="multiple"
-                      multiple={true}
                       notFoundContent={null}
-                      onChange={[Function]}
+                      omitDomProps={
+                        Array [
+                          "inputValue",
+                        ]
+                      }
+                      onDisplayValuesChange={[Function]}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}
                       onInputCompositionStart={[Function]}
@@ -434,18 +429,19 @@ exports[`Categories List component Snapshot testing should render the component 
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onPopupScroll={[Function]}
+                      onRemove={[Function]}
                       onSearch={[Function]}
+                      onSearchSplit={[Function]}
                       onSearchSubmit={[Function]}
-                      onSelect={[Function]}
                       onToggleOpen={[Function]}
                       placeholder="Select categories"
+                      placement="bottomLeft"
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
                       tokenWithEnter={false}
                       transitionName="ant-slide-up"
-                      value={Array []}
                       values={Array []}
                     >
                       <Overflow
@@ -466,7 +462,7 @@ exports[`Categories List component Snapshot testing should render the component 
                             }
                           >
                             <ForwardRef(Input)
-                              accessibilityIndex={0}
+                              activeDescendantId="undefined_list_0"
                               attrs={Object {}}
                               editable={false}
                               inputElement={null}
@@ -499,7 +495,8 @@ exports[`Categories List component Snapshot testing should render the component 
                             order={0}
                             prefixCls="ant-select-selection-overflow-item"
                             registerSize={[Function]}
-                            responsive={0}
+                            responsive={false}
+                            responsiveDisabled={true}
                             style={Object {}}
                           >
                             <div
@@ -526,7 +523,7 @@ exports[`Categories List component Snapshot testing should render the component 
                                 }
                               >
                                 <Input
-                                  accessibilityIndex={0}
+                                  activeDescendantId="undefined_list_0"
                                   attrs={Object {}}
                                   editable={false}
                                   inputElement={null}
@@ -587,7 +584,7 @@ exports[`Categories List component Snapshot testing should render the component 
               </Trigger>
             </SelectTrigger>
           </div>
-        </ForwardRef(Select)>
+        </BaseSelect>
       </Select>
     </ForwardRef(InternalSelect)>
   </Selector>
@@ -649,37 +646,50 @@ exports[`Categories List component Snapshot testing should render the component 
         onPopupScroll={[Function]}
         onSearch={[Function]}
         placeholder="Select categories"
+        placement="bottomLeft"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
         searchValue=""
         transitionName="ant-slide-up"
         value={Array []}
       >
-        <ForwardRef(Select)
+        <BaseSelect
+          OptionList={
+            Object {
+              "$$typeof": Symbol(react.forward_ref),
+              "displayName": "OptionList",
+              "render": [Function],
+            }
+          }
+          activeDescendantId="undefined_list_0"
+          activeValue={null}
           allowClear={true}
-          autoClearSearchValue={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
-          defaultValue={Array []}
+          displayValues={Array []}
           dropdownClassName=""
-          filterOption={[Function]}
+          dropdownMatchSelectWidth={true}
+          emptyOptions={true}
           getPopupContainer={[Function]}
           inputIcon={[Function]}
-          listHeight={128}
-          listItemHeight={24}
           loading={false}
-          menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
           mode="multiple"
           notFoundContent={null}
-          onChange={[Function]}
+          omitDomProps={
+            Array [
+              "inputValue",
+            ]
+          }
+          onDisplayValuesChange={[Function]}
           onPopupScroll={[Function]}
           onSearch={[Function]}
+          onSearchSplit={[Function]}
           placeholder="Select categories"
+          placement="bottomLeft"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
           searchValue=""
           transitionName="ant-slide-up"
-          value={Array []}
         >
           <div
             className="ant-select ant-select-multiple ant-select-allow-clear ant-select-show-search"
@@ -692,31 +702,13 @@ exports[`Categories List component Snapshot testing should render the component 
             <SelectTrigger
               containerWidth={null}
               dropdownClassName=""
+              dropdownMatchSelectWidth={true}
               empty={true}
               getPopupContainer={[Function]}
               getTriggerDOMNode={[Function]}
-              popupElement={
-                <ForwardRef(OptionList)
-                  childrenAsData={true}
-                  defaultActiveFirstOption={true}
-                  flattenOptions={Array []}
-                  height={128}
-                  itemHeight={24}
-                  menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
-                  multiple={true}
-                  notFoundContent={null}
-                  onActiveValue={[Function]}
-                  onMouseEnter={[Function]}
-                  onScroll={[Function]}
-                  onSelect={[Function]}
-                  onToggleOpen={[Function]}
-                  options={Array []}
-                  prefixCls="ant-select"
-                  searchValue=""
-                  values={Set {}}
-                  virtual={true}
-                />
-              }
+              onPopupMouseEnter={[Function]}
+              placement="bottomLeft"
+              popupElement={<ForwardRef(OptionList) />}
               prefixCls="ant-select"
               transitionName="ant-slide-up"
               visible={false}
@@ -801,27 +793,10 @@ exports[`Categories List component Snapshot testing should render the component 
                 onPopupAlign={[Function]}
                 onPopupVisibleChange={[Function]}
                 popup={
-                  <div>
-                    <ForwardRef(OptionList)
-                      childrenAsData={true}
-                      defaultActiveFirstOption={true}
-                      flattenOptions={Array []}
-                      height={128}
-                      itemHeight={24}
-                      menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
-                      multiple={true}
-                      notFoundContent={null}
-                      onActiveValue={[Function]}
-                      onMouseEnter={[Function]}
-                      onScroll={[Function]}
-                      onSelect={[Function]}
-                      onToggleOpen={[Function]}
-                      options={Array []}
-                      prefixCls="ant-select"
-                      searchValue=""
-                      values={Set {}}
-                      virtual={true}
-                    />
+                  <div
+                    onMouseEnter={[Function]}
+                  >
+                    <ForwardRef(OptionList) />
                   </div>
                 }
                 popupAlign={Object {}}
@@ -839,13 +814,19 @@ exports[`Categories List component Snapshot testing should render the component 
                 showAction={Array []}
               >
                 <Selector
-                  accessibilityIndex={0}
+                  OptionList={
+                    Object {
+                      "$$typeof": Symbol(react.forward_ref),
+                      "displayName": "OptionList",
+                      "render": [Function],
+                    }
+                  }
+                  activeDescendantId="undefined_list_0"
                   activeValue={null}
                   allowClear={true}
-                  autoClearSearchValue={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
-                  defaultValue={Array []}
+                  displayValues={Array []}
                   domRef={
                     Object {
                       "current": <div
@@ -897,32 +878,35 @@ exports[`Categories List component Snapshot testing should render the component 
                     }
                   }
                   dropdownClassName=""
-                  filterOption={[Function]}
+                  dropdownMatchSelectWidth={true}
+                  emptyOptions={true}
                   getPopupContainer={[Function]}
                   inputElement={null}
                   inputIcon={[Function]}
                   key="trigger"
-                  listHeight={128}
-                  listItemHeight={24}
                   loading={false}
-                  menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                   mode="multiple"
-                  multiple={true}
                   notFoundContent={null}
-                  onChange={[Function]}
+                  omitDomProps={
+                    Array [
+                      "inputValue",
+                    ]
+                  }
+                  onDisplayValuesChange={[Function]}
                   onPopupScroll={[Function]}
+                  onRemove={[Function]}
                   onSearch={[Function]}
+                  onSearchSplit={[Function]}
                   onSearchSubmit={[Function]}
-                  onSelect={[Function]}
                   onToggleOpen={[Function]}
                   placeholder="Select categories"
+                  placement="bottomLeft"
                   prefixCls="ant-select"
                   removeIcon={<ForwardRef(CloseOutlined) />}
                   searchValue=""
                   showSearch={true}
                   tokenWithEnter={false}
                   transitionName="ant-slide-up"
-                  value={Array []}
                   values={Array []}
                 >
                   <div
@@ -931,13 +915,19 @@ exports[`Categories List component Snapshot testing should render the component 
                     onMouseDown={[Function]}
                   >
                     <SelectSelector
-                      accessibilityIndex={0}
+                      OptionList={
+                        Object {
+                          "$$typeof": Symbol(react.forward_ref),
+                          "displayName": "OptionList",
+                          "render": [Function],
+                        }
+                      }
+                      activeDescendantId="undefined_list_0"
                       activeValue={null}
                       allowClear={true}
-                      autoClearSearchValue={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
-                      defaultValue={Array []}
+                      displayValues={Array []}
                       domRef={
                         Object {
                           "current": <div
@@ -989,7 +979,8 @@ exports[`Categories List component Snapshot testing should render the component 
                         }
                       }
                       dropdownClassName=""
-                      filterOption={[Function]}
+                      dropdownMatchSelectWidth={true}
+                      emptyOptions={true}
                       getPopupContainer={[Function]}
                       inputElement={null}
                       inputIcon={[Function]}
@@ -1013,14 +1004,15 @@ exports[`Categories List component Snapshot testing should render the component 
                           />,
                         }
                       }
-                      listHeight={128}
-                      listItemHeight={24}
                       loading={false}
-                      menuItemSelectedIcon={<ForwardRef(CheckOutlined) />}
                       mode="multiple"
-                      multiple={true}
                       notFoundContent={null}
-                      onChange={[Function]}
+                      omitDomProps={
+                        Array [
+                          "inputValue",
+                        ]
+                      }
+                      onDisplayValuesChange={[Function]}
                       onInputChange={[Function]}
                       onInputCompositionEnd={[Function]}
                       onInputCompositionStart={[Function]}
@@ -1028,18 +1020,19 @@ exports[`Categories List component Snapshot testing should render the component 
                       onInputMouseDown={[Function]}
                       onInputPaste={[Function]}
                       onPopupScroll={[Function]}
+                      onRemove={[Function]}
                       onSearch={[Function]}
+                      onSearchSplit={[Function]}
                       onSearchSubmit={[Function]}
-                      onSelect={[Function]}
                       onToggleOpen={[Function]}
                       placeholder="Select categories"
+                      placement="bottomLeft"
                       prefixCls="ant-select"
                       removeIcon={<ForwardRef(CloseOutlined) />}
                       searchValue=""
                       showSearch={true}
                       tokenWithEnter={false}
                       transitionName="ant-slide-up"
-                      value={Array []}
                       values={Array []}
                     >
                       <Overflow
@@ -1060,7 +1053,7 @@ exports[`Categories List component Snapshot testing should render the component 
                             }
                           >
                             <ForwardRef(Input)
-                              accessibilityIndex={0}
+                              activeDescendantId="undefined_list_0"
                               attrs={Object {}}
                               editable={false}
                               inputElement={null}
@@ -1093,7 +1086,8 @@ exports[`Categories List component Snapshot testing should render the component 
                             order={0}
                             prefixCls="ant-select-selection-overflow-item"
                             registerSize={[Function]}
-                            responsive={0}
+                            responsive={false}
+                            responsiveDisabled={true}
                             style={Object {}}
                           >
                             <div
@@ -1120,7 +1114,7 @@ exports[`Categories List component Snapshot testing should render the component 
                                 }
                               >
                                 <Input
-                                  accessibilityIndex={0}
+                                  activeDescendantId="undefined_list_0"
                                   attrs={Object {}}
                                   editable={false}
                                   inputElement={null}
@@ -1181,7 +1175,7 @@ exports[`Categories List component Snapshot testing should render the component 
               </Trigger>
             </SelectTrigger>
           </div>
-        </ForwardRef(Select)>
+        </BaseSelect>
       </Select>
     </ForwardRef(InternalSelect)>
   </Selector>
