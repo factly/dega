@@ -16,7 +16,26 @@ import { deleteCategory } from '../../../actions/categories';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
+const setFilters = jest.fn();
 
+let data = {
+  menus: [
+    {
+      id: 1,
+      name: 'Menu 1',
+    },
+    {
+      id: 2,
+      name: 'Menu 2',
+    },
+  ],
+  loading: false,
+  total: 2,
+};
+let filters = {
+  page: 1,
+  limit: 1,
+};
 let state = {
   menus: {
     req: [
@@ -64,7 +83,7 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList actions={['update', 'delete']} />
+            <MenuList filters={filters} data={data} actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -76,25 +95,11 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList actions={['update', 'delete']} />
+            <MenuList filters={filters} data={data} actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-    });
-    it('should match component with menus', () => {
-      state.menus.loading = false;
-      store = mockStore(state);
-      const tree = mount(
-        <Provider store={store}>
-          <Router>
-            <MenuList actions={['update', 'delete']} />
-          </Router>
-        </Provider>,
-      );
-      expect(tree).toMatchSnapshot();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -111,14 +116,25 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList actions={['update', 'delete']} />
+              <MenuList
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
-      wrapper.find(Table).props().pagination.onChange(2);
-      wrapper.update();
-      expect(wrapper.find(Table).props().pagination.current).toEqual(2);
+      act(() => {
+        wrapper.find(Table).props().pagination.onChange(2, 1);
+        wrapper.update();
+      });
+      expect(setFilters).toHaveBeenCalledTimes(1);
+      expect(setFilters).toHaveBeenCalledWith({
+        limit: 1,
+        page: 2,
+      });
     });
     it('should delete menu', () => {
       store = mockStore(state);
@@ -127,7 +143,12 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList actions={['update', 'delete']} />
+              <MenuList
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -141,7 +162,6 @@ describe('Menu List component', () => {
         .simulate('click');
       expect(deleteMenu).toHaveBeenCalled();
       expect(deleteMenu).toHaveBeenCalledWith(1);
-      expect(getMenus).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
     it('should edit menu', () => {
       store = mockStore(state);
@@ -150,14 +170,19 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList actions={['update', 'delete']} />
+              <MenuList
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text(0)).toEqual('Menu 1');
-      expect(link.prop('to')).toEqual('/menus/1/edit');
+      expect(link.prop('to')).toEqual('/website/menus/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -172,7 +197,12 @@ describe('Menu List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <MenuList actions={['update', 'delete']} />
+              <MenuList
+                setFilters={setFilters}
+                filters={filters}
+                data={{ menus: [], total: 0, loading: false }}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
