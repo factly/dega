@@ -187,11 +187,8 @@ describe('Categories Create Form component', () => {
       });
       act(() => {
         const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
 
         input.simulate('change', { target: { value: 'new name' } });
@@ -311,11 +308,8 @@ describe('Categories Create Form component', () => {
             target: { value: '{"sample":"testing"}' },
           });
         const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');

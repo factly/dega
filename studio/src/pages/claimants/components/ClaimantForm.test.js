@@ -179,12 +179,7 @@ describe('Claimants Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
-          .find('input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -229,18 +224,12 @@ describe('Claimants Create Form component', () => {
             },
           });
         wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('SlugInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')
