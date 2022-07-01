@@ -41,239 +41,6 @@ exports[`Account Menu component should render the component 1`] = `
       placement="topLeft"
     >
       <ForwardRef(Dropdown)
-        arrow={false}
-        builtinPlacements={
-          Object {
-            "bottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tc",
-                "bc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "left": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cr",
-                "cl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "right": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cl",
-                "cr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "top": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bc",
-                "tc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-          }
-        }
         mouseEnterDelay={0.15}
         mouseLeaveDelay={0.1}
         overlay={[Function]}
@@ -293,8 +60,7 @@ exports[`Account Menu component should render the component 1`] = `
           blurDelay={0.15}
           builtinPlacements={
             Object {
-              "bottom": Object {
-                "ignoreShake": true,
+              "bottomCenter": Object {
                 "offset": Array [
                   0,
                   4,
@@ -313,7 +79,6 @@ exports[`Account Menu component should render the component 1`] = `
                 ],
               },
               "bottomLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -332,7 +97,6 @@ exports[`Account Menu component should render the component 1`] = `
                 ],
               },
               "bottomRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -350,122 +114,7 @@ exports[`Account Menu component should render the component 1`] = `
                   0,
                 ],
               },
-              "left": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cr",
-                  "cl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "br",
-                  "bl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tr",
-                  "tl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "right": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cl",
-                  "cr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "bl",
-                  "br",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tl",
-                  "tr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "top": Object {
-                "ignoreShake": true,
+              "topCenter": Object {
                 "offset": Array [
                   0,
                   -4,
@@ -484,7 +133,6 @@ exports[`Account Menu component should render the component 1`] = `
                 ],
               },
               "topLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -503,7 +151,6 @@ exports[`Account Menu component should render the component 1`] = `
                 ],
               },
               "topRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -563,11 +210,9 @@ exports[`Account Menu component should render the component 1`] = `
                 }
               }
             >
-              <Wave
-                disabled={false}
-              >
+              <Wave>
                 <button
-                  className="ant-btn ant-btn-default"
+                  className="ant-btn"
                   onClick={[Function]}
                   style={
                     Object {
@@ -836,239 +481,6 @@ exports[`Account Menu component should render the component with no profile 1`] 
       placement="topLeft"
     >
       <ForwardRef(Dropdown)
-        arrow={false}
-        builtinPlacements={
-          Object {
-            "bottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tc",
-                "bc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "left": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cr",
-                "cl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "right": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cl",
-                "cr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "top": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bc",
-                "tc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-          }
-        }
         mouseEnterDelay={0.15}
         mouseLeaveDelay={0.1}
         overlay={[Function]}
@@ -1088,8 +500,7 @@ exports[`Account Menu component should render the component with no profile 1`] 
           blurDelay={0.15}
           builtinPlacements={
             Object {
-              "bottom": Object {
-                "ignoreShake": true,
+              "bottomCenter": Object {
                 "offset": Array [
                   0,
                   4,
@@ -1108,7 +519,6 @@ exports[`Account Menu component should render the component with no profile 1`] 
                 ],
               },
               "bottomLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -1127,7 +537,6 @@ exports[`Account Menu component should render the component with no profile 1`] 
                 ],
               },
               "bottomRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -1145,122 +554,7 @@ exports[`Account Menu component should render the component with no profile 1`] 
                   0,
                 ],
               },
-              "left": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cr",
-                  "cl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "br",
-                  "bl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tr",
-                  "tl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "right": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cl",
-                  "cr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "bl",
-                  "br",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tl",
-                  "tr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "top": Object {
-                "ignoreShake": true,
+              "topCenter": Object {
                 "offset": Array [
                   0,
                   -4,
@@ -1279,7 +573,6 @@ exports[`Account Menu component should render the component with no profile 1`] 
                 ],
               },
               "topLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -1298,7 +591,6 @@ exports[`Account Menu component should render the component with no profile 1`] 
                 ],
               },
               "topRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -1358,11 +650,9 @@ exports[`Account Menu component should render the component with no profile 1`] 
                 }
               }
             >
-              <Wave
-                disabled={false}
-              >
+              <Wave>
                 <button
-                  className="ant-btn ant-btn-default"
+                  className="ant-btn"
                   onClick={[Function]}
                   style={
                     Object {
@@ -1631,239 +921,6 @@ exports[`Account Menu component should render the component with profile image 1
       placement="topLeft"
     >
       <ForwardRef(Dropdown)
-        arrow={false}
-        builtinPlacements={
-          Object {
-            "bottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tc",
-                "bc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "bottomRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "left": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cr",
-                "cl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "bl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "leftTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                -4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tr",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "right": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "cl",
-                "cr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightBottom": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "br",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "rightTop": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                4,
-                0,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "tl",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "top": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bc",
-                "tc",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topLeft": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "bl",
-                "tl",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-            "topRight": Object {
-              "ignoreShake": true,
-              "offset": Array [
-                0,
-                -4,
-              ],
-              "overflow": Object {
-                "adjustX": 1,
-                "adjustY": 1,
-              },
-              "points": Array [
-                "br",
-                "tr",
-              ],
-              "targetOffset": Array [
-                0,
-                0,
-              ],
-            },
-          }
-        }
         mouseEnterDelay={0.15}
         mouseLeaveDelay={0.1}
         overlay={[Function]}
@@ -1883,8 +940,7 @@ exports[`Account Menu component should render the component with profile image 1
           blurDelay={0.15}
           builtinPlacements={
             Object {
-              "bottom": Object {
-                "ignoreShake": true,
+              "bottomCenter": Object {
                 "offset": Array [
                   0,
                   4,
@@ -1903,7 +959,6 @@ exports[`Account Menu component should render the component with profile image 1
                 ],
               },
               "bottomLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -1922,7 +977,6 @@ exports[`Account Menu component should render the component with profile image 1
                 ],
               },
               "bottomRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   4,
@@ -1940,122 +994,7 @@ exports[`Account Menu component should render the component with profile image 1
                   0,
                 ],
               },
-              "left": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cr",
-                  "cl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "br",
-                  "bl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "leftTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  -4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tr",
-                  "tl",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "right": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "cl",
-                  "cr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightBottom": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "bl",
-                  "br",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "rightTop": Object {
-                "ignoreShake": true,
-                "offset": Array [
-                  4,
-                  0,
-                ],
-                "overflow": Object {
-                  "adjustX": 1,
-                  "adjustY": 1,
-                },
-                "points": Array [
-                  "tl",
-                  "tr",
-                ],
-                "targetOffset": Array [
-                  0,
-                  0,
-                ],
-              },
-              "top": Object {
-                "ignoreShake": true,
+              "topCenter": Object {
                 "offset": Array [
                   0,
                   -4,
@@ -2074,7 +1013,6 @@ exports[`Account Menu component should render the component with profile image 1
                 ],
               },
               "topLeft": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -2093,7 +1031,6 @@ exports[`Account Menu component should render the component with profile image 1
                 ],
               },
               "topRight": Object {
-                "ignoreShake": true,
                 "offset": Array [
                   0,
                   -4,
@@ -2153,11 +1090,9 @@ exports[`Account Menu component should render the component with profile image 1
                 }
               }
             >
-              <Wave
-                disabled={false}
-              >
+              <Wave>
                 <button
-                  className="ant-btn ant-btn-default"
+                  className="ant-btn"
                   onClick={[Function]}
                   style={
                     Object {

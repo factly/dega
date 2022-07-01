@@ -227,12 +227,7 @@ describe('Episode Form component', () => {
     });
     it('should submit form with new title', (done) => {
       act(() => {
-        const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
-          .find('input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'New Episode name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -280,12 +275,7 @@ describe('Episode Form component', () => {
       });
       wrapper.update();
       act(() => {
-        const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
-          .find('input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'New Episode' } });
         wrapper
           .find('MonacoEditor')

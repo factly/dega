@@ -164,7 +164,7 @@ exports[`Header component snapshot testing should render the component 1`] = `
       onMouseLeave={[Function]}
     >
       <button
-        className="ant-btn ant-btn-default"
+        className="ant-btn"
         onClick={[Function]}
         style={
           Object {
@@ -371,7 +371,7 @@ exports[`Header component snapshot testing should render the component with no a
       onMouseLeave={[Function]}
     >
       <button
-        className="ant-btn ant-btn-default"
+        className="ant-btn"
         onClick={[Function]}
         style={
           Object {

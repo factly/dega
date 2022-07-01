@@ -145,12 +145,7 @@ describe('Tags Create Form component', () => {
     });
     it('should submit form with new name', (done) => {
       act(() => {
-        const input = wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
-          .find('input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -202,18 +197,12 @@ describe('Tags Create Form component', () => {
       wrapper.update();
       act(() => {
         wrapper
-          .find('TitleInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('SlugInput')
-          .find('FormItem')
-          .find('FormItemInput')
-          .find('BaseInput')
           .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('DescriptionInput')

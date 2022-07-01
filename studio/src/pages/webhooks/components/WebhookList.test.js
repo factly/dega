@@ -24,9 +24,7 @@ jest.mock('../../../actions/webhooks', () => ({
   deleteWebhook: jest.fn(),
 }));
 const setFilters = jest.fn();
-const fetchWebhooks = () => {
-  dispatch(getWebhooks(filters));
-};
+const fetchWebhooks = jest.fn();
 let store, mockedDispatch;
 let data = {
   webhooks: [

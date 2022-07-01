@@ -17,7 +17,7 @@ const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
 const setFilters = jest.fn();
-
+const fetchMenus = jest.fn();
 let data = {
   menus: [
     {
@@ -83,7 +83,12 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList filters={filters} data={data} actions={['update', 'delete']} />
+            <MenuList
+              fetchMenus={fetchMenus}
+              filters={filters}
+              data={data}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -95,7 +100,12 @@ describe('Menu List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <MenuList filters={filters} data={data} actions={['update', 'delete']} />
+            <MenuList
+              fetchMenus={fetchMenus}
+              filters={filters}
+              data={data}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -117,6 +127,7 @@ describe('Menu List component', () => {
           <Provider store={store}>
             <Router>
               <MenuList
+                fetchMenus={fetchMenus}
                 setFilters={setFilters}
                 filters={filters}
                 data={data}
@@ -144,6 +155,7 @@ describe('Menu List component', () => {
           <Provider store={store}>
             <Router>
               <MenuList
+                fetchMenus={fetchMenus}
                 setFilters={setFilters}
                 filters={filters}
                 data={data}
@@ -171,6 +183,7 @@ describe('Menu List component', () => {
           <Provider store={store}>
             <Router>
               <MenuList
+                fetchMenus={fetchMenus}
                 setFilters={setFilters}
                 filters={filters}
                 data={data}
@@ -198,6 +211,7 @@ describe('Menu List component', () => {
           <Provider store={store}>
             <Router>
               <MenuList
+                fetchMenus={fetchMenus}
                 setFilters={setFilters}
                 filters={filters}
                 data={{ menus: [], total: 0, loading: false }}
