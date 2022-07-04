@@ -10,6 +10,7 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
+	"gorm.io/sharding"
 )
 
 // DB - gorm DB
@@ -19,7 +20,8 @@ var DB *gorm.DB
 func SetupDB() {
 
 	fmt.Println("connecting to database ...")
-	dbString := fmt.Sprintf("postgresql://root@%s:%s/%s?sslmode=%s", viper.GetString("database_host"), viper.GetString("database_port"), viper.GetString("database_name"), viper.GetString("database_ssl_mode"))
+	// dbString := fmt.Sprintf("postgresql://root@%s:%s/%s?sslmode=%s", viper.GetString("database_host"), viper.GetString("database_port"), viper.GetString("database_name"), viper.GetString("database_ssl_mode")) // for cockroach db
+	dbString := fmt.Sprintf("postgresql://%s:%s@%s:%s/%s?sslmode=%s", viper.GetString("database_user"), viper.GetString("database_password"),viper.GetString("database_host"), viper.GetString("database_port"), viper.GetString("database_name"), viper.GetString("database_ssl_mode")) // for postgres db
 	var err error
 
 	// if Sqlite() {
@@ -39,6 +41,8 @@ func SetupDB() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	DB.Use(sharding.Register(sharding.Config{
+		PrimaryKeyGenerator: sharding.PKPGSequence,
+	}, "spaces"))
 	fmt.Println("connected to database ...")
 }

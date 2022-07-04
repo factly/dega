@@ -17,12 +17,13 @@ require (
 	github.com/nats-io/gnatsd v1.4.1
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
-	github.com/prometheus/common v0.15.0
+	github.com/prometheus/common v0.15.0 // indirect
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/http-swagger v1.0.0
 	github.com/swaggo/swag v1.7.0
 	gopkg.in/h2non/gock.v1 v1.0.15
-	gorm.io/driver/postgres v1.0.8
-	gorm.io/gorm v1.21.11
+	gorm.io/driver/postgres v1.3.1
+	gorm.io/gorm v1.23.2
+	gorm.io/sharding v0.5.1
 )
