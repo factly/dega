@@ -27,7 +27,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       },
     },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
+    { title: 'Parent Category', dataIndex: 'parent_name', key: 'parent_id' },
     {
       title: 'Action',
       dataIndex: 'operation',
