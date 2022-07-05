@@ -97,11 +97,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.CannotSaveChanges()))
 		return
 	}
-
+	var parentCat model.Category
+	parentCat.ID = category.ParentID
 	// Check if parent category exist or not
 	if category.ParentID != 0 {
-		var parentCat model.Category
-		parentCat.ID = category.ParentID
+
 		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
 
 		if err != nil {
@@ -109,6 +109,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
 			return
 		}
+		// parentCat.Name =
 	}
 
 	var categorySlug string
@@ -171,22 +172,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	tx.Model(&result).Select("IsFeatured").Updates(model.Category{IsFeatured: category.IsFeatured})
-	err = tx.Model(&result).Updates(model.Category{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Name:             category.Name,
-		Slug:             categorySlug,
-		BackgroundColour: category.BackgroundColour,
-		Description:      category.Description,
-		HTMLDescription:  description,
-		ParentID:         parentID,
-		MediumID:         mediumID,
-		MetaFields:       category.MetaFields,
-		Meta:             category.Meta,
-		HeaderCode:       category.HeaderCode,
-		FooterCode:       category.FooterCode,
-	}).Preload("Medium").First(&result).Error
-
+	//tx.Model(&result).Select("ParentName").Upda"tes(model.Category{ParentName: parentCat.Name})
+	//tx.Model(&result).Select("IsFeatured").Upda"tes(model.Category{IsFeatured: category.IsFeatured})
+	updateMap := map[string]interface{}{
+		"updated_by_id":     uint(uID),
+		"name":              category.Name,
+		"parentname":        parentCat.Name,
+		"is_featured":       category.IsFeatured,
+		"slug":              categorySlug,
+		"background_colour": category.BackgroundColour,
+		"description":       category.Description,
+		"html_description":  description,
+		"parent_id":         parentID,
+		"medium_id":         mediumID,
+		"meta_fields":       category.MetaFields,
+		"meta":              category.Meta,
+		"header_code":       category.HeaderCode,
+		"footer_code":       category.FooterCode,
+	}
+	err = tx.Model(&model.Category{}).Where("id=?", id).Updates(&updateMap).Preload("Medium").First(&result).Error
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)

@@ -70,9 +70,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Check if parent category exist or not
+	var parentCat model.Category
+	parentCat.ID = category.ParentID
 	if category.ParentID != 0 {
-		var parentCat model.Category
-		parentCat.ID = category.ParentID
 		err = config.DB.Where(&model.Category{SpaceID: uint(sID)}).First(&parentCat).Error
 
 		if err != nil {
@@ -129,6 +129,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		HTMLDescription:  description,
 		Slug:             slugx.Approve(&config.DB, categorySlug, sID, tableName),
 		ParentID:         parentID,
+		ParentName:       parentCat.Name,
 		MediumID:         mediumID,
 		SpaceID:          uint(sID),
 		IsFeatured:       category.IsFeatured,

@@ -13,6 +13,7 @@ import (
 type Category struct {
 	config.Base
 	Name             string         `gorm:"column:name" json:"name"`
+	ParentName       string         `gorm:"column:parentname" json:"parent_name"`
 	Slug             string         `gorm:"column:slug" json:"slug"`
 	BackgroundColour postgres.Jsonb `gorm:"column:background_colour" json:"background_colour" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
