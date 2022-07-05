@@ -4,6 +4,7 @@ import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
 function Selector({
+  setLoading = true,
   mode,
   createEntity,
   value,
@@ -97,6 +98,10 @@ function Selector({
   }, [query]);
 
   const fetchEntities = () => {
+    if (!setLoading) {
+      dispatch(selectorType['get' + action](query, setLoading));
+      return;
+    }
     dispatch(selectorType['get' + action](query));
   };
 

@@ -9,11 +9,11 @@ import { useSelector } from 'react-redux';
 
 import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
-const CategoryForm = ({ onCreate, data = {} }) => {
+const CategoryForm = ({ onCreate, data = {}, loading }) => {
   const siteAddress = useSelector(
     ({ spaces: { details, selected } }) => details[selected].site_address,
   );
-
+  const setLoading = onCreate.name === 'onCreate' ? true : false;
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
@@ -111,7 +111,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               <Row gutter={40}>
                 <Col md={{ span: 16 }}>
                   <Form.Item name="parent_id" label="Parent Category">
-                    <Selector action="Categories" />
+                    <Selector action="Categories" setLoading={setLoading} />
                   </Form.Item>
                 </Col>
                 <Col md={{ span: 5 }}>
