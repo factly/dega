@@ -59,7 +59,7 @@ describe('Categories Create Form component', () => {
 
   describe('snapshot testing', () => {
     beforeEach(() => {
-      onCreate = jest.fn();
+      onCreate = jest.fn().mockName('onCreate');
       onCreate.mockImplementationOnce(
         (values) => new Promise((resolve, reject) => resolve(values)),
       );
@@ -67,7 +67,7 @@ describe('Categories Create Form component', () => {
     it('should render the component', () => {
       const tree = mount(
         <Provider store={store}>
-          <CategoryCreateForm />
+          <CategoryCreateForm onCreate={onCreate} />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
@@ -75,7 +75,7 @@ describe('Categories Create Form component', () => {
     it('should match component with empty data', () => {
       const tree = mount(
         <Provider store={store}>
-          <CategoryCreateForm data={[]} />
+          <CategoryCreateForm onCreate={onCreate} data={[]} />
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
