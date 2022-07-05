@@ -772,6 +772,7 @@ exports[`Categories create component snapshot testing should render the componen
                                                               action="Categories"
                                                               id="create-category_parent_id"
                                                               onChange={[Function]}
+                                                              setLoading={true}
                                                             >
                                                               <ForwardRef(InternalSelect)
                                                                 allowClear={true}

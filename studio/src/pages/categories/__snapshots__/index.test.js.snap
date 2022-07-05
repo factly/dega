@@ -1511,7 +1511,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": "parent_name",
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -1574,7 +1574,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                             "title": "Slug",
                                           },
                                           Object {
-                                            "dataIndex": "parent_id",
+                                            "dataIndex": "parent_name",
                                             "key": "parent_id",
                                             "title": "Parent Category",
                                           },
@@ -1755,7 +1755,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": "parent_name",
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
                                                 },
@@ -1962,7 +1962,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -2037,7 +2037,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
                                                       },
@@ -2067,7 +2067,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -2142,7 +2142,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                             "colSpan": 1,
                                                             "colStart": 2,
                                                             "column": Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             },
@@ -2184,7 +2184,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                             "title": "Slug",
                                                           },
                                                           Object {
-                                                            "dataIndex": "parent_id",
+                                                            "dataIndex": "parent_name",
                                                             "fixed": undefined,
                                                             "key": "parent_id",
                                                             "title": "Parent Category",
@@ -2290,7 +2290,7 @@ exports[`Categories component snapshot testing should render the component 1`] =
                                                           colStart={2}
                                                           column={
                                                             Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             }
@@ -3927,7 +3927,7 @@ exports[`Categories component snapshot testing should render the component with 
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": "parent_name",
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -4008,7 +4008,7 @@ exports[`Categories component snapshot testing should render the component with 
                                             "title": "Slug",
                                           },
                                           Object {
-                                            "dataIndex": "parent_id",
+                                            "dataIndex": "parent_name",
                                             "key": "parent_id",
                                             "title": "Parent Category",
                                           },
@@ -4347,7 +4347,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": "parent_name",
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
                                                 },
@@ -4708,7 +4708,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -4783,7 +4783,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
                                                       },
@@ -4813,7 +4813,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -4888,7 +4888,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                             "colSpan": 1,
                                                             "colStart": 2,
                                                             "column": Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             },
@@ -4930,7 +4930,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                             "title": "Slug",
                                                           },
                                                           Object {
-                                                            "dataIndex": "parent_id",
+                                                            "dataIndex": "parent_name",
                                                             "fixed": undefined,
                                                             "key": "parent_id",
                                                             "title": "Parent Category",
@@ -5036,7 +5036,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                           colStart={2}
                                                           column={
                                                             Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             }
@@ -5245,7 +5245,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         </Cell>
                                                         <Cell
                                                           component="td"
-                                                          dataIndex="parent_id"
+                                                          dataIndex="parent_name"
                                                           firstFixLeft={false}
                                                           firstFixRight={false}
                                                           index={0}
@@ -6139,7 +6139,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         </Cell>
                                                         <Cell
                                                           component="td"
-                                                          dataIndex="parent_id"
+                                                          dataIndex="parent_name"
                                                           firstFixLeft={false}
                                                           firstFixRight={false}
                                                           index={1}
@@ -7033,7 +7033,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         </Cell>
                                                         <Cell
                                                           component="td"
-                                                          dataIndex="parent_id"
+                                                          dataIndex="parent_name"
                                                           firstFixLeft={false}
                                                           firstFixRight={false}
                                                           index={2}
@@ -9658,7 +9658,7 @@ exports[`Categories component snapshot testing should render the component with 
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": "parent_name",
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -9721,7 +9721,7 @@ exports[`Categories component snapshot testing should render the component with 
                                             "title": "Slug",
                                           },
                                           Object {
-                                            "dataIndex": "parent_id",
+                                            "dataIndex": "parent_name",
                                             "key": "parent_id",
                                             "title": "Parent Category",
                                           },
@@ -9902,7 +9902,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": "parent_name",
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
                                                 },
@@ -10109,7 +10109,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -10184,7 +10184,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
                                                       },
@@ -10214,7 +10214,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                         "title": "Slug",
                                                       },
                                                       Object {
-                                                        "dataIndex": "parent_id",
+                                                        "dataIndex": "parent_name",
                                                         "fixed": undefined,
                                                         "key": "parent_id",
                                                         "title": "Parent Category",
@@ -10289,7 +10289,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                             "colSpan": 1,
                                                             "colStart": 2,
                                                             "column": Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             },
@@ -10331,7 +10331,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                             "title": "Slug",
                                                           },
                                                           Object {
-                                                            "dataIndex": "parent_id",
+                                                            "dataIndex": "parent_name",
                                                             "fixed": undefined,
                                                             "key": "parent_id",
                                                             "title": "Parent Category",
@@ -10437,7 +10437,7 @@ exports[`Categories component snapshot testing should render the component with 
                                                           colStart={2}
                                                           column={
                                                             Object {
-                                                              "dataIndex": "parent_id",
+                                                              "dataIndex": "parent_name",
                                                               "key": "parent_id",
                                                               "title": "Parent Category",
                                                             }
