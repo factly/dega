@@ -19,7 +19,6 @@ function EditCategory() {
       loading: state.categories.loading,
     };
   });
-  var i = 1;
   React.useEffect(() => {
     dispatch(getCategory(id));
   }, [dispatch, id]);
