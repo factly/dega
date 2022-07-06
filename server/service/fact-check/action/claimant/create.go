@@ -109,6 +109,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Description:     claimant.Description,
 		HTMLDescription: description,
 		MediumID:        mediumID,
+		IsFeatured:      claimant.IsFeatured,
 		SpaceID:         uint(sID),
 		TagLine:         claimant.TagLine,
 		MetaFields:      claimant.MetaFields,

@@ -17,6 +17,7 @@ type Claimant struct {
 	Slug            string         `gorm:"column:slug" json:"slug"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	IsFeatured      bool           `gorm:"column:is_featured" json:"is_featured"`
 	TagLine         string         `gorm:"column:tag_line" json:"tag_line"`
 	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium          *model.Medium  `json:"medium"`

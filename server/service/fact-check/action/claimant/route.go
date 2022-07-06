@@ -11,6 +11,7 @@ import (
 type claimant struct {
 	Name        string         `json:"name" validate:"required,max=500"`
 	Slug        string         `json:"slug"`
+	IsFeatured  bool           `json:"is_featured"`
 	Description postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
 	TagLine     string         `json:"tag_line"`
 	MediumID    uint           `json:"medium_id"`
