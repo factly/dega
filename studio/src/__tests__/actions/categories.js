@@ -101,6 +101,39 @@ describe('categories actions', () => {
       params: query,
     });
   });
+  it('should create actions to fetch categories success and not set loading', () => {
+    const query = { page: 1, limit: 5 };
+    const categories = [{ id: 1, name: 'Category' }];
+    const resp = { data: { nodes: categories, total: 1 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: types.ADD_CATEGORIES,
+        payload: [{ id: 1, name: 'Category', medium: undefined }],
+      },
+      {
+        type: types.ADD_CATEGORIES_REQUEST,
+        payload: {
+          data: [1],
+          query: query,
+          total: 1,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getCategories(query, false))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API, {
+      params: query,
+    });
+  });
   it('should create actions to fetch categories success with media', () => {
     const query = { page: 1, limit: 5 };
     const medium = { id: 3, medium: 'Medium' };
