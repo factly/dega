@@ -46,7 +46,7 @@ function FactCheck({ formats }) {
               mode="multiple"
               action="Authors"
               placeholder="Filter Authors"
-              display={'email'}
+              display="display_name"
             />
           </Form.Item>
         </Col>,
@@ -163,31 +163,31 @@ function FactCheck({ formats }) {
             </Form.Item>
           </Col>
           <Col key={4}>
-            <Form.Item name="status">
-              <Select defaultValue="all">
+            <Form.Item label="Status" name="status">
+              <Select placeholder="Status" defaultValue="all">
                 <Option value="all" key={'all'}>
-                  Status: All
+                  All
                 </Option>
                 <Option value="draft" key={'draft'}>
-                  Status: Draft
+                  Draft
                 </Option>
                 <Option value="publish" key={'publish'}>
-                  Status: Publish
+                  Publish
                 </Option>
                 <Option value="ready" key={'ready'}>
-                  Status: Ready to Publish
+                  Ready to Publish
                 </Option>
               </Select>
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item name="sort">
-              <Select defaultValue="desc" style={{ width: '100%' }}>
+            <Form.Item label="Sort By" name="sort">
+              <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
                 <Option value="desc" key={'desc'}>
-                  Sort By: Latest
+                  Latest
                 </Option>
                 <Option value="asc" key={'asc'}>
-                  Sort By: Old
+                  Old
                 </Option>
               </Select>
             </Form.Item>
