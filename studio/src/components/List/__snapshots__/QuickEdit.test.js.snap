@@ -5113,7 +5113,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                     >
                                       <Selector
                                         action="Authors"
-                                        display="email"
+                                        display="display_name"
                                         id="authors"
                                         mode="multiple"
                                         onChange={[Function]}
@@ -5239,7 +5239,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                         Array [
                                                           Object {
                                                             "data": Object {
-                                                              "children": undefined,
+                                                              "children": null,
                                                               "key": "authors1",
                                                               "value": 1,
                                                             },
@@ -5262,7 +5262,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       options={
                                                         Array [
                                                           Object {
-                                                            "children": undefined,
+                                                            "children": null,
                                                             "key": "authors1",
                                                             "value": 1,
                                                           },
@@ -5369,7 +5369,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                             Array [
                                                               Object {
                                                                 "data": Object {
-                                                                  "children": undefined,
+                                                                  "children": null,
                                                                   "key": "authors1",
                                                                   "value": 1,
                                                                 },
@@ -5392,7 +5392,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           options={
                                                             Array [
                                                               Object {
-                                                                "children": undefined,
+                                                                "children": null,
                                                                 "key": "authors1",
                                                                 "value": 1,
                                                               },
@@ -5554,7 +5554,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           Object {
                                                             "disabled": undefined,
                                                             "key": 1,
-                                                            "label": undefined,
+                                                            "label": null,
                                                             "value": 1,
                                                           },
                                                         ]
@@ -5722,7 +5722,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                               Object {
                                                                 "disabled": undefined,
                                                                 "key": 1,
-                                                                "label": undefined,
+                                                                "label": null,
                                                                 "value": 1,
                                                               },
                                                             ]
@@ -5734,7 +5734,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                                 Object {
                                                                   "disabled": undefined,
                                                                   "key": 1,
-                                                                  "label": undefined,
+                                                                  "label": null,
                                                                   "value": 1,
                                                                 },
                                                               ]
@@ -5789,7 +5789,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                                   Object {
                                                                     "disabled": undefined,
                                                                     "key": 1,
-                                                                    "label": undefined,
+                                                                    "label": null,
                                                                     "value": 1,
                                                                   }
                                                                 }

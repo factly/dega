@@ -7886,7 +7886,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -19868,7 +19868,7 @@ exports[`Fact-check form component snapshot testing should match component with 
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -31651,7 +31651,7 @@ exports[`Fact-check form component snapshot testing should match with different 
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -42093,7 +42093,7 @@ exports[`Fact-check form component snapshot testing should render the component 
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
