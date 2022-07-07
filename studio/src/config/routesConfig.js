@@ -665,6 +665,7 @@ const routes = {
   },
   sach: {
     path: '/fact-checks/sach',
+    menuKey: '/fact-checks/sach',
     Component: Factly,
     title: 'Sach',
   },
