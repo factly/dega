@@ -6701,7 +6701,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -17490,7 +17490,7 @@ exports[`Posts Create Form component snapshot testing should match component wit
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -28088,7 +28088,7 @@ exports[`Posts Create Form component snapshot testing should match with differen
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}
@@ -37742,7 +37742,7 @@ exports[`Posts Create Form component snapshot testing should render the componen
                                                                         >
                                                                           <Selector
                                                                             action="Authors"
-                                                                            display="email"
+                                                                            display="display_name"
                                                                             id="authors"
                                                                             mode="multiple"
                                                                             onChange={[Function]}

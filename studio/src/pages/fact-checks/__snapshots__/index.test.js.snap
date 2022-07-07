@@ -566,12 +566,14 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                 }
                               >
                                 <FormItem
+                                  label="Status"
                                   name="status"
                                 >
                                   <WrapperField
+                                    label="Status"
                                     messageVariables={
                                       Object {
-                                        "label": "status",
+                                        "label": "Status",
                                       }
                                     }
                                     name="status"
@@ -606,9 +608,10 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         }
                                       }
                                       key="_status"
+                                      label="Status"
                                       messageVariables={
                                         Object {
-                                          "label": "status",
+                                          "label": "Status",
                                         }
                                       }
                                       name={
@@ -631,13 +634,32 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_status"
+                                            label="Status"
                                             name="status"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_status"
+                                                  title="Status"
+                                                >
+                                                  Status
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Status"
                                             name={
                                               Array [
                                                 "status",
@@ -670,6 +692,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                         defaultValue="all"
                                                         id="filters_status"
                                                         onChange={[Function]}
+                                                        placeholder="Status"
                                                       >
                                                         <Select
                                                           className=""
@@ -687,6 +710,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Status"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
@@ -707,6 +731,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Status"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="ant-slide-up"
@@ -732,7 +757,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: All",
+                                                                            "children": "All",
                                                                             "key": "all",
                                                                             "value": "all",
                                                                           },
@@ -741,7 +766,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Draft",
+                                                                            "children": "Draft",
                                                                             "key": "draft",
                                                                             "value": "draft",
                                                                           },
@@ -750,7 +775,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Publish",
+                                                                            "children": "Publish",
                                                                             "key": "publish",
                                                                             "value": "publish",
                                                                           },
@@ -759,7 +784,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Ready to Publish",
+                                                                            "children": "Ready to Publish",
                                                                             "key": "ready",
                                                                             "value": "ready",
                                                                           },
@@ -785,22 +810,22 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Status: All",
+                                                                          "children": "All",
                                                                           "key": "all",
                                                                           "value": "all",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Draft",
+                                                                          "children": "Draft",
                                                                           "key": "draft",
                                                                           "value": "draft",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Publish",
+                                                                          "children": "Publish",
                                                                           "key": "publish",
                                                                           "value": "publish",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Ready to Publish",
+                                                                          "children": "Ready to Publish",
                                                                           "key": "ready",
                                                                           "value": "ready",
                                                                         },
@@ -906,7 +931,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: All",
+                                                                                "children": "All",
                                                                                 "key": "all",
                                                                                 "value": "all",
                                                                               },
@@ -915,7 +940,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Draft",
+                                                                                "children": "Draft",
                                                                                 "key": "draft",
                                                                                 "value": "draft",
                                                                               },
@@ -924,7 +949,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Publish",
+                                                                                "children": "Publish",
                                                                                 "key": "publish",
                                                                                 "value": "publish",
                                                                               },
@@ -933,7 +958,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Ready to Publish",
+                                                                                "children": "Ready to Publish",
                                                                                 "key": "ready",
                                                                                 "value": "ready",
                                                                               },
@@ -959,22 +984,22 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Status: All",
+                                                                              "children": "All",
                                                                               "key": "all",
                                                                               "value": "all",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Draft",
+                                                                              "children": "Draft",
                                                                               "key": "draft",
                                                                               "value": "draft",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Publish",
+                                                                              "children": "Publish",
                                                                               "key": "publish",
                                                                               "value": "publish",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Ready to Publish",
+                                                                              "children": "Ready to Publish",
                                                                               "key": "ready",
                                                                               "value": "ready",
                                                                             },
@@ -1037,9 +1062,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Status: All"
+                                                                            title="All"
                                                                           >
-                                                                            Status: All
+                                                                            All
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -1063,6 +1088,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Status"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -1074,7 +1100,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "all",
-                                                                          "label": "Status: All",
+                                                                          "label": "All",
                                                                           "value": "all",
                                                                         },
                                                                       ]
@@ -1118,9 +1144,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Status: All"
+                                                                                title="All"
                                                                               >
-                                                                                Status: All
+                                                                                All
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -1169,6 +1195,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Status"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -1180,7 +1207,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "all",
-                                                                              "label": "Status: All",
+                                                                              "label": "All",
                                                                               "value": "all",
                                                                             },
                                                                           ]
@@ -1234,9 +1261,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Status: All"
+                                                                          title="All"
                                                                         >
-                                                                          Status: All
+                                                                          All
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>
@@ -1387,12 +1414,14 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                 }
                               >
                                 <FormItem
+                                  label="Sort By"
                                   name="sort"
                                 >
                                   <WrapperField
+                                    label="Sort By"
                                     messageVariables={
                                       Object {
-                                        "label": "sort",
+                                        "label": "Sort By",
                                       }
                                     }
                                     name="sort"
@@ -1427,9 +1456,10 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         }
                                       }
                                       key="_sort"
+                                      label="Sort By"
                                       messageVariables={
                                         Object {
-                                          "label": "sort",
+                                          "label": "Sort By",
                                         }
                                       }
                                       name={
@@ -1452,13 +1482,32 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_sort"
+                                            label="Sort By"
                                             name="sort"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_sort"
+                                                  title="Sort By"
+                                                >
+                                                  Sort By
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Sort By"
                                             name={
                                               Array [
                                                 "sort",
@@ -1492,6 +1541,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                         defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
+                                                        placeholder="Sort By"
                                                         style={
                                                           Object {
                                                             "width": "100%",
@@ -1515,6 +1565,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Sort By"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           style={
@@ -1541,6 +1592,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Sort By"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             style={
@@ -1577,7 +1629,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Latest",
+                                                                            "children": "Latest",
                                                                             "key": "desc",
                                                                             "value": "desc",
                                                                           },
@@ -1586,7 +1638,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Old",
+                                                                            "children": "Old",
                                                                             "key": "asc",
                                                                             "value": "asc",
                                                                           },
@@ -1612,12 +1664,12 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Sort By: Latest",
+                                                                          "children": "Latest",
                                                                           "key": "desc",
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
-                                                                          "children": "Sort By: Old",
+                                                                          "children": "Old",
                                                                           "key": "asc",
                                                                           "value": "asc",
                                                                         },
@@ -1723,7 +1775,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Latest",
+                                                                                "children": "Latest",
                                                                                 "key": "desc",
                                                                                 "value": "desc",
                                                                               },
@@ -1732,7 +1784,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Old",
+                                                                                "children": "Old",
                                                                                 "key": "asc",
                                                                                 "value": "asc",
                                                                               },
@@ -1758,12 +1810,12 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Sort By: Latest",
+                                                                              "children": "Latest",
                                                                               "key": "desc",
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
-                                                                              "children": "Sort By: Old",
+                                                                              "children": "Old",
                                                                               "key": "asc",
                                                                               "value": "asc",
                                                                             },
@@ -1826,9 +1878,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Sort By: Latest"
+                                                                            title="Latest"
                                                                           >
-                                                                            Sort By: Latest
+                                                                            Latest
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -1852,6 +1904,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Sort By"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -1869,7 +1922,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "desc",
-                                                                          "label": "Sort By: Latest",
+                                                                          "label": "Latest",
                                                                           "value": "desc",
                                                                         },
                                                                       ]
@@ -1913,9 +1966,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Sort By: Latest"
+                                                                                title="Latest"
                                                                               >
-                                                                                Sort By: Latest
+                                                                                Latest
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -1964,6 +2017,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Sort By"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -1981,7 +2035,7 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "desc",
-                                                                              "label": "Sort By: Latest",
+                                                                              "label": "Latest",
                                                                               "value": "desc",
                                                                             },
                                                                           ]
@@ -2035,9 +2089,9 @@ exports[`FactCheck component snapshot testing should render the component 1`] = 
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Sort By: Latest"
+                                                                          title="Latest"
                                                                         >
-                                                                          Sort By: Latest
+                                                                          Latest
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>
@@ -4207,12 +4261,14 @@ exports[`FactCheck component snapshot testing should render the component with d
                                 }
                               >
                                 <FormItem
+                                  label="Status"
                                   name="status"
                                 >
                                   <WrapperField
+                                    label="Status"
                                     messageVariables={
                                       Object {
-                                        "label": "status",
+                                        "label": "Status",
                                       }
                                     }
                                     name="status"
@@ -4247,9 +4303,10 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         }
                                       }
                                       key="_status"
+                                      label="Status"
                                       messageVariables={
                                         Object {
-                                          "label": "status",
+                                          "label": "Status",
                                         }
                                       }
                                       name={
@@ -4272,13 +4329,32 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_status"
+                                            label="Status"
                                             name="status"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_status"
+                                                  title="Status"
+                                                >
+                                                  Status
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Status"
                                             name={
                                               Array [
                                                 "status",
@@ -4311,6 +4387,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                         defaultValue="all"
                                                         id="filters_status"
                                                         onChange={[Function]}
+                                                        placeholder="Status"
                                                       >
                                                         <Select
                                                           className=""
@@ -4328,6 +4405,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Status"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
@@ -4348,6 +4426,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Status"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="ant-slide-up"
@@ -4373,7 +4452,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: All",
+                                                                            "children": "All",
                                                                             "key": "all",
                                                                             "value": "all",
                                                                           },
@@ -4382,7 +4461,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Draft",
+                                                                            "children": "Draft",
                                                                             "key": "draft",
                                                                             "value": "draft",
                                                                           },
@@ -4391,7 +4470,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Publish",
+                                                                            "children": "Publish",
                                                                             "key": "publish",
                                                                             "value": "publish",
                                                                           },
@@ -4400,7 +4479,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Ready to Publish",
+                                                                            "children": "Ready to Publish",
                                                                             "key": "ready",
                                                                             "value": "ready",
                                                                           },
@@ -4426,22 +4505,22 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Status: All",
+                                                                          "children": "All",
                                                                           "key": "all",
                                                                           "value": "all",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Draft",
+                                                                          "children": "Draft",
                                                                           "key": "draft",
                                                                           "value": "draft",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Publish",
+                                                                          "children": "Publish",
                                                                           "key": "publish",
                                                                           "value": "publish",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Ready to Publish",
+                                                                          "children": "Ready to Publish",
                                                                           "key": "ready",
                                                                           "value": "ready",
                                                                         },
@@ -4547,7 +4626,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: All",
+                                                                                "children": "All",
                                                                                 "key": "all",
                                                                                 "value": "all",
                                                                               },
@@ -4556,7 +4635,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Draft",
+                                                                                "children": "Draft",
                                                                                 "key": "draft",
                                                                                 "value": "draft",
                                                                               },
@@ -4565,7 +4644,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Publish",
+                                                                                "children": "Publish",
                                                                                 "key": "publish",
                                                                                 "value": "publish",
                                                                               },
@@ -4574,7 +4653,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Ready to Publish",
+                                                                                "children": "Ready to Publish",
                                                                                 "key": "ready",
                                                                                 "value": "ready",
                                                                               },
@@ -4600,22 +4679,22 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Status: All",
+                                                                              "children": "All",
                                                                               "key": "all",
                                                                               "value": "all",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Draft",
+                                                                              "children": "Draft",
                                                                               "key": "draft",
                                                                               "value": "draft",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Publish",
+                                                                              "children": "Publish",
                                                                               "key": "publish",
                                                                               "value": "publish",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Ready to Publish",
+                                                                              "children": "Ready to Publish",
                                                                               "key": "ready",
                                                                               "value": "ready",
                                                                             },
@@ -4678,9 +4757,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Status: All"
+                                                                            title="All"
                                                                           >
-                                                                            Status: All
+                                                                            All
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -4704,6 +4783,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Status"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -4715,7 +4795,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "all",
-                                                                          "label": "Status: All",
+                                                                          "label": "All",
                                                                           "value": "all",
                                                                         },
                                                                       ]
@@ -4759,9 +4839,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Status: All"
+                                                                                title="All"
                                                                               >
-                                                                                Status: All
+                                                                                All
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -4810,6 +4890,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Status"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -4821,7 +4902,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "all",
-                                                                              "label": "Status: All",
+                                                                              "label": "All",
                                                                               "value": "all",
                                                                             },
                                                                           ]
@@ -4875,9 +4956,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Status: All"
+                                                                          title="All"
                                                                         >
-                                                                          Status: All
+                                                                          All
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>
@@ -5028,12 +5109,14 @@ exports[`FactCheck component snapshot testing should render the component with d
                                 }
                               >
                                 <FormItem
+                                  label="Sort By"
                                   name="sort"
                                 >
                                   <WrapperField
+                                    label="Sort By"
                                     messageVariables={
                                       Object {
-                                        "label": "sort",
+                                        "label": "Sort By",
                                       }
                                     }
                                     name="sort"
@@ -5068,9 +5151,10 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         }
                                       }
                                       key="_sort"
+                                      label="Sort By"
                                       messageVariables={
                                         Object {
-                                          "label": "sort",
+                                          "label": "Sort By",
                                         }
                                       }
                                       name={
@@ -5093,13 +5177,32 @@ exports[`FactCheck component snapshot testing should render the component with d
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_sort"
+                                            label="Sort By"
                                             name="sort"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_sort"
+                                                  title="Sort By"
+                                                >
+                                                  Sort By
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Sort By"
                                             name={
                                               Array [
                                                 "sort",
@@ -5133,6 +5236,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                         defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
+                                                        placeholder="Sort By"
                                                         style={
                                                           Object {
                                                             "width": "100%",
@@ -5156,6 +5260,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Sort By"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           style={
@@ -5182,6 +5287,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Sort By"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             style={
@@ -5218,7 +5324,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Latest",
+                                                                            "children": "Latest",
                                                                             "key": "desc",
                                                                             "value": "desc",
                                                                           },
@@ -5227,7 +5333,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Old",
+                                                                            "children": "Old",
                                                                             "key": "asc",
                                                                             "value": "asc",
                                                                           },
@@ -5253,12 +5359,12 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Sort By: Latest",
+                                                                          "children": "Latest",
                                                                           "key": "desc",
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
-                                                                          "children": "Sort By: Old",
+                                                                          "children": "Old",
                                                                           "key": "asc",
                                                                           "value": "asc",
                                                                         },
@@ -5364,7 +5470,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Latest",
+                                                                                "children": "Latest",
                                                                                 "key": "desc",
                                                                                 "value": "desc",
                                                                               },
@@ -5373,7 +5479,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Old",
+                                                                                "children": "Old",
                                                                                 "key": "asc",
                                                                                 "value": "asc",
                                                                               },
@@ -5399,12 +5505,12 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Sort By: Latest",
+                                                                              "children": "Latest",
                                                                               "key": "desc",
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
-                                                                              "children": "Sort By: Old",
+                                                                              "children": "Old",
                                                                               "key": "asc",
                                                                               "value": "asc",
                                                                             },
@@ -5467,9 +5573,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Sort By: Latest"
+                                                                            title="Latest"
                                                                           >
-                                                                            Sort By: Latest
+                                                                            Latest
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -5493,6 +5599,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Sort By"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -5510,7 +5617,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "desc",
-                                                                          "label": "Sort By: Latest",
+                                                                          "label": "Latest",
                                                                           "value": "desc",
                                                                         },
                                                                       ]
@@ -5554,9 +5661,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Sort By: Latest"
+                                                                                title="Latest"
                                                                               >
-                                                                                Sort By: Latest
+                                                                                Latest
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -5605,6 +5712,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Sort By"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -5622,7 +5730,7 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "desc",
-                                                                              "label": "Sort By: Latest",
+                                                                              "label": "Latest",
                                                                               "value": "desc",
                                                                             },
                                                                           ]
@@ -5676,9 +5784,9 @@ exports[`FactCheck component snapshot testing should render the component with d
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Sort By: Latest"
+                                                                          title="Latest"
                                                                         >
-                                                                          Sort By: Latest
+                                                                          Latest
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>

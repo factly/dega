@@ -6827,7 +6827,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                           >
                                                                             <Selector
                                                                               action="Authors"
-                                                                              display="email"
+                                                                              display="display_name"
                                                                               id="authors"
                                                                               mode="multiple"
                                                                               onChange={[Function]}

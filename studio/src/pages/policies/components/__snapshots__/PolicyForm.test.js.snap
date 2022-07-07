@@ -750,7 +750,7 @@ exports[`Policy Create Form component snapshot testing should match component wi
                                         >
                                           <Selector
                                             action="Authors"
-                                            display="email"
+                                            display="display_name"
                                             id="create-policy_users"
                                             mode="multiple"
                                             onChange={[Function]}
@@ -8205,7 +8205,7 @@ exports[`Policy Create Form component snapshot testing should render the compone
                                         >
                                           <Selector
                                             action="Authors"
-                                            display="email"
+                                            display="display_name"
                                             id="create-policy_users"
                                             mode="multiple"
                                             onChange={[Function]}

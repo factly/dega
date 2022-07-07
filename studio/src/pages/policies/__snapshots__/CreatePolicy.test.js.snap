@@ -749,7 +749,7 @@ exports[`Policies create component snapshot testing should render the component 
                                           >
                                             <Selector
                                               action="Authors"
-                                              display="email"
+                                              display="display_name"
                                               id="create-policy_users"
                                               mode="multiple"
                                               onChange={[Function]}
