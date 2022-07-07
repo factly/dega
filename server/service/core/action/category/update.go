@@ -185,7 +185,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Meta:             category.Meta,
 		HeaderCode:       category.HeaderCode,
 		FooterCode:       category.FooterCode,
-	}).Preload("Medium").First(&result).Error
+	}).Preload("Medium").Preload("ParentCategory").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

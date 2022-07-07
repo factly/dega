@@ -56,7 +56,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx := config.DB.Model(&model.Category{}).Preload("Medium").Where(&model.Category{
+	tx := config.DB.Model(&model.Category{}).Preload("Medium").Preload("ParentCategory").Where(&model.Category{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
