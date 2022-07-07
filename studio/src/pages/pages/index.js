@@ -45,7 +45,7 @@ function Pages({ formats }) {
               mode="multiple"
               action="Authors"
               placeholder="Filter Authors"
-              display = 'display_name'
+              display="display_name"
             />
           </Form.Item>
         </Col>,

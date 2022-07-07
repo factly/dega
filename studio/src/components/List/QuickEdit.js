@@ -108,7 +108,7 @@ function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => 
         <Selector mode="multiple" action="Tags" createEntity="Tag" />
       </Form.Item>
       <Form.Item name="authors" label="Authors">
-        <Selector mode="multiple" display={'email'} action="Authors" />
+        <Selector mode="multiple" display={'display_name'} action="Authors" />
       </Form.Item>
       <Form.Item {...tailLayout}>
         <Space>
