@@ -9,11 +9,37 @@ import { getSpaces } from '../actions/spaces';
 import './basic.css';
 import { getSuperOrganisation } from '../actions/admin';
 import PageHeader from '../components/PageHeader';
+import routes from '../config/routesConfig';
+import _ from 'lodash';
 
 function BasicLayout(props) {
   const { location } = props;
   const { Content } = Layout;
   const { children } = props;
+  const [enteredRoute, setRoute] = React.useState({ menuKey: '/' });
+  React.useEffect(() => {
+    const pathSnippets = location.pathname.split('/').filter((i) => i);
+    if (pathSnippets.length === 0) {
+      setRoute({ menuKey: '/' });
+      return;
+    }
+    var index;
+    for (index = 0; index < pathSnippets.length; index++) {
+      const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
+      const nextTempRoute =
+        pathSnippets.length - index > 1
+          ? _.find(routes, { path: `/${pathSnippets.slice(0, index + 2).join('/')}` })
+          : null;
+      const tempRoute = _.find(routes, { path: url });
+      if (nextTempRoute) {
+        continue;
+      }
+      if (tempRoute) {
+        setRoute(tempRoute);
+        break;
+      }
+    }
+  }, [location]);
   const dispatch = useDispatch();
 
   const { permission, orgs, loading, selected, applications, services } = useSelector((state) => {
@@ -90,6 +116,7 @@ function BasicLayout(props) {
       {!hideSidebar && (
         <Sidebar
           permission={permission}
+          menuKey={enteredRoute?.menuKey}
           orgs={orgs}
           loading={loading}
           superOrg={superOrg}
