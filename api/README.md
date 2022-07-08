@@ -10,3 +10,5 @@ GraphQL API used to generate websites developed on Dega CMS. Developed in Go wit
 
 for development purpose :
 URL for GRAPHQL playground - http://localhost:9001
+
+RUN this command for generating resolvers - go run -mod=mod github.com/99designs/gqlgen generate
