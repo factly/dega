@@ -152,8 +152,6 @@ github.com/factly/dega-server v0.0.0-20210629085956-9acf3184fde4/go.mod h1:gDnZ9
 github.com/factly/hukz v0.0.0-20210513184540-cb49caf5c3d1/go.mod h1:JnwNJ/nQ4Y+qpW44k2Ap/vL0mZHQFstZlrIGPbd77nQ=
 github.com/factly/x v0.0.23/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
 github.com/factly/x v0.0.46/go.mod h1:hYG+r3T4aSb4LTFnMGgf5dlLuN9cpHRaG90psbsTFrY=
-github.com/factly/x v0.0.72 h1:7u+04XMLA1AbEYVwHt7C+FsRmmVwqs2KjJs4oEKzpas=
-github.com/factly/x v0.0.72/go.mod h1:0OKvu90gUJBjBwJ0OYXvXPNxWJ2KqimeehHNI+5KOjA=
 github.com/factly/x v0.0.73 h1:s64hPNmE3ZbaYCLiy/yb6oMFSMpGWQeDJFQr3kwefJo=
 github.com/factly/x v0.0.73/go.mod h1:0OKvu90gUJBjBwJ0OYXvXPNxWJ2KqimeehHNI+5KOjA=
 github.com/fasthttp-contrib/websocket v0.0.0-20160511215533-1f3b11f56072/go.mod h1:duJ4Jxv5lDcvg4QuQr0oowTf7dz4/CR8NtyCooz9HL8=
