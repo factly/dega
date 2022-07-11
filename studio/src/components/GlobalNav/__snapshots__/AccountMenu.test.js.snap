@@ -28,12 +28,13 @@ exports[`Account Menu component should render the component 1`] = `
             </ForwardRef>
           </MenuItem>
           <MenuItem>
-            <a
-              href="undefined/self-service/browser/flows/logout"
+            <ForwardRef(InternalButton)
+              danger={true}
+              icon={<ForwardRef(LogoutOutlined) />}
+              onClick={[Function]}
             >
-              <ForwardRef(LogoutOutlined) />
               Logout
-            </a>
+            </ForwardRef(InternalButton)>
           </MenuItem>
         </Menu>
       }
@@ -467,12 +468,13 @@ exports[`Account Menu component should render the component with no profile 1`] 
             </ForwardRef>
           </MenuItem>
           <MenuItem>
-            <a
-              href="undefined/self-service/browser/flows/logout"
+            <ForwardRef(InternalButton)
+              danger={true}
+              icon={<ForwardRef(LogoutOutlined) />}
+              onClick={[Function]}
             >
-              <ForwardRef(LogoutOutlined) />
               Logout
-            </a>
+            </ForwardRef(InternalButton)>
           </MenuItem>
         </Menu>
       }
@@ -906,12 +908,13 @@ exports[`Account Menu component should render the component with profile image 1
             </ForwardRef>
           </MenuItem>
           <MenuItem>
-            <a
-              href="undefined/self-service/browser/flows/logout"
+            <ForwardRef(InternalButton)
+              danger={true}
+              icon={<ForwardRef(LogoutOutlined) />}
+              onClick={[Function]}
             >
-              <ForwardRef(LogoutOutlined) />
               Logout
-            </a>
+            </ForwardRef(InternalButton)>
           </MenuItem>
         </Menu>
       }

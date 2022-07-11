@@ -4,6 +4,7 @@ import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
 function Selector({
+  setLoading = true,
   mode,
   createEntity,
   value,
@@ -39,7 +40,7 @@ function Selector({
   const onSearch = (value) => {
     if (value) {
       setSearchValue(value);
-      setQuery({ ...query, q: value });
+      setQuery({ q: value, page: 1, limit: 5 });
     } else {
       setSearchValue('');
       setQuery({ page: query.page });
@@ -97,6 +98,10 @@ function Selector({
   }, [query]);
 
   const fetchEntities = () => {
+    if (!setLoading) {
+      dispatch(selectorType['get' + action](query, setLoading));
+      return;
+    }
     dispatch(selectorType['get' + action](query));
   };
 
@@ -159,7 +164,7 @@ function Selector({
     >
       {details.map((item) => (
         <Select.Option value={item.id} key={entity + item.id}>
-          {item[display]}
+          {item[display] ? item[display] : item['email'] ? item['email'] : null}
         </Select.Option>
       ))}
     </Select>

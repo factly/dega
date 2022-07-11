@@ -82,7 +82,7 @@ describe('Spaces create component', () => {
       });
       setTimeout(() => {
         expect(actions.addSpace).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/spaces');
+        expect(push).toHaveBeenCalledWith('/admin/spaces');
         done();
       }, 0);
     });

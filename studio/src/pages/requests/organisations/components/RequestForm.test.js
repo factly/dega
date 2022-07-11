@@ -7,7 +7,10 @@ import { act } from '@testing-library/react';
 
 import '../../../../matchMedia.mock';
 import CreateOrganisationRequestForm from './RequestForm';
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 

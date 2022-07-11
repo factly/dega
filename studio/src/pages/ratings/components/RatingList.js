@@ -57,6 +57,7 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

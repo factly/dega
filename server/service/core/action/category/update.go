@@ -169,7 +169,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["parent_id"] = nil
 	}
 
-	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").Preload("ParentCategory").First(&result).Error
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)

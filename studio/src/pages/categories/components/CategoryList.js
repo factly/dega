@@ -27,7 +27,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       },
     },
     { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Parent Category', dataIndex: 'parent_id', key: 'parent_id' },
+    { title: 'Parent Category', dataIndex: ['parent_category', 'name'], key: 'parent_id' },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -39,6 +39,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import PostList from '../../components/List';
@@ -14,15 +14,16 @@ import getUrlParams from '../../utils/getUrlParams';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 function Posts({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
-  const query = new URLSearchParams(useLocation().search);
+  const { search, pathname } = useLocation();
+  const query = new URLSearchParams(search);
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-  const [formatFlag, setFormatFlag] = React.useState(false);
   const [expand, setExpand] = React.useState(false);
   const getFields = () => {
     const children = [];
@@ -44,7 +45,7 @@ function Posts({ formats }) {
               mode="multiple"
               action="Authors"
               placeholder="Filter Authors"
-              display={'email'}
+              display="display_name"
             />
           </Form.Item>
         </Col>,
@@ -59,50 +60,22 @@ function Posts({ formats }) {
   if (formats && !formats.loading && formats.article) {
     params['format'] = [formats.article.id];
   }
-  const [filters, setFilters] = React.useState({
-    ...params,
-  });
 
-  React.useEffect(() => {
-    if (filters !== params) {
-      setFilters({ ...params });
+  useEffect(() => {
+    if (form) {
+      form.setFieldsValue(new Filters(params));
     }
-  }, [window.location.href]);
+  }, [search, formats.loading]);
 
-  React.useEffect(() => {
-    form.resetFields();
-    form.setFieldsValue(filters);
-  }, [form, filters]);
+  useEffect(() => {
+    fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search, formats.loading]);
 
-  const pathName = useLocation().pathname;
-  let searchFilter = new URLSearchParams(useLocation().search);
+  const fetchPosts = () => {
+    dispatch(getPosts(params));
+  };
 
-  React.useEffect(() => {
-    keys.forEach((key) => {
-      if (searchFilter.has(key)) {
-        searchFilter.delete(key);
-      }
-    });
-    Object.keys(filters).forEach(function (key) {
-      if (key === 'format' || key === 'tag' || key === 'category' || key === 'author') {
-        searchFilter.delete(key);
-        filters[key].map((each) => {
-          return searchFilter.append(key, each);
-        });
-      } else {
-        searchFilter.set(key, filters[key]);
-      }
-    });
-    history.push({
-      pathName: pathName,
-      search: '?' + searchFilter.toString(),
-    });
-  }, [history, filters]);
-
-  if (!formatFlag && !formats.loading && formats.article) {
-    setFilters({ ...filters, format: [formats.article.id] });
-    setFormatFlag(true);
-  }
   const { posts, total, loading, tags, categories, authors } = useSelector((state) => {
     const node = state.posts.req.find((item) => {
       return deepEqual(item.query, params);
@@ -132,33 +105,37 @@ function Posts({ formats }) {
     };
   });
 
-  React.useEffect(() => {
-    fetchPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchPosts = () => {
-    dispatch(getPosts(filters));
-  };
   const onSave = (values) => {
-    let filterValue = {};
-    if (values.status === 'all') {
-      values.status = null;
-    }
+    let searchFilter = new URLSearchParams();
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'format' || key === 'tag' || key === 'author' || key === 'category') {
-          if (values[key].length > 0) {
-            filterValue[key] = values[key];
-          }
+          values[key].map((each) => {
+            return searchFilter.append(key, each);
+          });
         } else {
-          filterValue[key] = values[key];
+          if (values.status !== 'all') searchFilter.set(key, values[key]);
         }
       }
     });
-    filterValue['format'] = filters.format;
-    setFilters(filterValue);
+    if (formats && !formats.loading && formats.article) {
+      searchFilter.set('format', formats.article.id);
+    }
+    history.push({
+      pathName: pathname,
+      search: '?' + searchFilter.toString(),
+    });
   };
+
+  const onPagination = (page, limit) => {
+    query.set('limit', limit);
+    query.set('page', page);
+    history.push({
+      pathName: pathname,
+      search: '?' + query.toString(),
+    });
+  };
+
   return formats.loading ? (
     <Loader />
   ) : formats.article ? (
@@ -167,7 +144,7 @@ function Posts({ formats }) {
       <Template format={formats.article} />
 
       <Form
-        initialValues={filters}
+        initialValues={params}
         form={form}
         name="filters"
         onFinish={(values) => onSave(values)}
@@ -189,20 +166,32 @@ function Posts({ formats }) {
             </Form.Item>
           </Col>
           <Col key={4}>
-            <Form.Item name="status">
-              <Select defaultValue="all">
-                <Option value="all">Status: All</Option>
-                <Option value="draft">Status: Draft</Option>
-                <Option value="publish">Status: Publish</Option>
-                <Option value="ready">Status: Ready to Publish</Option>
+            <Form.Item label="Status" name="status">
+              <Select placeholder="Status" defaultValue="all">
+                <Option value="all" key={'all'}>
+                  All
+                </Option>
+                <Option value="draft" key={'draft'}>
+                  Draft
+                </Option>
+                <Option value="publish" key={'publish'}>
+                  Publish
+                </Option>
+                <Option value="ready" key={'ready'}>
+                  Ready to Publish
+                </Option>
               </Select>
             </Form.Item>
           </Col>
           <Col>
-            <Form.Item name="sort">
-              <Select defaultValue="desc" style={{ width: '100%' }}>
-                <Option value="desc">Sort By: Latest</Option>
-                <Option value="asc">Sort By: Old</Option>
+            <Form.Item label="Sort By" name="sort">
+              <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                <Option value="desc" key={'desc'}>
+                  Latest
+                </Option>
+                <Option value="asc" key={'asc'}>
+                  Old
+                </Option>
               </Select>
             </Form.Item>
           </Col>
@@ -246,9 +235,9 @@ function Posts({ formats }) {
           categories: categories,
           authors: authors,
         }}
-        filters={filters}
-        setFilters={setFilters}
+        filters={params}
         fetchPosts={fetchPosts}
+        onPagination={onPagination}
       />
     </Space>
   ) : (

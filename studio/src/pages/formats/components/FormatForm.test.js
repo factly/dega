@@ -137,12 +137,11 @@ describe('Formats Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
         wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
         wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper.find('FormItem').at(1).find('input');
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -177,12 +176,12 @@ describe('Formats Create Form component', () => {
         wrapper
           .find('FormItem')
           .at(1)
-          .find('Input')
+          .find('input')
           .simulate('change', { target: { value: 'new name' } });
         wrapper
           .find('FormItem')
           .at(2)
-          .find('Input')
+          .find('input')
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')

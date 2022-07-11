@@ -59,6 +59,85 @@ let state = {
     loading: false,
   },
 };
+let cachedQueryState = {
+  tags: {
+    req: [
+      {
+        data: [3, 2, 1],
+        query: {
+          sort: 'desc',
+          limit: 10,
+          page: 1,
+        },
+        total: 3,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        created_at: '2022-04-29T11:45:53.89832Z',
+        updated_at: '2022-04-29T11:45:53.89832Z',
+        deleted_at: null,
+        created_by_id: 34,
+        updated_by_id: 34,
+        name: 'murder',
+        slug: 'murder',
+        background_colour: null,
+        description: null,
+        is_featured: false,
+        meta_fields: null,
+        medium_id: null,
+        medium: null,
+        space_id: 2,
+        posts: null,
+        meta: null,
+        header_code: '',
+        footer_code: '',
+      },
+      '2': {
+        id: 2,
+        created_at: '2022-05-05T11:42:10.559671Z',
+        updated_at: '2022-05-05T11:42:10.559671Z',
+        deleted_at: null,
+        created_by_id: 34,
+        updated_by_id: 34,
+        name: 'sports',
+        slug: 'sports',
+        description: null,
+        is_featured: false,
+        meta_fields: null,
+        medium_id: null,
+        medium: null,
+        space_id: 2,
+        posts: null,
+        meta: null,
+        header_code: '',
+        footer_code: '',
+      },
+      '3': {
+        id: 3,
+        created_at: '2022-06-13T09:06:48.649526Z',
+        updated_at: '2022-06-13T09:06:48.649526Z',
+        deleted_at: null,
+        created_by_id: 34,
+        updated_by_id: 34,
+        name: 'latest',
+        slug: 'latest',
+        description: null,
+        is_featured: true,
+        meta_fields: null,
+        medium_id: null,
+        medium: null,
+        space_id: 2,
+        posts: null,
+        meta: null,
+        header_code: '',
+        footer_code: '',
+      },
+    },
+    loading: false,
+  },
+};
 describe('Tags List component', () => {
   let store;
   let mockedDispatch;
@@ -99,6 +178,35 @@ describe('Tags List component', () => {
       );
       expect(tree).toMatchSnapshot();
     });
+    it('should render the component with cached query data', () => {
+      store = mockStore(cachedQueryState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Tags permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+  });
+  it('should render loader component', () => {
+    const loadingState = {
+      tags: {
+        req: [],
+        details: {},
+        loading: true,
+      },
+    };
+    store = mockStore(loadingState);
+    const tree = mount(
+      <Provider store={store}>
+        <Router>
+          <Tags permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
+    expect(tree).toMatchSnapshot();
   });
   describe('component testing', () => {
     beforeEach(() => {
@@ -109,7 +217,7 @@ describe('Tags List component', () => {
     it('should handle url search params', () => {
       store = mockStore(state);
       let wrapper;
-      window.history.pushState({}, '', '/tags?limit=20&page=1&q=desc');
+      window.history.pushState({}, '', '/tags?limit=20&page=1&sort=desc');
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -119,7 +227,7 @@ describe('Tags List component', () => {
           </Provider>,
         );
       });
-      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
+      expect(getTags).toHaveBeenCalledWith({ page: 1, limit: 20, sort: 'desc' });
     });
 
     it('should submit filters', () => {
@@ -134,9 +242,8 @@ describe('Tags List component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'tag' } });
         wrapper
           .find('FormItem')

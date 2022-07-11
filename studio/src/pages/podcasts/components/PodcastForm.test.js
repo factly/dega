@@ -7,6 +7,7 @@ import { shallow, mount } from 'enzyme';
 
 import '../../../matchMedia.mock';
 import PodcastForm from './PodcastForm';
+import { Collapse } from 'antd';
 
 jest.mock('@editorjs/editorjs');
 jest.mock('react-monaco-editor', () => {
@@ -274,6 +275,10 @@ describe('Podcast form component', () => {
         );
       });
       act(() => {
+        wrapper.find('Collapse').at(3).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      act(() => {
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
         wrapper.update();
@@ -324,19 +329,28 @@ describe('Podcast form component', () => {
         );
       });
       act(() => {
-        const headerData = wrapper.find('FormItem').at(6).find('MonacoEditor');
+        wrapper.find('Collapse').at(3).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      act(() => {
+        wrapper.find('Collapse').at(0).find('Button').at(1).simulate('click');
+        //  wrapper.find(Collapse).at(0).props.onChange();
+      });
+      wrapper.update();
+      act(() => {
+        const headerData = wrapper.find('MonacoEditor').at(0);
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
-        const footerData = wrapper.find('FormItem').at(7).find('MonacoEditor');
+        const footerData = wrapper.find('MonacoEditor').at(1);
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);

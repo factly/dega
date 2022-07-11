@@ -70,6 +70,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

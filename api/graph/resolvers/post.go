@@ -234,8 +234,8 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	result := &models.PostsPaging{}
 	result.Nodes = make([]*models.Post, 0)
 
-	offset, pageLimit := parse(page, limit)
-
+	offset, pageLimit := util.Parse(page, limit)
+	
 	tx := config.DB.Model(&models.Post{}).Where("is_page = ?", false)
 
 	if status != nil {
@@ -337,7 +337,6 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	}
 
 	tx.Group("posts.id")
-
 	filterStr = strings.Trim(filterStr, " AND")
 	var total int64
 	tx.Where(&models.Post{
@@ -355,24 +354,4 @@ func createFilters(arr []string) string {
 	filter := strings.Trim(strings.Replace(fmt.Sprint(arr), " ", "','", -1), "[]")
 	filter = "'" + filter + "'"
 	return filter
-}
-
-// Parse pagination
-func parse(page *int, perPage *int) (int, int) {
-	offset := 0  // no. of records to skip
-	limit := 100 // limit
-
-	if page == nil || perPage == nil {
-		return offset, limit
-	}
-
-	if *perPage > 0 && *perPage <= 100 {
-		limit = *perPage
-	}
-
-	if *page > 1 {
-		offset = (*page - 1) * limit
-	}
-
-	return offset, limit
 }

@@ -19,6 +19,7 @@ exports[`Categories List component Snapshot testing should render the component 
   >
     <ForwardRef(InternalSelect)
       allowClear={true}
+      autoClearSearchValue={true}
       bordered={true}
       defaultValue={Array []}
       filterOption={[Function]}
@@ -31,10 +32,12 @@ exports[`Categories List component Snapshot testing should render the component 
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
+      searchValue=""
       value={Array []}
     >
       <Select
         allowClear={true}
+        autoClearSearchValue={true}
         className=""
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue={Array []}
@@ -54,11 +57,13 @@ exports[`Categories List component Snapshot testing should render the component 
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        searchValue=""
         transitionName="ant-slide-up"
         value={Array []}
       >
         <ForwardRef(Select)
           allowClear={true}
+          autoClearSearchValue={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           defaultValue={Array []}
@@ -78,6 +83,7 @@ exports[`Categories List component Snapshot testing should render the component 
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          searchValue=""
           transitionName="ant-slide-up"
           value={Array []}
         >
@@ -242,6 +248,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   accessibilityIndex={0}
                   activeValue={null}
                   allowClear={true}
+                  autoClearSearchValue={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   defaultValue={Array []}
@@ -333,6 +340,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       accessibilityIndex={0}
                       activeValue={null}
                       allowClear={true}
+                      autoClearSearchValue={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       defaultValue={Array []}
@@ -605,6 +613,7 @@ exports[`Categories List component Snapshot testing should render the component 
   >
     <ForwardRef(InternalSelect)
       allowClear={true}
+      autoClearSearchValue={true}
       bordered={true}
       defaultValue={Array []}
       filterOption={[Function]}
@@ -617,10 +626,12 @@ exports[`Categories List component Snapshot testing should render the component 
       onPopupScroll={[Function]}
       onSearch={[Function]}
       placeholder="Select categories"
+      searchValue=""
       value={Array []}
     >
       <Select
         allowClear={true}
+        autoClearSearchValue={true}
         className=""
         clearIcon={<ForwardRef(CloseCircleFilled) />}
         defaultValue={Array []}
@@ -640,11 +651,13 @@ exports[`Categories List component Snapshot testing should render the component 
         placeholder="Select categories"
         prefixCls="ant-select"
         removeIcon={<ForwardRef(CloseOutlined) />}
+        searchValue=""
         transitionName="ant-slide-up"
         value={Array []}
       >
         <ForwardRef(Select)
           allowClear={true}
+          autoClearSearchValue={true}
           className=""
           clearIcon={<ForwardRef(CloseCircleFilled) />}
           defaultValue={Array []}
@@ -664,6 +677,7 @@ exports[`Categories List component Snapshot testing should render the component 
           placeholder="Select categories"
           prefixCls="ant-select"
           removeIcon={<ForwardRef(CloseOutlined) />}
+          searchValue=""
           transitionName="ant-slide-up"
           value={Array []}
         >
@@ -828,6 +842,7 @@ exports[`Categories List component Snapshot testing should render the component 
                   accessibilityIndex={0}
                   activeValue={null}
                   allowClear={true}
+                  autoClearSearchValue={true}
                   className=""
                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                   defaultValue={Array []}
@@ -919,6 +934,7 @@ exports[`Categories List component Snapshot testing should render the component 
                       accessibilityIndex={0}
                       activeValue={null}
                       allowClear={true}
+                      autoClearSearchValue={true}
                       className=""
                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                       defaultValue={Array []}

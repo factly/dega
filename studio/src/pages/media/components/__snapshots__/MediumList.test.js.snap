@@ -172,6 +172,11 @@ exports[`Media List component snapshot testing should match component when loadi
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 2,
                     }
                   }
@@ -378,7 +383,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                 cover={
                                                   <img
                                                     alt="ALT"
-                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                     style={
                                                       Object {
                                                         "height": "220px",
@@ -403,7 +408,7 @@ exports[`Media List component snapshot testing should match component when loadi
                                                   >
                                                     <img
                                                       alt="ALT"
-                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                       style={
                                                         Object {
                                                           "height": "220px",
@@ -447,6 +452,13 @@ exports[`Media List component snapshot testing should match component when loadi
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={2}
                       >
                         <LocaleReceiver
@@ -535,6 +547,13 @@ exports[`Media List component snapshot testing should match component when loadi
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -802,9 +821,8 @@ exports[`Media List component snapshot testing should match component when loadi
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}
@@ -1009,6 +1027,11 @@ exports[`Media List component snapshot testing should match component with media
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 2,
                     }
                   }
@@ -1215,7 +1238,7 @@ exports[`Media List component snapshot testing should match component with media
                                                 cover={
                                                   <img
                                                     alt="ALT"
-                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                    src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                     style={
                                                       Object {
                                                         "height": "220px",
@@ -1240,7 +1263,7 @@ exports[`Media List component snapshot testing should match component with media
                                                   >
                                                     <img
                                                       alt="ALT"
-                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fit:220:220"
+                                                      src="http://storage.googleapis.com/sample.png?gravity:sm/resize:fill:220:220"
                                                       style={
                                                         Object {
                                                           "height": "220px",
@@ -1284,6 +1307,13 @@ exports[`Media List component snapshot testing should match component with media
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={2}
                       >
                         <LocaleReceiver
@@ -1372,6 +1402,13 @@ exports[`Media List component snapshot testing should match component with media
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -1639,9 +1676,8 @@ exports[`Media List component snapshot testing should match component with media
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}
@@ -1770,6 +1806,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
                       "total": 0,
                     }
                   }
@@ -1861,6 +1902,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         total={0}
                       >
                         <LocaleReceiver
@@ -1949,6 +1997,13 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             onChange={[Function]}
                             onShowSizeChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
                             prefixCls="ant-pagination"
                             prevIcon={
                               <button
@@ -2216,9 +2271,8 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                 pageSizeOptions={
                                   Array [
                                     "10",
+                                    "15",
                                     "20",
-                                    "50",
-                                    "100",
                                   ]
                                 }
                                 quickGo={null}

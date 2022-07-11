@@ -46,7 +46,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	result.ID = uint(id)
 
-	err = config.DB.Model(&model.Category{}).Preload("Medium").Where(&model.Category{
+	err = config.DB.Model(&model.Category{}).Preload("Medium").Preload("ParentCategory").Where(&model.Category{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 

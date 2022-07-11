@@ -65,7 +65,13 @@ function Template({ format }) {
       ).then((res) => history.push(`/posts/${res.id}/edit`));
     } else if (format.slug === 'fact-check') {
       dispatch(
-        addPost({ ...item, tag_ids: item.tags, category_ids: item.categories, status: 'draft' }),
+        addPost({
+          ...item,
+          tag_ids: item.tags,
+          category_ids: item.categories,
+          claim_ids: item.claims,
+          status: 'draft',
+        }),
       ).then((res) => history.push(`/fact-checks/${res.id}/edit`));
     }
   };

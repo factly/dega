@@ -40,6 +40,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteEpisode(record.id)).then(() => fetchEpisodes())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

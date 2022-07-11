@@ -42,6 +42,39 @@ let state = {
     loading: true,
   },
 };
+let cachedQueryState = {
+  categories: {
+    req: [
+      {
+        data: [4, 3, 1],
+        query: {
+          sort: 'desc',
+          page: 1,
+          limit: 10,
+        },
+        total: 3,
+      },
+    ],
+    details: {
+      '1': {
+        id: 1,
+        name: 'crime',
+        slug: 'crime',
+      },
+      '3': {
+        id: 3,
+        name: 'sports',
+        slug: 'sports',
+      },
+      '4': {
+        id: 4,
+        name: 'election',
+        slug: 'election',
+      },
+    },
+    loading: false,
+  },
+};
 describe('Categories component', () => {
   let store;
   let mockedDispatch;
@@ -108,7 +141,49 @@ describe('Categories component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(actions.getCategories).toHaveBeenCalledWith({});
+      expect(actions.getCategories).toHaveBeenCalledWith({
+        limit: 10,
+        page: 1,
+        sort: 'desc',
+      });
+    });
+    it('should render loader component', () => {
+      const loadingState = {
+        categories: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      };
+      store = mockStore(loadingState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Categories
+              permission={{
+                actions: ['create'],
+              }}
+            />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
+    it('should render the component with cached query data', () => {
+      store = mockStore(cachedQueryState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Categories
+              permission={{
+                actions: ['create'],
+              }}
+            />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+      // expect(actions.getCategories).toHaveBeenCalledWith({});
     });
   });
   describe('component testing', () => {
@@ -119,7 +194,7 @@ describe('Categories component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/categories?limit=20&page=1&q=desc');
+      window.history.pushState({}, '', '/categories?limit=20&page=1&sort=desc');
       const store2 = mockStore({
         categories: {
           req: [
@@ -156,7 +231,7 @@ describe('Categories component', () => {
           </Provider>,
         );
       });
-      expect(actions.getCategories).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc' });
+      expect(actions.getCategories).toHaveBeenCalledWith({ page: 1, limit: 20, sort: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore({
@@ -199,9 +274,8 @@ describe('Categories component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')

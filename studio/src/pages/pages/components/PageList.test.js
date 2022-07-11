@@ -19,6 +19,12 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
+
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 jest.mock('../../../actions/pages', () => ({
   deletePage: jest.fn(),
 }));
@@ -597,16 +603,18 @@ describe('Page List component', () => {
       button2.simulate('click');
 
       const button = wrapper.find(Button).at(1);
+      // console.log(button.debug())
       expect(button.find(FormOutlined).length).toBe(1);
       button.simulate('click');
       expect(wrapper.find(QuickEdit).length).toBe(2);
       const updateBtn = wrapper.find(Button).at(4);
       expect(updateBtn.text()).toBe('Update');
       expect(wrapper.find('FormItem').at(0).props().name).toBe('title');
+      console.log(wrapper.find(QuickEdit).find('input').at(0).debug());
       wrapper
-        .find('FormItem')
+        .find(QuickEdit)
+        .find('input')
         .at(0)
-        .find('TextArea')
         .simulate('change', { target: { value: 'New title' } });
       updateBtn.simulate('submit');
     });

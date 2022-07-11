@@ -138,7 +138,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-
+	tx.Model(&result).Select("IsFeatured").Updates(model.Claimant{IsFeatured: claimant.IsFeatured})
 	err = tx.Model(&result).Updates(model.Claimant{
 		Base:            config.Base{UpdatedByID: uint(uID)},
 		Name:            claimant.Name,

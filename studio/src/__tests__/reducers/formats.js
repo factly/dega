@@ -127,10 +127,10 @@ describe('formats reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_FORMAT', () => {
+  it('should handle GET_FORMAT', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_FORMAT,
+        type: types.GET_FORMAT,
         payload: { id: 1, name: 'new format' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('formats reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_FORMAT when details is non-empty', () => {
+  it('should handle GET_FORMAT when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('formats reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_FORMAT,
+          type: types.GET_FORMAT,
           payload: { id: 2, name: 'new format' },
         },
       ),
@@ -161,7 +161,7 @@ describe('formats reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_FORMAT when already exists', () => {
+  it('should handle UPDATE_FORMAT when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('formats reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_FORMAT,
+          type: types.UPDATE_FORMAT,
           payload: { id: 2, name: 'updated format' },
         },
       ),

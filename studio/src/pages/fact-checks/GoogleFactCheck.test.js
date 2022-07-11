@@ -166,9 +166,8 @@ describe('GoogleFactCheck component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Russian doctors' } });
         wrapper
           .find('FormItem')
@@ -198,9 +197,8 @@ describe('GoogleFactCheck component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Russian doctors' } });
         wrapper
           .find('FormItem')

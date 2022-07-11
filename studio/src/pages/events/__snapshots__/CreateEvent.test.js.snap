@@ -14,6 +14,23 @@ exports[`Event create component snapshot testing should render the component 1`]
   }
 >
   <CreateEvent>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Create Event"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Create Event"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Create Event"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <EventForm
       onCreate={[Function]}
     >
@@ -435,6 +452,9 @@ exports[`Event create component snapshot testing should render the component 1`]
                                               "enabled": false,
                                             },
                                             "scrollBeyondLastLine": false,
+                                            "scrollbar": Object {
+                                              "alwaysConsumeMouseWheel": false,
+                                            },
                                             "theme": "vs-dark",
                                             "wordWrap": "on",
                                           }

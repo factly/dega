@@ -35,9 +35,8 @@ describe('MenuField component', () => {
         );
       });
       component
-        .find('FormItem')
+        .find('input')
         .at(0)
-        .find('Input')
         .simulate('change', { target: { value: 'New name' } });
       expect(component.find('CollapsePanel').at(1).props().header).toBe('New name');
       component.unmount();

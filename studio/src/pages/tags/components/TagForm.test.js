@@ -8,6 +8,7 @@ import { Collapse } from 'antd';
 
 import '../../../matchMedia.mock';
 import TagForm from './TagForm';
+import { SketchPicker } from 'react-color';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -20,11 +21,14 @@ let onCreate, store;
 const data = {
   name: 'name',
   slug: 'slug',
+  background_colour: null,
   description: {
     time: 1613561493761,
     blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
     version: '2.19.0',
   },
+  is_featured: true,
+  medium_id: 1,
 };
 
 describe('Tags Create Form component', () => {
@@ -36,8 +40,9 @@ describe('Tags Create Form component', () => {
     },
     spaces: {
       orgs: [],
-      details: {},
+      details: { 1: { site_address: '' } },
       loading: true,
+      selected: 1,
     },
     media: {
       req: [],
@@ -140,9 +145,8 @@ describe('Tags Create Form component', () => {
     });
     it('should submit form with new name', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
-
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
         wrapper.update();
@@ -153,11 +157,14 @@ describe('Tags Create Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           name: 'new name',
           slug: 'new-name',
+          background_colour: null,
           description: {
             time: 1613561493761,
             blocks: [{ type: 'paragraph', data: { text: 'Description' } }],
             version: '2.19.0',
           },
+          is_featured: true,
+          medium_id: 1,
         });
         done();
       }, 0);
@@ -167,6 +174,14 @@ describe('Tags Create Form component', () => {
       data2.meta_fields = {
         sample: 'testing',
       };
+      data2.background_colour = {
+        hex: '#e0f0fa',
+        hsl: { h: 240, s: 0.094517011520825, l: 0.979237, a: 1 },
+        hsv: { h: 240, s: 0.00399999999999994, v: 0.9812, a: 1 },
+        oldHue: 240,
+        rgb: { r: 240, g: 240, b: 250, a: 1 },
+        source: 'hsv',
+      };
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -175,23 +190,22 @@ describe('Tags Create Form component', () => {
         );
       });
       act(() => {
-        wrapper.find(Collapse).at(2).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(0).find('Button').at(0).simulate('click');
+        wrapper.find(Collapse).at(1).find('Button').at(0).simulate('click');
+        wrapper.find('FormItem').at(4).find('div').at(6).simulate('click');
       });
       wrapper.update();
       act(() => {
         wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Input')
+          .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
-          .find('FormItem')
-          .at(5)
+          .find('DescriptionInput')
           .find('Editor')
           .props()
           .onChange({
@@ -205,7 +219,21 @@ describe('Tags Create Form component', () => {
           });
         wrapper
           .find('FormItem')
-          .at(6)
+          .at(4)
+          .find(SketchPicker)
+          .at(0)
+          .props()
+          .onChange({
+            hex: '#f0f0fa',
+            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+            hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+            oldHue: 240,
+            rgb: { r: 240, g: 240, b: 250, a: 1 },
+            source: 'hsv',
+          });
+        wrapper
+          .find('FormItem')
+          .at(10)
           .find('MonacoEditor')
           .props()
           .onChange({
@@ -218,7 +246,16 @@ describe('Tags Create Form component', () => {
 
       setTimeout(() => {
         expect(props.onCreate).toHaveBeenCalledTimes(1);
+        expect(wrapper.find(SketchPicker).length).toBe(1);
         expect(props.onCreate).toHaveBeenCalledWith({
+          background_colour: {
+            hex: '#f0f0fa',
+            hsl: { h: 240, s: 0.0945170115208253, l: 0.9792376, a: 1 },
+            hsv: { h: 240, s: 0.003999999999999949, v: 0.9812000000000001, a: 1 },
+            oldHue: 240,
+            rgb: { r: 240, g: 240, b: 250, a: 1 },
+            source: 'hsv',
+          },
           name: 'new name',
           slug: 'new-slug',
           description: {
@@ -226,12 +263,38 @@ describe('Tags Create Form component', () => {
             blocks: [{ type: 'paragraph', data: { text: 'New Description' } }],
             version: '2.19.0',
           },
+          is_featured: true,
+          medium_id: 1,
+          meta: {
+            canonical_URL: undefined,
+            description: undefined,
+            title: undefined,
+          },
           meta_fields: {
             sample: 'testing',
           },
         });
         done();
       }, 0);
+    });
+    it('should handle open and close SketchPicker', () => {
+      act(() => {
+        wrapper = mount(
+          <Provider store={store}>
+            <TagForm onCreate={props.onCreate} data={data} />
+          </Provider>,
+        );
+      });
+      act(() => {
+        wrapper.find('FormItem').at(4).find('div').at(6).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(SketchPicker).length).toBe(1);
+      act(() => {
+        wrapper.find('FormItem').at(4).find('div').at(9).simulate('click');
+      });
+      wrapper.update();
+      expect(wrapper.find(SketchPicker).length).toBe(0);
     });
     it('should handle collapse open and close', () => {
       act(() => {

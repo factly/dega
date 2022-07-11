@@ -280,337 +280,283 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                   }
                 }
               >
-                <FormItem
-                  label="Title"
-                  name="title"
-                  rules={
-                    Array [
-                      Object {
-                        "message": "Please input the title!",
-                        "required": true,
-                      },
-                      Object {
-                        "message": "Title must be minimum 3 characters.",
-                        "min": 3,
-                      },
-                      Object {
-                        "max": 150,
-                        "message": "Title must be maximum 150 characters.",
-                      },
-                    ]
-                  }
-                >
-                  <WrapperField
-                    label="Title"
-                    messageVariables={
-                      Object {
-                        "label": "Title",
-                      }
+                <TitleInput
+                  inputProps={
+                    Object {
+                      "placeholder": "Add title for the post",
+                      "rows": 2,
                     }
+                  }
+                  onChange={[Function]}
+                  type="textarea"
+                >
+                  <FormItem
+                    label="Title"
                     name="title"
-                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
-                          "message": "Please input the title!",
+                          "message": "Please enter title!",
                           "required": true,
                         },
                         Object {
-                          "message": "Title must be minimum 3 characters.",
-                          "min": 3,
-                        },
-                        Object {
-                          "max": 150,
-                          "message": "Title must be maximum 150 characters.",
+                          "max": 500,
+                          "message": "Name must be maximum 500 characters.",
                         },
                       ]
                     }
-                    trigger="onChange"
-                    validateTrigger="onChange"
                   >
-                    <Field
-                      fieldContext={
-                        Object {
-                          "__INTERNAL__": Object {
-                            "itemRef": [Function],
-                            "name": undefined,
-                          },
-                          "getFieldError": [Function],
-                          "getFieldInstance": [Function],
-                          "getFieldValue": [Function],
-                          "getFieldsError": [Function],
-                          "getFieldsValue": [Function],
-                          "getInternalHooks": [Function],
-                          "isFieldTouched": [Function],
-                          "isFieldValidating": [Function],
-                          "isFieldsTouched": [Function],
-                          "isFieldsValidating": [Function],
-                          "resetFields": [Function],
-                          "scrollToField": [Function],
-                          "setFields": [Function],
-                          "setFieldsValue": [Function],
-                          "submit": [Function],
-                          "validateFields": [Function],
-                          "validateTrigger": "onChange",
-                        }
-                      }
-                      key="_title"
+                    <WrapperField
                       label="Title"
                       messageVariables={
                         Object {
                           "label": "Title",
                         }
                       }
-                      name={
-                        Array [
-                          "title",
-                        ]
-                      }
+                      name="title"
                       onReset={[Function]}
                       rules={
                         Array [
                           Object {
-                            "message": "Please input the title!",
+                            "message": "Please enter title!",
                             "required": true,
                           },
                           Object {
-                            "message": "Title must be minimum 3 characters.",
-                            "min": 3,
-                          },
-                          Object {
-                            "max": 150,
-                            "message": "Title must be maximum 150 characters.",
+                            "max": 500,
+                            "message": "Name must be maximum 500 characters.",
                           },
                         ]
                       }
                       trigger="onChange"
                       validateTrigger="onChange"
-                      valuePropName="value"
                     >
-                      <Row
-                        className="ant-form-item"
-                        key="row"
+                      <Field
+                        fieldContext={
+                          Object {
+                            "__INTERNAL__": Object {
+                              "itemRef": [Function],
+                              "name": undefined,
+                            },
+                            "getFieldError": [Function],
+                            "getFieldInstance": [Function],
+                            "getFieldValue": [Function],
+                            "getFieldsError": [Function],
+                            "getFieldsValue": [Function],
+                            "getInternalHooks": [Function],
+                            "isFieldTouched": [Function],
+                            "isFieldValidating": [Function],
+                            "isFieldsTouched": [Function],
+                            "isFieldsValidating": [Function],
+                            "resetFields": [Function],
+                            "scrollToField": [Function],
+                            "setFields": [Function],
+                            "setFieldsValue": [Function],
+                            "submit": [Function],
+                            "validateFields": [Function],
+                            "validateTrigger": "onChange",
+                          }
+                        }
+                        key="_title"
+                        label="Title"
+                        messageVariables={
+                          Object {
+                            "label": "Title",
+                          }
+                        }
+                        name={
+                          Array [
+                            "title",
+                          ]
+                        }
+                        onReset={[Function]}
+                        rules={
+                          Array [
+                            Object {
+                              "message": "Please enter title!",
+                              "required": true,
+                            },
+                            Object {
+                              "max": 500,
+                              "message": "Name must be maximum 500 characters.",
+                            },
+                          ]
+                        }
+                        trigger="onChange"
+                        validateTrigger="onChange"
+                        valuePropName="value"
                       >
-                        <div
-                          className="ant-row ant-form-item"
-                          style={Object {}}
+                        <Row
+                          className="ant-form-item"
+                          key="row"
                         >
-                          <FormItemLabel
-                            htmlFor="title"
-                            label="Title"
-                            name="title"
-                            prefixCls="ant-form"
-                            required={true}
-                            requiredMark={true}
-                            rules={
-                              Array [
-                                Object {
-                                  "message": "Please input the title!",
-                                  "required": true,
-                                },
-                                Object {
-                                  "message": "Title must be minimum 3 characters.",
-                                  "min": 3,
-                                },
-                                Object {
-                                  "max": 150,
-                                  "message": "Title must be maximum 150 characters.",
-                                },
-                              ]
-                            }
+                          <div
+                            className="ant-row ant-form-item"
+                            style={Object {}}
                           >
-                            <Col
-                              className="ant-form-item-label"
-                              span={3}
+                            <FormItemLabel
+                              htmlFor="title"
+                              label="Title"
+                              name="title"
+                              prefixCls="ant-form"
+                              required={true}
+                              requiredMark={true}
+                              rules={
+                                Array [
+                                  Object {
+                                    "message": "Please enter title!",
+                                    "required": true,
+                                  },
+                                  Object {
+                                    "max": 500,
+                                    "message": "Name must be maximum 500 characters.",
+                                  },
+                                ]
+                              }
                             >
-                              <div
-                                className="ant-col ant-col-3 ant-form-item-label"
-                                style={Object {}}
-                              >
-                                <label
-                                  className="ant-form-item-required"
-                                  htmlFor="title"
-                                  title="Title"
-                                >
-                                  Title
-                                </label>
-                              </div>
-                            </Col>
-                          </FormItemLabel>
-                          <FormItemInput
-                            errors={Array []}
-                            label="Title"
-                            name={
-                              Array [
-                                "title",
-                              ]
-                            }
-                            onDomErrorVisibleChange={[Function]}
-                            prefixCls="ant-form"
-                            rules={
-                              Array [
-                                Object {
-                                  "message": "Please input the title!",
-                                  "required": true,
-                                },
-                                Object {
-                                  "message": "Title must be minimum 3 characters.",
-                                  "min": 3,
-                                },
-                                Object {
-                                  "max": 150,
-                                  "message": "Title must be maximum 150 characters.",
-                                },
-                              ]
-                            }
-                            status=""
-                            touched={false}
-                            validateStatus=""
-                            validating={false}
-                          >
-                            <Col
-                              className="ant-form-item-control"
-                              span={12}
-                            >
-                              <div
-                                className="ant-col ant-col-12 ant-form-item-control"
-                                style={Object {}}
+                              <Col
+                                className="ant-form-item-label"
+                                span={3}
                               >
                                 <div
-                                  className="ant-form-item-control-input"
+                                  className="ant-col ant-col-3 ant-form-item-label"
+                                  style={Object {}}
+                                >
+                                  <label
+                                    className="ant-form-item-required"
+                                    htmlFor="title"
+                                    title="Title"
+                                  >
+                                    Title
+                                  </label>
+                                </div>
+                              </Col>
+                            </FormItemLabel>
+                            <FormItemInput
+                              errors={Array []}
+                              label="Title"
+                              name={
+                                Array [
+                                  "title",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
+                              prefixCls="ant-form"
+                              rules={
+                                Array [
+                                  Object {
+                                    "message": "Please enter title!",
+                                    "required": true,
+                                  },
+                                  Object {
+                                    "max": 500,
+                                    "message": "Name must be maximum 500 characters.",
+                                  },
+                                ]
+                              }
+                              status=""
+                              touched={false}
+                              validateStatus=""
+                              validating={false}
+                            >
+                              <Col
+                                className="ant-form-item-control"
+                                span={12}
+                              >
+                                <div
+                                  className="ant-col ant-col-12 ant-form-item-control"
+                                  style={Object {}}
                                 >
                                   <div
-                                    className="ant-form-item-control-input-content"
+                                    className="ant-form-item-control-input"
                                   >
-                                    <Component
-                                      update={1}
-                                      value="Post-1"
+                                    <div
+                                      className="ant-form-item-control-input-content"
                                     >
-                                      <ForwardRef
-                                        id="title"
-                                        onChange={[Function]}
-                                        placeholder="Add title for the post"
-                                        rows={2}
+                                      <Component
+                                        update={1}
                                         value="Post-1"
                                       >
-                                        <ClearableLabeledInput
-                                          bordered={true}
-                                          element={
-                                            <TextArea
-                                              className=""
-                                              id="title"
-                                              onChange={[Function]}
-                                              onCompositionEnd={[Function]}
-                                              onCompositionStart={[Function]}
-                                              placeholder="Add title for the post"
-                                              prefixCls="ant-input"
-                                              rows={2}
-                                              value="Post-1"
-                                            />
-                                          }
-                                          handleReset={[Function]}
+                                        <Input
                                           id="title"
-                                          inputType="text"
+                                          onChange={[Function]}
                                           placeholder="Add title for the post"
-                                          prefixCls="ant-input"
                                           rows={2}
+                                          type="text"
                                           value="Post-1"
                                         >
-                                          <TextArea
-                                            className=""
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
+                                              <input
+                                                className="ant-input"
+                                                id="title"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                placeholder="Add title for the post"
+                                                rows={2}
+                                                type="text"
+                                                value="Post-1"
+                                              />
+                                            }
+                                            focused={false}
+                                            handleReset={[Function]}
                                             id="title"
+                                            inputType="input"
                                             onChange={[Function]}
-                                            onCompositionEnd={[Function]}
-                                            onCompositionStart={[Function]}
                                             placeholder="Add title for the post"
                                             prefixCls="ant-input"
                                             rows={2}
+                                            triggerFocus={[Function]}
+                                            type="text"
                                             value="Post-1"
                                           >
-                                            <ResizableTextArea
-                                              className=""
+                                            <input
+                                              className="ant-input"
                                               id="title"
+                                              onBlur={[Function]}
                                               onChange={[Function]}
-                                              onCompositionEnd={[Function]}
-                                              onCompositionStart={[Function]}
+                                              onFocus={[Function]}
                                               onKeyDown={[Function]}
                                               placeholder="Add title for the post"
-                                              prefixCls="ant-input"
                                               rows={2}
+                                              type="text"
                                               value="Post-1"
-                                            >
-                                              <ResizeObserver
-                                                disabled={true}
-                                                onResize={[Function]}
-                                              >
-                                                <textarea
-                                                  className="ant-input"
-                                                  id="title"
-                                                  onChange={[Function]}
-                                                  onCompositionEnd={[Function]}
-                                                  onCompositionStart={[Function]}
-                                                  onKeyDown={[Function]}
-                                                  placeholder="Add title for the post"
-                                                  rows={2}
-                                                  style={Object {}}
-                                                  value="Post-1"
-                                                />
-                                              </ResizeObserver>
-                                            </ResizableTextArea>
-                                          </TextArea>
-                                        </ClearableLabeledInput>
-                                      </ForwardRef>
-                                    </Component>
+                                            />
+                                          </ClearableLabeledInput>
+                                        </Input>
+                                      </Component>
+                                    </div>
                                   </div>
-                                </div>
-                                <ErrorList
-                                  errors={Array []}
-                                  onDomErrorVisibleChange={[Function]}
-                                >
-                                  <CSSMotion
-                                    motionAppear={true}
-                                    motionDeadline={500}
-                                    motionName="ant-show-help"
-                                    onLeaveEnd={[Function]}
-                                    removeOnLeave={true}
-                                    visible={false}
+                                  <ErrorList
+                                    errors={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
-                                    <DomWrapper />
-                                  </CSSMotion>
-                                </ErrorList>
-                              </div>
-                            </Col>
-                          </FormItemInput>
-                        </div>
-                      </Row>
-                    </Field>
-                  </WrapperField>
-                </FormItem>
-                <FormItem
-                  label="Slug"
-                  name="slug"
-                  rules={
-                    Array [
-                      Object {
-                        "message": "Please input the slug!",
-                        "required": true,
-                      },
-                      Object {
-                        "message": "Please enter valid slug!",
-                        "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                      },
-                    ]
-                  }
-                >
-                  <WrapperField
+                                    <CSSMotion
+                                      motionAppear={true}
+                                      motionDeadline={500}
+                                      motionName="ant-show-help"
+                                      onLeaveEnd={[Function]}
+                                      removeOnLeave={true}
+                                      visible={false}
+                                    >
+                                      <DomWrapper />
+                                    </CSSMotion>
+                                  </ErrorList>
+                                </div>
+                              </Col>
+                            </FormItemInput>
+                          </div>
+                        </Row>
+                      </Field>
+                    </WrapperField>
+                  </FormItem>
+                </TitleInput>
+                <SlugInput>
+                  <FormItem
                     label="Slug"
-                    messageVariables={
-                      Object {
-                        "label": "Slug",
-                      }
-                    }
                     name="slug"
-                    onReset={[Function]}
                     rules={
                       Array [
                         Object {
@@ -623,47 +569,15 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                         },
                       ]
                     }
-                    trigger="onChange"
-                    validateTrigger="onChange"
                   >
-                    <Field
-                      fieldContext={
-                        Object {
-                          "__INTERNAL__": Object {
-                            "itemRef": [Function],
-                            "name": undefined,
-                          },
-                          "getFieldError": [Function],
-                          "getFieldInstance": [Function],
-                          "getFieldValue": [Function],
-                          "getFieldsError": [Function],
-                          "getFieldsValue": [Function],
-                          "getInternalHooks": [Function],
-                          "isFieldTouched": [Function],
-                          "isFieldValidating": [Function],
-                          "isFieldsTouched": [Function],
-                          "isFieldsValidating": [Function],
-                          "resetFields": [Function],
-                          "scrollToField": [Function],
-                          "setFields": [Function],
-                          "setFieldsValue": [Function],
-                          "submit": [Function],
-                          "validateFields": [Function],
-                          "validateTrigger": "onChange",
-                        }
-                      }
-                      key="_slug"
+                    <WrapperField
                       label="Slug"
                       messageVariables={
                         Object {
                           "label": "Slug",
                         }
                       }
-                      name={
-                        Array [
-                          "slug",
-                        ]
-                      }
+                      name="slug"
                       onReset={[Function]}
                       rules={
                         Array [
@@ -679,108 +593,183 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                       }
                       trigger="onChange"
                       validateTrigger="onChange"
-                      valuePropName="value"
                     >
-                      <Row
-                        className="ant-form-item"
-                        key="row"
+                      <Field
+                        fieldContext={
+                          Object {
+                            "__INTERNAL__": Object {
+                              "itemRef": [Function],
+                              "name": undefined,
+                            },
+                            "getFieldError": [Function],
+                            "getFieldInstance": [Function],
+                            "getFieldValue": [Function],
+                            "getFieldsError": [Function],
+                            "getFieldsValue": [Function],
+                            "getInternalHooks": [Function],
+                            "isFieldTouched": [Function],
+                            "isFieldValidating": [Function],
+                            "isFieldsTouched": [Function],
+                            "isFieldsValidating": [Function],
+                            "resetFields": [Function],
+                            "scrollToField": [Function],
+                            "setFields": [Function],
+                            "setFieldsValue": [Function],
+                            "submit": [Function],
+                            "validateFields": [Function],
+                            "validateTrigger": "onChange",
+                          }
+                        }
+                        key="_slug"
+                        label="Slug"
+                        messageVariables={
+                          Object {
+                            "label": "Slug",
+                          }
+                        }
+                        name={
+                          Array [
+                            "slug",
+                          ]
+                        }
+                        onReset={[Function]}
+                        rules={
+                          Array [
+                            Object {
+                              "message": "Please input the slug!",
+                              "required": true,
+                            },
+                            Object {
+                              "message": "Please enter valid slug!",
+                              "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                            },
+                          ]
+                        }
+                        trigger="onChange"
+                        validateTrigger="onChange"
+                        valuePropName="value"
                       >
-                        <div
-                          className="ant-row ant-form-item"
-                          style={Object {}}
+                        <Row
+                          className="ant-form-item"
+                          key="row"
                         >
-                          <FormItemLabel
-                            htmlFor="slug"
-                            label="Slug"
-                            name="slug"
-                            prefixCls="ant-form"
-                            required={true}
-                            requiredMark={true}
-                            rules={
-                              Array [
-                                Object {
-                                  "message": "Please input the slug!",
-                                  "required": true,
-                                },
-                                Object {
-                                  "message": "Please enter valid slug!",
-                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                },
-                              ]
-                            }
+                          <div
+                            className="ant-row ant-form-item"
+                            style={Object {}}
                           >
-                            <Col
-                              className="ant-form-item-label"
-                              span={3}
+                            <FormItemLabel
+                              htmlFor="slug"
+                              label="Slug"
+                              name="slug"
+                              prefixCls="ant-form"
+                              required={true}
+                              requiredMark={true}
+                              rules={
+                                Array [
+                                  Object {
+                                    "message": "Please input the slug!",
+                                    "required": true,
+                                  },
+                                  Object {
+                                    "message": "Please enter valid slug!",
+                                    "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                  },
+                                ]
+                              }
                             >
-                              <div
-                                className="ant-col ant-col-3 ant-form-item-label"
-                                style={Object {}}
-                              >
-                                <label
-                                  className="ant-form-item-required"
-                                  htmlFor="slug"
-                                  title="Slug"
-                                >
-                                  Slug
-                                </label>
-                              </div>
-                            </Col>
-                          </FormItemLabel>
-                          <FormItemInput
-                            errors={Array []}
-                            label="Slug"
-                            name={
-                              Array [
-                                "slug",
-                              ]
-                            }
-                            onDomErrorVisibleChange={[Function]}
-                            prefixCls="ant-form"
-                            rules={
-                              Array [
-                                Object {
-                                  "message": "Please input the slug!",
-                                  "required": true,
-                                },
-                                Object {
-                                  "message": "Please enter valid slug!",
-                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                },
-                              ]
-                            }
-                            status=""
-                            touched={false}
-                            validateStatus=""
-                            validating={false}
-                          >
-                            <Col
-                              className="ant-form-item-control"
-                              span={12}
-                            >
-                              <div
-                                className="ant-col ant-col-12 ant-form-item-control"
-                                style={Object {}}
+                              <Col
+                                className="ant-form-item-label"
+                                span={3}
                               >
                                 <div
-                                  className="ant-form-item-control-input"
+                                  className="ant-col ant-col-3 ant-form-item-label"
+                                  style={Object {}}
+                                >
+                                  <label
+                                    className="ant-form-item-required"
+                                    htmlFor="slug"
+                                    title="Slug"
+                                  >
+                                    Slug
+                                  </label>
+                                </div>
+                              </Col>
+                            </FormItemLabel>
+                            <FormItemInput
+                              errors={Array []}
+                              label="Slug"
+                              name={
+                                Array [
+                                  "slug",
+                                ]
+                              }
+                              onDomErrorVisibleChange={[Function]}
+                              prefixCls="ant-form"
+                              rules={
+                                Array [
+                                  Object {
+                                    "message": "Please input the slug!",
+                                    "required": true,
+                                  },
+                                  Object {
+                                    "message": "Please enter valid slug!",
+                                    "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                  },
+                                ]
+                              }
+                              status=""
+                              touched={false}
+                              validateStatus=""
+                              validating={false}
+                            >
+                              <Col
+                                className="ant-form-item-control"
+                                span={12}
+                              >
+                                <div
+                                  className="ant-col ant-col-12 ant-form-item-control"
+                                  style={Object {}}
                                 >
                                   <div
-                                    className="ant-form-item-control-input-content"
+                                    className="ant-form-item-control-input"
                                   >
-                                    <Component
-                                      update={1}
-                                      value="post-1"
+                                    <div
+                                      className="ant-form-item-control-input-content"
                                     >
-                                      <Input
-                                        id="slug"
-                                        onChange={[Function]}
-                                        type="text"
+                                      <Component
+                                        update={1}
                                         value="post-1"
                                       >
-                                        <ClearableLabeledInput
-                                          bordered={true}
-                                          element={
+                                        <Input
+                                          id="slug"
+                                          onChange={[Function]}
+                                          type="text"
+                                          value="post-1"
+                                        >
+                                          <ClearableLabeledInput
+                                            bordered={true}
+                                            element={
+                                              <input
+                                                className="ant-input"
+                                                id="slug"
+                                                onBlur={[Function]}
+                                                onChange={[Function]}
+                                                onFocus={[Function]}
+                                                onKeyDown={[Function]}
+                                                type="text"
+                                                value="post-1"
+                                              />
+                                            }
+                                            focused={false}
+                                            handleReset={[Function]}
+                                            id="slug"
+                                            inputType="input"
+                                            onChange={[Function]}
+                                            prefixCls="ant-input"
+                                            triggerFocus={[Function]}
+                                            type="text"
+                                            value="post-1"
+                                          >
                                             <input
                                               className="ant-input"
                                               id="slug"
@@ -791,55 +780,35 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               type="text"
                                               value="post-1"
                                             />
-                                          }
-                                          focused={false}
-                                          handleReset={[Function]}
-                                          id="slug"
-                                          inputType="input"
-                                          onChange={[Function]}
-                                          prefixCls="ant-input"
-                                          triggerFocus={[Function]}
-                                          type="text"
-                                          value="post-1"
-                                        >
-                                          <input
-                                            className="ant-input"
-                                            id="slug"
-                                            onBlur={[Function]}
-                                            onChange={[Function]}
-                                            onFocus={[Function]}
-                                            onKeyDown={[Function]}
-                                            type="text"
-                                            value="post-1"
-                                          />
-                                        </ClearableLabeledInput>
-                                      </Input>
-                                    </Component>
+                                          </ClearableLabeledInput>
+                                        </Input>
+                                      </Component>
+                                    </div>
                                   </div>
-                                </div>
-                                <ErrorList
-                                  errors={Array []}
-                                  onDomErrorVisibleChange={[Function]}
-                                >
-                                  <CSSMotion
-                                    motionAppear={true}
-                                    motionDeadline={500}
-                                    motionName="ant-show-help"
-                                    onLeaveEnd={[Function]}
-                                    removeOnLeave={true}
-                                    visible={false}
+                                  <ErrorList
+                                    errors={Array []}
+                                    onDomErrorVisibleChange={[Function]}
                                   >
-                                    <DomWrapper />
-                                  </CSSMotion>
-                                </ErrorList>
-                              </div>
-                            </Col>
-                          </FormItemInput>
-                        </div>
-                      </Row>
-                    </Field>
-                  </WrapperField>
-                </FormItem>
+                                    <CSSMotion
+                                      motionAppear={true}
+                                      motionDeadline={500}
+                                      motionName="ant-show-help"
+                                      onLeaveEnd={[Function]}
+                                      removeOnLeave={true}
+                                      visible={false}
+                                    >
+                                      <DomWrapper />
+                                    </CSSMotion>
+                                  </ErrorList>
+                                </div>
+                              </Col>
+                            </FormItemInput>
+                          </div>
+                        </Row>
+                      </Field>
+                    </WrapperField>
+                  </FormItem>
+                </SlugInput>
                 <FormItem
                   label="Status"
                   name="status"
@@ -2782,6 +2751,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                       >
                                         <ForwardRef(InternalSelect)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           bordered={true}
                                           defaultValue={
                                             Array [
@@ -2803,6 +2773,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select categories"
+                                          searchValue=""
                                           value={
                                             Array [
                                               1,
@@ -2811,6 +2782,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                         >
                                           <Select
                                             allowClear={true}
+                                            autoClearSearchValue={true}
                                             className=""
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
@@ -2839,6 +2811,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             placeholder="Select categories"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
+                                            searchValue=""
                                             transitionName="ant-slide-up"
                                             value={
                                               Array [
@@ -2848,6 +2821,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
+                                              autoClearSearchValue={true}
                                               className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue={
@@ -2876,6 +2850,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               placeholder="Select categories"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
+                                              searchValue=""
                                               transitionName="ant-slide-up"
                                               value={
                                                 Array [
@@ -3102,6 +3077,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={
@@ -3251,6 +3227,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           accessibilityIndex={0}
                                                           activeValue={null}
                                                           allowClear={true}
+                                                          autoClearSearchValue={true}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={
@@ -3961,6 +3938,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                       >
                                         <ForwardRef(InternalSelect)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           bordered={true}
                                           defaultValue={
                                             Array [
@@ -3982,6 +3960,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select tags"
+                                          searchValue=""
                                           value={
                                             Array [
                                               1,
@@ -3990,6 +3969,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                         >
                                           <Select
                                             allowClear={true}
+                                            autoClearSearchValue={true}
                                             className=""
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
@@ -4018,6 +3998,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             placeholder="Select tags"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
+                                            searchValue=""
                                             transitionName="ant-slide-up"
                                             value={
                                               Array [
@@ -4027,6 +4008,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
+                                              autoClearSearchValue={true}
                                               className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue={
@@ -4055,6 +4037,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               placeholder="Select tags"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
+                                              searchValue=""
                                               transitionName="ant-slide-up"
                                               value={
                                                 Array [
@@ -4281,6 +4264,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={
@@ -4430,6 +4414,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           accessibilityIndex={0}
                                                           activeValue={null}
                                                           allowClear={true}
+                                                          autoClearSearchValue={true}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={
@@ -5128,7 +5113,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                     >
                                       <Selector
                                         action="Authors"
-                                        display="email"
+                                        display="display_name"
                                         id="authors"
                                         mode="multiple"
                                         onChange={[Function]}
@@ -5140,6 +5125,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                       >
                                         <ForwardRef(InternalSelect)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           bordered={true}
                                           defaultValue={
                                             Array [
@@ -5156,6 +5142,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           onPopupScroll={[Function]}
                                           onSearch={[Function]}
                                           placeholder="Select authors"
+                                          searchValue=""
                                           value={
                                             Array [
                                               1,
@@ -5164,6 +5151,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                         >
                                           <Select
                                             allowClear={true}
+                                            autoClearSearchValue={true}
                                             className=""
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
@@ -5187,6 +5175,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                             placeholder="Select authors"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
+                                            searchValue=""
                                             transitionName="ant-slide-up"
                                             value={
                                               Array [
@@ -5196,6 +5185,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                           >
                                             <ForwardRef(Select)
                                               allowClear={true}
+                                              autoClearSearchValue={true}
                                               className=""
                                               clearIcon={<ForwardRef(CloseCircleFilled) />}
                                               defaultValue={
@@ -5219,6 +5209,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                               placeholder="Select authors"
                                               prefixCls="ant-select"
                                               removeIcon={<ForwardRef(CloseOutlined) />}
+                                              searchValue=""
                                               transitionName="ant-slide-up"
                                               value={
                                                 Array [
@@ -5248,7 +5239,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                         Array [
                                                           Object {
                                                             "data": Object {
-                                                              "children": undefined,
+                                                              "children": null,
                                                               "key": "authors1",
                                                               "value": 1,
                                                             },
@@ -5271,7 +5262,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       options={
                                                         Array [
                                                           Object {
-                                                            "children": undefined,
+                                                            "children": null,
                                                             "key": "authors1",
                                                             "value": 1,
                                                           },
@@ -5378,7 +5369,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                             Array [
                                                               Object {
                                                                 "data": Object {
-                                                                  "children": undefined,
+                                                                  "children": null,
                                                                   "key": "authors1",
                                                                   "value": 1,
                                                                 },
@@ -5401,7 +5392,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           options={
                                                             Array [
                                                               Object {
-                                                                "children": undefined,
+                                                                "children": null,
                                                                 "key": "authors1",
                                                                 "value": 1,
                                                               },
@@ -5435,6 +5426,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={
@@ -5562,7 +5554,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           Object {
                                                             "disabled": undefined,
                                                             "key": 1,
-                                                            "label": undefined,
+                                                            "label": null,
                                                             "value": 1,
                                                           },
                                                         ]
@@ -5577,6 +5569,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                           accessibilityIndex={0}
                                                           activeValue={null}
                                                           allowClear={true}
+                                                          autoClearSearchValue={true}
                                                           className=""
                                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                           defaultValue={
@@ -5729,7 +5722,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                               Object {
                                                                 "disabled": undefined,
                                                                 "key": 1,
-                                                                "label": undefined,
+                                                                "label": null,
                                                                 "value": 1,
                                                               },
                                                             ]
@@ -5741,7 +5734,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                                 Object {
                                                                   "disabled": undefined,
                                                                   "key": 1,
-                                                                  "label": undefined,
+                                                                  "label": null,
                                                                   "value": 1,
                                                                 },
                                                               ]
@@ -5796,7 +5789,7 @@ exports[`Quick Edit component snapshot testing should render the component 1`] =
                                                                   Object {
                                                                     "disabled": undefined,
                                                                     "key": 1,
-                                                                    "label": undefined,
+                                                                    "label": null,
                                                                     "value": 1,
                                                                   }
                                                                 }

@@ -3,6 +3,7 @@ package models
 import (
 	"encoding/json"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -37,7 +38,7 @@ func (media *Medium) AfterFind(tx *gorm.DB) (err error) {
 		_ = json.Unmarshal(media.URL.RawMessage, &resurl)
 		if rawURL, found := resurl["raw"]; found {
 			urlObj, _ := url.Parse(rawURL.(string))
-			resurl["proxy"] = viper.GetString("imageproxy_url") + urlObj.Path
+			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, "/dega.factly.in", "", 1)
 
 			rawBArr, _ := json.Marshal(resurl)
 			media.URL = postgres.Jsonb{

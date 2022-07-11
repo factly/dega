@@ -792,6 +792,9 @@ exports[`Menu Create Form component snapshot testing should match with empty dat
                                               "enabled": false,
                                             },
                                             "scrollBeyondLastLine": false,
+                                            "scrollbar": Object {
+                                              "alwaysConsumeMouseWheel": false,
+                                            },
                                             "theme": "vs-dark",
                                             "wordWrap": "on",
                                           }
@@ -1626,6 +1629,9 @@ exports[`Menu Create Form component snapshot testing should render the component
                                               "enabled": false,
                                             },
                                             "scrollBeyondLastLine": false,
+                                            "scrollbar": Object {
+                                              "alwaysConsumeMouseWheel": false,
+                                            },
                                             "theme": "vs-dark",
                                             "wordWrap": "on",
                                           }

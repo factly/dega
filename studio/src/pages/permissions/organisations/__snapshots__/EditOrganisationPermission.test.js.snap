@@ -928,6 +928,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                     >
                                       <ForwardRef(InternalSelect)
                                         allowClear={true}
+                                        autoClearSearchValue={true}
                                         bordered={true}
                                         defaultValue={
                                           Array [
@@ -943,6 +944,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                         onPopupScroll={[Function]}
                                         onSearch={[Function]}
                                         placeholder="Select organisation"
+                                        searchValue=""
                                         value={
                                           Array [
                                             1,
@@ -951,6 +953,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                       >
                                         <Select
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           className=""
                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                           defaultValue={
@@ -973,6 +976,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                           placeholder="Select organisation"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
+                                          searchValue=""
                                           transitionName="ant-slide-up"
                                           value={
                                             Array [
@@ -982,6 +986,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                         >
                                           <ForwardRef(Select)
                                             allowClear={true}
+                                            autoClearSearchValue={true}
                                             className=""
                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                             defaultValue={
@@ -1004,6 +1009,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                             placeholder="Select organisation"
                                             prefixCls="ant-select"
                                             removeIcon={<ForwardRef(CloseOutlined) />}
+                                            searchValue=""
                                             transitionName="ant-slide-up"
                                             value={
                                               Array [
@@ -1182,6 +1188,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                                     accessibilityIndex={0}
                                                     activeValue={null}
                                                     allowClear={true}
+                                                    autoClearSearchValue={true}
                                                     className=""
                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                     defaultValue={
@@ -1275,6 +1282,7 @@ exports[`Organisation Permission Edit component snapshot testing should render t
                                                         accessibilityIndex={0}
                                                         activeValue={null}
                                                         allowClear={true}
+                                                        autoClearSearchValue={true}
                                                         className=""
                                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                         defaultValue={

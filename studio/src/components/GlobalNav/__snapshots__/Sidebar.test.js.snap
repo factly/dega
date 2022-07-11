@@ -55,6 +55,13 @@ exports[`Sidebar component snapshot testing should not render the component when
           },
         ]
       }
+      services={
+        Array [
+          "core",
+          "fact-checking",
+          "podcast",
+        ]
+      }
       superOrg={
         Object {
           "id": 1,
@@ -121,6 +128,13 @@ exports[`Sidebar component snapshot testing should render the component 1`] = `
             ],
             "resource": "posts",
           },
+        ]
+      }
+      services={
+        Array [
+          "core",
+          "fact-checking",
+          "podcast",
         ]
       }
       superOrg={

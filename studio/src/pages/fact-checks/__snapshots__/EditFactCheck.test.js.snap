@@ -173,6 +173,23 @@ exports[`FactCheck edit component snapshot testing should render the component 1
           }
         }
       >
+        <HelmetWrapper
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="FactCheck-1 - Edit Fact Check"
+        >
+          <SideEffect(NullComponent)
+            defer={true}
+            encodeSpecialCharacters={true}
+            title="FactCheck-1 - Edit Fact Check"
+          >
+            <NullComponent
+              defer={true}
+              encodeSpecialCharacters={true}
+              title="FactCheck-1 - Edit Fact Check"
+            />
+          </SideEffect(NullComponent)>
+        </HelmetWrapper>
         <FactCheckForm
           actions={Array []}
           data={
@@ -1223,12 +1240,8 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                           "required": true,
                                         },
                                         Object {
-                                          "message": "Title must be minimum 3 characters.",
-                                          "min": 3,
-                                        },
-                                        Object {
-                                          "max": 150,
-                                          "message": "Title must be maximum 150 characters.",
+                                          "max": 500,
+                                          "message": "Title must be maximum 500 characters.",
                                         },
                                       ]
                                     }
@@ -1248,12 +1261,8 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                             "required": true,
                                           },
                                           Object {
-                                            "message": "Title must be minimum 3 characters.",
-                                            "min": 3,
-                                          },
-                                          Object {
-                                            "max": 150,
-                                            "message": "Title must be maximum 150 characters.",
+                                            "max": 500,
+                                            "message": "Title must be maximum 500 characters.",
                                           },
                                         ]
                                       }
@@ -1305,12 +1314,8 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                               "required": true,
                                             },
                                             Object {
-                                              "message": "Title must be minimum 3 characters.",
-                                              "min": 3,
-                                            },
-                                            Object {
-                                              "max": 150,
-                                              "message": "Title must be maximum 150 characters.",
+                                              "max": 500,
+                                              "message": "Title must be maximum 500 characters.",
                                             },
                                           ]
                                         }
@@ -1339,12 +1344,8 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                     "required": true,
                                                   },
                                                   Object {
-                                                    "message": "Title must be minimum 3 characters.",
-                                                    "min": 3,
-                                                  },
-                                                  Object {
-                                                    "max": 150,
-                                                    "message": "Title must be maximum 150 characters.",
+                                                    "max": 500,
+                                                    "message": "Title must be maximum 500 characters.",
                                                   },
                                                 ]
                                               }
@@ -1365,12 +1366,8 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                     "required": true,
                                                   },
                                                   Object {
-                                                    "message": "Title must be minimum 3 characters.",
-                                                    "min": 3,
-                                                  },
-                                                  Object {
-                                                    "max": 150,
-                                                    "message": "Title must be maximum 150 characters.",
+                                                    "max": 500,
+                                                    "message": "Title must be maximum 500 characters.",
                                                   },
                                                 ]
                                               }
@@ -1555,146 +1552,155 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                       </Field>
                                     </WrapperField>
                                   </FormItem>
-                                  <FormItem
-                                    className="post-description"
-                                    name="description"
-                                  >
-                                    <WrapperField
-                                      className="post-description"
-                                      messageVariables={
-                                        Object {
-                                          "label": "description",
-                                        }
+                                  <DescriptionInput
+                                    formItemProps={
+                                      Object {
+                                        "className": "post-description",
                                       }
+                                    }
+                                    noLabel={true}
+                                  >
+                                    <FormItem
+                                      className="post-description"
                                       name="description"
-                                      onReset={[Function]}
-                                      trigger="onChange"
-                                      validateTrigger="onChange"
                                     >
-                                      <Field
+                                      <WrapperField
                                         className="post-description"
-                                        fieldContext={
-                                          Object {
-                                            "__INTERNAL__": Object {
-                                              "itemRef": [Function],
-                                              "name": undefined,
-                                            },
-                                            "getFieldError": [Function],
-                                            "getFieldInstance": [Function],
-                                            "getFieldValue": [Function],
-                                            "getFieldsError": [Function],
-                                            "getFieldsValue": [Function],
-                                            "getInternalHooks": [Function],
-                                            "isFieldTouched": [Function],
-                                            "isFieldValidating": [Function],
-                                            "isFieldsTouched": [Function],
-                                            "isFieldsValidating": [Function],
-                                            "resetFields": [Function],
-                                            "scrollToField": [Function],
-                                            "setFields": [Function],
-                                            "setFieldsValue": [Function],
-                                            "submit": [Function],
-                                            "validateFields": [Function],
-                                            "validateTrigger": "onChange",
-                                          }
-                                        }
-                                        key="_description"
                                         messageVariables={
                                           Object {
                                             "label": "description",
                                           }
                                         }
-                                        name={
-                                          Array [
-                                            "description",
-                                          ]
-                                        }
+                                        name="description"
                                         onReset={[Function]}
                                         trigger="onChange"
                                         validateTrigger="onChange"
-                                        valuePropName="value"
                                       >
-                                        <Row
-                                          className="ant-form-item post-description"
-                                          key="row"
+                                        <Field
+                                          className="post-description"
+                                          fieldContext={
+                                            Object {
+                                              "__INTERNAL__": Object {
+                                                "itemRef": [Function],
+                                                "name": undefined,
+                                              },
+                                              "getFieldError": [Function],
+                                              "getFieldInstance": [Function],
+                                              "getFieldValue": [Function],
+                                              "getFieldsError": [Function],
+                                              "getFieldsValue": [Function],
+                                              "getInternalHooks": [Function],
+                                              "isFieldTouched": [Function],
+                                              "isFieldValidating": [Function],
+                                              "isFieldsTouched": [Function],
+                                              "isFieldsValidating": [Function],
+                                              "resetFields": [Function],
+                                              "scrollToField": [Function],
+                                              "setFields": [Function],
+                                              "setFieldsValue": [Function],
+                                              "submit": [Function],
+                                              "validateFields": [Function],
+                                              "validateTrigger": "onChange",
+                                            }
+                                          }
+                                          key="_description"
+                                          messageVariables={
+                                            Object {
+                                              "label": "description",
+                                            }
+                                          }
+                                          name={
+                                            Array [
+                                              "description",
+                                            ]
+                                          }
+                                          onReset={[Function]}
+                                          trigger="onChange"
+                                          validateTrigger="onChange"
+                                          valuePropName="value"
                                         >
-                                          <div
-                                            className="ant-row ant-form-item post-description"
-                                            style={Object {}}
+                                          <Row
+                                            className="ant-form-item post-description"
+                                            key="row"
                                           >
-                                            <FormItemLabel
-                                              className="post-description"
-                                              htmlFor="description"
-                                              name="description"
-                                              prefixCls="ant-form"
-                                              required={false}
-                                              requiredMark={true}
-                                            />
-                                            <FormItemInput
-                                              className="post-description"
-                                              errors={Array []}
-                                              name={
-                                                Array [
-                                                  "description",
-                                                ]
-                                              }
-                                              onDomErrorVisibleChange={[Function]}
-                                              prefixCls="ant-form"
-                                              status=""
-                                              touched={false}
-                                              validateStatus=""
-                                              validating={false}
+                                            <div
+                                              className="ant-row ant-form-item post-description"
+                                              style={Object {}}
                                             >
-                                              <Col
-                                                className="ant-form-item-control"
+                                              <FormItemLabel
+                                                className="post-description"
+                                                htmlFor="description"
+                                                name="description"
+                                                prefixCls="ant-form"
+                                                required={false}
+                                                requiredMark={true}
+                                              />
+                                              <FormItemInput
+                                                className="post-description"
+                                                errors={Array []}
+                                                name={
+                                                  Array [
+                                                    "description",
+                                                  ]
+                                                }
+                                                onDomErrorVisibleChange={[Function]}
+                                                prefixCls="ant-form"
+                                                status=""
+                                                touched={false}
+                                                validateStatus=""
+                                                validating={false}
                                               >
-                                                <div
-                                                  className="ant-col ant-form-item-control"
-                                                  style={Object {}}
+                                                <Col
+                                                  className="ant-form-item-control"
                                                 >
                                                   <div
-                                                    className="ant-form-item-control-input"
+                                                    className="ant-col ant-form-item-control"
+                                                    style={Object {}}
                                                   >
                                                     <div
-                                                      className="ant-form-item-control-input-content"
+                                                      className="ant-form-item-control-input"
                                                     >
-                                                      <Component
-                                                        update={1}
+                                                      <div
+                                                        className="ant-form-item-control-input-content"
                                                       >
-                                                        <Editor
-                                                          id="description"
-                                                          onChange={[Function]}
+                                                        <Component
+                                                          update={1}
                                                         >
-                                                          <div
-                                                            style={null}
-                                                          />
-                                                        </Editor>
-                                                      </Component>
+                                                          <Editor
+                                                            id="description"
+                                                            onChange={[Function]}
+                                                          >
+                                                            <div
+                                                              style={null}
+                                                            />
+                                                          </Editor>
+                                                        </Component>
+                                                      </div>
                                                     </div>
-                                                  </div>
-                                                  <ErrorList
-                                                    errors={Array []}
-                                                    onDomErrorVisibleChange={[Function]}
-                                                  >
-                                                    <CSSMotion
-                                                      motionAppear={true}
-                                                      motionDeadline={500}
-                                                      motionName="ant-show-help"
-                                                      onLeaveEnd={[Function]}
-                                                      removeOnLeave={true}
-                                                      visible={false}
+                                                    <ErrorList
+                                                      errors={Array []}
+                                                      onDomErrorVisibleChange={[Function]}
                                                     >
-                                                      <DomWrapper />
-                                                    </CSSMotion>
-                                                  </ErrorList>
-                                                </div>
-                                              </Col>
-                                            </FormItemInput>
-                                          </div>
-                                        </Row>
-                                      </Field>
-                                    </WrapperField>
-                                  </FormItem>
+                                                      <CSSMotion
+                                                        motionAppear={true}
+                                                        motionDeadline={500}
+                                                        motionName="ant-show-help"
+                                                        onLeaveEnd={[Function]}
+                                                        removeOnLeave={true}
+                                                        visible={false}
+                                                      >
+                                                        <DomWrapper />
+                                                      </CSSMotion>
+                                                    </ErrorList>
+                                                  </div>
+                                                </Col>
+                                              </FormItemInput>
+                                            </div>
+                                          </Row>
+                                        </Field>
+                                      </WrapperField>
+                                    </FormItem>
+                                  </DescriptionInput>
                                   <DrawerWrapper
                                     closable={true}
                                     getContainer={false}
@@ -2085,7 +2091,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                       onClick={[Function]}
                                                                                       type="primary"
                                                                                     >
-                                                                                      Confirm
+                                                                                      Ok
                                                                                     </ForwardRef(InternalButton)>,
                                                                                   ]
                                                                                 }
@@ -2118,7 +2124,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                         onClick={[Function]}
                                                                                         type="primary"
                                                                                       >
-                                                                                        Confirm
+                                                                                        Ok
                                                                                       </ForwardRef(InternalButton)>,
                                                                                     ]
                                                                                   }
@@ -2404,6 +2410,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                             >
                                                                               <ForwardRef(InternalSelect)
                                                                                 allowClear={true}
+                                                                                autoClearSearchValue={true}
                                                                                 bordered={true}
                                                                                 defaultValue={Array []}
                                                                                 filterOption={[Function]}
@@ -2416,10 +2423,12 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                 onPopupScroll={[Function]}
                                                                                 onSearch={[Function]}
                                                                                 placeholder="Select claims"
+                                                                                searchValue=""
                                                                                 value={Array []}
                                                                               >
                                                                                 <Select
                                                                                   allowClear={true}
+                                                                                  autoClearSearchValue={true}
                                                                                   className=""
                                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                   defaultValue={Array []}
@@ -2443,11 +2452,13 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                   placeholder="Select claims"
                                                                                   prefixCls="ant-select"
                                                                                   removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                  searchValue=""
                                                                                   transitionName="ant-slide-up"
                                                                                   value={Array []}
                                                                                 >
                                                                                   <ForwardRef(Select)
                                                                                     allowClear={true}
+                                                                                    autoClearSearchValue={true}
                                                                                     className=""
                                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                     defaultValue={Array []}
@@ -2471,6 +2482,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     placeholder="Select claims"
                                                                                     prefixCls="ant-select"
                                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                    searchValue=""
                                                                                     transitionName="ant-slide-up"
                                                                                     value={Array []}
                                                                                   >
@@ -2635,6 +2647,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                             accessibilityIndex={0}
                                                                                             activeValue={null}
                                                                                             allowClear={true}
+                                                                                            autoClearSearchValue={true}
                                                                                             className=""
                                                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                             defaultValue={Array []}
@@ -2730,6 +2743,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                                 accessibilityIndex={0}
                                                                                                 activeValue={null}
                                                                                                 allowClear={true}
+                                                                                                autoClearSearchValue={true}
                                                                                                 className=""
                                                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                                 defaultValue={Array []}
@@ -3214,10 +3228,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                         rules={
                                                           Array [
                                                             Object {
-                                                              "message": "Title must be minimum 3 characters.",
-                                                              "min": 3,
-                                                            },
-                                                            Object {
                                                               "max": 5000,
                                                               "message": "Excerpt must be a maximum of 5000 characters.",
                                                             },
@@ -3235,10 +3245,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                           onReset={[Function]}
                                                           rules={
                                                             Array [
-                                                              Object {
-                                                                "message": "Title must be minimum 3 characters.",
-                                                                "min": 3,
-                                                              },
                                                               Object {
                                                                 "max": 5000,
                                                                 "message": "Excerpt must be a maximum of 5000 characters.",
@@ -3290,10 +3296,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                             rules={
                                                               Array [
                                                                 Object {
-                                                                  "message": "Title must be minimum 3 characters.",
-                                                                  "min": 3,
-                                                                },
-                                                                Object {
                                                                   "max": 5000,
                                                                   "message": "Excerpt must be a maximum of 5000 characters.",
                                                                 },
@@ -3320,10 +3322,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                   requiredMark={true}
                                                                   rules={
                                                                     Array [
-                                                                      Object {
-                                                                        "message": "Title must be minimum 3 characters.",
-                                                                        "min": 3,
-                                                                      },
                                                                       Object {
                                                                         "max": 5000,
                                                                         "message": "Excerpt must be a maximum of 5000 characters.",
@@ -3360,10 +3358,6 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                   prefixCls="ant-form"
                                                                   rules={
                                                                     Array [
-                                                                      Object {
-                                                                        "message": "Title must be minimum 3 characters.",
-                                                                        "min": 3,
-                                                                      },
                                                                       Object {
                                                                         "max": 5000,
                                                                         "message": "Excerpt must be a maximum of 5000 characters.",
@@ -3514,42 +3508,18 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                         </WrapperField>
                                                       </FormItem>
                                                       <FormItem
-                                                        label="Slug"
-                                                        name="slug"
-                                                        rules={
-                                                          Array [
-                                                            Object {
-                                                              "message": "Please input the slug!",
-                                                              "required": true,
-                                                            },
-                                                            Object {
-                                                              "message": "Please enter valid slug!",
-                                                              "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                                            },
-                                                          ]
-                                                        }
+                                                        label="Subtitle"
+                                                        name="subtitle"
                                                       >
                                                         <WrapperField
-                                                          label="Slug"
+                                                          label="Subtitle"
                                                           messageVariables={
                                                             Object {
-                                                              "label": "Slug",
+                                                              "label": "Subtitle",
                                                             }
                                                           }
-                                                          name="slug"
+                                                          name="subtitle"
                                                           onReset={[Function]}
-                                                          rules={
-                                                            Array [
-                                                              Object {
-                                                                "message": "Please input the slug!",
-                                                                "required": true,
-                                                              },
-                                                              Object {
-                                                                "message": "Please enter valid slug!",
-                                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                                              },
-                                                            ]
-                                                          }
                                                           trigger="onChange"
                                                           validateTrigger="onChange"
                                                         >
@@ -3579,31 +3549,19 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                 "validateTrigger": "onChange",
                                                               }
                                                             }
-                                                            key="_slug"
-                                                            label="Slug"
+                                                            key="_subtitle"
+                                                            label="Subtitle"
                                                             messageVariables={
                                                               Object {
-                                                                "label": "Slug",
+                                                                "label": "Subtitle",
                                                               }
                                                             }
                                                             name={
                                                               Array [
-                                                                "slug",
+                                                                "subtitle",
                                                               ]
                                                             }
                                                             onReset={[Function]}
-                                                            rules={
-                                                              Array [
-                                                                Object {
-                                                                  "message": "Please input the slug!",
-                                                                  "required": true,
-                                                                },
-                                                                Object {
-                                                                  "message": "Please enter valid slug!",
-                                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                                                },
-                                                              ]
-                                                            }
                                                             trigger="onChange"
                                                             validateTrigger="onChange"
                                                             valuePropName="value"
@@ -3617,24 +3575,12 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                 style={Object {}}
                                                               >
                                                                 <FormItemLabel
-                                                                  htmlFor="slug"
-                                                                  label="Slug"
-                                                                  name="slug"
+                                                                  htmlFor="subtitle"
+                                                                  label="Subtitle"
+                                                                  name="subtitle"
                                                                   prefixCls="ant-form"
-                                                                  required={true}
+                                                                  required={false}
                                                                   requiredMark={true}
-                                                                  rules={
-                                                                    Array [
-                                                                      Object {
-                                                                        "message": "Please input the slug!",
-                                                                        "required": true,
-                                                                      },
-                                                                      Object {
-                                                                        "message": "Please enter valid slug!",
-                                                                        "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                                                      },
-                                                                    ]
-                                                                  }
                                                                 >
                                                                   <Col
                                                                     className="ant-form-item-label"
@@ -3644,37 +3590,25 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                       style={Object {}}
                                                                     >
                                                                       <label
-                                                                        className="ant-form-item-required"
-                                                                        htmlFor="slug"
-                                                                        title="Slug"
+                                                                        className=""
+                                                                        htmlFor="subtitle"
+                                                                        title="Subtitle"
                                                                       >
-                                                                        Slug
+                                                                        Subtitle
                                                                       </label>
                                                                     </div>
                                                                   </Col>
                                                                 </FormItemLabel>
                                                                 <FormItemInput
                                                                   errors={Array []}
-                                                                  label="Slug"
+                                                                  label="Subtitle"
                                                                   name={
                                                                     Array [
-                                                                      "slug",
+                                                                      "subtitle",
                                                                     ]
                                                                   }
                                                                   onDomErrorVisibleChange={[Function]}
                                                                   prefixCls="ant-form"
-                                                                  rules={
-                                                                    Array [
-                                                                      Object {
-                                                                        "message": "Please input the slug!",
-                                                                        "required": true,
-                                                                      },
-                                                                      Object {
-                                                                        "message": "Please enter valid slug!",
-                                                                        "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                                                      },
-                                                                    ]
-                                                                  }
                                                                   status=""
                                                                   touched={false}
                                                                   validateStatus=""
@@ -3695,47 +3629,68 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                         >
                                                                           <Component
                                                                             update={1}
-                                                                            value="factcheck-1"
                                                                           >
                                                                             <Input
-                                                                              id="slug"
+                                                                              id="subtitle"
                                                                               onChange={[Function]}
+                                                                              placeholder="Subtitle"
+                                                                              style={
+                                                                                Object {
+                                                                                  "fontSize": "medium",
+                                                                                }
+                                                                              }
                                                                               type="text"
-                                                                              value="factcheck-1"
                                                                             >
                                                                               <ClearableLabeledInput
                                                                                 bordered={true}
                                                                                 element={
                                                                                   <input
                                                                                     className="ant-input"
-                                                                                    id="slug"
+                                                                                    id="subtitle"
                                                                                     onBlur={[Function]}
                                                                                     onChange={[Function]}
                                                                                     onFocus={[Function]}
                                                                                     onKeyDown={[Function]}
+                                                                                    placeholder="Subtitle"
+                                                                                    style={
+                                                                                      Object {
+                                                                                        "fontSize": "medium",
+                                                                                      }
+                                                                                    }
                                                                                     type="text"
-                                                                                    value="factcheck-1"
                                                                                   />
                                                                                 }
                                                                                 focused={false}
                                                                                 handleReset={[Function]}
-                                                                                id="slug"
+                                                                                id="subtitle"
                                                                                 inputType="input"
                                                                                 onChange={[Function]}
+                                                                                placeholder="Subtitle"
                                                                                 prefixCls="ant-input"
+                                                                                style={
+                                                                                  Object {
+                                                                                    "fontSize": "medium",
+                                                                                  }
+                                                                                }
                                                                                 triggerFocus={[Function]}
                                                                                 type="text"
-                                                                                value="factcheck-1"
+                                                                                value=""
                                                                               >
                                                                                 <input
                                                                                   className="ant-input"
-                                                                                  id="slug"
+                                                                                  id="subtitle"
                                                                                   onBlur={[Function]}
                                                                                   onChange={[Function]}
                                                                                   onFocus={[Function]}
                                                                                   onKeyDown={[Function]}
+                                                                                  placeholder="Subtitle"
+                                                                                  style={
+                                                                                    Object {
+                                                                                      "fontSize": "medium",
+                                                                                    }
+                                                                                  }
                                                                                   type="text"
-                                                                                  value="factcheck-1"
+                                                                                  value=""
                                                                                 />
                                                                               </ClearableLabeledInput>
                                                                             </Input>
@@ -3765,6 +3720,260 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                           </Field>
                                                         </WrapperField>
                                                       </FormItem>
+                                                      <SlugInput>
+                                                        <FormItem
+                                                          label="Slug"
+                                                          name="slug"
+                                                          rules={
+                                                            Array [
+                                                              Object {
+                                                                "message": "Please input the slug!",
+                                                                "required": true,
+                                                              },
+                                                              Object {
+                                                                "message": "Please enter valid slug!",
+                                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                              },
+                                                            ]
+                                                          }
+                                                        >
+                                                          <WrapperField
+                                                            label="Slug"
+                                                            messageVariables={
+                                                              Object {
+                                                                "label": "Slug",
+                                                              }
+                                                            }
+                                                            name="slug"
+                                                            onReset={[Function]}
+                                                            rules={
+                                                              Array [
+                                                                Object {
+                                                                  "message": "Please input the slug!",
+                                                                  "required": true,
+                                                                },
+                                                                Object {
+                                                                  "message": "Please enter valid slug!",
+                                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                                },
+                                                              ]
+                                                            }
+                                                            trigger="onChange"
+                                                            validateTrigger="onChange"
+                                                          >
+                                                            <Field
+                                                              fieldContext={
+                                                                Object {
+                                                                  "__INTERNAL__": Object {
+                                                                    "itemRef": [Function],
+                                                                    "name": undefined,
+                                                                  },
+                                                                  "getFieldError": [Function],
+                                                                  "getFieldInstance": [Function],
+                                                                  "getFieldValue": [Function],
+                                                                  "getFieldsError": [Function],
+                                                                  "getFieldsValue": [Function],
+                                                                  "getInternalHooks": [Function],
+                                                                  "isFieldTouched": [Function],
+                                                                  "isFieldValidating": [Function],
+                                                                  "isFieldsTouched": [Function],
+                                                                  "isFieldsValidating": [Function],
+                                                                  "resetFields": [Function],
+                                                                  "scrollToField": [Function],
+                                                                  "setFields": [Function],
+                                                                  "setFieldsValue": [Function],
+                                                                  "submit": [Function],
+                                                                  "validateFields": [Function],
+                                                                  "validateTrigger": "onChange",
+                                                                }
+                                                              }
+                                                              key="_slug"
+                                                              label="Slug"
+                                                              messageVariables={
+                                                                Object {
+                                                                  "label": "Slug",
+                                                                }
+                                                              }
+                                                              name={
+                                                                Array [
+                                                                  "slug",
+                                                                ]
+                                                              }
+                                                              onReset={[Function]}
+                                                              rules={
+                                                                Array [
+                                                                  Object {
+                                                                    "message": "Please input the slug!",
+                                                                    "required": true,
+                                                                  },
+                                                                  Object {
+                                                                    "message": "Please enter valid slug!",
+                                                                    "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                                  },
+                                                                ]
+                                                              }
+                                                              trigger="onChange"
+                                                              validateTrigger="onChange"
+                                                              valuePropName="value"
+                                                            >
+                                                              <Row
+                                                                className="ant-form-item"
+                                                                key="row"
+                                                              >
+                                                                <div
+                                                                  className="ant-row ant-form-item"
+                                                                  style={Object {}}
+                                                                >
+                                                                  <FormItemLabel
+                                                                    htmlFor="slug"
+                                                                    label="Slug"
+                                                                    name="slug"
+                                                                    prefixCls="ant-form"
+                                                                    required={true}
+                                                                    requiredMark={true}
+                                                                    rules={
+                                                                      Array [
+                                                                        Object {
+                                                                          "message": "Please input the slug!",
+                                                                          "required": true,
+                                                                        },
+                                                                        Object {
+                                                                          "message": "Please enter valid slug!",
+                                                                          "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                  >
+                                                                    <Col
+                                                                      className="ant-form-item-label"
+                                                                    >
+                                                                      <div
+                                                                        className="ant-col ant-form-item-label"
+                                                                        style={Object {}}
+                                                                      >
+                                                                        <label
+                                                                          className="ant-form-item-required"
+                                                                          htmlFor="slug"
+                                                                          title="Slug"
+                                                                        >
+                                                                          Slug
+                                                                        </label>
+                                                                      </div>
+                                                                    </Col>
+                                                                  </FormItemLabel>
+                                                                  <FormItemInput
+                                                                    errors={Array []}
+                                                                    label="Slug"
+                                                                    name={
+                                                                      Array [
+                                                                        "slug",
+                                                                      ]
+                                                                    }
+                                                                    onDomErrorVisibleChange={[Function]}
+                                                                    prefixCls="ant-form"
+                                                                    rules={
+                                                                      Array [
+                                                                        Object {
+                                                                          "message": "Please input the slug!",
+                                                                          "required": true,
+                                                                        },
+                                                                        Object {
+                                                                          "message": "Please enter valid slug!",
+                                                                          "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                                        },
+                                                                      ]
+                                                                    }
+                                                                    status=""
+                                                                    touched={false}
+                                                                    validateStatus=""
+                                                                    validating={false}
+                                                                  >
+                                                                    <Col
+                                                                      className="ant-form-item-control"
+                                                                    >
+                                                                      <div
+                                                                        className="ant-col ant-form-item-control"
+                                                                        style={Object {}}
+                                                                      >
+                                                                        <div
+                                                                          className="ant-form-item-control-input"
+                                                                        >
+                                                                          <div
+                                                                            className="ant-form-item-control-input-content"
+                                                                          >
+                                                                            <Component
+                                                                              update={1}
+                                                                              value="factcheck-1"
+                                                                            >
+                                                                              <Input
+                                                                                id="slug"
+                                                                                onChange={[Function]}
+                                                                                type="text"
+                                                                                value="factcheck-1"
+                                                                              >
+                                                                                <ClearableLabeledInput
+                                                                                  bordered={true}
+                                                                                  element={
+                                                                                    <input
+                                                                                      className="ant-input"
+                                                                                      id="slug"
+                                                                                      onBlur={[Function]}
+                                                                                      onChange={[Function]}
+                                                                                      onFocus={[Function]}
+                                                                                      onKeyDown={[Function]}
+                                                                                      type="text"
+                                                                                      value="factcheck-1"
+                                                                                    />
+                                                                                  }
+                                                                                  focused={false}
+                                                                                  handleReset={[Function]}
+                                                                                  id="slug"
+                                                                                  inputType="input"
+                                                                                  onChange={[Function]}
+                                                                                  prefixCls="ant-input"
+                                                                                  triggerFocus={[Function]}
+                                                                                  type="text"
+                                                                                  value="factcheck-1"
+                                                                                >
+                                                                                  <input
+                                                                                    className="ant-input"
+                                                                                    id="slug"
+                                                                                    onBlur={[Function]}
+                                                                                    onChange={[Function]}
+                                                                                    onFocus={[Function]}
+                                                                                    onKeyDown={[Function]}
+                                                                                    type="text"
+                                                                                    value="factcheck-1"
+                                                                                  />
+                                                                                </ClearableLabeledInput>
+                                                                              </Input>
+                                                                            </Component>
+                                                                          </div>
+                                                                        </div>
+                                                                        <ErrorList
+                                                                          errors={Array []}
+                                                                          onDomErrorVisibleChange={[Function]}
+                                                                        >
+                                                                          <CSSMotion
+                                                                            motionAppear={true}
+                                                                            motionDeadline={500}
+                                                                            motionName="ant-show-help"
+                                                                            onLeaveEnd={[Function]}
+                                                                            removeOnLeave={true}
+                                                                            visible={false}
+                                                                          >
+                                                                            <DomWrapper />
+                                                                          </CSSMotion>
+                                                                        </ErrorList>
+                                                                      </div>
+                                                                    </Col>
+                                                                  </FormItemInput>
+                                                                </div>
+                                                              </Row>
+                                                            </Field>
+                                                          </WrapperField>
+                                                        </FormItem>
+                                                      </SlugInput>
                                                       <FormItem
                                                         label="Published Date"
                                                         name="published_date"
@@ -4857,6 +5066,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                             >
                                                                               <ForwardRef(InternalSelect)
                                                                                 allowClear={true}
+                                                                                autoClearSearchValue={true}
                                                                                 bordered={true}
                                                                                 defaultValue={Array []}
                                                                                 filterOption={[Function]}
@@ -4874,10 +5084,12 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                 onPopupScroll={[Function]}
                                                                                 onSearch={[Function]}
                                                                                 placeholder="Select categories"
+                                                                                searchValue=""
                                                                                 value={Array []}
                                                                               >
                                                                                 <Select
                                                                                   allowClear={true}
+                                                                                  autoClearSearchValue={true}
                                                                                   className=""
                                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                   defaultValue={Array []}
@@ -4906,11 +5118,13 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                   placeholder="Select categories"
                                                                                   prefixCls="ant-select"
                                                                                   removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                  searchValue=""
                                                                                   transitionName="ant-slide-up"
                                                                                   value={Array []}
                                                                                 >
                                                                                   <ForwardRef(Select)
                                                                                     allowClear={true}
+                                                                                    autoClearSearchValue={true}
                                                                                     className=""
                                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                     defaultValue={Array []}
@@ -4939,6 +5153,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     placeholder="Select categories"
                                                                                     prefixCls="ant-select"
                                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                    searchValue=""
                                                                                     transitionName="ant-slide-up"
                                                                                     value={Array []}
                                                                                   >
@@ -5111,6 +5326,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                             accessibilityIndex={0}
                                                                                             activeValue={null}
                                                                                             allowClear={true}
+                                                                                            autoClearSearchValue={true}
                                                                                             className=""
                                                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                             defaultValue={Array []}
@@ -5211,6 +5427,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                                 accessibilityIndex={0}
                                                                                                 activeValue={null}
                                                                                                 allowClear={true}
+                                                                                                autoClearSearchValue={true}
                                                                                                 className=""
                                                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                                 defaultValue={Array []}
@@ -5733,6 +5950,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                             >
                                                                               <ForwardRef(InternalSelect)
                                                                                 allowClear={true}
+                                                                                autoClearSearchValue={true}
                                                                                 bordered={true}
                                                                                 defaultValue={Array []}
                                                                                 filterOption={[Function]}
@@ -5750,10 +5968,12 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                 onPopupScroll={[Function]}
                                                                                 onSearch={[Function]}
                                                                                 placeholder="Select tags"
+                                                                                searchValue=""
                                                                                 value={Array []}
                                                                               >
                                                                                 <Select
                                                                                   allowClear={true}
+                                                                                  autoClearSearchValue={true}
                                                                                   className=""
                                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                   defaultValue={Array []}
@@ -5782,11 +6002,13 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                   placeholder="Select tags"
                                                                                   prefixCls="ant-select"
                                                                                   removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                  searchValue=""
                                                                                   transitionName="ant-slide-up"
                                                                                   value={Array []}
                                                                                 >
                                                                                   <ForwardRef(Select)
                                                                                     allowClear={true}
+                                                                                    autoClearSearchValue={true}
                                                                                     className=""
                                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                     defaultValue={Array []}
@@ -5815,6 +6037,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     placeholder="Select tags"
                                                                                     prefixCls="ant-select"
                                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                    searchValue=""
                                                                                     transitionName="ant-slide-up"
                                                                                     value={Array []}
                                                                                   >
@@ -5987,6 +6210,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                             accessibilityIndex={0}
                                                                                             activeValue={null}
                                                                                             allowClear={true}
+                                                                                            autoClearSearchValue={true}
                                                                                             className=""
                                                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                             defaultValue={Array []}
@@ -6087,6 +6311,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                                 accessibilityIndex={0}
                                                                                                 activeValue={null}
                                                                                                 allowClear={true}
+                                                                                                autoClearSearchValue={true}
                                                                                                 className=""
                                                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                                 defaultValue={Array []}
@@ -6602,13 +6827,14 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                           >
                                                                             <Selector
                                                                               action="Authors"
-                                                                              display="email"
+                                                                              display="display_name"
                                                                               id="authors"
                                                                               mode="multiple"
                                                                               onChange={[Function]}
                                                                             >
                                                                               <ForwardRef(InternalSelect)
                                                                                 allowClear={true}
+                                                                                autoClearSearchValue={true}
                                                                                 bordered={true}
                                                                                 defaultValue={Array []}
                                                                                 filterOption={[Function]}
@@ -6621,10 +6847,12 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                 onPopupScroll={[Function]}
                                                                                 onSearch={[Function]}
                                                                                 placeholder="Select authors"
+                                                                                searchValue=""
                                                                                 value={Array []}
                                                                               >
                                                                                 <Select
                                                                                   allowClear={true}
+                                                                                  autoClearSearchValue={true}
                                                                                   className=""
                                                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                   defaultValue={Array []}
@@ -6648,11 +6876,13 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                   placeholder="Select authors"
                                                                                   prefixCls="ant-select"
                                                                                   removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                  searchValue=""
                                                                                   transitionName="ant-slide-up"
                                                                                   value={Array []}
                                                                                 >
                                                                                   <ForwardRef(Select)
                                                                                     allowClear={true}
+                                                                                    autoClearSearchValue={true}
                                                                                     className=""
                                                                                     clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                     defaultValue={Array []}
@@ -6676,6 +6906,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                     placeholder="Select authors"
                                                                                     prefixCls="ant-select"
                                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
+                                                                                    searchValue=""
                                                                                     transitionName="ant-slide-up"
                                                                                     value={Array []}
                                                                                   >
@@ -6840,6 +7071,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                             accessibilityIndex={0}
                                                                                             activeValue={null}
                                                                                             allowClear={true}
+                                                                                            autoClearSearchValue={true}
                                                                                             className=""
                                                                                             clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                             defaultValue={Array []}
@@ -6935,6 +7167,7 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                                 accessibilityIndex={0}
                                                                                                 activeValue={null}
                                                                                                 allowClear={true}
+                                                                                                autoClearSearchValue={true}
                                                                                                 className=""
                                                                                                 clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                                                                 defaultValue={Array []}
@@ -9508,6 +9741,9 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                       "enabled": false,
                                                                                     },
                                                                                     "scrollBeyondLastLine": false,
+                                                                                    "scrollbar": Object {
+                                                                                      "alwaysConsumeMouseWheel": false,
+                                                                                    },
                                                                                     "theme": "vs-dark",
                                                                                     "wordWrap": "on",
                                                                                   }
@@ -9687,6 +9923,9 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                       "enabled": false,
                                                                                     },
                                                                                     "scrollBeyondLastLine": false,
+                                                                                    "scrollbar": Object {
+                                                                                      "alwaysConsumeMouseWheel": false,
+                                                                                    },
                                                                                     "theme": "vs-dark",
                                                                                     "wordWrap": "on",
                                                                                   }
@@ -10333,6 +10572,9 @@ exports[`FactCheck edit component snapshot testing should render the component 1
                                                                                       "enabled": false,
                                                                                     },
                                                                                     "scrollBeyondLastLine": false,
+                                                                                    "scrollbar": Object {
+                                                                                      "alwaysConsumeMouseWheel": false,
+                                                                                    },
                                                                                     "theme": "vs-dark",
                                                                                     "wordWrap": "on",
                                                                                   }

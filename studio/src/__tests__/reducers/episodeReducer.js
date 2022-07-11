@@ -131,10 +131,10 @@ describe('Episode reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_EPISODE', () => {
+  it('should handle GET_EPISODE', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_EPISODE,
+        type: types.GET_EPISODE,
         payload: { id: 1, title: 'new episode' },
       }),
     ).toEqual({
@@ -143,7 +143,7 @@ describe('Episode reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_EPISODE when details is non-empty', () => {
+  it('should handle GET_EPISODE when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -152,7 +152,7 @@ describe('Episode reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_EPISODE,
+          type: types.GET_EPISODE,
           payload: { id: 2, title: 'new episode' },
         },
       ),
@@ -165,7 +165,7 @@ describe('Episode reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_EPISODE when already exists', () => {
+  it('should handle UPDATE_EPISODE when already exists', () => {
     expect(
       reducer(
         {
@@ -177,7 +177,7 @@ describe('Episode reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_EPISODE,
+          type: types.UPDATE_EPISODE,
           payload: { id: 2, title: 'updated episode' },
         },
       ),

@@ -49,6 +49,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}

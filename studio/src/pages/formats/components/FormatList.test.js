@@ -14,9 +14,39 @@ import { getFormats, deleteFormat } from '../../../actions/formats';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+const setFilters = jest.fn();
+const fetchFormats = jest.fn();
 let store, mockedDispatch;
-
+let info = {
+  formats: [
+    {
+      id: 1,
+      created_at: '2020-09-25T07:23:38.40006Z',
+      updated_at: '2020-09-25T07:23:38.40006Z',
+      deleted_at: null,
+      name: 'Fact check',
+      slug: 'fact-check',
+      description: '',
+      space_id: 1,
+    },
+    {
+      id: 2,
+      created_at: '2020-09-25T07:24:11.008257Z',
+      updated_at: '2020-09-25T07:24:11.008257Z',
+      deleted_at: null,
+      name: 'Article',
+      slug: 'article',
+      description: '',
+      space_id: 1,
+    },
+  ],
+  total: 2,
+  loading: false,
+};
+const filters = {
+  page: 1,
+  limit: 20,
+};
 let state = {
   formats: {
     req: [
@@ -77,7 +107,7 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList actions={['update', 'delete']} />
+            <FormatList data={info} filters={filters} actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -89,7 +119,7 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList actions={['update', 'delete']} />
+            <FormatList data={info} filters={filters} actions={['update', 'delete']} />
           </Router>
         </Provider>,
       );
@@ -101,14 +131,16 @@ describe('Formats List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <FormatList actions={['update', 'delete']} />
+            <FormatList
+              data={info}
+              fetchFormats={fetchFormats}
+              filters={filters}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-
-      expect(getFormats).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -124,7 +156,12 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList actions={['update', 'delete']} />
+              <FormatList
+                data={info}
+                setFilters={setFilters}
+                filters={filters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -142,7 +179,12 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList actions={['update', 'delete']} />
+              <FormatList
+                data={info}
+                fetchFormats={fetchFormats}
+                filters={filters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -157,8 +199,7 @@ describe('Formats List component', () => {
         .simulate('click');
 
       expect(deleteFormat).toHaveBeenCalled();
-      expect(deleteFormat).toHaveBeenCalledWith(2);
-      expect(getFormats).toHaveBeenCalledWith({ page: 1 });
+      expect(deleteFormat).toHaveBeenCalledWith(1);
     });
     it('should edit format', () => {
       store = mockStore(state);
@@ -167,14 +208,14 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList actions={['update', 'delete']} />
+              <FormatList data={info} filters={filters} actions={['update', 'delete']} />
             </Router>
           </Provider>,
         );
       });
       const link = wrapper.find(Link).at(0);
-      expect(link.text()).toEqual('Article');
-      expect(link.prop('to')).toEqual('/formats/2/edit');
+      expect(link.text()).toEqual('Fact check');
+      expect(link.prop('to')).toEqual('/advanced/formats/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -187,12 +228,15 @@ describe('Formats List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <FormatList actions={['update', 'delete']} />
+              <FormatList
+                data={{ formats: [], loading: false, total: 0 }}
+                filters={filters}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
-
       const button = wrapper.find(Button);
       expect(button.length).toEqual(0);
     });

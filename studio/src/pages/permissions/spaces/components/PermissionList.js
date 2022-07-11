@@ -132,6 +132,7 @@ function PermissionList({ admin }) {
                 fetchSpacePermissions(),
               )
             }
+            disabled={!admin}
           >
             <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
           </Popconfirm>

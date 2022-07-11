@@ -22,6 +22,11 @@ func space(w http.ResponseWriter, r *http.Request) {
 
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {

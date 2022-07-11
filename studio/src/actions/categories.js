@@ -13,13 +13,13 @@ import { addMedia } from './media';
 import getError from '../utils/getError';
 
 // action to fetch all categories
-export const getCategories = (query) => {
+export const getCategories = (query, setLoading = true) => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     if (currentSpaceID === 0) {
       return;
     }
-    dispatch(loadingCategories());
+    if (setLoading) dispatch(loadingCategories());
     return axios
       .get(CATEGORIES_API, {
         params: query,
@@ -50,7 +50,9 @@ export const getCategories = (query) => {
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
       })
-      .finally(() => dispatch(stopCategoriesLoading()));
+      .finally(() => {
+        if (setLoading) dispatch(stopCategoriesLoading());
+      });
   };
 };
 

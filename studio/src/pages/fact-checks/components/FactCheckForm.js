@@ -215,7 +215,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
       {visible && (
         <Modal visible={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
           <ClaimCreateForm
-            data={details[claimID]}
+            data={details?.[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
             width={560}
           />
@@ -352,7 +352,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <Selector mode="multiple" action="Tags" createEntity="Tag" />
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
-                  <Selector mode="multiple" display={'email'} action="Authors" />
+                  <Selector mode="multiple" display={'display_name'} action="Authors" />
                 </Form.Item>
                 <Form.Item>
                   <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>

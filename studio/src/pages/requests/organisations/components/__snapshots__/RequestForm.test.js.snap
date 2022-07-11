@@ -116,35 +116,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
             onReset={[Function]}
             onSubmit={[Function]}
           >
-            <FormItem
-              label="Title"
-              name="title"
-              rules={
-                Array [
-                  Object {
-                    "message": "Please enter title!",
-                    "required": true,
-                  },
-                  Object {
-                    "message": "Name must be minimum 3 characters.",
-                    "min": 3,
-                  },
-                  Object {
-                    "max": 50,
-                    "message": "Name must be maximum 50 characters.",
-                  },
-                ]
-              }
-            >
-              <WrapperField
+            <TitleInput>
+              <FormItem
                 label="Title"
-                messageVariables={
-                  Object {
-                    "label": "Title",
-                  }
-                }
                 name="title"
-                onReset={[Function]}
                 rules={
                   Array [
                     Object {
@@ -152,56 +127,20 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       "required": true,
                     },
                     Object {
-                      "message": "Name must be minimum 3 characters.",
-                      "min": 3,
-                    },
-                    Object {
-                      "max": 50,
-                      "message": "Name must be maximum 50 characters.",
+                      "max": 500,
+                      "message": "Name must be maximum 500 characters.",
                     },
                   ]
                 }
-                trigger="onChange"
-                validateTrigger="onChange"
               >
-                <Field
-                  fieldContext={
-                    Object {
-                      "__INTERNAL__": Object {
-                        "itemRef": [Function],
-                        "name": "create-category",
-                      },
-                      "getFieldError": [Function],
-                      "getFieldInstance": [Function],
-                      "getFieldValue": [Function],
-                      "getFieldsError": [Function],
-                      "getFieldsValue": [Function],
-                      "getInternalHooks": [Function],
-                      "isFieldTouched": [Function],
-                      "isFieldValidating": [Function],
-                      "isFieldsTouched": [Function],
-                      "isFieldsValidating": [Function],
-                      "resetFields": [Function],
-                      "scrollToField": [Function],
-                      "setFields": [Function],
-                      "setFieldsValue": [Function],
-                      "submit": [Function],
-                      "validateFields": [Function],
-                      "validateTrigger": "onChange",
-                    }
-                  }
-                  key="_title"
+                <WrapperField
                   label="Title"
                   messageVariables={
                     Object {
                       "label": "Title",
                     }
                   }
-                  name={
-                    Array [
-                      "title",
-                    ]
-                  }
+                  name="title"
                   onReset={[Function]}
                   rules={
                     Array [
@@ -210,127 +149,190 @@ exports[`Organisation Request Form component snapshot testing should match compo
                         "required": true,
                       },
                       Object {
-                        "message": "Name must be minimum 3 characters.",
-                        "min": 3,
-                      },
-                      Object {
-                        "max": 50,
-                        "message": "Name must be maximum 50 characters.",
+                        "max": 500,
+                        "message": "Name must be maximum 500 characters.",
                       },
                     ]
                   }
                   trigger="onChange"
                   validateTrigger="onChange"
-                  valuePropName="value"
                 >
-                  <Row
-                    className="ant-form-item"
-                    key="row"
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_title"
+                    label="Title"
+                    messageVariables={
+                      Object {
+                        "label": "Title",
+                      }
+                    }
+                    name={
+                      Array [
+                        "title",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter title!",
+                          "required": true,
+                        },
+                        Object {
+                          "max": 500,
+                          "message": "Name must be maximum 500 characters.",
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
                   >
-                    <div
-                      className="ant-row ant-form-item"
-                      style={Object {}}
+                    <Row
+                      className="ant-form-item"
+                      key="row"
                     >
-                      <FormItemLabel
-                        htmlFor="create-category_title"
-                        label="Title"
-                        name="title"
-                        prefixCls="ant-form"
-                        required={true}
-                        requiredMark={true}
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
                       >
-                        <Col
-                          className="ant-form-item-label"
-                          span={10}
+                        <FormItemLabel
+                          htmlFor="create-category_title"
+                          label="Title"
+                          name="title"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
                         >
-                          <div
-                            className="ant-col ant-col-10 ant-form-item-label"
-                            style={Object {}}
-                          >
-                            <label
-                              className="ant-form-item-required"
-                              htmlFor="create-category_title"
-                              title="Title"
-                            >
-                              Title
-                            </label>
-                          </div>
-                        </Col>
-                      </FormItemLabel>
-                      <FormItemInput
-                        errors={Array []}
-                        label="Title"
-                        name={
-                          Array [
-                            "title",
-                          ]
-                        }
-                        onDomErrorVisibleChange={[Function]}
-                        prefixCls="ant-form"
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
-                        status=""
-                        touched={false}
-                        validateStatus=""
-                        validating={false}
-                      >
-                        <Col
-                          className="ant-form-item-control"
-                          span={8}
-                        >
-                          <div
-                            className="ant-col ant-col-8 ant-form-item-control"
-                            style={Object {}}
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
                           >
                             <div
-                              className="ant-form-item-control-input"
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_title"
+                                title="Title"
+                              >
+                                Title
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Title"
+                          name={
+                            Array [
+                              "title",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
                             >
                               <div
-                                className="ant-form-item-control-input-content"
+                                className="ant-form-item-control-input"
                               >
-                                <Component
-                                  update={1}
-                                  value="Request"
+                                <div
+                                  className="ant-form-item-control-input-content"
                                 >
-                                  <Input
-                                    id="create-category_title"
-                                    onChange={[Function]}
-                                    type="text"
+                                  <Component
+                                    update={1}
                                     value="Request"
                                   >
-                                    <ClearableLabeledInput
-                                      bordered={true}
-                                      element={
+                                    <Input
+                                      id="create-category_title"
+                                      onChange={[Function]}
+                                      type="text"
+                                      value="Request"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-category_title"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                            value="Request"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-category_title"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value="Request"
+                                      >
                                         <input
                                           className="ant-input"
                                           id="create-category_title"
@@ -341,55 +343,35 @@ exports[`Organisation Request Form component snapshot testing should match compo
                                           type="text"
                                           value="Request"
                                         />
-                                      }
-                                      focused={false}
-                                      handleReset={[Function]}
-                                      id="create-category_title"
-                                      inputType="input"
-                                      onChange={[Function]}
-                                      prefixCls="ant-input"
-                                      triggerFocus={[Function]}
-                                      type="text"
-                                      value="Request"
-                                    >
-                                      <input
-                                        className="ant-input"
-                                        id="create-category_title"
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        type="text"
-                                        value="Request"
-                                      />
-                                    </ClearableLabeledInput>
-                                  </Input>
-                                </Component>
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
                               </div>
-                            </div>
-                            <ErrorList
-                              errors={Array []}
-                              onDomErrorVisibleChange={[Function]}
-                            >
-                              <CSSMotion
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionName="ant-show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </ErrorList>
-                          </div>
-                        </Col>
-                      </FormItemInput>
-                    </div>
-                  </Row>
-                </Field>
-              </WrapperField>
-            </FormItem>
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+            </TitleInput>
             <FormItem
               label="Organisation"
               name="organisation_id"
@@ -2178,35 +2160,10 @@ exports[`Organisation Request Form component snapshot testing should match compo
             onReset={[Function]}
             onSubmit={[Function]}
           >
-            <FormItem
-              label="Title"
-              name="title"
-              rules={
-                Array [
-                  Object {
-                    "message": "Please enter title!",
-                    "required": true,
-                  },
-                  Object {
-                    "message": "Name must be minimum 3 characters.",
-                    "min": 3,
-                  },
-                  Object {
-                    "max": 50,
-                    "message": "Name must be maximum 50 characters.",
-                  },
-                ]
-              }
-            >
-              <WrapperField
+            <TitleInput>
+              <FormItem
                 label="Title"
-                messageVariables={
-                  Object {
-                    "label": "Title",
-                  }
-                }
                 name="title"
-                onReset={[Function]}
                 rules={
                   Array [
                     Object {
@@ -2214,56 +2171,20 @@ exports[`Organisation Request Form component snapshot testing should match compo
                       "required": true,
                     },
                     Object {
-                      "message": "Name must be minimum 3 characters.",
-                      "min": 3,
-                    },
-                    Object {
-                      "max": 50,
-                      "message": "Name must be maximum 50 characters.",
+                      "max": 500,
+                      "message": "Name must be maximum 500 characters.",
                     },
                   ]
                 }
-                trigger="onChange"
-                validateTrigger="onChange"
               >
-                <Field
-                  fieldContext={
-                    Object {
-                      "__INTERNAL__": Object {
-                        "itemRef": [Function],
-                        "name": "create-category",
-                      },
-                      "getFieldError": [Function],
-                      "getFieldInstance": [Function],
-                      "getFieldValue": [Function],
-                      "getFieldsError": [Function],
-                      "getFieldsValue": [Function],
-                      "getInternalHooks": [Function],
-                      "isFieldTouched": [Function],
-                      "isFieldValidating": [Function],
-                      "isFieldsTouched": [Function],
-                      "isFieldsValidating": [Function],
-                      "resetFields": [Function],
-                      "scrollToField": [Function],
-                      "setFields": [Function],
-                      "setFieldsValue": [Function],
-                      "submit": [Function],
-                      "validateFields": [Function],
-                      "validateTrigger": "onChange",
-                    }
-                  }
-                  key="_title"
+                <WrapperField
                   label="Title"
                   messageVariables={
                     Object {
                       "label": "Title",
                     }
                   }
-                  name={
-                    Array [
-                      "title",
-                    ]
-                  }
+                  name="title"
                   onReset={[Function]}
                   rules={
                     Array [
@@ -2272,125 +2193,187 @@ exports[`Organisation Request Form component snapshot testing should match compo
                         "required": true,
                       },
                       Object {
-                        "message": "Name must be minimum 3 characters.",
-                        "min": 3,
-                      },
-                      Object {
-                        "max": 50,
-                        "message": "Name must be maximum 50 characters.",
+                        "max": 500,
+                        "message": "Name must be maximum 500 characters.",
                       },
                     ]
                   }
                   trigger="onChange"
                   validateTrigger="onChange"
-                  valuePropName="value"
                 >
-                  <Row
-                    className="ant-form-item"
-                    key="row"
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_title"
+                    label="Title"
+                    messageVariables={
+                      Object {
+                        "label": "Title",
+                      }
+                    }
+                    name={
+                      Array [
+                        "title",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter title!",
+                          "required": true,
+                        },
+                        Object {
+                          "max": 500,
+                          "message": "Name must be maximum 500 characters.",
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
                   >
-                    <div
-                      className="ant-row ant-form-item"
-                      style={Object {}}
+                    <Row
+                      className="ant-form-item"
+                      key="row"
                     >
-                      <FormItemLabel
-                        htmlFor="create-category_title"
-                        label="Title"
-                        name="title"
-                        prefixCls="ant-form"
-                        required={true}
-                        requiredMark={true}
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
                       >
-                        <Col
-                          className="ant-form-item-label"
-                          span={10}
+                        <FormItemLabel
+                          htmlFor="create-category_title"
+                          label="Title"
+                          name="title"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
                         >
-                          <div
-                            className="ant-col ant-col-10 ant-form-item-label"
-                            style={Object {}}
-                          >
-                            <label
-                              className="ant-form-item-required"
-                              htmlFor="create-category_title"
-                              title="Title"
-                            >
-                              Title
-                            </label>
-                          </div>
-                        </Col>
-                      </FormItemLabel>
-                      <FormItemInput
-                        errors={Array []}
-                        label="Title"
-                        name={
-                          Array [
-                            "title",
-                          ]
-                        }
-                        onDomErrorVisibleChange={[Function]}
-                        prefixCls="ant-form"
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
-                        status=""
-                        touched={false}
-                        validateStatus=""
-                        validating={false}
-                      >
-                        <Col
-                          className="ant-form-item-control"
-                          span={8}
-                        >
-                          <div
-                            className="ant-col ant-col-8 ant-form-item-control"
-                            style={Object {}}
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
                           >
                             <div
-                              className="ant-form-item-control-input"
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_title"
+                                title="Title"
+                              >
+                                Title
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Title"
+                          name={
+                            Array [
+                              "title",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
                             >
                               <div
-                                className="ant-form-item-control-input-content"
+                                className="ant-form-item-control-input"
                               >
-                                <Component
-                                  update={1}
+                                <div
+                                  className="ant-form-item-control-input-content"
                                 >
-                                  <Input
-                                    id="create-category_title"
-                                    onChange={[Function]}
-                                    type="text"
+                                  <Component
+                                    update={1}
                                   >
-                                    <ClearableLabeledInput
-                                      bordered={true}
-                                      element={
+                                    <Input
+                                      id="create-category_title"
+                                      onChange={[Function]}
+                                      type="text"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-category_title"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-category_title"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
                                         <input
                                           className="ant-input"
                                           id="create-category_title"
@@ -2399,56 +2382,37 @@ exports[`Organisation Request Form component snapshot testing should match compo
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
+                                          value=""
                                         />
-                                      }
-                                      focused={false}
-                                      handleReset={[Function]}
-                                      id="create-category_title"
-                                      inputType="input"
-                                      onChange={[Function]}
-                                      prefixCls="ant-input"
-                                      triggerFocus={[Function]}
-                                      type="text"
-                                      value=""
-                                    >
-                                      <input
-                                        className="ant-input"
-                                        id="create-category_title"
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        type="text"
-                                        value=""
-                                      />
-                                    </ClearableLabeledInput>
-                                  </Input>
-                                </Component>
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
                               </div>
-                            </div>
-                            <ErrorList
-                              errors={Array []}
-                              onDomErrorVisibleChange={[Function]}
-                            >
-                              <CSSMotion
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionName="ant-show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </ErrorList>
-                          </div>
-                        </Col>
-                      </FormItemInput>
-                    </div>
-                  </Row>
-                </Field>
-              </WrapperField>
-            </FormItem>
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+            </TitleInput>
             <FormItem
               label="Organisation"
               name="organisation_id"
@@ -4107,35 +4071,10 @@ exports[`Organisation Request Form component snapshot testing should render the 
             onReset={[Function]}
             onSubmit={[Function]}
           >
-            <FormItem
-              label="Title"
-              name="title"
-              rules={
-                Array [
-                  Object {
-                    "message": "Please enter title!",
-                    "required": true,
-                  },
-                  Object {
-                    "message": "Name must be minimum 3 characters.",
-                    "min": 3,
-                  },
-                  Object {
-                    "max": 50,
-                    "message": "Name must be maximum 50 characters.",
-                  },
-                ]
-              }
-            >
-              <WrapperField
+            <TitleInput>
+              <FormItem
                 label="Title"
-                messageVariables={
-                  Object {
-                    "label": "Title",
-                  }
-                }
                 name="title"
-                onReset={[Function]}
                 rules={
                   Array [
                     Object {
@@ -4143,56 +4082,20 @@ exports[`Organisation Request Form component snapshot testing should render the 
                       "required": true,
                     },
                     Object {
-                      "message": "Name must be minimum 3 characters.",
-                      "min": 3,
-                    },
-                    Object {
-                      "max": 50,
-                      "message": "Name must be maximum 50 characters.",
+                      "max": 500,
+                      "message": "Name must be maximum 500 characters.",
                     },
                   ]
                 }
-                trigger="onChange"
-                validateTrigger="onChange"
               >
-                <Field
-                  fieldContext={
-                    Object {
-                      "__INTERNAL__": Object {
-                        "itemRef": [Function],
-                        "name": "create-category",
-                      },
-                      "getFieldError": [Function],
-                      "getFieldInstance": [Function],
-                      "getFieldValue": [Function],
-                      "getFieldsError": [Function],
-                      "getFieldsValue": [Function],
-                      "getInternalHooks": [Function],
-                      "isFieldTouched": [Function],
-                      "isFieldValidating": [Function],
-                      "isFieldsTouched": [Function],
-                      "isFieldsValidating": [Function],
-                      "resetFields": [Function],
-                      "scrollToField": [Function],
-                      "setFields": [Function],
-                      "setFieldsValue": [Function],
-                      "submit": [Function],
-                      "validateFields": [Function],
-                      "validateTrigger": "onChange",
-                    }
-                  }
-                  key="_title"
+                <WrapperField
                   label="Title"
                   messageVariables={
                     Object {
                       "label": "Title",
                     }
                   }
-                  name={
-                    Array [
-                      "title",
-                    ]
-                  }
+                  name="title"
                   onReset={[Function]}
                   rules={
                     Array [
@@ -4201,125 +4104,187 @@ exports[`Organisation Request Form component snapshot testing should render the 
                         "required": true,
                       },
                       Object {
-                        "message": "Name must be minimum 3 characters.",
-                        "min": 3,
-                      },
-                      Object {
-                        "max": 50,
-                        "message": "Name must be maximum 50 characters.",
+                        "max": 500,
+                        "message": "Name must be maximum 500 characters.",
                       },
                     ]
                   }
                   trigger="onChange"
                   validateTrigger="onChange"
-                  valuePropName="value"
                 >
-                  <Row
-                    className="ant-form-item"
-                    key="row"
+                  <Field
+                    fieldContext={
+                      Object {
+                        "__INTERNAL__": Object {
+                          "itemRef": [Function],
+                          "name": "create-category",
+                        },
+                        "getFieldError": [Function],
+                        "getFieldInstance": [Function],
+                        "getFieldValue": [Function],
+                        "getFieldsError": [Function],
+                        "getFieldsValue": [Function],
+                        "getInternalHooks": [Function],
+                        "isFieldTouched": [Function],
+                        "isFieldValidating": [Function],
+                        "isFieldsTouched": [Function],
+                        "isFieldsValidating": [Function],
+                        "resetFields": [Function],
+                        "scrollToField": [Function],
+                        "setFields": [Function],
+                        "setFieldsValue": [Function],
+                        "submit": [Function],
+                        "validateFields": [Function],
+                        "validateTrigger": "onChange",
+                      }
+                    }
+                    key="_title"
+                    label="Title"
+                    messageVariables={
+                      Object {
+                        "label": "Title",
+                      }
+                    }
+                    name={
+                      Array [
+                        "title",
+                      ]
+                    }
+                    onReset={[Function]}
+                    rules={
+                      Array [
+                        Object {
+                          "message": "Please enter title!",
+                          "required": true,
+                        },
+                        Object {
+                          "max": 500,
+                          "message": "Name must be maximum 500 characters.",
+                        },
+                      ]
+                    }
+                    trigger="onChange"
+                    validateTrigger="onChange"
+                    valuePropName="value"
                   >
-                    <div
-                      className="ant-row ant-form-item"
-                      style={Object {}}
+                    <Row
+                      className="ant-form-item"
+                      key="row"
                     >
-                      <FormItemLabel
-                        htmlFor="create-category_title"
-                        label="Title"
-                        name="title"
-                        prefixCls="ant-form"
-                        required={true}
-                        requiredMark={true}
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
+                      <div
+                        className="ant-row ant-form-item"
+                        style={Object {}}
                       >
-                        <Col
-                          className="ant-form-item-label"
-                          span={10}
+                        <FormItemLabel
+                          htmlFor="create-category_title"
+                          label="Title"
+                          name="title"
+                          prefixCls="ant-form"
+                          required={true}
+                          requiredMark={true}
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
                         >
-                          <div
-                            className="ant-col ant-col-10 ant-form-item-label"
-                            style={Object {}}
-                          >
-                            <label
-                              className="ant-form-item-required"
-                              htmlFor="create-category_title"
-                              title="Title"
-                            >
-                              Title
-                            </label>
-                          </div>
-                        </Col>
-                      </FormItemLabel>
-                      <FormItemInput
-                        errors={Array []}
-                        label="Title"
-                        name={
-                          Array [
-                            "title",
-                          ]
-                        }
-                        onDomErrorVisibleChange={[Function]}
-                        prefixCls="ant-form"
-                        rules={
-                          Array [
-                            Object {
-                              "message": "Please enter title!",
-                              "required": true,
-                            },
-                            Object {
-                              "message": "Name must be minimum 3 characters.",
-                              "min": 3,
-                            },
-                            Object {
-                              "max": 50,
-                              "message": "Name must be maximum 50 characters.",
-                            },
-                          ]
-                        }
-                        status=""
-                        touched={false}
-                        validateStatus=""
-                        validating={false}
-                      >
-                        <Col
-                          className="ant-form-item-control"
-                          span={8}
-                        >
-                          <div
-                            className="ant-col ant-col-8 ant-form-item-control"
-                            style={Object {}}
+                          <Col
+                            className="ant-form-item-label"
+                            span={10}
                           >
                             <div
-                              className="ant-form-item-control-input"
+                              className="ant-col ant-col-10 ant-form-item-label"
+                              style={Object {}}
+                            >
+                              <label
+                                className="ant-form-item-required"
+                                htmlFor="create-category_title"
+                                title="Title"
+                              >
+                                Title
+                              </label>
+                            </div>
+                          </Col>
+                        </FormItemLabel>
+                        <FormItemInput
+                          errors={Array []}
+                          label="Title"
+                          name={
+                            Array [
+                              "title",
+                            ]
+                          }
+                          onDomErrorVisibleChange={[Function]}
+                          prefixCls="ant-form"
+                          rules={
+                            Array [
+                              Object {
+                                "message": "Please enter title!",
+                                "required": true,
+                              },
+                              Object {
+                                "max": 500,
+                                "message": "Name must be maximum 500 characters.",
+                              },
+                            ]
+                          }
+                          status=""
+                          touched={false}
+                          validateStatus=""
+                          validating={false}
+                        >
+                          <Col
+                            className="ant-form-item-control"
+                            span={8}
+                          >
+                            <div
+                              className="ant-col ant-col-8 ant-form-item-control"
+                              style={Object {}}
                             >
                               <div
-                                className="ant-form-item-control-input-content"
+                                className="ant-form-item-control-input"
                               >
-                                <Component
-                                  update={1}
+                                <div
+                                  className="ant-form-item-control-input-content"
                                 >
-                                  <Input
-                                    id="create-category_title"
-                                    onChange={[Function]}
-                                    type="text"
+                                  <Component
+                                    update={1}
                                   >
-                                    <ClearableLabeledInput
-                                      bordered={true}
-                                      element={
+                                    <Input
+                                      id="create-category_title"
+                                      onChange={[Function]}
+                                      type="text"
+                                    >
+                                      <ClearableLabeledInput
+                                        bordered={true}
+                                        element={
+                                          <input
+                                            className="ant-input"
+                                            id="create-category_title"
+                                            onBlur={[Function]}
+                                            onChange={[Function]}
+                                            onFocus={[Function]}
+                                            onKeyDown={[Function]}
+                                            type="text"
+                                          />
+                                        }
+                                        focused={false}
+                                        handleReset={[Function]}
+                                        id="create-category_title"
+                                        inputType="input"
+                                        onChange={[Function]}
+                                        prefixCls="ant-input"
+                                        triggerFocus={[Function]}
+                                        type="text"
+                                        value=""
+                                      >
                                         <input
                                           className="ant-input"
                                           id="create-category_title"
@@ -4328,56 +4293,37 @@ exports[`Organisation Request Form component snapshot testing should render the 
                                           onFocus={[Function]}
                                           onKeyDown={[Function]}
                                           type="text"
+                                          value=""
                                         />
-                                      }
-                                      focused={false}
-                                      handleReset={[Function]}
-                                      id="create-category_title"
-                                      inputType="input"
-                                      onChange={[Function]}
-                                      prefixCls="ant-input"
-                                      triggerFocus={[Function]}
-                                      type="text"
-                                      value=""
-                                    >
-                                      <input
-                                        className="ant-input"
-                                        id="create-category_title"
-                                        onBlur={[Function]}
-                                        onChange={[Function]}
-                                        onFocus={[Function]}
-                                        onKeyDown={[Function]}
-                                        type="text"
-                                        value=""
-                                      />
-                                    </ClearableLabeledInput>
-                                  </Input>
-                                </Component>
+                                      </ClearableLabeledInput>
+                                    </Input>
+                                  </Component>
+                                </div>
                               </div>
-                            </div>
-                            <ErrorList
-                              errors={Array []}
-                              onDomErrorVisibleChange={[Function]}
-                            >
-                              <CSSMotion
-                                motionAppear={true}
-                                motionDeadline={500}
-                                motionName="ant-show-help"
-                                onLeaveEnd={[Function]}
-                                removeOnLeave={true}
-                                visible={false}
+                              <ErrorList
+                                errors={Array []}
+                                onDomErrorVisibleChange={[Function]}
                               >
-                                <DomWrapper />
-                              </CSSMotion>
-                            </ErrorList>
-                          </div>
-                        </Col>
-                      </FormItemInput>
-                    </div>
-                  </Row>
-                </Field>
-              </WrapperField>
-            </FormItem>
+                                <CSSMotion
+                                  motionAppear={true}
+                                  motionDeadline={500}
+                                  motionName="ant-show-help"
+                                  onLeaveEnd={[Function]}
+                                  removeOnLeave={true}
+                                  visible={false}
+                                >
+                                  <DomWrapper />
+                                </CSSMotion>
+                              </ErrorList>
+                            </div>
+                          </Col>
+                        </FormItemInput>
+                      </div>
+                    </Row>
+                  </Field>
+                </WrapperField>
+              </FormItem>
+            </TitleInput>
             <FormItem
               label="Organisation"
               name="organisation_id"
