@@ -174,40 +174,34 @@ func update(w http.ResponseWriter, r *http.Request) {
 		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
-	featuredMediumID := &post.FeaturedMediumID
-	result.Post.FeaturedMediumID = &post.FeaturedMediumID
-	if post.FeaturedMediumID == 0 {
-		err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
-		featuredMediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	updateMap := map[string]interface{}{
+		"updated_at":         time.Now(),
+		"updated_by_id":      uint(uID),
+		"title":              post.Title,
+		"slug":               postSlug,
+		"subtitle":           post.Subtitle,
+		"excerpt":            post.Excerpt,
+		"description":        post.Description,
+		"html_description":   description,
+		"is_highlighted":     post.IsHighlighted,
+		"is_sticky":          post.IsSticky,
+		"is_featured":        post.IsFeatured,
+		"format_id":          post.FormatID,
+		"featured_medium_id": post.FeaturedMediumID,
+		"meta":               post.Meta,
+		"header_code":        post.HeaderCode,
+		"footer_code":        post.FooterCode,
+		"meta_fields":        post.MetaFields,
 	}
 
-	updatedPost := model.Post{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Title:            post.Title,
-		Slug:             postSlug,
-		Subtitle:         post.Subtitle,
-		Excerpt:          post.Excerpt,
-		Description:      post.Description,
-		HTMLDescription:  description,
-		IsHighlighted:    post.IsHighlighted,
-		IsSticky:         post.IsSticky,
-		FormatID:         post.FormatID,
-		FeaturedMediumID: featuredMediumID,
-		Meta:             post.Meta,
-		HeaderCode:       post.HeaderCode,
-		FooterCode:       post.FooterCode,
-		MetaFields:       post.MetaFields,
+	result.Post.FeaturedMediumID = &post.FeaturedMediumID
+	if post.FeaturedMediumID == 0 {
+		updateMap["featured_medium_id"] = nil
 	}
 
 	oldStatus := result.Post.Status
-	// Check if post status is changed back to draft from published
-	if oldStatus == "publish" && post.Status == "draft" {
+	// Check if post status is changed back to draft or ready from published
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
@@ -215,14 +209,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 			return
 		}
-		if status == http.StatusOK {
-			updatedPost.Status = "draft"
-			tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
-		} else {
+
+		if status != http.StatusOK {
 			tx.Rollback()
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+
+		updateMap["status"] = post.Status
+		updateMap["published_date"] = nil
 
 	} else if post.Status == "publish" {
 		// Check if authors are not added while publishing post
@@ -239,12 +234,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if status == http.StatusOK {
-			updatedPost.Status = "publish"
+			updateMap["status"] = "publish"
 			if post.PublishedDate == nil {
 				currTime := time.Now()
-				updatedPost.PublishedDate = &currTime
+				updateMap["published_date"] = &currTime
 			} else {
-				updatedPost.PublishedDate = post.PublishedDate
+				updateMap["published_date"] = post.PublishedDate
 			}
 		} else {
 			tx.Rollback()
@@ -252,18 +247,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else if post.Status == "ready" {
-		updatedPost.Status = "ready"
+		updateMap["status"] = "ready"
 	} else if oldStatus == "ready" && post.Status == "draft" {
-		updatedPost.Status = "draft"
+		updateMap["status"] = "draft"
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "IsPage").Omit("Tags", "Categories").Updates(model.Post{
-		IsFeatured:    post.IsFeatured,
-		IsSticky:      post.IsSticky,
-		IsHighlighted: post.IsHighlighted,
-		IsPage:        post.IsPage,
-	})
-	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
