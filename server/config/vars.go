@@ -71,7 +71,7 @@ func SetupVars() {
 		}
 
 		if !viper.IsSet("meili_api_key") {
-			log.Fatal("please provide meili_key config param")
+			log.Fatal("please provide meili_api_key config param")
 		}
 	}
 
