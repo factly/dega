@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/x/meilisearchx"
+	meilisearchx "github.com/factly/x/meilisearchx"
 	meilisearch "github.com/meilisearch/meilisearch-go"
 
 	"github.com/factly/x/errorx"
