@@ -52,16 +52,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Add spaceId filter
-	var filters string = fmt.Sprint("space_id=", sID)
+	var spaceFilter string = fmt.Sprint("space_id=", sID)
 	if len(searchQuery.Filters) > 0 {
-		filters = fmt.Sprint(searchQuery.Filters, " AND ", filters)
-	}
-
-	result, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
-		Query:        searchQuery.Query,
+		spaceFilter = fmt.Sprint(searchQuery.Filters, " AND ", spaceFilter)
+	}	
+	
+	filters := [][]string{}
+	filters = append(filters, []string{spaceFilter})
+	filters = append(filters, searchQuery.FacetFilters)
+	result, err := meilisearchx.Client.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
 		Limit:        searchQuery.Limit,
-		Filters:      filters,
-		FacetFilters: searchQuery.FacetFilters,
+		Filter:      filters,
 	})
 
 	if err != nil {

@@ -11,8 +11,7 @@ import (
 
 func (r *queryResolver) Search(ctx context.Context, q string) (*models.SearchResult, error) {
 	result := models.SearchResult{}
-	hits, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
-		Query: q,
+	hits, err := meilisearchx.Client.Index("dega").Search(q, &meilisearch.SearchRequest{
 		Limit: 1000000,
 	})
 	if err != nil {

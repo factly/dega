@@ -68,7 +68,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	objectID := fmt.Sprint("policy_", policyId)
-	_, err = meilisearchx.Client.Documents("dega").Delete(objectID)
+	_, err = meilisearchx.Client.Index("dega").Delete(objectID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
