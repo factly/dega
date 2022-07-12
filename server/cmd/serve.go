@@ -29,7 +29,7 @@ var serveCmd = &cobra.Command{
 		config.SetupDB()
 
 		if config.SearchEnabled() {
-			err := meilisearchx.SetupMeiliSearch("dega", []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status"})
+			err := meilisearchx.SetupMeiliSearch("dega", []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
 			if err != nil {
 				fmt.Println(err)
 			}
