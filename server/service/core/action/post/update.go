@@ -185,6 +185,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"html_description":   description,
 		"is_highlighted":     post.IsHighlighted,
 		"is_sticky":          post.IsSticky,
+		"is_featured":        post.IsFeatured,
 		"format_id":          post.FormatID,
 		"featured_medium_id": post.FeaturedMediumID,
 		"meta":               post.Meta,
@@ -199,8 +200,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	oldStatus := result.Post.Status
-	// Check if post status is changed back to draft from published
-	if oldStatus == "publish" && post.Status == "draft" {
+	// Check if post status is changed back to draft or ready from published
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
@@ -208,14 +209,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 			return
 		}
-		if status == http.StatusOK {
-			updateMap["status"] = "draft"
-			tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
-		} else {
+
+		if status != http.StatusOK {
 			tx.Rollback()
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+
+		updateMap["status"] = post.Status
+		updateMap["published_date"] = nil
 
 	} else if post.Status == "publish" {
 		// Check if authors are not added while publishing post
@@ -250,12 +252,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["status"] = "draft"
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "IsPage").Omit("Tags", "Categories").Updates(model.Post{
-		IsFeatured:    post.IsFeatured,
-		IsSticky:      post.IsSticky,
-		IsHighlighted: post.IsHighlighted,
-		IsPage:        post.IsPage,
-	})
 	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
 
 	if err != nil {
