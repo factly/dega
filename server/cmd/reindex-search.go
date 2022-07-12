@@ -24,12 +24,12 @@ var reindexCommand = &cobra.Command{
 
 		config.SetupDB()
 
-		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"})
+		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status"})
 		if err != nil {
 			loggerx.Error(err)
 		}
 
-		_, err = meilisearchx.Client.Documents("dega").DeleteAllDocuments()
+		_, err = meilisearchx.Client.Index("dega").DeleteAllDocuments()
 		if err != nil {
 			loggerx.Error(err)
 		}

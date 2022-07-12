@@ -34,7 +34,7 @@ func all(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, err = meilisearchx.Client.Documents("dega").DeleteAllDocuments()
+	_, err = meilisearchx.Client.Index("dega").DeleteAllDocuments()
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

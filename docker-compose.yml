@@ -118,11 +118,11 @@ services:
   #######             SEARCH SERVICES                                 #######
   ###########################################################################
   meilisearch:
-    image: getmeili/meilisearch:v0.16.0
+    image: getmeili/meilisearch:v0.27.1
     ports:
       - "7700:7700"
     volumes:
-      - ~/factly/dega/meilisearch-0-14-0/data.ms/:/data.ms
+      - ~/factly/dega/meilisearch-0-27-1/data.ms/:/data.ms
     environment:
       # To put an upper limit of 100MB for the payload size during indexing
       - MEILI_HTTP_PAYLOAD_SIZE_LIMIT=104857600

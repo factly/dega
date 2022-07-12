@@ -100,16 +100,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search posts with filter
 			var hits []interface{}
-			var res map[string]interface{}
-
-			if searchQuery != "" {
-				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "post")
-			} else {
-				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "post")
-				if _, found := res["hits"]; found {
-					hits = res["hits"].([]interface{})
-				}
-			}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "post")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
