@@ -110,6 +110,7 @@ function PermissionList({ admin }) {
       loading={loading}
       rowKey={'id'}
       pagination={{
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
         total: total,
         current: filters.page,
         pageSize: filters.limit,
