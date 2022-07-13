@@ -28,6 +28,7 @@ import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
+import { getDatefromStringWithoutDay } from '../../../utils/date';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -295,6 +296,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+              {
+                (data?.updated_at) ? <p style={{fontSize: '18px', color:'#595E60'}}>Last updated on : {getDatefromStringWithoutDay(data.updated_at)}</p> : null
+              }
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
               !loading ? (
