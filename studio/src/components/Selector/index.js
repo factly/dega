@@ -16,7 +16,6 @@ function Selector({
 }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
-
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
   const [query, setQuery] = React.useState({
     page: 1,

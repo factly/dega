@@ -11,6 +11,7 @@ import getUrlParams from '../../utils/getUrlParams';
 import Selector from '../../components/Selector';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 function Podcasts({ permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -66,7 +67,9 @@ function Podcasts({ permission }) {
       };
     return { podcasts: [], total: 0, loading: state.podcasts.loading };
   });
-
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [params]);
   React.useEffect(() => {
     fetchPodcasts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
