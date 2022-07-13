@@ -31,8 +31,7 @@ var PaiganatedOrg = map[string]interface{}{
 	"total": 1,
 }
 
-var Dummy_Org_Member_List = []map[string]interface{}{
-	map[string]interface{}{
+var Dummy_Org_Member_List = []map[string]interface{}{{
 		"id":         1,
 		"created_at": time.Now(),
 		"updated_at": time.Now(),

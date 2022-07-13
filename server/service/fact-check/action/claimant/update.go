@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -125,33 +126,26 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
-
-	mediumID := &claimant.MediumID
-	result.MediumID = &claimant.MediumID
-	if claimant.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	updateMap := map[string]interface{}{
+		"updated_at":       time.Now(),
+		"updated_by_id":    uID,
+		"name":             claimant.Name,
+		"slug":             claimantSlug,
+		"description":      claimant.Description,
+		"html_description": description,
+		"medium_id":        claimant.MediumID,
+		"tag_line":         claimant.TagLine,
+		"is_featured":      claimant.IsFeatured,
+		"meta_fields":      claimant.MetaFields,
+		"meta":             claimant.Meta,
+		"header_code":      claimant.HeaderCode,
+		"footer_code":      claimant.FooterCode,
 	}
-	tx.Model(&result).Select("IsFeatured").Updates(model.Claimant{IsFeatured: claimant.IsFeatured})
-	err = tx.Model(&result).Updates(model.Claimant{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Name:            claimant.Name,
-		Slug:            claimantSlug,
-		MediumID:        mediumID,
-		TagLine:         claimant.TagLine,
-		Description:     claimant.Description,
-		HTMLDescription: description,
-		MetaFields:      claimant.MetaFields,
-		Meta:            claimant.Meta,
-		HeaderCode:      claimant.HeaderCode,
-		FooterCode:      claimant.FooterCode,
-	}).Preload("Medium").First(&result).Error
+	if claimant.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

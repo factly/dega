@@ -7,7 +7,7 @@ import {
 import { addErrorNotification } from './notifications';
 import getError from '../utils/getError';
 
-export const getSachFactChecks = (reqBody, setTotalMatches) => {
+export const getSachFactChecks = (reqBody, setTotalMatches, setResultStats) => {
   return (dispatch) => {
     dispatch(loadingSachFactChecks());
     fetch(`${window.REACT_APP_SACH_API_URL}${SACH_FACT_CHECKS_API}`, {
@@ -24,6 +24,7 @@ export const getSachFactChecks = (reqBody, setTotalMatches) => {
       .then((res) => {
         dispatch(addFactChecks(res.results));
         setTotalMatches(res.total);
+        setResultStats(res.resultStats);
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

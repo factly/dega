@@ -72,18 +72,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		if config.SearchEnabled() {
 			// search claims with filter
 			var hits []interface{}
-			var res map[string]interface{}
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
-			if searchQuery != "" {
-				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
-			} else {
-				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "claim")
-				if _, found := res["hits"]; found {
-					hits = res["hits"].([]interface{})
-				}
-			}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

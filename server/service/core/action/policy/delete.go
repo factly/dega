@@ -7,7 +7,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
+	meilisearchx "github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -68,7 +68,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	objectID := fmt.Sprint("policy_", policyId)
-	_, err = meilisearchx.Client.Documents("dega").Delete(objectID)
+	_, err = meilisearchx.Client.Index("dega").Delete(objectID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

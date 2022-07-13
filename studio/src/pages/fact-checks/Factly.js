@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSachFactChecks, getSachFilters } from '../../actions/sachFactChecks';
 import FactCheck from './components/sach-fact-check';
+import { getResultStringFromStats } from '../../utils/getStats';
 
 function Factly() {
   const [form] = Form.useForm();
@@ -18,7 +19,10 @@ function Factly() {
   const [query, setQuery] = useState('');
   const [pageNum, setPageNum] = useState(1);
   const [totalMatches, setTotalMatches] = useState(0);
+  const [resultStats, setResultStats] = useState({});
+  const [isResultTextVisible, setIsResultTextVisible] = useState(false);
   let languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
+
   const pageLimit = 20;
   const fetchFilters = () => {
     dispatch(getSachFilters(setLanguages, setPublishersList, setPublisherCountries));
@@ -37,6 +41,7 @@ function Factly() {
           offset: (pageNum - 1) * pageLimit,
         },
         setTotalMatches,
+        setResultStats,
       ),
     );
   };
@@ -47,11 +52,25 @@ function Factly() {
 
   useEffect(() => {
     fetchFactChecks();
+    setIsResultTextVisible(true);
   }, [language, publisher, country, dateOrder, query, pageNum]);
 
   useEffect(() => {
     setPageNum(1);
+    setIsResultTextVisible(false);
   }, [query]);
+
+  useEffect(() => {
+    if (query === '' || query === undefined) {
+      setDateOrder('desc');
+    } else {
+      setDateOrder('');
+    }
+  }, [query]);
+
+  useEffect(() => {
+    setDateOrder((prevDateOrder) => prevDateOrder);
+  }, [dateOrder]);
 
   const handleFinish = (formData) => {
     setQuery(formData.query);
@@ -199,6 +218,7 @@ function Factly() {
             placeholder={'Sort by date'}
             onChange={handleDateChange}
             style={{ width: '80%' }}
+            value={dateOrder === '' ? null : dateOrder}
             allowClear
           >
             <Select.Option value={'desc'}> latest </Select.Option>
@@ -214,6 +234,16 @@ function Factly() {
             marginTop: '20px',
           }}
         >
+          {isResultTextVisible && factChecks?.length ? (
+            <p
+              style={{
+                color: ' #4b5563',
+                fontSize: '16px',
+              }}
+            >
+              {getResultStringFromStats(resultStats, totalMatches)}
+            </p>
+          ) : null}
           {factChecks?.length
             ? factChecks.map((factCheck, index) => (
                 <FactCheck

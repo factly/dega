@@ -77,15 +77,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			var res map[string]interface{}
-			if searchQuery != "" {
-				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
-			} else {
-				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "podcast")
-				if _, found := res["hits"]; found {
-					hits = res["hits"].([]interface{})
-				}
-			}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

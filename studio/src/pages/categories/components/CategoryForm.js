@@ -64,7 +64,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   return (
     <Form
       form={form}
-      initialValues={{ ...data }}
+      initialValues={{ ...formData }}
       name="create-category"
       layout="vertical"
       onFinish={(values) => {

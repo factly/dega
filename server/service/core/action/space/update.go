@@ -91,59 +91,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-
-	logoID := &space.LogoID
-	result.LogoID = &space.LogoID
-	if space.LogoID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"logo_id": nil}).Error
-		logoID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	logoMobileID := &space.LogoMobileID
-	result.LogoMobileID = &space.LogoMobileID
-	if space.LogoMobileID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"logo_mobile_id": nil}).Error
-		logoMobileID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	favIconID := &space.FavIconID
-	result.FavIconID = &space.FavIconID
-	if space.FavIconID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"fav_icon_id": nil}).Error
-		favIconID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	mobileIconID := &space.MobileIconID
-	result.MobileIconID = &space.MobileIconID
-	if space.MobileIconID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"mobile_icon_id": nil}).Error
-		mobileIconID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
 	var spaceSlug string
 	if result.Slug == space.Slug {
 		spaceSlug = result.Slug
@@ -152,27 +99,44 @@ func update(w http.ResponseWriter, r *http.Request) {
 	} else {
 		spaceSlug = approveSpaceSlug(slugx.Make(space.Name))
 	}
+	updateMap := map[string]interface{}{
+		"name":               space.Name,
+		"slug":               spaceSlug,
+		"site_title":         space.SiteTitle,
+		"tag_line":           space.TagLine,
+		"site_address":       space.SiteAddress,
+		"description":        space.Description,
+		"logo_id":            space.LogoID,
+		"logo_mobile_id":     space.LogoMobileID,
+		"fav_icon_id":        space.FavIconID,
+		"mobile_icon_id":     space.MobileIconID,
+		"header_code":        space.HeaderCode,
+		"footer_code":        space.FooterCode,
+		"meta_fields":        space.MetaFields,
+		"verification_codes": space.VerificationCodes,
+		"social_media_urls":  space.SocialMediaURLs,
+		"contact_info":       space.ContactInfo,
+		"analytics":          space.Analytics,
+	}
 
-	err = tx.Model(&result).Updates(model.Space{
-		Base:              config.Base{UpdatedByID: uint(uID)},
-		Name:              space.Name,
-		SiteTitle:         space.SiteTitle,
-		Slug:              spaceSlug,
-		Description:       space.Description,
-		TagLine:           space.TagLine,
-		SiteAddress:       space.SiteAddress,
-		LogoID:            logoID,
-		FavIconID:         favIconID,
-		MobileIconID:      mobileIconID,
-		LogoMobileID:      logoMobileID,
-		Analytics:         space.Analytics,
-		VerificationCodes: space.VerificationCodes,
-		SocialMediaURLs:   space.SocialMediaURLs,
-		ContactInfo:       space.ContactInfo,
-		HeaderCode:        space.HeaderCode,
-		FooterCode:        space.FooterCode,
-		MetaFields:        space.MetaFields,
-	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
+	// check if the id for all the mediums in space is 0 or not if it is zero then make it null
+	if space.LogoID == 0 {
+		updateMap["logo_id"] = nil
+	}
+
+	if space.LogoMobileID == 0 {
+		updateMap["logo_mobile_id"] = nil
+	}
+
+	if space.FavIconID == 0 {
+		updateMap["fav_icon_id"] = nil
+	}
+
+	if space.MobileIconID == 0 {
+		updateMap["mobile_icon_id"] = nil
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

@@ -138,7 +138,7 @@ func AddPosts(spaceID uint) error {
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
 
-	_, err = meilisearchx.Client.Documents("dega").AddOrUpdate(meiliPostObjects)
+	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliPostObjects)
 	tx.Commit();
 	return err
 }
@@ -166,7 +166,7 @@ func AddCategories(spaceID uint) error {
 		meiliCategoryObjects = append(meiliCategoryObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliCategoryObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliCategoryObjects)
 
 	return err
 }
@@ -193,7 +193,7 @@ func AddTags(spaceID uint) error {
 		meiliTagObjects = append(meiliTagObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliTagObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliTagObjects)
 
 	return err
 }
@@ -226,7 +226,7 @@ func AddMedium(spaceID uint) error {
 		meiliMediumObjects = append(meiliMediumObjects, meiliObj)
 	}
 
-	_, err = meilisearchx.Client.Documents("dega").AddOrUpdate(meiliMediumObjects)
+	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliMediumObjects)
 	tx.Commit()
 	return err
 }
@@ -253,7 +253,7 @@ func AddMenu(spaceID uint) error {
 		meiliMenuObjects = append(meiliMenuObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliMenuObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliMenuObjects)
 
 	return err
 }
@@ -284,7 +284,7 @@ func AddSpace(spaceID uint) error {
 		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliSpaceObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliSpaceObjects)
 
 	return err
 }
@@ -327,7 +327,7 @@ func AddClaim(spaceID uint) error {
 		meiliClaimObjects = append(meiliClaimObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliClaimObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimObjects)
 
 	return err
 }
@@ -355,7 +355,7 @@ func AddClaimant(spaceID uint) error {
 		meiliClaimantObjects = append(meiliClaimantObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliClaimantObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimantObjects)
 
 	return err
 }
@@ -385,7 +385,7 @@ func AddRating(spaceID uint) error {
 		meiliRatingObjects = append(meiliRatingObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliRatingObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliRatingObjects)
 
 	return err
 }
@@ -421,7 +421,7 @@ func AddPodcast(spaceID uint) error {
 		meiliPodcastObjects = append(meiliPodcastObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliPodcastObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliPodcastObjects)
 
 	return err
 }
@@ -461,7 +461,7 @@ func AddEpisode(spaceID uint) error {
 		meiliEpisodeObjects = append(meiliEpisodeObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Documents("dega").AddOrUpdate(meiliEpisodeObjects)
+	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliEpisodeObjects)
 
 	return err
 }

@@ -159,45 +159,33 @@ func update(w http.ResponseWriter, r *http.Request) {
 		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
-	featuredMediumID := &page.FeaturedMediumID
+	updateMap := map[string]interface{}{
+		"updated_by_id":      uint(uID),
+		"title":              page.Title,
+		"slug":               pageSlug,
+		"subtitle":           page.Subtitle,
+		"status":             page.Status,
+		"published_date":     page.PublishedDate,
+		"excerpt":            page.Excerpt,
+		"description":        page.Description,
+		"html_description":   description,
+		"is_highlighted":     page.IsHighlighted,
+		"is_sticky":          page.IsSticky,
+		"format_id":          page.FormatID,
+		"featured_medium_id": page.FeaturedMediumID,
+		"meta":               page.Meta,
+		"meta_fields":        page.MetaFields,
+		"header_code":        page.HeaderCode,
+		"footer_code":        page.FooterCode,
+		"is_featured":        page.IsFeatured,
+	}
+
 	result.Post.FeaturedMediumID = &page.FeaturedMediumID
 	if page.FeaturedMediumID == 0 {
-		err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
-		featuredMediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["featured_medium_id"] = nil
 	}
 
-	updatedPage := model.Post{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Title:            page.Title,
-		Slug:             pageSlug,
-		Subtitle:         page.Subtitle,
-		Status:           page.Status,
-		PublishedDate:    page.PublishedDate,
-		Excerpt:          page.Excerpt,
-		Description:      page.Description,
-		HTMLDescription:  description,
-		IsHighlighted:    page.IsHighlighted,
-		IsSticky:         page.IsSticky,
-		FormatID:         page.FormatID,
-		FeaturedMediumID: featuredMediumID,
-		Meta:             page.Meta,
-		MetaFields:       page.MetaFields,
-		HeaderCode:       page.HeaderCode,
-		FooterCode:       page.FooterCode,
-	}
-
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted").Omit("Tags", "Categories").Updates(model.Post{
-		IsFeatured:    page.IsFeatured,
-		IsSticky:      page.IsSticky,
-		IsHighlighted: page.IsHighlighted,
-	})
-	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(updatedPage).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
