@@ -177,6 +177,7 @@ exports[`Media List component snapshot testing should match component when loadi
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -459,6 +460,7 @@ exports[`Media List component snapshot testing should match component when loadi
                             "20",
                           ]
                         }
+                        showTotal={[Function]}
                         total={2}
                       >
                         <LocaleReceiver
@@ -578,6 +580,7 @@ exports[`Media List component snapshot testing should match component when loadi
                             showPrevNextJumpers={true}
                             showQuickJumper={false}
                             showTitle={true}
+                            showTotal={[Function]}
                             style={Object {}}
                             total={2}
                             totalBoundaryShowSizeChanger={50}
@@ -587,6 +590,11 @@ exports[`Media List component snapshot testing should match component when loadi
                               style={Object {}}
                               unselectable="unselectable"
                             >
+                              <li
+                                className="ant-pagination-total-text"
+                              >
+                                1-2 of 2 results
+                              </li>
                               <li
                                 aria-disabled={true}
                                 className="ant-pagination-prev ant-pagination-disabled"
@@ -1032,6 +1040,7 @@ exports[`Media List component snapshot testing should match component with media
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -1314,6 +1323,7 @@ exports[`Media List component snapshot testing should match component with media
                             "20",
                           ]
                         }
+                        showTotal={[Function]}
                         total={2}
                       >
                         <LocaleReceiver
@@ -1433,6 +1443,7 @@ exports[`Media List component snapshot testing should match component with media
                             showPrevNextJumpers={true}
                             showQuickJumper={false}
                             showTitle={true}
+                            showTotal={[Function]}
                             style={Object {}}
                             total={2}
                             totalBoundaryShowSizeChanger={50}
@@ -1442,6 +1453,11 @@ exports[`Media List component snapshot testing should match component with media
                               style={Object {}}
                               unselectable="unselectable"
                             >
+                              <li
+                                className="ant-pagination-total-text"
+                              >
+                                1-2 of 2 results
+                              </li>
                               <li
                                 aria-disabled={true}
                                 className="ant-pagination-prev ant-pagination-disabled"
@@ -1811,6 +1827,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 0,
                     }
                   }
@@ -1909,6 +1926,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             "20",
                           ]
                         }
+                        showTotal={[Function]}
                         total={0}
                       >
                         <LocaleReceiver
@@ -2028,6 +2046,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                             showPrevNextJumpers={true}
                             showQuickJumper={false}
                             showTitle={true}
+                            showTotal={[Function]}
                             style={Object {}}
                             total={0}
                             totalBoundaryShowSizeChanger={50}
@@ -2037,6 +2056,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                               style={Object {}}
                               unselectable="unselectable"
                             >
+                              <li
+                                className="ant-pagination-total-text"
+                              >
+                                0-0 of 0 results
+                              </li>
                               <li
                                 aria-disabled={true}
                                 className="ant-pagination-prev ant-pagination-disabled"

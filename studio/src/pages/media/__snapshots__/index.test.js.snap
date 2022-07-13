@@ -1518,6 +1518,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -1616,6 +1617,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       "20",
                                     ]
                                   }
+                                  showTotal={[Function]}
                                   total={0}
                                 >
                                   <LocaleReceiver
@@ -1735,6 +1737,7 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                       showPrevNextJumpers={true}
                                       showQuickJumper={false}
                                       showTitle={true}
+                                      showTotal={[Function]}
                                       style={Object {}}
                                       total={0}
                                       totalBoundaryShowSizeChanger={50}
@@ -1744,6 +1747,11 @@ exports[`Media List component snapshot testing should render the component 1`] =
                                         style={Object {}}
                                         unselectable="unselectable"
                                       >
+                                        <li
+                                          className="ant-pagination-total-text"
+                                        >
+                                          0-0 of 0 results
+                                        </li>
                                         <li
                                           aria-disabled={true}
                                           className="ant-pagination-prev ant-pagination-disabled"
@@ -3462,6 +3470,7 @@ exports[`Media List component snapshot testing should render the component with 
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 1,
                               }
                             }
@@ -3629,6 +3638,7 @@ exports[`Media List component snapshot testing should render the component with 
                                       "20",
                                     ]
                                   }
+                                  showTotal={[Function]}
                                   total={1}
                                 >
                                   <LocaleReceiver
@@ -3748,6 +3758,7 @@ exports[`Media List component snapshot testing should render the component with 
                                       showPrevNextJumpers={true}
                                       showQuickJumper={false}
                                       showTitle={true}
+                                      showTotal={[Function]}
                                       style={Object {}}
                                       total={1}
                                       totalBoundaryShowSizeChanger={50}
@@ -3757,6 +3768,11 @@ exports[`Media List component snapshot testing should render the component with 
                                         style={Object {}}
                                         unselectable="unselectable"
                                       >
+                                        <li
+                                          className="ant-pagination-total-text"
+                                        >
+                                          1-1 of 1 results
+                                        </li>
                                         <li
                                           aria-disabled={true}
                                           className="ant-pagination-prev ant-pagination-disabled"

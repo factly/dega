@@ -3191,6 +3191,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -3401,6 +3402,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -3599,6 +3601,7 @@ exports[`Claims List component snapshot testing should render the component 1`] 
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -7467,6 +7470,7 @@ exports[`Claims List component snapshot testing should render the component with
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 2,
                               }
                             }
@@ -7828,6 +7832,7 @@ exports[`Claims List component snapshot testing should render the component with
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 2,
                                         }
                                       }
@@ -8173,6 +8178,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 2,
                                               },
                                               "prefixCls": "ant-table",
@@ -10792,6 +10798,7 @@ exports[`Claims List component snapshot testing should render the component with
                                           "20",
                                         ]
                                       }
+                                      showTotal={[Function]}
                                       total={2}
                                     >
                                       <LocaleReceiver
@@ -10911,6 +10918,7 @@ exports[`Claims List component snapshot testing should render the component with
                                           showPrevNextJumpers={true}
                                           showQuickJumper={false}
                                           showTitle={true}
+                                          showTotal={[Function]}
                                           style={Object {}}
                                           total={2}
                                           totalBoundaryShowSizeChanger={50}
@@ -10920,6 +10928,11 @@ exports[`Claims List component snapshot testing should render the component with
                                             style={Object {}}
                                             unselectable="unselectable"
                                           >
+                                            <li
+                                              className="ant-pagination-total-text"
+                                            >
+                                              1-2 of 2 results
+                                            </li>
                                             <li
                                               aria-disabled={true}
                                               className="ant-pagination-prev ant-pagination-disabled"
@@ -14293,6 +14306,7 @@ exports[`Claims List component snapshot testing should render the component with
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -14503,6 +14517,7 @@ exports[`Claims List component snapshot testing should render the component with
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -14701,6 +14716,7 @@ exports[`Claims List component snapshot testing should render the component with
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",

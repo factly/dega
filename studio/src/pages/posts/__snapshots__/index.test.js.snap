@@ -2587,6 +2587,7 @@ exports[`Posts List component snapshot testing should render the component 1`] =
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -2801,6 +2802,7 @@ exports[`Posts List component snapshot testing should render the component 1`] =
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -3005,6 +3007,7 @@ exports[`Posts List component snapshot testing should render the component 1`] =
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -6283,6 +6286,7 @@ exports[`Posts List component snapshot testing should render the component with 
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -6497,6 +6501,7 @@ exports[`Posts List component snapshot testing should render the component with 
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -6701,6 +6706,7 @@ exports[`Posts List component snapshot testing should render the component with 
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",

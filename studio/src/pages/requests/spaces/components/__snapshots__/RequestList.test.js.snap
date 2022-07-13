@@ -128,6 +128,7 @@ exports[`Space Request List component snapshot testing should match the componen
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -590,6 +591,7 @@ exports[`Space Request List component snapshot testing should match the componen
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -1012,6 +1014,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -6559,6 +6562,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -6678,6 +6682,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -6687,6 +6692,11 @@ exports[`Space Request List component snapshot testing should match the componen
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -7081,6 +7091,7 @@ exports[`Space Request List component snapshot testing should match the componen
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -7519,6 +7530,7 @@ exports[`Space Request List component snapshot testing should match the componen
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -7941,6 +7953,7 @@ exports[`Space Request List component snapshot testing should match the componen
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -13488,6 +13501,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -13607,6 +13621,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -13616,6 +13631,11 @@ exports[`Space Request List component snapshot testing should match the componen
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -14010,6 +14030,7 @@ exports[`Space Request List component snapshot testing should render the compone
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -14448,6 +14469,7 @@ exports[`Space Request List component snapshot testing should render the compone
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -14870,6 +14892,7 @@ exports[`Space Request List component snapshot testing should render the compone
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -20417,6 +20440,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -20536,6 +20560,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -20545,6 +20570,11 @@ exports[`Space Request List component snapshot testing should render the compone
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -20911,6 +20941,7 @@ exports[`Space Request List component snapshot testing should render the compone
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 1,
             }
           }
@@ -21126,6 +21157,7 @@ exports[`Space Request List component snapshot testing should render the compone
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 1,
                       }
                     }
@@ -21325,6 +21357,7 @@ exports[`Space Request List component snapshot testing should render the compone
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 1,
                             },
                             "prefixCls": "ant-table",
@@ -22174,6 +22207,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={1}
                   >
                     <LocaleReceiver
@@ -22293,6 +22327,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={1}
                         totalBoundaryShowSizeChanger={50}
@@ -22302,6 +22337,11 @@ exports[`Space Request List component snapshot testing should render the compone
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-1 of 1 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"

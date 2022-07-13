@@ -153,6 +153,7 @@ exports[`Space Permission List component snapshot testing should match component
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": undefined,
             }
           }
@@ -712,6 +713,7 @@ exports[`Space Permission List component snapshot testing should match component
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -1231,6 +1233,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": undefined,
                             },
                             "prefixCls": "ant-table",
@@ -5425,6 +5428,7 @@ exports[`Space Permission List component snapshot testing should match component
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -5544,6 +5548,7 @@ exports[`Space Permission List component snapshot testing should match component
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -5553,6 +5558,11 @@ exports[`Space Permission List component snapshot testing should match component
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -5972,6 +5982,7 @@ exports[`Space Permission List component snapshot testing should match component
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": undefined,
             }
           }
@@ -6507,6 +6518,7 @@ exports[`Space Permission List component snapshot testing should match component
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -7026,6 +7038,7 @@ exports[`Space Permission List component snapshot testing should match component
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": undefined,
                             },
                             "prefixCls": "ant-table",
@@ -11220,6 +11233,7 @@ exports[`Space Permission List component snapshot testing should match component
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -11339,6 +11353,7 @@ exports[`Space Permission List component snapshot testing should match component
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -11348,6 +11363,11 @@ exports[`Space Permission List component snapshot testing should match component
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -11767,6 +11787,7 @@ exports[`Space Permission List component snapshot testing should render componen
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": undefined,
             }
           }
@@ -12302,6 +12323,7 @@ exports[`Space Permission List component snapshot testing should render componen
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -12821,6 +12843,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": undefined,
                             },
                             "prefixCls": "ant-table",
@@ -17015,6 +17038,7 @@ exports[`Space Permission List component snapshot testing should render componen
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -17134,6 +17158,7 @@ exports[`Space Permission List component snapshot testing should render componen
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -17143,6 +17168,11 @@ exports[`Space Permission List component snapshot testing should render componen
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -17524,6 +17554,7 @@ exports[`Space Permission List component snapshot testing should render componen
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 0,
             }
           }
@@ -17773,6 +17804,7 @@ exports[`Space Permission List component snapshot testing should render componen
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -18010,6 +18042,7 @@ exports[`Space Permission List component snapshot testing should render componen
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 0,
                             },
                             "prefixCls": "ant-table",

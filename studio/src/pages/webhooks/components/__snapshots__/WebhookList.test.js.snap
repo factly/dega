@@ -156,6 +156,7 @@ exports[`Webhook List component snapshot testing should match component when loa
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 2,
             }
           }
@@ -467,6 +468,7 @@ exports[`Webhook List component snapshot testing should match component when loa
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 2,
                       }
                     }
@@ -762,6 +764,7 @@ exports[`Webhook List component snapshot testing should match component when loa
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 2,
                             },
                             "prefixCls": "ant-table",
@@ -4261,6 +4264,7 @@ exports[`Webhook List component snapshot testing should match component when loa
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={2}
                   >
                     <LocaleReceiver
@@ -4380,6 +4384,7 @@ exports[`Webhook List component snapshot testing should match component when loa
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={2}
                         totalBoundaryShowSizeChanger={50}
@@ -4389,6 +4394,11 @@ exports[`Webhook List component snapshot testing should match component when loa
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-2 of 2 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -4811,6 +4821,7 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 2,
             }
           }
@@ -5122,6 +5133,7 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 2,
                       }
                     }
@@ -5417,6 +5429,7 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 2,
                             },
                             "prefixCls": "ant-table",
@@ -8916,6 +8929,7 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={2}
                   >
                     <LocaleReceiver
@@ -9035,6 +9049,7 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={2}
                         totalBoundaryShowSizeChanger={50}
@@ -9044,6 +9059,11 @@ exports[`Webhook List component snapshot testing should render the component 1`]
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-2 of 2 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"

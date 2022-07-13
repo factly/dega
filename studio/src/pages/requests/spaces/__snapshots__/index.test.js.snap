@@ -244,6 +244,7 @@ exports[`Space Request component should render the component 1`] = `
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -463,6 +464,7 @@ exports[`Space Request component should render the component 1`] = `
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": 0,
                                 }
                               }
@@ -670,6 +672,7 @@ exports[`Space Request component should render the component 1`] = `
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",
@@ -1738,6 +1741,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -1957,6 +1961,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": 0,
                                 }
                               }
@@ -2164,6 +2169,7 @@ exports[`Space Request component should render the with no spaceRequests 1`] = `
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",

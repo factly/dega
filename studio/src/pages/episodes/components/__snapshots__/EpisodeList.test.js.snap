@@ -172,6 +172,7 @@ exports[`Episode List component snapshot testing should match component when loa
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 1,
                     }
                   }
@@ -448,6 +449,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 1,
                               }
                             }
@@ -684,6 +686,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                         "15",
                                         "20",
                                       ],
+                                      "showTotal": [Function],
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -2290,6 +2293,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                 "20",
                               ]
                             }
+                            showTotal={[Function]}
                             total={1}
                           >
                             <LocaleReceiver
@@ -2409,6 +2413,7 @@ exports[`Episode List component snapshot testing should match component when loa
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={1}
                                 totalBoundaryShowSizeChanger={50}
@@ -2418,6 +2423,11 @@ exports[`Episode List component snapshot testing should match component when loa
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-1 of 1 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
@@ -2860,6 +2870,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 1,
                     }
                   }
@@ -3112,6 +3123,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 1,
                               }
                             }
@@ -3348,6 +3360,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                         "15",
                                         "20",
                                       ],
+                                      "showTotal": [Function],
                                       "total": 1,
                                     },
                                     "prefixCls": "ant-table",
@@ -4954,6 +4967,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                 "20",
                               ]
                             }
+                            showTotal={[Function]}
                             total={1}
                           >
                             <LocaleReceiver
@@ -5073,6 +5087,7 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={1}
                                 totalBoundaryShowSizeChanger={50}
@@ -5082,6 +5097,11 @@ exports[`Episode List component snapshot testing should render the component 1`]
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-1 of 1 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
