@@ -2,12 +2,12 @@ name: API CI
 on:
   pull_request:
     branches: [develop, master]
-    paths: 
-    - 'api/**'
+    paths:
+      - "api/**"
   push:
     branches: [develop, master]
-    paths: 
-    - 'api/**'
+    paths:
+      - "api/**"
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-go@v2
         id: setup_go
         with:
-          go-version: '1.13'
+          go-version: "1.18"
       - name: Cache go-modules
         uses: actions/cache@v1
         with:
