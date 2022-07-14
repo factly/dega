@@ -1,11 +1,12 @@
 package test
 
 import (
-	"log"
 	"net/http"
 	"regexp"
 	"testing"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/DATA-DOG/go-sqlmock"
@@ -65,7 +66,7 @@ func TestRouter() http.Handler {
 func SetupMockDB() sqlmock.Sqlmock {
 	db, mock, err := sqlmock.New()
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 	}
 
 	dialector := postgres.New(postgres.Config{
@@ -80,7 +81,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	})
 
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 	}
 
 	viper.Set("enable_cache", false)

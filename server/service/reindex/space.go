@@ -2,9 +2,10 @@ package reindex
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -54,15 +55,14 @@ func space(w http.ResponseWriter, r *http.Request) {
 
 	res, err := meilisearchx.Client.Index("dega").Search("", &meilisearch.SearchRequest{
 		Filter: "space_id=" + fmt.Sprint(sID),
-		Limit:   100000,
+		Limit:  100000,
 	})
 
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 	}
 
-	
-	if res!=nil{
+	if res != nil {
 		hits := res.Hits
 		if len(hits) > 0 {
 
