@@ -2,10 +2,11 @@ package test
 
 import (
 	"database/sql/driver"
-	"log"
 	"regexp"
 	"testing"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
 	"github.com/factly/x/meilisearchx"
@@ -53,7 +54,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 
 	db, mock, err := sqlmock.New()
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 	}
 
 	dialector := postgres.New(postgres.Config{
@@ -68,7 +69,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	})
 
 	if err != nil {
-		log.Println(err)
+		log.Error(err)
 	}
 
 	return mock

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"log"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/factly/dega-server/config"
 	"github.com/spf13/cobra"
@@ -20,7 +20,7 @@ var superOrgCmd = &cobra.Command{
 
 		err := config.CreateSuperOrganisation()
 		if err != nil {
-			log.Println(err)
+			log.Error(err)
 		}
 	},
 }

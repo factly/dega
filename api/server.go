@@ -1,9 +1,10 @@
 package main
 
 import (
-	"log"
 	"net/http"
 	"time"
+
+	log "github.com/sirupsen/logrus"
 
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
@@ -73,7 +74,7 @@ func main() {
 	if config.SearchEnabled() {
 		err := meilisearchx.SetupMeiliSearch("dega", []string{"name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "status", "space_id"})
 		if err != nil {
-			log.Println(err)
+			log.Error(err)
 		}
 	}
 
