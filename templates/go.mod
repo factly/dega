@@ -11,7 +11,7 @@ require (
 	github.com/spf13/viper v1.8.1
 	gorm.io/driver/postgres v1.0.8
 	gorm.io/driver/sqlite v1.1.4
-	gorm.io/gorm v1.21.11
+	gorm.io/gorm v1.23.8
 )
 
 require (
@@ -29,7 +29,7 @@ require (
 	github.com/jackc/pgtype v1.6.2 // indirect
 	github.com/jackc/pgx/v4 v4.10.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.2 // indirect
+	github.com/jinzhu/now v1.1.4 // indirect
 	github.com/lib/pq v1.3.0 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mattn/go-sqlite3 v1.14.6 // indirect
