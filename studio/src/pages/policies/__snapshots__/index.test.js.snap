@@ -248,6 +248,7 @@ exports[`Policies List component should render the component 1`] = `
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -443,6 +444,7 @@ exports[`Policies List component should render the component 1`] = `
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": 0,
                                 }
                               }
@@ -626,6 +628,7 @@ exports[`Policies List component should render the component 1`] = `
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",

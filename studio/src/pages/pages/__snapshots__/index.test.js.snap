@@ -2518,6 +2518,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -2688,6 +2689,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -2848,6 +2850,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",

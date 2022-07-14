@@ -201,6 +201,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
           expandIcon: () => {},
         }}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,

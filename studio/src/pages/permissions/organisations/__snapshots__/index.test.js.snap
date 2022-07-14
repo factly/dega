@@ -99,6 +99,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -278,6 +279,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": 0,
                                 }
                               }
@@ -445,6 +447,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",
@@ -1081,6 +1084,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -1282,6 +1286,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": undefined,
                                 }
                               }
@@ -1467,6 +1472,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": undefined,
                                       },
                                       "prefixCls": "ant-table",
@@ -2783,6 +2789,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                   "20",
                                 ]
                               }
+                              showTotal={[Function]}
                               total={1}
                             >
                               <LocaleReceiver
@@ -2902,6 +2909,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                   showPrevNextJumpers={true}
                                   showQuickJumper={false}
                                   showTitle={true}
+                                  showTotal={[Function]}
                                   style={Object {}}
                                   total={1}
                                   totalBoundaryShowSizeChanger={50}
@@ -2911,6 +2919,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                     style={Object {}}
                                     unselectable="unselectable"
                                   >
+                                    <li
+                                      className="ant-pagination-total-text"
+                                    >
+                                      1-1 of 1 results
+                                    </li>
                                     <li
                                       aria-disabled={true}
                                       className="ant-pagination-prev ant-pagination-disabled"
@@ -3294,6 +3307,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -3500,6 +3514,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                     "15",
                                     "20",
                                   ],
+                                  "showTotal": [Function],
                                   "total": undefined,
                                 }
                               }
@@ -3690,6 +3705,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                           "15",
                                           "20",
                                         ],
+                                        "showTotal": [Function],
                                         "total": undefined,
                                       },
                                       "prefixCls": "ant-table",
@@ -5000,6 +5016,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                   "20",
                                 ]
                               }
+                              showTotal={[Function]}
                               total={1}
                             >
                               <LocaleReceiver
@@ -5119,6 +5136,7 @@ exports[`Organisation Permission component snapshot testing should render the co
                                   showPrevNextJumpers={true}
                                   showQuickJumper={false}
                                   showTitle={true}
+                                  showTotal={[Function]}
                                   style={Object {}}
                                   total={1}
                                   totalBoundaryShowSizeChanger={50}
@@ -5128,6 +5146,11 @@ exports[`Organisation Permission component snapshot testing should render the co
                                     style={Object {}}
                                     unselectable="unselectable"
                                   >
+                                    <li
+                                      className="ant-pagination-total-text"
+                                    >
+                                      1-1 of 1 results
+                                    </li>
                                     <li
                                       aria-disabled={true}
                                       className="ant-pagination-prev ant-pagination-disabled"

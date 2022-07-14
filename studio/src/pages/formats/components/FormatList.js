@@ -70,6 +70,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
       loading={data.loading}
       rowKey={'id'}
       pagination={{
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
         total: data.total,
         current: filters.page,
         pageSize: filters.limit,

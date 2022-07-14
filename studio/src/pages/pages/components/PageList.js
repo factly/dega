@@ -184,6 +184,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           expandIcon: () => {},
         }}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,

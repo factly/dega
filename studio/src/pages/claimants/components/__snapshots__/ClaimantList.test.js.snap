@@ -174,6 +174,7 @@ exports[`Claimants List component snapshot testing should match component when l
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -504,6 +505,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 2,
                               }
                             }
@@ -794,6 +796,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                         "15",
                                         "20",
                                       ],
+                                      "showTotal": [Function],
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -3235,6 +3238,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                 "20",
                               ]
                             }
+                            showTotal={[Function]}
                             total={2}
                           >
                             <LocaleReceiver
@@ -3354,6 +3358,7 @@ exports[`Claimants List component snapshot testing should match component when l
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={2}
                                 totalBoundaryShowSizeChanger={50}
@@ -3363,6 +3368,11 @@ exports[`Claimants List component snapshot testing should match component when l
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-2 of 2 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
@@ -3807,6 +3817,7 @@ exports[`Claimants List component snapshot testing should match component with c
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -4113,6 +4124,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 2,
                               }
                             }
@@ -4403,6 +4415,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                         "15",
                                         "20",
                                       ],
+                                      "showTotal": [Function],
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -6844,6 +6857,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                 "20",
                               ]
                             }
+                            showTotal={[Function]}
                             total={2}
                           >
                             <LocaleReceiver
@@ -6963,6 +6977,7 @@ exports[`Claimants List component snapshot testing should match component with c
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={2}
                                 totalBoundaryShowSizeChanger={50}
@@ -6972,6 +6987,11 @@ exports[`Claimants List component snapshot testing should match component with c
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-2 of 2 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
@@ -7364,6 +7384,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                         "15",
                         "20",
                       ],
+                      "showTotal": [Function],
                       "total": 0,
                     }
                   }
@@ -7555,6 +7576,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -7734,6 +7756,7 @@ exports[`Claimants List component snapshot testing should render the component 1
                                         "15",
                                         "20",
                                       ],
+                                      "showTotal": [Function],
                                       "total": 0,
                                     },
                                     "prefixCls": "ant-table",

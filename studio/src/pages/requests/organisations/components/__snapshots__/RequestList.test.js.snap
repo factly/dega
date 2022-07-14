@@ -103,6 +103,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -435,6 +436,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -727,6 +729,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -5638,6 +5641,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -5757,6 +5761,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -5766,6 +5771,11 @@ exports[`Organisation Request List component snapshot testing should match the c
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -6135,6 +6145,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -6443,6 +6454,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -6735,6 +6747,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -11646,6 +11659,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -11765,6 +11779,7 @@ exports[`Organisation Request List component snapshot testing should match the c
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -11774,6 +11789,11 @@ exports[`Organisation Request List component snapshot testing should match the c
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -12143,6 +12163,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -12451,6 +12472,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -12743,6 +12765,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -17654,6 +17677,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -17773,6 +17797,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -17782,6 +17807,11 @@ exports[`Organisation Request List component snapshot testing should render the 
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -18137,6 +18167,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                 "15",
                 "20",
               ],
+              "showTotal": [Function],
               "total": 2,
             }
           }
@@ -18323,6 +18354,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                           "15",
                           "20",
                         ],
+                        "showTotal": [Function],
                         "total": 2,
                       }
                     }
@@ -18493,6 +18525,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                                 "15",
                                 "20",
                               ],
+                              "showTotal": [Function],
                               "total": 2,
                             },
                             "prefixCls": "ant-table",
@@ -19116,6 +19149,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                         "20",
                       ]
                     }
+                    showTotal={[Function]}
                     total={2}
                   >
                     <LocaleReceiver
@@ -19235,6 +19269,7 @@ exports[`Organisation Request List component snapshot testing should render the 
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={2}
                         totalBoundaryShowSizeChanger={50}
@@ -19244,6 +19279,11 @@ exports[`Organisation Request List component snapshot testing should render the 
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-2 of 2 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"

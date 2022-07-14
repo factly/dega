@@ -16,6 +16,7 @@ function MediumList({ data, filters, setFilters }) {
           xxl: 5,
         }}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,

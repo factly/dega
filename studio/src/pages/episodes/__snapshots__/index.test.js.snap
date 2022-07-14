@@ -2290,6 +2290,7 @@ exports[`Episode Component snapshot testing should render the component 1`] = `
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -2488,6 +2489,7 @@ exports[`Episode Component snapshot testing should render the component 1`] = `
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -2674,6 +2676,7 @@ exports[`Episode Component snapshot testing should render the component 1`] = `
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",
@@ -5641,6 +5644,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                   "15",
                                   "20",
                                 ],
+                                "showTotal": [Function],
                                 "total": 1,
                               }
                             }
@@ -5906,6 +5910,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                             "15",
                                             "20",
                                           ],
+                                          "showTotal": [Function],
                                           "total": 1,
                                         }
                                       }
@@ -6155,6 +6160,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                                   "15",
                                                   "20",
                                                 ],
+                                                "showTotal": [Function],
                                                 "total": 1,
                                               },
                                               "prefixCls": "ant-table",
@@ -7802,6 +7808,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                           "20",
                                         ]
                                       }
+                                      showTotal={[Function]}
                                       total={1}
                                     >
                                       <LocaleReceiver
@@ -7921,6 +7928,7 @@ exports[`Episode Component snapshot testing should render the component with dat
                                           showPrevNextJumpers={true}
                                           showQuickJumper={false}
                                           showTitle={true}
+                                          showTotal={[Function]}
                                           style={Object {}}
                                           total={1}
                                           totalBoundaryShowSizeChanger={50}
@@ -7930,6 +7938,11 @@ exports[`Episode Component snapshot testing should render the component with dat
                                             style={Object {}}
                                             unselectable="unselectable"
                                           >
+                                            <li
+                                              className="ant-pagination-total-text"
+                                            >
+                                              1-1 of 1 results
+                                            </li>
                                             <li
                                               aria-disabled={true}
                                               className="ant-pagination-prev ant-pagination-disabled"

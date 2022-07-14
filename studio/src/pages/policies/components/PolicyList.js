@@ -91,6 +91,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
       loading={data.loading}
       rowKey={'name'}
       pagination={{
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
         total: data.total,
         current: filters.page,
         pageSize: filters.limit,
