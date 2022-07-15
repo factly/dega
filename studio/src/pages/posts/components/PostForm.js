@@ -236,9 +236,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
-              {
-                (data?.updated_at) ? <p style={{fontSize: '18px', color:'#595E60'}}>Last updated on : {getDatefromStringWithoutDay(data.updated_at)}</p> : null
-              }
+              {data?.updated_at ? (
+                <p style={{ fontSize: '18px', color: '#595E60' }}>
+                  Last updated on : {getDatefromStringWithoutDay(data.updated_at)}
+                </p>
+              ) : null}
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
