@@ -73,32 +73,30 @@ const factcheck = {
 };
 
 describe('sach fact-checks action', () => {
+  // testing the loadingSachFactChecks action
+  it('should create an action to set loading to true', () => {
+    const startLoadingAction = {
+      type: types.SET_SACH_FACT_CHECKS_LOADING,
+      payload: true,
+    };
+    expect(actions.loadingSachFactChecks()).toEqual(startLoadingAction);
+  });
 
-	// testing the loadingSachFactChecks action
-	it('should create an action to set loading to true', () => {
-		const startLoadingAction = {
-			type: types.SET_SACH_FACT_CHECKS_LOADING,
-			payload: true,
-		}
-		expect(actions.loadingSachFactChecks()).toEqual(startLoadingAction)
-	});
+  // testing the stopLoading fact check action
+  it('should create an action to stop loading', () => {
+    const stopLoadingAction = {
+      type: types.SET_SACH_FACT_CHECKS_LOADING,
+      payload: false,
+    };
+    expect(actions.stopLoading()).toEqual(stopLoadingAction);
+  });
 
-	// testing the stopLoading fact check action
-	it('should create an action to stop loading', () => {
-		const stopLoadingAction = {
-			type: types.SET_SACH_FACT_CHECKS_LOADING,
-			payload: false
-		}
-		expect(actions.stopLoading()).toEqual(stopLoadingAction);
-	})
-
-	//testing it addFactChecks action
-	it('should create an action to add fact checks', () => {
-		const addFactChecksAction  = {
-			type: types.ADD_SACH_FACT_CHECKS,
-			payload: [factcheck]
-		};
-		expect(actions.addFactChecks([factcheck])).toEqual(addFactChecksAction);
-	})
+  //testing it addFactChecks action
+  it('should create an action to add fact checks', () => {
+    const addFactChecksAction = {
+      type: types.ADD_SACH_FACT_CHECKS,
+      payload: [factcheck],
+    };
+    expect(actions.addFactChecks([factcheck])).toEqual(addFactChecksAction);
+  });
 });
- 
