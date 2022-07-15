@@ -79,7 +79,8 @@ function Media({ permission }) {
         style={{ width: '100%', marginBottom: '1rem' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
-            setFilters({ ...filters, ...changedValues });
+            const { q, ...filter } = filters;
+            setFilters({ ...filter });
           }
         }}
       >

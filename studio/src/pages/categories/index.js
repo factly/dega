@@ -78,7 +78,8 @@ function Categories({ permission }) {
         style={{ width: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
-            setFilters({ ...filters, ...changedValues });
+            const { q, ...filter } = filters;
+            setFilters({ ...filter });
           }
         }}
       >

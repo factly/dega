@@ -78,7 +78,8 @@ function Claimants({ permission }) {
         style={{ maxWidth: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
-            setFilters({ ...filters, ...changedValues });
+            const { q, ...filter } = filters;
+            setFilters({ ...filter });
           }
         }}
       >
