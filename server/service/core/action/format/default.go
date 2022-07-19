@@ -63,9 +63,19 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
+	spacePermission := &model.SpacePermission{}
+	spacePermission.ID = uint(sID)
+	err = config.DB.Model(&model.SpacePermission{}).First(&spacePermission).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		return
+	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	for i := range formats {
+		if formats[i].Name == "Fact Check" && !spacePermission.FactCheck {
+			break
+		}
 		formats[i].SpaceID = uint(sID)
 		tx.Model(&model.Format{}).FirstOrCreate(&formats[i], &formats[i])
 		if config.SearchEnabled() {
