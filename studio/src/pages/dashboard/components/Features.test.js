@@ -47,6 +47,7 @@ let state = {
     organisation: {
       id: 1,
       is_admin: true,
+      space_permissions: [{ id: 11, fact_check: true }],
     },
   },
   spaces: {
