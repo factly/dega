@@ -78,11 +78,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.Space{}
+	result := spaceWithPermissions{}
+	adminPerm := model.Permission{
+		Resource: "admin",
+		Actions:  []string{"admin"},
+	}
+	result.Permissions = []model.Permission{adminPerm}
+	var services []string
+	services, err = util.GetAllowedServices(uint(id))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+	result.AllowedServices = services
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&result).Error
+	err = config.DB.First(&result.Space).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -136,7 +149,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["mobile_icon_id"] = nil
 	}
 
-	err = tx.Model(&result).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
+	err = tx.Model(&result.Space).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result.Space).Error
 
 	if err != nil {
 		tx.Rollback()
