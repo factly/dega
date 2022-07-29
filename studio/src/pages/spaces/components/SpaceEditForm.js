@@ -43,7 +43,7 @@ const SpaceEditForm = ({ onCreate, data = {} }) => {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
-          onReset();
+          //  onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
