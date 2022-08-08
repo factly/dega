@@ -4,6 +4,7 @@ import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
 function Selector({
+  invalidOptions = [],
   setLoading = true,
   mode,
   createEntity,
@@ -161,11 +162,13 @@ function Selector({
       getPopupContainer={(trigger) => trigger.parentNode}
       autoClearSearchValue={true}
     >
-      {details.map((item) => (
-        <Select.Option value={item.id} key={entity + item.id}>
-          {item[display] ? item[display] : item['email'] ? item['email'] : null}
-        </Select.Option>
-      ))}
+      {details
+        .filter((item) => !invalidOptions.includes(item.id))
+        .map((item) => (
+          <Select.Option value={item.id} key={entity + item.id}>
+            {item[display] ? item[display] : item['email'] ? item['email'] : null}
+          </Select.Option>
+        ))}
     </Select>
   );
 }
