@@ -82,6 +82,11 @@ function Tags({ permission }) {
         style={{ width: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
+            if (changedValues.q === '') {
+              const { q, ...filtersWithoutQuery } = filters;
+              setFilters({ ...filtersWithoutQuery });
+              return;
+            }
             setFilters({ ...filters, ...changedValues });
           }
         }}
