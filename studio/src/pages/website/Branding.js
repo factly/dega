@@ -46,7 +46,7 @@ function Branding() {
         name="create-space"
         onFinish={(values) => {
           onCreate(values);
-          onReset();
+          //onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
