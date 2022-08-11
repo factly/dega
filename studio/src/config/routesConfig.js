@@ -71,6 +71,10 @@ import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
 
+//Roles
+import Roles from '../pages/roles';
+import CreateRole from '../pages/roles/CreateRole';
+
 //Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
@@ -140,6 +144,7 @@ import Permissions from '../pages/permissions';
 
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
+import { Component } from 'react';
 
 const routes = {
   dashboard: {
@@ -405,6 +410,12 @@ const routes = {
     Component: Policies,
     title: 'Policies',
   },
+  roles: {
+    path: '/members/roles',
+    menuKey: '/members',
+    Component: Roles,
+    title: 'Roles',
+  },
   createPolicy: {
     path: '/members/policies/create',
     menuKey: '/members',
@@ -414,6 +425,16 @@ const routes = {
       resource: 'policies',
       action: 'create',
     },
+  },
+  createRole: {
+    path: '/members/roles/create',
+    menuKey: '/members',
+    Component: CreateRole,
+    title: 'New Role',
+    // permission: {
+    //   resource: 'policies',
+    //   action: 'create',
+    // },
   },
   editPolicy: {
     path: '/members/policies/:id/edit',

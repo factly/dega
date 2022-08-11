@@ -167,6 +167,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 		result.Nodes = append(result.Nodes, *pageList)
 	}
 
+	// for _, node := range result.Nodes {
+	// 	println(node)
+
+	// }
+
 	renderx.JSON(w, http.StatusOK, result)
 }
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {

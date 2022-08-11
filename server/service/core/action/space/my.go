@@ -2,16 +2,18 @@ package space
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/service/core/action/user"
-	"github.com/factly/dega-server/util"
+	//"github.com/factly/dega-server/service/core/action/user"
+	//"github.com/factly/dega-server/util"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/policy"
+	//"github.com/factly/dega-server/service/core/action/policy"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -22,6 +24,13 @@ import (
 type organisationUser struct {
 	config.Base
 	Role string `gorm:"column:role" json:"role"`
+}
+type policyReq struct {
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Slug        string         `json:"slug"`
+	Permissions postgres.Jsonb `json:"permissions"`
+	Roles       []uint         `json:"roles"`
 }
 
 type orgWithSpace struct {
@@ -86,9 +95,14 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer resp.Body.Close()
-	body, _ := ioutil.ReadAll(resp.Body)
-
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 	allOrg := []orgWithSpace{}
+
 	err = json.Unmarshal(body, &allOrg)
 
 	if err != nil {
@@ -104,16 +118,71 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Fetched all the spaces related to all the organisations
+
 	var allSpaces = make([]model.Space, 0)
 
-	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
+	//	config.DB.Model(model.Space{}).Where("organisation_id IN (?)", allOrgIDs).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&allSpaces)
 
-	// fetch all the keto policies
-	policyList, err := policy.GetAllPolicies()
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	for _, org_id := range allOrgIDs {
+		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(org_id)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/", nil)
+		req.Header.Set("X-User", strconv.Itoa(uID))
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		org_spaces := []model.Space{}
+		err = json.NewDecoder(resp.Body).Decode(&org_spaces)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		fmt.Println(org_spaces, "org_spaces_test")
+
+		for _, space := range org_spaces {
+			allSpaces = append(allSpaces, space)
+		}
+
+	}
+	//fetch all the keto policies
+
+	policyList := make([]policyReq, 0)
+	fmt.Println(allSpaces, "allSpaces")
+	for _, space := range allSpaces {
+		fmt.Println("strconv.Itoa(space.OrganisationID)", strconv.Itoa(space.OrganisationID))
+		fmt.Println("+strconv.Itoa(int(space.ID))", strconv.Itoa(int(space.ID)))
+		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(space.OrganisationID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+strconv.Itoa(int(space.ID))+"/policy/", nil)
+		req.Header.Set("X-User", strconv.Itoa(uID))
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		client := &http.Client{}
+		resp, err := client.Do(req)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		space_policies := []policyReq{}
+		err = json.NewDecoder(resp.Body).Decode(&space_policies)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+		for _, space_policy := range space_policies {
+			policyList = append(policyList, space_policy)
+		}
 	}
 
 	adminPerm := model.Permission{
@@ -127,29 +196,32 @@ func my(w http.ResponseWriter, r *http.Request) {
 		spaceWithPermArr := []spaceWithPermissions{}
 		for _, space := range allSpaces {
 			if space.OrganisationID == int(each.ID) {
-				var services []string
-				services, err = util.GetAllowedServices(space.ID)
+				//*need to figure out
+				//	var services []string
+				//	services, err = util.GetAllowedServices(space.ID)
 				if err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.DBError()))
 					return
 				}
-				if each.Permission.Role != "owner" {
-					permissions := user.GetPermissions(int(each.ID), int(space.ID), uID, policyList)
-					spaceWithPerm := spaceWithPermissions{
-						Space:           space,
-						Permissions:     permissions,
-						AllowedServices: services,
-					}
-					spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
-				} else {
-					adminSpaceWithPerm := spaceWithPermissions{
-						Space:       space,
-						Permissions: []model.Permission{adminPerm},
-						AllowedServices: services,
-					}
-					spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
+				//**need to figure out
+				// if each.Permission.Role != "owner" {
+				// 	permissions := user.GetPermissions(int(each.ID), int(space.ID), uID, policyList)
+				// 	spaceWithPerm := spaceWithPermissions{
+				// 		Space:           space,
+				// 		Permissions:     permissions,
+				// 		AllowedServices: services,
+				// 	}
+				// 	spaceWithPermArr = append(spaceWithPermArr, spaceWithPerm)
+				// }
+				//else {
+				adminSpaceWithPerm := spaceWithPermissions{
+					Space:           space,
+					Permissions:     []model.Permission{adminPerm},
+					AllowedServices: []string{"core", "fact-checks", "podcast"},
 				}
+				spaceWithPermArr = append(spaceWithPermArr, adminSpaceWithPerm)
+				//	}
 			}
 		}
 		each.Spaces = spaceWithPermArr

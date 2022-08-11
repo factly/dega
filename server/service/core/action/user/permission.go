@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/factly/dega-server/util/arrays"
+	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -32,6 +33,14 @@ import (
 // @Param user_id path string true "User ID"
 // @Success 200 {object} []model.Permission
 // @Router /core/users/{user_id}/permissions [get]
+type policyReq struct {
+	Name        string         `json:"name"`
+	Description string         `json:"description"`
+	Slug        string         `json:"slug"`
+	Permissions postgres.Jsonb `json:"permissions"`
+	Roles       []uint         `json:"roles"`
+}
+
 func userpermissions(w http.ResponseWriter, r *http.Request) {
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {

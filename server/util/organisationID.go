@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/factly/dega-server/config"
+	//	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/middlewarex"
 )
@@ -28,16 +28,11 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-
-			space := &model.Space{}
-			space.ID = uint(sID)
-
-			err = config.DB.First(&space).Error
-
-			if err != nil {
-				w.WriteHeader(http.StatusUnauthorized)
-				return
+			//** need to make change in x-package if space id is given organisation should be returned
+			space := &model.Space{
+				OrganisationID: 1,
 			}
+			space.ID = uint(sID)
 
 			ctx = context.WithValue(ctx, OrganisationIDKey, space.OrganisationID)
 			h.ServeHTTP(w, r.WithContext(ctx))

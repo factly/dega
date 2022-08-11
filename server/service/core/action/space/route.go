@@ -2,6 +2,7 @@ package space
 
 import (
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/role"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
@@ -39,6 +40,7 @@ func Router() chi.Router {
 	r.Route("/{space_id}", func(r chi.Router) {
 		r.Get("/", details)
 		r.Put("/", update)
+		r.Mount("/roles", role.Router())
 		r.Delete("/", delete)
 	})
 
