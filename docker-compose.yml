@@ -149,24 +149,37 @@ services:
       - dega
 
   keto-migrate:
-    image: oryd/keto:v0.5.7
+    image: oryd/keto:v0.9.0-alpha.0
     environment:
+      - DSN=postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
       - LOG_LEVEL=debug
     depends_on:
       - postgres
-    command: migrate sql postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    # command: namespace migrate legacy -c "/etc/config/keto/keto.yml" --yes
+    command: migrate up -c "/etc/config/keto/keto.yml" --yes
     restart: on-failure
     networks:
       - dega
 
   keto:
-    image: oryd/keto:v0.5.7
-    ports:
-      - "4466:4466"
     depends_on:
       - keto-migrate
+    image: oryd/keto:v0.9.0-alpha.0
+    ports:
+      - "4466:4466" # read
+      - "4467:4467" # write 
+      - "4468:4468" # metric
     environment:
-      - DSN=postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+      - LOG_LEVEL=debug
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    command: serve -c "/etc/config/keto/keto.yml" 
     networks:
       - dega
 
@@ -230,11 +243,14 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server:0.23.0
+    image: factly/kavach-server
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
         target: /app/data
+      - type: bind
+        source: ./kavach-config.env
+        target: /app/config.env
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -250,6 +266,7 @@ services:
       - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
       - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
       - KAVACH_ENABLE_MULTITENANCY=true
+      - DISABLE_REGISTRATION=false
     restart: unless-stopped
     networks:
       - dega
@@ -259,7 +276,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server:0.23.0
+    image: factly/kavach-migrate
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -275,12 +292,15 @@ services:
       - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
       - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
       - KAVACH_ENABLE_MULTITENANCY=true
-    entrypoint: /app/kavach-server migrate
+    volumes:
+     - type: bind
+       source: ./kavach-config.env
+       target: /app/config.env
     networks:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:0.23.0-dev
+    image: factly/kavach-web
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js

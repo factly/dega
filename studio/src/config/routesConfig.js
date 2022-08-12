@@ -71,6 +71,14 @@ import Policies from '../pages/policies';
 import CreatePolicy from '../pages/policies/CreatePolicy';
 import EditPolicy from '../pages/policies/EditPolicy';
 
+//Roles
+import Roles from '../pages/roles';
+import CreateRole from '../pages/roles/CreateRole';
+import EditRole from '../pages/roles/EditRole';
+//import AddUserToRoleForm from '../pages/roles/components/AddUsertoRoleForm';
+
+import SpaceRoleForm from '../pages/roles/components/SpaceRoleForm';
+
 //Fact Checks
 import GoogleFactCheck from '../pages/fact-checks/GoogleFactCheck';
 import Factly from '../pages/fact-checks/Factly';
@@ -140,6 +148,12 @@ import Permissions from '../pages/permissions';
 
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
+
+//import SpaceRoleUsers from '../pages/roles/components/AddUsertoRoleForm';
+
+// import { Component } from 'react';
+
+//import SpaceRoleUsers from '../pages/roles/User';
 
 const routes = {
   dashboard: {
@@ -405,6 +419,12 @@ const routes = {
     Component: Policies,
     title: 'Policies',
   },
+  roles: {
+    path: '/members/roles',
+    menuKey: '/members',
+    Component: Roles,
+    title: 'Roles',
+  },
   createPolicy: {
     path: '/members/policies/create',
     menuKey: '/members',
@@ -414,6 +434,36 @@ const routes = {
       resource: 'policies',
       action: 'create',
     },
+  },
+  createRole: {
+    path: '/members/roles/create',
+    menuKey: '/members',
+    Component: CreateRole,
+    title: 'New Role',
+    // permission: {
+    //   resource: 'policies',
+    //   action: 'create',
+    // },
+  },
+  editRole: {
+    path: '/members/roles/:id/edit',
+    menuKey: '/members',
+    Component: EditRole,
+    title: 'Edit',
+    // permission: {
+    //   resource: 'policies',
+    //   action: 'create',
+    // },
+  },
+  addUsertoRole: {
+    path: '/members/space/:spaceID/role/:roleId/',
+    menuKey: '/members',
+    Component: SpaceRoleForm,
+    title: 'Add',
+    // permission: {
+    //   resource: 'policies',
+    //   action: 'create',
+    // },
   },
   editPolicy: {
     path: '/members/policies/:id/edit',

@@ -12,7 +12,14 @@ function Spaces() {
     if (selected > 0) {
       const space = state.spaces.details[selected];
       const orgId = space.organisation_id;
-      const org = orgs.find((org) => org.id === orgId);
+      console.log(orgId, 'orgID');
+      console.log(orgs, 'orgs orgs');
+      const org = orgs.find((org) => {
+        console.log(org, 'org map');
+        console.log(org.organisation.id, 'org.organisation_id map');
+        return org.organisation.id === orgId;
+      });
+      console.log(org, 'org');
       const role = org.permission.role;
       return {
         role: role,

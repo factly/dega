@@ -1,9 +1,11 @@
 package space
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
-	"errors"
+
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -17,8 +19,7 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
+	//"github.com/factly/x/slugx"
 )
 
 // create - Create space
@@ -40,7 +41,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := &space{}
+	space := map[string]interface{}{}
 
 	err = json.NewDecoder(r.Body).Decode(&space)
 
@@ -50,24 +51,55 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(space)
+	// err = util.CheckSpaceKetoPermission("create", uint(space.OrganisationID), uint(uID))
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
+	// 	return
+	// }
 
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+	// validationError := validationx.Check(space)
+
+	// if validationError != nil {
+	// 	loggerx.Error(errors.New("validation error"))
+	// 	errorx.Render(w, validationError)
+	// 	return
+	// }
+
+	spaceOrgID := int(space["organisation_id"].(float64))
+	if spaceOrgID == 0 {
 		return
 	}
 
-	if space.OrganisationID == 0 {
-		return
-	}
-
-	err = util.CheckSpaceKetoPermission("create", uint(space.OrganisationID), uint(uID))
+	buf := new(bytes.Buffer)
+	err = json.NewEncoder(buf).Encode(&space)
+	fmt.Println(space, "spacetestnew")
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+
+	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(spaceOrgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces", buf)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	req.Header.Set("X-User", strconv.Itoa(uID))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	fmt.Println(resp.Status, "resp status")
+	result := &model.Space{}
+	err = json.NewDecoder(resp.Body).Decode(result)
+	if err != nil {
+		loggerx.Error(err)
+		return
+	}
+	fmt.Println(resp)
 
 	var superOrgID int
 	if viper.GetBool("create_super_organisation") {
@@ -81,10 +113,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-			OrganisationID: uint(space.OrganisationID),
+			OrganisationID: uint(spaceOrgID),
 		}).First(&permission).Error
 
-		if err != nil && space.OrganisationID != superOrgID {
+		if err != nil && spaceOrgID != superOrgID {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
 			return
@@ -94,7 +126,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			// Fetch total number of spaces in organisation
 			var totSpaces int64
 			config.DB.Model(&model.Space{}).Where(&model.Space{
-				OrganisationID: space.OrganisationID,
+				OrganisationID: spaceOrgID,
 			}).Count(&totSpaces)
 
 			if totSpaces >= permission.Spaces && permission.Spaces > 0 {
@@ -104,44 +136,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var spaceSlug string
-	if space.Slug != "" && slugx.Check(space.Slug) {
-		spaceSlug = space.Slug
-	} else {
-		spaceSlug = slugx.Make(space.Name)
-	}
-
-	result := model.Space{
-		Name:              space.Name,
-		SiteTitle:         space.SiteTitle,
-		Slug:              approveSpaceSlug(spaceSlug),
-		Description:       space.Description,
-		TagLine:           space.TagLine,
-		SiteAddress:       space.SiteAddress,
-		Analytics:         space.Analytics,
-		VerificationCodes: space.VerificationCodes,
-		SocialMediaURLs:   space.SocialMediaURLs,
-		OrganisationID:    space.OrganisationID,
-		ContactInfo:       space.ContactInfo,
-		HeaderCode:        space.HeaderCode,
-		FooterCode:        space.FooterCode,
-		MetaFields:        space.MetaFields,
-	}
-
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Create(&result).Error
-
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
 
 	if viper.GetBool("create_super_organisation") {
 		// Create SpacePermission for super organisation
 		var spacePermission model.SpacePermission
-		if superOrgID == space.OrganisationID {
+		if superOrgID == spaceOrgID {
 			spacePermission = model.SpacePermission{
 				SpaceID:   result.ID,
 				Media:     -1,
