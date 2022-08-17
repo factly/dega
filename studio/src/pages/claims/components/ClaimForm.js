@@ -187,7 +187,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 <DatePicker disabledDate={disabledDate} />
               </Form.Item>
             </Form.Item>
-            <DescriptionInput inputProps={{ placeholder: 'Enter Description...' }} />
+            <DescriptionInput
+              inputProps={{ placeholder: 'Enter Description...' }}
+              initialValue={data.description}
+            />
           </Panel>
           <Panel header="Sources" key="2">
             <Form.Item label="Claim Sources">

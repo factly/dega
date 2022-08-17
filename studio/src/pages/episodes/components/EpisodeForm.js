@@ -94,6 +94,7 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
           </Form.Item>
           <DescriptionInput
             inputProps={{ style: { width: '600px' }, placeholder: 'Enter Description...' }}
+            initialValue={data.description}
           />
           <MetaForm />
           <Form.Item {...tailLayout}>
