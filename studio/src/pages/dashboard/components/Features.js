@@ -15,7 +15,7 @@ function Features() {
   const superOrg = useSelector(({ admin }) => {
     return admin.organisation;
   });
-
+  const selectedSpace = useSelector((state) =>({space_id:state.spaces.selected}));
   React.useEffect(() => {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,7 +92,7 @@ function Features() {
             actions={[
               <Button
                 onClick={() => {
-                  dispatch(addDefaultFormats()).then(() => history.push('/advanced/formats'));
+                  dispatch(addDefaultFormats(selectedSpace)).then(() => history.push('/advanced/formats'));
                 }}
               >
                 <PlusOutlined /> CREATE FORMATS
