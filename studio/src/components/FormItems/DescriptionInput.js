@@ -6,7 +6,7 @@ const DescriptionInput = ({
   name = 'description',
   label = 'Description',
   noLabel = false,
-  onChange = (data) => console.log(data),
+  onChange = (data) => console.log({ data }),
   inputProps,
   formItemProps,
   initialValue,
@@ -16,7 +16,6 @@ const DescriptionInput = ({
 
   return (
     <Form.Item name={name} {...formItemProps}>
-      {console.log({ inputProps, formItemProps, initialValue })}
       {/* <Editor {...inputProps} /> */}
       <Editor
         menuType="bubble"

@@ -6,14 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -174,12 +172,19 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		featuredMediumID = nil
 	}
 
-	// Store HTML description
-	var description string
-	if len(post.Description.RawMessage) > 0 && !reflect.DeepEqual(post.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(post.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(post.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(post.Description)
 		if err != nil {
-			return nil, errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)
+			loggerx.Error(err)
+			return nil, errorx.GetMessage("could not get html description", 422)
+		}
+
+		jsonDescription, err = util.GetJSONDescription(post.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return nil, errorx.GetMessage("could not get json description", 422)
 		}
 	}
 
@@ -190,8 +195,8 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		IsPage:           post.IsPage,
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
-		Description:      post.Description,
-		HTMLDescription:  description,
+		Description:      jsonDescription,
+		HTMLDescription:  htmlDescription,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FeaturedMediumID: featuredMediumID,

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 	"time"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -135,13 +133,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
-	// Store HTML description
-	var description string
-	if len(post.Description.RawMessage) > 0 && !reflect.DeepEqual(post.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(post.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(post.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(post.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(post.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -181,8 +186,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"slug":               postSlug,
 		"subtitle":           post.Subtitle,
 		"excerpt":            post.Excerpt,
-		"description":        post.Description,
-		"html_description":   description,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
 		"is_highlighted":     post.IsHighlighted,
 		"is_sticky":          post.IsSticky,
 		"is_featured":        post.IsFeatured,

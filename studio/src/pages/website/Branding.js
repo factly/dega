@@ -52,7 +52,6 @@ function Branding() {
         onFinishFailed={(errors) => {
           //let name = errors.errorFields[0].name[0];
           // if (['name', 'slug'].includes(name)) {
-          console.log({ errors });
           // }
         }}
         onValuesChange={() => {

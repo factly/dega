@@ -6,13 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -23,6 +21,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -121,12 +120,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(page.Description.RawMessage) > 0 && !reflect.DeepEqual(page.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(page.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(page.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(page.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse page description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(page.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -167,8 +174,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"status":             page.Status,
 		"published_date":     page.PublishedDate,
 		"excerpt":            page.Excerpt,
-		"description":        page.Description,
-		"html_description":   description,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
 		"is_highlighted":     page.IsHighlighted,
 		"is_sticky":          page.IsSticky,
 		"format_id":          page.FormatID,

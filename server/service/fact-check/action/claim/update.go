@@ -4,12 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -19,6 +17,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -115,13 +114,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Store HTML description
-	var description string
-	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(claim.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(claim.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(claim.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -150,8 +156,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Claim:           claim.Claim,
 		Slug:            claimSlug,
 		ClaimSources:    claim.ClaimSources,
-		Description:     claim.Description,
-		HTMLDescription: description,
+		Description:     jsonDescription,
+		HTMLDescription: htmlDescription,
 		ClaimantID:      claim.ClaimantID,
 		RatingID:        claim.RatingID,
 		Fact:            claim.Fact,
