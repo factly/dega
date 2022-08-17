@@ -8,3 +8,5 @@ namespaces:
     name: applications
   - id: 2
     name: spaces
+  - id: 3
+    name: superorganisation

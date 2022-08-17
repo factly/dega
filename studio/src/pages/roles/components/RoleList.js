@@ -93,23 +93,23 @@ function RoleList({ roles, total, loading }) {
         return (
           <span>
             {/* {role === 'owner' ? ( */}
-              <Space>
-                <Link
-                  to={{
-                    pathname: ``,
-                  }}
-                >
-                  <Button icon={<UserAddOutlined />} primary="true">
-                    Add users
-                  </Button>
-                </Link>
-                <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record.id)}>
-                  <Button type="danger" icon={<DeleteOutlined />}>
-                    {' '}
-                    Delete{' '}
-                  </Button>
-                </Popconfirm>
-              </Space>
+            <Space>
+              <Link
+                to={{
+                  pathname: ``,
+                }}
+              >
+                <Button icon={<UserAddOutlined />} primary="true">
+                  Add users
+                </Button>
+              </Link>
+              <Popconfirm title="Sure to Revoke?">
+                <Button type="danger" icon={<DeleteOutlined />}>
+                  {' '}
+                  Delete{' '}
+                </Button>
+              </Popconfirm>
+            </Space>
             {/* ) */}
             {/* // : null} */}
           </span>

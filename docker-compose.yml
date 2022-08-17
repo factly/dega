@@ -18,9 +18,11 @@ services:
     networks:
       - dega
 
-  ###########################################################################
-  #######                        MINIO                                #######
-  ###########################################################################
+# networks:
+#   dega:
+  ##########################################################################
+  ######                        MINIO                                #######
+  ##########################################################################
   minio:
     image: minio/minio
     ports:
@@ -243,7 +245,7 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server-v0.1
+    image: factly/kavach-server
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -276,7 +278,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-migrate-latest
+    image: factly/kavach-migrate
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -300,7 +302,7 @@ services:
       - dega
 
   kavach-web:
-    image: factly/kavach-web-latest 
+    image: factly/kavach-web 
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js
