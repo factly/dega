@@ -194,6 +194,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   placeholder: 'Enter Description...',
                   basic: true,
                 }}
+                initialValue={formData.description}
               />
             </Col>
           </Row>
