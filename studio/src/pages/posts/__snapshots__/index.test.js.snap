@@ -2398,13 +2398,13 @@ exports[`Posts List component snapshot testing should render the component 1`] =
                                       onClick={[Function]}
                                     >
                                       <Button
-                                        disabled={true}
+                                        disabled={false}
                                         type="primary"
                                       >
                                         <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
-                                            disabled={true}
+                                            disabled={false}
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -2474,7 +2474,11 @@ exports[`Posts List component snapshot testing should render the component 1`] =
                 style={Object {}}
               >
                 <PostList
-                  actions={Array []}
+                  actions={
+                    Array [
+                      "create",
+                    ]
+                  }
                   data={
                     Object {
                       "authors": Object {},
@@ -6097,13 +6101,13 @@ exports[`Posts List component snapshot testing should render the component with 
                                       onClick={[Function]}
                                     >
                                       <Button
-                                        disabled={true}
+                                        disabled={false}
                                         type="primary"
                                       >
                                         <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
-                                            disabled={true}
+                                            disabled={false}
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -6173,7 +6177,11 @@ exports[`Posts List component snapshot testing should render the component with 
                 style={Object {}}
               >
                 <PostList
-                  actions={Array []}
+                  actions={
+                    Array [
+                      "create",
+                    ]
+                  }
                   data={
                     Object {
                       "authors": Object {},

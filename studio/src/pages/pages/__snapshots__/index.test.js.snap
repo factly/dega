@@ -2328,13 +2328,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       onClick={[Function]}
                                     >
                                       <Button
-                                        disabled={true}
+                                        disabled={false}
                                         type="primary"
                                       >
                                         <Wave>
                                           <button
                                             className="ant-btn ant-btn-primary"
-                                            disabled={true}
+                                            disabled={false}
                                             onClick={[Function]}
                                             type="button"
                                           >
@@ -2404,7 +2404,11 @@ exports[`Page component snapshot testing should render the component 1`] = `
                 style={Object {}}
               >
                 <PageList
-                  actions={Array []}
+                  actions={
+                    Array [
+                      "create",
+                    ]
+                  }
                   data={
                     Object {
                       "categories": Object {},
