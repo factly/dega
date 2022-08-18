@@ -3,7 +3,6 @@ import React, { useEffect } from 'react';
 import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import PostList from '../../components/List';
-import getUserPermission from '../../utils/getUserPermission';
 import { useSelector, useDispatch } from 'react-redux';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import deepEqual from 'deep-equal';
@@ -16,9 +15,10 @@ import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
 
-function Posts({ formats }) {
+function Posts({ formats, permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'posts', action: 'get', spaces });
+  const { actions } = permission;
+
   const { search, pathname } = useLocation();
   const query = new URLSearchParams(search);
   const { Option } = Select;

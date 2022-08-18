@@ -4,7 +4,6 @@ import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import PageList from './components/PageList';
 import { useSelector, useDispatch } from 'react-redux';
-import getUserPermission from '../../utils/getUserPermission';
 import FormatNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import deepEqual from 'deep-equal';
 import { getPages } from '../../actions/pages';
@@ -15,9 +14,9 @@ import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
 
-function Pages({ formats }) {
+function Pages({ formats, permission }) {
   const spaces = useSelector(({ spaces }) => spaces);
-  const actions = getUserPermission({ resource: 'pages', action: 'get', spaces });
+  const { actions } = permission;
   const { Option } = Select;
   const [form] = Form.useForm();
   const dispatch = useDispatch();
