@@ -25,7 +25,7 @@ function SpaceSelector({ collapsed }) {
       ) : (
         <Select
           style={{ width: '200px' }}
-          value={selected}
+          value={selected!==0?selected:orgs[0]?.title}
           onChange={handleSpaceChange}
           bordered={false}
         >
