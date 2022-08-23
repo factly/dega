@@ -130,7 +130,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if format.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}
-	
+
 	tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result)
 
 	// Update into meili index
@@ -150,11 +150,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("format.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("format.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("format.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

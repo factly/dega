@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -186,10 +187,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 	if util.CheckNats() {
-		if err = util.NC.Publish("episode.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("episode.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("episode.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 	renderx.JSON(w, http.StatusCreated, result)
