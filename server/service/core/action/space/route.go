@@ -1,6 +1,8 @@
 package space
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -8,6 +10,8 @@ import (
 
 // space request body
 type space struct {
+	CreatedAt         time.Time      `json:"created_at"`
+	UpdatedAt         time.Time      `json:"updated_at"`
 	Name              string         `json:"name" validate:"required,min=3,max=50"`
 	Slug              string         `json:"slug"`
 	SiteTitle         string         `json:"site_title"`
