@@ -50,7 +50,7 @@ function EventList() {
             style={{
               marginRight: 8,
             }}
-            to={`/events/${record.id}/edit`}
+            to={`/admin/events/${record.id}/edit`}
           >
             <p>{getName(record.name)}</p>
           </Link>
