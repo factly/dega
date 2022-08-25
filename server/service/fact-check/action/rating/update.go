@@ -140,34 +140,30 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	mediumID := &rating.MediumID
-	result.MediumID = &rating.MediumID
-	if rating.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	updateMap := map[string]interface{}{
+		"created_at":        rating.CreatedAt,
+		"updated_at":        rating.UpdatedAt,
+		"updated_by_id":     uint(uID),
+		"kind":              "rating",
+		"name":              rating.Name,
+		"slug":              ratingSlug,
+		"background_colour": rating.BackgroundColour,
+		"text_colour":       rating.TextColour,
+		"medium_id":         rating.MediumID,
+		"description":       rating.Description,
+		"html_description":  description,
+		"numeric_value":     rating.NumericValue,
+		"meta_fields":       rating.MetaFields,
+		"meta":              rating.Meta,
+		"header_code":       rating.HeaderCode,
+		"footer_code":       rating.FooterCode,
 	}
 
-	err = tx.Model(&result).Updates(model.Rating{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Name:             rating.Name,
-		Slug:             ratingSlug,
-		BackgroundColour: rating.BackgroundColour,
-		TextColour:       rating.TextColour,
-		MediumID:         mediumID,
-		Description:      rating.Description,
-		HTMLDescription:  description,
-		NumericValue:     rating.NumericValue,
-		MetaFields:       rating.MetaFields,
-		Meta:             rating.Meta,
-		HeaderCode:       rating.HeaderCode,
-		FooterCode:       rating.FooterCode,
-	}).Preload("Medium").First(&result).Error
+	if rating.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()
