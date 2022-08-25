@@ -11,6 +11,8 @@ import (
 )
 
 type claim struct {
+	CreatedAt     time.Time      `json:"created_at"`
+	UpdatedAt     time.Time      `json:"updated_at"`
 	Claim         string         `json:"claim" validate:"required,max=5000"`
 	Slug          string         `json:"slug"`
 	ClaimDate     *time.Time     `json:"claim_date" `
