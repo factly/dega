@@ -127,7 +127,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 
 	updateMap := map[string]interface{}{
-		"updated_at":       time.Now(),
+		"created_at":       tag.CreatedAt,
+		"updated_at":       tag.UpdatedAt,
 		"updated_by_id":    uint(uID),
 		"name":             tag.Name,
 		"slug":             tagSlug,
@@ -143,6 +144,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.MediumID = &tag.MediumID
 	if tag.MediumID == 0 {
 		updateMap["medium_id"] = nil
+	}
+
+	if tag.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if tag.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})

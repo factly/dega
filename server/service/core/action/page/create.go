@@ -97,6 +97,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result.Post = model.Post{
+		Base: config.Base{
+			CreatedAt: page.CreatedAt,
+			UpdatedAt: page.UpdatedAt,
+		},
 		Title:            page.Title,
 		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           page.Status,

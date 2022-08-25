@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -113,6 +114,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		spaceSlug = approveSpaceSlug(slugx.Make(space.Name))
 	}
 	updateMap := map[string]interface{}{
+		"created_at":         space.CreatedAt,
+		"updated_at":         space.UpdatedAt,
 		"name":               space.Name,
 		"slug":               spaceSlug,
 		"site_title":         space.SiteTitle,
@@ -147,6 +150,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if space.MobileIconID == 0 {
 		updateMap["mobile_icon_id"] = nil
+	}
+
+	if space.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if space.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	err = tx.Model(&result.Space).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result.Space).Error

@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
@@ -160,6 +161,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updateMap := map[string]interface{}{
+		"created_at":         page.CreatedAt,
+		"updated_at":         page.UpdatedAt,
 		"updated_by_id":      uint(uID),
 		"title":              page.Title,
 		"slug":               pageSlug,
@@ -183,6 +186,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Post.FeaturedMediumID = &page.FeaturedMediumID
 	if page.FeaturedMediumID == 0 {
 		updateMap["featured_medium_id"] = nil
+	}
+
+	if page.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if page.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error

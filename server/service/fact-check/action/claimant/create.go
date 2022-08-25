@@ -104,6 +104,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Claimant{
+		Base: config.Base{
+			CreatedAt: claimant.CreatedAt,
+			UpdatedAt: claimant.UpdatedAt,
+		},
 		Name:            claimant.Name,
 		Slug:            slugx.Approve(&config.DB, claimantSlug, sID, tableName),
 		Description:     claimant.Description,
