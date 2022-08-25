@@ -111,6 +111,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	result := &episodeData{}
 	result.Episode = model.Episode{
+		Base: config.Base{
+			CreatedAt: episode.CreatedAt,
+			UpdatedAt: episode.UpdatedAt,
+		},
 		Title:           episode.Title,
 		Description:     jsonDescription,
 		HTMLDescription: htmlDescription,

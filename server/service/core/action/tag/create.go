@@ -110,6 +110,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Tag{
+		Base: config.Base{
+			CreatedAt: tag.CreatedAt,
+			UpdatedAt: tag.UpdatedAt,
+		},
 		Name:             tag.Name,
 		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
 		BackgroundColour: tag.BackgroundColour,

@@ -808,6 +808,11 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                           <Selector
                                                             action="Categories"
                                                             id="create-category_parent_id"
+                                                            invalidOptions={
+                                                              Array [
+                                                                undefined,
+                                                              ]
+                                                            }
                                                             onChange={[Function]}
                                                             setLoading={false}
                                                           >
@@ -4228,6 +4233,11 @@ exports[`Categories Create Form component snapshot testing should match componen
                                                           <Selector
                                                             action="Categories"
                                                             id="create-category_parent_id"
+                                                            invalidOptions={
+                                                              Array [
+                                                                undefined,
+                                                              ]
+                                                            }
                                                             onChange={[Function]}
                                                             setLoading={false}
                                                           >
@@ -7600,6 +7610,11 @@ exports[`Categories Create Form component snapshot testing should render the com
                                                           <Selector
                                                             action="Categories"
                                                             id="create-category_parent_id"
+                                                            invalidOptions={
+                                                              Array [
+                                                                undefined,
+                                                              ]
+                                                            }
                                                             onChange={[Function]}
                                                             setLoading={false}
                                                           >

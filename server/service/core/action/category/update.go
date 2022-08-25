@@ -154,7 +154,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	updateMap := map[string]interface{}{
-		"updated_at":       time.Now(),
+		"created_at":       category.CreatedAt,
+		"updated_at":       category.UpdatedAt,
 		"updated_by_id":    uID,
 		"name":             category.Name,
 		"slug":             categorySlug,
@@ -174,6 +175,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if category.ParentID == 0 {
 		updateMap["parent_id"] = nil
+	}
+
+	if category.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if category.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").Preload("ParentCategory").First(&result).Error

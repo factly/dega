@@ -111,7 +111,11 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               <Row gutter={40}>
                 <Col md={{ span: 16 }}>
                   <Form.Item name="parent_id" label="Parent Category">
-                    <Selector action="Categories" setLoading={setLoading} />
+                    <Selector
+                      action="Categories"
+                      setLoading={setLoading}
+                      invalidOptions={data?.id ? [data.id] : []}
+                    />
                   </Form.Item>
                 </Col>
                 <Col md={{ span: 5 }}>

@@ -130,6 +130,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Category{
+		Base: config.Base{
+			CreatedAt: category.CreatedAt,
+			UpdatedAt: category.UpdatedAt,
+		},
 		Name:             category.Name,
 		Description:      jsonDescription,
 		BackgroundColour: category.BackgroundColour,

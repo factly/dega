@@ -189,6 +189,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	}
 
 	result.Post = model.Post{
+		Base: config.Base{
+			CreatedAt: post.CreatedAt,
+			UpdatedAt: post.UpdatedAt,
+		},
 		Title:            post.Title,
 		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           status,

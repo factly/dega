@@ -112,6 +112,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := model.Space{
+		Base: config.Base{
+			CreatedAt: space.CreatedAt,
+			UpdatedAt: space.UpdatedAt,
+		},
 		Name:              space.Name,
 		SiteTitle:         space.SiteTitle,
 		Slug:              approveSpaceSlug(spaceSlug),
