@@ -127,7 +127,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	updateMap := map[string]interface{}{
-		"updated_at":       time.Now(),
+		"created_at":       claimant.CreatedAt,
+		"updated_at":       claimant.UpdatedAt,
 		"updated_by_id":    uID,
 		"name":             claimant.Name,
 		"slug":             claimantSlug,
@@ -143,6 +144,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 	if claimant.MediumID == 0 {
 		updateMap["medium_id"] = nil
+	}
+
+	if claimant.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if claimant.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
