@@ -1,6 +1,8 @@
 package format
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -9,6 +11,8 @@ import (
 
 // format model
 type format struct {
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 	Name        string         `json:"name" validate:"required,min=3,max=50"`
 	Slug        string         `json:"slug"`
 	Description string         `json:"description"`
