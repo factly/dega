@@ -144,7 +144,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"created_at":        rating.CreatedAt,
 		"updated_at":        rating.UpdatedAt,
 		"updated_by_id":     uint(uID),
-		"kind":              "rating",
 		"name":              rating.Name,
 		"slug":              ratingSlug,
 		"background_colour": rating.BackgroundColour,
