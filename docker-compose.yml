@@ -25,6 +25,7 @@ services:
     image: minio/minio
     ports:
       - "9000:9000"
+      - "9002:9002"
     volumes:
       - ~/factly/dega/minio/data:/export
       - ~/factly/dega/minio/config:/root/.minio
@@ -33,7 +34,7 @@ services:
       - MINIO_SECRET_KEY=miniosecret
     networks:
       - dega
-    command: server /export
+    command: server -console-address :9002 /export
 
   createbuckets:
     image: minio/mc
