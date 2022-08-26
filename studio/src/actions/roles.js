@@ -12,45 +12,17 @@ import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
 
 // action to fetch all roles
-// export const addDefaultRoles = (query) => {
-//   return (dispatch) => {
-//     dispatch(loadingRoles());
-//     return axios
-//       .post(ROLES_API + '/default')
-//       .then((response) => {
-//         dispatch(addRoles(response.data.nodes));
-//         dispatch(
-//           addRolesRequest({
-//             data: response.data.nodes.map((item) => item.id),
-//             query: query,
-//             total: response.data.total,
-//           }),
-//         );
-//       })
-//       .catch((error) => {
-//         dispatch(addErrorNotification(getError(error)));
-//       })
-//       .finally(() => dispatch(stopRolesLoading()));
-//   };
-// };
-
-// action to fetch all roles
 export const getRoles = (query) => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
-    const currentOrgID = getState().spaces?.details[currentSpaceID].organisation_id;
-    const params = new URLSearchParams();
-    params.append('organisation_id', currentOrgID);
     dispatch(loadingRoles());
     return axios
-      .get(ROLES_API(currentSpaceID), {
-        params: params,
-      })
+      .get(ROLES_API(currentSpaceID))
       .then((response) => {
-        dispatch(addRoles(response.data.nodes));
+        dispatch(addRoles(response.data));
         dispatch(
           addRolesRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: response.data.map((item) => item.id),
             query: query,
             total: response.data.total,
           }),
@@ -84,13 +56,12 @@ export const getRole = (id) => {
 export const createRole = (data) => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
-    const currentOrgID = getState().spaces?.details[currentSpaceID].organisation_id;
     dispatch(loadingRoles());
     return axios
-      .post(ROLES_API(currentSpaceID), { role: data, organisation_id: currentOrgID })
+      .post(ROLES_API(currentSpaceID), data)
       .then(() => {
         dispatch(resetRoles());
-        dispatch(addSuccessNotification('Roles created'));
+        dispatch(addSuccessNotification('Role created'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
@@ -119,16 +90,20 @@ export const updateRole = (data) => {
 
 // action to delete role by id
 export const deleteRole = (id) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const currentSpaceID = getState().spaces?.selected;
     dispatch(loadingRoles());
     return axios
-      .delete(ROLES_API + '/' + id)
+      .delete(ROLES_API(currentSpaceID) + '/' + id)
       .then(() => {
         dispatch(resetRoles());
         dispatch(addSuccessNotification('Roles deleted'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
+      })
+      .finally(() => {
+        dispatch(stopRolesLoading());
       });
   };
 };

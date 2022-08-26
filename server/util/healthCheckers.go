@@ -3,7 +3,9 @@ package util
 import (
 	"errors"
 	"net/http"
+	"time"
 
+	"github.com/factly/dega-server/util/timex"
 	"github.com/spf13/viper"
 )
 
@@ -36,7 +38,7 @@ func GetRequest(url string) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 	res, err := client.Do(req)
 	if err != nil {
 		return err

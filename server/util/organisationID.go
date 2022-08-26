@@ -2,13 +2,20 @@ package util
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
+	"time"
 
 	//	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+
+	"github.com/factly/dega-server/util/timex"
+	"github.com/factly/x/errorx"
+	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
+	"github.com/spf13/viper"
 )
 
 type ctxKeyOrganisationID int
@@ -28,13 +35,23 @@ func GenerateOrganisation(h http.Handler) http.Handler {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-			//** need to make change in x-package if space id is given organisation should be returned
-			space := &model.Space{
-				OrganisationID: 1,
-			}
-			space.ID = uint(sID)
 
-			ctx = context.WithValue(ctx, OrganisationIDKey, space.OrganisationID)
+			userID, err := middlewarex.GetUser(r.Context())
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+
+			//** need to make change in x-package if space id is given organisation should be returned
+			organisationID, err := GetOrganisationIDfromSpaceID(uint(sID), uint(userID))
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+
+			ctx = context.WithValue(ctx, OrganisationIDKey, organisationID)
 			h.ServeHTTP(w, r.WithContext(ctx))
 			return
 		}
@@ -52,4 +69,30 @@ func GetOrganisation(ctx context.Context) (int, error) {
 		return organisationID.(int), nil
 	}
 	return 0, errors.New("something went wrong")
+}
+
+func GetOrganisationIDfromSpaceID(spaceID, userID uint) (int, error) {
+	//** need to make change in x-package if space id is given organisation should be returned
+	req, err := http.NewRequest(http.MethodGet, viper.GetString("kavach_url")+fmt.Sprintf("/util/space/%d/getOrganisation", spaceID), nil)
+	if err != nil {
+		return 0, err
+	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	response, err := client.Do(req)
+	if err != nil {
+		return 0, err
+	}
+	defer response.Body.Close()
+	responseBody := map[string]interface{}{}
+	err = json.NewDecoder(response.Body).Decode(&responseBody)
+	if err != nil {
+		return 0, err
+	}
+
+	if response.StatusCode != 200 {
+		return 0, errors.New("internal server error on kavach while getting space id from organisation id")
+	}
+	organisationID := int(responseBody["organisation_id"].(float64))
+	return organisationID, nil
 }

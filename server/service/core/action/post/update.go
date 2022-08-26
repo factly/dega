@@ -252,7 +252,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["status"] = "draft"
 	}
 
-	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space.Logo").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -379,6 +379,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
 		SpaceID: uint(sID),
@@ -388,7 +395,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Post:    result.Post,
 		Authors: result.Authors,
 		Claims:  result.Claims,
-	}, *result.Space, ratings)
+	}, *spaceObjectforDega, ratings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -482,7 +489,7 @@ func getPublishPermissions(oID, sID, uID int) (int, error) {
 	result.Resource = kresource
 	result.Subject = fmt.Sprint(uID)
 
-	resStatus, err := util.IsAllowed(result)
+	resStatus, err := util.IsAllowed(result, uint(oID), uint(sID), uint(uID))
 	if err != nil {
 		return 0, err
 	}

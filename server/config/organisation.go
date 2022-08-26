@@ -77,7 +77,6 @@ func CheckSuperOrganisation() bool {
 	req, _ = http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+orgID, nil)
 	req.Header.Set("Content-Type", "application/json")
 
-	client = &http.Client{}
 	resp, err = client.Do(req)
 	if err != nil {
 		return false

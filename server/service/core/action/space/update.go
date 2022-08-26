@@ -4,26 +4,24 @@ import (
 	//"context"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
-
-	//"errors"
 	"net/http"
 	"strconv"
-
-	"github.com/spf13/viper"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-
-	//	"github.com/factly/x/slugx"
-	//"github.com/factly/x/validationx"
+	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/spf13/viper"
 )
 
 // update - Update space
@@ -46,180 +44,143 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceID := chi.URLParam(r, "space_id")
+	sID := chi.URLParam(r, "space_id")
+	spaceID, err := strconv.Atoi(sID)
 
-	// id, err := strconv.Atoi(spaceID)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
 
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-	// 	return
-	//}
-
-	// space := &space{}
-	space := map[string]interface{}{}
-
+	space := &model.Space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	//	validationError := validationx.Check(space)
-
-	// if validationError != nil {
-	// 	loggerx.Error(errors.New("validation error"))
-	// 	errorx.Render(w, validationError)
-	// 	return
-	// }
-
-	spaceOrgID := int(space["organisation_id"].(float64))
-	if spaceOrgID == 0 {
+	space.ID = uint(spaceID)
+	validationError := validationx.Check(space)
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
 		return
 	}
 
+	requestBody := map[string]interface{}{
+		"name":        space.Name,
+		"slug":        space.Slug,
+		"description": space.Description,
+		"metadata": map[string]interface{}{
+			"meta_fields":        space.MetaFields,
+			"site_address":       space.SiteAddress,
+			"tag_line":           space.TagLine,
+			"site_title":         space.SiteTitle,
+			"logo_id":            space.LogoID,
+			"logo_mobile_id":     space.LogoMobileID,
+			"fav_icon_id":        space.FavIconID,
+			"mobile_icon_id":     space.MobileIconID,
+			"verification_codes": space.VerificationCodes,
+			"social_media_urls":  space.SocialMediaURLs,
+			"contact_info":       space.ContactInfo,
+			"analytics":          space.Analytics,
+			"header_code":        space.HeaderCode,
+			"footer_code":        space.FooterCode,
+		},
+	}
 	buf := new(bytes.Buffer)
-	err = json.NewEncoder(buf).Encode(&space)
-	fmt.Println(space, "spacetestnew")
+	err = json.NewEncoder(buf).Encode(&requestBody)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(spaceOrgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+spaceID, buf)
+	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
+	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID), buf)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+
+	defer resp.Body.Close()
+
 	if resp.StatusCode != 200 {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	fmt.Println(resp.Status, "resp status")
-	result := &model.Space{}
-	err = json.NewDecoder(resp.Body).Decode(result)
+	spaceObjectfromKavach := &model.KavachSpace{}
+	err = json.NewDecoder(resp.Body).Decode(spaceObjectfromKavach)
 	if err != nil {
 		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	// err = util.CheckSpaceKetoPermission("update", uint(space.OrganisationID), uint(uID))
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
-	// 	return
-	// }
-
-	// result := model.Space{}
-	// result.ID = uint(id)
-
-	// check record exists or not
-	//	err = config.DB.First(&result).Error
-
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-	// 	return
-	// }
-
-	//	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	// var spaceSlug string
-	// if result.Slug == space.Slug {
-	// 	spaceSlug = result.Slug
-	// } else if space.Slug != "" && slugx.Check(space.Slug) {
-	// 	spaceSlug = approveSpaceSlug(space.Slug)
-	// } else {
-	// 	spaceSlug = approveSpaceSlug(slugx.Make(space.Name))
-	// }
-	// updateMap := map[string]interface{}{
-	// 	"name":               space.Name,
-	// 	"slug":               spaceSlug,
-	// 	"site_title":         space.SiteTitle,
-	// 	"tag_line":           space.TagLine,
-	// 	"site_address":       space.SiteAddress,
-	// 	"description":        space.Description,
-	// 	"logo_id":            space.LogoID,
-	// 	"logo_mobile_id":     space.LogoMobileID,
-	// 	"fav_icon_id":        space.FavIconID,
-	// 	"mobile_icon_id":     space.MobileIconID,
-	// 	"header_code":        space.HeaderCode,
-	// 	"footer_code":        space.FooterCode,
-	// 	"meta_fields":        space.MetaFields,
-	// 	"verification_codes": space.VerificationCodes,
-	// 	"social_media_urls":  space.SocialMediaURLs,
-	// 	"contact_info":       space.ContactInfo,
-	// 	"analytics":          space.Analytics,
-	// }
-
-	// check if the id for all the mediums in space is 0 or not if it is zero then make it null
-	// if space.LogoID == 0 {
-	// 	updateMap["logo_id"] = nil
-	// }
-
-	// if space.LogoMobileID == 0 {
-	// 	updateMap["logo_mobile_id"] = nil
-	// }
-
-	// if space.FavIconID == 0 {
-	// 	updateMap["fav_icon_id"] = nil
-	// }
-
-	// if space.MobileIconID == 0 {
-	// 	updateMap["mobile_icon_id"] = nil
-	// }
-
-	// err = tx.Model(&result).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
-
-	// if err != nil {
-	// 	tx.Rollback()
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.DBError()))
-	// 	return
-	// }
+	spaceObjectforDega := model.Space{}
+	spaceObjectforDega.ID = spaceObjectfromKavach.ID
+	spaceObjectforDega.CreatedAt = spaceObjectfromKavach.CreatedAt
+	spaceObjectforDega.UpdatedAt = spaceObjectfromKavach.UpdatedAt
+	spaceObjectforDega.DeletedAt = spaceObjectfromKavach.DeletedAt
+	spaceObjectforDega.CreatedByID = spaceObjectfromKavach.CreatedByID
+	spaceObjectforDega.UpdatedByID = spaceObjectfromKavach.UpdatedByID
+	spaceObjectforDega.Name = spaceObjectfromKavach.Name
+	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
+	spaceObjectforDega.Description = spaceObjectfromKavach.Description
+	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
+	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
+	err = json.Unmarshal(spaceObjectfromKavach.Metadata.RawMessage, &spaceObjectforDega)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
-		"id":              result.ID,
+		"id":              sID,
 		"kind":            "space",
-		"name":            result.Name,
-		"slug":            result.Slug,
-		"description":     result.Description,
-		"site_title":      result.SiteTitle,
-		"site_address":    result.SiteAddress,
-		"tag_line":        result.TagLine,
-		"organisation_id": result.OrganisationID,
-		"analytics":       result.Analytics,
+		"name":            spaceObjectforDega.Name,
+		"slug":            spaceObjectforDega.Slug,
+		"description":     spaceObjectforDega.Description,
+		"site_title":      spaceObjectforDega.SiteTitle,
+		"site_address":    spaceObjectforDega.SiteAddress,
+		"tag_line":        spaceObjectforDega.TagLine,
+		"organisation_id": spaceObjectforDega.OrganisationID,
+		"analytics":       spaceObjectforDega.Analytics,
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
-	}
-
-	//tx.Commit()
-
-	if util.CheckNats() {
-		if err = util.NC.Publish("space.updated", result); err != nil {
+		err = meilisearchx.UpdateDocument("dega", meiliObj)
+		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 	}
 
-	renderx.JSON(w, http.StatusOK, result)
+	//tx.Commit()
+
+	if util.CheckNats() {
+		if err = util.NC.Publish("space.updated", spaceObjectforDega); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
+
+	renderx.JSON(w, http.StatusOK, spaceObjectforDega)
 }

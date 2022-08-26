@@ -5,20 +5,20 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
+
+	"github.com/factly/x/middlewarex"
+	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
+
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
-	"github.com/spf13/viper"
 )
 
-func details(w http.ResponseWriter, r *http.Request) {
+func list(w http.ResponseWriter, r *http.Request) {
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -40,40 +40,30 @@ func details(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	
-	roleID := chi.URLParam(r, "role_id")
-
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, viper.GetInt("dega_application_id"), spaceID, roleID)
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
-
-	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
+	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+spaceID+"/roles", nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", uID))
-	req.Header.Set("Content-type", "application/json")
-	response, err := client.Do(req)
+	req.Header.Set("X-User", strconv.Itoa(uID))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	defer response.Body.Close()
-	if response.StatusCode != 200 {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	spaceRole := model.SpaceRole{}
-	err = json.NewDecoder(response.Body).Decode(&spaceRole)
+	defer resp.Body.Close()
+	result := []model.SpaceRole{}
+	err = json.NewDecoder(resp.Body).Decode(&result)
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, spaceRole)
+	renderx.JSON(w, http.StatusOK, result)
+
 }

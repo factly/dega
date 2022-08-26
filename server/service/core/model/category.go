@@ -24,7 +24,6 @@ type Category struct {
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Posts            []*Post        `gorm:"many2many:post_categories;" json:"posts"`
-	Space            *Space         `json:"space,omitempty"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`

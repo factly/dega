@@ -2,6 +2,8 @@ package space
 
 import (
 	//	"encoding/json"
+
+	"fmt"
 	"net/http"
 	"strconv"
 
@@ -36,20 +38,6 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-	// space := map[string]interface{}{}
-
-	// err = json.NewDecoder(r.Body).Decode(&space)
-
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-	// 	return
-	// }
-
-	// spaceOrgID := int(space["organisation_id"].(float64))
-	// if spaceOrgID == 0 {
-	// 	return
-	// }
 
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
@@ -59,10 +47,22 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Space{}
-	result.ID = uint(sID)
+	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
-	req, err := http.NewRequest("DELETE", viper.GetString("kavach_url")+"/organisations/1/applications/"+viper.GetString("dega_application_id")+"/spaces/"+spaceID, nil)
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	// getting the details for the space to be deleted
+	client := http.Client{}
+	req, err := http.NewRequest("DELETE", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+viper.GetString("dega_application_id")+"/spaces/"+spaceID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -72,10 +72,10 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("X-User", strconv.Itoa(uID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 	if resp.StatusCode != 200 {
@@ -83,44 +83,30 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
-	//	fmt.Println(resp)
-
-	// check record exists or not
-	// err = config.DB.First(&result).Error
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-	// 	return
-	// }
-
-	// if result.OrganisationID == 0 {
-	// 	return
-	// }
-
-	// err = util.CheckSpaceKetoPermission("delete", uint(result.OrganisationID), uint(uID))
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
-	// 	return
-	// }
-
-	// tx := config.DB.Begin()
-	// tx.Model(&model.Space{}).Delete(&result)
-
+	defer resp.Body.Close()
 	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "space")
+		err = meilisearchx.DeleteDocument("dega", uint(sID), "space")
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		}
 	}
 
-	// tx.Commit()
-
 	if util.CheckNats() {
-		if err = util.NC.Publish("space.deleted", result); err != nil {
+		if err = util.NC.Publish("space.deleted", spaceObjectforDega); err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 	}
 
+	err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
+		SpaceID: uint(sID),
+	}).Delete(&model.SpacePermission{}).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 	renderx.JSON(w, http.StatusOK, nil)
 }

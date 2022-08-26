@@ -10,11 +10,6 @@ function CreateRole() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    console.log(values, 'onCreate');
-    // values.users = values.users.map((item) => item.toString());
-    // values.permissions = values.permissions.filter(
-    //   (item) => item && item.resource && item.actions.length > 0,
-    // );
     dispatch(createRole(values)).then(() => history.push('/members/roles'));
   };
 

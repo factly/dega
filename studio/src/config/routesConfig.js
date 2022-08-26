@@ -145,6 +145,7 @@ import Permissions from '../pages/permissions';
 //Reindex
 import Reindex from '../pages/spaces/Reindex';
 import { Component } from 'react';
+import ViewPolicy from '../pages/policies/components/ViewPolicy';
 
 const routes = {
   dashboard: {
@@ -425,6 +426,12 @@ const routes = {
       resource: 'policies',
       action: 'create',
     },
+  },
+  ViewPolicy: {
+    path: '/members/policies/:policyID/view',
+    menuKey: '/members',
+    Component: ViewPolicy,
+    title: 'Policy',
   },
   createRole: {
     path: '/members/roles/create',

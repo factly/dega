@@ -6,9 +6,11 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"time"
 
 	"github.com/spf13/viper"
 
+	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -72,7 +74,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	req.URL.RawQuery = q.Encode()
 
-	client := &http.Client{}
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 	resp, err := client.Do(req)
 
 	if err != nil {

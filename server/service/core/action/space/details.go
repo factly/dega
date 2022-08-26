@@ -1,15 +1,14 @@
 package space
 
 import (
-	"encoding/json"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/x/middlewarex"
-	"github.com/spf13/viper"
 
 	//	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -35,50 +34,26 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceID := chi.URLParam(r, "space_id")
-	//id, err := strconv.Atoi(spaceID)
+	sID := chi.URLParam(r, "space_id")
+	spaceID, err := strconv.Atoi(sID)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
 
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.InvalidID()))
-	// 	return
-	// }
-	//** HARDCODED organisation id need x-package util to get organisation id , given space id and uid
-	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/1/applications/"+viper.GetString("dega_application_id")+"/spaces/"+spaceID, nil)
+	orgID, err := util.GetOrganisationIDfromSpaceID(uint(spaceID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	req.Header.Set("X-User", strconv.Itoa(uID))
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(spaceID))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	result := &model.Space{}
-	err = json.NewDecoder(resp.Body).Decode(result)
-	if err != nil {
-		loggerx.Error(err)
-		return
-	}
-
-	//result := &model.Space{}
-
-	//result.ID = uint(id)
-
-	//err = config.DB.Model(&model.Space{}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
-
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-	// 	return
-	// }
-
-	renderx.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, spaceObjectforDega)
 }

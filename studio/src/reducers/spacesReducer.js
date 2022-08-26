@@ -26,13 +26,11 @@ export default function spacesReducer(state = initialState, action = {}) {
       };
     case GET_SPACES_SUCCESS:
       let space_details = {};
-
       action.payload.forEach((element) => {
         element.spaces.forEach((s) => {
           space_details[s.id] = s;
         });
       });
-
       const spaceID = localStorage.getItem('space') ? localStorage.getItem('space') : 0;
 
       const defaultSpace =
@@ -48,7 +46,12 @@ export default function spacesReducer(state = initialState, action = {}) {
       return {
         ...state,
         orgs: action.payload.map((each) => {
-          return { ...each, spaces: each.spaces.map((e) => e.id) };
+          return {
+            ...each.organisation,
+            applications: each.applications,
+            permission: each.permission,
+            spaces: each.spaces.map((e) => e.id),
+          };
         }),
         details: space_details,
         loading: false,

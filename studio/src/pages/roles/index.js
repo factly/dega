@@ -14,35 +14,24 @@ function Roles() {
   const spaces = useSelector(({ spaces }) => spaces);
   const actions = getUserPermission({ resource: 'roles', action: 'get', spaces });
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  query.set('page', filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
 
   const { roles, total, loading } = useSelector((state) => {
-    const node = state.roles.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        roles: node.data.map((element) => state.roles.details[element]),
-        total: node.total,
-        loading: state.roles.loading,
-      };
-    return { roles: [], total: 0, loading: state.roles.loading };
+    return {
+      roles: state.roles.req?.length
+        ? state.roles.req[0].data.map((id) => state.roles.details[id])
+        : [],
+      total: state.roles.req?.length,
+      loading: state.roles.loading,
+    };
   });
   React.useEffect(() => {
     fetchRoles();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
+  }, []);
 
   const fetchRoles = () => {
-    dispatch(getRoles(filters));
+    dispatch(getRoles());
   };
+
   return loading ? (
     <Loader />
   ) : (
@@ -51,20 +40,14 @@ function Roles() {
       <Row gutter={16} justify="end">
         <Link to="/members/roles/create">
           <Button
-            //  disabled={!(actions.includes('admin') || actions.includes('create'))}
+            disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"
           >
             New Role
           </Button>
         </Link>
       </Row>
-      <RoleList
-        // actions={actions}
-        data={{ roles, total, loading }}
-        // filters={filters}
-        // setFilters={setFilters}
-        // fetchPolicies={fetchPolicies}
-      />
+      <RoleList roles={roles} total={total} loading={loading} />
     </Space>
   );
 }

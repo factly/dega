@@ -105,7 +105,6 @@ function PolicyForm({ data = {}, onCreate }) {
           permissions: Object.keys(values.permissions)
             .filter((key) => values.permissions[key] && values.permissions[key].length > 0)
             .map((key) => ({ resource: key, actions: values.permissions[key] })),
-          users: values.users.map((item) => item.toString()),
         })
       }
       onValuesChange={() => {
@@ -120,8 +119,8 @@ function PolicyForm({ data = {}, onCreate }) {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="users" label="Users">
-            <Selector mode="multiple" display={'display_name'} action="Authors" />
+          <Form.Item name="roles" label="Roles">
+            <Selector mode="multiple" display={'name'} action="Roles" />
           </Form.Item>
         </Col>
       </Row>

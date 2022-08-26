@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
@@ -66,7 +68,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", strconv.Itoa(uID))
-	client := &http.Client{}
+	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
 	resp, err := client.Do(req)
 
 	if err != nil {

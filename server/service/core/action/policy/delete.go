@@ -1,6 +1,7 @@
 package policy
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
@@ -35,6 +36,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userID, err := middlewarex.GetUser(r.Context())
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
@@ -46,14 +54,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	/* delete old policy */
 	policyId := chi.URLParam(r, "policy_id")
 
-	policyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyId)
-
-	req, err := http.NewRequest("DELETE", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, viper.GetInt("dega_application_id"), spaceID, policyId)
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
 	client := &http.Client{}
@@ -66,6 +74,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		loggerx.Error(errors.New("unable to delete policy on kavach"))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	objectID := fmt.Sprint("policy_", policyId)
 	_, err = meilisearchx.Client.Index("dega").Delete(objectID)

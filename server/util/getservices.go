@@ -12,8 +12,10 @@ func GetAllowedServices(spaceID uint) ([]string, error) {
 		SpaceID: spaceID,
 	}).First(spacePermission).Error
 	if err != nil {
-		loggerx.Error(err)
-		return nil, err
+		if !(err.Error() == "record not found") {
+			loggerx.Error(err)
+			return nil, err
+		}
 	}
 
 	var serviceList []string

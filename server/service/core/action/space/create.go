@@ -4,8 +4,9 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-
+	"errors"
 	"fmt"
+
 	"net/http"
 	"strconv"
 
@@ -19,6 +20,7 @@ import (
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/validationx"
 	//"github.com/factly/x/slugx"
 )
 
@@ -41,46 +43,49 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := map[string]interface{}{}
-
+	space := space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	// err = util.CheckSpaceKetoPermission("create", uint(space.OrganisationID), uint(uID))
-	// if err != nil {
-	// 	loggerx.Error(err)
-	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
-	// 	return
-	// }
+	validationError := validationx.Check(space)
 
-	// validationError := validationx.Check(space)
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		errorx.Render(w, validationError)
+		return
+	}
 
-	// if validationError != nil {
-	// 	loggerx.Error(errors.New("validation error"))
-	// 	errorx.Render(w, validationError)
-	// 	return
-	// }
-
-	spaceOrgID := int(space["organisation_id"].(float64))
-	if spaceOrgID == 0 {
+	if space.OrganisationID == 0 {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
 	buf := new(bytes.Buffer)
-	err = json.NewEncoder(buf).Encode(&space)
-	fmt.Println(space, "spacetestnew")
+
+	requestBody := map[string]interface{}{
+		"name":        space.Name,
+		"description": space.Description,
+		"slug":        space.Slug,
+		"metadata": map[string]interface{}{
+			"meta_fields":  space.MetaFields,
+			"site_address": space.SiteAddress,
+			"tag_line":     space.TagLine,
+			"site_title":   space.SiteTitle,
+		},
+	}
+	err = json.NewEncoder(buf).Encode(&requestBody)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(spaceOrgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces", buf)
+	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces", buf)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -92,58 +97,93 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
-	fmt.Println(resp.Status, "resp status")
-	result := &model.Space{}
-	err = json.NewDecoder(resp.Body).Decode(result)
 	if err != nil {
 		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-	fmt.Println(resp)
+
+	defer resp.Body.Close()
+
+	if resp.StatusCode != 201 {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	spaceObjectfromKavach := &model.KavachSpace{}
+	err = json.NewDecoder(resp.Body).Decode(spaceObjectfromKavach)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	spaceObjectforDega := model.Space{}
+	spaceObjectforDega.ID = spaceObjectfromKavach.ID
+	spaceObjectforDega.CreatedAt = spaceObjectfromKavach.CreatedAt
+	spaceObjectforDega.UpdatedAt = spaceObjectfromKavach.UpdatedAt
+	spaceObjectforDega.DeletedAt = spaceObjectfromKavach.DeletedAt
+	spaceObjectforDega.CreatedByID = spaceObjectfromKavach.CreatedByID
+	spaceObjectforDega.UpdatedByID = spaceObjectfromKavach.UpdatedByID
+	spaceObjectforDega.Name = spaceObjectfromKavach.Name
+	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
+	spaceObjectforDega.Description = spaceObjectfromKavach.Description
+	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
+	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
+	err = json.Unmarshal(spaceObjectfromKavach.Metadata.RawMessage, &spaceObjectforDega)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 
 	var superOrgID int
 	if viper.GetBool("create_super_organisation") {
-		superOrgID, err = middlewarex.GetSuperOrganisationID("dega")
+		superOrgID, err = middlewarex.GetSuperOrganisationID("Kavach")
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
-
 		// Fetch organisation permissions
 		permission := model.OrganisationPermission{}
 		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-			OrganisationID: uint(spaceOrgID),
+			OrganisationID: uint(space.OrganisationID),
 		}).First(&permission).Error
 
-		if err != nil && spaceOrgID != superOrgID {
+		if err != nil && space.OrganisationID != superOrgID {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
 			return
 		}
 
-		if err == nil {
-			// Fetch total number of spaces in organisation
-			var totSpaces int64
-			config.DB.Model(&model.Space{}).Where(&model.Space{
-				OrganisationID: spaceOrgID,
-			}).Count(&totSpaces)
-
-			if totSpaces >= permission.Spaces && permission.Spaces > 0 {
-				errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
-				return
-			}
-		}
+		// if err == nil {
+		// 	// Fetch total number of spaces in organisation
+		// 	var totSpaces int64
+		// 	err = config.DB.Model(&model.Space{}).Where(&model.Space{
+		// 		OrganisationID: space.OrganisationID,
+		// 	}).Count(&totSpaces).Error
+		// 	if err != nil {
+		// 		loggerx.Error(err)
+		// 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		// 		return
+		// 	}
+		// 	if totSpaces >= permission.Spaces && permission.Spaces > 0 {
+		// 		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
+		// 		return
+		// 	}
+		// }
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	if viper.GetBool("create_super_organisation") {
-		// Create SpacePermission for super organisation
+		fmt.Println("here")
+		//Create SpacePermission for super organisation
 		var spacePermission model.SpacePermission
-		if superOrgID == spaceOrgID {
+		if superOrgID == space.OrganisationID {
 			spacePermission = model.SpacePermission{
-				SpaceID:   result.ID,
+				SpaceID:   spaceObjectforDega.ID,
 				Media:     -1,
 				Posts:     -1,
 				Podcast:   true,
@@ -153,7 +193,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			}
 		} else {
 			spacePermission = model.SpacePermission{
-				SpaceID:   result.ID,
+				SpaceID:   spaceObjectforDega.ID,
 				Media:     viper.GetInt64("default_number_of_media"),
 				Posts:     viper.GetInt64("default_number_of_posts"),
 				Episodes:  viper.GetInt64("default_number_of_episodes"),
@@ -162,72 +202,47 @@ func create(w http.ResponseWriter, r *http.Request) {
 				FactCheck: false,
 			}
 		}
-		var spacePermContext config.ContextKey = "space_perm_user"
-		if err = tx.WithContext(context.WithValue(r.Context(), spacePermContext, uID)).Create(&spacePermission).Error; err != nil {
+		fmt.Println("create permissions for space", spacePermission)
+		if err = tx.Model(&model.SpacePermission{}).Create(&spacePermission).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-
 	}
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
-		"id":              result.ID,
+		"id":              spaceObjectforDega.ID,
 		"kind":            "space",
-		"name":            result.Name,
-		"slug":            result.Slug,
-		"description":     result.Description,
-		"site_title":      result.SiteTitle,
-		"site_address":    result.SiteAddress,
-		"tag_line":        result.TagLine,
-		"organisation_id": result.OrganisationID,
-		"analytics":       result.Analytics,
+		"name":            spaceObjectforDega.Name,
+		"slug":            spaceObjectforDega.Slug,
+		"description":     spaceObjectforDega.Description,
+		"site_title":      spaceObjectforDega.SiteTitle,
+		"site_address":    spaceObjectforDega.SiteAddress,
+		"tag_line":        spaceObjectforDega.TagLine,
+		"organisation_id": spaceObjectforDega.OrganisationID,
+		"analytics":       spaceObjectforDega.Analytics,
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
-	}
-
-	tx.Commit()
-
-	if util.CheckNats() {
-		if err = util.NC.Publish("space.created", result); err != nil {
+		err = meilisearchx.AddDocument("dega", meiliObj)
+		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 	}
 
-	renderx.JSON(w, http.StatusCreated, result)
-}
+	tx.Commit()
 
-func approveSpaceSlug(slug string) string {
-	spaceList := make([]model.Space, 0)
-	config.DB.Model(&model.Space{}).Where("slug LIKE ? AND deleted_at IS NULL", slug+"%").Find(&spaceList)
+	if util.CheckNats() {
+		if err = util.NC.Publish("space.created", spaceObjectforDega); err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
+	}
 
-	count := 0
-	for {
-		flag := true
-		for _, each := range spaceList {
-			temp := slug
-			if count != 0 {
-				temp = temp + "-" + strconv.Itoa(count)
-			}
-			if each.Slug == temp {
-				flag = false
-				break
-			}
-		}
-		if flag {
-			break
-		}
-		count++
-	}
-	temp := slug
-	if count != 0 {
-		temp = temp + "-" + strconv.Itoa(count)
-	}
-	return temp
+	renderx.JSON(w, http.StatusCreated, spaceObjectforDega)
 }

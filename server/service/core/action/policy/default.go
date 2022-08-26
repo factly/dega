@@ -1,22 +1,29 @@
 package policy
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"time"
 
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/factly/x/slugx"
+	"github.com/spf13/viper"
 )
 
-// DataFile default json data file
-var DataFile = "./data/policies.json"
+// policyDataFile default json data file
+var policyDataFile = "./data/policies.json"
+var rolesDataFile = "./data/roles.json"
 
 // createDefaults - Create Default Policies
 // @Summary Create Default Policies
@@ -52,18 +59,20 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	jsonFile, err := os.Open(DataFile)
+	policyJsonFile, err := os.Open(policyDataFile)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
-	defer jsonFile.Close()
-
+	defer policyJsonFile.Close()
 	policies := make([]policyReq, 0)
-
-	byteValue, _ := ioutil.ReadAll(jsonFile)
+	byteValue, err := ioutil.ReadAll(policyJsonFile)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 	err = json.Unmarshal(byteValue, &policies)
 	if err != nil {
 		loggerx.Error(err)
@@ -71,23 +80,102 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	authors := author.Mapper(oID, uID)
+	rolesJsonFile, err := os.Open(rolesDataFile)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	defer rolesJsonFile.Close()
+	roles := make([]roleReq, 0)
+	byteValue, err = ioutil.ReadAll(rolesJsonFile)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	err = json.Unmarshal(byteValue, &roles)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
-	result := paging{}
-	result.Nodes = make([]model.Policy, 0)
-
-	for _, policy := range policies {
-		res := Mapper(Composer(oID, sID, policy), authors)
-		result.Nodes = append(result.Nodes, res)
-
-		if err = insertIntoMeili(res); err != nil {
+	defaultPolicies := make([]model.KavachPolicy, 0)
+	for index, role := range roles {
+		policy, err := createRoleandPolicyonKavach(role, policies[index], uint(oID), uint(sID), uint(uID))
+		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
+
+		defaultPolicies = append(defaultPolicies, *policy)
+	}
+	renderx.JSON(w, http.StatusCreated, defaultPolicies)
+}
+
+func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID, userID uint) (*model.KavachPolicy, error) {
+	buf := new(bytes.Buffer)
+	err := json.NewEncoder(buf).Encode(&role)
+	if err != nil {
+		return nil, err
+	}
+	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
+	req, err := http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/roles", buf)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
+	resp, err := client.Do(req)
+	if err != nil {
+		return nil, err
 	}
 
-	result.Total = len(result.Nodes)
+	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		return nil, errors.New("could not create role in the space")
+	}
 
-	renderx.JSON(w, http.StatusCreated, result)
+	spaceRole := model.SpaceRole{}
+	err = json.NewDecoder(resp.Body).Decode(&spaceRole)
+	if err != nil {
+		return nil, errors.New("unable to decode default space role response body")
+	}
+	fmt.Println("spacerole", spaceRole.ID, spaceRole.Name)
+	policyReqBody := map[string]interface{}{
+		"name":        policy.Name,
+		"description": policy.Description,
+		"slug":        slugx.Make(policy.Name),
+		"permissions": policy.Permissions,
+		"roles":       append([]int{}, int(spaceRole.ID)),
+	}
+
+	fmt.Println("this is policy roles", policyReqBody["roles"])
+	err = json.NewEncoder(buf).Encode(&policyReqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err = http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/policy", buf)
+	if err != nil {
+		return nil, err
+	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
+	resp, err = client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	if resp.StatusCode != 200 {
+		return nil, errors.New("error in creating policy on kavach")
+	}
+
+	spacePolicy := &model.KavachPolicy{}
+	err = json.NewDecoder(resp.Body).Decode(spacePolicy)
+	if err != nil {
+		return nil, errors.New("unable to decode default space policy response body")
+	}
+
+	return spacePolicy, nil
 }

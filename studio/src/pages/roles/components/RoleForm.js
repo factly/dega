@@ -19,22 +19,9 @@ function RoleForm({ data = {}, onCreate }) {
         layout="vertical"
         name="update-space-role"
         onFinish={(values) => {
-          console.log(values);
           onCreate(values);
-          //  console.log(onCreate,"onCreate")
-          //  console.log(onCreate,"function")
-          // console.log(something,"something")
-          // console.log("hello" )
-
-          // onReset();
         }}
-        //  initialValues={{
-        //    name: role.name,
-        //    slug: role.slug,
-        //    description: role.description,
-        //  }}
       >
-        {/* <h3> Space : {space?.name}</h3> */}
         <Form.Item
           name="name"
           label="Name"

@@ -1,13 +1,11 @@
 package role
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/errorx"
@@ -18,7 +16,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-func details(w http.ResponseWriter, r *http.Request) {
+func delete(w http.ResponseWriter, r *http.Request) {
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
 		loggerx.Error(err)
@@ -33,20 +31,18 @@ func details(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-
+	
+	roleID := chi.URLParam(r, "role_id")
 	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	
-	roleID := chi.URLParam(r, "role_id")
-
 	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, viper.GetInt("dega_application_id"), spaceID, roleID)
 	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 
-	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -67,13 +63,5 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceRole := model.SpaceRole{}
-	err = json.NewDecoder(response.Body).Decode(&spaceRole)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
-	}
-
-	renderx.JSON(w, http.StatusOK, spaceRole)
+	renderx.JSON(w, http.StatusOK, nil)
 }

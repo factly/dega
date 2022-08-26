@@ -6,16 +6,19 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+	"time"
 
+	"github.com/factly/dega-server/util/timex"
 	"github.com/factly/x/middlewarex"
 	"github.com/spf13/viper"
 )
 
 // KetoAllowed is request object to check permissions of user
 type KetoAllowed struct {
-	Subject  string `json:"subject"`
-	Action   string `json:"action"`
-	Resource string `json:"resource"`
+	Subject     string `json:"subject"`
+	Action      string `json:"action"`
+	Resource    string `json:"resource"`
+	SubjectType string `json:"subject_type"`
 }
 
 // CheckKetoPolicy returns middleware that checks the permissions of user from keto server
@@ -36,24 +39,18 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 				return
 			}
 			oID, err := GetOrganisation(ctx)
-
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
-
-			kresource := fmt.Sprint("resources", commonString, entity)
-			kaction := fmt.Sprint("actions", commonString, entity, ":", action)
-
 			result := KetoAllowed{}
 
-			result.Action = kaction
-			result.Resource = kresource
+			result.Action = action
+			result.Resource = entity
 			result.Subject = fmt.Sprint(uID)
-
-			resStatus, err := IsAllowed(result)
+			result.SubjectType = "id"
+			resStatus, err := IsAllowed(result, uint(oID), uint(sID), uint(uID))
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
@@ -69,48 +66,66 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 	}
 }
 
-// CheckSpaceKetoPermission checks keto policy for operations on space
-func CheckSpaceKetoPermission(action string, oID, uID uint) error {
-	commonString := fmt.Sprint(":org:", oID, ":app:dega:spaces")
+func CheckAdmin(orgID, uID uint) (bool, error) {
+	requestBody := map[string]interface{}{
+		"namespace":  "organisations",
+		"object":     fmt.Sprintf("org:%d", orgID),
+		"relation":   "owner",
+		"subject_id": fmt.Sprintf("%d", uID),
+	}
 
-	kresource := fmt.Sprint("resources", commonString)
-	kaction := fmt.Sprint("actions", commonString, ":", action)
-
-	result := KetoAllowed{}
-
-	result.Action = kaction
-	result.Resource = kresource
-	result.Subject = fmt.Sprint(uID)
-
-	resStatus, err := IsAllowed(result)
+	buf := new(bytes.Buffer)
+	err := json.NewEncoder(buf).Encode(&requestBody)
 	if err != nil {
-		return err
+		return false, err
+	}
+	req, err := http.NewRequest("POST", viper.GetString("keto_url")+"/relation-tuples/check", buf)
+	if err != nil {
+		return false, err
 	}
 
-	if resStatus != 200 {
-		return errors.New("Permission not granted")
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	response, err := client.Do(req)
+	if err != nil {
+		return false, err
 	}
-	return nil
+	defer response.Body.Close()
+	responseBody := make(map[string]interface{})
+	err = json.NewDecoder(response.Body).Decode(&responseBody)
+	if err != nil {
+		return false, err
+	}
+
+	if !(response.StatusCode == 200 || response.StatusCode == 403) {
+		return false, errors.New("error in checking the authorization the relation tuple")
+	}
+	return responseBody["allowed"].(bool), nil
 }
 
 // IsAllowed checks if keto policy allows user to action on resource
-func IsAllowed(result KetoAllowed) (int, error) {
+func IsAllowed(result KetoAllowed, orgID, spaceID, userID uint) (int, error) {
+	isAdmin, err := CheckAdmin(orgID, userID)
+	if err != nil {
+		return 0, err
+	}
+	if isAdmin {
+		return http.StatusOK, nil
+	}
 	buf := new(bytes.Buffer)
-
-	err := json.NewEncoder(buf).Encode(&result)
+	err = json.NewEncoder(buf).Encode(&result)
 	if err != nil {
 		return 0, err
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("keto_url")+"/engines/acp/ory/regex/allowed", buf)
+	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/%s/spaces/%d/policy/allowed", orgID, viper.GetString("dega_application_id"), spaceID), buf)
 	if err != nil {
 		return 0, err
 	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 	resp, err := client.Do(req)
-
 	if err != nil {
 		return 0, err
 	}

@@ -135,6 +135,11 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.Unauthorized()
 	}
 
+	orgID, err := util.GetOrganisation(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.Unauthorized()
+	}
 	if viper.GetBool("create_super_organisation") {
 		// Fetch space permissions
 		permission := model.SpacePermission{}
@@ -231,7 +236,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		return nil, errorx.DBError()
 	}
 
-	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post)
+	tx.Model(&model.Post{}).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space.Logo").First(&result.Post)
 
 	if result.Format.Slug == "fact-check" {
 		// create post claim
@@ -285,6 +290,12 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		}
 	}
 
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		return nil, errorx.InternalServerError()
+	}
+
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
 		SpaceID: uint(sID),
@@ -294,7 +305,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		Post:    result.Post,
 		Authors: result.Authors,
 		Claims:  result.Claims,
-	}, *result.Space, ratings)
+	}, *spaceObjectforDega, ratings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {

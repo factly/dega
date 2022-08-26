@@ -1,24 +1,15 @@
 import React from 'react';
 import { Popconfirm, Button, Table, Avatar, Tooltip, Space } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-//import { deleteSpaceRole, getSpaceRoles } from '../../../../../../../actions/roles';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { UserAddOutlined, DeleteOutlined } from '@ant-design/icons';
+import { deleteRole, getRoles } from '../../../actions/roles';
 
 function RoleList({ roles, total, loading }) {
-  //   const dispatch = useDispatch();
-  //   const { roles, loading } = useSelector((state) => {
-  //     var roleIDs = [];
-  //     roleIDs = state.spaces.details[spaceID]?.roleIDs || [];
-  //     return {
-  //       roles: roleIDs.map((id) => ({
-  //         ...state.roles.space[spaceID][id],
-  //         users:
-  //           state.roles.space[spaceID][id]?.users.map((userID) => state.users.details[userID]) || [],
-  //       })),
-  //       loading: state.roles.loading,
-  //     };
-  //   });
+  const dispatch = useDispatch();
+  const onDelete = (id) => {
+    dispatch(deleteRole(id)).then(() => dispatch(getRoles()));
+  };
 
   const columns = [
     {
@@ -29,21 +20,17 @@ function RoleList({ roles, total, loading }) {
       render: (_, record) => {
         return (
           <div key={record.id}>
-            {/* {role === 'owner' ? ( */}
             <Link
               key={record.id}
               style={{
                 marginRight: 8,
               }}
               to={{
-                pathname: ``,
+                pathname: `/members/roles/${record.id}/edit`,
               }}
             >
               {record?.name}
             </Link>
-            {/* ) : (
-              <h4 key={record.id}>{record?.name}</h4>
-            ) */}
           </div>
         );
       },
@@ -55,44 +42,12 @@ function RoleList({ roles, total, loading }) {
       width: '15%',
     },
     {
-      title: 'Users',
-      dataIndex: 'users',
-      key: 'users',
-      width: '15%',
-      render: (_, record) => {
-        return (
-          <Avatar.Group
-            maxCount={3}
-            maxStyle={{ color: '#f56a00', backgroundColor: '#fde3cf' }}
-            key={record.id}
-          >
-            {record?.users?.map((user) => {
-              return (
-                <Tooltip title={user?.email} placement="top" key={'role-' + user?.id}>
-                  <Avatar
-                    key={user?.id}
-                    style={{
-                      backgroundColor:
-                        '#' + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, '0'),
-                    }}
-                  >
-                    {user?.email?.charAt(0)}
-                  </Avatar>
-                </Tooltip>
-              );
-            })}
-          </Avatar.Group>
-        );
-      },
-    },
-    {
       title: 'Action',
       dataIndex: 'operation',
       width: '20%',
       render: (_, record) => {
         return (
           <span>
-            {/* {role === 'owner' ? ( */}
             <Space>
               <Link
                 to={{
@@ -103,46 +58,21 @@ function RoleList({ roles, total, loading }) {
                   Add users
                 </Button>
               </Link>
-              <Popconfirm title="Sure to Revoke?">
+              <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record.id)}>
                 <Button type="danger" icon={<DeleteOutlined />}>
-                  {' '}
-                  Delete{' '}
+                  Delete
                 </Button>
               </Popconfirm>
             </Space>
-            {/* ) */}
-            {/* // : null} */}
           </span>
         );
       },
     },
   ];
 
-  //   const fetchRoles = () => {
-  //     dispatch(getSpaceRoles(appID, spaceID));
-  //   };
-
-  //   const onDelete = (id) => {
-  //     dispatch(deleteSpaceRole(appID, spaceID, id)).then(() =>
-  //       dispatch(getSpaceRoles(appID, spaceID)),
-  //     );
-  //   };
-
-  //   React.useEffect(() => {
-  //     fetchRoles();
-  //     // eslint-disable-next-line
-  //   }, [dispatch, appID, spaceID]);
-
   return (
     <div>
-      <Table
-        bordered
-        columns={columns}
-        dataSource={roles}
-        rowKey={'id'}
-        loading={loading}
-        //  style={{ width: '78vw' }}
-      />
+      <Table bordered columns={columns} dataSource={roles} rowKey={'id'} loading={loading} />
     </div>
   );
 }

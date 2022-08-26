@@ -19,7 +19,6 @@ type Tag struct {
 	MediumID         *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium           *Medium        `json:"medium"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
-	Space            *Space         `json:"space,omitempty"`
 	Posts            []*Post        `gorm:"many2many:post_tags;" json:"posts"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
