@@ -42,6 +42,7 @@ func Router() chi.Router {
 		r.Put("/", update)
 		r.Mount("/roles", role.Router())
 		r.Delete("/", delete)
+		r.Get("/users", users)
 	})
 
 	return r

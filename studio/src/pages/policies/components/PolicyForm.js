@@ -119,7 +119,7 @@ function PolicyForm({ data = {}, onCreate }) {
           </Form.Item>
         </Col>
         <Col span={12}>
-          <Form.Item name="roles" label="Roles">
+          <Form.Item name="roles" label="Roles" required={true}>
             <Selector mode="multiple" display={'name'} action="Roles" />
           </Form.Item>
         </Col>

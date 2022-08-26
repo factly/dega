@@ -1,4 +1,4 @@
-package role
+package user
 
 import (
 	"fmt"
@@ -32,22 +32,25 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	roleID := chi.URLParam(r, "role_id")
 	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, viper.GetInt("dega_application_id"), spaceID, roleID)
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 
+	roleID := chi.URLParam(r, "role_id")
+	userID := chi.URLParam(r, "user_id")
+
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s/users/%s", orgID, viper.GetInt("dega_application_id"), spaceID, roleID, userID)
+	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+
 	req.Header.Set("X-User", fmt.Sprintf("%d", uID))
 	req.Header.Set("Content-type", "application/json")
 	response, err := client.Do(req)
@@ -64,4 +67,5 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusOK, nil)
+
 }

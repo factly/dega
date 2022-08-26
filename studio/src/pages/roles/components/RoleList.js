@@ -2,7 +2,7 @@ import React from 'react';
 import { Popconfirm, Button, Table, Avatar, Tooltip, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { UserAddOutlined, DeleteOutlined } from '@ant-design/icons';
+import { UserOutlined, DeleteOutlined } from '@ant-design/icons';
 import { deleteRole, getRoles } from '../../../actions/roles';
 
 function RoleList({ roles, total, loading }) {
@@ -51,11 +51,11 @@ function RoleList({ roles, total, loading }) {
             <Space>
               <Link
                 to={{
-                  pathname: ``,
+                  pathname: `/members/roles/${record.id}/users`,
                 }}
               >
-                <Button icon={<UserAddOutlined />} primary="true">
-                  Add users
+                <Button icon={<UserOutlined />} primary="true">
+                  Users
                 </Button>
               </Link>
               <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record.id)}>

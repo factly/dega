@@ -178,7 +178,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
 	if viper.GetBool("create_super_organisation") {
-		fmt.Println("here")
 		//Create SpacePermission for super organisation
 		var spacePermission model.SpacePermission
 		if superOrgID == space.OrganisationID {
@@ -202,7 +201,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 				FactCheck: false,
 			}
 		}
-		fmt.Println("create permissions for space", spacePermission)
 		if err = tx.Model(&model.SpacePermission{}).Create(&spacePermission).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

@@ -10,6 +10,7 @@ import {
   SET_SELECTED_SPACE,
   DELETE_SPACE_SUCCESS,
   UPDATE_SPACE_SUCCESS,
+  ADD_SPACE_USERS,
 } from '../constants/spaces';
 import { addErrorNotification, addSuccessNotification } from './notifications';
 import getError from '../utils/getError';
@@ -84,6 +85,20 @@ export const updateSpace = (data) => {
   };
 };
 
+export const getSpaceUsers = () => {
+  return (dispatch, getState) => {
+    const currentSpaceID = getState().spaces?.selected;
+    dispatch(loadingSpaces());
+    return axios.
+      get(`/core/spaces/${currentSpaceID}/users`)
+      .then((response) => {
+        dispatch(addSpaceUsers(currentSpaceID, response.data))
+      })
+      .catch((error) => {
+        dispatch(addErrorNotification(getError(error)));
+      })
+  }
+} 
 export const loadingSpaces = () => ({
   type: LOADING_SPACES,
 });
@@ -107,3 +122,12 @@ export const deleteSpaceSuccess = (id) => ({
   type: DELETE_SPACE_SUCCESS,
   payload: id,
 });
+
+export const addSpaceUsers = (id, data) => ({
+  type: ADD_SPACE_USERS,
+  payload: {
+    id,
+    data
+  }
+})
+

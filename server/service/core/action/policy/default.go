@@ -142,7 +142,6 @@ func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID,
 	if err != nil {
 		return nil, errors.New("unable to decode default space role response body")
 	}
-	fmt.Println("spacerole", spaceRole.ID, spaceRole.Name)
 	policyReqBody := map[string]interface{}{
 		"name":        policy.Name,
 		"description": policy.Description,
@@ -151,7 +150,6 @@ func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID,
 		"roles":       append([]int{}, int(spaceRole.ID)),
 	}
 
-	fmt.Println("this is policy roles", policyReqBody["roles"])
 	err = json.NewEncoder(buf).Encode(&policyReqBody)
 	if err != nil {
 		return nil, err

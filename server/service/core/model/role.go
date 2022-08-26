@@ -28,5 +28,4 @@ type User struct {
 	SocialMediaURLs  postgres.Jsonb `json:"social_media_urls" swaggertype:"primitive,string"`
 	Description      string         `json:"description"`
 	Meta             postgres.Jsonb `json:"meta"`
-	Organisations    []Organisation `json:"organisations"`
 }

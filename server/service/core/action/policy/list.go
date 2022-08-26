@@ -65,7 +65,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	client := &http.Client{}
 	resp, err := client.Do(req)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -73,6 +72,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	var polices []model.KavachPolicy
 

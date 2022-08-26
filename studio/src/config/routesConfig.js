@@ -146,6 +146,7 @@ import Permissions from '../pages/permissions';
 import Reindex from '../pages/spaces/Reindex';
 import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
+import RoleUsers from '../pages/roles/users';
 
 const routes = {
   dashboard: {
@@ -416,6 +417,13 @@ const routes = {
     menuKey: '/members',
     Component: Roles,
     title: 'Roles',
+  },
+
+  roleUsers: {
+    path: '/members/roles/:roleID/users',
+    menuKey: '/members',
+    Component: RoleUsers,
+    title: 'Role Users'
   },
   createPolicy: {
     path: '/members/policies/create',
