@@ -13,7 +13,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   const siteAddress = useSelector(
     ({ spaces: { details, selected } }) => details[selected].site_address,
   );
-  const setLoading = onCreate.name === 'onCreate' ? true : false;
+  const setLoading = data.id ? false : true;
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
