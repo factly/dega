@@ -28,7 +28,7 @@ function EditPolicy() {
           (obj, item) => Object.assign(obj, { [item.resource]: item.actions }),
           {},
         ),
-        roles: state.policies.details[id].roles?.length 
+        roles: state.policies.details[id].roles?.length
           ? state.policies.details[id].roles.map((item) => item.id)
           : [],
       },
@@ -47,9 +47,7 @@ function EditPolicy() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePolicy({ ...policy, ...values })).then(() =>
-      history.push(`/members/policies/`),
-    );
+    dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push(`/members/policies/`));
   };
 
   return (

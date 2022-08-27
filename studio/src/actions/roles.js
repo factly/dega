@@ -109,7 +109,7 @@ export const deleteRole = (id) => {
 };
 
 export const addRoleUser = (roleID, data) => {
-  return (dispatch, getState) => {  
+  return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     dispatch(loadingRoles());
     return axios
@@ -121,10 +121,10 @@ export const addRoleUser = (roleID, data) => {
         dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => {
-        dispatch(stopRolesLoading())
-      })
-  }
-}
+        dispatch(stopRolesLoading());
+      });
+  };
+};
 
 export const deleteRoleUser = (roleID, userID) => {
   return (dispatch, getState) => {
@@ -139,10 +139,10 @@ export const deleteRoleUser = (roleID, userID) => {
         dispatch(addErrorNotification(getError(error)));
       })
       .finally(() => {
-        dispatch(stopRolesLoading())
-      })   
-  }
-}
+        dispatch(stopRolesLoading());
+      });
+  };
+};
 export const loadingRoles = () => ({
   type: SET_ROLES_LOADING,
   payload: true,

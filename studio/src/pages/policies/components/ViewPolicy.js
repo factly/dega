@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function ViewPolicy() {
-  const { policyID } = useParams()
+  const { policyID } = useParams();
   const span = 2;
   const nestedTableColumns = [
     {
@@ -30,10 +30,10 @@ export default function ViewPolicy() {
 
   const { policy, loading } = useSelector((state) => {
     return {
-      policy:  state.policies.details?.[policyID],
-      loading: state.policies.loading
-    }
-  })
+      policy: state.policies.details?.[policyID],
+      loading: state.policies.loading,
+    };
+  });
 
   return (
     <div

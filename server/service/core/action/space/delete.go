@@ -54,6 +54,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
 	if err != nil {
 		loggerx.Error(err)
@@ -62,7 +69,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 	// getting the details for the space to be deleted
 	client := http.Client{}
-	req, err := http.NewRequest("DELETE", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+viper.GetString("dega_application_id")+"/spaces/"+spaceID, nil)
+	req, err := http.NewRequest("DELETE", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+fmt.Sprintf("%d", applicationID)+"/spaces/"+spaceID, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

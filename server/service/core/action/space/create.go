@@ -43,6 +43,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	space := space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
 	if err != nil {
@@ -85,7 +92,45 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces", buf)
+	var superOrgID int
+	superOrgID, err = middlewarex.GetSuperOrganisationID("Kavach")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	if viper.GetBool("create_super_organisation") && viper.GetBool("organisation_permission_enabled") {
+		// Fetch organisation permissions
+		permission := model.OrganisationPermission{}
+		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
+			OrganisationID: uint(space.OrganisationID),
+		}).First(&permission).Error
+
+		if err != nil && space.OrganisationID != superOrgID {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
+			return
+		}
+
+		// if err == nil {
+		// 	// Fetch total number of spaces in organisation
+		// 	// var totSpaces int64
+		// 	// err = config.DB.Model(&model.Space{}).Where(&model.Space{
+		// 	// 	OrganisationID: space.OrganisationID,
+		// 	// }).Count(&totSpaces).Error
+		// 	// if err != nil {
+		// 	// 	loggerx.Error(err)
+		// 	// 	errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		// 	// 	return
+		// 	// }
+		// 	// if totSpaces >= permission.Spaces && permission.Spaces > 0 {
+		// 	// 	errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
+		// 	// 	return
+		// 	// }
+		// }
+	}
+
+	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces", buf)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -135,44 +180,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return
-	}
-
-	var superOrgID int
-	if viper.GetBool("create_super_organisation") {
-		superOrgID, err = middlewarex.GetSuperOrganisationID("Kavach")
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
-		// Fetch organisation permissions
-		permission := model.OrganisationPermission{}
-		err = config.DB.Model(&model.OrganisationPermission{}).Where(&model.OrganisationPermission{
-			OrganisationID: uint(space.OrganisationID),
-		}).First(&permission).Error
-
-		if err != nil && space.OrganisationID != superOrgID {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
-			return
-		}
-
-		// if err == nil {
-		// 	// Fetch total number of spaces in organisation
-		// 	var totSpaces int64
-		// 	err = config.DB.Model(&model.Space{}).Where(&model.Space{
-		// 		OrganisationID: space.OrganisationID,
-		// 	}).Count(&totSpaces).Error
-		// 	if err != nil {
-		// 		loggerx.Error(err)
-		// 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		// 		return
-		// 	}
-		// 	if totSpaces >= permission.Spaces && permission.Spaces > 0 {
-		// 		errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more spaces", http.StatusUnprocessableEntity)))
-		// 		return
-		// 	}
-		// }
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

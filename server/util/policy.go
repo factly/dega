@@ -44,23 +44,16 @@ func CheckKetoPolicy(entity, action string) func(h http.Handler) http.Handler {
 				return
 			}
 
-			result := KetoAllowed{}
-
-			result.Action = action
-			result.Resource = entity
-			result.Subject = fmt.Sprint(uID)
-			result.SubjectType = "id"
-			resStatus, err := IsAllowed(result, uint(oID), uint(sID), uint(uID))
+			resStatus, err := IsAllowed(entity, action, uint(oID), uint(sID), uint(uID))
 			if err != nil {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			if resStatus != 200 {
+			if resStatus != http.StatusOK {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-
 			h.ServeHTTP(w, r)
 		})
 	}
@@ -103,7 +96,7 @@ func CheckAdmin(orgID, uID uint) (bool, error) {
 }
 
 // IsAllowed checks if keto policy allows user to action on resource
-func IsAllowed(result KetoAllowed, orgID, spaceID, userID uint) (int, error) {
+func IsAllowed(entity, action string, orgID, spaceID, userID uint) (int, error) {
 	isAdmin, err := CheckAdmin(orgID, userID)
 	if err != nil {
 		return 0, err
@@ -111,19 +104,19 @@ func IsAllowed(result KetoAllowed, orgID, spaceID, userID uint) (int, error) {
 	if isAdmin {
 		return http.StatusOK, nil
 	}
-	buf := new(bytes.Buffer)
-	err = json.NewEncoder(buf).Encode(&result)
+
+	applicationID, err := GetApplicationID(uint(userID), "dega")
 	if err != nil {
 		return 0, err
 	}
 
-	req, err := http.NewRequest("POST", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/%s/spaces/%d/policy/allowed", orgID, viper.GetString("dega_application_id"), spaceID), buf)
+	object := fmt.Sprintf("resource:org:%d:app:%d:space:%d:%s", orgID, applicationID, spaceID, entity)
+	reqURL := viper.GetString("keto_url") + "/relation-tuples/check?" + fmt.Sprintf("namespace=%s&object=%s&relation=%s&subject_id=%d", namespace, object, action, userID)
+	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
 		return 0, err
 	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
-
 	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 	resp, err := client.Do(req)
 	if err != nil {

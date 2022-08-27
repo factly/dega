@@ -2,6 +2,7 @@ package space
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -70,6 +71,14 @@ func my(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	// Fetched all organisations of the user
 	req, err := http.NewRequest(http.MethodGet, viper.GetString("kavach_url")+"/organisations/my", nil)
 	if err != nil {
@@ -106,7 +115,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for index, organisation := range allOrg {
-		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(int(organisation.Organisation.ID))+"/applications/"+viper.GetString("dega_application_id")+"/spaces/", nil)
+		req, err := http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+strconv.Itoa(int(organisation.Organisation.ID))+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/", nil)
 		req.Header.Set("X-User", strconv.Itoa(uID))
 		if err != nil {
 			loggerx.Error(err)
@@ -121,7 +130,8 @@ func my(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		defer resp.Body.Close()
-		organisationSpacesfromKavach := []model.KavachSpace{}
+
+		organisationSpacesfromKavach := make([]model.KavachSpace, 0)
 		err = json.NewDecoder(resp.Body).Decode(&organisationSpacesfromKavach)
 		if err != nil {
 			loggerx.Error(err)
@@ -155,7 +165,12 @@ func my(w http.ResponseWriter, r *http.Request) {
 				}
 				spaceWithPerm.Permissions = append(spaceWithPerm.Permissions, adminPerm)
 			} else {
-				spaceWithPerm.Permissions = []model.Permission{}
+				spaceWithPerm.Permissions, err = util.GetPermissions(organisation.Organisation.ID, eachSpace.ApplicationID, eachSpace.ID, uint(uID))
+				if err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 
 			spaceWithPerm.AllowedServices, err = util.GetAllowedServices(eachSpace.ID)

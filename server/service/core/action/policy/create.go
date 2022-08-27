@@ -57,6 +57,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	policyReq := kavachPolicy{}
 
 	err = json.NewDecoder(r.Body).Decode(&policyReq)
@@ -74,7 +81,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", organisationID) + "/applications/" + viper.GetString("dega_application_id") + "/spaces/" + fmt.Sprintf("%d", spaceID) + "/policy"
+	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", organisationID) + "/applications/" + fmt.Sprintf("%d", applicationID) + "/spaces/" + fmt.Sprintf("%d", spaceID) + "/policy"
 	req, err := http.NewRequest(http.MethodPost, requrl, buf)
 	if err != nil {
 		loggerx.Error(err)

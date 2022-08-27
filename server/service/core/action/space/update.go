@@ -53,6 +53,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	space := &model.Space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
 	if err != nil {
@@ -99,7 +106,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
-	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID), buf)
+	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID), buf)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

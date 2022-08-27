@@ -46,6 +46,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	roleID := chi.URLParam(r, "role_id")
 
 	// decoding the requestBody
@@ -65,7 +72,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s/users", orgID, viper.GetInt("dega_application_id"), spaceID, roleID)
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s/users", orgID, applicationID, spaceID, roleID)
 	req, err := http.NewRequest(http.MethodPost, reqURL, buf)
 	if err != nil {
 		loggerx.Error(err)

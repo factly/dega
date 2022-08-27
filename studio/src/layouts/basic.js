@@ -78,9 +78,11 @@ function BasicLayout(props) {
   });
 
   React.useEffect(() => {
-    dispatch(getSpaces()).then((org) => {
-      if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
-    });
+    dispatch(getSpaces());
+    // .then((org) => {
+    // if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
+    // }
+    // );
   }, [dispatch, selected]);
 
   React.useEffect(() => {
@@ -94,9 +96,9 @@ function BasicLayout(props) {
   }, [time, description]);
 
   React.useEffect(() => {
-    // if (redirect?.code === 307) {
-    //   window.location.href = window.REACT_APP_KAVACH_PUBLIC_URL;
-    // }
+    if (redirect?.code === 307) {
+      window.location.href = window.REACT_APP_KAVACH_PUBLIC_URL;
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [redirect]);
 

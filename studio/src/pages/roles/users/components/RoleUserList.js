@@ -41,11 +41,8 @@ export default function UserList({ users, roleID }) {
   ];
 
   const deleteUser = (id) => {
-    dispatch(deleteRoleUser(roleID, id)).then(() =>
-      dispatch(getRoles())
-    );
+    dispatch(deleteRoleUser(roleID, id)).then(() => dispatch(getRoles()));
   };
 
   return <Table bordered columns={columns} dataSource={users} rowKey={'id'} />;
-
 }

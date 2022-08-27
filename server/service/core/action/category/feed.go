@@ -8,18 +8,41 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/post"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/go-chi/chi"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
+	uID, err := middlewarex.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
+	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	space, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
@@ -32,14 +55,6 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	slugs := chi.URLParam(r, "slugs")
 	categorySlugs := strings.Split(slugs, ",")
 
-	space := model.Space{}
-	space.ID = uint(sID)
-	if err := config.DB.Preload("Logo").First(&space).Error; err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-		return
-	}
-
 	categoryIDs := make([]uint, 0)
 	categoryList := make([]model.Category, 0)
 	config.DB.Model(&model.Category{}).Where("slug IN (?)", categorySlugs).Find(&categoryList)
@@ -47,7 +62,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		categoryIDs = append(categoryIDs, each.ID)
 	}
 
-	feed := post.GetFeed(space)
+	feed := post.GetFeed(*space)
 
 	postList := make([]model.Post, 0)
 	config.DB.Model(&model.Post{}).Joins("JOIN post_categories ON posts.id = post_categories.post_id").Where(&model.Post{
@@ -55,7 +70,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).Where("category_id IN (?)", categoryIDs).Order("created_at " + sort).Offset(offset).Limit(limit).Find(&postList)
 
-	feed.Items = post.GetItemsList(postList, space)
+	feed.Items = post.GetItemsList(postList, *space)
 
 	if err := feed.WriteRss(w); err != nil {
 		loggerx.Error(err)

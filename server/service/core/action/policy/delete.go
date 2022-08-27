@@ -51,10 +51,17 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	/* delete old policy */
 	policyId := chi.URLParam(r, "policy_id")
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, viper.GetInt("dega_application_id"), spaceID, policyId)
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyId)
 	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)

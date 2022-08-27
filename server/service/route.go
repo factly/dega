@@ -75,7 +75,7 @@ func RegisterRoutes() http.Handler {
 		r.With(util.PodcastPermission).Mount("/podcast", podcast.Router())
 		r.Mount("/reindex", reindex.Router())
 	})
-	
+
 	r.With(middlewarex.CheckUser).Group(func(r chi.Router) {
 		r.Post("/core/requests/organisations", organisation.Create)
 		r.With(middlewarex.CheckSpace(1)).Post("/core/requests/spaces", space.Create)

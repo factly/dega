@@ -102,10 +102,10 @@ export default function spacesReducer(state = initialState, action = {}) {
         details: {
           [action.payload.id]: {
             ...state.details[action.payload.id],
-            users: action.payload.data
-          }
-        }
-      }
+            users: action.payload.data,
+          },
+        },
+      };
     default:
       return state;
   }

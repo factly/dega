@@ -423,7 +423,7 @@ const routes = {
     path: '/members/roles/:roleID/users',
     menuKey: '/members',
     Component: RoleUsers,
-    title: 'Role Users'
+    title: 'Role Users',
   },
   createPolicy: {
     path: '/members/policies/create',

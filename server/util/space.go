@@ -12,7 +12,11 @@ import (
 )
 
 func GetSpacefromKavach(userID, orgID, spaceID uint) (*model.Space, error) {
-	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID), nil)
+	applicationID, err := GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		return nil, err
+	}
+	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID), nil)
 	if err != nil {
 		return nil, err
 	}

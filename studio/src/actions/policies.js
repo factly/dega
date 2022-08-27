@@ -66,7 +66,7 @@ export const getPolicy = (id) => {
     return axios
       .get(POLICIES_API + '/' + id)
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         dispatch(addPolicy(GET_POLICY, response.data));
       })
       .catch((error) => {
@@ -94,7 +94,7 @@ export const createPolicy = (data) => {
 
 // action to update policy by id
 export const updatePolicy = (data) => {
-  console.log({data})
+  console.log({ data });
   return (dispatch) => {
     dispatch(loadingPolicies());
     return axios

@@ -26,6 +26,13 @@ func users(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	sID := chi.URLParam(r, "space_id")
 	spaceID, err := strconv.Atoi(sID)
 	if err != nil {
@@ -41,7 +48,7 @@ func users(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/users", nil)
+	req, err := http.NewRequest("GET", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/users", nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

@@ -121,8 +121,14 @@ func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID,
 	if err != nil {
 		return nil, err
 	}
+
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		return nil, err
+	}
+
 	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
-	req, err := http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/roles", buf)
+	req, err := http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/roles", buf)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +161,7 @@ func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID,
 		return nil, err
 	}
 
-	req, err = http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+viper.GetString("dega_application_id")+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/policy", buf)
+	req, err = http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/policy", buf)
 	if err != nil {
 		return nil, err
 	}

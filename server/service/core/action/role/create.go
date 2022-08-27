@@ -50,6 +50,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
+
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	buf := new(bytes.Buffer)
 	err = json.NewEncoder(buf).Encode(spaceRole)
 	if err != nil {
@@ -58,7 +66,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", orgID) + "/applications/" + viper.GetString("dega_application_id") + "/spaces/" + spaceID + "/roles"
+	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", orgID) + "/applications/" + fmt.Sprintf("%d", applicationID) + "/spaces/" + spaceID + "/roles"
 	req, err := http.NewRequest("POST", requrl, buf)
 	if err != nil {
 		loggerx.Error(err)

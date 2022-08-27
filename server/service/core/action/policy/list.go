@@ -53,7 +53,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy", organisationID, viper.GetInt("dega_application_id"), spaceID)
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy", organisationID, applicationID, spaceID)
 	req, err := http.NewRequest("GET", reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)

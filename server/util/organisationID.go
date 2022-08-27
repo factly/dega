@@ -91,7 +91,7 @@ func GetOrganisationIDfromSpaceID(spaceID, userID uint) (int, error) {
 	}
 
 	if response.StatusCode != 200 {
-		return 0, errors.New("internal server error on kavach while getting space id from organisation id")
+		return 0, errors.New("internal server error on kavach while getting organisation id from space id")
 	}
 	organisationID := int(responseBody["organisation_id"].(float64))
 	return organisationID, nil

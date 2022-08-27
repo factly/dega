@@ -39,7 +39,15 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, viper.GetInt("dega_application_id"), spaceID, roleID)
+
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, applicationID, spaceID, roleID)
 	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
 
 	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)

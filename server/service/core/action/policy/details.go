@@ -52,9 +52,16 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	policyID := chi.URLParam(r, "policy_id")
 
-	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, viper.GetInt("dega_application_id"), spaceID, policyID)
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyID)
 	req, err := http.NewRequest("GET", reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)

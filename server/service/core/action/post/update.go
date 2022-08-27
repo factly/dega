@@ -252,7 +252,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["status"] = "draft"
 	}
 
-	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -478,18 +478,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPublishPermissions(oID, sID, uID int) (int, error) {
-	commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 
-	kresource := fmt.Sprint("resources", commonString, "posts")
-	kaction := fmt.Sprint("actions", commonString, "posts:publish")
-
-	result := util.KetoAllowed{}
-
-	result.Action = kaction
-	result.Resource = kresource
-	result.Subject = fmt.Sprint(uID)
-
-	resStatus, err := util.IsAllowed(result, uint(oID), uint(sID), uint(uID))
+	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
 	if err != nil {
 		return 0, err
 	}

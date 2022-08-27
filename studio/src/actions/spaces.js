@@ -89,16 +89,16 @@ export const getSpaceUsers = () => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
     dispatch(loadingSpaces());
-    return axios.
-      get(`/core/spaces/${currentSpaceID}/users`)
+    return axios
+      .get(`/core/spaces/${currentSpaceID}/users`)
       .then((response) => {
-        dispatch(addSpaceUsers(currentSpaceID, response.data))
+        dispatch(addSpaceUsers(currentSpaceID, response.data));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));
-      })
-  }
-} 
+      });
+  };
+};
 export const loadingSpaces = () => ({
   type: LOADING_SPACES,
 });
@@ -127,7 +127,6 @@ export const addSpaceUsers = (id, data) => ({
   type: ADD_SPACE_USERS,
   payload: {
     id,
-    data
-  }
-})
-
+    data,
+  },
+});
