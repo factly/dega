@@ -7,11 +7,10 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -92,7 +91,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("X-User", strconv.Itoa(userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{Timeout: time.Duration(timex.HTTP_TIMEOUT) * time.Second}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)

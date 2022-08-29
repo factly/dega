@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -68,7 +69,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// getting the details for the space to be deleted
-	client := http.Client{}
+	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest("DELETE", viper.GetString("kavach_url")+fmt.Sprintf("/organisations/%d/applications/", orgID)+fmt.Sprintf("%d", applicationID)+"/spaces/"+spaceID, nil)
 	if err != nil {
 		loggerx.Error(err)

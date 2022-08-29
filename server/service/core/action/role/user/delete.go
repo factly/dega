@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -50,7 +49,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	userID := chi.URLParam(r, "user_id")
 
 	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s/users/%s", orgID, applicationID, spaceID, roleID, userID)
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)

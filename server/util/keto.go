@@ -2,9 +2,8 @@ package util
 
 import (
 	"net/http"
-	"time"
 
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -16,7 +15,7 @@ func KetoGetRequest(path string) (*http.Response, error) {
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

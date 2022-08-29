@@ -5,11 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -51,8 +50,7 @@ func details(w http.ResponseWriter, r *http.Request) {
 	roleID := chi.URLParam(r, "role_id")
 
 	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%s/roles/%s", orgID, applicationID, spaceID, roleID)
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
-
+	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)

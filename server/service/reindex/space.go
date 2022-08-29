@@ -6,12 +6,11 @@ import (
 	"log"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -46,7 +45,7 @@ func space(w http.ResponseWriter, r *http.Request) {
 	}
 
 	req.Header.Set("X-User", fmt.Sprintf("%d", uID))
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	response, err := client.Do(req)
 	if err != nil {
 		loggerx.Error(err)

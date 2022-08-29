@@ -8,12 +8,11 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -105,7 +104,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID), buf)
 	if err != nil {
 		loggerx.Error(err)

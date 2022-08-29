@@ -4,10 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"time"
 
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -24,7 +23,7 @@ func GetSpacefromKavach(userID, orgID, spaceID uint) (*model.Space, error) {
 	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err

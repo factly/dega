@@ -8,11 +8,10 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -127,7 +126,7 @@ func createRoleandPolicyonKavach(role roleReq, policy policyReq, orgID, spaceID,
 		return nil, err
 	}
 
-	client := http.Client{Timeout: time.Second * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest(http.MethodPost, viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", orgID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID)+"/roles", buf)
 	if err != nil {
 		return nil, err

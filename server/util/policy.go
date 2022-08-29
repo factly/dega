@@ -6,9 +6,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/middlewarex"
 	"github.com/spf13/viper"
 )
@@ -77,7 +76,7 @@ func CheckAdmin(orgID, uID uint) (bool, error) {
 		return false, err
 	}
 
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	response, err := client.Do(req)
 	if err != nil {
 		return false, err
@@ -117,7 +116,7 @@ func IsAllowed(entity, action string, orgID, spaceID, userID uint) (int, error) 
 		return 0, err
 	}
 	req.Header.Set("Content-Type", "application/json")
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return 0, err

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	meilisearchx "github.com/factly/x/meilisearchx"
@@ -71,7 +72,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

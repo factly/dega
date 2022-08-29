@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
@@ -39,7 +38,7 @@ type TupleWithSubjectSet struct {
 const namespace string = "spaces"
 
 func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error) {
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	roleObject := fmt.Sprintf("roles:org:%d:app:%d:space:%d", orgID, appID, spaceID)
 	requestURL := viper.GetString("keto_url") + "/relation-tuples?namespace=spaces&" + fmt.Sprintf("subject_id=%d&object=%s", uID, roleObject)
 	req, err := http.NewRequest("GET", requestURL, nil)

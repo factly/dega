@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -101,7 +102,7 @@ func (r *sitemapsResolver) Users(ctx context.Context, obj *models.Sitemaps) ([]*
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", fmt.Sprint(postAuthor.AuthorID))
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

@@ -3,9 +3,8 @@ package user
 import (
 	"encoding/json"
 	"net/http"
-	"time"
 
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -46,8 +45,7 @@ func redirectToKavach(w http.ResponseWriter, r *http.Request) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-USer", header.Get("X-User"))
-
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

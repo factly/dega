@@ -5,9 +5,8 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"time"
 
-	"github.com/factly/dega-server/util/timex"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -18,7 +17,7 @@ func GetApplicationID(userID uint, appSlug string) (uint, error) {
 	}
 
 	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
-	client := http.Client{Timeout: time.Minute * time.Duration(timex.HTTP_TIMEOUT)}
+	client := httpx.CustomHttpClient()
 	response, err := client.Do(req)
 	if err != nil {
 		return 0, err
