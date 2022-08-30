@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 function Tags({ permission }) {
   const { actions } = permission;
@@ -46,7 +47,9 @@ function Tags({ permission }) {
       };
     return { tags: [], total: 0, loading: state.tags.loading };
   });
-
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [params]);
   React.useEffect(() => {
     fetchTags();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +82,11 @@ function Tags({ permission }) {
         style={{ width: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
+            if (changedValues.q === '') {
+              const { q, ...filtersWithoutQuery } = filters;
+              setFilters({ ...filtersWithoutQuery });
+              return;
+            }
             setFilters({ ...filters, ...changedValues });
           }
         }}

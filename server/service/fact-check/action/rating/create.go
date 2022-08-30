@@ -123,6 +123,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Rating{
+		Base: config.Base{
+			CreatedAt: rating.CreatedAt,
+			UpdatedAt: rating.UpdatedAt,
+		},
 		Name:             rating.Name,
 		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
 		BackgroundColour: rating.BackgroundColour,

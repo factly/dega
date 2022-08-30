@@ -117,6 +117,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Podcast{
+		Base: config.Base{
+			CreatedAt: podcast.CreatedAt,
+			UpdatedAt: podcast.UpdatedAt,
+		},
 		Title:             podcast.Title,
 		Description:       jsonDescription,
 		HTMLDescription:   htmlDescription,

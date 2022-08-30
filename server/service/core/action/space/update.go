@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -78,11 +79,24 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.Space{}
+	result := spaceWithPermissions{}
+	adminPerm := model.Permission{
+		Resource: "admin",
+		Actions:  []string{"admin"},
+	}
+	result.Permissions = []model.Permission{adminPerm}
+	var services []string
+	services, err = util.GetAllowedServices(uint(id))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+	result.AllowedServices = services
 	result.ID = uint(id)
 
 	// check record exists or not
-	err = config.DB.First(&result).Error
+	err = config.DB.First(&result.Space).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -100,6 +114,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		spaceSlug = approveSpaceSlug(slugx.Make(space.Name))
 	}
 	updateMap := map[string]interface{}{
+		"created_at":         space.CreatedAt,
+		"updated_at":         space.UpdatedAt,
 		"name":               space.Name,
 		"slug":               spaceSlug,
 		"site_title":         space.SiteTitle,
@@ -136,7 +152,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["mobile_icon_id"] = nil
 	}
 
-	err = tx.Model(&result).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
+	if space.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if space.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
+	}
+
+	err = tx.Model(&result.Space).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result.Space).Error
 
 	if err != nil {
 		tx.Rollback()

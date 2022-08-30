@@ -180,7 +180,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updateMap := map[string]interface{}{
-		"updated_at":         time.Now(),
+		"created_at":         post.CreatedAt,
+		"updated_at":         post.UpdatedAt,
 		"updated_by_id":      uint(uID),
 		"title":              post.Title,
 		"slug":               postSlug,
@@ -202,6 +203,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID
 	if post.FeaturedMediumID == 0 {
 		updateMap["featured_medium_id"] = nil
+	}
+
+	if post.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if post.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	oldStatus := result.Post.Status

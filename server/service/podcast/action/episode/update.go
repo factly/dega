@@ -124,135 +124,122 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
-	}
 
-	tx := config.DB.Begin()
-	mediumID := &episode.MediumID
-	result.MediumID = &episode.MediumID
-	if episode.MediumID == 0 {
-		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
+		tx := config.DB.Begin()
+
+		updateMap := map[string]interface{}{
+			"created_at":       episode.CreatedAt,
+			"updated_at":       episode.UpdatedAt,
+			"updated_by_id":    uint(uID),
+			"title":            episode.Title,
+			"slug":             episodeSlug,
+			"html_description": htmlDescription,
+			"description":      jsonDescription,
+			"season":           episode.Season,
+			"episode":          episode.Episode,
+			"audio_url":        episode.AudioURL,
+			"podcast_id":       episode.PodcastID,
+			"published_date":   episode.PublishedDate,
+			"medium_id":        episode.MediumID,
+			"meta_fields":      episode.MetaFields,
 		}
-	}
 
-	podcastID := &episode.PodcastID
-	result.PodcastID = &episode.PodcastID
-	if episode.PodcastID == 0 {
-		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"podcast_id": nil}).Error
-		podcastID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
+		if episode.MediumID == 0 {
+			updateMap["medium_id"] = nil
 		}
-	}
 
-	tx.Model(&result.Episode).Select("PublishedDate").Updates(model.Episode{PublishedDate: episode.PublishedDate})
-	tx.Model(&result.Episode).Updates(model.Episode{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Title:           episode.Title,
-		HTMLDescription: htmlDescription,
-		Description:     jsonDescription,
-		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
-		Season:          episode.Season,
-		Episode:         episode.Episode,
-		AudioURL:        episode.AudioURL,
-		PodcastID:       podcastID,
-		MediumID:        mediumID,
-		MetaFields:      episode.MetaFields,
-	}).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
+		if episode.PodcastID == 0 {
+			updateMap["podcast_id"] = nil
+		}
 
-	// fetch old authors
-	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
-	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(result.Episode.ID),
-	}).Find(&prevEpisodeAuthors)
+		tx.Model(&result.Episode).Updates(&updateMap).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
 
-	prevAuthorIDs := make([]uint, 0)
-	for _, each := range prevEpisodeAuthors {
-		prevAuthorIDs = append(prevAuthorIDs, each.AuthorID)
-	}
+		// fetch old authors
+		prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
+		tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+			EpisodeID: uint(result.Episode.ID),
+		}).Find(&prevEpisodeAuthors)
 
-	toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, episode.AuthorIDs)
+		prevAuthorIDs := make([]uint, 0)
+		for _, each := range prevEpisodeAuthors {
+			prevAuthorIDs = append(prevAuthorIDs, each.AuthorID)
+		}
 
-	if len(toDeleteIDs) > 0 {
-		tx.Model(&model.EpisodeAuthor{}).Where("author_id IN (?)", toDeleteIDs).Delete(&model.EpisodeAuthor{})
-	}
+		toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, episode.AuthorIDs)
 
-	if len(toCreateIDs) > 0 {
-		createEpisodeAuthors := make([]model.EpisodeAuthor, 0)
-		for _, each := range toCreateIDs {
-			epiAuth := model.EpisodeAuthor{
-				EpisodeID: uint(result.Episode.ID),
-				AuthorID:  each,
+		if len(toDeleteIDs) > 0 {
+			tx.Model(&model.EpisodeAuthor{}).Where("author_id IN (?)", toDeleteIDs).Delete(&model.EpisodeAuthor{})
+		}
+
+		if len(toCreateIDs) > 0 {
+			createEpisodeAuthors := make([]model.EpisodeAuthor, 0)
+			for _, each := range toCreateIDs {
+				epiAuth := model.EpisodeAuthor{
+					EpisodeID: uint(result.Episode.ID),
+					AuthorID:  each,
+				}
+				createEpisodeAuthors = append(createEpisodeAuthors, epiAuth)
 			}
-			createEpisodeAuthors = append(createEpisodeAuthors, epiAuth)
+
+			if err = tx.Model(&model.EpisodeAuthor{}).Create(&createEpisodeAuthors).Error; err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 
-		if err = tx.Model(&model.EpisodeAuthor{}).Create(&createEpisodeAuthors).Error; err != nil {
-			tx.Rollback()
+		// Fetch current authors
+		authorMap, err := author.All(r.Context())
+		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DBError()))
 			return
 		}
-	}
 
-	// Fetch current authors
-	authorMap, err := author.All(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
+		authorEpisodes := make([]model.EpisodeAuthor, 0)
+		tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+			EpisodeID: uint(id),
+		}).Find(&authorEpisodes)
 
-	authorEpisodes := make([]model.EpisodeAuthor, 0)
-	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
-	}).Find(&authorEpisodes)
-
-	for _, each := range authorEpisodes {
-		result.Authors = append(result.Authors, authorMap[fmt.Sprint(each.AuthorID)])
-	}
-
-	// Update into meili index
-	var publishedDate int64
-	if result.PublishedDate == nil {
-		publishedDate = 0
-	} else {
-		publishedDate = result.PublishedDate.Unix()
-	}
-	meiliObj := map[string]interface{}{
-		"id":             result.Episode.ID,
-		"kind":           "episode",
-		"title":          result.Title,
-		"slug":           result.Slug,
-		"season":         result.Season,
-		"episode":        result.Episode,
-		"audio_url":      result.AudioURL,
-		"podcast_id":     result.PodcastID,
-		"description":    result.Description,
-		"published_date": publishedDate,
-		"space_id":       result.SpaceID,
-		"medium_id":      result.MediumID,
-	}
-
-	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
-	}
-
-	tx.Commit()
-	if util.CheckNats() {
-		if err = util.NC.Publish("episode.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		for _, each := range authorEpisodes {
+			result.Authors = append(result.Authors, authorMap[fmt.Sprint(each.AuthorID)])
 		}
+
+		// Update into meili index
+		var publishedDate int64
+		if result.PublishedDate == nil {
+			publishedDate = 0
+		} else {
+			publishedDate = result.PublishedDate.Unix()
+		}
+		meiliObj := map[string]interface{}{
+			"id":             result.Episode.ID,
+			"kind":           "episode",
+			"title":          result.Title,
+			"slug":           result.Slug,
+			"season":         result.Season,
+			"episode":        result.Episode,
+			"audio_url":      result.AudioURL,
+			"podcast_id":     result.PodcastID,
+			"description":    result.Description,
+			"published_date": publishedDate,
+			"space_id":       result.SpaceID,
+			"medium_id":      result.MediumID,
+		}
+
+		if config.SearchEnabled() {
+			_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		}
+
+		tx.Commit()
+		if util.CheckNats() {
+			if err = util.NC.Publish("episode.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		}
+		renderx.JSON(w, http.StatusOK, result)
 	}
-	renderx.JSON(w, http.StatusOK, result)
 }
