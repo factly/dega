@@ -21,6 +21,7 @@ function RoleForm({ data = {}, onCreate }) {
         onFinish={(values) => {
           onCreate(values);
         }}
+        initialValues={data}
       >
         <Form.Item
           name="name"

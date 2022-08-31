@@ -73,10 +73,9 @@ export const createRole = (data) => {
 export const updateRole = (data) => {
   return (dispatch, getState) => {
     const currentSpaceID = getState().spaces?.selected;
-    const currentOrgID = getState().spaces?.details[currentSpaceID].organisation_id;
     dispatch(loadingRoles());
     return axios
-      .put(ROLES_API(currentSpaceID) + '/' + data.id, { role: data, organisation_id: currentOrgID })
+      .put(ROLES_API(currentSpaceID) + '/' + data.id, data)
       .then((response) => {
         dispatch(addRole(UPDATE_ROLE, response.data));
         dispatch(addSuccessNotification('Roles updated'));

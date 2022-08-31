@@ -172,7 +172,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 
-			spaceWithPerm.AllowedServices, err = util.GetAllowedServices(eachSpace.ID)
+			spaceWithPerm.AllowedServices, err = util.GetAllowedServices(eachSpace.ID, organisation.Organisation.ID, uint(uID))
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))

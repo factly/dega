@@ -58,7 +58,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-
+	
 	buf := new(bytes.Buffer)
 	err = json.NewEncoder(buf).Encode(spaceRole)
 	if err != nil {
