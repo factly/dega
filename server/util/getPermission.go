@@ -78,7 +78,8 @@ func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error)
 			params.Add("subject_set.object", roleObject)
 			params.Add("subject_set.relation", tuple.Relation)
 			baseURL.RawQuery = params.Encode()
-			req, err = http.NewRequest("GET", baseURL.String(), nil)
+			reqUrl := baseURL.String()
+			req, err = http.NewRequest("GET", reqUrl, nil)
 			if err != nil {
 				return nil, err
 			}
