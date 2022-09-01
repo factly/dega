@@ -75,7 +75,7 @@ func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error)
 			}
 
 			if response.StatusCode != 200 {
-				return nil, err
+				continue
 			}
 
 			resourceTuples := RelationTuplesWithSubjectSet{}
@@ -104,7 +104,6 @@ func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error)
 
 	_, err = json.Marshal(ketoResponse)
 	if err != nil {
-		fmt.Print("here")
 		loggerx.Error(err)
 		return nil, err
 	}
