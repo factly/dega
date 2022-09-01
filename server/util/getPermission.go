@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 
 	"github.com/factly/dega-server/service/core/model"
@@ -64,8 +65,20 @@ func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error)
 	var ketoResponse = make(map[string][]string)
 	for _, tuple := range tuples.Tuples {
 		if strings.HasPrefix(tuple.Object, "roles") {
-			requestURL = viper.GetString("keto_url") + "/relation-tuples?" + fmt.Sprintf("namespace=%s&subject_set.namespace=%s&subject_set.object=%s&subject_set.relation=%s", namespace, namespace, roleObject, tuple.Relation)
-			req, err = http.NewRequest("GET", requestURL, nil)
+			baseURL, err := url.Parse(viper.GetString("keto_url"))
+			if err != nil {
+				return nil, err
+			}
+
+			//adding the path
+			baseURL.Path += "relation-tuples"
+			params := url.Values{}
+			params.Add("namespace", namespace)
+			params.Add("subject_set.namespace", namespace)
+			params.Add("subject_set.object", roleObject)
+			params.Add("subject_set.relation", tuple.Relation)
+			baseURL.RawQuery = params.Encode()
+			req, err = http.NewRequest("GET", baseURL.String(), nil)
 			if err != nil {
 				return nil, err
 			}
