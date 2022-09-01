@@ -100,6 +100,7 @@ export default function spacesReducer(state = initialState, action = {}) {
       return {
         ...state,
         details: {
+          ...state.details , 
           [action.payload.id]: {
             ...state.details[action.payload.id],
             users: action.payload.data,
