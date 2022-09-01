@@ -130,6 +130,9 @@ func my(w http.ResponseWriter, r *http.Request) {
 		}
 		defer resp.Body.Close()
 
+		if resp.StatusCode != 200 {
+			continue
+		}
 		organisationSpacesfromKavach := make([]model.KavachSpace, 0)
 		err = json.NewDecoder(resp.Body).Decode(&organisationSpacesfromKavach)
 		if err != nil {
