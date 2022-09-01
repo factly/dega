@@ -21,7 +21,7 @@ export const getSpaces = () => {
     return axios
       .get(API_GET_SPACES)
       .then((response) => {
-        dispatch(getSpacesSuccess(response.data));
+        dispatch(getSpacesSuccess(response.data.filter((org)=> org.applications!==null && org.spaces!==null)));
         return response.data;
       })
       .catch((error) => {
