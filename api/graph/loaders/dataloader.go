@@ -12,8 +12,8 @@ import (
 	"github.com/factly/dega-api/graph/logger"
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
-	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/dega-api/util"
+	httpx "github.com/factly/dega-api/util/httpx"
 	"github.com/spf13/viper"
 )
 
