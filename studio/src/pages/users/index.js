@@ -30,7 +30,7 @@ function Users() {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'display_name',
       key: 'name',
     },
     {
