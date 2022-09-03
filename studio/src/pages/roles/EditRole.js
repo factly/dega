@@ -17,13 +17,10 @@ function EditRole() {
     };
   });
 
-  console.log(role, loading);
   React.useEffect(() => {
     dispatch(getRole(id));
   }, [dispatch, id]);
   const onCreate = (values) => {
-    console.log('this has beeen called');
-    console.log({ values });
     dispatch(updateRole({ ...role, ...values })).then(() => history.push('/members/roles'));
   };
 
