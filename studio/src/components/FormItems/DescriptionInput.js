@@ -27,6 +27,8 @@ const DescriptionInput = ({
         onChange={({ json, html }) => console.log({ json, html })}
         {...inputProps}
         initialValue={initialValue}
+        uploadEndpoint={window.REACT_APP_COMPANION_URL}
+        iframelyEndpoint={window.REACT_APP_IFRAMELY_URL}
         imagesFetcher={(currentPage) =>
           axios
             .get(MEDIA_API, {
