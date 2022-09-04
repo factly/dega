@@ -4,13 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -20,6 +18,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -114,13 +113,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store HTML description
-	var description string
-	if len(podcast.Description.RawMessage) > 0 && !reflect.DeepEqual(podcast.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(podcast.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(podcast.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(podcast.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(podcast.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -140,44 +146,31 @@ func update(w http.ResponseWriter, r *http.Request) {
 		_ = config.DB.Model(&result).Association("Categories").Clear()
 	}
 
-	mediumID := &podcast.MediumID
-	result.MediumID = &podcast.MediumID
+	updateMap := map[string]interface{}{
+		"created_at":          podcast.CreatedAt,
+		"updated_at":          podcast.UpdatedAt,
+		"updated_by_id":       uint(uID),
+		"title":               podcast.Title,
+		"slug":                podcastSlug,
+		"html_description":    htmlDescription,
+		"description":         jsonDescription,
+		"medium_id":           podcast.MediumID,
+		"meta_fields":         podcast.MetaFields,
+		"language":            podcast.Language,
+		"primary_category_id": podcast.PrimaryCategoryID,
+		"header_code":         podcast.HeaderCode,
+		"footer_code":         podcast.FooterCode,
+	}
+
 	if podcast.MediumID == 0 {
-		err = tx.Model(&result).Omit("Categories").Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
 	}
 
-	primaryCategoryID := &podcast.PrimaryCategoryID
-	result.PrimaryCategoryID = &podcast.PrimaryCategoryID
 	if podcast.PrimaryCategoryID == 0 {
-		err = tx.Model(&result).Omit("Categories").Updates(map[string]interface{}{"primary_category_id": nil}).Error
-		primaryCategoryID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["primary_category_id"] = nil
 	}
 
-	tx.Model(&result).Omit("Categories").Updates(model.Podcast{
-		Base:              config.Base{UpdatedByID: uint(uID)},
-		HTMLDescription:   description,
-		Description:       podcast.Description,
-		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:          podcast.Language,
-		MediumID:          mediumID,
-		PrimaryCategoryID: primaryCategoryID,
-		HeaderCode:        podcast.HeaderCode,
-		FooterCode:        podcast.FooterCode,
-		MetaFields:        podcast.MetaFields,
-	}).Preload("Categories").Preload("Medium").First(&result)
+	tx.Model(&result).Omit("Categories").Updates(&updateMap).Preload("Categories").Preload("Medium").First(&result)
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{

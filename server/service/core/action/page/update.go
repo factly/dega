@@ -6,13 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -23,6 +22,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -121,12 +121,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(page.Description.RawMessage) > 0 && !reflect.DeepEqual(page.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(page.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(page.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(page.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse page description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(page.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -160,6 +168,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updateMap := map[string]interface{}{
+		"created_at":         page.CreatedAt,
+		"updated_at":         page.UpdatedAt,
 		"updated_by_id":      uint(uID),
 		"title":              page.Title,
 		"slug":               pageSlug,
@@ -167,8 +177,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"status":             page.Status,
 		"published_date":     page.PublishedDate,
 		"excerpt":            page.Excerpt,
-		"description":        page.Description,
-		"html_description":   description,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
 		"is_highlighted":     page.IsHighlighted,
 		"is_sticky":          page.IsSticky,
 		"format_id":          page.FormatID,
@@ -183,6 +193,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	result.Post.FeaturedMediumID = &page.FeaturedMediumID
 	if page.FeaturedMediumID == 0 {
 		updateMap["featured_medium_id"] = nil
+	}
+
+	if page.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if page.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error

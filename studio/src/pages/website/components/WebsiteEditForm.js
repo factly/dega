@@ -35,13 +35,12 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
           onCreate(values);
-          onReset();
+          // onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
           //let name = errors.errorFields[0].name[0];
           // if (['name', 'slug'].includes(name)) {
-          console.log({ errors });
           // }
         }}
         onValuesChange={() => {

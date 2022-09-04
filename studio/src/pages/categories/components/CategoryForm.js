@@ -114,7 +114,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                     <Selector
                       action="Categories"
                       setLoading={setLoading}
-                      invalidOptions={[data?.id]}
+                      invalidOptions={data?.id ? [data.id] : []}
                     />
                   </Form.Item>
                 </Col>
@@ -198,6 +198,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   placeholder: 'Enter Description...',
                   basic: true,
                 }}
+                initialValue={formData.description}
               />
             </Col>
           </Row>

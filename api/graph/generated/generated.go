@@ -46,6 +46,7 @@ type ResolverRoot interface {
 	Post() PostResolver
 	Query() QueryResolver
 	Rating() RatingResolver
+	Sitemap() SitemapResolver
 	Sitemaps() SitemapsResolver
 	Space() SpaceResolver
 	Tag() TagResolver
@@ -281,9 +282,11 @@ type ComplexityRoot struct {
 	}
 
 	Sitemap struct {
-		CreatedAt func(childComplexity int) int
-		ID        func(childComplexity int) int
-		Slug      func(childComplexity int) int
+		CreatedAt     func(childComplexity int) int
+		ID            func(childComplexity int) int
+		PublishedDate func(childComplexity int) int
+		Slug          func(childComplexity int) int
+		UpdatedAt     func(childComplexity int) int
 	}
 
 	Sitemaps struct {
@@ -482,6 +485,9 @@ type RatingResolver interface {
 	Meta(ctx context.Context, obj *models.Rating) (interface{}, error)
 
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
+}
+type SitemapResolver interface {
+	PublishedDate(ctx context.Context, obj *models.Sitemap) (*time.Time, error)
 }
 type SitemapsResolver interface {
 	Categories(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
@@ -1847,12 +1853,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Sitemap.ID(childComplexity), true
 
+	case "Sitemap.published_date":
+		if e.complexity.Sitemap.PublishedDate == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.PublishedDate(childComplexity), true
+
 	case "Sitemap.slug":
 		if e.complexity.Sitemap.Slug == nil {
 			break
 		}
 
 		return e.complexity.Sitemap.Slug(childComplexity), true
+
+	case "Sitemap.updated_at":
+		if e.complexity.Sitemap.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.UpdatedAt(childComplexity), true
 
 	case "Sitemaps.categories":
 		if e.complexity.Sitemaps.Categories == nil {
@@ -2590,6 +2610,8 @@ type Sitemap {
 	slug: String!
 	id: ID!
 	created_at: Time
+	published_date: Time
+	updated_at: Time
 }
 
 type Sitemaps {
@@ -12461,6 +12483,88 @@ func (ec *executionContext) fieldContext_Sitemap_created_at(ctx context.Context,
 	return fc, nil
 }
 
+func (ec *executionContext) _Sitemap_published_date(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Sitemap_published_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemap().PublishedDate(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Sitemap_published_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Sitemap",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Sitemap_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Sitemap_updated_at(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Sitemap_updated_at(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Sitemap",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Sitemaps_categories(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Sitemaps_categories(ctx, field)
 	if err != nil {
@@ -12503,6 +12607,10 @@ func (ec *executionContext) fieldContext_Sitemaps_categories(ctx context.Context
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12552,6 +12660,10 @@ func (ec *executionContext) fieldContext_Sitemaps_tags(ctx context.Context, fiel
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12601,6 +12713,10 @@ func (ec *executionContext) fieldContext_Sitemaps_users(ctx context.Context, fie
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12650,6 +12766,10 @@ func (ec *executionContext) fieldContext_Sitemaps_formats(ctx context.Context, f
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12699,6 +12819,10 @@ func (ec *executionContext) fieldContext_Sitemaps_posts(ctx context.Context, fie
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12748,6 +12872,10 @@ func (ec *executionContext) fieldContext_Sitemaps_claims(ctx context.Context, fi
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12797,6 +12925,10 @@ func (ec *executionContext) fieldContext_Sitemaps_claimants(ctx context.Context,
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12846,6 +12978,10 @@ func (ec *executionContext) fieldContext_Sitemaps_ratings(ctx context.Context, f
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -19456,18 +19592,39 @@ func (ec *executionContext) _Sitemap(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Sitemap_slug(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "id":
 
 			out.Values[i] = ec._Sitemap_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "created_at":
 
 			out.Values[i] = ec._Sitemap_created_at(ctx, field, obj)
+
+		case "published_date":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemap_published_date(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "updated_at":
+
+			out.Values[i] = ec._Sitemap_updated_at(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

@@ -44,7 +44,7 @@ function CodeInjection() {
         name="code-injection"
         onFinish={(values) => {
           onCreate(values);
-          onReset();
+          // onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
