@@ -11,6 +11,7 @@ import (
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
@@ -66,7 +67,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", strconv.Itoa(uID))
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Avatar, Row, Col } from 'antd';
-import { UserOutlined, EyeTwoTone } from '@ant-design/icons';
+import { UserOutlined, EyeTwoTone, UsergroupAddOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 const Members = () => {
@@ -40,6 +40,22 @@ const Members = () => {
                 }
                 title="Policies"
                 description="Update user policies"
+              />
+            </Card>
+          </Link>
+        </Col>
+        <Col span={12}>
+          <Link to="/members/roles">
+            <Card style={gridStyle} hoverable>
+              <Meta
+                avatar={
+                  <Avatar
+                    icon={<UsergroupAddOutlined twoToneColor="#ffb41f" />}
+                    style={{ backgroundColor: 'transparent', color: '#ffb41f' }}
+                  />
+                }
+                title="Roles"
+                description="Role settings"
               />
             </Card>
           </Link>

@@ -1,64 +1,42 @@
 import React from 'react';
 import { Space, Typography, Table, Tag } from 'antd';
-import { getUsers } from '../../actions/users';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import { getSpaceUsers } from '../../actions/spaces';
 
 function Users() {
   const dispatch = useDispatch();
 
-  const { details, loading } = useSelector((state) => state.users);
-
+  const { spaceUsers, loading } = useSelector((state) => {
+    const spaceUsers = state.spaces?.details?.[state.spaces?.selected]?.users?.length
+      ? state.spaces?.details?.[state.spaces?.selected]?.users
+      : [];
+    return {
+      spaceUsers: spaceUsers,
+      loading: state.spaces?.loading,
+    };
+  });
   React.useEffect(() => {
     fetchUsers();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchUsers = () => {
-    dispatch(getUsers());
+    dispatch(getSpaceUsers());
   };
 
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'name',
+      dataIndex: 'display_name',
       key: 'name',
-      render: (_, record) => {
-        return (
-          <Typography key={record.id}>
-            {record.policies[0].id !== 'admin' ? (
-              <Link to={`/members/users/${record.id}/permissions`}>
-                {record.first_name + ' ' + record.last_name}
-              </Link>
-            ) : (
-              record.first_name + ' ' + record.last_name
-            )}
-          </Typography>
-        );
-      },
     },
     {
       title: 'E-mail',
       dataIndex: 'email',
       key: 'email',
-    },
-    {
-      title: 'Policies',
-      dataIndex: 'policies',
-      key: 'policies',
-      render: (_, record) => {
-        return record.policies.map((policy, index) => (
-          <Tag key={record.id + policy.id}>
-            {policy.id !== 'admin' ? (
-              <Link to={`/members/policies/${policy.id}/edit`}> {policy.name}</Link>
-            ) : (
-              policy.name
-            )}
-          </Tag>
-        ));
-      },
     },
   ];
 
@@ -70,7 +48,7 @@ function Users() {
       <Table
         bordered
         columns={columns}
-        dataSource={details}
+        dataSource={spaceUsers}
         loading={loading}
         rowKey={['record', 'user', 'id']}
       />

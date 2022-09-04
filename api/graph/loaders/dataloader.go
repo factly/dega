@@ -13,6 +13,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	httpx "github.com/factly/dega-api/util/httpx"
 	"github.com/spf13/viper"
 )
 
@@ -323,7 +324,7 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 				}
 				req.Header.Set("Content-Type", "application/json")
 				req.Header.Set("X-User", fmt.Sprint(keys[0]))
-				client := &http.Client{}
+				client := httpx.CustomHttpClient()
 				resp, err := client.Do(req)
 
 				if err != nil {

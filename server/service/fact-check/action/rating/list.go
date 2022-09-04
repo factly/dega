@@ -32,7 +32,6 @@ type paging struct {
 // @Success 200 {object} paging
 // @Router /fact-check/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
-
 	sID, err := middlewarex.GetSpace(r.Context())
 	if err != nil {
 		loggerx.Error(err)

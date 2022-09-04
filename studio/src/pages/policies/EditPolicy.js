@@ -28,8 +28,8 @@ function EditPolicy() {
           (obj, item) => Object.assign(obj, { [item.resource]: item.actions }),
           {},
         ),
-        users: state.policies.details[id].users
-          ? state.policies.details[id].users.map((item) => parseInt(item.id))
+        roles: state.policies.details[id].roles?.length
+          ? state.policies.details[id].roles.map((item) => item.id)
           : [],
       },
       loading: state.policies.loading,
@@ -47,14 +47,12 @@ function EditPolicy() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePolicy({ ...policy, ...values })).then(() =>
-      history.push(`/members/policies/${id}/edit`),
-    );
+    dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push(`/members/policies/`));
   };
 
   return (
     <>
-      <Helmet title={`${policy?.name} - Edit Policy`} />
+      <Helmet title={`${policy.name} - Edit Policy`} />
       <PolicyEditForm data={policy} onCreate={onUpdate} />
     </>
   );

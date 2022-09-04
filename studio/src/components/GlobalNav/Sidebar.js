@@ -166,7 +166,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
               : permission.filter((each) => each.resource === 'admin').length > 0
               ? getSubMenuItems(menu, index, Icon)
               : null
-            : services.includes(maker(menu.title))
+            : services?.includes(maker(menu.title))
             ? getSubMenuItems(menu, index, Icon)
             : null;
         })}

@@ -30,7 +30,6 @@ type Episode struct {
 	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
-	Space           *model.Space   `json:"space,omitempty"`
 }
 
 // EpisodeAuthor model

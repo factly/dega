@@ -27,13 +27,18 @@ func all(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = util.CheckSpaceKetoPermission("create", uint(oID), uint(uID))
+	isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.GetMessage(err.Error(), http.StatusUnauthorized)))
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
+	if !isAdmin {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 	_, err = meilisearchx.Client.Index("dega").DeleteAllDocuments()
 	if err != nil {
 		loggerx.Error(err)
