@@ -1,7 +1,10 @@
 import React from 'react';
 import { Form } from 'antd';
+import axios from 'axios';
 // import Editor from '../Editor';
 import { Editor } from '@factly/scooter';
+import { MEDIA_API } from '../../constants/media';
+
 const DescriptionInput = ({
   name = 'description',
   label = 'Description',
@@ -24,6 +27,13 @@ const DescriptionInput = ({
         onChange={({ json, html }) => console.log({ json, html })}
         {...inputProps}
         initialValue={initialValue}
+        imagesFetcher={(currentPage) =>
+          axios
+            .get(MEDIA_API, {
+              params: { page: currentPage, limit: 12 },
+            })
+            .then((res) => res.data)
+        }
       />
     </Form.Item>
   );
