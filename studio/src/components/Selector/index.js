@@ -18,7 +18,6 @@ function Selector({
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
-  const [selectedOptions, setSelectedOptions] = React.useState([]);
   const [query, setQuery] = React.useState({
     page: 1,
     limit: 5,
@@ -118,14 +117,11 @@ function Selector({
       searchValue={searchValue}
       value={value}
       placeholder={placeholder}
-      onChange={(values) => {
-        setSelectedOptions(values);
-        onChange(values);
-      }}
+      onChange={(values) => onChange(values)}
       onSearch={(value) => onSearch(value)}
-      filterOption={(input, option) => {
-        return option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0;
-      }}
+      filterOption={(input, option) =>
+        option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      }
       onPopupScroll={(e) => {
         if (
           e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
@@ -167,16 +163,12 @@ function Selector({
       autoClearSearchValue={true}
     >
       {details
-        .filter((item) => {
-          return ![...invalidOptions].includes(item.id);
-        })
-        .map((item, _, array) => {
-          return (
-            <Select.Option value={item.id} key={entity + item.id}>
-              {item[display] ? item[display] : item['email'] ? item['email'] : null}
-            </Select.Option>
-          );
-        })}
+        .filter((item) => !invalidOptions.includes(item.id))
+        .map((item) => (
+          <Select.Option value={item.id} key={entity + item.id}>
+            {item[display] ? item[display] : item['email'] ? item['email'] : null}
+          </Select.Option>
+        ))}
     </Select>
   );
 }

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Space, Button, Select, Form, Col, Row, Input } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import PageList from './components/PageList';
@@ -14,7 +14,6 @@ import { UpOutlined, DownOutlined } from '@ant-design/icons';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
 import Filters from '../../utils/filters';
-import Filter from '../../components/Filter';
 
 function Pages({ formats }) {
   const spaces = useSelector(({ spaces }) => spaces);
@@ -57,11 +56,11 @@ function Pages({ formats }) {
   const keys = ['page', 'limit', 'q', 'sort', 'tag', 'category', 'author', 'status'];
   const params = getUrlParams(query, keys);
 
-  // useEffect(() => {
-  //   if (form) {
-  //     form.setFieldsValue(new Filters(params));
-  //   }
-  // }, [search, formats.loading]);
+  useEffect(() => {
+    if (form) {
+      form.setFieldsValue(new Filters(params));
+    }
+  }, [search, formats.loading]);
 
   useEffect(() => {
     fetchPages();
@@ -151,29 +150,34 @@ function Pages({ formats }) {
             </Form.Item>
           </Col>
           <Col key={4}>
-            <Filter
-              placeholder={'Status'}
-              defaultValue="all"
-              label={'Status'}
-              form={form}
-              name={'status'}
-              optionsMap={{
-                all: 'All',
-                draft: 'Draft',
-                publish: 'Publish',
-                ready: 'Ready to Publish',
-              }}
-            />
+            <Form.Item label="Status" name="status">
+              <Select placeholder="Status" defaultValue="all">
+                <Option value="all" key={'all'}>
+                  All
+                </Option>
+                <Option value="draft" key={'draft'}>
+                  Draft
+                </Option>
+                <Option value="publish" key={'publish'}>
+                  Publish
+                </Option>
+                <Option value="ready" key={'ready'}>
+                  Ready to Publish
+                </Option>
+              </Select>
+            </Form.Item>
           </Col>
           <Col>
-            <Filter
-              placeholder={'Sort by'}
-              defaultValue="desc"
-              label={'Sort By'}
-              name={'sort'}
-              form={form}
-              optionsMap={{ desc: 'Latest', asc: 'Old' }}
-            />
+            <Form.Item label="Sort By" name="sort">
+              <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                <Option value="desc" key={'desc'}>
+                  Latest
+                </Option>
+                <Option value="asc" key={'asc'}>
+                  Old
+                </Option>
+              </Select>
+            </Form.Item>
           </Col>
           <Button
             type="link"
