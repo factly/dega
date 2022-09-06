@@ -8,7 +8,6 @@ import (
 	"github.com/factly/x/healthx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
-	"github.com/factly/x/middlewarex"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/viper"
 
@@ -79,7 +78,7 @@ func main() {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	r := router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("X-Dega-API-Key", "dega", validator.GetOrganisation))
+	r := router.With(validator.CheckSpace(), validator.CheckOrganisation())
 
 	if cache.IsEnabled() {
 		r = r.With(cache.CachingMiddleware(), cache.RespMiddleware)

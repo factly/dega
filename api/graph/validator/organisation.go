@@ -10,7 +10,6 @@ import (
 	"github.com/factly/dega-api/util/httpx"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/middlewarex"
 	"github.com/spf13/viper"
 )
 
@@ -30,14 +29,13 @@ func CheckOrganisation() func(http.Handler) http.Handler {
 				return
 			}
 
-			userID, err := middlewarex.GetUser(r.Context())
+			token, err := GetSpaceToken(ctx)
 			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
 
-			organisationID, err := GetOrganisationIDfromSpaceID(uint(spaceID), uint(userID))
+			organisationID, err := GetOrganisationIDfromSpaceID(uint(spaceID), token)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
@@ -62,13 +60,12 @@ func GetOrganisation(ctx context.Context) (int, error) {
 	return 0, errors.New("something went wrong")
 }
 
-func GetOrganisationIDfromSpaceID(spaceID, userID uint) (int, error) {
-	//** need to make change in x-package if space id is given organisation should be returned
-	req, err := http.NewRequest(http.MethodGet, viper.GetString("kavach_url")+fmt.Sprintf("/util/space/%d/getOrganisation", spaceID), nil)
+func GetOrganisationIDfromSpaceID(spaceID uint, token string) (int, error) {
+	req, err := http.NewRequest(http.MethodGet, viper.GetString("kavach_url")+fmt.Sprintf("/util/space/%d/getOrganisationUsingToken", spaceID), nil)
 	if err != nil {
 		return 0, err
 	}
-	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
+	req.Header.Set("X-Space-Token", token)
 	client := httpx.CustomHttpClient()
 	response, err := client.Do(req)
 	if err != nil {
