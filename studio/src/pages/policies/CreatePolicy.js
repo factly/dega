@@ -10,8 +10,7 @@ function CreatePolicy() {
 
   const dispatch = useDispatch();
   const onCreate = (values) => {
-    values.users = values.users.map((item) => item.toString());
-    values.permissions = values.permissions.filter(
+    values.permissions = values.permissions?.filter(
       (item) => item && item.resource && item.actions.length > 0,
     );
     dispatch(createPolicy(values)).then(() => history.push('/members/policies'));

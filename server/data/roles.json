@@ -1,0 +1,17 @@
+[
+  {
+    "name":"Editor",
+    "slug":"editor",
+    "description":"Someone who edits the posts, pages, factchecks, etc."
+  },
+  {
+    "name":"Author",
+    "slug":"author",
+    "description":"Someone who writes the posts, pages, factchecks, etc."
+  },
+  {
+    "name":"Contributor",
+    "slug":"contributor",
+    "description":"Someone who contributes in some way to the posts, pages, factchecks, etc."
+  }
+]

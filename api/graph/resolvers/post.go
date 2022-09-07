@@ -212,11 +212,12 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	if err != nil {
 		return nil, err
 	}
+
 	oID, err := validator.GetOrganisation(ctx)
 	if err != nil {
 		return nil, err
 	}
-
+	
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
 	pageSortOrder := "desc"

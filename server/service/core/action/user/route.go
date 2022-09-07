@@ -6,7 +6,7 @@ import "github.com/go-chi/chi"
 func Router() chi.Router {
 	r := chi.NewRouter()
 
-	r.Get("/", list)
+	// r.Get("/", list)
 	r.Get("/{user_id}/permissions", userpermissions)
 
 	return r

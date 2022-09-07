@@ -6,10 +6,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/spf13/viper"
-
 	"github.com/factly/dega-server/service/core/model"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/loggerx"
+	"github.com/spf13/viper"
 )
 
 func contains(s []string, e string) bool {
@@ -60,8 +60,7 @@ func Composer(oID int, sID int, inputPolicy policyReq) model.KetoPolicy {
 		loggerx.Error(err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

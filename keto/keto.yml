@@ -1,0 +1,12 @@
+
+dsn: postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+version: v0.9.0-alpha.0
+namespaces:
+  - id: 0
+    name: organisations
+  - id: 1
+    name: applications
+  - id: 2
+    name: spaces
+  - id: 3
+    name: superorganisation

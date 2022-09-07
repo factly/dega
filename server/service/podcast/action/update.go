@@ -4,13 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -20,6 +18,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -114,13 +113,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store HTML description
-	var description string
-	if len(podcast.Description.RawMessage) > 0 && !reflect.DeepEqual(podcast.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(podcast.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(podcast.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(podcast.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse podcast description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(podcast.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -146,8 +152,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"updated_by_id":       uint(uID),
 		"title":               podcast.Title,
 		"slug":                podcastSlug,
-		"html_description":    description,
-		"description":         podcast.Description,
+		"html_description":    htmlDescription,
+		"description":         jsonDescription,
 		"medium_id":           podcast.MediumID,
 		"meta_fields":         podcast.MetaFields,
 		"language":            podcast.Language,

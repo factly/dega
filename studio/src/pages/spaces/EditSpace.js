@@ -20,9 +20,7 @@ function EditSpace() {
   });
 
   const onCreate = (values) => {
-    dispatch(updateSpace({ ...space, ...values })).then(() =>
-      history.push(`/admin/spaces`),
-    );
+    dispatch(updateSpace({ ...space, ...values })).then(() => history.push(`/admin/spaces`));
   };
 
   if (loading) return <Skeleton />;

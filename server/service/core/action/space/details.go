@@ -4,8 +4,11 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/x/middlewarex"
+
+	//	"github.com/factly/dega-server/config"
+
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/renderx"
@@ -24,27 +27,33 @@ import (
 // @Success 200 {object} model.Space
 // @Router /core/spaces/{space_id} [get]
 func details(w http.ResponseWriter, r *http.Request) {
+	uID, err := middlewarex.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 
-	spaceID := chi.URLParam(r, "space_id")
-	id, err := strconv.Atoi(spaceID)
-
+	sID := chi.URLParam(r, "space_id")
+	spaceID, err := strconv.Atoi(sID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
 
-	result := &model.Space{}
-
-	result.ID = uint(id)
-
-	err = config.DB.Model(&model.Space{}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&result).Error
-
+	orgID, err := util.GetOrganisationIDfromSpaceID(uint(spaceID), uint(uID))
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result)
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(spaceID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	renderx.JSON(w, http.StatusOK, spaceObjectforDega)
 }

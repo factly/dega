@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 	"time"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -135,13 +133,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
-	// Store HTML description
-	var description string
-	if len(post.Description.RawMessage) > 0 && !reflect.DeepEqual(post.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(post.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(post.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(post.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(post.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -182,8 +187,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"slug":               postSlug,
 		"subtitle":           post.Subtitle,
 		"excerpt":            post.Excerpt,
-		"description":        post.Description,
-		"html_description":   description,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
 		"is_highlighted":     post.IsHighlighted,
 		"is_sticky":          post.IsSticky,
 		"is_featured":        post.IsFeatured,
@@ -261,7 +266,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["status"] = "draft"
 	}
 
-	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -388,6 +393,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
 		SpaceID: uint(sID),
@@ -397,7 +409,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Post:    result.Post,
 		Authors: result.Authors,
 		Claims:  result.Claims,
-	}, *result.Space, ratings)
+	}, *spaceObjectforDega, ratings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -480,18 +492,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPublishPermissions(oID, sID, uID int) (int, error) {
-	commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 
-	kresource := fmt.Sprint("resources", commonString, "posts")
-	kaction := fmt.Sprint("actions", commonString, "posts:publish")
-
-	result := util.KetoAllowed{}
-
-	result.Action = kaction
-	result.Resource = kresource
-	result.Subject = fmt.Sprint(uID)
-
-	resStatus, err := util.IsAllowed(result)
+	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
 	if err != nil {
 		return 0, err
 	}
