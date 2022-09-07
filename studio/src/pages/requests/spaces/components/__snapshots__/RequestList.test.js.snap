@@ -123,6 +123,12 @@ exports[`Space Request List component snapshot testing should match the componen
               "current": 1,
               "onChange": [Function],
               "pageSize": 20,
+              "pageSizeOptions": Array [
+                "10",
+                "15",
+                "20",
+              ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -421,19 +427,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -494,19 +495,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -567,19 +563,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -595,6 +586,12 @@ exports[`Space Request List component snapshot testing should match the componen
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -854,19 +851,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -927,19 +919,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -1000,19 +987,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -1027,6 +1009,12 @@ exports[`Space Request List component snapshot testing should match the componen
                               "current": 1,
                               "onChange": [Function],
                               "pageSize": 20,
+                              "pageSizeOptions": Array [
+                                "10",
+                                "15",
+                                "20",
+                              ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -3330,69 +3318,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -4952,69 +4920,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -6542,69 +6490,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -6627,6 +6555,14 @@ exports[`Space Request List component snapshot testing should match the componen
                     current={1}
                     onChange={[Function]}
                     pageSize={20}
+                    pageSizeOptions={
+                      Array [
+                        "10",
+                        "15",
+                        "20",
+                      ]
+                    }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -6715,6 +6651,13 @@ exports[`Space Request List component snapshot testing should match the componen
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -6739,6 +6682,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -6748,6 +6692,11 @@ exports[`Space Request List component snapshot testing should match the componen
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -6982,9 +6931,8 @@ exports[`Space Request List component snapshot testing should match the componen
                             pageSizeOptions={
                               Array [
                                 "10",
+                                "15",
                                 "20",
-                                "50",
-                                "100",
                               ]
                             }
                             quickGo={null}
@@ -7138,6 +7086,12 @@ exports[`Space Request List component snapshot testing should match the componen
               "current": 1,
               "onChange": [Function],
               "pageSize": 20,
+              "pageSizeOptions": Array [
+                "10",
+                "15",
+                "20",
+              ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -7412,19 +7366,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -7485,19 +7434,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -7558,19 +7502,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -7586,6 +7525,12 @@ exports[`Space Request List component snapshot testing should match the componen
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -7845,19 +7790,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -7918,19 +7858,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -7991,19 +7926,14 @@ exports[`Space Request List component snapshot testing should match the componen
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -8018,6 +7948,12 @@ exports[`Space Request List component snapshot testing should match the componen
                               "current": 1,
                               "onChange": [Function],
                               "pageSize": 20,
+                              "pageSizeOptions": Array [
+                                "10",
+                                "15",
+                                "20",
+                              ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -10321,69 +10257,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -11943,69 +11859,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -13533,69 +13429,49 @@ exports[`Space Request List component snapshot testing should match the componen
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -13618,6 +13494,14 @@ exports[`Space Request List component snapshot testing should match the componen
                     current={1}
                     onChange={[Function]}
                     pageSize={20}
+                    pageSizeOptions={
+                      Array [
+                        "10",
+                        "15",
+                        "20",
+                      ]
+                    }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -13706,6 +13590,13 @@ exports[`Space Request List component snapshot testing should match the componen
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -13730,6 +13621,7 @@ exports[`Space Request List component snapshot testing should match the componen
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -13739,6 +13631,11 @@ exports[`Space Request List component snapshot testing should match the componen
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -13973,9 +13870,8 @@ exports[`Space Request List component snapshot testing should match the componen
                             pageSizeOptions={
                               Array [
                                 "10",
+                                "15",
                                 "20",
-                                "50",
-                                "100",
                               ]
                             }
                             quickGo={null}
@@ -14129,6 +14025,12 @@ exports[`Space Request List component snapshot testing should render the compone
               "current": 1,
               "onChange": [Function],
               "pageSize": 20,
+              "pageSizeOptions": Array [
+                "10",
+                "15",
+                "20",
+              ],
+              "showTotal": [Function],
               "total": 3,
             }
           }
@@ -14403,19 +14305,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -14476,19 +14373,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -14549,19 +14441,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                           Approve
                                         </span>
                                       </button>
-                                      <a
-                                        class="ant-dropdown-link"
-                                        href="/"
+                                      <button
+                                        class="ant-btn"
+                                        type="button"
                                       >
-                                        <button
-                                          class="ant-btn"
-                                          type="button"
-                                        >
-                                          <span>
-                                            Reject
-                                          </span>
-                                        </button>
-                                      </a>
+                                        <span>
+                                          Reject
+                                        </span>
+                                      </button>
                                     </span>
                                   </td>
                                 </tr>
@@ -14577,6 +14464,12 @@ exports[`Space Request List component snapshot testing should render the compone
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": 3,
                       }
                     }
@@ -14836,19 +14729,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -14909,19 +14797,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -14982,19 +14865,14 @@ exports[`Space Request List component snapshot testing should render the compone
                                                 Approve
                                               </span>
                                             </button>
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn"
-                                                type="button"
-                                              >
-                                                <span>
-                                                  Reject
-                                                </span>
-                                              </button>
-                                            </a>
+                                              <span>
+                                                Reject
+                                              </span>
+                                            </button>
                                           </span>
                                         </td>
                                       </tr>
@@ -15009,6 +14887,12 @@ exports[`Space Request List component snapshot testing should render the compone
                               "current": 1,
                               "onChange": [Function],
                               "pageSize": 20,
+                              "pageSizeOptions": Array [
+                                "10",
+                                "15",
+                                "20",
+                              ],
+                              "showTotal": [Function],
                               "total": 3,
                             },
                             "prefixCls": "ant-table",
@@ -17312,69 +17196,49 @@ exports[`Space Request List component snapshot testing should render the compone
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -18934,69 +18798,49 @@ exports[`Space Request List component snapshot testing should render the compone
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -20524,69 +20368,49 @@ exports[`Space Request List component snapshot testing should render the compone
                                                     title="Sure to Reject?"
                                                     visible={false}
                                                   >
-                                                    <Link
-                                                      className="ant-dropdown-link"
+                                                    <Button
                                                       key="trigger"
                                                       onClick={[Function]}
                                                       onKeyDown={[Function]}
                                                       onMouseDown={[Function]}
                                                       onTouchStart={[Function]}
-                                                      to=""
                                                     >
-                                                      <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/"
-                                                        navigate={[Function]}
-                                                        onClick={[Function]}
-                                                        onKeyDown={[Function]}
-                                                        onMouseDown={[Function]}
-                                                        onTouchStart={[Function]}
-                                                      >
-                                                        <a
-                                                          className="ant-dropdown-link"
-                                                          href="/"
+                                                      <Wave>
+                                                        <button
+                                                          className="ant-btn"
                                                           onClick={[Function]}
                                                           onKeyDown={[Function]}
                                                           onMouseDown={[Function]}
                                                           onTouchStart={[Function]}
+                                                          type="button"
                                                         >
-                                                          <Button>
-                                                            <Wave>
-                                                              <button
-                                                                className="ant-btn"
-                                                                onClick={[Function]}
-                                                                type="button"
-                                                              >
-                                                                <LoadingIcon
-                                                                  existIcon={false}
-                                                                  loading={false}
-                                                                  prefixCls="ant-btn"
-                                                                >
-                                                                  <CSSMotion
-                                                                    motionName="ant-btn-loading-icon-motion"
-                                                                    onAppearActive={[Function]}
-                                                                    onAppearStart={[Function]}
-                                                                    onEnterActive={[Function]}
-                                                                    onEnterStart={[Function]}
-                                                                    onLeaveActive={[Function]}
-                                                                    onLeaveStart={[Function]}
-                                                                    removeOnLeave={true}
-                                                                    visible={false}
-                                                                  >
-                                                                    <DomWrapper />
-                                                                  </CSSMotion>
-                                                                </LoadingIcon>
-                                                                <span
-                                                                  key=".0"
-                                                                >
-                                                                  Reject
-                                                                </span>
-                                                              </button>
-                                                            </Wave>
-                                                          </Button>
-                                                        </a>
-                                                      </LinkAnchor>
-                                                    </Link>
+                                                          <LoadingIcon
+                                                            existIcon={false}
+                                                            loading={false}
+                                                            prefixCls="ant-btn"
+                                                          >
+                                                            <CSSMotion
+                                                              motionName="ant-btn-loading-icon-motion"
+                                                              onAppearActive={[Function]}
+                                                              onAppearStart={[Function]}
+                                                              onEnterActive={[Function]}
+                                                              onEnterStart={[Function]}
+                                                              onLeaveActive={[Function]}
+                                                              onLeaveStart={[Function]}
+                                                              removeOnLeave={true}
+                                                              visible={false}
+                                                            >
+                                                              <DomWrapper />
+                                                            </CSSMotion>
+                                                          </LoadingIcon>
+                                                          <span
+                                                            key=".0"
+                                                          >
+                                                            Reject
+                                                          </span>
+                                                        </button>
+                                                      </Wave>
+                                                    </Button>
                                                   </Trigger>
                                                 </ForwardRef(Tooltip)>
                                               </Tooltip>
@@ -20609,6 +20433,14 @@ exports[`Space Request List component snapshot testing should render the compone
                     current={1}
                     onChange={[Function]}
                     pageSize={20}
+                    pageSizeOptions={
+                      Array [
+                        "10",
+                        "15",
+                        "20",
+                      ]
+                    }
+                    showTotal={[Function]}
                     total={3}
                   >
                     <LocaleReceiver
@@ -20697,6 +20529,13 @@ exports[`Space Request List component snapshot testing should render the compone
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -20721,6 +20560,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={3}
                         totalBoundaryShowSizeChanger={50}
@@ -20730,6 +20570,11 @@ exports[`Space Request List component snapshot testing should render the compone
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-3 of 3 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -20964,9 +20809,8 @@ exports[`Space Request List component snapshot testing should render the compone
                             pageSizeOptions={
                               Array [
                                 "10",
+                                "15",
                                 "20",
-                                "50",
-                                "100",
                               ]
                             }
                             quickGo={null}
@@ -21092,6 +20936,12 @@ exports[`Space Request List component snapshot testing should render the compone
               "current": 1,
               "onChange": [Function],
               "pageSize": 20,
+              "pageSizeOptions": Array [
+                "10",
+                "15",
+                "20",
+              ],
+              "showTotal": [Function],
               "total": 1,
             }
           }
@@ -21302,6 +21152,12 @@ exports[`Space Request List component snapshot testing should render the compone
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": 1,
                       }
                     }
@@ -21496,6 +21352,12 @@ exports[`Space Request List component snapshot testing should render the compone
                               "current": 1,
                               "onChange": [Function],
                               "pageSize": 20,
+                              "pageSizeOptions": Array [
+                                "10",
+                                "15",
+                                "20",
+                              ],
+                              "showTotal": [Function],
                               "total": 1,
                             },
                             "prefixCls": "ant-table",
@@ -22338,6 +22200,14 @@ exports[`Space Request List component snapshot testing should render the compone
                     current={1}
                     onChange={[Function]}
                     pageSize={20}
+                    pageSizeOptions={
+                      Array [
+                        "10",
+                        "15",
+                        "20",
+                      ]
+                    }
+                    showTotal={[Function]}
                     total={1}
                   >
                     <LocaleReceiver
@@ -22426,6 +22296,13 @@ exports[`Space Request List component snapshot testing should render the compone
                         onChange={[Function]}
                         onShowSizeChange={[Function]}
                         pageSize={20}
+                        pageSizeOptions={
+                          Array [
+                            "10",
+                            "15",
+                            "20",
+                          ]
+                        }
                         prefixCls="ant-pagination"
                         prevIcon={
                           <button
@@ -22450,6 +22327,7 @@ exports[`Space Request List component snapshot testing should render the compone
                         showPrevNextJumpers={true}
                         showQuickJumper={false}
                         showTitle={true}
+                        showTotal={[Function]}
                         style={Object {}}
                         total={1}
                         totalBoundaryShowSizeChanger={50}
@@ -22459,6 +22337,11 @@ exports[`Space Request List component snapshot testing should render the compone
                           style={Object {}}
                           unselectable="unselectable"
                         >
+                          <li
+                            className="ant-pagination-total-text"
+                          >
+                            1-1 of 1 results
+                          </li>
                           <li
                             aria-disabled={true}
                             className="ant-pagination-prev ant-pagination-disabled"
@@ -22693,9 +22576,8 @@ exports[`Space Request List component snapshot testing should render the compone
                             pageSizeOptions={
                               Array [
                                 "10",
+                                "15",
                                 "20",
-                                "50",
-                                "100",
                               ]
                             }
                             quickGo={null}

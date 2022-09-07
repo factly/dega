@@ -32,7 +32,11 @@ let state = {
     req: [
       {
         data: [1],
-        query: {},
+        query: {
+          sort: 'desc',
+          limit: 10,
+          page: 1,
+        },
         total: 1,
       },
     ],
@@ -154,6 +158,36 @@ describe('Episode Component', () => {
       );
       expect(tree).toMatchSnapshot();
     });
+    it('should render loader component', () => {
+      const loadingState = {
+        episodes: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+        spaces: {
+          orgs: [{ id: 1, organisation: 'Organisation 1', spaces: [11] }],
+          details: {
+            11: {
+              id: 11,
+              name: 'Space 11',
+              permissions: [{ resource: 'episodes', actions: ['get', 'create'] }],
+            },
+          },
+          loading: false,
+          selected: 11,
+        },
+      };
+      store = mockStore(loadingState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Episode permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
+    });
     it('should render the component with data', () => {
       store = mockStore(state);
       const tree = mount(
@@ -168,7 +202,7 @@ describe('Episode Component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getEpisodes).toBeCalledWith({});
+      expect(getEpisodes).toBeCalledWith({ page: 1, limit: 10, sort: 'desc' });
     });
   });
   describe('component testing', () => {
@@ -179,7 +213,7 @@ describe('Episode Component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/episodes?limit=20&page=1&q=desc&podcast=1');
+      window.history.pushState({}, '', '/episodes?limit=20&page=1&sort=desc&podcast=1');
       act(() => {
         wrapper = mount(
           <Provider store={store}>
@@ -189,7 +223,7 @@ describe('Episode Component', () => {
           </Provider>,
         );
       });
-      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'desc', podcast: [1] });
+      expect(getEpisodes).toHaveBeenCalledWith({ page: 1, limit: 20, sort: 'desc', podcast: [1] });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -203,9 +237,8 @@ describe('Episode Component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'episode' } });
         wrapper
           .find('FormItem')

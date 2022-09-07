@@ -28,6 +28,7 @@ import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
+import { getDatefromStringWithoutDay } from '../../../utils/date';
 
 function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
   const history = useHistory();
@@ -159,11 +160,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
     setVisible(true);
   };
 
-  const handleOk = () => {
-    setVisible(false);
-    setClaimID(0);
-  };
-
   const handleCancel = () => {
     setVisible(false);
     setClaimID(0);
@@ -218,9 +214,9 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
         message="You have unsaved changes, are you sure you want to leave?"
       />
       {visible && (
-        <Modal visible={visible} onOk={handleOk} onCancel={handleCancel} maskClosable={false}>
+        <Modal visible={visible} onCancel={handleCancel} maskClosable={false} footer={null}>
           <ClaimCreateForm
-            data={details[claimID]}
+            data={details?.[claimID]}
             onCreate={claimID > 0 ? onClaimEdit : onClaimCreate}
             width={560}
           />
@@ -289,8 +285,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                     required: true,
                     message: 'Please input the title!',
                   },
-                  { min: 3, message: 'Title must be minimum 3 characters.' },
-                  { max: 150, message: 'Title must be maximum 150 characters.' },
+                  { max: 500, message: 'Title must be maximum 500 characters.' },
                 ]}
               >
                 <Input.TextArea
@@ -301,6 +296,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   style={{ fontSize: '2.5rem', fontWeight: 'bold', textAlign: 'center' }}
                 />
               </Form.Item>
+              {data?.updated_at ? (
+                <p style={{ fontSize: '18px', color: '#595E60' }}>
+                  Last updated on : {getDatefromStringWithoutDay(data.updated_at)}
+                </p>
+              ) : null}
               {form.getFieldValue('claims') &&
               form.getFieldValue('claims').length > 0 &&
               !loading ? (
@@ -315,7 +315,11 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   />
                 </Form.Item>
               ) : null}
-              <DescriptionInput formItemProps={{ className: 'post-description' }} noLabel />
+              <DescriptionInput
+                formItemProps={{ className: 'post-description' }}
+                noLabel
+                initialValue={data.description}
+              />
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
                 placement="right"
@@ -340,10 +344,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 <Form.Item
                   name="excerpt"
                   label="Excerpt"
-                  rules={[
-                    { min: 3, message: 'Title must be minimum 3 characters.' },
-                    { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
-                  ]}
+                  rules={[{ max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' }]}
                 >
                   <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
                 </Form.Item>
@@ -361,7 +362,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                   <Selector mode="multiple" action="Tags" createEntity="Tag" />
                 </Form.Item>
                 <Form.Item name="authors" label="Authors">
-                  <Selector mode="multiple" display={'email'} action="Authors" />
+                  <Selector mode="multiple" display={'display_name'} action="Authors" />
                 </Form.Item>
                 <Form.Item>
                   <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>

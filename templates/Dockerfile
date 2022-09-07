@@ -1,4 +1,4 @@
-FROM golang:1.14.2-alpine3.11
+FROM golang:1.18.3-alpine3.16
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ COPY . .
 RUN apk add gcc musl-dev
 RUN go mod download
 
-RUN go get github.com/githubnemo/CompileDaemon
+RUN go install github.com/githubnemo/CompileDaemon@latest
 
 # Following lines provides ability to add WAIT_HOSTS in docker-compose to wait for other hosts to start
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/2.7.3/wait /wait

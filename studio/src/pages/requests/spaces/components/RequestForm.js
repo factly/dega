@@ -41,14 +41,16 @@ const RequestForm = ({ onCreate, data = {} }) => {
       }}
     >
       <TitleInput />
-      <Form.Item 
-        name="space_id" 
+      <Form.Item
+        name="space_id"
         label="Space"
-        rules={[{
-          required: true,
-          message: 'Please select a space'
-        }]}
-        >
+        rules={[
+          {
+            required: true,
+            message: 'Please select a space',
+          },
+        ]}
+      >
         <Select
           allowClear
           bordered

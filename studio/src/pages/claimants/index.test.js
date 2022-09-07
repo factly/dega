@@ -18,7 +18,11 @@ let state = {
     req: [
       {
         data: [1, 2],
-        query: {},
+        query: {
+          sort: 'desc',
+          limit: 10,
+          page: 1,
+        },
         total: 2,
       },
     ],
@@ -104,7 +108,25 @@ describe('Claimants List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getClaimants).toBeCalledWith({});
+      expect(getClaimants).toBeCalledWith({ limit: 10, page: 1, sort: 'desc' });
+    });
+    it('should render loader component', () => {
+      const loadingState = {
+        claimants: {
+          req: [],
+          details: {},
+          loading: true,
+        },
+      };
+      store = mockStore(loadingState);
+      const tree = mount(
+        <Provider store={store}>
+          <Router>
+            <Claimants permission={{ actions: ['create'] }} />
+          </Router>
+        </Provider>,
+      );
+      expect(tree).toMatchSnapshot();
     });
   });
   describe('component testing', () => {
@@ -163,7 +185,7 @@ describe('Claimants List component', () => {
           </Provider>,
         );
       });
-      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'descri' });
+      expect(getClaimants).toHaveBeenCalledWith({ page: 1, limit: 20, q: 'descri', sort: 'desc' });
     });
     it('should submit filters', () => {
       store = mockStore(state);
@@ -177,9 +199,8 @@ describe('Claimants List component', () => {
           </Provider>,
         );
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'claimant' } });
         wrapper
           .find('FormItem')

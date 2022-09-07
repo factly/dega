@@ -15,7 +15,6 @@ const mockStore = configureMockStore(middlewares);
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
-  useSelector: jest.fn(),
 }));
 
 jest.mock('react-router-dom', () => ({
@@ -27,7 +26,54 @@ jest.mock('../../actions/ratings', () => ({
   getRatings: jest.fn(),
   addRating: jest.fn(),
 }));
-
+let state = {
+  ratings: {
+    req: [
+      {
+        data: [7],
+        query: {
+          page: 1,
+          limit: 20,
+        },
+        total: 1,
+      },
+    ],
+    details: {
+      '7': {
+        id: 7,
+        created_at: '2022-05-05T06:31:22.492Z',
+        updated_at: '2022-05-05T06:57:13.091323Z',
+        deleted_at: null,
+        created_by_id: 34,
+        updated_by_id: 34,
+        name: 'verygood',
+        slug: 'verygoo',
+        description: {
+          time: 1651732083960,
+          blocks: [
+            {
+              id: '84XfO28Gol',
+              type: 'paragraph',
+              data: {
+                text: 'verygood',
+              },
+            },
+          ],
+          version: '2.22.1',
+        },
+        html_description: '<p>verygood</p>',
+        numeric_value: 35,
+        medium_id: null,
+        meta_fields: null,
+        space_id: 2,
+        meta: null,
+        header_code: '',
+        footer_code: '',
+      },
+    },
+    loading: false,
+  },
+};
 describe('Ratings List component', () => {
   let store;
   let mockedDispatch;
@@ -39,7 +85,14 @@ describe('Ratings List component', () => {
     useDispatch.mockReturnValue(mockedDispatch);
   });
   it('should render the component', () => {
-    useSelector.mockImplementationOnce(() => ({}));
+    const state2 = {
+      ratings: {
+        req: [],
+        details: {},
+        loading: false,
+      },
+    };
+    store = mockStore(state2);
     const tree = mount(
       <Provider store={store}>
         <Router>
@@ -50,21 +103,27 @@ describe('Ratings List component', () => {
     expect(tree).toMatchSnapshot();
   });
   it('should render the component with data', () => {
-    useSelector.mockImplementationOnce(() => ({
-      ratings: [
-        {
-          id: 1,
-          name: 'rating',
-          slug: 'slug',
-          description: 'description',
-          numeric_value: 3,
-        },
-      ],
-      total: 1,
-      loading: false,
-    }));
+    store = mockStore(state);
     const tree = mount(
       <Provider store={store}>
+        <Router>
+          <Ratings permission={{ actions: ['create'] }} />
+        </Router>
+      </Provider>,
+    );
+    expect(tree).toMatchSnapshot();
+  });
+  it('should render loader component', () => {
+    const loadingState = {
+      ratings: {
+        req: [],
+        details: {},
+        loading: true,
+      },
+    };
+    let store2 = mockStore(loadingState);
+    const tree = mount(
+      <Provider store={store2}>
         <Router>
           <Ratings permission={{ actions: ['create'] }} />
         </Router>

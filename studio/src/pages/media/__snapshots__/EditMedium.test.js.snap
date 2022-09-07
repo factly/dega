@@ -499,6 +499,23 @@ exports[`Media edit component snapshot testing should render the component 1`] =
               }
             }
           >
+            <HelmetWrapper
+              defer={true}
+              encodeSpecialCharacters={true}
+              title="name - Edit Medium"
+            >
+              <SideEffect(NullComponent)
+                defer={true}
+                encodeSpecialCharacters={true}
+                title="name - Edit Medium"
+              >
+                <NullComponent
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="name - Edit Medium"
+                />
+              </SideEffect(NullComponent)>
+            </HelmetWrapper>
             <Col
               span="24"
             >
@@ -768,141 +785,232 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                         onReset={[Function]}
                         onSubmit={[Function]}
                       >
-                        <FormItem
+                        <TitleInput
+                          inputProps={
+                            Object {
+                              "disabled": true,
+                            }
+                          }
                           label="Name"
                           name="name"
                         >
-                          <WrapperField
+                          <FormItem
                             label="Name"
-                            messageVariables={
-                              Object {
-                                "label": "Name",
-                              }
-                            }
                             name="name"
-                            onReset={[Function]}
-                            trigger="onChange"
-                            validateTrigger="onChange"
-                          >
-                            <Field
-                              fieldContext={
+                            rules={
+                              Array [
                                 Object {
-                                  "__INTERNAL__": Object {
-                                    "itemRef": [Function],
-                                    "name": "create-space",
-                                  },
-                                  "getFieldError": [Function],
-                                  "getFieldInstance": [Function],
-                                  "getFieldValue": [Function],
-                                  "getFieldsError": [Function],
-                                  "getFieldsValue": [Function],
-                                  "getInternalHooks": [Function],
-                                  "isFieldTouched": [Function],
-                                  "isFieldValidating": [Function],
-                                  "isFieldsTouched": [Function],
-                                  "isFieldsValidating": [Function],
-                                  "resetFields": [Function],
-                                  "scrollToField": [Function],
-                                  "setFields": [Function],
-                                  "setFieldsValue": [Function],
-                                  "submit": [Function],
-                                  "validateFields": [Function],
-                                  "validateTrigger": "onChange",
-                                }
-                              }
-                              key="_name"
+                                  "message": "Please enter name!",
+                                  "required": true,
+                                },
+                                Object {
+                                  "max": 500,
+                                  "message": "Name must be maximum 500 characters.",
+                                },
+                              ]
+                            }
+                          >
+                            <WrapperField
                               label="Name"
                               messageVariables={
                                 Object {
                                   "label": "Name",
                                 }
                               }
-                              name={
+                              name="name"
+                              onReset={[Function]}
+                              rules={
                                 Array [
-                                  "name",
+                                  Object {
+                                    "message": "Please enter name!",
+                                    "required": true,
+                                  },
+                                  Object {
+                                    "max": 500,
+                                    "message": "Name must be maximum 500 characters.",
+                                  },
                                 ]
                               }
-                              onReset={[Function]}
                               trigger="onChange"
                               validateTrigger="onChange"
-                              valuePropName="value"
                             >
-                              <Row
-                                className="ant-form-item"
-                                key="row"
+                              <Field
+                                fieldContext={
+                                  Object {
+                                    "__INTERNAL__": Object {
+                                      "itemRef": [Function],
+                                      "name": "create-space",
+                                    },
+                                    "getFieldError": [Function],
+                                    "getFieldInstance": [Function],
+                                    "getFieldValue": [Function],
+                                    "getFieldsError": [Function],
+                                    "getFieldsValue": [Function],
+                                    "getInternalHooks": [Function],
+                                    "isFieldTouched": [Function],
+                                    "isFieldValidating": [Function],
+                                    "isFieldsTouched": [Function],
+                                    "isFieldsValidating": [Function],
+                                    "resetFields": [Function],
+                                    "scrollToField": [Function],
+                                    "setFields": [Function],
+                                    "setFieldsValue": [Function],
+                                    "submit": [Function],
+                                    "validateFields": [Function],
+                                    "validateTrigger": "onChange",
+                                  }
+                                }
+                                key="_name"
+                                label="Name"
+                                messageVariables={
+                                  Object {
+                                    "label": "Name",
+                                  }
+                                }
+                                name={
+                                  Array [
+                                    "name",
+                                  ]
+                                }
+                                onReset={[Function]}
+                                rules={
+                                  Array [
+                                    Object {
+                                      "message": "Please enter name!",
+                                      "required": true,
+                                    },
+                                    Object {
+                                      "max": 500,
+                                      "message": "Name must be maximum 500 characters.",
+                                    },
+                                  ]
+                                }
+                                trigger="onChange"
+                                validateTrigger="onChange"
+                                valuePropName="value"
                               >
-                                <div
-                                  className="ant-row ant-form-item"
-                                  style={Object {}}
+                                <Row
+                                  className="ant-form-item"
+                                  key="row"
                                 >
-                                  <FormItemLabel
-                                    htmlFor="create-space_name"
-                                    label="Name"
-                                    name="name"
-                                    prefixCls="ant-form"
-                                    required={false}
-                                    requiredMark={true}
+                                  <div
+                                    className="ant-row ant-form-item"
+                                    style={Object {}}
                                   >
-                                    <Col
-                                      className="ant-form-item-label"
+                                    <FormItemLabel
+                                      htmlFor="create-space_name"
+                                      label="Name"
+                                      name="name"
+                                      prefixCls="ant-form"
+                                      required={true}
+                                      requiredMark={true}
+                                      rules={
+                                        Array [
+                                          Object {
+                                            "message": "Please enter name!",
+                                            "required": true,
+                                          },
+                                          Object {
+                                            "max": 500,
+                                            "message": "Name must be maximum 500 characters.",
+                                          },
+                                        ]
+                                      }
                                     >
-                                      <div
-                                        className="ant-col ant-form-item-label"
-                                        style={Object {}}
-                                      >
-                                        <label
-                                          className=""
-                                          htmlFor="create-space_name"
-                                          title="Name"
-                                        >
-                                          Name
-                                        </label>
-                                      </div>
-                                    </Col>
-                                  </FormItemLabel>
-                                  <FormItemInput
-                                    errors={Array []}
-                                    label="Name"
-                                    name={
-                                      Array [
-                                        "name",
-                                      ]
-                                    }
-                                    onDomErrorVisibleChange={[Function]}
-                                    prefixCls="ant-form"
-                                    status=""
-                                    touched={false}
-                                    validateStatus=""
-                                    validating={false}
-                                  >
-                                    <Col
-                                      className="ant-form-item-control"
-                                    >
-                                      <div
-                                        className="ant-col ant-form-item-control"
-                                        style={Object {}}
+                                      <Col
+                                        className="ant-form-item-label"
                                       >
                                         <div
-                                          className="ant-form-item-control-input"
+                                          className="ant-col ant-form-item-label"
+                                          style={Object {}}
+                                        >
+                                          <label
+                                            className="ant-form-item-required"
+                                            htmlFor="create-space_name"
+                                            title="Name"
+                                          >
+                                            Name
+                                          </label>
+                                        </div>
+                                      </Col>
+                                    </FormItemLabel>
+                                    <FormItemInput
+                                      errors={Array []}
+                                      label="Name"
+                                      name={
+                                        Array [
+                                          "name",
+                                        ]
+                                      }
+                                      onDomErrorVisibleChange={[Function]}
+                                      prefixCls="ant-form"
+                                      rules={
+                                        Array [
+                                          Object {
+                                            "message": "Please enter name!",
+                                            "required": true,
+                                          },
+                                          Object {
+                                            "max": 500,
+                                            "message": "Name must be maximum 500 characters.",
+                                          },
+                                        ]
+                                      }
+                                      status=""
+                                      touched={false}
+                                      validateStatus=""
+                                      validating={false}
+                                    >
+                                      <Col
+                                        className="ant-form-item-control"
+                                      >
+                                        <div
+                                          className="ant-col ant-form-item-control"
+                                          style={Object {}}
                                         >
                                           <div
-                                            className="ant-form-item-control-input-content"
+                                            className="ant-form-item-control-input"
                                           >
-                                            <Component
-                                              update={2}
-                                              value="name"
+                                            <div
+                                              className="ant-form-item-control-input-content"
                                             >
-                                              <Input
-                                                disabled={true}
-                                                id="create-space_name"
-                                                onChange={[Function]}
-                                                type="text"
+                                              <Component
+                                                update={2}
                                                 value="name"
                                               >
-                                                <ClearableLabeledInput
-                                                  bordered={true}
+                                                <Input
                                                   disabled={true}
-                                                  element={
+                                                  id="create-space_name"
+                                                  onChange={[Function]}
+                                                  type="text"
+                                                  value="name"
+                                                >
+                                                  <ClearableLabeledInput
+                                                    bordered={true}
+                                                    disabled={true}
+                                                    element={
+                                                      <input
+                                                        className="ant-input ant-input-disabled"
+                                                        disabled={true}
+                                                        id="create-space_name"
+                                                        onBlur={[Function]}
+                                                        onChange={[Function]}
+                                                        onFocus={[Function]}
+                                                        onKeyDown={[Function]}
+                                                        type="text"
+                                                        value="name"
+                                                      />
+                                                    }
+                                                    focused={false}
+                                                    handleReset={[Function]}
+                                                    id="create-space_name"
+                                                    inputType="input"
+                                                    onChange={[Function]}
+                                                    prefixCls="ant-input"
+                                                    triggerFocus={[Function]}
+                                                    type="text"
+                                                    value="name"
+                                                  >
                                                     <input
                                                       className="ant-input ant-input-disabled"
                                                       disabled={true}
@@ -914,56 +1022,35 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                       type="text"
                                                       value="name"
                                                     />
-                                                  }
-                                                  focused={false}
-                                                  handleReset={[Function]}
-                                                  id="create-space_name"
-                                                  inputType="input"
-                                                  onChange={[Function]}
-                                                  prefixCls="ant-input"
-                                                  triggerFocus={[Function]}
-                                                  type="text"
-                                                  value="name"
-                                                >
-                                                  <input
-                                                    className="ant-input ant-input-disabled"
-                                                    disabled={true}
-                                                    id="create-space_name"
-                                                    onBlur={[Function]}
-                                                    onChange={[Function]}
-                                                    onFocus={[Function]}
-                                                    onKeyDown={[Function]}
-                                                    type="text"
-                                                    value="name"
-                                                  />
-                                                </ClearableLabeledInput>
-                                              </Input>
-                                            </Component>
+                                                  </ClearableLabeledInput>
+                                                </Input>
+                                              </Component>
+                                            </div>
                                           </div>
-                                        </div>
-                                        <ErrorList
-                                          errors={Array []}
-                                          onDomErrorVisibleChange={[Function]}
-                                        >
-                                          <CSSMotion
-                                            motionAppear={true}
-                                            motionDeadline={500}
-                                            motionName="ant-show-help"
-                                            onLeaveEnd={[Function]}
-                                            removeOnLeave={true}
-                                            visible={false}
+                                          <ErrorList
+                                            errors={Array []}
+                                            onDomErrorVisibleChange={[Function]}
                                           >
-                                            <DomWrapper />
-                                          </CSSMotion>
-                                        </ErrorList>
-                                      </div>
-                                    </Col>
-                                  </FormItemInput>
-                                </div>
-                              </Row>
-                            </Field>
-                          </WrapperField>
-                        </FormItem>
+                                            <CSSMotion
+                                              motionAppear={true}
+                                              motionDeadline={500}
+                                              motionName="ant-show-help"
+                                              onLeaveEnd={[Function]}
+                                              removeOnLeave={true}
+                                              visible={false}
+                                            >
+                                              <DomWrapper />
+                                            </CSSMotion>
+                                          </ErrorList>
+                                        </div>
+                                      </Col>
+                                    </FormItemInput>
+                                  </div>
+                                </Row>
+                              </Field>
+                            </WrapperField>
+                          </FormItem>
+                        </TitleInput>
                         <FormItem
                           label="Alt Text"
                           name="alt_text"
@@ -1753,6 +1840,9 @@ exports[`Media edit component snapshot testing should render the component 1`] =
                                                         "enabled": false,
                                                       },
                                                       "scrollBeyondLastLine": false,
+                                                      "scrollbar": Object {
+                                                        "alwaysConsumeMouseWheel": false,
+                                                      },
                                                       "theme": "vs-dark",
                                                       "wordWrap": "on",
                                                     }

@@ -1,42 +1,12 @@
 import React from 'react';
 import { Popconfirm, Button, Typography, Table } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { getFormats, deleteFormat } from '../../../actions/formats';
-import { Link, useLocation } from 'react-router-dom';
-import deepEqual from 'deep-equal';
+import { useDispatch } from 'react-redux';
+import { deleteFormat } from '../../../actions/formats';
+import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function FormatList({ actions }) {
+function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
   const dispatch = useDispatch();
-  const query = new URLSearchParams(useLocation().search);
-  const [filters, setFilters] = React.useState({
-    page: 1,
-    limit: 20,
-  });
-  query.set('page', filters.page);
-  window.history.replaceState({}, '', `${window.PUBLIC_URL}${useLocation().pathname}?${query}`);
-  const { formats, total, loading } = useSelector((state) => {
-    const node = state.formats.req.find((item) => {
-      return deepEqual(item.query, filters);
-    });
-
-    if (node)
-      return {
-        formats: node.data.map((element) => state.formats.details[element]),
-        total: node.total,
-        loading: state.formats.loading,
-      };
-    return { formats: [], total: 0, loading: state.formats.loading };
-  });
-
-  React.useEffect(() => {
-    fetchFormats();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchFormats = () => {
-    dispatch(getFormats(filters));
-  };
 
   const columns = [
     {
@@ -49,7 +19,7 @@ function FormatList({ actions }) {
             style={{
               marginRight: 8,
             }}
-            to={`/formats/${record.id}/edit`}
+            to={`/advanced/formats/${record.id}/edit`}
           >
             {record.name}
           </Link>
@@ -79,6 +49,7 @@ function FormatList({ actions }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteFormat(record.id)).then(() => fetchFormats())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
@@ -95,14 +66,16 @@ function FormatList({ actions }) {
     <Table
       bordered
       columns={columns}
-      dataSource={formats}
-      loading={loading}
+      dataSource={data.formats}
+      loading={data.loading}
       rowKey={'id'}
       pagination={{
-        total: total,
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+        total: data.total,
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) => setFilters({ page: pageNumber, limit: pageSize }),
+        pageSizeOptions: ['10', '15', '20'],
       }}
     />
   );

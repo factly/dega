@@ -6,13 +6,12 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -23,6 +22,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -121,12 +121,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(page.Description.RawMessage) > 0 && !reflect.DeepEqual(page.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(page.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(page.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(page.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse page description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(page.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -159,45 +167,43 @@ func update(w http.ResponseWriter, r *http.Request) {
 		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
-	featuredMediumID := &page.FeaturedMediumID
+	updateMap := map[string]interface{}{
+		"created_at":         page.CreatedAt,
+		"updated_at":         page.UpdatedAt,
+		"updated_by_id":      uint(uID),
+		"title":              page.Title,
+		"slug":               pageSlug,
+		"subtitle":           page.Subtitle,
+		"status":             page.Status,
+		"published_date":     page.PublishedDate,
+		"excerpt":            page.Excerpt,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
+		"is_highlighted":     page.IsHighlighted,
+		"is_sticky":          page.IsSticky,
+		"format_id":          page.FormatID,
+		"featured_medium_id": page.FeaturedMediumID,
+		"meta":               page.Meta,
+		"meta_fields":        page.MetaFields,
+		"header_code":        page.HeaderCode,
+		"footer_code":        page.FooterCode,
+		"is_featured":        page.IsFeatured,
+	}
+
 	result.Post.FeaturedMediumID = &page.FeaturedMediumID
 	if page.FeaturedMediumID == 0 {
-		err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
-		featuredMediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["featured_medium_id"] = nil
 	}
 
-	updatedPage := model.Post{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Title:            page.Title,
-		Slug:             pageSlug,
-		Subtitle:         page.Subtitle,
-		Status:           page.Status,
-		PublishedDate:    page.PublishedDate,
-		Excerpt:          page.Excerpt,
-		Description:      page.Description,
-		HTMLDescription:  description,
-		IsHighlighted:    page.IsHighlighted,
-		IsSticky:         page.IsSticky,
-		FormatID:         page.FormatID,
-		FeaturedMediumID: featuredMediumID,
-		Meta:             page.Meta,
-		MetaFields:       page.MetaFields,
-		HeaderCode:       page.HeaderCode,
-		FooterCode:       page.FooterCode,
+	if page.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted").Omit("Tags", "Categories").Updates(model.Post{
-		IsFeatured:    page.IsFeatured,
-		IsSticky:      page.IsSticky,
-		IsHighlighted: page.IsHighlighted,
-	})
-	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(updatedPage).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
+	if page.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
+	}
+
+	err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()

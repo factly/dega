@@ -23,6 +23,10 @@ jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
 }));
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('../../actions/profile', () => ({
   getUserProfile: jest.fn(),
   updateProfile: jest.fn(),
@@ -132,19 +136,16 @@ describe('Profiles index component', () => {
     it('should submit form with data', (done) => {
       act(() => {
         wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Input')
+          .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'firstname' } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'lastname' } });
         wrapper
-          .find('FormItem')
-          .at(3)
-          .find('Input')
+          .find('input')
+          .at(2)
           .simulate('change', { target: { value: 'new Display Name' } });
         wrapper
           .find('FormItem')

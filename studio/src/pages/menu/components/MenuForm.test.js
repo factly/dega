@@ -150,7 +150,7 @@ describe('Menu Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'New menu name' } });
         const submitButton = wrapper.find('Button').at(4);
         expect(submitButton.text()).toBe('Update');

@@ -8,7 +8,6 @@ func Migration() {
 		&Medium{},
 		&Category{},
 		&Tag{},
-		&Space{},
 		&Format{},
 		&Post{},
 		&PostAuthor{},

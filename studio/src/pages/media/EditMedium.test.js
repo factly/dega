@@ -289,9 +289,8 @@ describe('Media edit component', () => {
       });
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(2)
-          .find('Input')
           .simulate('change', { target: { value: 'caption ' } });
         const submitButton = wrapper.find('Button').at(2);
         expect(submitButton.text()).toBe('Submit');

@@ -13,7 +13,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   const siteAddress = useSelector(
     ({ spaces: { details, selected } }) => details[selected].site_address,
   );
-
+  const setLoading = data?.id ? false : true;
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
@@ -64,7 +64,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
   return (
     <Form
       form={form}
-      initialValues={{ ...data }}
+      initialValues={{ ...formData }}
       name="create-category"
       layout="vertical"
       onFinish={(values) => {
@@ -111,7 +111,11 @@ const CategoryForm = ({ onCreate, data = {} }) => {
               <Row gutter={40}>
                 <Col md={{ span: 16 }}>
                   <Form.Item name="parent_id" label="Parent Category">
-                    <Selector action="Categories" />
+                    <Selector
+                      action="Categories"
+                      setLoading={setLoading}
+                      invalidOptions={data?.id ? [data.id] : []}
+                    />
                   </Form.Item>
                 </Col>
                 <Col md={{ span: 5 }}>
@@ -120,7 +124,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   </Form.Item>
                 </Col>
               </Row>
-              <Form.Item name="background_colour" label="Background Colour">
+              <Form.Item name="background_colour" label="Colour">
                 <div style={{ position: 'relative' }}>
                   <div
                     style={{
@@ -131,7 +135,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                       display: 'inline-block',
                       cursor: 'pointer',
                     }}
-                   onClick={() => handleBgClick()}
+                    onClick={() => handleBgClick()}
                   >
                     <div
                       style={{
@@ -194,6 +198,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                   placeholder: 'Enter Description...',
                   basic: true,
                 }}
+                initialValue={formData.description}
               />
             </Col>
           </Row>

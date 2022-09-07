@@ -123,7 +123,7 @@ describe('Event form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -158,9 +158,8 @@ describe('Event form component', () => {
       });
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'new name' } });
         const submitButtom = wrapper.find('Button').at(0);
         expect(submitButtom.text()).toBe('Submit');

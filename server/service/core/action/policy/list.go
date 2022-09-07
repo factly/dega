@@ -4,11 +4,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
 
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -18,8 +17,8 @@ import (
 )
 
 type paging struct {
-	Total int            `json:"total"`
-	Nodes []model.Policy `json:"nodes"`
+	Total int                  `json:"total"`
+	Nodes []model.KavachPolicy `json:"nodes"`
 }
 
 // list - Get all policies
@@ -55,17 +54,25 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	req, err := http.NewRequest("GET", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies", nil)
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy", organisationID, applicationID, spaceID)
+	req, err := http.NewRequest("GET", reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -74,32 +81,24 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	var polices []model.KetoPolicy
+	if resp.StatusCode != http.StatusOK {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	var polices []model.KavachPolicy
 
 	err = json.NewDecoder(resp.Body).Decode(&polices)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	prefixName := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":")
-	var onlyOrgPolicy []model.KetoPolicy
-
-	for _, each := range polices {
-		if strings.HasPrefix(each.ID, prefixName) {
-			onlyOrgPolicy = append(onlyOrgPolicy, each)
-		}
-	}
-
-	for i, j := 0, len(onlyOrgPolicy)-1; i < j; i, j = i+1, j-1 {
-		onlyOrgPolicy[i], onlyOrgPolicy[j] = onlyOrgPolicy[j], onlyOrgPolicy[i]
-	}
-
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	total := len(onlyOrgPolicy)
+	total := len(polices)
 	lowerLimit := offset
 	upperLimit := offset + limit
 	if offset > total {
@@ -110,19 +109,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		upperLimit = total
 	}
 
-	onlyOrgPolicy = onlyOrgPolicy[lowerLimit:upperLimit]
-
-	/* User req */
-	userMap := author.Mapper(organisationID, userID)
-
-	pagePolicies := make([]model.Policy, 0)
-
-	for _, each := range onlyOrgPolicy {
-		pagePolicies = append(pagePolicies, Mapper(each, userMap))
-	}
-
+	polices = polices[lowerLimit:upperLimit]
 	var result paging
-	result.Nodes = pagePolicies
+	result.Nodes = polices
 	result.Total = total
 	renderx.JSON(w, http.StatusOK, result)
 }

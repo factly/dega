@@ -7,3 +7,8 @@
 **Other:** [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=factly_dega-api) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-api&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=factly_dega-api) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=factly_dega-api&metric=coverage)](https://sonarcloud.io/dashboard?id=factly_dega-api)  
 
 GraphQL API used to generate websites developed on Dega CMS. Developed in Go with first class support for static sites using GatsbyJS.
+
+for development purpose :
+URL for GRAPHQL playground - http://localhost:9001
+
+RUN this command for generating resolvers - go run -mod=mod github.com/99designs/gqlgen generate

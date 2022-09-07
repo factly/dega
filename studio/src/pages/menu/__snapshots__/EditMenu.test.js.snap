@@ -432,6 +432,23 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
   }
 >
   <EditMenu>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Menu 1 - Edit Menu"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Menu 1 - Edit Menu"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Menu 1 - Edit Menu"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <MenuForm
       data={
         Object {
@@ -1136,6 +1153,9 @@ exports[`Menu Edit component snapshot testing should render the component 1`] = 
                                                 "enabled": false,
                                               },
                                               "scrollBeyondLastLine": false,
+                                              "scrollbar": Object {
+                                                "alwaysConsumeMouseWheel": false,
+                                              },
                                               "theme": "vs-dark",
                                               "wordWrap": "on",
                                             }

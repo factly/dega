@@ -83,9 +83,9 @@ describe('Ratings Edit component', () => {
         },
         spaces: {
           orgs: [],
-          details: {},
+          details: { 1: { site_address: '' } },
           loading: true,
-          selected: 0,
+          selected: 1,
         },
       });
       store.dispatch = jest.fn(() => ({}));
@@ -180,9 +180,9 @@ describe('Ratings Edit component', () => {
         },
         spaces: {
           orgs: [],
-          details: {},
+          details: { 1: { site_address: '' } },
           loading: true,
-          selected: 0,
+          selected: 1,
         },
       });
       store.dispatch = jest.fn(() => ({}));

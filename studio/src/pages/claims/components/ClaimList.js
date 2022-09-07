@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import { DeleteOutlined } from '@ant-design/icons';
 
-function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
+function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
   const dispatch = useDispatch();
   const columns = [
     {
@@ -52,6 +52,7 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteClaim(record.id)).then(() => fetchClaims())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
@@ -73,11 +74,12 @@ function ClaimList({ actions, data, filters, setFilters, fetchClaims }) {
         loading={data.loading}
         rowKey={'id'}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

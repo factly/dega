@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Space, Button, Row, Col, Form, Input, Select } from 'antd';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
@@ -8,46 +8,35 @@ import deepEqual from 'deep-equal';
 import Selector from '../../components/Selector';
 import { getClaims } from '../../actions/claims';
 import getUrlParams from '../../utils/getUrlParams';
+import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
+
+const { Option } = Select;
 
 function Claims({ permission }) {
   const { actions } = permission;
   const dispatch = useDispatch();
-  const location = useLocation();
+  const { search } = useLocation();
   const history = useHistory();
-  const query = new URLSearchParams(location.search);
+  const query = new URLSearchParams(search);
 
   const keys = ['page', 'limit', 'q', 'sort', 'rating', 'claimant'];
   const params = getUrlParams(query, keys);
-  const [filters, setFilters] = React.useState({
-    ...params,
-  });
-  const pathName = useLocation().pathname;
-  let searchFilter = new URLSearchParams(useLocation().search);
 
-  React.useEffect(() => {
-    keys.forEach((key) => {
-      if (searchFilter.has(key)) {
-        searchFilter.delete(key);
-      }
-    });
-    Object.keys(filters).forEach(function (key) {
-      if (key === 'claimant' || key === 'rating') {
-        searchFilter.delete(key);
-        filters[key].map((each) => {
-          return searchFilter.append(key, each);
-        });
-      } else {
-        searchFilter.set(key, filters[key]);
-      }
-    });
-    history.push({
-      pathName: pathName,
-      search: '?' + searchFilter.toString(),
-    });
-  }, [history, filters]);
   const [form] = Form.useForm();
-  const { Option } = Select;
+
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [search]);
+
+  useEffect(() => {
+    fetchClaims();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [search]);
+  const fetchClaims = () => {
+    dispatch(getClaims(params));
+  };
 
   const { claims, total, loading } = useSelector((state) => {
     const node = state.claims.req.find((item) => {
@@ -70,36 +59,42 @@ function Claims({ permission }) {
     return { claims: [], total: 0, loading: state.claims.loading };
   });
 
-  React.useEffect(() => {
-    fetchClaims();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filters]);
-
-  const fetchClaims = () => {
-    dispatch(getClaims(filters));
-  };
-
   const onSave = (values) => {
-    let filterValue = {};
+    let searchFilter = new URLSearchParams();
     Object.keys(values).forEach(function (key) {
       if (values[key]) {
         if (key === 'rating' || key === 'claimant') {
-          if (values[key].length > 0) {
-            filterValue[key] = values[key];
-          }
+          values[key].map((each) => {
+            return searchFilter.append(key, each);
+          });
         } else {
-          filterValue[key] = values[key];
+          searchFilter.set(key, values[key]);
         }
       }
     });
-    setFilters(filterValue);
+
+    history.push({
+      pathName: '/claims',
+      search: '?' + searchFilter.toString(),
+    });
   };
 
-  return (
+  const onPagination = (page, limit) => {
+    query.set('limit', limit);
+    query.set('page', page);
+    history.push({
+      pathName: '/claims',
+      search: '?' + query.toString(),
+    });
+  };
+
+  return loading ? (
+    <Loader />
+  ) : (
     <Space direction="vertical">
       <Helmet title={'Claims'} />
       <Form
-        initialValues={filters}
+        initialValues={params}
         form={form}
         name="filters"
         onFinish={(values) => onSave(values)}
@@ -113,7 +108,7 @@ function Claims({ permission }) {
         <Row justify="end" gutter={16}>
           <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
             <Form.Item name="q">
-              <Input placeholder="search post" />
+              <Input placeholder="search claims" />
             </Form.Item>
             <Form.Item>
               <Button htmlType="submit">Search</Button>
@@ -131,7 +126,7 @@ function Claims({ permission }) {
           </Col>
           <Col>
             <Form.Item name="sort" style={{ width: '100%' }}>
-              <Select defaultValue="desc">
+              <Select>
                 <Option value="desc">Sort By: Latest</Option>
                 <Option value="asc">Sort By: Old</Option>
               </Select>
@@ -152,9 +147,9 @@ function Claims({ permission }) {
       <ClaimList
         actions={actions}
         data={{ claims: claims, total: total, loading: loading }}
-        filters={filters}
-        setFilters={setFilters}
+        filters={params}
         fetchClaims={fetchClaims}
+        onPagination={onPagination}
       />
     </Space>
   );

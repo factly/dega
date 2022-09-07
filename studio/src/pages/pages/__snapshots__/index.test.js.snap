@@ -83,6 +83,41 @@ exports[`Page component snapshot testing should render the component 1`] = `
                   }
                 }
               >
+                <HelmetWrapper
+                  defer={true}
+                  encodeSpecialCharacters={true}
+                  title="Pages"
+                >
+                  <SideEffect(NullComponent)
+                    defer={true}
+                    encodeSpecialCharacters={true}
+                    title="Pages"
+                  >
+                    <NullComponent
+                      defer={true}
+                      encodeSpecialCharacters={true}
+                      title="Pages"
+                    />
+                  </SideEffect(NullComponent)>
+                </HelmetWrapper>
+              </div>
+            </Item>
+            <Item
+              className="ant-space-item"
+              direction="vertical"
+              index={1}
+              key="ant-space-item-1"
+              marginDirection="marginRight"
+              wrap={false}
+            >
+              <div
+                className="ant-space-item"
+                style={
+                  Object {
+                    "marginBottom": 8,
+                  }
+                }
+              >
                 <ForwardRef(InternalForm)
                   className="ant-advanced-search-form"
                   form={
@@ -109,7 +144,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                       "validateFields": [Function],
                     }
                   }
-                  initialValues={Object {}}
+                  initialValues={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   name="filters"
                   onFinish={[Function]}
                   onValuesChange={[Function]}
@@ -147,7 +188,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                         }
                       }
                       id="filters"
-                      initialValues={Object {}}
+                      initialValues={
+                        Object {
+                          "limit": 10,
+                          "page": 1,
+                          "sort": "desc",
+                        }
+                      }
                       name="filters"
                       onFinish={[Function]}
                       onFinishFailed={[Function]}
@@ -486,12 +533,14 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                 }
                               >
                                 <FormItem
+                                  label="Status"
                                   name="status"
                                 >
                                   <WrapperField
+                                    label="Status"
                                     messageVariables={
                                       Object {
-                                        "label": "status",
+                                        "label": "Status",
                                       }
                                     }
                                     name="status"
@@ -526,9 +575,10 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         }
                                       }
                                       key="_status"
+                                      label="Status"
                                       messageVariables={
                                         Object {
-                                          "label": "status",
+                                          "label": "Status",
                                         }
                                       }
                                       name={
@@ -551,13 +601,32 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_status"
+                                            label="Status"
                                             name="status"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_status"
+                                                  title="Status"
+                                                >
+                                                  Status
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Status"
                                             name={
                                               Array [
                                                 "status",
@@ -590,6 +659,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                         defaultValue="all"
                                                         id="filters_status"
                                                         onChange={[Function]}
+                                                        placeholder="Status"
                                                       >
                                                         <Select
                                                           className=""
@@ -607,6 +677,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Status"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           transitionName="ant-slide-up"
@@ -627,6 +698,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Status"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             transitionName="ant-slide-up"
@@ -652,8 +724,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: All",
-                                                                            "key": null,
+                                                                            "children": "All",
+                                                                            "key": "all",
                                                                             "value": "all",
                                                                           },
                                                                           "groupOption": false,
@@ -661,8 +733,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Draft",
-                                                                            "key": null,
+                                                                            "children": "Draft",
+                                                                            "key": "draft",
                                                                             "value": "draft",
                                                                           },
                                                                           "groupOption": false,
@@ -670,8 +742,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Publish",
-                                                                            "key": null,
+                                                                            "children": "Publish",
+                                                                            "key": "publish",
                                                                             "value": "publish",
                                                                           },
                                                                           "groupOption": false,
@@ -679,8 +751,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Status: Ready to Publish",
-                                                                            "key": null,
+                                                                            "children": "Ready to Publish",
+                                                                            "key": "ready",
                                                                             "value": "ready",
                                                                           },
                                                                           "groupOption": false,
@@ -705,23 +777,23 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Status: All",
-                                                                          "key": null,
+                                                                          "children": "All",
+                                                                          "key": "all",
                                                                           "value": "all",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Draft",
-                                                                          "key": null,
+                                                                          "children": "Draft",
+                                                                          "key": "draft",
                                                                           "value": "draft",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Publish",
-                                                                          "key": null,
+                                                                          "children": "Publish",
+                                                                          "key": "publish",
                                                                           "value": "publish",
                                                                         },
                                                                         Object {
-                                                                          "children": "Status: Ready to Publish",
-                                                                          "key": null,
+                                                                          "children": "Ready to Publish",
+                                                                          "key": "ready",
                                                                           "value": "ready",
                                                                         },
                                                                       ]
@@ -826,8 +898,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: All",
-                                                                                "key": null,
+                                                                                "children": "All",
+                                                                                "key": "all",
                                                                                 "value": "all",
                                                                               },
                                                                               "groupOption": false,
@@ -835,8 +907,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Draft",
-                                                                                "key": null,
+                                                                                "children": "Draft",
+                                                                                "key": "draft",
                                                                                 "value": "draft",
                                                                               },
                                                                               "groupOption": false,
@@ -844,8 +916,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Publish",
-                                                                                "key": null,
+                                                                                "children": "Publish",
+                                                                                "key": "publish",
                                                                                 "value": "publish",
                                                                               },
                                                                               "groupOption": false,
@@ -853,8 +925,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Status: Ready to Publish",
-                                                                                "key": null,
+                                                                                "children": "Ready to Publish",
+                                                                                "key": "ready",
                                                                                 "value": "ready",
                                                                               },
                                                                               "groupOption": false,
@@ -879,23 +951,23 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Status: All",
-                                                                              "key": null,
+                                                                              "children": "All",
+                                                                              "key": "all",
                                                                               "value": "all",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Draft",
-                                                                              "key": null,
+                                                                              "children": "Draft",
+                                                                              "key": "draft",
                                                                               "value": "draft",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Publish",
-                                                                              "key": null,
+                                                                              "children": "Publish",
+                                                                              "key": "publish",
                                                                               "value": "publish",
                                                                             },
                                                                             Object {
-                                                                              "children": "Status: Ready to Publish",
-                                                                              "key": null,
+                                                                              "children": "Ready to Publish",
+                                                                              "key": "ready",
                                                                               "value": "ready",
                                                                             },
                                                                           ]
@@ -957,9 +1029,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Status: All"
+                                                                            title="All"
                                                                           >
-                                                                            Status: All
+                                                                            All
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -983,6 +1055,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Status"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -994,7 +1067,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "all",
-                                                                          "label": "Status: All",
+                                                                          "label": "All",
                                                                           "value": "all",
                                                                         },
                                                                       ]
@@ -1038,9 +1111,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Status: All"
+                                                                                title="All"
                                                                               >
-                                                                                Status: All
+                                                                                All
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -1089,6 +1162,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Status"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -1100,7 +1174,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "all",
-                                                                              "label": "Status: All",
+                                                                              "label": "All",
                                                                               "value": "all",
                                                                             },
                                                                           ]
@@ -1154,9 +1228,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Status: All"
+                                                                          title="All"
                                                                         >
-                                                                          Status: All
+                                                                          All
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>
@@ -1307,12 +1381,14 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                 }
                               >
                                 <FormItem
+                                  label="Sort By"
                                   name="sort"
                                 >
                                   <WrapperField
+                                    label="Sort By"
                                     messageVariables={
                                       Object {
-                                        "label": "sort",
+                                        "label": "Sort By",
                                       }
                                     }
                                     name="sort"
@@ -1347,9 +1423,10 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         }
                                       }
                                       key="_sort"
+                                      label="Sort By"
                                       messageVariables={
                                         Object {
-                                          "label": "sort",
+                                          "label": "Sort By",
                                         }
                                       }
                                       name={
@@ -1372,13 +1449,32 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                         >
                                           <FormItemLabel
                                             htmlFor="filters_sort"
+                                            label="Sort By"
                                             name="sort"
                                             prefixCls="ant-form"
                                             required={false}
                                             requiredMark={true}
-                                          />
+                                          >
+                                            <Col
+                                              className="ant-form-item-label"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="filters_sort"
+                                                  title="Sort By"
+                                                >
+                                                  Sort By
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
                                           <FormItemInput
                                             errors={Array []}
+                                            label="Sort By"
                                             name={
                                               Array [
                                                 "sort",
@@ -1406,16 +1502,19 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                   >
                                                     <Component
                                                       update={2}
+                                                      value="desc"
                                                     >
                                                       <ForwardRef(InternalSelect)
                                                         defaultValue="desc"
                                                         id="filters_sort"
                                                         onChange={[Function]}
+                                                        placeholder="Sort By"
                                                         style={
                                                           Object {
                                                             "width": "100%",
                                                           }
                                                         }
+                                                        value="desc"
                                                       >
                                                         <Select
                                                           className=""
@@ -1433,6 +1532,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             </Context.Consumer>
                                                           }
                                                           onChange={[Function]}
+                                                          placeholder="Sort By"
                                                           prefixCls="ant-select"
                                                           removeIcon={<ForwardRef(CloseOutlined) />}
                                                           style={
@@ -1441,6 +1541,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                             }
                                                           }
                                                           transitionName="ant-slide-up"
+                                                          value="desc"
                                                         >
                                                           <ForwardRef(Select)
                                                             className=""
@@ -1458,6 +1559,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               </Context.Consumer>
                                                             }
                                                             onChange={[Function]}
+                                                            placeholder="Sort By"
                                                             prefixCls="ant-select"
                                                             removeIcon={<ForwardRef(CloseOutlined) />}
                                                             style={
@@ -1466,6 +1568,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                               }
                                                             }
                                                             transitionName="ant-slide-up"
+                                                            value="desc"
                                                           >
                                                             <div
                                                               className="ant-select ant-select-single ant-select-show-arrow"
@@ -1493,8 +1596,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                       Array [
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Latest",
-                                                                            "key": null,
+                                                                            "children": "Latest",
+                                                                            "key": "desc",
                                                                             "value": "desc",
                                                                           },
                                                                           "groupOption": false,
@@ -1502,8 +1605,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         },
                                                                         Object {
                                                                           "data": Object {
-                                                                            "children": "Sort By: Old",
-                                                                            "key": null,
+                                                                            "children": "Old",
+                                                                            "key": "asc",
                                                                             "value": "asc",
                                                                           },
                                                                           "groupOption": false,
@@ -1528,13 +1631,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     options={
                                                                       Array [
                                                                         Object {
-                                                                          "children": "Sort By: Latest",
-                                                                          "key": null,
+                                                                          "children": "Latest",
+                                                                          "key": "desc",
                                                                           "value": "desc",
                                                                         },
                                                                         Object {
-                                                                          "children": "Sort By: Old",
-                                                                          "key": null,
+                                                                          "children": "Old",
+                                                                          "key": "asc",
                                                                           "value": "asc",
                                                                         },
                                                                       ]
@@ -1639,8 +1742,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           Array [
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Latest",
-                                                                                "key": null,
+                                                                                "children": "Latest",
+                                                                                "key": "desc",
                                                                                 "value": "desc",
                                                                               },
                                                                               "groupOption": false,
@@ -1648,8 +1751,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                             },
                                                                             Object {
                                                                               "data": Object {
-                                                                                "children": "Sort By: Old",
-                                                                                "key": null,
+                                                                                "children": "Old",
+                                                                                "key": "asc",
                                                                                 "value": "asc",
                                                                               },
                                                                               "groupOption": false,
@@ -1674,13 +1777,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         options={
                                                                           Array [
                                                                             Object {
-                                                                              "children": "Sort By: Latest",
-                                                                              "key": null,
+                                                                              "children": "Latest",
+                                                                              "key": "desc",
                                                                               "value": "desc",
                                                                             },
                                                                             Object {
-                                                                              "children": "Sort By: Old",
-                                                                              "key": null,
+                                                                              "children": "Old",
+                                                                              "key": "asc",
                                                                               "value": "asc",
                                                                             },
                                                                           ]
@@ -1742,9 +1845,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                           </span>
                                                                           <span
                                                                             class="ant-select-selection-item"
-                                                                            title="Sort By: Latest"
+                                                                            title="Latest"
                                                                           >
-                                                                            Sort By: Latest
+                                                                            Latest
                                                                           </span>
                                                                         </div>,
                                                                       }
@@ -1768,6 +1871,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     onSearchSubmit={[Function]}
                                                                     onSelect={[Function]}
                                                                     onToggleOpen={[Function]}
+                                                                    placeholder="Sort By"
                                                                     prefixCls="ant-select"
                                                                     removeIcon={<ForwardRef(CloseOutlined) />}
                                                                     searchValue=""
@@ -1779,12 +1883,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                     }
                                                                     tokenWithEnter={false}
                                                                     transitionName="ant-slide-up"
+                                                                    value="desc"
                                                                     values={
                                                                       Array [
                                                                         Object {
                                                                           "disabled": undefined,
                                                                           "key": "desc",
-                                                                          "label": "Sort By: Latest",
+                                                                          "label": "Latest",
                                                                           "value": "desc",
                                                                         },
                                                                       ]
@@ -1828,9 +1933,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                               </span>
                                                                               <span
                                                                                 class="ant-select-selection-item"
-                                                                                title="Sort By: Latest"
+                                                                                title="Latest"
                                                                               >
-                                                                                Sort By: Latest
+                                                                                Latest
                                                                               </span>
                                                                             </div>,
                                                                           }
@@ -1879,6 +1984,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         onSearchSubmit={[Function]}
                                                                         onSelect={[Function]}
                                                                         onToggleOpen={[Function]}
+                                                                        placeholder="Sort By"
                                                                         prefixCls="ant-select"
                                                                         removeIcon={<ForwardRef(CloseOutlined) />}
                                                                         searchValue=""
@@ -1890,12 +1996,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         }
                                                                         tokenWithEnter={false}
                                                                         transitionName="ant-slide-up"
+                                                                        value="desc"
                                                                         values={
                                                                           Array [
                                                                             Object {
                                                                               "disabled": undefined,
                                                                               "key": "desc",
-                                                                              "label": "Sort By: Latest",
+                                                                              "label": "Latest",
                                                                               "value": "desc",
                                                                             },
                                                                           ]
@@ -1949,9 +2056,9 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                                         </span>
                                                                         <span
                                                                           className="ant-select-selection-item"
-                                                                          title="Sort By: Latest"
+                                                                          title="Latest"
                                                                         >
-                                                                          Sort By: Latest
+                                                                          Latest
                                                                         </span>
                                                                       </SingleSelector>
                                                                     </div>
@@ -2287,8 +2394,8 @@ exports[`Page component snapshot testing should render the component 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={1}
-              key="ant-space-item-1"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -2308,7 +2415,13 @@ exports[`Page component snapshot testing should render the component 1`] = `
                     }
                   }
                   fetchPages={[Function]}
-                  filters={Object {}}
+                  filters={
+                    Object {
+                      "limit": 10,
+                      "page": 1,
+                      "sort": "desc",
+                    }
+                  }
                   format={
                     Object {
                       "id": 1,
@@ -2316,7 +2429,7 @@ exports[`Page component snapshot testing should render the component 1`] = `
                       "slug": "article",
                     }
                   }
-                  setFilters={[Function]}
+                  onPagination={[Function]}
                 >
                   <Space
                     direction="vertical"
@@ -2397,9 +2510,15 @@ exports[`Page component snapshot testing should render the component 1`] = `
                             }
                             pagination={
                               Object {
-                                "current": undefined,
+                                "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 10,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -2562,9 +2681,15 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                       }
                                       pagination={
                                         Object {
-                                          "current": undefined,
+                                          "current": 1,
                                           "onChange": [Function],
                                           "pageSize": 10,
+                                          "pageSizeOptions": Array [
+                                            "10",
+                                            "15",
+                                            "20",
+                                          ],
+                                          "showTotal": [Function],
                                           "total": 0,
                                         }
                                       }
@@ -2717,9 +2842,15 @@ exports[`Page component snapshot testing should render the component 1`] = `
                                                 0,
                                               },
                                               "pagination": Object {
-                                                "current": undefined,
+                                                "current": 1,
                                                 "onChange": [Function],
                                                 "pageSize": 10,
+                                                "pageSizeOptions": Array [
+                                                  "10",
+                                                  "15",
+                                                  "20",
+                                                ],
+                                                "showTotal": [Function],
                                                 "total": 0,
                                               },
                                               "prefixCls": "ant-table",

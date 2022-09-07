@@ -450,6 +450,9 @@ exports[`Event form component snapshot testing should match component with data 
                                             "enabled": false,
                                           },
                                           "scrollBeyondLastLine": false,
+                                          "scrollbar": Object {
+                                            "alwaysConsumeMouseWheel": false,
+                                          },
                                           "theme": "vs-dark",
                                           "wordWrap": "on",
                                         }
@@ -1117,6 +1120,9 @@ exports[`Event form component snapshot testing should match component with empty
                                             "enabled": false,
                                           },
                                           "scrollBeyondLastLine": false,
+                                          "scrollbar": Object {
+                                            "alwaysConsumeMouseWheel": false,
+                                          },
                                           "theme": "vs-dark",
                                           "wordWrap": "on",
                                         }
@@ -1782,6 +1788,9 @@ exports[`Event form component snapshot testing should render the component 1`] =
                                             "enabled": false,
                                           },
                                           "scrollBeyondLastLine": false,
+                                          "scrollbar": Object {
+                                            "alwaysConsumeMouseWheel": false,
+                                          },
                                           "theme": "vs-dark",
                                           "wordWrap": "on",
                                         }

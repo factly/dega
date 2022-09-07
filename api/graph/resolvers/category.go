@@ -118,7 +118,7 @@ func (r *queryResolver) Category(ctx context.Context, id *int, slug *string) (*m
 		}).Preload("Medium").First(&result).Error
 	}
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
 
 	return result, nil

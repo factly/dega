@@ -121,7 +121,10 @@ exports[`Categories List component snapshot testing should match component when 
                         "title": "Slug",
                       },
                       Object {
-                        "dataIndex": "parent_id",
+                        "dataIndex": Array [
+                          "parent_category",
+                          "name",
+                        ],
                         "key": "parent_id",
                         "title": "Parent Category",
                       },
@@ -171,6 +174,12 @@ exports[`Categories List component snapshot testing should match component when 
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -232,7 +241,10 @@ exports[`Categories List component snapshot testing should match component when 
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": Array [
+                                    "parent_category",
+                                    "name",
+                                  ],
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -376,7 +388,6 @@ exports[`Categories List component snapshot testing should match component when 
                                             class="ant-table-cell"
                                           >
                                             <a
-                                              class="ant-dropdown-link"
                                               href="/categories/1/edit"
                                               style="margin-right: 8px;"
                                             >
@@ -390,42 +401,35 @@ exports[`Categories List component snapshot testing should match component when 
                                           </td>
                                           <td
                                             class="ant-table-cell"
-                                          >
-                                            0
-                                          </td>
+                                          />
                                           <td
                                             class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                             style="text-align: center; position: sticky; right: 0px;"
                                           >
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                type="button"
+                                              <span
+                                                aria-label="delete"
+                                                class="anticon anticon-delete"
+                                                role="img"
                                               >
-                                                <span
-                                                  aria-label="delete"
-                                                  class="anticon anticon-delete"
-                                                  role="img"
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="delete"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
                                                 >
-                                                  <svg
-                                                    aria-hidden="true"
-                                                    data-icon="delete"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height="1em"
-                                                    viewBox="64 64 896 896"
-                                                    width="1em"
-                                                  >
-                                                    <path
-                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                    />
-                                                  </svg>
-                                                </span>
-                                              </button>
-                                            </a>
+                                                  <path
+                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </button>
                                           </td>
                                         </tr>
                                         <tr
@@ -436,7 +440,6 @@ exports[`Categories List component snapshot testing should match component when 
                                             class="ant-table-cell"
                                           >
                                             <a
-                                              class="ant-dropdown-link"
                                               href="/categories/2/edit"
                                               style="margin-right: 8px;"
                                             >
@@ -450,42 +453,35 @@ exports[`Categories List component snapshot testing should match component when 
                                           </td>
                                           <td
                                             class="ant-table-cell"
-                                          >
-                                            0
-                                          </td>
+                                          />
                                           <td
                                             class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                             style="text-align: center; position: sticky; right: 0px;"
                                           >
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                type="button"
+                                              <span
+                                                aria-label="delete"
+                                                class="anticon anticon-delete"
+                                                role="img"
                                               >
-                                                <span
-                                                  aria-label="delete"
-                                                  class="anticon anticon-delete"
-                                                  role="img"
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="delete"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
                                                 >
-                                                  <svg
-                                                    aria-hidden="true"
-                                                    data-icon="delete"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height="1em"
-                                                    viewBox="64 64 896 896"
-                                                    width="1em"
-                                                  >
-                                                    <path
-                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                    />
-                                                  </svg>
-                                                </span>
-                                              </button>
-                                            </a>
+                                                  <path
+                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </button>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -500,6 +496,12 @@ exports[`Categories List component snapshot testing should match component when 
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
+                                "showTotal": [Function],
                                 "total": 2,
                               }
                             }
@@ -531,7 +533,10 @@ exports[`Categories List component snapshot testing should match component when 
                                         "title": "Slug",
                                       },
                                       Object {
-                                        "dataIndex": "parent_id",
+                                        "dataIndex": Array [
+                                          "parent_category",
+                                          "name",
+                                        ],
                                         "key": "parent_id",
                                         "title": "Parent Category",
                                       },
@@ -666,7 +671,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   class="ant-table-cell"
                                                 >
                                                   <a
-                                                    class="ant-dropdown-link"
                                                     href="/categories/1/edit"
                                                     style="margin-right: 8px;"
                                                   >
@@ -680,42 +684,35 @@ exports[`Categories List component snapshot testing should match component when 
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                                 <td
                                                   class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                   style="text-align: center; position: sticky; right: 0px;"
                                                 >
-                                                  <a
-                                                    class="ant-dropdown-link"
-                                                    href="/"
+                                                  <button
+                                                    class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                    type="button"
                                                   >
-                                                    <button
-                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                      type="button"
+                                                    <span
+                                                      aria-label="delete"
+                                                      class="anticon anticon-delete"
+                                                      role="img"
                                                     >
-                                                      <span
-                                                        aria-label="delete"
-                                                        class="anticon anticon-delete"
-                                                        role="img"
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="delete"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
                                                       >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          data-icon="delete"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <path
-                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                          />
-                                                        </svg>
-                                                      </span>
-                                                    </button>
-                                                  </a>
+                                                        <path
+                                                          d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </button>
                                                 </td>
                                               </tr>
                                               <tr
@@ -726,7 +723,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   class="ant-table-cell"
                                                 >
                                                   <a
-                                                    class="ant-dropdown-link"
                                                     href="/categories/2/edit"
                                                     style="margin-right: 8px;"
                                                   >
@@ -740,42 +736,35 @@ exports[`Categories List component snapshot testing should match component when 
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                                 <td
                                                   class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                   style="text-align: center; position: sticky; right: 0px;"
                                                 >
-                                                  <a
-                                                    class="ant-dropdown-link"
-                                                    href="/"
+                                                  <button
+                                                    class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                    type="button"
                                                   >
-                                                    <button
-                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                      type="button"
+                                                    <span
+                                                      aria-label="delete"
+                                                      class="anticon anticon-delete"
+                                                      role="img"
                                                     >
-                                                      <span
-                                                        aria-label="delete"
-                                                        class="anticon anticon-delete"
-                                                        role="img"
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="delete"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
                                                       >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          data-icon="delete"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <path
-                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                          />
-                                                        </svg>
-                                                      </span>
-                                                    </button>
-                                                  </a>
+                                                        <path
+                                                          d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </button>
                                                 </td>
                                               </tr>
                                             </tbody>
@@ -789,6 +778,12 @@ exports[`Categories List component snapshot testing should match component when 
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
+                                      "showTotal": [Function],
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -852,7 +847,10 @@ exports[`Categories List component snapshot testing should match component when 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -927,7 +925,10 @@ exports[`Categories List component snapshot testing should match component when 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "key": "parent_id",
                                               "title": "Parent Category",
                                             },
@@ -957,7 +958,10 @@ exports[`Categories List component snapshot testing should match component when 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -1032,7 +1036,10 @@ exports[`Categories List component snapshot testing should match component when 
                                                   "colSpan": 1,
                                                   "colStart": 2,
                                                   "column": Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   },
@@ -1074,7 +1081,10 @@ exports[`Categories List component snapshot testing should match component when 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ],
                                                   "fixed": undefined,
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
@@ -1180,7 +1190,10 @@ exports[`Categories List component snapshot testing should match component when 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   }
@@ -1356,7 +1369,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    className="ant-dropdown-link"
                                                     style={
                                                       Object {
                                                         "marginRight": 8,
@@ -1365,7 +1377,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                     to="/categories/1/edit"
                                                   >
                                                     <LinkAnchor
-                                                      className="ant-dropdown-link"
                                                       href="/categories/1/edit"
                                                       navigate={[Function]}
                                                       style={
@@ -1375,7 +1386,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                       }
                                                     >
                                                       <a
-                                                        className="ant-dropdown-link"
                                                         href="/categories/1/edit"
                                                         onClick={[Function]}
                                                         style={
@@ -1427,7 +1437,12 @@ exports[`Categories List component snapshot testing should match component when 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="parent_id"
+                                                dataIndex={
+                                                  Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ]
+                                                }
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
                                                 index={0}
@@ -1456,9 +1471,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                   colSpan={null}
                                                   rowSpan={null}
                                                   style={Object {}}
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                               </Cell>
                                               <Cell
                                                 align="center"
@@ -2107,121 +2120,100 @@ exports[`Categories List component snapshot testing should match component when 
                                                           title="Are you sure you want to delete this?"
                                                           visible={false}
                                                         >
-                                                          <Link
-                                                            className="ant-dropdown-link"
+                                                          <Button
+                                                            disabled={false}
+                                                            icon={<ForwardRef(DeleteOutlined) />}
                                                             key="trigger"
                                                             onClick={[Function]}
                                                             onKeyDown={[Function]}
                                                             onMouseDown={[Function]}
                                                             onTouchStart={[Function]}
-                                                            to=""
+                                                            type="danger"
                                                           >
-                                                            <LinkAnchor
-                                                              className="ant-dropdown-link"
-                                                              href="/"
-                                                              navigate={[Function]}
-                                                              onClick={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              onMouseDown={[Function]}
-                                                              onTouchStart={[Function]}
-                                                            >
-                                                              <a
-                                                                className="ant-dropdown-link"
-                                                                href="/"
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}
                                                                 onMouseDown={[Function]}
                                                                 onTouchStart={[Function]}
+                                                                type="button"
                                                               >
-                                                                <Button
-                                                                  disabled={false}
-                                                                  icon={<ForwardRef(DeleteOutlined) />}
-                                                                  type="danger"
-                                                                >
-                                                                  <Wave>
-                                                                    <button
-                                                                      className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                      disabled={false}
-                                                                      onClick={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(DeleteOutlined)>
-                                                                        <AntdIcon
-                                                                          icon={
+                                                                <ForwardRef(DeleteOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
                                                                             Object {
-                                                                              "icon": Object {
-                                                                                "attrs": Object {
-                                                                                  "focusable": "false",
-                                                                                  "viewBox": "64 64 896 896",
-                                                                                },
-                                                                                "children": Array [
-                                                                                  Object {
-                                                                                    "attrs": Object {
-                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                    },
-                                                                                    "tag": "path",
-                                                                                  },
-                                                                                ],
-                                                                                "tag": "svg",
+                                                                              "attrs": Object {
+                                                                                "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                               },
-                                                                              "name": "delete",
-                                                                              "theme": "outlined",
-                                                                            }
-                                                                          }
-                                                                        >
-                                                                          <span
-                                                                            aria-label="delete"
-                                                                            className="anticon anticon-delete"
-                                                                            role="img"
-                                                                          >
-                                                                            <IconReact
-                                                                              icon={
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "delete",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="delete"
+                                                                      className="anticon anticon-delete"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
                                                                                 Object {
-                                                                                  "icon": Object {
-                                                                                    "attrs": Object {
-                                                                                      "focusable": "false",
-                                                                                      "viewBox": "64 64 896 896",
-                                                                                    },
-                                                                                    "children": Array [
-                                                                                      Object {
-                                                                                        "attrs": Object {
-                                                                                          "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                        },
-                                                                                        "tag": "path",
-                                                                                      },
-                                                                                    ],
-                                                                                    "tag": "svg",
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                   },
-                                                                                  "name": "delete",
-                                                                                  "theme": "outlined",
-                                                                                }
-                                                                              }
-                                                                            >
-                                                                              <svg
-                                                                                aria-hidden="true"
-                                                                                data-icon="delete"
-                                                                                fill="currentColor"
-                                                                                focusable="false"
-                                                                                height="1em"
-                                                                                key="svg-delete"
-                                                                                viewBox="64 64 896 896"
-                                                                                width="1em"
-                                                                              >
-                                                                                <path
-                                                                                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                  key="svg-delete-svg-0"
-                                                                                />
-                                                                              </svg>
-                                                                            </IconReact>
-                                                                          </span>
-                                                                        </AntdIcon>
-                                                                      </ForwardRef(DeleteOutlined)>
-                                                                    </button>
-                                                                  </Wave>
-                                                                </Button>
-                                                              </a>
-                                                            </LinkAnchor>
-                                                          </Link>
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          data-icon="delete"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-delete"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <path
+                                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                            key="svg-delete-svg-0"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(DeleteOutlined)>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
                                                         </Trigger>
                                                       </ForwardRef(Tooltip)>
                                                     </Tooltip>
@@ -2296,7 +2288,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    className="ant-dropdown-link"
                                                     style={
                                                       Object {
                                                         "marginRight": 8,
@@ -2305,7 +2296,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                     to="/categories/2/edit"
                                                   >
                                                     <LinkAnchor
-                                                      className="ant-dropdown-link"
                                                       href="/categories/2/edit"
                                                       navigate={[Function]}
                                                       style={
@@ -2315,7 +2305,6 @@ exports[`Categories List component snapshot testing should match component when 
                                                       }
                                                     >
                                                       <a
-                                                        className="ant-dropdown-link"
                                                         href="/categories/2/edit"
                                                         onClick={[Function]}
                                                         style={
@@ -2367,7 +2356,12 @@ exports[`Categories List component snapshot testing should match component when 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="parent_id"
+                                                dataIndex={
+                                                  Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ]
+                                                }
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
                                                 index={1}
@@ -2396,9 +2390,7 @@ exports[`Categories List component snapshot testing should match component when 
                                                   colSpan={null}
                                                   rowSpan={null}
                                                   style={Object {}}
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                               </Cell>
                                               <Cell
                                                 align="center"
@@ -3047,121 +3039,100 @@ exports[`Categories List component snapshot testing should match component when 
                                                           title="Are you sure you want to delete this?"
                                                           visible={false}
                                                         >
-                                                          <Link
-                                                            className="ant-dropdown-link"
+                                                          <Button
+                                                            disabled={false}
+                                                            icon={<ForwardRef(DeleteOutlined) />}
                                                             key="trigger"
                                                             onClick={[Function]}
                                                             onKeyDown={[Function]}
                                                             onMouseDown={[Function]}
                                                             onTouchStart={[Function]}
-                                                            to=""
+                                                            type="danger"
                                                           >
-                                                            <LinkAnchor
-                                                              className="ant-dropdown-link"
-                                                              href="/"
-                                                              navigate={[Function]}
-                                                              onClick={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              onMouseDown={[Function]}
-                                                              onTouchStart={[Function]}
-                                                            >
-                                                              <a
-                                                                className="ant-dropdown-link"
-                                                                href="/"
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}
                                                                 onMouseDown={[Function]}
                                                                 onTouchStart={[Function]}
+                                                                type="button"
                                                               >
-                                                                <Button
-                                                                  disabled={false}
-                                                                  icon={<ForwardRef(DeleteOutlined) />}
-                                                                  type="danger"
-                                                                >
-                                                                  <Wave>
-                                                                    <button
-                                                                      className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                      disabled={false}
-                                                                      onClick={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(DeleteOutlined)>
-                                                                        <AntdIcon
-                                                                          icon={
+                                                                <ForwardRef(DeleteOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
                                                                             Object {
-                                                                              "icon": Object {
-                                                                                "attrs": Object {
-                                                                                  "focusable": "false",
-                                                                                  "viewBox": "64 64 896 896",
-                                                                                },
-                                                                                "children": Array [
-                                                                                  Object {
-                                                                                    "attrs": Object {
-                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                    },
-                                                                                    "tag": "path",
-                                                                                  },
-                                                                                ],
-                                                                                "tag": "svg",
+                                                                              "attrs": Object {
+                                                                                "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                               },
-                                                                              "name": "delete",
-                                                                              "theme": "outlined",
-                                                                            }
-                                                                          }
-                                                                        >
-                                                                          <span
-                                                                            aria-label="delete"
-                                                                            className="anticon anticon-delete"
-                                                                            role="img"
-                                                                          >
-                                                                            <IconReact
-                                                                              icon={
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "delete",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="delete"
+                                                                      className="anticon anticon-delete"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
                                                                                 Object {
-                                                                                  "icon": Object {
-                                                                                    "attrs": Object {
-                                                                                      "focusable": "false",
-                                                                                      "viewBox": "64 64 896 896",
-                                                                                    },
-                                                                                    "children": Array [
-                                                                                      Object {
-                                                                                        "attrs": Object {
-                                                                                          "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                        },
-                                                                                        "tag": "path",
-                                                                                      },
-                                                                                    ],
-                                                                                    "tag": "svg",
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                   },
-                                                                                  "name": "delete",
-                                                                                  "theme": "outlined",
-                                                                                }
-                                                                              }
-                                                                            >
-                                                                              <svg
-                                                                                aria-hidden="true"
-                                                                                data-icon="delete"
-                                                                                fill="currentColor"
-                                                                                focusable="false"
-                                                                                height="1em"
-                                                                                key="svg-delete"
-                                                                                viewBox="64 64 896 896"
-                                                                                width="1em"
-                                                                              >
-                                                                                <path
-                                                                                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                  key="svg-delete-svg-0"
-                                                                                />
-                                                                              </svg>
-                                                                            </IconReact>
-                                                                          </span>
-                                                                        </AntdIcon>
-                                                                      </ForwardRef(DeleteOutlined)>
-                                                                    </button>
-                                                                  </Wave>
-                                                                </Button>
-                                                              </a>
-                                                            </LinkAnchor>
-                                                          </Link>
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          data-icon="delete"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-delete"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <path
+                                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                            key="svg-delete-svg-0"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(DeleteOutlined)>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
                                                         </Trigger>
                                                       </ForwardRef(Tooltip)>
                                                     </Tooltip>
@@ -3183,6 +3154,14 @@ exports[`Categories List component snapshot testing should match component when 
                             current={1}
                             onChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
+                            showTotal={[Function]}
                             total={2}
                           >
                             <LocaleReceiver
@@ -3271,6 +3250,13 @@ exports[`Categories List component snapshot testing should match component when 
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
                                 pageSize={20}
+                                pageSizeOptions={
+                                  Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ]
+                                }
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -3295,6 +3281,7 @@ exports[`Categories List component snapshot testing should match component when 
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={2}
                                 totalBoundaryShowSizeChanger={50}
@@ -3304,6 +3291,11 @@ exports[`Categories List component snapshot testing should match component when 
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-2 of 2 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
@@ -3538,9 +3530,8 @@ exports[`Categories List component snapshot testing should match component when 
                                     pageSizeOptions={
                                       Array [
                                         "10",
+                                        "15",
                                         "20",
-                                        "50",
-                                        "100",
                                       ]
                                     }
                                     quickGo={null}
@@ -3696,7 +3687,10 @@ exports[`Categories List component snapshot testing should match component with 
                         "title": "Slug",
                       },
                       Object {
-                        "dataIndex": "parent_id",
+                        "dataIndex": Array [
+                          "parent_category",
+                          "name",
+                        ],
                         "key": "parent_id",
                         "title": "Parent Category",
                       },
@@ -3746,6 +3740,12 @@ exports[`Categories List component snapshot testing should match component with 
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
+                      "showTotal": [Function],
                       "total": 2,
                     }
                   }
@@ -3783,7 +3783,10 @@ exports[`Categories List component snapshot testing should match component with 
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": Array [
+                                    "parent_category",
+                                    "name",
+                                  ],
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -3927,7 +3930,6 @@ exports[`Categories List component snapshot testing should match component with 
                                             class="ant-table-cell"
                                           >
                                             <a
-                                              class="ant-dropdown-link"
                                               href="/categories/1/edit"
                                               style="margin-right: 8px;"
                                             >
@@ -3941,42 +3943,35 @@ exports[`Categories List component snapshot testing should match component with 
                                           </td>
                                           <td
                                             class="ant-table-cell"
-                                          >
-                                            0
-                                          </td>
+                                          />
                                           <td
                                             class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                             style="text-align: center; position: sticky; right: 0px;"
                                           >
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                type="button"
+                                              <span
+                                                aria-label="delete"
+                                                class="anticon anticon-delete"
+                                                role="img"
                                               >
-                                                <span
-                                                  aria-label="delete"
-                                                  class="anticon anticon-delete"
-                                                  role="img"
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="delete"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
                                                 >
-                                                  <svg
-                                                    aria-hidden="true"
-                                                    data-icon="delete"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height="1em"
-                                                    viewBox="64 64 896 896"
-                                                    width="1em"
-                                                  >
-                                                    <path
-                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                    />
-                                                  </svg>
-                                                </span>
-                                              </button>
-                                            </a>
+                                                  <path
+                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </button>
                                           </td>
                                         </tr>
                                         <tr
@@ -3987,7 +3982,6 @@ exports[`Categories List component snapshot testing should match component with 
                                             class="ant-table-cell"
                                           >
                                             <a
-                                              class="ant-dropdown-link"
                                               href="/categories/2/edit"
                                               style="margin-right: 8px;"
                                             >
@@ -4001,42 +3995,35 @@ exports[`Categories List component snapshot testing should match component with 
                                           </td>
                                           <td
                                             class="ant-table-cell"
-                                          >
-                                            0
-                                          </td>
+                                          />
                                           <td
                                             class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                             style="text-align: center; position: sticky; right: 0px;"
                                           >
-                                            <a
-                                              class="ant-dropdown-link"
-                                              href="/"
+                                            <button
+                                              class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                              type="button"
                                             >
-                                              <button
-                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                type="button"
+                                              <span
+                                                aria-label="delete"
+                                                class="anticon anticon-delete"
+                                                role="img"
                                               >
-                                                <span
-                                                  aria-label="delete"
-                                                  class="anticon anticon-delete"
-                                                  role="img"
+                                                <svg
+                                                  aria-hidden="true"
+                                                  data-icon="delete"
+                                                  fill="currentColor"
+                                                  focusable="false"
+                                                  height="1em"
+                                                  viewBox="64 64 896 896"
+                                                  width="1em"
                                                 >
-                                                  <svg
-                                                    aria-hidden="true"
-                                                    data-icon="delete"
-                                                    fill="currentColor"
-                                                    focusable="false"
-                                                    height="1em"
-                                                    viewBox="64 64 896 896"
-                                                    width="1em"
-                                                  >
-                                                    <path
-                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                    />
-                                                  </svg>
-                                                </span>
-                                              </button>
-                                            </a>
+                                                  <path
+                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                  />
+                                                </svg>
+                                              </span>
+                                            </button>
                                           </td>
                                         </tr>
                                       </tbody>
@@ -4051,6 +4038,12 @@ exports[`Categories List component snapshot testing should match component with 
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
+                                "showTotal": [Function],
                                 "total": 2,
                               }
                             }
@@ -4082,7 +4075,10 @@ exports[`Categories List component snapshot testing should match component with 
                                         "title": "Slug",
                                       },
                                       Object {
-                                        "dataIndex": "parent_id",
+                                        "dataIndex": Array [
+                                          "parent_category",
+                                          "name",
+                                        ],
                                         "key": "parent_id",
                                         "title": "Parent Category",
                                       },
@@ -4217,7 +4213,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   class="ant-table-cell"
                                                 >
                                                   <a
-                                                    class="ant-dropdown-link"
                                                     href="/categories/1/edit"
                                                     style="margin-right: 8px;"
                                                   >
@@ -4231,42 +4226,35 @@ exports[`Categories List component snapshot testing should match component with 
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                                 <td
                                                   class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                   style="text-align: center; position: sticky; right: 0px;"
                                                 >
-                                                  <a
-                                                    class="ant-dropdown-link"
-                                                    href="/"
+                                                  <button
+                                                    class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                    type="button"
                                                   >
-                                                    <button
-                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                      type="button"
+                                                    <span
+                                                      aria-label="delete"
+                                                      class="anticon anticon-delete"
+                                                      role="img"
                                                     >
-                                                      <span
-                                                        aria-label="delete"
-                                                        class="anticon anticon-delete"
-                                                        role="img"
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="delete"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
                                                       >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          data-icon="delete"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <path
-                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                          />
-                                                        </svg>
-                                                      </span>
-                                                    </button>
-                                                  </a>
+                                                        <path
+                                                          d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </button>
                                                 </td>
                                               </tr>
                                               <tr
@@ -4277,7 +4265,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   class="ant-table-cell"
                                                 >
                                                   <a
-                                                    class="ant-dropdown-link"
                                                     href="/categories/2/edit"
                                                     style="margin-right: 8px;"
                                                   >
@@ -4291,42 +4278,35 @@ exports[`Categories List component snapshot testing should match component with 
                                                 </td>
                                                 <td
                                                   class="ant-table-cell"
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                                 <td
                                                   class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                   style="text-align: center; position: sticky; right: 0px;"
                                                 >
-                                                  <a
-                                                    class="ant-dropdown-link"
-                                                    href="/"
+                                                  <button
+                                                    class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                    type="button"
                                                   >
-                                                    <button
-                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                      type="button"
+                                                    <span
+                                                      aria-label="delete"
+                                                      class="anticon anticon-delete"
+                                                      role="img"
                                                     >
-                                                      <span
-                                                        aria-label="delete"
-                                                        class="anticon anticon-delete"
-                                                        role="img"
+                                                      <svg
+                                                        aria-hidden="true"
+                                                        data-icon="delete"
+                                                        fill="currentColor"
+                                                        focusable="false"
+                                                        height="1em"
+                                                        viewBox="64 64 896 896"
+                                                        width="1em"
                                                       >
-                                                        <svg
-                                                          aria-hidden="true"
-                                                          data-icon="delete"
-                                                          fill="currentColor"
-                                                          focusable="false"
-                                                          height="1em"
-                                                          viewBox="64 64 896 896"
-                                                          width="1em"
-                                                        >
-                                                          <path
-                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                          />
-                                                        </svg>
-                                                      </span>
-                                                    </button>
-                                                  </a>
+                                                        <path
+                                                          d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                        />
+                                                      </svg>
+                                                    </span>
+                                                  </button>
                                                 </td>
                                               </tr>
                                             </tbody>
@@ -4340,6 +4320,12 @@ exports[`Categories List component snapshot testing should match component with 
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
+                                      "showTotal": [Function],
                                       "total": 2,
                                     },
                                     "prefixCls": "ant-table",
@@ -4403,7 +4389,10 @@ exports[`Categories List component snapshot testing should match component with 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -4478,7 +4467,10 @@ exports[`Categories List component snapshot testing should match component with 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "key": "parent_id",
                                               "title": "Parent Category",
                                             },
@@ -4508,7 +4500,10 @@ exports[`Categories List component snapshot testing should match component with 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -4583,7 +4578,10 @@ exports[`Categories List component snapshot testing should match component with 
                                                   "colSpan": 1,
                                                   "colStart": 2,
                                                   "column": Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   },
@@ -4625,7 +4623,10 @@ exports[`Categories List component snapshot testing should match component with 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ],
                                                   "fixed": undefined,
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
@@ -4731,7 +4732,10 @@ exports[`Categories List component snapshot testing should match component with 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   }
@@ -4907,7 +4911,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    className="ant-dropdown-link"
                                                     style={
                                                       Object {
                                                         "marginRight": 8,
@@ -4916,7 +4919,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                     to="/categories/1/edit"
                                                   >
                                                     <LinkAnchor
-                                                      className="ant-dropdown-link"
                                                       href="/categories/1/edit"
                                                       navigate={[Function]}
                                                       style={
@@ -4926,7 +4928,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                       }
                                                     >
                                                       <a
-                                                        className="ant-dropdown-link"
                                                         href="/categories/1/edit"
                                                         onClick={[Function]}
                                                         style={
@@ -4978,7 +4979,12 @@ exports[`Categories List component snapshot testing should match component with 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="parent_id"
+                                                dataIndex={
+                                                  Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ]
+                                                }
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
                                                 index={0}
@@ -5007,9 +5013,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                   colSpan={null}
                                                   rowSpan={null}
                                                   style={Object {}}
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                               </Cell>
                                               <Cell
                                                 align="center"
@@ -5658,121 +5662,100 @@ exports[`Categories List component snapshot testing should match component with 
                                                           title="Are you sure you want to delete this?"
                                                           visible={false}
                                                         >
-                                                          <Link
-                                                            className="ant-dropdown-link"
+                                                          <Button
+                                                            disabled={false}
+                                                            icon={<ForwardRef(DeleteOutlined) />}
                                                             key="trigger"
                                                             onClick={[Function]}
                                                             onKeyDown={[Function]}
                                                             onMouseDown={[Function]}
                                                             onTouchStart={[Function]}
-                                                            to=""
+                                                            type="danger"
                                                           >
-                                                            <LinkAnchor
-                                                              className="ant-dropdown-link"
-                                                              href="/"
-                                                              navigate={[Function]}
-                                                              onClick={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              onMouseDown={[Function]}
-                                                              onTouchStart={[Function]}
-                                                            >
-                                                              <a
-                                                                className="ant-dropdown-link"
-                                                                href="/"
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}
                                                                 onMouseDown={[Function]}
                                                                 onTouchStart={[Function]}
+                                                                type="button"
                                                               >
-                                                                <Button
-                                                                  disabled={false}
-                                                                  icon={<ForwardRef(DeleteOutlined) />}
-                                                                  type="danger"
-                                                                >
-                                                                  <Wave>
-                                                                    <button
-                                                                      className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                      disabled={false}
-                                                                      onClick={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(DeleteOutlined)>
-                                                                        <AntdIcon
-                                                                          icon={
+                                                                <ForwardRef(DeleteOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
                                                                             Object {
-                                                                              "icon": Object {
-                                                                                "attrs": Object {
-                                                                                  "focusable": "false",
-                                                                                  "viewBox": "64 64 896 896",
-                                                                                },
-                                                                                "children": Array [
-                                                                                  Object {
-                                                                                    "attrs": Object {
-                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                    },
-                                                                                    "tag": "path",
-                                                                                  },
-                                                                                ],
-                                                                                "tag": "svg",
+                                                                              "attrs": Object {
+                                                                                "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                               },
-                                                                              "name": "delete",
-                                                                              "theme": "outlined",
-                                                                            }
-                                                                          }
-                                                                        >
-                                                                          <span
-                                                                            aria-label="delete"
-                                                                            className="anticon anticon-delete"
-                                                                            role="img"
-                                                                          >
-                                                                            <IconReact
-                                                                              icon={
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "delete",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="delete"
+                                                                      className="anticon anticon-delete"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
                                                                                 Object {
-                                                                                  "icon": Object {
-                                                                                    "attrs": Object {
-                                                                                      "focusable": "false",
-                                                                                      "viewBox": "64 64 896 896",
-                                                                                    },
-                                                                                    "children": Array [
-                                                                                      Object {
-                                                                                        "attrs": Object {
-                                                                                          "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                        },
-                                                                                        "tag": "path",
-                                                                                      },
-                                                                                    ],
-                                                                                    "tag": "svg",
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                   },
-                                                                                  "name": "delete",
-                                                                                  "theme": "outlined",
-                                                                                }
-                                                                              }
-                                                                            >
-                                                                              <svg
-                                                                                aria-hidden="true"
-                                                                                data-icon="delete"
-                                                                                fill="currentColor"
-                                                                                focusable="false"
-                                                                                height="1em"
-                                                                                key="svg-delete"
-                                                                                viewBox="64 64 896 896"
-                                                                                width="1em"
-                                                                              >
-                                                                                <path
-                                                                                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                  key="svg-delete-svg-0"
-                                                                                />
-                                                                              </svg>
-                                                                            </IconReact>
-                                                                          </span>
-                                                                        </AntdIcon>
-                                                                      </ForwardRef(DeleteOutlined)>
-                                                                    </button>
-                                                                  </Wave>
-                                                                </Button>
-                                                              </a>
-                                                            </LinkAnchor>
-                                                          </Link>
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          data-icon="delete"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-delete"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <path
+                                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                            key="svg-delete-svg-0"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(DeleteOutlined)>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
                                                         </Trigger>
                                                       </ForwardRef(Tooltip)>
                                                     </Tooltip>
@@ -5847,7 +5830,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                   style={Object {}}
                                                 >
                                                   <Link
-                                                    className="ant-dropdown-link"
                                                     style={
                                                       Object {
                                                         "marginRight": 8,
@@ -5856,7 +5838,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                     to="/categories/2/edit"
                                                   >
                                                     <LinkAnchor
-                                                      className="ant-dropdown-link"
                                                       href="/categories/2/edit"
                                                       navigate={[Function]}
                                                       style={
@@ -5866,7 +5847,6 @@ exports[`Categories List component snapshot testing should match component with 
                                                       }
                                                     >
                                                       <a
-                                                        className="ant-dropdown-link"
                                                         href="/categories/2/edit"
                                                         onClick={[Function]}
                                                         style={
@@ -5918,7 +5898,12 @@ exports[`Categories List component snapshot testing should match component with 
                                               </Cell>
                                               <Cell
                                                 component="td"
-                                                dataIndex="parent_id"
+                                                dataIndex={
+                                                  Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ]
+                                                }
                                                 firstFixLeft={false}
                                                 firstFixRight={false}
                                                 index={1}
@@ -5947,9 +5932,7 @@ exports[`Categories List component snapshot testing should match component with 
                                                   colSpan={null}
                                                   rowSpan={null}
                                                   style={Object {}}
-                                                >
-                                                  0
-                                                </td>
+                                                />
                                               </Cell>
                                               <Cell
                                                 align="center"
@@ -6598,121 +6581,100 @@ exports[`Categories List component snapshot testing should match component with 
                                                           title="Are you sure you want to delete this?"
                                                           visible={false}
                                                         >
-                                                          <Link
-                                                            className="ant-dropdown-link"
+                                                          <Button
+                                                            disabled={false}
+                                                            icon={<ForwardRef(DeleteOutlined) />}
                                                             key="trigger"
                                                             onClick={[Function]}
                                                             onKeyDown={[Function]}
                                                             onMouseDown={[Function]}
                                                             onTouchStart={[Function]}
-                                                            to=""
+                                                            type="danger"
                                                           >
-                                                            <LinkAnchor
-                                                              className="ant-dropdown-link"
-                                                              href="/"
-                                                              navigate={[Function]}
-                                                              onClick={[Function]}
-                                                              onKeyDown={[Function]}
-                                                              onMouseDown={[Function]}
-                                                              onTouchStart={[Function]}
-                                                            >
-                                                              <a
-                                                                className="ant-dropdown-link"
-                                                                href="/"
+                                                            <Wave>
+                                                              <button
+                                                                className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                disabled={false}
                                                                 onClick={[Function]}
                                                                 onKeyDown={[Function]}
                                                                 onMouseDown={[Function]}
                                                                 onTouchStart={[Function]}
+                                                                type="button"
                                                               >
-                                                                <Button
-                                                                  disabled={false}
-                                                                  icon={<ForwardRef(DeleteOutlined) />}
-                                                                  type="danger"
-                                                                >
-                                                                  <Wave>
-                                                                    <button
-                                                                      className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                      disabled={false}
-                                                                      onClick={[Function]}
-                                                                      type="button"
-                                                                    >
-                                                                      <ForwardRef(DeleteOutlined)>
-                                                                        <AntdIcon
-                                                                          icon={
+                                                                <ForwardRef(DeleteOutlined)>
+                                                                  <AntdIcon
+                                                                    icon={
+                                                                      Object {
+                                                                        "icon": Object {
+                                                                          "attrs": Object {
+                                                                            "focusable": "false",
+                                                                            "viewBox": "64 64 896 896",
+                                                                          },
+                                                                          "children": Array [
                                                                             Object {
-                                                                              "icon": Object {
-                                                                                "attrs": Object {
-                                                                                  "focusable": "false",
-                                                                                  "viewBox": "64 64 896 896",
-                                                                                },
-                                                                                "children": Array [
-                                                                                  Object {
-                                                                                    "attrs": Object {
-                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                    },
-                                                                                    "tag": "path",
-                                                                                  },
-                                                                                ],
-                                                                                "tag": "svg",
+                                                                              "attrs": Object {
+                                                                                "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                               },
-                                                                              "name": "delete",
-                                                                              "theme": "outlined",
-                                                                            }
-                                                                          }
-                                                                        >
-                                                                          <span
-                                                                            aria-label="delete"
-                                                                            className="anticon anticon-delete"
-                                                                            role="img"
-                                                                          >
-                                                                            <IconReact
-                                                                              icon={
+                                                                              "tag": "path",
+                                                                            },
+                                                                          ],
+                                                                          "tag": "svg",
+                                                                        },
+                                                                        "name": "delete",
+                                                                        "theme": "outlined",
+                                                                      }
+                                                                    }
+                                                                  >
+                                                                    <span
+                                                                      aria-label="delete"
+                                                                      className="anticon anticon-delete"
+                                                                      role="img"
+                                                                    >
+                                                                      <IconReact
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
                                                                                 Object {
-                                                                                  "icon": Object {
-                                                                                    "attrs": Object {
-                                                                                      "focusable": "false",
-                                                                                      "viewBox": "64 64 896 896",
-                                                                                    },
-                                                                                    "children": Array [
-                                                                                      Object {
-                                                                                        "attrs": Object {
-                                                                                          "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                        },
-                                                                                        "tag": "path",
-                                                                                      },
-                                                                                    ],
-                                                                                    "tag": "svg",
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                   },
-                                                                                  "name": "delete",
-                                                                                  "theme": "outlined",
-                                                                                }
-                                                                              }
-                                                                            >
-                                                                              <svg
-                                                                                aria-hidden="true"
-                                                                                data-icon="delete"
-                                                                                fill="currentColor"
-                                                                                focusable="false"
-                                                                                height="1em"
-                                                                                key="svg-delete"
-                                                                                viewBox="64 64 896 896"
-                                                                                width="1em"
-                                                                              >
-                                                                                <path
-                                                                                  d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                  key="svg-delete-svg-0"
-                                                                                />
-                                                                              </svg>
-                                                                            </IconReact>
-                                                                          </span>
-                                                                        </AntdIcon>
-                                                                      </ForwardRef(DeleteOutlined)>
-                                                                    </button>
-                                                                  </Wave>
-                                                                </Button>
-                                                              </a>
-                                                            </LinkAnchor>
-                                                          </Link>
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
+                                                                      >
+                                                                        <svg
+                                                                          aria-hidden="true"
+                                                                          data-icon="delete"
+                                                                          fill="currentColor"
+                                                                          focusable="false"
+                                                                          height="1em"
+                                                                          key="svg-delete"
+                                                                          viewBox="64 64 896 896"
+                                                                          width="1em"
+                                                                        >
+                                                                          <path
+                                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                            key="svg-delete-svg-0"
+                                                                          />
+                                                                        </svg>
+                                                                      </IconReact>
+                                                                    </span>
+                                                                  </AntdIcon>
+                                                                </ForwardRef(DeleteOutlined)>
+                                                              </button>
+                                                            </Wave>
+                                                          </Button>
                                                         </Trigger>
                                                       </ForwardRef(Tooltip)>
                                                     </Tooltip>
@@ -6734,6 +6696,14 @@ exports[`Categories List component snapshot testing should match component with 
                             current={1}
                             onChange={[Function]}
                             pageSize={20}
+                            pageSizeOptions={
+                              Array [
+                                "10",
+                                "15",
+                                "20",
+                              ]
+                            }
+                            showTotal={[Function]}
                             total={2}
                           >
                             <LocaleReceiver
@@ -6822,6 +6792,13 @@ exports[`Categories List component snapshot testing should match component with 
                                 onChange={[Function]}
                                 onShowSizeChange={[Function]}
                                 pageSize={20}
+                                pageSizeOptions={
+                                  Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ]
+                                }
                                 prefixCls="ant-pagination"
                                 prevIcon={
                                   <button
@@ -6846,6 +6823,7 @@ exports[`Categories List component snapshot testing should match component with 
                                 showPrevNextJumpers={true}
                                 showQuickJumper={false}
                                 showTitle={true}
+                                showTotal={[Function]}
                                 style={Object {}}
                                 total={2}
                                 totalBoundaryShowSizeChanger={50}
@@ -6855,6 +6833,11 @@ exports[`Categories List component snapshot testing should match component with 
                                   style={Object {}}
                                   unselectable="unselectable"
                                 >
+                                  <li
+                                    className="ant-pagination-total-text"
+                                  >
+                                    1-2 of 2 results
+                                  </li>
                                   <li
                                     aria-disabled={true}
                                     className="ant-pagination-prev ant-pagination-disabled"
@@ -7089,9 +7072,8 @@ exports[`Categories List component snapshot testing should match component with 
                                     pageSizeOptions={
                                       Array [
                                         "10",
+                                        "15",
                                         "20",
-                                        "50",
-                                        "100",
                                       ]
                                     }
                                     quickGo={null}
@@ -7220,7 +7202,10 @@ exports[`Categories List component snapshot testing should render the component 
                         "title": "Slug",
                       },
                       Object {
-                        "dataIndex": "parent_id",
+                        "dataIndex": Array [
+                          "parent_category",
+                          "name",
+                        ],
                         "key": "parent_id",
                         "title": "Parent Category",
                       },
@@ -7241,6 +7226,12 @@ exports[`Categories List component snapshot testing should render the component 
                       "current": 1,
                       "onChange": [Function],
                       "pageSize": 20,
+                      "pageSizeOptions": Array [
+                        "10",
+                        "15",
+                        "20",
+                      ],
+                      "showTotal": [Function],
                       "total": 0,
                     }
                   }
@@ -7278,7 +7269,10 @@ exports[`Categories List component snapshot testing should render the component 
                                   "title": "Slug",
                                 },
                                 Object {
-                                  "dataIndex": "parent_id",
+                                  "dataIndex": Array [
+                                    "parent_category",
+                                    "name",
+                                  ],
                                   "key": "parent_id",
                                   "title": "Parent Category",
                                 },
@@ -7423,6 +7417,12 @@ exports[`Categories List component snapshot testing should render the component 
                                 "current": 1,
                                 "onChange": [Function],
                                 "pageSize": 20,
+                                "pageSizeOptions": Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ],
+                                "showTotal": [Function],
                                 "total": 0,
                               }
                             }
@@ -7454,7 +7454,10 @@ exports[`Categories List component snapshot testing should render the component 
                                         "title": "Slug",
                                       },
                                       Object {
-                                        "dataIndex": "parent_id",
+                                        "dataIndex": Array [
+                                          "parent_category",
+                                          "name",
+                                        ],
                                         "key": "parent_id",
                                         "title": "Parent Category",
                                       },
@@ -7593,6 +7596,12 @@ exports[`Categories List component snapshot testing should render the component 
                                       "current": 1,
                                       "onChange": [Function],
                                       "pageSize": 20,
+                                      "pageSizeOptions": Array [
+                                        "10",
+                                        "15",
+                                        "20",
+                                      ],
+                                      "showTotal": [Function],
                                       "total": 0,
                                     },
                                     "prefixCls": "ant-table",
@@ -7656,7 +7665,10 @@ exports[`Categories List component snapshot testing should render the component 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -7731,7 +7743,10 @@ exports[`Categories List component snapshot testing should render the component 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "key": "parent_id",
                                               "title": "Parent Category",
                                             },
@@ -7761,7 +7776,10 @@ exports[`Categories List component snapshot testing should render the component 
                                               "title": "Slug",
                                             },
                                             Object {
-                                              "dataIndex": "parent_id",
+                                              "dataIndex": Array [
+                                                "parent_category",
+                                                "name",
+                                              ],
                                               "fixed": undefined,
                                               "key": "parent_id",
                                               "title": "Parent Category",
@@ -7836,7 +7854,10 @@ exports[`Categories List component snapshot testing should render the component 
                                                   "colSpan": 1,
                                                   "colStart": 2,
                                                   "column": Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   },
@@ -7878,7 +7899,10 @@ exports[`Categories List component snapshot testing should render the component 
                                                   "title": "Slug",
                                                 },
                                                 Object {
-                                                  "dataIndex": "parent_id",
+                                                  "dataIndex": Array [
+                                                    "parent_category",
+                                                    "name",
+                                                  ],
                                                   "fixed": undefined,
                                                   "key": "parent_id",
                                                   "title": "Parent Category",
@@ -7984,7 +8008,10 @@ exports[`Categories List component snapshot testing should render the component 
                                                 colStart={2}
                                                 column={
                                                   Object {
-                                                    "dataIndex": "parent_id",
+                                                    "dataIndex": Array [
+                                                      "parent_category",
+                                                      "name",
+                                                    ],
                                                     "key": "parent_id",
                                                     "title": "Parent Category",
                                                   }

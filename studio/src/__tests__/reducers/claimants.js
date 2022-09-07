@@ -127,10 +127,10 @@ describe('claimants reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CLAIMANT', () => {
+  it('should handle GET_CLAIMANT', () => {
     expect(
       reducer(initialState, {
-        type: types.ADD_CLAIMANT,
+        type: types.GET_CLAIMANT,
         payload: { id: 1, name: 'new claimant' },
       }),
     ).toEqual({
@@ -139,7 +139,7 @@ describe('claimants reducer', () => {
       loading: true,
     });
   });
-  it('should handle ADD_CLAIMANT when details is non-empty', () => {
+  it('should handle GET_CLAIMANT when details is non-empty', () => {
     expect(
       reducer(
         {
@@ -148,7 +148,7 @@ describe('claimants reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CLAIMANT,
+          type: types.GET_CLAIMANT,
           payload: { id: 2, name: 'new claimant' },
         },
       ),
@@ -161,7 +161,7 @@ describe('claimants reducer', () => {
       loading: false,
     });
   });
-  it('should handle ADD_CLAIMANT when already exists', () => {
+  it('should handle UPDATE_CLAIMANT when already exists', () => {
     expect(
       reducer(
         {
@@ -173,7 +173,7 @@ describe('claimants reducer', () => {
           loading: false,
         },
         {
-          type: types.ADD_CLAIMANT,
+          type: types.UPDATE_CLAIMANT,
           payload: { id: 2, name: 'updated claimant' },
         },
       ),

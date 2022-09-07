@@ -177,7 +177,7 @@ describe('Space Permission List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <PermissionList />
+              <PermissionList admin={true} />
             </Router>
           </Provider>,
         );

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 	"time"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -135,13 +133,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
-	// Store HTML description
-	var description string
-	if len(post.Description.RawMessage) > 0 && !reflect.DeepEqual(post.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(post.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(post.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(post.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(post.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -174,40 +179,43 @@ func update(w http.ResponseWriter, r *http.Request) {
 		_ = config.DB.Model(&result.Post).Association("Categories").Clear()
 	}
 
-	featuredMediumID := &post.FeaturedMediumID
-	result.Post.FeaturedMediumID = &post.FeaturedMediumID
-	if post.FeaturedMediumID == 0 {
-		err = tx.Model(&result.Post).Omit("Tags", "Categories").Updates(map[string]interface{}{"featured_medium_id": nil}).Error
-		featuredMediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	updateMap := map[string]interface{}{
+		"created_at":         post.CreatedAt,
+		"updated_at":         post.UpdatedAt,
+		"updated_by_id":      uint(uID),
+		"title":              post.Title,
+		"slug":               postSlug,
+		"subtitle":           post.Subtitle,
+		"excerpt":            post.Excerpt,
+		"description":        jsonDescription,
+		"html_description":   htmlDescription,
+		"is_highlighted":     post.IsHighlighted,
+		"is_sticky":          post.IsSticky,
+		"is_featured":        post.IsFeatured,
+		"format_id":          post.FormatID,
+		"featured_medium_id": post.FeaturedMediumID,
+		"meta":               post.Meta,
+		"header_code":        post.HeaderCode,
+		"footer_code":        post.FooterCode,
+		"meta_fields":        post.MetaFields,
 	}
 
-	updatedPost := model.Post{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Title:            post.Title,
-		Slug:             postSlug,
-		Subtitle:         post.Subtitle,
-		Excerpt:          post.Excerpt,
-		Description:      post.Description,
-		HTMLDescription:  description,
-		IsHighlighted:    post.IsHighlighted,
-		IsSticky:         post.IsSticky,
-		FormatID:         post.FormatID,
-		FeaturedMediumID: featuredMediumID,
-		Meta:             post.Meta,
-		HeaderCode:       post.HeaderCode,
-		FooterCode:       post.FooterCode,
-		MetaFields:       post.MetaFields,
+	result.Post.FeaturedMediumID = &post.FeaturedMediumID
+	if post.FeaturedMediumID == 0 {
+		updateMap["featured_medium_id"] = nil
+	}
+
+	if post.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if post.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	oldStatus := result.Post.Status
-	// Check if post status is changed back to draft from published
-	if oldStatus == "publish" && post.Status == "draft" {
+	// Check if post status is changed back to draft or ready from published
+	if oldStatus == "publish" && (post.Status == "draft" || post.Status == "ready") {
 		status, err := getPublishPermissions(oID, sID, uID)
 		if err != nil {
 			tx.Rollback()
@@ -215,14 +223,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 			errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 			return
 		}
-		if status == http.StatusOK {
-			updatedPost.Status = "draft"
-			tx.Model(&result.Post).Select("PublishedDate").Omit("Tags", "Categories").Updates(model.Post{PublishedDate: nil})
-		} else {
+
+		if status != http.StatusOK {
 			tx.Rollback()
 			w.WriteHeader(http.StatusUnauthorized)
 			return
 		}
+
+		updateMap["status"] = post.Status
+		updateMap["published_date"] = nil
 
 	} else if post.Status == "publish" {
 		// Check if authors are not added while publishing post
@@ -239,12 +248,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if status == http.StatusOK {
-			updatedPost.Status = "publish"
+			updateMap["status"] = "publish"
 			if post.PublishedDate == nil {
 				currTime := time.Now()
-				updatedPost.PublishedDate = &currTime
+				updateMap["published_date"] = &currTime
 			} else {
-				updatedPost.PublishedDate = post.PublishedDate
+				updateMap["published_date"] = post.PublishedDate
 			}
 		} else {
 			tx.Rollback()
@@ -252,18 +261,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	} else if post.Status == "ready" {
-		updatedPost.Status = "ready"
+		updateMap["status"] = "ready"
 	} else if oldStatus == "ready" && post.Status == "draft" {
-		updatedPost.Status = "draft"
+		updateMap["status"] = "draft"
 	}
 
-	tx.Model(&result.Post).Select("IsFeatured", "IsSticky", "IsHighlighted", "IsPage").Omit("Tags", "Categories").Updates(model.Post{
-		IsFeatured:    post.IsFeatured,
-		IsSticky:      post.IsSticky,
-		IsHighlighted: post.IsHighlighted,
-		IsPage:        post.IsPage,
-	})
-	err = tx.Model(&result.Post).Updates(updatedPost).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -390,6 +393,13 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
 		SpaceID: uint(sID),
@@ -399,7 +409,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		Post:    result.Post,
 		Authors: result.Authors,
 		Claims:  result.Claims,
-	}, *result.Space, ratings)
+	}, *spaceObjectforDega, ratings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -482,18 +492,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPublishPermissions(oID, sID, uID int) (int, error) {
-	commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 
-	kresource := fmt.Sprint("resources", commonString, "posts")
-	kaction := fmt.Sprint("actions", commonString, "posts:publish")
-
-	result := util.KetoAllowed{}
-
-	result.Action = kaction
-	result.Resource = kresource
-	result.Subject = fmt.Sprint(uID)
-
-	resStatus, err := util.IsAllowed(result)
+	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
 	if err != nil {
 		return 0, err
 	}

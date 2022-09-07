@@ -14,6 +14,23 @@ exports[`Tags create component snapshot testing should render the component 1`] 
   }
 >
   <CreateTag>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Create Tag"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Create Tag"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Create Tag"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <TagForm
       onCreate={[Function]}
     >
@@ -345,217 +362,222 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                 }
                               }
                             >
-                              <FormItem
+                              <TitleInput
                                 label="Tag Name"
                                 name="name"
-                                rules={
-                                  Array [
-                                    Object {
-                                      "message": "Please enter the name!",
-                                      "required": true,
-                                    },
-                                    Object {
-                                      "message": "Name must be minimum 3 characters.",
-                                      "min": 3,
-                                    },
-                                    Object {
-                                      "max": 50,
-                                      "message": "Name must be maximum 50 characters.",
-                                    },
-                                  ]
-                                }
+                                onChange={[Function]}
                               >
-                                <WrapperField
+                                <FormItem
                                   label="Tag Name"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Tag Name",
-                                    }
-                                  }
                                   name="name"
-                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
-                                        "message": "Please enter the name!",
+                                        "message": "Please enter name!",
                                         "required": true,
                                       },
                                       Object {
-                                        "message": "Name must be minimum 3 characters.",
-                                        "min": 3,
-                                      },
-                                      Object {
-                                        "max": 50,
-                                        "message": "Name must be maximum 50 characters.",
+                                        "max": 500,
+                                        "message": "Name must be maximum 500 characters.",
                                       },
                                     ]
                                   }
-                                  trigger="onChange"
-                                  validateTrigger="onChange"
                                 >
-                                  <Field
-                                    fieldContext={
-                                      Object {
-                                        "__INTERNAL__": Object {
-                                          "itemRef": [Function],
-                                          "name": "create-tag",
-                                        },
-                                        "getFieldError": [Function],
-                                        "getFieldInstance": [Function],
-                                        "getFieldValue": [Function],
-                                        "getFieldsError": [Function],
-                                        "getFieldsValue": [Function],
-                                        "getInternalHooks": [Function],
-                                        "isFieldTouched": [Function],
-                                        "isFieldValidating": [Function],
-                                        "isFieldsTouched": [Function],
-                                        "isFieldsValidating": [Function],
-                                        "resetFields": [Function],
-                                        "scrollToField": [Function],
-                                        "setFields": [Function],
-                                        "setFieldsValue": [Function],
-                                        "submit": [Function],
-                                        "validateFields": [Function],
-                                        "validateTrigger": "onChange",
-                                      }
-                                    }
-                                    key="_name"
+                                  <WrapperField
                                     label="Tag Name"
                                     messageVariables={
                                       Object {
                                         "label": "Tag Name",
                                       }
                                     }
-                                    name={
-                                      Array [
-                                        "name",
-                                      ]
-                                    }
+                                    name="name"
                                     onReset={[Function]}
                                     rules={
                                       Array [
                                         Object {
-                                          "message": "Please enter the name!",
+                                          "message": "Please enter name!",
                                           "required": true,
                                         },
                                         Object {
-                                          "message": "Name must be minimum 3 characters.",
-                                          "min": 3,
-                                        },
-                                        Object {
-                                          "max": 50,
-                                          "message": "Name must be maximum 50 characters.",
+                                          "max": 500,
+                                          "message": "Name must be maximum 500 characters.",
                                         },
                                       ]
                                     }
                                     trigger="onChange"
                                     validateTrigger="onChange"
-                                    valuePropName="value"
                                   >
-                                    <Row
-                                      className="ant-form-item"
-                                      key="row"
+                                    <Field
+                                      fieldContext={
+                                        Object {
+                                          "__INTERNAL__": Object {
+                                            "itemRef": [Function],
+                                            "name": "create-tag",
+                                          },
+                                          "getFieldError": [Function],
+                                          "getFieldInstance": [Function],
+                                          "getFieldValue": [Function],
+                                          "getFieldsError": [Function],
+                                          "getFieldsValue": [Function],
+                                          "getInternalHooks": [Function],
+                                          "isFieldTouched": [Function],
+                                          "isFieldValidating": [Function],
+                                          "isFieldsTouched": [Function],
+                                          "isFieldsValidating": [Function],
+                                          "resetFields": [Function],
+                                          "scrollToField": [Function],
+                                          "setFields": [Function],
+                                          "setFieldsValue": [Function],
+                                          "submit": [Function],
+                                          "validateFields": [Function],
+                                          "validateTrigger": "onChange",
+                                        }
+                                      }
+                                      key="_name"
+                                      label="Tag Name"
+                                      messageVariables={
+                                        Object {
+                                          "label": "Tag Name",
+                                        }
+                                      }
+                                      name={
+                                        Array [
+                                          "name",
+                                        ]
+                                      }
+                                      onReset={[Function]}
+                                      rules={
+                                        Array [
+                                          Object {
+                                            "message": "Please enter name!",
+                                            "required": true,
+                                          },
+                                          Object {
+                                            "max": 500,
+                                            "message": "Name must be maximum 500 characters.",
+                                          },
+                                        ]
+                                      }
+                                      trigger="onChange"
+                                      validateTrigger="onChange"
+                                      valuePropName="value"
                                     >
-                                      <div
-                                        className="ant-row ant-form-item"
-                                        style={Object {}}
+                                      <Row
+                                        className="ant-form-item"
+                                        key="row"
                                       >
-                                        <FormItemLabel
-                                          htmlFor="create-tag_name"
-                                          label="Tag Name"
-                                          name="name"
-                                          prefixCls="ant-form"
-                                          required={true}
-                                          requiredMark={true}
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please enter the name!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Name must be minimum 3 characters.",
-                                                "min": 3,
-                                              },
-                                              Object {
-                                                "max": 50,
-                                                "message": "Name must be maximum 50 characters.",
-                                              },
-                                            ]
-                                          }
+                                        <div
+                                          className="ant-row ant-form-item"
+                                          style={Object {}}
                                         >
-                                          <Col
-                                            className="ant-form-item-label"
+                                          <FormItemLabel
+                                            htmlFor="create-tag_name"
+                                            label="Tag Name"
+                                            name="name"
+                                            prefixCls="ant-form"
+                                            required={true}
+                                            requiredMark={true}
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please enter name!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "max": 500,
+                                                  "message": "Name must be maximum 500 characters.",
+                                                },
+                                              ]
+                                            }
                                           >
-                                            <div
-                                              className="ant-col ant-form-item-label"
-                                              style={Object {}}
-                                            >
-                                              <label
-                                                className="ant-form-item-required"
-                                                htmlFor="create-tag_name"
-                                                title="Tag Name"
-                                              >
-                                                Tag Name
-                                              </label>
-                                            </div>
-                                          </Col>
-                                        </FormItemLabel>
-                                        <FormItemInput
-                                          errors={Array []}
-                                          label="Tag Name"
-                                          name={
-                                            Array [
-                                              "name",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
-                                          prefixCls="ant-form"
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please enter the name!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Name must be minimum 3 characters.",
-                                                "min": 3,
-                                              },
-                                              Object {
-                                                "max": 50,
-                                                "message": "Name must be maximum 50 characters.",
-                                              },
-                                            ]
-                                          }
-                                          status=""
-                                          touched={false}
-                                          validateStatus=""
-                                          validating={false}
-                                        >
-                                          <Col
-                                            className="ant-form-item-control"
-                                          >
-                                            <div
-                                              className="ant-col ant-form-item-control"
-                                              style={Object {}}
+                                            <Col
+                                              className="ant-form-item-label"
                                             >
                                               <div
-                                                className="ant-form-item-control-input"
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className="ant-form-item-required"
+                                                  htmlFor="create-tag_name"
+                                                  title="Tag Name"
+                                                >
+                                                  Tag Name
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
+                                          <FormItemInput
+                                            errors={Array []}
+                                            label="Tag Name"
+                                            name={
+                                              Array [
+                                                "name",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
+                                            prefixCls="ant-form"
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please enter name!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "max": 500,
+                                                  "message": "Name must be maximum 500 characters.",
+                                                },
+                                              ]
+                                            }
+                                            status=""
+                                            touched={false}
+                                            validateStatus=""
+                                            validating={false}
+                                          >
+                                            <Col
+                                              className="ant-form-item-control"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-control"
+                                                style={Object {}}
                                               >
                                                 <div
-                                                  className="ant-form-item-control-input-content"
+                                                  className="ant-form-item-control-input"
                                                 >
-                                                  <Component
-                                                    update={1}
+                                                  <div
+                                                    className="ant-form-item-control-input-content"
                                                   >
-                                                    <Input
-                                                      id="create-tag_name"
-                                                      onChange={[Function]}
-                                                      type="text"
+                                                    <Component
+                                                      update={1}
                                                     >
-                                                      <ClearableLabeledInput
-                                                        bordered={true}
-                                                        element={
+                                                      <Input
+                                                        id="create-tag_name"
+                                                        onChange={[Function]}
+                                                        type="text"
+                                                      >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
+                                                            <input
+                                                              className="ant-input"
+                                                              id="create-tag_name"
+                                                              onBlur={[Function]}
+                                                              onChange={[Function]}
+                                                              onFocus={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              type="text"
+                                                            />
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="create-tag_name"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        >
                                                           <input
                                                             className="ant-input"
                                                             id="create-tag_name"
@@ -564,81 +586,41 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                                             onFocus={[Function]}
                                                             onKeyDown={[Function]}
                                                             type="text"
+                                                            value=""
                                                           />
-                                                        }
-                                                        focused={false}
-                                                        handleReset={[Function]}
-                                                        id="create-tag_name"
-                                                        inputType="input"
-                                                        onChange={[Function]}
-                                                        prefixCls="ant-input"
-                                                        triggerFocus={[Function]}
-                                                        type="text"
-                                                        value=""
-                                                      >
-                                                        <input
-                                                          className="ant-input"
-                                                          id="create-tag_name"
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          type="text"
-                                                          value=""
-                                                        />
-                                                      </ClearableLabeledInput>
-                                                    </Input>
-                                                  </Component>
+                                                        </ClearableLabeledInput>
+                                                      </Input>
+                                                    </Component>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                              <ErrorList
-                                                errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
-                                              >
-                                                <CSSMotion
-                                                  motionAppear={true}
-                                                  motionDeadline={500}
-                                                  motionName="ant-show-help"
-                                                  onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <ErrorList
+                                                  errors={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </ErrorList>
-                                            </div>
-                                          </Col>
-                                        </FormItemInput>
-                                      </div>
-                                    </Row>
-                                  </Field>
-                                </WrapperField>
-                              </FormItem>
-                              <FormItem
-                                label="Slug"
-                                name="slug"
-                                rules={
-                                  Array [
-                                    Object {
-                                      "message": "Please input the slug!",
-                                      "required": true,
-                                    },
-                                    Object {
-                                      "message": "Please enter valid slug!",
-                                      "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                    },
-                                  ]
-                                }
-                              >
-                                <WrapperField
+                                                  <CSSMotion
+                                                    motionAppear={true}
+                                                    motionDeadline={500}
+                                                    motionName="ant-show-help"
+                                                    onLeaveEnd={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </ErrorList>
+                                              </div>
+                                            </Col>
+                                          </FormItemInput>
+                                        </div>
+                                      </Row>
+                                    </Field>
+                                  </WrapperField>
+                                </FormItem>
+                              </TitleInput>
+                              <SlugInput>
+                                <FormItem
                                   label="Slug"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Slug",
-                                    }
-                                  }
                                   name="slug"
-                                  onReset={[Function]}
                                   rules={
                                     Array [
                                       Object {
@@ -651,47 +633,15 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                       },
                                     ]
                                   }
-                                  trigger="onChange"
-                                  validateTrigger="onChange"
                                 >
-                                  <Field
-                                    fieldContext={
-                                      Object {
-                                        "__INTERNAL__": Object {
-                                          "itemRef": [Function],
-                                          "name": "create-tag",
-                                        },
-                                        "getFieldError": [Function],
-                                        "getFieldInstance": [Function],
-                                        "getFieldValue": [Function],
-                                        "getFieldsError": [Function],
-                                        "getFieldsValue": [Function],
-                                        "getInternalHooks": [Function],
-                                        "isFieldTouched": [Function],
-                                        "isFieldValidating": [Function],
-                                        "isFieldsTouched": [Function],
-                                        "isFieldsValidating": [Function],
-                                        "resetFields": [Function],
-                                        "scrollToField": [Function],
-                                        "setFields": [Function],
-                                        "setFieldsValue": [Function],
-                                        "submit": [Function],
-                                        "validateFields": [Function],
-                                        "validateTrigger": "onChange",
-                                      }
-                                    }
-                                    key="_slug"
+                                  <WrapperField
                                     label="Slug"
                                     messageVariables={
                                       Object {
                                         "label": "Slug",
                                       }
                                     }
-                                    name={
-                                      Array [
-                                        "slug",
-                                      ]
-                                    }
+                                    name="slug"
                                     onReset={[Function]}
                                     rules={
                                       Array [
@@ -707,104 +657,178 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                     }
                                     trigger="onChange"
                                     validateTrigger="onChange"
-                                    valuePropName="value"
                                   >
-                                    <Row
-                                      className="ant-form-item"
-                                      key="row"
+                                    <Field
+                                      fieldContext={
+                                        Object {
+                                          "__INTERNAL__": Object {
+                                            "itemRef": [Function],
+                                            "name": "create-tag",
+                                          },
+                                          "getFieldError": [Function],
+                                          "getFieldInstance": [Function],
+                                          "getFieldValue": [Function],
+                                          "getFieldsError": [Function],
+                                          "getFieldsValue": [Function],
+                                          "getInternalHooks": [Function],
+                                          "isFieldTouched": [Function],
+                                          "isFieldValidating": [Function],
+                                          "isFieldsTouched": [Function],
+                                          "isFieldsValidating": [Function],
+                                          "resetFields": [Function],
+                                          "scrollToField": [Function],
+                                          "setFields": [Function],
+                                          "setFieldsValue": [Function],
+                                          "submit": [Function],
+                                          "validateFields": [Function],
+                                          "validateTrigger": "onChange",
+                                        }
+                                      }
+                                      key="_slug"
+                                      label="Slug"
+                                      messageVariables={
+                                        Object {
+                                          "label": "Slug",
+                                        }
+                                      }
+                                      name={
+                                        Array [
+                                          "slug",
+                                        ]
+                                      }
+                                      onReset={[Function]}
+                                      rules={
+                                        Array [
+                                          Object {
+                                            "message": "Please input the slug!",
+                                            "required": true,
+                                          },
+                                          Object {
+                                            "message": "Please enter valid slug!",
+                                            "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                          },
+                                        ]
+                                      }
+                                      trigger="onChange"
+                                      validateTrigger="onChange"
+                                      valuePropName="value"
                                     >
-                                      <div
-                                        className="ant-row ant-form-item"
-                                        style={Object {}}
+                                      <Row
+                                        className="ant-form-item"
+                                        key="row"
                                       >
-                                        <FormItemLabel
-                                          htmlFor="create-tag_slug"
-                                          label="Slug"
-                                          name="slug"
-                                          prefixCls="ant-form"
-                                          required={true}
-                                          requiredMark={true}
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please input the slug!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Please enter valid slug!",
-                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                              },
-                                            ]
-                                          }
+                                        <div
+                                          className="ant-row ant-form-item"
+                                          style={Object {}}
                                         >
-                                          <Col
-                                            className="ant-form-item-label"
+                                          <FormItemLabel
+                                            htmlFor="create-tag_slug"
+                                            label="Slug"
+                                            name="slug"
+                                            prefixCls="ant-form"
+                                            required={true}
+                                            requiredMark={true}
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please input the slug!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "message": "Please enter valid slug!",
+                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                },
+                                              ]
+                                            }
                                           >
-                                            <div
-                                              className="ant-col ant-form-item-label"
-                                              style={Object {}}
-                                            >
-                                              <label
-                                                className="ant-form-item-required"
-                                                htmlFor="create-tag_slug"
-                                                title="Slug"
-                                              >
-                                                Slug
-                                              </label>
-                                            </div>
-                                          </Col>
-                                        </FormItemLabel>
-                                        <FormItemInput
-                                          errors={Array []}
-                                          label="Slug"
-                                          name={
-                                            Array [
-                                              "slug",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
-                                          prefixCls="ant-form"
-                                          rules={
-                                            Array [
-                                              Object {
-                                                "message": "Please input the slug!",
-                                                "required": true,
-                                              },
-                                              Object {
-                                                "message": "Please enter valid slug!",
-                                                "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
-                                              },
-                                            ]
-                                          }
-                                          status=""
-                                          touched={false}
-                                          validateStatus=""
-                                          validating={false}
-                                        >
-                                          <Col
-                                            className="ant-form-item-control"
-                                          >
-                                            <div
-                                              className="ant-col ant-form-item-control"
-                                              style={Object {}}
+                                            <Col
+                                              className="ant-form-item-label"
                                             >
                                               <div
-                                                className="ant-form-item-control-input"
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className="ant-form-item-required"
+                                                  htmlFor="create-tag_slug"
+                                                  title="Slug"
+                                                >
+                                                  Slug
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
+                                          <FormItemInput
+                                            errors={Array []}
+                                            label="Slug"
+                                            name={
+                                              Array [
+                                                "slug",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
+                                            prefixCls="ant-form"
+                                            rules={
+                                              Array [
+                                                Object {
+                                                  "message": "Please input the slug!",
+                                                  "required": true,
+                                                },
+                                                Object {
+                                                  "message": "Please enter valid slug!",
+                                                  "pattern": /\\^\\[a-z0-9\\]\\+\\(\\?:-\\[a-z0-9\\]\\+\\)\\*\\$/,
+                                                },
+                                              ]
+                                            }
+                                            status=""
+                                            touched={false}
+                                            validateStatus=""
+                                            validating={false}
+                                          >
+                                            <Col
+                                              className="ant-form-item-control"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-control"
+                                                style={Object {}}
                                               >
                                                 <div
-                                                  className="ant-form-item-control-input-content"
+                                                  className="ant-form-item-control-input"
                                                 >
-                                                  <Component
-                                                    update={1}
+                                                  <div
+                                                    className="ant-form-item-control-input-content"
                                                   >
-                                                    <Input
-                                                      id="create-tag_slug"
-                                                      onChange={[Function]}
-                                                      type="text"
+                                                    <Component
+                                                      update={1}
                                                     >
-                                                      <ClearableLabeledInput
-                                                        bordered={true}
-                                                        element={
+                                                      <Input
+                                                        id="create-tag_slug"
+                                                        onChange={[Function]}
+                                                        type="text"
+                                                      >
+                                                        <ClearableLabeledInput
+                                                          bordered={true}
+                                                          element={
+                                                            <input
+                                                              className="ant-input"
+                                                              id="create-tag_slug"
+                                                              onBlur={[Function]}
+                                                              onChange={[Function]}
+                                                              onFocus={[Function]}
+                                                              onKeyDown={[Function]}
+                                                              type="text"
+                                                            />
+                                                          }
+                                                          focused={false}
+                                                          handleReset={[Function]}
+                                                          id="create-tag_slug"
+                                                          inputType="input"
+                                                          onChange={[Function]}
+                                                          prefixCls="ant-input"
+                                                          triggerFocus={[Function]}
+                                                          type="text"
+                                                          value=""
+                                                        >
                                                           <input
                                                             className="ant-input"
                                                             id="create-tag_slug"
@@ -813,56 +837,37 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                                             onFocus={[Function]}
                                                             onKeyDown={[Function]}
                                                             type="text"
+                                                            value=""
                                                           />
-                                                        }
-                                                        focused={false}
-                                                        handleReset={[Function]}
-                                                        id="create-tag_slug"
-                                                        inputType="input"
-                                                        onChange={[Function]}
-                                                        prefixCls="ant-input"
-                                                        triggerFocus={[Function]}
-                                                        type="text"
-                                                        value=""
-                                                      >
-                                                        <input
-                                                          className="ant-input"
-                                                          id="create-tag_slug"
-                                                          onBlur={[Function]}
-                                                          onChange={[Function]}
-                                                          onFocus={[Function]}
-                                                          onKeyDown={[Function]}
-                                                          type="text"
-                                                          value=""
-                                                        />
-                                                      </ClearableLabeledInput>
-                                                    </Input>
-                                                  </Component>
+                                                        </ClearableLabeledInput>
+                                                      </Input>
+                                                    </Component>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                              <ErrorList
-                                                errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
-                                              >
-                                                <CSSMotion
-                                                  motionAppear={true}
-                                                  motionDeadline={500}
-                                                  motionName="ant-show-help"
-                                                  onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <ErrorList
+                                                  errors={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </ErrorList>
-                                            </div>
-                                          </Col>
-                                        </FormItemInput>
-                                      </div>
-                                    </Row>
-                                  </Field>
-                                </WrapperField>
-                              </FormItem>
+                                                  <CSSMotion
+                                                    motionAppear={true}
+                                                    motionDeadline={500}
+                                                    motionName="ant-show-help"
+                                                    onLeaveEnd={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </ErrorList>
+                                              </div>
+                                            </Col>
+                                          </FormItemInput>
+                                        </div>
+                                      </Row>
+                                    </Field>
+                                  </WrapperField>
+                                </FormItem>
+                              </SlugInput>
                               <FormItem
                                 label="Featured"
                                 name="is_featured"
@@ -1053,6 +1058,189 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                   </Field>
                                 </WrapperField>
                               </FormItem>
+                              <FormItem
+                                label="Colour"
+                                name="background_colour"
+                              >
+                                <WrapperField
+                                  label="Colour"
+                                  messageVariables={
+                                    Object {
+                                      "label": "Colour",
+                                    }
+                                  }
+                                  name="background_colour"
+                                  onReset={[Function]}
+                                  trigger="onChange"
+                                  validateTrigger="onChange"
+                                >
+                                  <Field
+                                    fieldContext={
+                                      Object {
+                                        "__INTERNAL__": Object {
+                                          "itemRef": [Function],
+                                          "name": "create-tag",
+                                        },
+                                        "getFieldError": [Function],
+                                        "getFieldInstance": [Function],
+                                        "getFieldValue": [Function],
+                                        "getFieldsError": [Function],
+                                        "getFieldsValue": [Function],
+                                        "getInternalHooks": [Function],
+                                        "isFieldTouched": [Function],
+                                        "isFieldValidating": [Function],
+                                        "isFieldsTouched": [Function],
+                                        "isFieldsValidating": [Function],
+                                        "resetFields": [Function],
+                                        "scrollToField": [Function],
+                                        "setFields": [Function],
+                                        "setFieldsValue": [Function],
+                                        "submit": [Function],
+                                        "validateFields": [Function],
+                                        "validateTrigger": "onChange",
+                                      }
+                                    }
+                                    key="_background_colour"
+                                    label="Colour"
+                                    messageVariables={
+                                      Object {
+                                        "label": "Colour",
+                                      }
+                                    }
+                                    name={
+                                      Array [
+                                        "background_colour",
+                                      ]
+                                    }
+                                    onReset={[Function]}
+                                    trigger="onChange"
+                                    validateTrigger="onChange"
+                                    valuePropName="value"
+                                  >
+                                    <Row
+                                      className="ant-form-item"
+                                      key="row"
+                                    >
+                                      <div
+                                        className="ant-row ant-form-item"
+                                        style={Object {}}
+                                      >
+                                        <FormItemLabel
+                                          htmlFor="create-tag_background_colour"
+                                          label="Colour"
+                                          name="background_colour"
+                                          prefixCls="ant-form"
+                                          required={false}
+                                          requiredMark={true}
+                                        >
+                                          <Col
+                                            className="ant-form-item-label"
+                                          >
+                                            <div
+                                              className="ant-col ant-form-item-label"
+                                              style={Object {}}
+                                            >
+                                              <label
+                                                className=""
+                                                htmlFor="create-tag_background_colour"
+                                                title="Colour"
+                                              >
+                                                Colour
+                                              </label>
+                                            </div>
+                                          </Col>
+                                        </FormItemLabel>
+                                        <FormItemInput
+                                          errors={Array []}
+                                          label="Colour"
+                                          name={
+                                            Array [
+                                              "background_colour",
+                                            ]
+                                          }
+                                          onDomErrorVisibleChange={[Function]}
+                                          prefixCls="ant-form"
+                                          status=""
+                                          touched={false}
+                                          validateStatus=""
+                                          validating={false}
+                                        >
+                                          <Col
+                                            className="ant-form-item-control"
+                                          >
+                                            <div
+                                              className="ant-col ant-form-item-control"
+                                              style={Object {}}
+                                            >
+                                              <div
+                                                className="ant-form-item-control-input"
+                                              >
+                                                <div
+                                                  className="ant-form-item-control-input-content"
+                                                >
+                                                  <Component
+                                                    update={1}
+                                                  >
+                                                    <div
+                                                      id="create-tag_background_colour"
+                                                      onChange={[Function]}
+                                                      style={
+                                                        Object {
+                                                          "position": "relative",
+                                                        }
+                                                      }
+                                                    >
+                                                      <div
+                                                        onClick={[Function]}
+                                                        style={
+                                                          Object {
+                                                            "background": "#fff",
+                                                            "borderRadius": "1px",
+                                                            "boxShadow": "0 0 0 1px rgba(0,0,0,.1)",
+                                                            "cursor": "pointer",
+                                                            "display": "inline-block",
+                                                            "padding": "5px",
+                                                          }
+                                                        }
+                                                      >
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "background": "null",
+                                                              "borderRadius": "2px",
+                                                              "height": "24px",
+                                                              "width": "100px",
+                                                            }
+                                                          }
+                                                        />
+                                                      </div>
+                                                    </div>
+                                                  </Component>
+                                                </div>
+                                              </div>
+                                              <ErrorList
+                                                errors={Array []}
+                                                onDomErrorVisibleChange={[Function]}
+                                              >
+                                                <CSSMotion
+                                                  motionAppear={true}
+                                                  motionDeadline={500}
+                                                  motionName="ant-show-help"
+                                                  onLeaveEnd={[Function]}
+                                                  removeOnLeave={true}
+                                                  visible={false}
+                                                >
+                                                  <DomWrapper />
+                                                </CSSMotion>
+                                              </ErrorList>
+                                            </div>
+                                          </Col>
+                                        </FormItemInput>
+                                      </div>
+                                    </Row>
+                                  </Field>
+                                </WrapperField>
+                              </FormItem>
                             </div>
                           </Col>
                           <Col
@@ -1214,7 +1402,7 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                                               onClick={[Function]}
                                                               type="primary"
                                                             >
-                                                              Confirm
+                                                              Ok
                                                             </ForwardRef(InternalButton)>,
                                                           ]
                                                         }
@@ -1247,7 +1435,7 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                                                 onClick={[Function]}
                                                                 type="primary"
                                                               >
-                                                                Confirm
+                                                                Ok
                                                               </ForwardRef(InternalButton)>,
                                                             ]
                                                           }
@@ -1423,143 +1611,148 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                 }
                               }
                             >
-                              <FormItem
-                                label="Description"
-                                name="description"
-                              >
-                                <WrapperField
-                                  label="Description"
-                                  messageVariables={
-                                    Object {
-                                      "label": "Description",
-                                    }
+                              <DescriptionInput
+                                inputProps={
+                                  Object {
+                                    "basic": true,
+                                    "placeholder": "Enter Description...",
+                                    "style": Object {
+                                      "background": "#fff",
+                                      "padding": "0.5rem 0.75rem",
+                                      "width": "600px",
+                                    },
                                   }
+                                }
+                                type="editor"
+                              >
+                                <FormItem
+                                  label="Description"
                                   name="description"
-                                  onReset={[Function]}
-                                  trigger="onChange"
-                                  validateTrigger="onChange"
                                 >
-                                  <Field
-                                    fieldContext={
-                                      Object {
-                                        "__INTERNAL__": Object {
-                                          "itemRef": [Function],
-                                          "name": "create-tag",
-                                        },
-                                        "getFieldError": [Function],
-                                        "getFieldInstance": [Function],
-                                        "getFieldValue": [Function],
-                                        "getFieldsError": [Function],
-                                        "getFieldsValue": [Function],
-                                        "getInternalHooks": [Function],
-                                        "isFieldTouched": [Function],
-                                        "isFieldValidating": [Function],
-                                        "isFieldsTouched": [Function],
-                                        "isFieldsValidating": [Function],
-                                        "resetFields": [Function],
-                                        "scrollToField": [Function],
-                                        "setFields": [Function],
-                                        "setFieldsValue": [Function],
-                                        "submit": [Function],
-                                        "validateFields": [Function],
-                                        "validateTrigger": "onChange",
-                                      }
-                                    }
-                                    key="_description"
+                                  <WrapperField
                                     label="Description"
                                     messageVariables={
                                       Object {
                                         "label": "Description",
                                       }
                                     }
-                                    name={
-                                      Array [
-                                        "description",
-                                      ]
-                                    }
+                                    name="description"
                                     onReset={[Function]}
                                     trigger="onChange"
                                     validateTrigger="onChange"
-                                    valuePropName="value"
                                   >
-                                    <Row
-                                      className="ant-form-item"
-                                      key="row"
+                                    <Field
+                                      fieldContext={
+                                        Object {
+                                          "__INTERNAL__": Object {
+                                            "itemRef": [Function],
+                                            "name": "create-tag",
+                                          },
+                                          "getFieldError": [Function],
+                                          "getFieldInstance": [Function],
+                                          "getFieldValue": [Function],
+                                          "getFieldsError": [Function],
+                                          "getFieldsValue": [Function],
+                                          "getInternalHooks": [Function],
+                                          "isFieldTouched": [Function],
+                                          "isFieldValidating": [Function],
+                                          "isFieldsTouched": [Function],
+                                          "isFieldsValidating": [Function],
+                                          "resetFields": [Function],
+                                          "scrollToField": [Function],
+                                          "setFields": [Function],
+                                          "setFieldsValue": [Function],
+                                          "submit": [Function],
+                                          "validateFields": [Function],
+                                          "validateTrigger": "onChange",
+                                        }
+                                      }
+                                      key="_description"
+                                      label="Description"
+                                      messageVariables={
+                                        Object {
+                                          "label": "Description",
+                                        }
+                                      }
+                                      name={
+                                        Array [
+                                          "description",
+                                        ]
+                                      }
+                                      onReset={[Function]}
+                                      trigger="onChange"
+                                      validateTrigger="onChange"
+                                      valuePropName="value"
                                     >
-                                      <div
-                                        className="ant-row ant-form-item"
-                                        style={Object {}}
+                                      <Row
+                                        className="ant-form-item"
+                                        key="row"
                                       >
-                                        <FormItemLabel
-                                          htmlFor="create-tag_description"
-                                          label="Description"
-                                          name="description"
-                                          prefixCls="ant-form"
-                                          required={false}
-                                          requiredMark={true}
+                                        <div
+                                          className="ant-row ant-form-item"
+                                          style={Object {}}
                                         >
-                                          <Col
-                                            className="ant-form-item-label"
+                                          <FormItemLabel
+                                            htmlFor="create-tag_description"
+                                            label="Description"
+                                            name="description"
+                                            prefixCls="ant-form"
+                                            required={false}
+                                            requiredMark={true}
                                           >
-                                            <div
-                                              className="ant-col ant-form-item-label"
-                                              style={Object {}}
-                                            >
-                                              <label
-                                                className=""
-                                                htmlFor="create-tag_description"
-                                                title="Description"
-                                              >
-                                                Description
-                                              </label>
-                                            </div>
-                                          </Col>
-                                        </FormItemLabel>
-                                        <FormItemInput
-                                          errors={Array []}
-                                          label="Description"
-                                          name={
-                                            Array [
-                                              "description",
-                                            ]
-                                          }
-                                          onDomErrorVisibleChange={[Function]}
-                                          prefixCls="ant-form"
-                                          status=""
-                                          touched={false}
-                                          validateStatus=""
-                                          validating={false}
-                                        >
-                                          <Col
-                                            className="ant-form-item-control"
-                                          >
-                                            <div
-                                              className="ant-col ant-form-item-control"
-                                              style={Object {}}
+                                            <Col
+                                              className="ant-form-item-label"
                                             >
                                               <div
-                                                className="ant-form-item-control-input"
+                                                className="ant-col ant-form-item-label"
+                                                style={Object {}}
+                                              >
+                                                <label
+                                                  className=""
+                                                  htmlFor="create-tag_description"
+                                                  title="Description"
+                                                >
+                                                  Description
+                                                </label>
+                                              </div>
+                                            </Col>
+                                          </FormItemLabel>
+                                          <FormItemInput
+                                            errors={Array []}
+                                            label="Description"
+                                            name={
+                                              Array [
+                                                "description",
+                                              ]
+                                            }
+                                            onDomErrorVisibleChange={[Function]}
+                                            prefixCls="ant-form"
+                                            status=""
+                                            touched={false}
+                                            validateStatus=""
+                                            validating={false}
+                                          >
+                                            <Col
+                                              className="ant-form-item-control"
+                                            >
+                                              <div
+                                                className="ant-col ant-form-item-control"
+                                                style={Object {}}
                                               >
                                                 <div
-                                                  className="ant-form-item-control-input-content"
+                                                  className="ant-form-item-control-input"
                                                 >
-                                                  <Component
-                                                    update={1}
+                                                  <div
+                                                    className="ant-form-item-control-input-content"
                                                   >
-                                                    <Editor
-                                                      basic={true}
-                                                      id="create-tag_description"
-                                                      onChange={[Function]}
-                                                      placeholder="Enter Description..."
-                                                      style={
-                                                        Object {
-                                                          "background": "#fff",
-                                                          "padding": "0.5rem 0.75rem",
-                                                          "width": "600px",
-                                                        }
-                                                      }
+                                                    <Component
+                                                      update={1}
                                                     >
-                                                      <div
+                                                      <Editor
+                                                        basic={true}
+                                                        id="create-tag_description"
+                                                        onChange={[Function]}
+                                                        placeholder="Enter Description..."
                                                         style={
                                                           Object {
                                                             "background": "#fff",
@@ -1567,34 +1760,44 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                                             "width": "600px",
                                                           }
                                                         }
-                                                      />
-                                                    </Editor>
-                                                  </Component>
+                                                      >
+                                                        <div
+                                                          style={
+                                                            Object {
+                                                              "background": "#fff",
+                                                              "padding": "0.5rem 0.75rem",
+                                                              "width": "600px",
+                                                            }
+                                                          }
+                                                        />
+                                                      </Editor>
+                                                    </Component>
+                                                  </div>
                                                 </div>
-                                              </div>
-                                              <ErrorList
-                                                errors={Array []}
-                                                onDomErrorVisibleChange={[Function]}
-                                              >
-                                                <CSSMotion
-                                                  motionAppear={true}
-                                                  motionDeadline={500}
-                                                  motionName="ant-show-help"
-                                                  onLeaveEnd={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <ErrorList
+                                                  errors={Array []}
+                                                  onDomErrorVisibleChange={[Function]}
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </ErrorList>
-                                            </div>
-                                          </Col>
-                                        </FormItemInput>
-                                      </div>
-                                    </Row>
-                                  </Field>
-                                </WrapperField>
-                              </FormItem>
+                                                  <CSSMotion
+                                                    motionAppear={true}
+                                                    motionDeadline={500}
+                                                    motionName="ant-show-help"
+                                                    onLeaveEnd={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </ErrorList>
+                                              </div>
+                                            </Col>
+                                          </FormItemInput>
+                                        </div>
+                                      </Row>
+                                    </Field>
+                                  </WrapperField>
+                                </FormItem>
+                              </DescriptionInput>
                             </div>
                           </Col>
                         </div>
@@ -1626,93 +1829,64 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                             }
                           }
                         >
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
+                          <MetaForm>
                             <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
                               expandIcon={[Function]}
                               expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
                               style={
                                 Object {
                                   "width": "100%",
                                 }
                               }
                             >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
+                              <Collapse
+                                accordion={false}
+                                bordered={true}
+                                className="ant-collapse-icon-position-right"
+                                destroyInactivePanel={false}
+                                expandIcon={[Function]}
+                                expandIconPosition="right"
+                                onChange={[Function]}
+                                openMotion={
+                                  Object {
+                                    "leavedClassName": "ant-collapse-content-hidden",
+                                    "motionAppear": false,
+                                    "motionDeadline": 500,
+                                    "motionName": "ant-motion-collapse",
+                                    "onAppearActive": [Function],
+                                    "onAppearEnd": [Function],
+                                    "onAppearStart": [Function],
+                                    "onEnterActive": [Function],
+                                    "onEnterEnd": [Function],
+                                    "onEnterStart": [Function],
+                                    "onLeaveActive": [Function],
+                                    "onLeaveEnd": [Function],
+                                    "onLeaveStart": [Function],
+                                  }
+                                }
+                                prefixCls="ant-collapse"
                                 style={
                                   Object {
                                     "width": "100%",
                                   }
                                 }
                               >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Meta Data"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
+                                <div
+                                  className="ant-collapse ant-collapse-icon-position-right"
+                                  role={null}
+                                  style={
                                     Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
+                                      "width": "100%",
                                     }
                                   }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
                                 >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Meta Data"
-                                    headerClass=""
                                     isActive={false}
+                                    key="0"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -1733,170 +1907,117 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                     }
                                     panelKey="0"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Meta Data"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="0"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
-                                            >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Meta Data
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
+                                          Meta Data
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
-                            </Collapse>
-                          </Collapse>
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
-                            <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
-                              expandIcon={[Function]}
-                              expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
-                              style={
-                                Object {
-                                  "width": "100%",
-                                }
-                              }
-                            >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
-                                style={
-                                  Object {
-                                    "width": "100%",
-                                  }
-                                }
-                              >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Code Injection"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
-                                    Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
-                                    }
-                                  }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
-                                >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Code Injection"
-                                    headerClass=""
                                     isActive={false}
+                                    key="1"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -1915,172 +2036,172 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                         "onLeaveStart": [Function],
                                       }
                                     }
-                                    panelKey="0"
+                                    panelKey="1"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Code Injection"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="1"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
-                                            >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Code Injection
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
+                                          Code Injection
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
+                                </div>
+                              </Collapse>
                             </Collapse>
-                          </Collapse>
-                          <Collapse
-                            expandIcon={[Function]}
-                            expandIconPosition="right"
-                            style={
-                              Object {
-                                "width": "100%",
-                              }
-                            }
-                          >
                             <Collapse
-                              accordion={false}
-                              bordered={true}
-                              className="ant-collapse-icon-position-right"
-                              destroyInactivePanel={false}
                               expandIcon={[Function]}
                               expandIconPosition="right"
-                              onChange={[Function]}
-                              openMotion={
-                                Object {
-                                  "leavedClassName": "ant-collapse-content-hidden",
-                                  "motionAppear": false,
-                                  "motionDeadline": 500,
-                                  "motionName": "ant-motion-collapse",
-                                  "onAppearActive": [Function],
-                                  "onAppearEnd": [Function],
-                                  "onAppearStart": [Function],
-                                  "onEnterActive": [Function],
-                                  "onEnterEnd": [Function],
-                                  "onEnterStart": [Function],
-                                  "onLeaveActive": [Function],
-                                  "onLeaveEnd": [Function],
-                                  "onLeaveStart": [Function],
-                                }
-                              }
-                              prefixCls="ant-collapse"
                               style={
                                 Object {
                                   "width": "100%",
                                 }
                               }
                             >
-                              <div
-                                className="ant-collapse ant-collapse-icon-position-right"
-                                role={null}
+                              <Collapse
+                                accordion={false}
+                                bordered={true}
+                                className="ant-collapse-icon-position-right"
+                                destroyInactivePanel={false}
+                                expandIcon={[Function]}
+                                expandIconPosition="right"
+                                onChange={[Function]}
+                                openMotion={
+                                  Object {
+                                    "leavedClassName": "ant-collapse-content-hidden",
+                                    "motionAppear": false,
+                                    "motionDeadline": 500,
+                                    "motionName": "ant-motion-collapse",
+                                    "onAppearActive": [Function],
+                                    "onAppearEnd": [Function],
+                                    "onAppearStart": [Function],
+                                    "onEnterActive": [Function],
+                                    "onEnterEnd": [Function],
+                                    "onEnterStart": [Function],
+                                    "onLeaveActive": [Function],
+                                    "onLeaveEnd": [Function],
+                                    "onLeaveStart": [Function],
+                                  }
+                                }
+                                prefixCls="ant-collapse"
                                 style={
                                   Object {
                                     "width": "100%",
                                   }
                                 }
                               >
-                                <CollapsePanel
-                                  accordion={false}
-                                  destroyInactivePanel={false}
-                                  expandIcon={[Function]}
-                                  header="Meta Fields"
-                                  isActive={false}
-                                  key="0"
-                                  onItemClick={[Function]}
-                                  openMotion={
+                                <div
+                                  className="ant-collapse ant-collapse-icon-position-right"
+                                  role={null}
+                                  style={
                                     Object {
-                                      "leavedClassName": "ant-collapse-content-hidden",
-                                      "motionAppear": false,
-                                      "motionDeadline": 500,
-                                      "motionName": "ant-motion-collapse",
-                                      "onAppearActive": [Function],
-                                      "onAppearEnd": [Function],
-                                      "onAppearStart": [Function],
-                                      "onEnterActive": [Function],
-                                      "onEnterEnd": [Function],
-                                      "onEnterStart": [Function],
-                                      "onLeaveActive": [Function],
-                                      "onLeaveEnd": [Function],
-                                      "onLeaveStart": [Function],
+                                      "width": "100%",
                                     }
                                   }
-                                  panelKey="0"
-                                  prefixCls="ant-collapse"
                                 >
                                   <CollapsePanel
                                     accordion={false}
-                                    className=""
                                     destroyInactivePanel={false}
                                     expandIcon={[Function]}
-                                    forceRender={false}
                                     header="Meta Fields"
-                                    headerClass=""
                                     isActive={false}
+                                    key="0"
                                     onItemClick={[Function]}
                                     openMotion={
                                       Object {
@@ -2101,83 +2222,114 @@ exports[`Tags create component snapshot testing should render the component 1`] 
                                     }
                                     panelKey="0"
                                     prefixCls="ant-collapse"
-                                    showArrow={true}
                                   >
-                                    <div
-                                      className="ant-collapse-item"
+                                    <CollapsePanel
+                                      accordion={false}
+                                      className=""
+                                      destroyInactivePanel={false}
+                                      expandIcon={[Function]}
+                                      forceRender={false}
+                                      header="Meta Fields"
+                                      headerClass=""
+                                      isActive={false}
+                                      onItemClick={[Function]}
+                                      openMotion={
+                                        Object {
+                                          "leavedClassName": "ant-collapse-content-hidden",
+                                          "motionAppear": false,
+                                          "motionDeadline": 500,
+                                          "motionName": "ant-motion-collapse",
+                                          "onAppearActive": [Function],
+                                          "onAppearEnd": [Function],
+                                          "onAppearStart": [Function],
+                                          "onEnterActive": [Function],
+                                          "onEnterEnd": [Function],
+                                          "onEnterStart": [Function],
+                                          "onLeaveActive": [Function],
+                                          "onLeaveEnd": [Function],
+                                          "onLeaveStart": [Function],
+                                        }
+                                      }
+                                      panelKey="0"
+                                      prefixCls="ant-collapse"
+                                      showArrow={true}
                                     >
                                       <div
-                                        aria-expanded={false}
-                                        className="ant-collapse-header"
-                                        onClick={[Function]}
-                                        onKeyPress={[Function]}
-                                        role="button"
-                                        tabIndex={0}
+                                        className="ant-collapse-item"
                                       >
-                                        <Button
-                                          className="ant-collapse-arrow"
+                                        <div
+                                          aria-expanded={false}
+                                          className="ant-collapse-header"
+                                          onClick={[Function]}
+                                          onKeyPress={[Function]}
+                                          role="button"
+                                          tabIndex={0}
                                         >
-                                          <Wave>
-                                            <button
-                                              className="ant-btn ant-collapse-arrow"
-                                              onClick={[Function]}
-                                              type="button"
-                                            >
-                                              <LoadingIcon
-                                                existIcon={false}
-                                                loading={false}
-                                                prefixCls="ant-btn"
+                                          <Button
+                                            className="ant-collapse-arrow"
+                                          >
+                                            <Wave>
+                                              <button
+                                                className="ant-btn ant-collapse-arrow"
+                                                onClick={[Function]}
+                                                type="button"
                                               >
-                                                <CSSMotion
-                                                  motionName="ant-btn-loading-icon-motion"
-                                                  onAppearActive={[Function]}
-                                                  onAppearStart={[Function]}
-                                                  onEnterActive={[Function]}
-                                                  onEnterStart={[Function]}
-                                                  onLeaveActive={[Function]}
-                                                  onLeaveStart={[Function]}
-                                                  removeOnLeave={true}
-                                                  visible={false}
+                                                <LoadingIcon
+                                                  existIcon={false}
+                                                  loading={false}
+                                                  prefixCls="ant-btn"
                                                 >
-                                                  <DomWrapper />
-                                                </CSSMotion>
-                                              </LoadingIcon>
-                                              <span
-                                                key=".0"
-                                              >
-                                                Expand
-                                              </span>
-                                            </button>
-                                          </Wave>
-                                        </Button>
-                                        Meta Fields
+                                                  <CSSMotion
+                                                    motionName="ant-btn-loading-icon-motion"
+                                                    onAppearActive={[Function]}
+                                                    onAppearStart={[Function]}
+                                                    onEnterActive={[Function]}
+                                                    onEnterStart={[Function]}
+                                                    onLeaveActive={[Function]}
+                                                    onLeaveStart={[Function]}
+                                                    removeOnLeave={true}
+                                                    visible={false}
+                                                  >
+                                                    <DomWrapper />
+                                                  </CSSMotion>
+                                                </LoadingIcon>
+                                                <span
+                                                  key=".0"
+                                                >
+                                                  Expand
+                                                </span>
+                                              </button>
+                                            </Wave>
+                                          </Button>
+                                          Meta Fields
+                                        </div>
+                                        <CSSMotion
+                                          forceRender={false}
+                                          leavedClassName="ant-collapse-content-hidden"
+                                          motionAppear={false}
+                                          motionDeadline={500}
+                                          motionName="ant-motion-collapse"
+                                          onAppearActive={[Function]}
+                                          onAppearEnd={[Function]}
+                                          onAppearStart={[Function]}
+                                          onEnterActive={[Function]}
+                                          onEnterEnd={[Function]}
+                                          onEnterStart={[Function]}
+                                          onLeaveActive={[Function]}
+                                          onLeaveEnd={[Function]}
+                                          onLeaveStart={[Function]}
+                                          removeOnLeave={false}
+                                          visible={false}
+                                        >
+                                          <DomWrapper />
+                                        </CSSMotion>
                                       </div>
-                                      <CSSMotion
-                                        forceRender={false}
-                                        leavedClassName="ant-collapse-content-hidden"
-                                        motionAppear={false}
-                                        motionDeadline={500}
-                                        motionName="ant-motion-collapse"
-                                        onAppearActive={[Function]}
-                                        onAppearEnd={[Function]}
-                                        onAppearStart={[Function]}
-                                        onEnterActive={[Function]}
-                                        onEnterEnd={[Function]}
-                                        onEnterStart={[Function]}
-                                        onLeaveActive={[Function]}
-                                        onLeaveEnd={[Function]}
-                                        onLeaveStart={[Function]}
-                                        removeOnLeave={false}
-                                        visible={false}
-                                      >
-                                        <DomWrapper />
-                                      </CSSMotion>
-                                    </div>
+                                    </CollapsePanel>
                                   </CollapsePanel>
-                                </CollapsePanel>
-                              </div>
+                                </div>
+                              </Collapse>
                             </Collapse>
-                          </Collapse>
+                          </MetaForm>
                         </div>
                       </Row>
                     </div>

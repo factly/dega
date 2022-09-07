@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebsiteEditForm Form component snapshot testing should match component with data 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
+      },
+    }
+  }
+>
+  <WebsiteEditForm
+    data={
+      Object {
+        "description": Object {
+          "blocks": Array [
+            Object {
+              "data": Object {
+                "text": "Description",
+              },
+              "type": "paragraph",
+            },
+          ],
+          "time": 1613715908408,
+          "version": "2.19.0",
+        },
+        "name": "name",
+        "organisation_id": 1,
+        "site_address": "site_address",
+        "site_title": "site_title",
+        "slug": "slug",
+        "tag_line": "tag_line",
+      }
+    }
+    onCreate={[MockFunction]}
+  />
+</ContextProvider>
+`;
+
+exports[`WebsiteEditForm Form component snapshot testing should render the component 1`] = `
+<ContextProvider
+  value={
+    Object {
+      "store": Object {
+        "clearActions": [Function],
+        "dispatch": [Function],
+        "getActions": [Function],
+        "getState": [Function],
+        "replaceReducer": [Function],
+        "subscribe": [Function],
+      },
+      "subscription": Subscription {
+        "handleChangeWrapper": [Function],
+        "listeners": Object {
+          "notify": [Function],
+        },
+        "onStateChange": [Function],
+        "parentSub": undefined,
+        "store": Object {
+          "clearActions": [Function],
+          "dispatch": [Function],
+          "getActions": [Function],
+          "getState": [Function],
+          "replaceReducer": [Function],
+          "subscribe": [Function],
+        },
+        "unsubscribe": null,
+      },
+    }
+  }
+>
+  <WebsiteEditForm />
+</ContextProvider>
+`;

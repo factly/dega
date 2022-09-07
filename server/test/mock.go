@@ -46,7 +46,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	viper.Set("templates_path", "../../../../web/templates/*")
 	google.GoogleURL = "http://googlefactchecktest.com"
 
-	meilisearchx.Client = meilisearch.NewClient(meilisearch.Config{
+	meilisearchx.Client = meilisearch.NewClient(meilisearch.ClientConfig{
 		Host:   viper.GetString("meili_url"),
 		APIKey: viper.GetString("meili_key"),
 	})

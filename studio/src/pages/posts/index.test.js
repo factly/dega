@@ -26,6 +26,11 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 jest.mock('../../actions/posts', () => ({
   getPosts: jest.fn(),
   addPost: jest.fn(),
@@ -125,7 +130,7 @@ describe('Posts List component', () => {
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-      expect(getPosts).toHaveBeenCalledWith({ format: [1] });
+      expect(getPosts).toHaveBeenCalledWith({ format: [1], limit: 10, page: 1, sort: 'desc' });
       expect(getPosts).toHaveBeenCalledWith({
         page: 1,
         format: [1],
@@ -156,7 +161,7 @@ describe('Posts List component', () => {
     });
     it('should handle url search params', () => {
       let wrapper;
-      window.history.pushState({}, '', '/posts?limit=20&page=1&q=desc&category=1');
+      window.history.pushState({}, '', '/posts?limit=20&page=1&sort=desc&category=1');
       const state2 = { ...state };
       state2.posts = {
         req: [
@@ -202,7 +207,7 @@ describe('Posts List component', () => {
       expect(getPosts).toHaveBeenCalledWith({
         page: 1,
         limit: 20,
-        q: 'desc',
+        sort: 'desc',
         category: [1],
         format: [1],
       });
@@ -302,9 +307,8 @@ describe('Posts List component', () => {
       wrapper.update();
       act(() => {
         wrapper
-          .find('FormItem')
+          .find('input')
           .at(0)
-          .find('Input')
           .simulate('change', { target: { value: 'Explainer' } });
         wrapper
           .find('FormItem')

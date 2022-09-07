@@ -4,6 +4,7 @@ import (
 	"errors"
 	"net/http"
 
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -36,7 +37,7 @@ func GetRequest(url string) error {
 	}
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	res, err := client.Do(req)
 	if err != nil {
 		return err

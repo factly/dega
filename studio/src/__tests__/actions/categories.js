@@ -101,6 +101,39 @@ describe('categories actions', () => {
       params: query,
     });
   });
+  it('should create actions to fetch categories success and not set loading', () => {
+    const query = { page: 1, limit: 5 };
+    const categories = [{ id: 1, name: 'Category' }];
+    const resp = { data: { nodes: categories, total: 1 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: ADD_MEDIA,
+        payload: [],
+      },
+      {
+        type: types.ADD_CATEGORIES,
+        payload: [{ id: 1, name: 'Category', medium: undefined }],
+      },
+      {
+        type: types.ADD_CATEGORIES_REQUEST,
+        payload: {
+          data: [1],
+          query: query,
+          total: 1,
+        },
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getCategories(query, false))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API, {
+      params: query,
+    });
+  });
   it('should create actions to fetch categories success with media', () => {
     const query = { page: 1, limit: 5 };
     const medium = { id: 3, medium: 'Medium' };
@@ -206,6 +239,13 @@ describe('categories actions', () => {
       .dispatch(actions.getCategory(id))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CATEGORIES_API + '/' + id);
+  });
+  it('should not create actions for fetching categories when spaceID is 0 ', () => {
+    const query = { page: 1, limit: 5 };
+    const expectedActions = [];
+    const store = mockStore({ ...initialState, spaces: { selected: 0 } });
+    store.dispatch(actions.getCategories(query));
+    expect(store.getActions()).toEqual(expectedActions);
   });
   it('should create actions to get category by id success', () => {
     const id = 1;

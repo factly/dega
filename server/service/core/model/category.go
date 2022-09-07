@@ -18,12 +18,12 @@ type Category struct {
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	HTMLDescription  string         `gorm:"column:html_description" json:"html_description,omitempty"`
 	ParentID         *uint          `gorm:"column:parent_id;default:NULL" json:"parent_id"`
+	ParentCategory   *Category      `gorm:"foreignKey:parent_id" json:"parent_category"`
 	MediumID         *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium           *Medium        `json:"medium"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	SpaceID          uint           `gorm:"column:space_id" json:"space_id"`
 	Posts            []*Post        `gorm:"many2many:post_categories;" json:"posts"`
-	Space            *Space         `json:"space,omitempty"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
@@ -42,6 +42,18 @@ func (category *Category) BeforeSave(tx *gorm.DB) (e error) {
 
 		if err != nil {
 			return errors.New("medium do not belong to same space")
+		}
+	}
+	if category.ParentID != nil {
+		if *category.ParentID > 0 {
+			category := Category{}
+			err := tx.Model(&Category{}).Where(Category{
+				SpaceID: category.SpaceID,
+			}).First(&category).Error
+
+			if err != nil {
+				return errors.New("parent category do not belong to same space")
+			}
 		}
 	}
 

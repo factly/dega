@@ -43,6 +43,21 @@ const initialState = {
   redirect: {
     code: 200,
   },
+  search: {
+    details: {
+      articles: [],
+      categories: [],
+      claims: [],
+      'fact-checks': [],
+      media: [],
+      pages: [],
+      ratings: [],
+      tags: [],
+      total: 0,
+    },
+    loading: true,
+    req: [],
+  },
   episodes: {
     req: [],
     details: {},
@@ -56,6 +71,10 @@ const initialState = {
   organisationRequests: {
     req: [],
     details: {},
+    loading: true,
+  },
+  sachFactChecks: {
+    details: [],
     loading: true,
   },
   spacePermissions: {

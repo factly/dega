@@ -23,8 +23,38 @@ jest.mock('../../../actions/webhooks', () => ({
   getWebhooks: jest.fn(),
   deleteWebhook: jest.fn(),
 }));
-
+const setFilters = jest.fn();
+const fetchWebhooks = jest.fn();
 let store, mockedDispatch;
+let data = {
+  webhooks: [
+    {
+      id: 2,
+      created_at: '2020-09-25T07:24:11.008257Z',
+      updated_at: '2020-09-25T07:24:11.008257Z',
+      deleted_at: null,
+      name: 'Webhook2',
+      url: 'webhook2url',
+      events: [1],
+    },
+    {
+      id: 1,
+      created_at: '2020-09-25T07:23:38.40006Z',
+      updated_at: '2020-09-25T07:23:38.40006Z',
+      deleted_at: null,
+      name: 'Webhook1',
+      url: 'webhook1url',
+      events: [1],
+      enabled: true,
+    },
+  ],
+  total: 2,
+  loading: false,
+};
+let filters = {
+  page: 1,
+  limit: 20,
+};
 
 let state = {
   webhooks: {
@@ -86,7 +116,12 @@ describe('Webhook List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <WebhookList actions={['update', 'delete']} />
+            <WebhookList
+              setFilters={setFilters}
+              filters={filters}
+              data={data}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
@@ -98,26 +133,16 @@ describe('Webhook List component', () => {
       const tree = mount(
         <Provider store={store}>
           <Router>
-            <WebhookList actions={['update', 'delete']} />
+            <WebhookList
+              setFilters={setFilters}
+              filters={filters}
+              data={data}
+              actions={['update', 'delete']}
+            />
           </Router>
         </Provider>,
       );
       expect(tree).toMatchSnapshot();
-    });
-    it('should match component with webhooks', () => {
-      state.webhooks.loading = false;
-      store = mockStore(state);
-      const tree = mount(
-        <Provider store={store}>
-          <Router>
-            <WebhookList actions={['update', 'delete']} />
-          </Router>
-        </Provider>,
-      );
-      expect(tree).toMatchSnapshot();
-      expect(mockedDispatch).toHaveBeenCalledTimes(1);
-
-      expect(getWebhooks).toHaveBeenCalledWith({ page: 1, limit: 20 });
     });
   });
   describe('component testing', () => {
@@ -133,7 +158,12 @@ describe('Webhook List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <WebhookList actions={['update', 'delete']} />
+              <WebhookList
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -151,7 +181,13 @@ describe('Webhook List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <WebhookList actions={['update', 'delete']} />
+              <WebhookList
+                fetchWebhooks={fetchWebhooks}
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
@@ -167,7 +203,6 @@ describe('Webhook List component', () => {
 
       expect(deleteWebhook).toHaveBeenCalled();
       expect(deleteWebhook).toHaveBeenCalledWith(2);
-      expect(getWebhooks).toHaveBeenCalledWith({ page: 1 });
     });
     it('should edit webhook', () => {
       store = mockStore(state);
@@ -176,14 +211,19 @@ describe('Webhook List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <WebhookList actions={['update', 'delete']} />
+              <WebhookList
+                setFilters={setFilters}
+                filters={filters}
+                data={data}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('Webhook2');
-      expect(link.prop('to')).toEqual('/webhooks/2/edit');
+      expect(link.prop('to')).toEqual('/advanced/webhooks/2/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({
@@ -196,13 +236,18 @@ describe('Webhook List component', () => {
         wrapper = mount(
           <Provider store={store}>
             <Router>
-              <WebhookList actions={['update', 'delete']} />
+              <WebhookList
+                setFilters={setFilters}
+                filters={filters}
+                data={{ webhooks: [], loading: false, total: 0 }}
+                actions={['update', 'delete']}
+              />
             </Router>
           </Provider>,
         );
       });
 
-      const button = wrapper.find(Button);
+      const button = wrapper.find('Button');
       expect(button.length).toEqual(0);
     });
   });

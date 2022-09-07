@@ -83,16 +83,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search pages with filter
 			var hits []interface{}
-			var res map[string]interface{}
-
-			if searchQuery != "" {
-				hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "page")
-			} else {
-				res, err = meilisearchx.SearchWithoutQuery("dega", filters, "page")
-				if _, found := res["hits"]; found {
-					hits = res["hits"].([]interface{})
-				}
-			}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "page")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -175,6 +166,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 		result.Nodes = append(result.Nodes, *pageList)
 	}
+
+	// for _, node := range result.Nodes {
+	// 	println(node)
+
+	// }
 
 	renderx.JSON(w, http.StatusOK, result)
 }

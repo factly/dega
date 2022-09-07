@@ -14,54 +14,17 @@ import { maker } from '../../utils/sluger';
 const { Sider } = Layout;
 const { SubMenu } = Menu;
 
-function Sidebar({ superOrg, permission, orgs, loading, applications }) {
+function Sidebar({ superOrg, permission, orgs, loading, applications, services, menuKey }) {
   const { collapsed } = useSelector((state) => state.sidebar);
-  const { space, loadingSpace } = useSelector((state) => {
-    const currentSpaceID = orgs[0]?.spaces.find((id) => id === state.spaces.selected);
-    return {
-      space: currentSpaceID ? state.spaces.details[currentSpaceID] : null,
-      loadingSpace: state.spaces.loading,
-    };
-  });
-
-  let filteredMenuItems = [];
-  if (!loadingSpace) {
-    if (space?.services?.length) {
-      filteredMenuItems = [
-        ...sidebarMenu.filter(
-          (menuItem) => menuItem.isService && space?.services?.indexOf(maker(menuItem.title)) > -1,
-        ),
-        ...sidebarMenu.filter((menuItem) => !menuItem.isService),
-      ];
-    }
-  }
-
   const dispatch = useDispatch();
-  let key;
-  const location = useLocation();
-  const [enteredRoute, setRoute] = React.useState(null);
-  const [selectedmenu, setSelectedMenu] = React.useState('Dashboard.Home.0.0');
-  const pathSnippets = location.pathname.split('/').filter((i) => i);
-  var index;
-  for (index = 0; index < pathSnippets.length; index++) {
-    const url = `/${pathSnippets.slice(0, index + 1).join('/')}`;
-    const tempRoute = _.find(routes, { path: url });
-    if (tempRoute && enteredRoute === null) {
-      setRoute(tempRoute);
-      break;
-    }
-  }
   const { navTheme } = useSelector((state) => state.settings);
-
   const [showCoreMenu, setCoreMenu] = useState(false);
-
   const onCollapse = (collapsed) => {
     collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };
   if (loading) {
     return null;
   }
-
   let resource = [
     'home',
     'dashboard',
@@ -71,8 +34,8 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     'policies',
     'users',
     'spaces',
+    'sach',
   ];
-
   let protectedResources = [
     'posts',
     'pages',
@@ -101,7 +64,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     borderRadius: '50px',
     padding: '0.25rem 0.5rem',
   };
-
   permission.forEach((each) => {
     if (each.resource === 'admin') {
       resource = resource.concat(protectedResources);
@@ -115,21 +77,13 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
       resource.push(each.resource);
     }
   });
-
   if (orgs[0]?.permission.role === 'owner') resource = resource.concat(protectedResources);
-
   const getMenuItems = (children, index, title) =>
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
         route.isAdmin !== superOrg.is_admin ? null : (
-          <Menu.Item key={`${title}.${route.title}.${index}.${childIndex}`}>
-            {
-              ((key = `${title}.${route.title}.${index}.${childIndex}`),
-              enteredRoute !== null && route.path === enteredRoute.path && selectedmenu !== key
-                ? setSelectedMenu(key)
-                : null)
-            }
+          <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
             </Link>
@@ -137,6 +91,27 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
         )
       ) : null;
     });
+
+  const getSubMenuItems = (menu, index, Icon) => (
+    <SubMenu key={index} title={menu.title} icon={<Icon />}>
+      {menu.submenu && menu.submenu.length > 0 ? (
+        <>
+          {menu.submenu.map((submenuItem, index) => {
+            return orgs[0]?.permission.role === 'owner' ? (
+              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                {getMenuItems(submenuItem.children, index, submenuItem.title)}
+              </SubMenu>
+            ) : (
+              <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
+                {getMenuItems(submenuItem.children, index, submenuItem.title)}
+              </SubMenu>
+            );
+          })}
+        </>
+      ) : null}
+      {getMenuItems(menu.children, index, menu.title)}
+    </SubMenu>
+  );
 
   return (
     <Sider
@@ -167,47 +142,33 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
           padding: collapsed ? '0 0.5rem' : '0 24px',
         }}
       >
-        <Link to="/">
-          <div className="menu-header" style={{}}>
-            <SpaceSelector collapsed={collapsed} />
-          </div>
-        </Link>
+        <div className="menu-header" style={{}}>
+          <SpaceSelector collapsed={collapsed} />
+        </div>
+
         <Search collapsed={collapsed} />
       </div>
-
       <Menu
         theme={navTheme}
         mode="inline"
         className="slider-menu"
         defaultOpenKeys={['0', '1']}
         style={{ background: '#f0f2f5' }}
-        defaultSelectedKeys={[selectedmenu]}
+        selectedKeys={menuKey}
       >
-        {filteredMenuItems.map((menu, index) => {
+        {sidebarMenu.map((menu, index) => {
           const { Icon } = menu;
-          return menu.title === 'CORE' && !showCoreMenu ? null : (
-            <SubMenu key={index} title={menu.title} icon={<Icon />}>
-              {menu.submenu && menu.submenu.length > 0 ? (
-                <>
-                  {menu.submenu.map((submenuItem, index) => {
-                    return (
-                      // check with Harsha on roles and permissions
-                      orgs[0]?.permission.role === 'owner' ? (
-                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
-                        </SubMenu>
-                      ) : (
-                        <SubMenu key={submenuItem.title + index} title={submenuItem.title}>
-                          {getMenuItems(submenuItem.children, index, submenuItem.title)}
-                        </SubMenu>
-                      )
-                    );
-                  })}
-                </>
-              ) : null}
-              {getMenuItems(menu.children, index, menu.title)}
-            </SubMenu>
-          );
+          return menu.title === 'CORE' && !showCoreMenu
+            ? null
+            : !menu.isService
+            ? !menu.isAdmin
+              ? getSubMenuItems(menu, index, Icon)
+              : permission.filter((each) => each.resource === 'admin').length > 0
+              ? getSubMenuItems(menu, index, Icon)
+              : null
+            : services?.includes(maker(menu.title))
+            ? getSubMenuItems(menu, index, Icon)
+            : null;
         })}
       </Menu>
       {!collapsed ? (
@@ -302,5 +263,4 @@ function Sidebar({ superOrg, permission, orgs, loading, applications }) {
     </Sider>
   );
 }
-
 export default Sidebar;

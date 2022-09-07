@@ -1,13 +1,18 @@
 package space
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/action/role"
 	"github.com/go-chi/chi"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // space request body
 type space struct {
+	CreatedAt         time.Time      `json:"created_at"`
+	UpdatedAt         time.Time      `json:"updated_at"`
 	Name              string         `json:"name" validate:"required,min=3,max=50"`
 	Slug              string         `json:"slug"`
 	SiteTitle         string         `json:"site_title"`
@@ -39,7 +44,9 @@ func Router() chi.Router {
 	r.Route("/{space_id}", func(r chi.Router) {
 		r.Get("/", details)
 		r.Put("/", update)
+		r.Mount("/roles", role.Router())
 		r.Delete("/", delete)
+		r.Get("/users", users)
 	})
 
 	return r

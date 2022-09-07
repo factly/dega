@@ -37,6 +37,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
@@ -58,11 +59,13 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
         loading={data.loading}
         rowKey={'id'}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

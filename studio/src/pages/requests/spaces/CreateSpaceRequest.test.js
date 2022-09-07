@@ -13,7 +13,10 @@ import CreateSpaceRequestForm from './components/RequestForm';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
-
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
 jest.mock('react-redux', () => ({
   ...jest.requireActual('react-redux'),
   useDispatch: jest.fn(),
@@ -112,7 +115,7 @@ describe('Space Request create component', () => {
       wrapper.find(CreateSpaceRequestForm).props().onCreate({ test: 'test' });
       setTimeout(() => {
         expect(actions.addSpaceRequest).toHaveBeenCalledWith({ test: 'test' });
-        expect(push).toHaveBeenCalledWith('/requests/spaces');
+        expect(push).toHaveBeenCalledWith('/admin/requests/spaces');
         done();
       }, 0);
     });

@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/x/meilisearchx"
-	"github.com/meilisearch/meilisearch-go"
+	meilisearchx "github.com/factly/x/meilisearchx"
+	meilisearch "github.com/meilisearch/meilisearch-go"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -51,17 +51,12 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Add spaceId filter
-	var filters string = fmt.Sprint("space_id=", sID)
-	if len(searchQuery.Filters) > 0 {
-		filters = fmt.Sprint(searchQuery.Filters, " AND ", filters)
-	}
+	filters := []string{}
+	filters = append(filters, fmt.Sprint("space_id=", sID))
 
-	result, err := meilisearchx.Client.Search("dega").Search(meilisearch.SearchRequest{
-		Query:        searchQuery.Query,
-		Limit:        searchQuery.Limit,
-		Filters:      filters,
-		FacetFilters: searchQuery.FacetFilters,
+	result, err := meilisearchx.Client.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
+		Filter: filters,
+		Limit:  searchQuery.Limit,
 	})
 
 	if err != nil {

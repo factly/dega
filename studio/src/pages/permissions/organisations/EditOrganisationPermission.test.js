@@ -231,7 +231,7 @@ describe('Organisation Permission Edit component', () => {
           organisation_id: 9,
           spaces: 5,
         });
-        expect(push).toHaveBeenCalledWith('/permissions/organisations');
+        expect(push).toHaveBeenCalledWith('/admin/permissions/organisations');
         done();
       }, 0);
     });

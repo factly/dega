@@ -1,0 +1,60 @@
+.FactCheckContainer {
+  border-radius: 6px;
+  padding: 8px 16px;
+  margin: 8px 0px;
+  width: 100%;
+  border: 1px solid #d1d5db;
+}
+
+.FactCheckContainer:hover {
+  background-color: #f3f4f6;
+  /* box-shadow: 0 8px 8px -4px white; */
+}
+.FactCheckTitle {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.ClaimContainer {
+  display: flex;
+}
+
+.ClaimTextContainer {
+  width: 50%;
+  padding: 4px 12px 4px 4px;
+}
+.ClaimText {
+  font-size: 14px;
+  font-weight: 400;
+  color: #4b5563;
+}
+
+.ClaimDetailsContainer {
+  background-color: #ffffff;
+  margin-top: 12px;
+  padding: 10px 15px;
+  border-left: 3px solid black;
+  border-radius: 0px 5px 5px 0px;
+  font-size: 14px;
+  font-weight: 400;
+  justify-self: center;
+  width: 60%;
+  /* flex-grow: 1; */
+}
+
+.ClaimDetailsText {
+  color: #4b5563;
+}
+
+.Date {
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.ClaimTextStyle {
+  font-size: '14px';
+  font-weight: 900;
+  color: '#4B5563';
+  font-family: 'Inter', sans-serif;
+}

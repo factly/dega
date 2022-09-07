@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
 function Selector({
+  invalidOptions = [],
+  setLoading = true,
   mode,
   createEntity,
   value,
@@ -15,13 +17,12 @@ function Selector({
 }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
-
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
   const [query, setQuery] = React.useState({
     page: 1,
     limit: 5,
   });
-  const [searchValue, setSearchValue] = useState("")
+  const [searchValue, setSearchValue] = useState('');
   const dispatch = useDispatch();
 
   if (!value) {
@@ -38,10 +39,10 @@ function Selector({
 
   const onSearch = (value) => {
     if (value) {
-      setSearchValue(value)
-      setQuery({ ...query, q: value });
+      setSearchValue(value);
+      setQuery({ q: value, page: 1, limit: 5 });
     } else {
-      setSearchValue("")
+      setSearchValue('');
       setQuery({ page: query.page });
     }
   };
@@ -97,6 +98,10 @@ function Selector({
   }, [query]);
 
   const fetchEntities = () => {
+    if (!setLoading) {
+      dispatch(selectorType['get' + action](query, setLoading));
+      return;
+    }
     dispatch(selectorType['get' + action](query));
   };
 
@@ -118,8 +123,11 @@ function Selector({
         option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
       }
       onPopupScroll={(e) => {
-        if (e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight) {
-          if (details.length < total) {
+        if (
+          e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
+          e.target.scrollTop + e.target.offsetHeight >= e.target.scrollHeight - 16
+        ) {
+          if (details.length < total &&  Math.ceil(total/query.limit) >= query.page+1 ) {
             setQuery({ ...query, page: query.page + 1 });
           }
         }
@@ -139,7 +147,7 @@ function Selector({
                 selectorType['create' + createEntity]({
                   name: query.q.trim(),
                 }),
-              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(""))
+              ).then(() => setQuery({ page: 1 }), setEntityCreatedFlag(true), setSearchValue(''))
             }
           >
             Create a {createEntity} '{query.q}'
@@ -154,11 +162,13 @@ function Selector({
       getPopupContainer={(trigger) => trigger.parentNode}
       autoClearSearchValue={true}
     >
-      {details.map((item) => (
-        <Select.Option value={item.id} key={entity + item.id}>
-          {item[display]}
-        </Select.Option>
-      ))}
+      {details
+        .filter((item) => !invalidOptions.includes(item.id))
+        .map((item) => (
+          <Select.Option value={item.id} key={entity + item.id}>
+            {item[display] ? item[display] : item['email'] ? item['email'] : null}
+          </Select.Option>
+        ))}
     </Select>
   );
 }

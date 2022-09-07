@@ -118,6 +118,23 @@ exports[`Event edit component snapshot testing should render the component 1`] =
   }
 >
   <EditEvent>
+    <HelmetWrapper
+      defer={true}
+      encodeSpecialCharacters={true}
+      title="Edit Event"
+    >
+      <SideEffect(NullComponent)
+        defer={true}
+        encodeSpecialCharacters={true}
+        title="Edit Event"
+      >
+        <NullComponent
+          defer={true}
+          encodeSpecialCharacters={true}
+          title="Edit Event"
+        />
+      </SideEffect(NullComponent)>
+    </HelmetWrapper>
     <EventForm
       data={
         Object {
@@ -558,6 +575,9 @@ exports[`Event edit component snapshot testing should render the component 1`] =
                                               "enabled": false,
                                             },
                                             "scrollBeyondLastLine": false,
+                                            "scrollbar": Object {
+                                              "alwaysConsumeMouseWheel": false,
+                                            },
                                             "theme": "vs-dark",
                                             "wordWrap": "on",
                                           }

@@ -93,6 +93,7 @@ function PermissionList({ admin }) {
                 fetchOrganisationPermissions(),
               )
             }
+            disabled={!admin}
           >
             <Button disabled={!admin} type="danger" icon={<DeleteOutlined />} />
           </Popconfirm>
@@ -109,11 +110,13 @@ function PermissionList({ admin }) {
       loading={loading}
       rowKey={'id'}
       pagination={{
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
         total: total,
         current: filters.page,
         pageSize: filters.limit,
         onChange: (pageNumber, pageSize) =>
           setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+        pageSizeOptions: ['10', '15', '20'],
       }}
     />
   );

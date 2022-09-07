@@ -191,7 +191,7 @@ describe('Ratings Create Form component', () => {
         );
       });
       act(() => {
-        const input = wrapper.find('FormItem').at(1).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'new name' } });
 
         const submitButtom = wrapper.find('Button').at(1);
@@ -258,14 +258,12 @@ describe('Ratings Create Form component', () => {
       wrapper.find('FormItem').at(5).find('div').at(6).simulate('click');
       act(() => {
         wrapper
-          .find('FormItem')
-          .at(1)
-          .find('Input')
+          .find('input')
+          .at(0)
           .simulate('change', { target: { value: 'new name' } });
         wrapper
-          .find('FormItem')
-          .at(2)
-          .find('Input')
+          .find('input')
+          .at(1)
           .simulate('change', { target: { value: 'new-slug' } });
         wrapper
           .find('FormItem')

@@ -174,9 +174,6 @@ describe('Episode Form component', () => {
             ],
             version: '2.18.0',
           },
-          meta_fields: {
-            sample: 'testing',
-          },
           audio_url: 'audioUrl',
           medium_id: 1,
         },
@@ -224,16 +221,13 @@ describe('Episode Form component', () => {
         expect(props.onCreate).toHaveBeenCalledWith({
           ...props.data,
           podcast_id: [1],
-          meta_fields: {
-            sample: 'testing',
-          },
         });
         done();
       }, 0);
     });
     it('should submit form with new title', (done) => {
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'New Episode name' } });
 
         const submitButtom = wrapper.find('Button').at(0);
@@ -262,9 +256,6 @@ describe('Episode Form component', () => {
             ],
             version: '2.18.0',
           },
-          meta_fields: {
-            sample: 'testing',
-          },
           audio_url: 'audioUrl',
           medium_id: 1,
         });
@@ -275,16 +266,24 @@ describe('Episode Form component', () => {
       act(() => {
         wrapper = mount(
           <Provider store={store}>
-            <EpisodeForm onCreate={props.onCreate} />
+            <EpisodeForm data={{ meta_fields: 2 }} onCreate={props.onCreate} />
           </Provider>,
         );
       });
-
       act(() => {
-        const input = wrapper.find('FormItem').at(0).find('Input');
+        wrapper.find('Collapse').at(3).find('Button').at(0).simulate('click');
+      });
+      wrapper.update();
+      act(() => {
+        const input = wrapper.find('input').at(0);
         input.simulate('change', { target: { value: 'New Episode' } });
-
-        wrapper.find('FormItem').at(11).find('Audio').props().onUpload('newAudioUrl');
+        wrapper
+          .find('MonacoEditor')
+          .props()
+          .onChange({
+            target: { value: '{"sample":"testing"}' },
+          });
+        wrapper.find('Audio').props().onUpload('newAudioUrl');
 
         const submitButtom = wrapper.find('Button').at(0);
         submitButtom.simulate('submit');
@@ -296,6 +295,14 @@ describe('Episode Form component', () => {
           title: 'New Episode',
           slug: 'new-episode',
           audio_url: 'newAudioUrl',
+          description: undefined,
+          episode: undefined,
+          medium_id: undefined,
+          meta_fields: {
+            sample: 'testing',
+          },
+          podcast: undefined,
+          season: undefined,
         });
         done();
       }, 0);

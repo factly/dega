@@ -133,7 +133,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                   required: true,
                   message: 'Please input the Claim!',
                 },
-                { min: 3, message: 'Claim must be minimum 3 characters.' },
                 { max: 5000, message: 'Claim must be maximum 5000 characters.' },
               ]}
             >
@@ -188,7 +187,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
                 <DatePicker disabledDate={disabledDate} />
               </Form.Item>
             </Form.Item>
-            <DescriptionInput inputProps={{ placeholder: 'Enter Description...' }} />
+            <DescriptionInput
+              inputProps={{ placeholder: 'Enter Description...' }}
+              initialValue={data.description}
+            />
           </Panel>
           <Panel header="Sources" key="2">
             <Form.Item label="Claim Sources">

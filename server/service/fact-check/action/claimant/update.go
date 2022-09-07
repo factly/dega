@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -19,6 +18,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -113,45 +113,54 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store HTML description
-	var description string
-	if len(claimant.Description.RawMessage) > 0 && !reflect.DeepEqual(claimant.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(claimant.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(claimant.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(claimant.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claimant description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(claimant.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	tx := config.DB.Begin()
-
-	mediumID := &claimant.MediumID
-	result.MediumID = &claimant.MediumID
+	updateMap := map[string]interface{}{
+		"created_at":       claimant.CreatedAt,
+		"updated_at":       claimant.UpdatedAt,
+		"updated_by_id":    uID,
+		"name":             claimant.Name,
+		"slug":             claimantSlug,
+		"description":      jsonDescription,
+		"html_description": htmlDescription,
+		"medium_id":        claimant.MediumID,
+		"tag_line":         claimant.TagLine,
+		"is_featured":      claimant.IsFeatured,
+		"meta_fields":      claimant.MetaFields,
+		"meta":             claimant.Meta,
+		"header_code":      claimant.HeaderCode,
+		"footer_code":      claimant.FooterCode,
+	}
 	if claimant.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
 	}
 
-	err = tx.Model(&result).Updates(model.Claimant{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Name:            claimant.Name,
-		Slug:            claimantSlug,
-		MediumID:        mediumID,
-		TagLine:         claimant.TagLine,
-		Description:     claimant.Description,
-		HTMLDescription: description,
-		MetaFields:      claimant.MetaFields,
-		Meta:            claimant.Meta,
-		HeaderCode:      claimant.HeaderCode,
-		FooterCode:      claimant.FooterCode,
-	}).Preload("Medium").First(&result).Error
+	if claimant.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if claimant.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

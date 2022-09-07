@@ -40,6 +40,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
           <Popconfirm
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteEpisode(record.id)).then(() => fetchEpisodes())}
+            disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button
               icon={<DeleteOutlined />}
@@ -61,11 +62,13 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
         loading={data.loading}
         rowKey={'id'}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit,
           onChange: (pageNumber, pageSize) =>
             setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

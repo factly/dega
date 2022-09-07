@@ -13,7 +13,9 @@ import (
 
 // episode model
 type episode struct {
-	Title         string         `json:"title"  validate:"required,min=3,max=50"`
+	CreatedAt     time.Time      `json:"created_at"`
+	UpdatedAt     time.Time      `json:"updated_at"`
+	Title         string         `json:"title"  validate:"required,max=500"`
 	Slug          string         `json:"slug"`
 	Season        int            `json:"season"  validate:"required"`
 	Episode       int            `json:"episode"  validate:"required"`

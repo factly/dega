@@ -14,9 +14,15 @@ import ListComponent from './index';
 import { getPosts, deletePost } from '../../actions/posts';
 import QuickEdit from './QuickEdit';
 
+jest.mock('react-monaco-editor', () => {
+  const MonacoEditor = () => <div />;
+  return MonacoEditor;
+});
+
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 let mockedDispatch, store;
+const onPagination = jest.fn();
 const filters = {
   page: 1,
   limit: 20,
@@ -513,6 +519,7 @@ describe('List component', () => {
                 filters={filters}
                 setFilters={setFilters}
                 fetchPosts={fetchPosts}
+                onPagination={onPagination}
               />
             </Router>
           </Provider>,
@@ -607,9 +614,8 @@ describe('List component', () => {
       expect(wrapper.find(QuickEdit).length).toBe(2);
       expect(wrapper.find('FormItem').at(0).props().name).toBe('title');
       wrapper
-        .find('FormItem')
+        .find('input')
         .at(0)
-        .find('TextArea')
         .simulate('change', { target: { value: 'New title' } });
       wrapper.update();
       wrapper.find(QuickEdit).at(0).props().onQuickEditUpdate();

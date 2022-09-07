@@ -264,6 +264,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                   >
                                     <ForwardRef(InternalSelect)
                                       allowClear={true}
+                                      autoClearSearchValue={true}
                                       bordered={true}
                                       defaultValue={
                                         Array [
@@ -279,6 +280,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      searchValue=""
                                       value={
                                         Array [
                                           9,
@@ -287,6 +289,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                     >
                                       <Select
                                         allowClear={true}
+                                        autoClearSearchValue={true}
                                         className=""
                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                         defaultValue={
@@ -309,6 +312,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                         placeholder="Select organisation"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
+                                        searchValue=""
                                         transitionName="ant-slide-up"
                                         value={
                                           Array [
@@ -318,6 +322,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           className=""
                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                           defaultValue={
@@ -340,6 +345,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                           placeholder="Select organisation"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
+                                          searchValue=""
                                           transitionName="ant-slide-up"
                                           value={
                                             Array [
@@ -518,6 +524,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                   accessibilityIndex={0}
                                                   activeValue={null}
                                                   allowClear={true}
+                                                  autoClearSearchValue={true}
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={
@@ -611,6 +618,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={
@@ -1859,6 +1867,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                   >
                                     <ForwardRef(InternalSelect)
                                       allowClear={true}
+                                      autoClearSearchValue={true}
                                       bordered={true}
                                       defaultValue={
                                         Array [
@@ -1874,6 +1883,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      searchValue=""
                                       value={
                                         Array [
                                           Array [],
@@ -1882,6 +1892,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                     >
                                       <Select
                                         allowClear={true}
+                                        autoClearSearchValue={true}
                                         className=""
                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                         defaultValue={
@@ -1904,6 +1915,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                         placeholder="Select organisation"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
+                                        searchValue=""
                                         transitionName="ant-slide-up"
                                         value={
                                           Array [
@@ -1913,6 +1925,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           className=""
                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                           defaultValue={
@@ -1935,6 +1948,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                           placeholder="Select organisation"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
+                                          searchValue=""
                                           transitionName="ant-slide-up"
                                           value={
                                             Array [
@@ -2113,6 +2127,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                   accessibilityIndex={0}
                                                   activeValue={null}
                                                   allowClear={true}
+                                                  autoClearSearchValue={true}
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={
@@ -2203,6 +2218,7 @@ exports[`Organisation Permission Form component snapshot testing should match co
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={
@@ -3442,6 +3458,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                   >
                                     <ForwardRef(InternalSelect)
                                       allowClear={true}
+                                      autoClearSearchValue={true}
                                       bordered={true}
                                       defaultValue={
                                         Array [
@@ -3457,6 +3474,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                       onPopupScroll={[Function]}
                                       onSearch={[Function]}
                                       placeholder="Select organisation"
+                                      searchValue=""
                                       value={
                                         Array [
                                           Array [],
@@ -3465,6 +3483,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                     >
                                       <Select
                                         allowClear={true}
+                                        autoClearSearchValue={true}
                                         className=""
                                         clearIcon={<ForwardRef(CloseCircleFilled) />}
                                         defaultValue={
@@ -3487,6 +3506,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                         placeholder="Select organisation"
                                         prefixCls="ant-select"
                                         removeIcon={<ForwardRef(CloseOutlined) />}
+                                        searchValue=""
                                         transitionName="ant-slide-up"
                                         value={
                                           Array [
@@ -3496,6 +3516,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                       >
                                         <ForwardRef(Select)
                                           allowClear={true}
+                                          autoClearSearchValue={true}
                                           className=""
                                           clearIcon={<ForwardRef(CloseCircleFilled) />}
                                           defaultValue={
@@ -3518,6 +3539,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                           placeholder="Select organisation"
                                           prefixCls="ant-select"
                                           removeIcon={<ForwardRef(CloseOutlined) />}
+                                          searchValue=""
                                           transitionName="ant-slide-up"
                                           value={
                                             Array [
@@ -3696,6 +3718,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                                   accessibilityIndex={0}
                                                   activeValue={null}
                                                   allowClear={true}
+                                                  autoClearSearchValue={true}
                                                   className=""
                                                   clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                   defaultValue={
@@ -3786,6 +3809,7 @@ exports[`Organisation Permission Form component snapshot testing should render t
                                                       accessibilityIndex={0}
                                                       activeValue={null}
                                                       allowClear={true}
+                                                      autoClearSearchValue={true}
                                                       className=""
                                                       clearIcon={<ForwardRef(CloseCircleFilled) />}
                                                       defaultValue={

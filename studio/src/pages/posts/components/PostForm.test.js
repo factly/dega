@@ -742,22 +742,22 @@ describe('Posts Create Form component', () => {
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(wrapper.find('Drawer').length).not.toBe(0);
-        const addMetaDataBtn = wrapper.find('FormItem').at(13).find('Button').at(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(14).find('Button').at(0);
         expect(addMetaDataBtn.text()).toBe('Add Meta Data');
         addMetaDataBtn.simulate('click');
       });
 
       act(() => {
-        const metaTitle = wrapper.find('FormItem').at(18).find('Input');
+        const metaTitle = wrapper.find('input').at(6);
         metaTitle.simulate('change', { target: { value: 'Meta title' } });
-        const metaDesc = wrapper.find('FormItem').at(19).find('TextArea');
+        const metaDesc = wrapper.find('TextArea').at(2);
         metaDesc.simulate('change', { target: { value: 'Meta Description' } });
-        const metaUrl = wrapper.find('FormItem').at(20).find('Input');
+        const metaUrl = wrapper.find('input').at(7);
         metaUrl.simulate('change', { target: { value: 'Canonical url' } });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(17).find('Button').at(0);
+        const backBtn = wrapper.find('button').at(16);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -841,20 +841,20 @@ describe('Posts Create Form component', () => {
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(wrapper.find('Drawer').length).not.toBe(0);
-        const addMetaDataBtn = wrapper.find('FormItem').at(16).find('Button').at(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(17).find('Button').at(0);
         expect(addMetaDataBtn.text()).toBe('Add Meta Fields');
         addMetaDataBtn.simulate('click');
       });
 
       act(() => {
-        const metaFieldData = wrapper.find('FormItem').at(25).find('MonacoEditor');
+        const metaFieldData = wrapper.find('MonacoEditor').at(2);
         metaFieldData.props().onChange({
           target: { value: '{"sample":"testing"}' },
         });
       });
 
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(24).find('Button').at(0);
+        const backBtn = wrapper.find('button').at(16);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -935,26 +935,26 @@ describe('Posts Create Form component', () => {
         expect(settingButton.text()).toBe('');
         settingButton.simulate('click');
         expect(wrapper.find('Drawer').length).not.toBe(0);
-        const addMetaDataBtn = wrapper.find('FormItem').at(14).find('Button').at(0);
+        const addMetaDataBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
         expect(addMetaDataBtn.text()).toBe('Code Injection');
         addMetaDataBtn.simulate('click');
       });
 
       act(() => {
-        const headerData = wrapper.find('FormItem').at(22).find('MonacoEditor');
+        const headerData = wrapper.find('MonacoEditor').at(0);
         headerData.props().onChange({
           target: {
             value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>',
           },
         });
 
-        const footerData = wrapper.find('FormItem').at(23).find('MonacoEditor');
+        const footerData = wrapper.find('MonacoEditor').at(1);
         footerData.props().onChange({
           target: { value: '<html>↵<body>↵<h1>Hi</h1>↵</body>↵</html>' },
         });
       });
       act(() => {
-        const backBtn = wrapper.find('FormItem').at(21).find('Button').at(0);
+        const backBtn = wrapper.find('button').at(16);
         expect(backBtn.text()).toBe('Back');
         backBtn.simulate('click');
 
@@ -1043,7 +1043,7 @@ describe('Posts Create Form component', () => {
         );
       });
       act(() => {
-        const schemaBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
+        const schemaBtn = wrapper.find('FormItem').at(16).find('Button').at(0);
         expect(schemaBtn.text()).toBe('View Schemas');
         schemaBtn.simulate('click');
       });
@@ -1055,7 +1055,7 @@ describe('Posts Create Form component', () => {
       copyButton.simulate('click');
       wrapper.find(Modal).at(1).props().onCancel();
       act(() => {
-        const schemaBtn = wrapper.find('FormItem').at(15).find('Button').at(0);
+        const schemaBtn = wrapper.find('FormItem').at(16).find('Button').at(0);
         expect(schemaBtn.text()).toBe('View Schemas');
         schemaBtn.simulate('click');
       });

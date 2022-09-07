@@ -25,6 +25,7 @@ describe('tags actions', () => {
     };
     expect(actions.loadingTags()).toEqual(startLoadingAction);
   });
+
   it('should create an action to set loading to false', () => {
     const stopLoadingAction = {
       type: types.SET_TAGS_LOADING,
@@ -185,6 +186,13 @@ describe('tags actions', () => {
       .dispatch(actions.getTag(id))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.TAGS_API + '/' + id);
+  });
+  it('should not create actions for fetching tag when spaceID is 0 ', () => {
+    const query = { page: 1, limit: 5 };
+    const expectedActions = [];
+    const store = mockStore({ ...initialState, spaces: { selected: 0 } });
+    store.dispatch(actions.getTags(query));
+    expect(store.getActions()).toEqual(expectedActions);
   });
   it('should create actions to create tag success', () => {
     const tag = { name: 'Tag' };

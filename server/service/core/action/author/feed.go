@@ -10,19 +10,34 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/go-chi/chi"
 	"github.com/gorilla/feeds"
 )
 
 func Feeds(w http.ResponseWriter, r *http.Request) {
+	uID, err := middlewarex.GetUser(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 	spaceID := chi.URLParam(r, "space_id")
 	sID, err := strconv.Atoi(spaceID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
+
+	orgID, err := util.GetOrganisationIDfromSpaceID(uint(sID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
@@ -41,14 +56,13 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		slugMap[each] = true
 	}
 
-	space := model.Space{}
-	space.ID = uint(sID)
-	if err := config.DB.Preload("Logo").First(&space).Error; err != nil {
+	space, err := util.GetSpacefromKavach(uint(uID), uint(orgID), uint(sID))
+	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
-
+	
 	now := time.Now()
 	feed := &feeds.Feed{
 		Id:          fmt.Sprint(space.ID),

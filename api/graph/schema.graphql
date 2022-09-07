@@ -260,6 +260,8 @@ type Sitemap {
 	slug: String!
 	id: ID!
 	created_at: Time
+	published_date: Time
+	updated_at: Time
 }
 
 type Sitemaps {
@@ -292,7 +294,7 @@ type Query {
 	space: Space
 	menu: MenusPaging
 	featuredCategories(featuredCount: Int!, postLimit: Int!): CategoriesPaging
-	featuredTags(featuredCount: Int!, tagLimit: Int!): TagsPaging
+	featuredTags(featuredCount: Int!, postLimit: Int!): TagsPaging
 	categories(
 		ids: [Int!]
 		spaces: [Int!]

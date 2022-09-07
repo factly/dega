@@ -17,7 +17,11 @@ import { addClaims } from './claims';
 import getError from '../utils/getError';
 
 export const getPosts = (query) => {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const currentSpaceID = getState().spaces?.selected;
+    if (currentSpaceID === 0) {
+      return;
+    }
     dispatch(loadingPosts());
 
     const params = new URLSearchParams();
@@ -247,19 +251,19 @@ export const addTemplate = (data) => {
         let post = response.data;
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
-        dispatch(addAuthors(post.authors));
-        dispatch(addClaims(post.claims));
+        dispatch(addAuthors(post.authors || []));
+        dispatch(addClaims(post.claims || []));
         dispatch(addFormats([post.format]));
         if (post.medium) dispatch(addMedia([post.medium]));
 
         dispatch(
           getPostByID({
             ...post,
-            authors: post.authors.map((author) => author.id),
+            authors: (post.authors && post.authors.map((author) => author.id)) || [],
             categories: post.categories.map((category) => category.id),
             tags: post.tags.map((tag) => tag.id),
             format: post.format.id,
-            claims: post.claims.map((claim) => claim.id),
+            claims: (post.claims && post.claims.map((claim) => claim.id)) || [],
             medium: post.medium?.id,
           }),
         );

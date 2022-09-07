@@ -105,6 +105,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Format{
+		Base: config.Base{
+			CreatedAt: format.CreatedAt,
+			UpdatedAt: format.UpdatedAt,
+		},
 		Name:        format.Name,
 		Description: format.Description,
 		Slug:        slugx.Approve(&config.DB, formatSlug, sID, tableName),

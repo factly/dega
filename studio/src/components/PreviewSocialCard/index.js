@@ -202,7 +202,7 @@ const getFacebookContainer = ({ medium, formData, siteAddress }) => {
             <div
               className="social-og-preview-image"
               style={{
-                backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fit:1200:627)`,
+                backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fill:1200:627)`,
               }}
             ></div>
           )}

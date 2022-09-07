@@ -1,6 +1,8 @@
 package rating
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -9,7 +11,9 @@ import (
 
 // rating model
 type rating struct {
-	Name             string         `json:"name" validate:"required,min=3,max=50"`
+	CreatedAt        time.Time      `json:"created_at"`
+	UpdatedAt        time.Time      `json:"updated_at"`
+	Name             string         `json:"name" validate:"required,max=500"`
 	Slug             string         `json:"slug"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
 	TextColour       postgres.Jsonb `json:"text_colour" validate:"required" swaggertype:"primitive,string"`
@@ -38,7 +42,7 @@ func Router() chi.Router {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
 		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
 		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
-	})
+	})	
 
 	return r
 

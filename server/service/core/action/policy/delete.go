@@ -1,13 +1,15 @@
 package policy
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
+	meilisearchx "github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -35,6 +37,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	userID, err := middlewarex.GetUser(r.Context())
+
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
 	organisationID, err := util.GetOrganisation(r.Context())
 
 	if err != nil {
@@ -43,20 +52,27 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	/* delete old policy */
-	policyId := chi.URLParam(r, "policy_id")
-
-	policyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":"+policyId)
-
-	req, err := http.NewRequest("DELETE", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+policyID, nil)
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+
+	/* delete old policy */
+	policyId := chi.URLParam(r, "policy_id")
+
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyId)
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -66,9 +82,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	defer resp.Body.Close()
+	if resp.StatusCode != 200 {
+		loggerx.Error(errors.New("unable to delete policy on kavach"))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	objectID := fmt.Sprint("policy_", policyId)
-	_, err = meilisearchx.Client.Documents("dega").Delete(objectID)
+	_, err = meilisearchx.Client.Index("dega").Delete(objectID)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

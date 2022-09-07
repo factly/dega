@@ -132,6 +132,12 @@ exports[`Space Permission component should render the component 1`] = `
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": 0,
                       }
                     }
@@ -376,6 +382,12 @@ exports[`Space Permission component should render the component 1`] = `
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
+                                  "showTotal": [Function],
                                   "total": 0,
                                 }
                               }
@@ -608,6 +620,12 @@ exports[`Space Permission component should render the component 1`] = `
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
+                                        "showTotal": [Function],
                                         "total": 0,
                                       },
                                       "prefixCls": "ant-table",
@@ -1787,6 +1805,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -2022,8 +2046,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               class="ant-table-cell"
                                             >
                                               <a
-                                                class="ant-dropdown-link"
-                                                href="/spaces/1/permissions/1/edit"
+                                                href="/admin/spaces/1/permissions/1/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Space 1
@@ -2073,35 +2096,30 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                               style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <a
-                                                class="ant-dropdown-link"
-                                                href="/"
+                                              <button
+                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                type="button"
                                               >
-                                                <button
-                                                  class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                  type="button"
+                                                <span
+                                                  aria-label="delete"
+                                                  class="anticon anticon-delete"
+                                                  role="img"
                                                 >
-                                                  <span
-                                                    aria-label="delete"
-                                                    class="anticon anticon-delete"
-                                                    role="img"
+                                                  <svg
+                                                    aria-hidden="true"
+                                                    data-icon="delete"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height="1em"
+                                                    viewBox="64 64 896 896"
+                                                    width="1em"
                                                   >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      data-icon="delete"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
-                                                    >
-                                                      <path
-                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                      />
-                                                    </svg>
-                                                  </span>
-                                                </button>
-                                              </a>
+                                                    <path
+                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                    />
+                                                  </svg>
+                                                </span>
+                                              </button>
                                             </td>
                                           </tr>
                                           <tr
@@ -2112,8 +2130,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               class="ant-table-cell"
                                             >
                                               <a
-                                                class="ant-dropdown-link"
-                                                href="/spaces/2/permissions/2/edit"
+                                                href="/admin/spaces/2/permissions/2/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 Space 2
@@ -2164,35 +2181,30 @@ exports[`Space Permission component should render the component with data 1`] = 
                                               class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                               style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <a
-                                                class="ant-dropdown-link"
-                                                href="/"
+                                              <button
+                                                class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                type="button"
                                               >
-                                                <button
-                                                  class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                  type="button"
+                                                <span
+                                                  aria-label="delete"
+                                                  class="anticon anticon-delete"
+                                                  role="img"
                                                 >
-                                                  <span
-                                                    aria-label="delete"
-                                                    class="anticon anticon-delete"
-                                                    role="img"
+                                                  <svg
+                                                    aria-hidden="true"
+                                                    data-icon="delete"
+                                                    fill="currentColor"
+                                                    focusable="false"
+                                                    height="1em"
+                                                    viewBox="64 64 896 896"
+                                                    width="1em"
                                                   >
-                                                    <svg
-                                                      aria-hidden="true"
-                                                      data-icon="delete"
-                                                      fill="currentColor"
-                                                      focusable="false"
-                                                      height="1em"
-                                                      viewBox="64 64 896 896"
-                                                      width="1em"
-                                                    >
-                                                      <path
-                                                        d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                      />
-                                                    </svg>
-                                                  </span>
-                                                </button>
-                                              </a>
+                                                    <path
+                                                      d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                    />
+                                                  </svg>
+                                                </span>
+                                              </button>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -2207,6 +2219,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
+                                  "showTotal": [Function],
                                   "total": undefined,
                                 }
                               }
@@ -2427,8 +2445,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     class="ant-table-cell"
                                                   >
                                                     <a
-                                                      class="ant-dropdown-link"
-                                                      href="/spaces/1/permissions/1/edit"
+                                                      href="/admin/spaces/1/permissions/1/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Space 1
@@ -2478,35 +2495,30 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <a
-                                                      class="ant-dropdown-link"
-                                                      href="/"
+                                                    <button
+                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                      type="button"
                                                     >
-                                                      <button
-                                                        class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                        type="button"
+                                                      <span
+                                                        aria-label="delete"
+                                                        class="anticon anticon-delete"
+                                                        role="img"
                                                       >
-                                                        <span
-                                                          aria-label="delete"
-                                                          class="anticon anticon-delete"
-                                                          role="img"
+                                                        <svg
+                                                          aria-hidden="true"
+                                                          data-icon="delete"
+                                                          fill="currentColor"
+                                                          focusable="false"
+                                                          height="1em"
+                                                          viewBox="64 64 896 896"
+                                                          width="1em"
                                                         >
-                                                          <svg
-                                                            aria-hidden="true"
-                                                            data-icon="delete"
-                                                            fill="currentColor"
-                                                            focusable="false"
-                                                            height="1em"
-                                                            viewBox="64 64 896 896"
-                                                            width="1em"
-                                                          >
-                                                            <path
-                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                            />
-                                                          </svg>
-                                                        </span>
-                                                      </button>
-                                                    </a>
+                                                          <path
+                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                          />
+                                                        </svg>
+                                                      </span>
+                                                    </button>
                                                   </td>
                                                 </tr>
                                                 <tr
@@ -2517,8 +2529,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     class="ant-table-cell"
                                                   >
                                                     <a
-                                                      class="ant-dropdown-link"
-                                                      href="/spaces/2/permissions/2/edit"
+                                                      href="/admin/spaces/2/permissions/2/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       Space 2
@@ -2569,35 +2580,30 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <a
-                                                      class="ant-dropdown-link"
-                                                      href="/"
+                                                    <button
+                                                      class="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                      type="button"
                                                     >
-                                                      <button
-                                                        class="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                        type="button"
+                                                      <span
+                                                        aria-label="delete"
+                                                        class="anticon anticon-delete"
+                                                        role="img"
                                                       >
-                                                        <span
-                                                          aria-label="delete"
-                                                          class="anticon anticon-delete"
-                                                          role="img"
+                                                        <svg
+                                                          aria-hidden="true"
+                                                          data-icon="delete"
+                                                          fill="currentColor"
+                                                          focusable="false"
+                                                          height="1em"
+                                                          viewBox="64 64 896 896"
+                                                          width="1em"
                                                         >
-                                                          <svg
-                                                            aria-hidden="true"
-                                                            data-icon="delete"
-                                                            fill="currentColor"
-                                                            focusable="false"
-                                                            height="1em"
-                                                            viewBox="64 64 896 896"
-                                                            width="1em"
-                                                          >
-                                                            <path
-                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                            />
-                                                          </svg>
-                                                        </span>
-                                                      </button>
-                                                    </a>
+                                                          <path
+                                                            d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                          />
+                                                        </svg>
+                                                      </span>
+                                                    </button>
                                                   </td>
                                                 </tr>
                                               </tbody>
@@ -2611,6 +2617,12 @@ exports[`Space Permission component should render the component with data 1`] = 
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
+                                        "showTotal": [Function],
                                         "total": undefined,
                                       },
                                       "prefixCls": "ant-table",
@@ -3602,17 +3614,15 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     style={Object {}}
                                                   >
                                                     <Link
-                                                      className="ant-dropdown-link"
                                                       style={
                                                         Object {
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/spaces/1/permissions/1/edit"
+                                                      to="/admin/spaces/1/permissions/1/edit"
                                                     >
                                                       <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/spaces/1/permissions/1/edit"
+                                                        href="/admin/spaces/1/permissions/1/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -3621,8 +3631,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                         }
                                                       >
                                                         <a
-                                                          className="ant-dropdown-link"
-                                                          href="/spaces/1/permissions/1/edit"
+                                                          href="/admin/spaces/1/permissions/1/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
@@ -4519,121 +4528,100 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Link
-                                                              className="ant-dropdown-link"
+                                                            <Button
+                                                              disabled={false}
+                                                              icon={<ForwardRef(DeleteOutlined) />}
                                                               key="trigger"
                                                               onClick={[Function]}
                                                               onKeyDown={[Function]}
                                                               onMouseDown={[Function]}
                                                               onTouchStart={[Function]}
-                                                              to=""
+                                                              type="danger"
                                                             >
-                                                              <LinkAnchor
-                                                                className="ant-dropdown-link"
-                                                                href="/"
-                                                                navigate={[Function]}
-                                                                onClick={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
-                                                              >
-                                                                <a
-                                                                  className="ant-dropdown-link"
-                                                                  href="/"
+                                                              <Wave>
+                                                                <button
+                                                                  className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                  disabled={false}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}
                                                                   onTouchStart={[Function]}
+                                                                  type="button"
                                                                 >
-                                                                  <Button
-                                                                    disabled={false}
-                                                                    icon={<ForwardRef(DeleteOutlined) />}
-                                                                    type="danger"
-                                                                  >
-                                                                    <Wave>
-                                                                      <button
-                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                        disabled={false}
-                                                                        onClick={[Function]}
-                                                                        type="button"
-                                                                      >
-                                                                        <ForwardRef(DeleteOutlined)>
-                                                                          <AntdIcon
-                                                                            icon={
+                                                                  <ForwardRef(DeleteOutlined)>
+                                                                    <AntdIcon
+                                                                      icon={
+                                                                        Object {
+                                                                          "icon": Object {
+                                                                            "attrs": Object {
+                                                                              "focusable": "false",
+                                                                              "viewBox": "64 64 896 896",
+                                                                            },
+                                                                            "children": Array [
                                                                               Object {
-                                                                                "icon": Object {
-                                                                                  "attrs": Object {
-                                                                                    "focusable": "false",
-                                                                                    "viewBox": "64 64 896 896",
-                                                                                  },
-                                                                                  "children": Array [
-                                                                                    Object {
-                                                                                      "attrs": Object {
-                                                                                        "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                      },
-                                                                                      "tag": "path",
-                                                                                    },
-                                                                                  ],
-                                                                                  "tag": "svg",
+                                                                                "attrs": Object {
+                                                                                  "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                 },
-                                                                                "name": "delete",
-                                                                                "theme": "outlined",
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <span
-                                                                              aria-label="delete"
-                                                                              className="anticon anticon-delete"
-                                                                              role="img"
-                                                                            >
-                                                                              <IconReact
-                                                                                icon={
+                                                                                "tag": "path",
+                                                                              },
+                                                                            ],
+                                                                            "tag": "svg",
+                                                                          },
+                                                                          "name": "delete",
+                                                                          "theme": "outlined",
+                                                                        }
+                                                                      }
+                                                                    >
+                                                                      <span
+                                                                        aria-label="delete"
+                                                                        className="anticon anticon-delete"
+                                                                        role="img"
+                                                                      >
+                                                                        <IconReact
+                                                                          icon={
+                                                                            Object {
+                                                                              "icon": Object {
+                                                                                "attrs": Object {
+                                                                                  "focusable": "false",
+                                                                                  "viewBox": "64 64 896 896",
+                                                                                },
+                                                                                "children": Array [
                                                                                   Object {
-                                                                                    "icon": Object {
-                                                                                      "attrs": Object {
-                                                                                        "focusable": "false",
-                                                                                        "viewBox": "64 64 896 896",
-                                                                                      },
-                                                                                      "children": Array [
-                                                                                        Object {
-                                                                                          "attrs": Object {
-                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                          },
-                                                                                          "tag": "path",
-                                                                                        },
-                                                                                      ],
-                                                                                      "tag": "svg",
+                                                                                    "attrs": Object {
+                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                     },
-                                                                                    "name": "delete",
-                                                                                    "theme": "outlined",
-                                                                                  }
-                                                                                }
-                                                                              >
-                                                                                <svg
-                                                                                  aria-hidden="true"
-                                                                                  data-icon="delete"
-                                                                                  fill="currentColor"
-                                                                                  focusable="false"
-                                                                                  height="1em"
-                                                                                  key="svg-delete"
-                                                                                  viewBox="64 64 896 896"
-                                                                                  width="1em"
-                                                                                >
-                                                                                  <path
-                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                    key="svg-delete-svg-0"
-                                                                                  />
-                                                                                </svg>
-                                                                              </IconReact>
-                                                                            </span>
-                                                                          </AntdIcon>
-                                                                        </ForwardRef(DeleteOutlined)>
-                                                                      </button>
-                                                                    </Wave>
-                                                                  </Button>
-                                                                </a>
-                                                              </LinkAnchor>
-                                                            </Link>
+                                                                                    "tag": "path",
+                                                                                  },
+                                                                                ],
+                                                                                "tag": "svg",
+                                                                              },
+                                                                              "name": "delete",
+                                                                              "theme": "outlined",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <svg
+                                                                            aria-hidden="true"
+                                                                            data-icon="delete"
+                                                                            fill="currentColor"
+                                                                            focusable="false"
+                                                                            height="1em"
+                                                                            key="svg-delete"
+                                                                            viewBox="64 64 896 896"
+                                                                            width="1em"
+                                                                          >
+                                                                            <path
+                                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                              key="svg-delete-svg-0"
+                                                                            />
+                                                                          </svg>
+                                                                        </IconReact>
+                                                                      </span>
+                                                                    </AntdIcon>
+                                                                  </ForwardRef(DeleteOutlined)>
+                                                                </button>
+                                                              </Wave>
+                                                            </Button>
                                                           </Trigger>
                                                         </ForwardRef(Tooltip)>
                                                       </Tooltip>
@@ -4704,17 +4692,15 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                     style={Object {}}
                                                   >
                                                     <Link
-                                                      className="ant-dropdown-link"
                                                       style={
                                                         Object {
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/spaces/2/permissions/2/edit"
+                                                      to="/admin/spaces/2/permissions/2/edit"
                                                     >
                                                       <LinkAnchor
-                                                        className="ant-dropdown-link"
-                                                        href="/spaces/2/permissions/2/edit"
+                                                        href="/admin/spaces/2/permissions/2/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -4723,8 +4709,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                         }
                                                       >
                                                         <a
-                                                          className="ant-dropdown-link"
-                                                          href="/spaces/2/permissions/2/edit"
+                                                          href="/admin/spaces/2/permissions/2/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {
@@ -5622,121 +5607,100 @@ exports[`Space Permission component should render the component with data 1`] = 
                                                             title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Link
-                                                              className="ant-dropdown-link"
+                                                            <Button
+                                                              disabled={false}
+                                                              icon={<ForwardRef(DeleteOutlined) />}
                                                               key="trigger"
                                                               onClick={[Function]}
                                                               onKeyDown={[Function]}
                                                               onMouseDown={[Function]}
                                                               onTouchStart={[Function]}
-                                                              to=""
+                                                              type="danger"
                                                             >
-                                                              <LinkAnchor
-                                                                className="ant-dropdown-link"
-                                                                href="/"
-                                                                navigate={[Function]}
-                                                                onClick={[Function]}
-                                                                onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
-                                                              >
-                                                                <a
-                                                                  className="ant-dropdown-link"
-                                                                  href="/"
+                                                              <Wave>
+                                                                <button
+                                                                  className="ant-btn ant-btn-danger ant-btn-icon-only"
+                                                                  disabled={false}
                                                                   onClick={[Function]}
                                                                   onKeyDown={[Function]}
                                                                   onMouseDown={[Function]}
                                                                   onTouchStart={[Function]}
+                                                                  type="button"
                                                                 >
-                                                                  <Button
-                                                                    disabled={false}
-                                                                    icon={<ForwardRef(DeleteOutlined) />}
-                                                                    type="danger"
-                                                                  >
-                                                                    <Wave>
-                                                                      <button
-                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                        disabled={false}
-                                                                        onClick={[Function]}
-                                                                        type="button"
-                                                                      >
-                                                                        <ForwardRef(DeleteOutlined)>
-                                                                          <AntdIcon
-                                                                            icon={
+                                                                  <ForwardRef(DeleteOutlined)>
+                                                                    <AntdIcon
+                                                                      icon={
+                                                                        Object {
+                                                                          "icon": Object {
+                                                                            "attrs": Object {
+                                                                              "focusable": "false",
+                                                                              "viewBox": "64 64 896 896",
+                                                                            },
+                                                                            "children": Array [
                                                                               Object {
-                                                                                "icon": Object {
-                                                                                  "attrs": Object {
-                                                                                    "focusable": "false",
-                                                                                    "viewBox": "64 64 896 896",
-                                                                                  },
-                                                                                  "children": Array [
-                                                                                    Object {
-                                                                                      "attrs": Object {
-                                                                                        "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                      },
-                                                                                      "tag": "path",
-                                                                                    },
-                                                                                  ],
-                                                                                  "tag": "svg",
+                                                                                "attrs": Object {
+                                                                                  "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                 },
-                                                                                "name": "delete",
-                                                                                "theme": "outlined",
-                                                                              }
-                                                                            }
-                                                                          >
-                                                                            <span
-                                                                              aria-label="delete"
-                                                                              className="anticon anticon-delete"
-                                                                              role="img"
-                                                                            >
-                                                                              <IconReact
-                                                                                icon={
+                                                                                "tag": "path",
+                                                                              },
+                                                                            ],
+                                                                            "tag": "svg",
+                                                                          },
+                                                                          "name": "delete",
+                                                                          "theme": "outlined",
+                                                                        }
+                                                                      }
+                                                                    >
+                                                                      <span
+                                                                        aria-label="delete"
+                                                                        className="anticon anticon-delete"
+                                                                        role="img"
+                                                                      >
+                                                                        <IconReact
+                                                                          icon={
+                                                                            Object {
+                                                                              "icon": Object {
+                                                                                "attrs": Object {
+                                                                                  "focusable": "false",
+                                                                                  "viewBox": "64 64 896 896",
+                                                                                },
+                                                                                "children": Array [
                                                                                   Object {
-                                                                                    "icon": Object {
-                                                                                      "attrs": Object {
-                                                                                        "focusable": "false",
-                                                                                        "viewBox": "64 64 896 896",
-                                                                                      },
-                                                                                      "children": Array [
-                                                                                        Object {
-                                                                                          "attrs": Object {
-                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                          },
-                                                                                          "tag": "path",
-                                                                                        },
-                                                                                      ],
-                                                                                      "tag": "svg",
+                                                                                    "attrs": Object {
+                                                                                      "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
                                                                                     },
-                                                                                    "name": "delete",
-                                                                                    "theme": "outlined",
-                                                                                  }
-                                                                                }
-                                                                              >
-                                                                                <svg
-                                                                                  aria-hidden="true"
-                                                                                  data-icon="delete"
-                                                                                  fill="currentColor"
-                                                                                  focusable="false"
-                                                                                  height="1em"
-                                                                                  key="svg-delete"
-                                                                                  viewBox="64 64 896 896"
-                                                                                  width="1em"
-                                                                                >
-                                                                                  <path
-                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                    key="svg-delete-svg-0"
-                                                                                  />
-                                                                                </svg>
-                                                                              </IconReact>
-                                                                            </span>
-                                                                          </AntdIcon>
-                                                                        </ForwardRef(DeleteOutlined)>
-                                                                      </button>
-                                                                    </Wave>
-                                                                  </Button>
-                                                                </a>
-                                                              </LinkAnchor>
-                                                            </Link>
+                                                                                    "tag": "path",
+                                                                                  },
+                                                                                ],
+                                                                                "tag": "svg",
+                                                                              },
+                                                                              "name": "delete",
+                                                                              "theme": "outlined",
+                                                                            }
+                                                                          }
+                                                                        >
+                                                                          <svg
+                                                                            aria-hidden="true"
+                                                                            data-icon="delete"
+                                                                            fill="currentColor"
+                                                                            focusable="false"
+                                                                            height="1em"
+                                                                            key="svg-delete"
+                                                                            viewBox="64 64 896 896"
+                                                                            width="1em"
+                                                                          >
+                                                                            <path
+                                                                              d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                              key="svg-delete-svg-0"
+                                                                            />
+                                                                          </svg>
+                                                                        </IconReact>
+                                                                      </span>
+                                                                    </AntdIcon>
+                                                                  </ForwardRef(DeleteOutlined)>
+                                                                </button>
+                                                              </Wave>
+                                                            </Button>
                                                           </Trigger>
                                                         </ForwardRef(Tooltip)>
                                                       </Tooltip>
@@ -5758,6 +5722,14 @@ exports[`Space Permission component should render the component with data 1`] = 
                               current={1}
                               onChange={[Function]}
                               pageSize={20}
+                              pageSizeOptions={
+                                Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ]
+                              }
+                              showTotal={[Function]}
                               total={2}
                             >
                               <LocaleReceiver
@@ -5846,6 +5818,13 @@ exports[`Space Permission component should render the component with data 1`] = 
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={20}
+                                  pageSizeOptions={
+                                    Array [
+                                      "10",
+                                      "15",
+                                      "20",
+                                    ]
+                                  }
                                   prefixCls="ant-pagination"
                                   prevIcon={
                                     <button
@@ -5870,6 +5849,7 @@ exports[`Space Permission component should render the component with data 1`] = 
                                   showPrevNextJumpers={true}
                                   showQuickJumper={false}
                                   showTitle={true}
+                                  showTotal={[Function]}
                                   style={Object {}}
                                   total={2}
                                   totalBoundaryShowSizeChanger={50}
@@ -5879,6 +5859,11 @@ exports[`Space Permission component should render the component with data 1`] = 
                                     style={Object {}}
                                     unselectable="unselectable"
                                   >
+                                    <li
+                                      className="ant-pagination-total-text"
+                                    >
+                                      1-2 of 2 results
+                                    </li>
                                     <li
                                       aria-disabled={true}
                                       className="ant-pagination-prev ant-pagination-disabled"
@@ -6113,9 +6098,8 @@ exports[`Space Permission component should render the component with data 1`] = 
                                       pageSizeOptions={
                                         Array [
                                           "10",
+                                          "15",
                                           "20",
-                                          "50",
-                                          "100",
                                         ]
                                       }
                                       quickGo={null}
@@ -6308,6 +6292,12 @@ exports[`Space Permission component should render the component with not admin 1
                         "current": 1,
                         "onChange": [Function],
                         "pageSize": 20,
+                        "pageSizeOptions": Array [
+                          "10",
+                          "15",
+                          "20",
+                        ],
+                        "showTotal": [Function],
                         "total": undefined,
                       }
                     }
@@ -6590,13 +6580,14 @@ exports[`Space Permission component should render the component with not admin 1
                                               class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                               style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <a
-                                                class="ant-dropdown-link"
-                                                href="/"
+                                              <span
+                                                class="ant-popover-disabled-compatible-wrapper"
+                                                style="display: inline-block; cursor: not-allowed;"
                                               >
                                                 <button
                                                   class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                   disabled=""
+                                                  style="pointer-events: none;"
                                                   type="button"
                                                 >
                                                   <span
@@ -6619,7 +6610,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     </svg>
                                                   </span>
                                                 </button>
-                                              </a>
+                                              </span>
                                             </td>
                                           </tr>
                                           <tr
@@ -6678,13 +6669,14 @@ exports[`Space Permission component should render the component with not admin 1
                                               class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                               style="text-align: center; position: sticky; right: 0px;"
                                             >
-                                              <a
-                                                class="ant-dropdown-link"
-                                                href="/"
+                                              <span
+                                                class="ant-popover-disabled-compatible-wrapper"
+                                                style="display: inline-block; cursor: not-allowed;"
                                               >
                                                 <button
                                                   class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                   disabled=""
+                                                  style="pointer-events: none;"
                                                   type="button"
                                                 >
                                                   <span
@@ -6707,7 +6699,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     </svg>
                                                   </span>
                                                 </button>
-                                              </a>
+                                              </span>
                                             </td>
                                           </tr>
                                         </tbody>
@@ -6722,6 +6714,12 @@ exports[`Space Permission component should render the component with not admin 1
                                   "current": 1,
                                   "onChange": [Function],
                                   "pageSize": 20,
+                                  "pageSizeOptions": Array [
+                                    "10",
+                                    "15",
+                                    "20",
+                                  ],
+                                  "showTotal": [Function],
                                   "total": undefined,
                                 }
                               }
@@ -6989,13 +6987,14 @@ exports[`Space Permission component should render the component with not admin 1
                                                     class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <a
-                                                      class="ant-dropdown-link"
-                                                      href="/"
+                                                    <span
+                                                      class="ant-popover-disabled-compatible-wrapper"
+                                                      style="display: inline-block; cursor: not-allowed;"
                                                     >
                                                       <button
                                                         class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                         disabled=""
+                                                        style="pointer-events: none;"
                                                         type="button"
                                                       >
                                                         <span
@@ -7018,7 +7017,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                           </svg>
                                                         </span>
                                                       </button>
-                                                    </a>
+                                                    </span>
                                                   </td>
                                                 </tr>
                                                 <tr
@@ -7077,13 +7076,14 @@ exports[`Space Permission component should render the component with not admin 1
                                                     class="ant-table-cell ant-table-cell-fix-right ant-table-cell-fix-right-first"
                                                     style="text-align: center; position: sticky; right: 0px;"
                                                   >
-                                                    <a
-                                                      class="ant-dropdown-link"
-                                                      href="/"
+                                                    <span
+                                                      class="ant-popover-disabled-compatible-wrapper"
+                                                      style="display: inline-block; cursor: not-allowed;"
                                                     >
                                                       <button
                                                         class="ant-btn ant-btn-danger ant-btn-icon-only"
                                                         disabled=""
+                                                        style="pointer-events: none;"
                                                         type="button"
                                                       >
                                                         <span
@@ -7106,7 +7106,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                           </svg>
                                                         </span>
                                                       </button>
-                                                    </a>
+                                                    </span>
                                                   </td>
                                                 </tr>
                                               </tbody>
@@ -7120,6 +7120,12 @@ exports[`Space Permission component should render the component with not admin 1
                                         "current": 1,
                                         "onChange": [Function],
                                         "pageSize": 20,
+                                        "pageSizeOptions": Array [
+                                          "10",
+                                          "15",
+                                          "20",
+                                        ],
+                                        "showTotal": [Function],
                                         "total": undefined,
                                       },
                                       "prefixCls": "ant-table",
@@ -8393,7 +8399,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     }
                                                   >
                                                     <ForwardRef
-                                                      disabled={false}
+                                                      disabled={true}
                                                       icon={<ForwardRef(ExclamationCircleFilled) />}
                                                       okType="primary"
                                                       onConfirm={[Function]}
@@ -8404,7 +8410,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                       <Tooltip
                                                         arrowPointAtCenter={false}
                                                         autoAdjustOverflow={true}
-                                                        disabled={false}
+                                                        disabled={true}
                                                         icon={<ForwardRef(ExclamationCircleFilled) />}
                                                         mouseEnterDelay={0.1}
                                                         mouseLeaveDelay={0.1}
@@ -8672,7 +8678,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                               },
                                                             }
                                                           }
-                                                          disabled={false}
+                                                          disabled={true}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
                                                           motion={
                                                             Object {
@@ -8953,7 +8959,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                             defaultPopupVisible={false}
                                                             destroyPopupOnHide={false}
-                                                            disabled={false}
+                                                            disabled={true}
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
@@ -8998,46 +9004,75 @@ exports[`Space Permission component should render the component with not admin 1
                                                             title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Link
-                                                              className="ant-dropdown-link"
+                                                            <span
+                                                              className="ant-popover-disabled-compatible-wrapper"
                                                               key="trigger"
                                                               onClick={[Function]}
-                                                              onKeyDown={[Function]}
                                                               onMouseDown={[Function]}
                                                               onTouchStart={[Function]}
-                                                              to=""
+                                                              style={
+                                                                Object {
+                                                                  "cursor": "not-allowed",
+                                                                  "display": "inline-block",
+                                                                  "width": null,
+                                                                }
+                                                              }
                                                             >
-                                                              <LinkAnchor
-                                                                className="ant-dropdown-link"
-                                                                href="/"
-                                                                navigate={[Function]}
-                                                                onClick={[Function]}
+                                                              <Button
+                                                                className={null}
+                                                                disabled={true}
+                                                                icon={<ForwardRef(DeleteOutlined) />}
                                                                 onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
+                                                                style={
+                                                                  Object {
+                                                                    "pointerEvents": "none",
+                                                                  }
+                                                                }
+                                                                type="danger"
                                                               >
-                                                                <a
-                                                                  className="ant-dropdown-link"
-                                                                  href="/"
-                                                                  onClick={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  onMouseDown={[Function]}
-                                                                  onTouchStart={[Function]}
-                                                                >
-                                                                  <Button
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-danger ant-btn-icon-only"
                                                                     disabled={true}
-                                                                    icon={<ForwardRef(DeleteOutlined) />}
-                                                                    type="danger"
+                                                                    onClick={[Function]}
+                                                                    onKeyDown={[Function]}
+                                                                    style={
+                                                                      Object {
+                                                                        "pointerEvents": "none",
+                                                                      }
+                                                                    }
+                                                                    type="button"
                                                                   >
-                                                                    <Wave>
-                                                                      <button
-                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                        disabled={true}
-                                                                        onClick={[Function]}
-                                                                        type="button"
+                                                                    <ForwardRef(DeleteOutlined)>
+                                                                      <AntdIcon
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
                                                                       >
-                                                                        <ForwardRef(DeleteOutlined)>
-                                                                          <AntdIcon
+                                                                        <span
+                                                                          aria-label="delete"
+                                                                          className="anticon anticon-delete"
+                                                                          role="img"
+                                                                        >
+                                                                          <IconReact
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -9060,59 +9095,29 @@ exports[`Space Permission component should render the component with not admin 1
                                                                               }
                                                                             }
                                                                           >
-                                                                            <span
-                                                                              aria-label="delete"
-                                                                              className="anticon anticon-delete"
-                                                                              role="img"
+                                                                            <svg
+                                                                              aria-hidden="true"
+                                                                              data-icon="delete"
+                                                                              fill="currentColor"
+                                                                              focusable="false"
+                                                                              height="1em"
+                                                                              key="svg-delete"
+                                                                              viewBox="64 64 896 896"
+                                                                              width="1em"
                                                                             >
-                                                                              <IconReact
-                                                                                icon={
-                                                                                  Object {
-                                                                                    "icon": Object {
-                                                                                      "attrs": Object {
-                                                                                        "focusable": "false",
-                                                                                        "viewBox": "64 64 896 896",
-                                                                                      },
-                                                                                      "children": Array [
-                                                                                        Object {
-                                                                                          "attrs": Object {
-                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                          },
-                                                                                          "tag": "path",
-                                                                                        },
-                                                                                      ],
-                                                                                      "tag": "svg",
-                                                                                    },
-                                                                                    "name": "delete",
-                                                                                    "theme": "outlined",
-                                                                                  }
-                                                                                }
-                                                                              >
-                                                                                <svg
-                                                                                  aria-hidden="true"
-                                                                                  data-icon="delete"
-                                                                                  fill="currentColor"
-                                                                                  focusable="false"
-                                                                                  height="1em"
-                                                                                  key="svg-delete"
-                                                                                  viewBox="64 64 896 896"
-                                                                                  width="1em"
-                                                                                >
-                                                                                  <path
-                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                    key="svg-delete-svg-0"
-                                                                                  />
-                                                                                </svg>
-                                                                              </IconReact>
-                                                                            </span>
-                                                                          </AntdIcon>
-                                                                        </ForwardRef(DeleteOutlined)>
-                                                                      </button>
-                                                                    </Wave>
-                                                                  </Button>
-                                                                </a>
-                                                              </LinkAnchor>
-                                                            </Link>
+                                                                              <path
+                                                                                d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                                key="svg-delete-svg-0"
+                                                                              />
+                                                                            </svg>
+                                                                          </IconReact>
+                                                                        </span>
+                                                                      </AntdIcon>
+                                                                    </ForwardRef(DeleteOutlined)>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </span>
                                                           </Trigger>
                                                         </ForwardRef(Tooltip)>
                                                       </Tooltip>
@@ -9466,7 +9471,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                     }
                                                   >
                                                     <ForwardRef
-                                                      disabled={false}
+                                                      disabled={true}
                                                       icon={<ForwardRef(ExclamationCircleFilled) />}
                                                       okType="primary"
                                                       onConfirm={[Function]}
@@ -9477,7 +9482,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                       <Tooltip
                                                         arrowPointAtCenter={false}
                                                         autoAdjustOverflow={true}
-                                                        disabled={false}
+                                                        disabled={true}
                                                         icon={<ForwardRef(ExclamationCircleFilled) />}
                                                         mouseEnterDelay={0.1}
                                                         mouseLeaveDelay={0.1}
@@ -9745,7 +9750,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                               },
                                                             }
                                                           }
-                                                          disabled={false}
+                                                          disabled={true}
                                                           icon={<ForwardRef(ExclamationCircleFilled) />}
                                                           motion={
                                                             Object {
@@ -10026,7 +10031,7 @@ exports[`Space Permission component should render the component with not admin 1
                                                             }
                                                             defaultPopupVisible={false}
                                                             destroyPopupOnHide={false}
-                                                            disabled={false}
+                                                            disabled={true}
                                                             focusDelay={0}
                                                             getDocument={[Function]}
                                                             getPopupClassNameFromAlign={[Function]}
@@ -10071,46 +10076,75 @@ exports[`Space Permission component should render the component with not admin 1
                                                             title="Are you sure you want to delete this?"
                                                             visible={false}
                                                           >
-                                                            <Link
-                                                              className="ant-dropdown-link"
+                                                            <span
+                                                              className="ant-popover-disabled-compatible-wrapper"
                                                               key="trigger"
                                                               onClick={[Function]}
-                                                              onKeyDown={[Function]}
                                                               onMouseDown={[Function]}
                                                               onTouchStart={[Function]}
-                                                              to=""
+                                                              style={
+                                                                Object {
+                                                                  "cursor": "not-allowed",
+                                                                  "display": "inline-block",
+                                                                  "width": null,
+                                                                }
+                                                              }
                                                             >
-                                                              <LinkAnchor
-                                                                className="ant-dropdown-link"
-                                                                href="/"
-                                                                navigate={[Function]}
-                                                                onClick={[Function]}
+                                                              <Button
+                                                                className={null}
+                                                                disabled={true}
+                                                                icon={<ForwardRef(DeleteOutlined) />}
                                                                 onKeyDown={[Function]}
-                                                                onMouseDown={[Function]}
-                                                                onTouchStart={[Function]}
+                                                                style={
+                                                                  Object {
+                                                                    "pointerEvents": "none",
+                                                                  }
+                                                                }
+                                                                type="danger"
                                                               >
-                                                                <a
-                                                                  className="ant-dropdown-link"
-                                                                  href="/"
-                                                                  onClick={[Function]}
-                                                                  onKeyDown={[Function]}
-                                                                  onMouseDown={[Function]}
-                                                                  onTouchStart={[Function]}
-                                                                >
-                                                                  <Button
+                                                                <Wave>
+                                                                  <button
+                                                                    className="ant-btn ant-btn-danger ant-btn-icon-only"
                                                                     disabled={true}
-                                                                    icon={<ForwardRef(DeleteOutlined) />}
-                                                                    type="danger"
+                                                                    onClick={[Function]}
+                                                                    onKeyDown={[Function]}
+                                                                    style={
+                                                                      Object {
+                                                                        "pointerEvents": "none",
+                                                                      }
+                                                                    }
+                                                                    type="button"
                                                                   >
-                                                                    <Wave>
-                                                                      <button
-                                                                        className="ant-btn ant-btn-danger ant-btn-icon-only"
-                                                                        disabled={true}
-                                                                        onClick={[Function]}
-                                                                        type="button"
+                                                                    <ForwardRef(DeleteOutlined)>
+                                                                      <AntdIcon
+                                                                        icon={
+                                                                          Object {
+                                                                            "icon": Object {
+                                                                              "attrs": Object {
+                                                                                "focusable": "false",
+                                                                                "viewBox": "64 64 896 896",
+                                                                              },
+                                                                              "children": Array [
+                                                                                Object {
+                                                                                  "attrs": Object {
+                                                                                    "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
+                                                                                  },
+                                                                                  "tag": "path",
+                                                                                },
+                                                                              ],
+                                                                              "tag": "svg",
+                                                                            },
+                                                                            "name": "delete",
+                                                                            "theme": "outlined",
+                                                                          }
+                                                                        }
                                                                       >
-                                                                        <ForwardRef(DeleteOutlined)>
-                                                                          <AntdIcon
+                                                                        <span
+                                                                          aria-label="delete"
+                                                                          className="anticon anticon-delete"
+                                                                          role="img"
+                                                                        >
+                                                                          <IconReact
                                                                             icon={
                                                                               Object {
                                                                                 "icon": Object {
@@ -10133,59 +10167,29 @@ exports[`Space Permission component should render the component with not admin 1
                                                                               }
                                                                             }
                                                                           >
-                                                                            <span
-                                                                              aria-label="delete"
-                                                                              className="anticon anticon-delete"
-                                                                              role="img"
+                                                                            <svg
+                                                                              aria-hidden="true"
+                                                                              data-icon="delete"
+                                                                              fill="currentColor"
+                                                                              focusable="false"
+                                                                              height="1em"
+                                                                              key="svg-delete"
+                                                                              viewBox="64 64 896 896"
+                                                                              width="1em"
                                                                             >
-                                                                              <IconReact
-                                                                                icon={
-                                                                                  Object {
-                                                                                    "icon": Object {
-                                                                                      "attrs": Object {
-                                                                                        "focusable": "false",
-                                                                                        "viewBox": "64 64 896 896",
-                                                                                      },
-                                                                                      "children": Array [
-                                                                                        Object {
-                                                                                          "attrs": Object {
-                                                                                            "d": "M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z",
-                                                                                          },
-                                                                                          "tag": "path",
-                                                                                        },
-                                                                                      ],
-                                                                                      "tag": "svg",
-                                                                                    },
-                                                                                    "name": "delete",
-                                                                                    "theme": "outlined",
-                                                                                  }
-                                                                                }
-                                                                              >
-                                                                                <svg
-                                                                                  aria-hidden="true"
-                                                                                  data-icon="delete"
-                                                                                  fill="currentColor"
-                                                                                  focusable="false"
-                                                                                  height="1em"
-                                                                                  key="svg-delete"
-                                                                                  viewBox="64 64 896 896"
-                                                                                  width="1em"
-                                                                                >
-                                                                                  <path
-                                                                                    d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
-                                                                                    key="svg-delete-svg-0"
-                                                                                  />
-                                                                                </svg>
-                                                                              </IconReact>
-                                                                            </span>
-                                                                          </AntdIcon>
-                                                                        </ForwardRef(DeleteOutlined)>
-                                                                      </button>
-                                                                    </Wave>
-                                                                  </Button>
-                                                                </a>
-                                                              </LinkAnchor>
-                                                            </Link>
+                                                                              <path
+                                                                                d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"
+                                                                                key="svg-delete-svg-0"
+                                                                              />
+                                                                            </svg>
+                                                                          </IconReact>
+                                                                        </span>
+                                                                      </AntdIcon>
+                                                                    </ForwardRef(DeleteOutlined)>
+                                                                  </button>
+                                                                </Wave>
+                                                              </Button>
+                                                            </span>
                                                           </Trigger>
                                                         </ForwardRef(Tooltip)>
                                                       </Tooltip>
@@ -10207,6 +10211,14 @@ exports[`Space Permission component should render the component with not admin 1
                               current={1}
                               onChange={[Function]}
                               pageSize={20}
+                              pageSizeOptions={
+                                Array [
+                                  "10",
+                                  "15",
+                                  "20",
+                                ]
+                              }
+                              showTotal={[Function]}
                               total={2}
                             >
                               <LocaleReceiver
@@ -10295,6 +10307,13 @@ exports[`Space Permission component should render the component with not admin 1
                                   onChange={[Function]}
                                   onShowSizeChange={[Function]}
                                   pageSize={20}
+                                  pageSizeOptions={
+                                    Array [
+                                      "10",
+                                      "15",
+                                      "20",
+                                    ]
+                                  }
                                   prefixCls="ant-pagination"
                                   prevIcon={
                                     <button
@@ -10319,6 +10338,7 @@ exports[`Space Permission component should render the component with not admin 1
                                   showPrevNextJumpers={true}
                                   showQuickJumper={false}
                                   showTitle={true}
+                                  showTotal={[Function]}
                                   style={Object {}}
                                   total={2}
                                   totalBoundaryShowSizeChanger={50}
@@ -10328,6 +10348,11 @@ exports[`Space Permission component should render the component with not admin 1
                                     style={Object {}}
                                     unselectable="unselectable"
                                   >
+                                    <li
+                                      className="ant-pagination-total-text"
+                                    >
+                                      1-2 of 2 results
+                                    </li>
                                     <li
                                       aria-disabled={true}
                                       className="ant-pagination-prev ant-pagination-disabled"
@@ -10562,9 +10587,8 @@ exports[`Space Permission component should render the component with not admin 1
                                       pageSizeOptions={
                                         Array [
                                           "10",
+                                          "15",
                                           "20",
-                                          "50",
-                                          "100",
                                         ]
                                       }
                                       quickGo={null}

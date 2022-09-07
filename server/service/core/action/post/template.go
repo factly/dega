@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -64,13 +65,13 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := model.Post{}
-	result.ID = uint(templateReq.PostID)
+	result := postData{}
+	result.Post.ID = uint(templateReq.PostID)
 
 	// check of post exist
 	err = config.DB.Where(&model.Post{
 		SpaceID: uint(sID),
-	}).Preload("Tags").Preload("Categories").First(&result).Error
+	}).Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		loggerx.Error(err)
@@ -78,14 +79,16 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	template := result
+	template := postData{}
+	template.Post = result.Post
 
-	template.Status = "template"
-	template.PublishedDate = nil
-	template.Base = config.Base{}
+	template.Post.Status = "template"
+	template.Post.PublishedDate = nil
+	template.Post.Base = config.Base{}
+	postClaims := make([]factCheckModel.PostClaim, 0)
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Post{}).Create(&template).Error
+	err = tx.Model(&model.Post{}).Create(&template.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -94,7 +97,42 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&template)
+	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template.Post)
+
+	if template.Post.Format.Slug == "fact-check" {
+
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+			PostID: uint(templateReq.PostID),
+		}).Find(&postClaims)
+
+		// create post claim
+		for i, claim := range postClaims {
+			postClaim := &factCheckModel.PostClaim{}
+			postClaim.ClaimID = claim.ClaimID
+			postClaim.PostID = template.Post.ID
+			postClaim.Position = uint(i + 1)
+
+			err = tx.Model(&factCheckModel.PostClaim{}).Create(&postClaim).Error
+			if err != nil {
+				tx.Rollback()
+				loggerx.Error(err)
+				return
+			}
+		}
+
+		// fetch all post claims
+		postClaims := []factCheckModel.PostClaim{}
+		tx.Model(&factCheckModel.PostClaim{}).Where(&factCheckModel.PostClaim{
+			PostID: template.Post.ID,
+		}).Preload("Claim").Preload("Claim.Rating").Preload("Claim.Rating.Medium").Preload("Claim.Claimant").Preload("Claim.Claimant.Medium").Find(&postClaims)
+
+		template.ClaimOrder = make([]uint, len(postClaims))
+		// appending all post claims
+		for _, postClaim := range postClaims {
+			template.Claims = append(template.Claims, postClaim.Claim)
+			template.ClaimOrder[int(postClaim.Position-1)] = postClaim.ClaimID
+		}
+	}
 
 	tagIDs := make([]uint, 0)
 	categoryIDs := make([]uint, 0)
@@ -138,7 +176,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("post.template.created", result); err != nil {
+		if err = util.NC.Publish("post.template.created", template); err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return

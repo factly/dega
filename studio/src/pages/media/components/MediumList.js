@@ -2,7 +2,7 @@ import React from 'react';
 import { Space, List, Card } from 'antd';
 import { Link } from 'react-router-dom';
 
-function MediumList({ data, filters, setFilters, fetchMedia }) {
+function MediumList({ data, filters, setFilters }) {
   return (
     <Space direction={'vertical'}>
       <List
@@ -16,11 +16,14 @@ function MediumList({ data, filters, setFilters, fetchMedia }) {
           xxl: 5,
         }}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          onChange: (pageNumber, pageSize) => {
+            setFilters({ ...filters, page: pageNumber || 1, limit: pageSize });
+          },
+          pageSizeOptions: ['10', '15', '20'],
         }}
         dataSource={data.media}
         renderItem={(item) => (
@@ -40,7 +43,7 @@ function MediumList({ data, filters, setFilters, fetchMedia }) {
                 cover={
                   <img
                     alt="ALT"
-                    src={item.url?.proxy ? `${item.url.proxy}?gravity:sm/resize:fit:220:220` : ''}
+                    src={item.url?.proxy ? `${item.url.proxy}?gravity:sm/resize:fill:220:220` : ''}
                     style={{
                       maxWidth: '100%',
                       width: '100%',

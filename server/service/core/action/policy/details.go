@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -53,19 +53,26 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	policyID := chi.URLParam(r, "policy_id")
 
-	ketoPolicyID := fmt.Sprint("id:org:", organisationID, ":app:dega:space:", spaceID, ":", policyID)
-
-	req, err := http.NewRequest("GET", viper.GetString("keto_url")+"/engines/acp/ory/regex/policies/"+ketoPolicyID, nil)
+	reqURL := viper.GetString("kavach_url") + fmt.Sprintf("/organisations/%d/applications/%d/spaces/%d/policy/%s", organisationID, applicationID, spaceID, policyID)
+	req, err := http.NewRequest("GET", reqURL, nil)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
+	req.Header.Set("X-User", fmt.Sprintf("%d", userID))
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -76,19 +83,19 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	defer resp.Body.Close()
 
-	ketoPolicy := model.KetoPolicy{}
-	err = json.NewDecoder(resp.Body).Decode(&ketoPolicy)
+	if resp.StatusCode != http.StatusOK {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
+	policy := model.KavachPolicy{}
+	err = json.NewDecoder(resp.Body).Decode(&policy)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	/* User req */
-	userMap := author.Mapper(organisationID, userID)
-
-	result := Mapper(ketoPolicy, userMap)
-
-	renderx.JSON(w, http.StatusOK, result)
+	renderx.JSON(w, http.StatusOK, policy)
 }

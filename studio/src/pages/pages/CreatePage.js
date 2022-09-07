@@ -15,7 +15,7 @@ function CreatePage({ formats }) {
 
   const onCreate = (values) => {
     dispatch(addPage(values)).then((page) => {
-      if (page && page.id) history.push(`/pages/${page.id}/edit`);
+      if (page && page.id) history.replace(`/pages/${page.id}/edit`);
     });
   };
   if (!formats.loading && formats.article) {

@@ -18,13 +18,14 @@ services:
     networks:
       - dega
 
-  ###########################################################################
-  #######                        MINIO                                #######
-  ###########################################################################
+  #########################################################################
+  #####                        MINIO                                #######
+  #########################################################################
   minio:
     image: minio/minio
     ports:
       - "9000:9000"
+      - "9002:9002"
     volumes:
       - ~/factly/dega/minio/data:/export
       - ~/factly/dega/minio/config:/root/.minio
@@ -33,7 +34,7 @@ services:
       - MINIO_SECRET_KEY=miniosecret
     networks:
       - dega
-    command: server /export
+    command: server -console-address :9002 /export
 
   createbuckets:
     image: minio/mc
@@ -44,14 +45,7 @@ services:
     networks:
       - dega
     entrypoint: >
-      /bin/sh -c "
-      apk add --no-cache bash;
-      wait-for-it.sh minio:9000 -- echo 'Minio is up. Creating the bucket!!';
-      /usr/bin/mc config host add myminio http://minio:9000 miniokey miniosecret;
-      /usr/bin/mc mb myminio/dega;
-      /usr/bin/mc policy set download myminio/dega;
-      exit 0;
-      "
+      /bin/sh -c " apk add --no-cache bash; wait-for-it.sh minio:9000 -- echo 'Minio is up. Creating the bucket!!'; /usr/bin/mc config host add myminio http://minio:9000 miniokey miniosecret; /usr/bin/mc mb myminio/dega; /usr/bin/mc policy set download myminio/dega; exit 0; "
 
   ###########################################################################
   #######                         IFRAMELY                            #######
@@ -118,11 +112,11 @@ services:
   #######             SEARCH SERVICES                                 #######
   ###########################################################################
   meilisearch:
-    image: getmeili/meilisearch:v0.16.0
+    image: getmeili/meilisearch:v0.28.0
     ports:
       - "7700:7700"
     volumes:
-      - ~/factly/dega/meilisearch-0-14-0/data.ms/:/data.ms
+      - ~/factly/dega/meilisearch-0-27-1/data.ms/:/data.ms
     environment:
       # To put an upper limit of 100MB for the payload size during indexing
       - MEILI_HTTP_PAYLOAD_SIZE_LIMIT=104857600
@@ -149,24 +143,37 @@ services:
       - dega
 
   keto-migrate:
-    image: oryd/keto:v0.5.7
+    image: oryd/keto:v0.9.0-alpha.0
     environment:
+      - DSN=postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
       - LOG_LEVEL=debug
     depends_on:
       - postgres
-    command: migrate sql postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    # command: namespace migrate legacy -c "/etc/config/keto/keto.yml" --yes
+    command: migrate up -c "/etc/config/keto/keto.yml" --yes
     restart: on-failure
     networks:
       - dega
 
   keto:
-    image: oryd/keto:v0.5.7
-    ports:
-      - "4466:4466"
     depends_on:
       - keto-migrate
+    image: oryd/keto:v0.9.0-alpha.0
+    ports:
+      - "4466:4466" # read
+      - "4467:4467" # write 
+      - "4468:4468" # metric
     environment:
-      - DSN=postgres://postgres:postgres@postgres:5432/keto?sslmode=disable
+      - LOG_LEVEL=debug
+    volumes:
+      - type: bind
+        source: ./keto
+        target: /etc/config/keto
+    command: serve -c "/etc/config/keto/keto.yml"
     networks:
       - dega
 
@@ -230,11 +237,14 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server:0.8.0
+    image: factly/kavach-server
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
         target: /app/data
+      - type: bind
+        source: ./kavach-config.env
+        target: /app/config.env
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -247,6 +257,10 @@ services:
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_MODE=development
       - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+      - DISABLE_REGISTRATION=false
     restart: unless-stopped
     networks:
       - dega
@@ -256,7 +270,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server:0.8.0
+    image: factly/kavach-migrate
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -269,12 +283,23 @@ services:
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_MODE=development
       - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
-    entrypoint: /app/kavach-server migrate
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+    volumes:
+      - type: bind
+        source: ./kavach-config.env
+        target: /app/config.env
     networks:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:dev
+    image: factly/kavach-web
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-web/config.js
+        target: /app/public/config.js
+
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
     restart: unless-stopped
@@ -393,6 +418,7 @@ services:
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/dega/studio
       - REACT_APP_KAVACH_PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
+      - REACT_APP_SACH_API_URL=https://sach-server.factly.in
     volumes:
       - type: bind
         source: ./studio

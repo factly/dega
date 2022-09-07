@@ -14,7 +14,7 @@ import { deletePost } from '../../actions/posts';
 import { Link } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
-function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
+function PostList({ actions, format, filters, onPagination, data, fetchPosts }) {
   /**
    * TODO: Add Authors detail on table
    */
@@ -201,11 +201,12 @@ function PostList({ actions, format, filters, setFilters, data, fetchPosts }) {
           expandIcon: () => {},
         }}
         pagination={{
+          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
           current: filters.page,
           pageSize: filters.limit ? filters.limit : 10,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+          onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
+          pageSizeOptions: ['10', '15', '20'],
         }}
       />
     </Space>

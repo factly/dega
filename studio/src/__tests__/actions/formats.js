@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import * as actions from '../../actions/formats';
 import * as types from '../../constants/formats';
 import { ADD_NOTIFICATION } from '../../constants/notifications';
-
+import { SET_REDIRECT } from '../../constants/settings';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 jest.mock('axios');
@@ -106,6 +106,40 @@ describe('formats actions', () => {
         type: types.SET_FORMATS_LOADING,
         payload: true,
       },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'error',
+          title: 'Error',
+          message: errorMessage,
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getFormats(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.FORMATS_API, {
+      params: query,
+    });
+  });
+  it('should create actions to fetch formats failure and redirect if error status is 307', () => {
+    const query = { page: 1, limit: 5 };
+    const errorMessage = 'Unable to fetch formats';
+    axios.get.mockRejectedValue({ message: errorMessage, response: { status: 307 } });
+
+    const expectedActions = [
+      {
+        type: types.SET_FORMATS_LOADING,
+        payload: true,
+      },
+      { type: SET_REDIRECT, payload: 307 },
       {
         type: ADD_NOTIFICATION,
         payload: {

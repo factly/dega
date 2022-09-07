@@ -4,12 +4,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
+	"time"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -19,6 +18,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -113,45 +113,56 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(tag.Description.RawMessage) > 0 && !reflect.DeepEqual(tag.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(tag.Description)
+	var htmlDescription string
+	var jsonDescription postgres.Jsonb
+	if len(tag.Description.RawMessage) > 0 {
+		htmlDescription, err = util.GetHTMLDescription(tag.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(tag.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	tx := config.DB.Begin()
 
-	mediumID := &tag.MediumID
+	updateMap := map[string]interface{}{
+		"created_at":       tag.CreatedAt,
+		"updated_at":       tag.UpdatedAt,
+		"updated_by_id":    uint(uID),
+		"name":             tag.Name,
+		"slug":             tagSlug,
+		"description":      jsonDescription,
+		"html_description": htmlDescription,
+		"meta_fields":      tag.MetaFields,
+		"meta":             tag.Meta,
+		"header_code":      tag.HeaderCode,
+		"footer_code":      tag.FooterCode,
+		"medium_id":        tag.MediumID,
+		"is_featured":      tag.IsFeatured,
+	}
 	result.MediumID = &tag.MediumID
 	if tag.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
+	}
+
+	if tag.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if tag.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
-	err = tx.Model(&result).Updates(model.Tag{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Name:             tag.Name,
-		Slug:             tagSlug,
-		Description:      tag.Description,
-		BackgroundColour: tag.BackgroundColour,
-		HTMLDescription:  description,
-		MetaFields:       tag.MetaFields,
-		Meta:             tag.Meta,
-		HeaderCode:       tag.HeaderCode,
-		FooterCode:       tag.FooterCode,
-		MediumID:         mediumID,
-	}).Preload("Medium").First(&result).Error
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)
