@@ -108,10 +108,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		episodeSlug = slugx.Approve(&config.DB, slugx.Make(episode.Title), sID, tableName)
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(episode.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(episode.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -133,7 +133,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			"updated_by_id":    uint(uID),
 			"title":            episode.Title,
 			"slug":             episodeSlug,
-			"html_description": htmlDescription,
+			"description_html": descriptionHTML,
 			"description":      jsonDescription,
 			"season":           episode.Season,
 			"episode":          episode.Episode,

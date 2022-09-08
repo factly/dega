@@ -91,10 +91,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(claimant.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(claimant.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(claimant.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -117,7 +117,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Name:            claimant.Name,
 		Slug:            slugx.Approve(&config.DB, claimantSlug, sID, tableName),
 		Description:     jsonDescription,
-		HTMLDescription: htmlDescription,
+		DescriptionHTML: descriptionHTML,
 		MediumID:        mediumID,
 		IsFeatured:      claimant.IsFeatured,
 		SpaceID:         uint(sID),

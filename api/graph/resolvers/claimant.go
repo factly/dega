@@ -24,8 +24,8 @@ func (r *claimantResolver) Description(ctx context.Context, obj *models.Claimant
 	return obj.Description, nil
 }
 
-func (r *claimantResolver) HTMLDescription(ctx context.Context, obj *models.Claimant) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *claimantResolver) DescriptionHTML(ctx context.Context, obj *models.Claimant) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *claimantResolver) MetaFields(ctx context.Context, obj *models.Claimant) (interface{}, error) {

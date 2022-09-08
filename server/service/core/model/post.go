@@ -20,7 +20,7 @@ type Post struct {
 	IsPage           bool           `gorm:"column:is_page" json:"is_page"`
 	Excerpt          string         `gorm:"column:excerpt" json:"excerpt"`
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb" swaggertype:"primitive,string"`
-	HTMLDescription  string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML  string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`

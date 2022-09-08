@@ -177,10 +177,10 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		featuredMediumID = nil
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(post.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(post.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(post.Description)
 		if err != nil {
 			loggerx.Error(err)
 			return nil, errorx.GetMessage("could not get html description", 422)
@@ -205,7 +205,7 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 		Subtitle:         post.Subtitle,
 		Excerpt:          post.Excerpt,
 		Description:      jsonDescription,
-		HTMLDescription:  htmlDescription,
+		DescriptionHTML:  descriptionHTML,
 		IsHighlighted:    post.IsHighlighted,
 		IsSticky:         post.IsSticky,
 		FeaturedMediumID: featuredMediumID,

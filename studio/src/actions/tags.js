@@ -26,7 +26,7 @@ export const getTags = (query) => {
       .then((response) => {
         if (response.data.nodes?.length) {
           response.data.nodes.forEach((tag) => {
-            tag.description = { json: tag.description, html: tag.html_description };
+            tag.description = { json: tag.description, html: tag.description_html };
           });
         }
         dispatch(addTags(response.data.nodes));
@@ -54,7 +54,7 @@ export const getTag = (id) => {
       .then((response) => {
         response.data.description = {
           json: response.data.description,
-          html: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(addTag(GET_TAG, response.data));
       })
@@ -90,7 +90,7 @@ export const updateTag = (data) => {
       .then((response) => {
         response.data.description = {
           json: response.data.description,
-          html: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(addTag(UPDATE_TAG, response.data));
         dispatch(addSuccessNotification('Tag updated'));

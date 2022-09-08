@@ -91,10 +91,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		podcastID = nil
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(episode.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(episode.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -117,7 +117,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		},
 		Title:           episode.Title,
 		Description:     jsonDescription,
-		HTMLDescription: htmlDescription,
+		DescriptionHTML: descriptionHTML,
 		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
 		Season:          episode.Season,
 		Episode:         episode.Episode,

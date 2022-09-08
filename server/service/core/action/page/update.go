@@ -121,10 +121,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(page.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(page.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(page.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -178,7 +178,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"published_date":     page.PublishedDate,
 		"excerpt":            page.Excerpt,
 		"description":        jsonDescription,
-		"html_description":   htmlDescription,
+		"description_html":   descriptionHTML,
 		"is_highlighted":     page.IsHighlighted,
 		"is_sticky":          page.IsSticky,
 		"format_id":          page.FormatID,

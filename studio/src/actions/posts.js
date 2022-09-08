@@ -119,7 +119,7 @@ export const getPosts = (query) => {
         dispatch(
           addPostsList(
             response.data.nodes.map((post) => {
-              post.description = { json: post.description, html: post.html_description };
+              post.description = { json: post.description, html: post.description_html };
               return {
                 ...post,
                 categories: post.categories.map((category) => category.id),
@@ -154,7 +154,7 @@ export const getPost = (id) => {
       .get(POSTS_API + '/' + id)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addAuthors(post.authors));
         dispatch(addCategories(post.categories));
@@ -188,7 +188,7 @@ export const addPost = (data) => {
       .post(POSTS_API, data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -217,7 +217,7 @@ export const publish = (data) => {
       .post(POSTS_API + '/publish', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -252,7 +252,7 @@ export const addTemplate = (data) => {
       .post(POSTS_API + '/templates', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors || []));
@@ -287,7 +287,7 @@ export const publishPost = (data) => {
       .put(POSTS_API + '/' + data.id + '/publish', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -322,7 +322,7 @@ export const updatePost = (data) => {
       .put(POSTS_API + '/' + data.id, data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.html_description };
+        post.description = { json: post.description, html: post.description_html };
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));

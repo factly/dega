@@ -34,8 +34,8 @@ func (r *postResolver) Description(ctx context.Context, obj *models.Post) (inter
 	return obj.Description, nil
 }
 
-func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *postResolver) DescriptionHTML(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *postResolver) HeaderCode(ctx context.Context, obj *models.Post) (*string, error) {

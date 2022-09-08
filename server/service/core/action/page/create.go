@@ -85,10 +85,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(page.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(page.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(page.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -115,7 +115,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Subtitle:         page.Subtitle,
 		Excerpt:          page.Excerpt,
 		Description:      jsonDescription,
-		HTMLDescription:  htmlDescription,
+		DescriptionHTML:  descriptionHTML,
 		IsHighlighted:    page.IsHighlighted,
 		IsSticky:         page.IsSticky,
 		FeaturedMediumID: featuredMediumID,

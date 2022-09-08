@@ -86,10 +86,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(tag.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(tag.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(tag.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -118,7 +118,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
 		BackgroundColour: tag.BackgroundColour,
 		Description:      jsonDescription,
-		HTMLDescription:  htmlDescription,
+		DescriptionHTML:  descriptionHTML,
 		SpaceID:          uint(sID),
 		MediumID:         mediumID,
 		IsFeatured:       tag.IsFeatured,

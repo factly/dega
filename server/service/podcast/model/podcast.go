@@ -15,7 +15,7 @@ type Podcast struct {
 	Title             string           `gorm:"column:title" json:"title"`
 	Slug              string           `gorm:"column:slug" json:"slug"`
 	Description       postgres.Jsonb   `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
-	HTMLDescription   string           `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML   string           `gorm:"column:description_html" json:"description_html,omitempty"`
 	Language          string           `gorm:"column:language" json:"language"`
 	Categories        []model.Category `gorm:"many2many:podcast_categories;" json:"categories"`
 	PrimaryCategoryID *uint            `gorm:"column:primary_category_id;default:NULL" json:"primary_category_id" sql:"DEFAULT:NULL"`

@@ -134,10 +134,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(category.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(category.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(category.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -160,7 +160,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"name":              category.Name,
 		"slug":              categorySlug,
 		"description":       jsonDescription,
-		"html_description":  htmlDescription,
+		"description_html":  descriptionHTML,
 		"medium_id":         category.MediumID,
 		"is_featured":       category.IsFeatured,
 		"meta_fields":       category.MetaFields,

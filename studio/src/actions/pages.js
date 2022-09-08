@@ -103,7 +103,7 @@ export const getPages = (query) => {
         dispatch(
           addPagesList(
             response.data.nodes.map((page) => {
-              page.description = { json: page.description, html: page.html_description };
+              page.description = { json: page.description, html: page.description_html };
               return {
                 ...page,
                 medium: page.medium?.id,
@@ -137,7 +137,7 @@ export const getPage = (id) => {
       .get(PAGES_API + '/' + id)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.html_description };
+        page.description = { json: page.description, html: page.description_html };
         dispatch(addTags(page.tags));
         dispatch(addAuthors(page.authors));
         dispatch(addCategories(page.categories));
@@ -167,7 +167,7 @@ export const addPage = (data) => {
       .post(PAGES_API, data)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.html_description };
+        page.description = { json: page.description, html: page.description_html };
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));
@@ -194,7 +194,7 @@ export const updatePage = (data) => {
       .put(PAGES_API + '/' + data.id, data)
       .then((response) => {
         let page = response.data;
-        page.description = { json: page.description, html: page.html_description };
+        page.description = { json: page.description, html: page.description_html };
         dispatch(addTags(page.tags));
         dispatch(addCategories(page.categories));
         dispatch(addAuthors(page.authors));

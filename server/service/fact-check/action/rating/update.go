@@ -126,10 +126,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(rating.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(rating.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -156,7 +156,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"text_colour":       rating.TextColour,
 		"medium_id":         rating.MediumID,
 		"description":       jsonDescription,
-		"html_description":  htmlDescription,
+		"description_html":  descriptionHTML,
 		"numeric_value":     rating.NumericValue,
 		"meta_fields":       rating.MetaFields,
 		"meta":              rating.Meta,
