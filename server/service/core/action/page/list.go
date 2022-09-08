@@ -203,7 +203,9 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	filters := ""
 
 	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' ",
+			"OR subtitle ILIKE '%", strings.ToLower(searchQuery), "%' ",
+			"OR excerpt ILIKE '%", strings.ToLower(searchQuery), "%' ")
 	}
 
 	if len(categoryIDs) > 0 {
