@@ -24,6 +24,11 @@ export const getTags = (query) => {
         params: query,
       })
       .then((response) => {
+        if (response.data.nodes?.length) {
+          response.data.nodes.forEach((tag) => {
+            tag.description = { json: tag.description, html: tag.html_description };
+          });
+        }
         dispatch(addTags(response.data.nodes));
         dispatch(
           addTagsRequest({
@@ -47,6 +52,10 @@ export const getTag = (id) => {
     return axios
       .get(TAGS_API + '/' + id)
       .then((response) => {
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.html_description,
+        };
         dispatch(addTag(GET_TAG, response.data));
       })
       .catch((error) => {
@@ -79,6 +88,10 @@ export const updateTag = (data) => {
     return axios
       .put(TAGS_API + '/' + data.id, data)
       .then((response) => {
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.html_description,
+        };
         dispatch(addTag(UPDATE_TAG, response.data));
         dispatch(addSuccessNotification('Tag updated'));
       })

@@ -58,7 +58,7 @@ func (media *Medium) AfterCreate(tx *gorm.DB) (err error) {
 			urlObj, _ := url.Parse(rawURL.(string))
 			bucket_name := ""
 			if viper.IsSet("bucket_name") {
-				bucket_name = viper.GetString("bucket_name")
+				bucket_name = viper.GetString("bucket_name") + "/"
 			}
 			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, bucket_name, "", 1)
 
@@ -80,7 +80,7 @@ func (media *Medium) AfterFind(tx *gorm.DB) (err error) {
 			urlObj, _ := url.Parse(rawURL.(string))
 			bucket_name := ""
 			if viper.IsSet("bucket_name") {
-				bucket_name = viper.GetString("bucket_name")
+				bucket_name = viper.GetString("bucket_name") + "/"
 			}
 			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, bucket_name, "", 1)
 

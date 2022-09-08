@@ -189,7 +189,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             </Form.Item>
             <DescriptionInput
               inputProps={{ placeholder: 'Enter Description...' }}
-              initialValue={data.description}
+              initialValue={data.description?.json}
             />
           </Panel>
           <Panel header="Sources" key="2">

@@ -39,12 +39,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  // const { tags, loading } = useSelector((state) => {
-  //   return {
-  //     tags: tagIDs?.length ? tagIDs.map((id) => state.tags.details[id]) : [],
-  //     loading: state.tags.loading
-  //   }
-  // })
   const showSchemaModal = () => {
     setIsModalVisible(true);
   };
@@ -244,7 +238,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
-                initialValue={data.description}
+                initialValue={data.description?.json}
                 noLabel
               />
               <Drawer
