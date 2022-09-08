@@ -37,7 +37,7 @@ export const getCategories = (query, setLoading = true) => {
             response.data.nodes.map((category) => {
               category.description = {
                 json: category.description,
-                html_description: category.html_description,
+                html: category.description_html,
               };
               return { ...category, medium: category.medium?.id };
             }),
@@ -70,7 +70,7 @@ export const getCategory = (id) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
         response.data.description = {
           json: response.data.description,
-          html_description: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(addCategory(GET_CATEGORY, { ...response.data, medium: response.data.medium?.id }));
       })
@@ -107,7 +107,7 @@ export const updateCategory = (data) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
         response.data.description = {
           json: response.data.description,
-          html_description: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(
           addCategory(UPDATE_CATEGORY, { ...response.data, medium: response.data.medium?.id }),
@@ -147,7 +147,7 @@ export const addCategories = (categories) => {
         categories.map((category) => {
           category.description = {
             json: category.description,
-            html_description: category.html_description,
+            html: category.description_html,
           };
           return { ...category, medium: category.medium?.id };
         }),

@@ -64,6 +64,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Tag{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -113,10 +116,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(tag.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(tag.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(tag.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -134,19 +137,19 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx := config.DB.Begin()
 
 	updateMap := map[string]interface{}{
-		"created_at":       tag.CreatedAt,
-		"updated_at":       tag.UpdatedAt,
-		"updated_by_id":    uint(uID),
-		"name":             tag.Name,
-		"slug":             tagSlug,
-		"description":      jsonDescription,
-		"html_description": htmlDescription,
-		"meta_fields":      tag.MetaFields,
-		"meta":             tag.Meta,
-		"header_code":      tag.HeaderCode,
-		"footer_code":      tag.FooterCode,
-		"medium_id":        tag.MediumID,
-		"is_featured":      tag.IsFeatured,
+		"created_at":        tag.CreatedAt,
+		"updated_at":        tag.UpdatedAt,
+		"updated_by_id":     uint(uID),
+		"name":              tag.Name,
+		"slug":              tagSlug,
+		"description":       jsonDescription,
+		"description_html":  descriptionHTML,
+		"meta_fields":       tag.MetaFields,
+		"meta":              tag.Meta,
+		"header_code":       tag.HeaderCode,
+		"footer_code":       tag.FooterCode,
+		"medium_id":         tag.MediumID,
+		"is_featured":       tag.IsFeatured,
 		"background_colour": tag.BackgroundColour,
 	}
 	result.MediumID = &tag.MediumID

@@ -81,6 +81,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Claim{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -114,10 +117,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(claim.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(claim.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(claim.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -142,7 +145,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"slug":             claimSlug,
 		"claim_sources":    claim.ClaimSources,
 		"description":      jsonDescription,
-		"html_description": htmlDescription,
+		"description_html": descriptionHTML,
 		"claimant_id":      claim.ClaimantID,
 		"rating_id":        claim.RatingID,
 		"fact":             claim.Fact,

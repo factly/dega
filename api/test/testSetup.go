@@ -57,7 +57,7 @@ func TestRouter() http.Handler {
 
 	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolvers.Resolver{}}))
 
-	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("X-Dega-API-Key", "dega", validator.GetOrganisation)).Handle("/query", loaders.DataloaderMiddleware(srv))
+	router.With(validator.CheckSpace(), validator.CheckOrganisation(), middlewarex.ValidateAPIToken("X-Dega-API-Key")).Handle("/query", loaders.DataloaderMiddleware(srv))
 
 	return router
 }

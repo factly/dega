@@ -11,7 +11,7 @@ type Description struct {
 	JSON postgres.Jsonb
 }
 
-func GetHTMLDescription(jsonData postgres.Jsonb) (string, error) {
+func GetDescriptionHTML(jsonData postgres.Jsonb) (string, error) {
 	var description Description
 	err := json.Unmarshal(jsonData.RawMessage, &description)
 	if err != nil {

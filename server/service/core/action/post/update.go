@@ -109,6 +109,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
@@ -133,10 +136,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(post.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(post.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(post.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -188,7 +191,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"subtitle":           post.Subtitle,
 		"excerpt":            post.Excerpt,
 		"description":        jsonDescription,
-		"html_description":   htmlDescription,
+		"description_html":   descriptionHTML,
 		"is_highlighted":     post.IsHighlighted,
 		"is_sticky":          post.IsSticky,
 		"is_featured":        post.IsFeatured,

@@ -104,10 +104,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(rating.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(rating.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -132,7 +132,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		BackgroundColour: rating.BackgroundColour,
 		TextColour:       rating.TextColour,
 		Description:      jsonDescription,
-		HTMLDescription:  htmlDescription,
+		DescriptionHTML:  descriptionHTML,
 		MediumID:         mediumID,
 		SpaceID:          uint(sID),
 		NumericValue:     rating.NumericValue,

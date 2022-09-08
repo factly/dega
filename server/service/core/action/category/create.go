@@ -111,10 +111,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var htmlDescription string
+	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
 	if len(category.Description.RawMessage) > 0 {
-		htmlDescription, err = util.GetHTMLDescription(category.Description)
+		descriptionHTML, err = util.GetDescriptionHTML(category.Description)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
@@ -137,7 +137,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Name:             category.Name,
 		Description:      jsonDescription,
 		BackgroundColour: category.BackgroundColour,
-		HTMLDescription:  htmlDescription,
+		DescriptionHTML:  descriptionHTML,
 		Slug:             slugx.Approve(&config.DB, categorySlug, sID, tableName),
 		ParentID:         parentID,
 		MediumID:         mediumID,

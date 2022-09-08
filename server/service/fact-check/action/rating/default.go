@@ -69,7 +69,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 
 	for i := range ratings {
 		ratings[i].SpaceID = uint(sID)
-		ratings[i].HTMLDescription, err = util.GetHTMLDescription(ratings[i].Description)
+		ratings[i].DescriptionHTML, err = util.GetDescriptionHTML(ratings[i].Description)
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)

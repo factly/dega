@@ -33,7 +33,7 @@ export const getClaimants = (query) => {
             response.data.nodes.map((claimant) => {
               claimant.description = {
                 json: claimant.description,
-                html: claimant.html_description,
+                html: claimant.description_html,
               };
               return { ...claimant, medium: claimant.medium?.id };
             }),
@@ -64,7 +64,7 @@ export const getClaimant = (id) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
         response.data.description = {
           json: response.data.description,
-          html: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(addClaimant(GET_CLAIMANT, { ...response.data, medium: response.data.medium?.id }));
       })
@@ -101,7 +101,7 @@ export const updateClaimant = (data) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
         response.data.description = {
           json: response.data.description,
-          html: response.data.html_description,
+          html: response.data.description_html,
         };
         dispatch(
           addClaimant(UPDATE_CLAIMANT, { ...response.data, medium: response.data.medium?.id }),

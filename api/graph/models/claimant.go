@@ -16,7 +16,7 @@ type Claimant struct {
 	Name            string          `gorm:"column:name" json:"name"`
 	Slug            string          `gorm:"column:slug" json:"slug"`
 	Description     postgres.Jsonb  `gorm:"column:description" json:"description"`
-	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
+	DescriptionHTML string          `gorm:"column:description_html" json:"description_html"`
 	TagLine         string          `gorm:"column:tag_line" json:"tag_line"`
 	MediumID        uint            `gorm:"column:medium_id" json:"medium_id" sql:"DEFAULT:NULL"`
 	Medium          *Medium         `gorm:"foreignKey:medium_id" json:"medium"`
