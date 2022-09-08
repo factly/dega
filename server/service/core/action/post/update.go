@@ -109,6 +109,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
