@@ -10,7 +10,7 @@ const DescriptionInput = ({
   name = 'description',
   label = 'Description',
   noLabel = false,
-  onChange = (data) => console.log({ data }),
+  onChange = () => console.log({  }),
   inputProps,
   formItemProps,
   initialValue,
@@ -29,7 +29,6 @@ const DescriptionInput = ({
         menuType="bubble"
         heightStrategy="flexible"
         rows={20}
-        onChange={({ json, html }) => console.log()}
         {...inputProps}
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}
