@@ -5,7 +5,6 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
-	"github.com/spf13/viper"
 )
 
 func GetAllowedServices(spaceID, orgID, userID uint) ([]string, error) {
@@ -75,12 +74,12 @@ func createSpacePermissionIfDoesNotExist(spaceID uint, isSuperOrg bool, userID u
 					CreatedByID: userID,
 				},
 				SpaceID:   spaceID,
-				Media:     viper.GetInt64("default_number_of_media"),
-				Posts:     viper.GetInt64("default_number_of_posts"),
-				Episodes:  viper.GetInt64("default_number_of_episodes"),
-				Videos:    viper.GetInt64("default_number_of_videos"),
-				Podcast:   false,
-				FactCheck: false,
+				Media:     -1,
+				Posts:     -1,
+				Podcast:   true,
+				Episodes:  -1,
+				FactCheck: true,
+				Videos:    -1,
 			}
 		}
 		if err = config.DB.Model(&model.SpacePermission{}).Create(&spacePermission).Error; err != nil {

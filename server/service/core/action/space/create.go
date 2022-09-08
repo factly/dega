@@ -201,12 +201,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		} else {
 			spacePermission = model.SpacePermission{
 				SpaceID:   spaceObjectforDega.ID,
-				Media:     viper.GetInt64("default_number_of_media"),
-				Posts:     viper.GetInt64("default_number_of_posts"),
-				Episodes:  viper.GetInt64("default_number_of_episodes"),
-				Videos:    viper.GetInt64("default_number_of_videos"),
-				Podcast:   false,
-				FactCheck: false,
+				Media:     -1,
+				Posts:     -1,
+				Podcast:   true,
+				Episodes:  -1,
+				FactCheck: true,
+				Videos:    -1,
 			}
 		}
 		if err = tx.Model(&model.SpacePermission{}).Create(&spacePermission).Error; err != nil {
