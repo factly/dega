@@ -50,6 +50,7 @@ export const getEpisodes = (query) => {
         dispatch(
           addEpisodes(
             response.data.nodes.map((episode) => {
+              episode.description = { json: episode.description, html: episode.html_description };
               return { ...episode, podcast: episode.podcast.id };
             }),
           ),
@@ -77,6 +78,7 @@ export const getEpisode = (id) => {
       .get(EPISODES_API + '/' + id)
       .then((response) => {
         let episode = response.data;
+        episode.description = { json: episode.description, html: episode.html_description };
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(addEpisode(GET_EPISODE, { ...episode, podcast: episode.podcast.id }));
       })
@@ -111,6 +113,7 @@ export const updateEpisode = (data) => {
       .put(EPISODES_API + '/' + data.id, data)
       .then((response) => {
         let episode = response.data;
+        episode.description = { json: episode.description, html: episode.html_description };
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(addEpisode(UPDATE_EPISODE, { ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));

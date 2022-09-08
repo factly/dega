@@ -154,20 +154,21 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 	updateMap := map[string]interface{}{
-		"created_at":       category.CreatedAt,
-		"updated_at":       category.UpdatedAt,
-		"updated_by_id":    uID,
-		"name":             category.Name,
-		"slug":             categorySlug,
-		"description":      jsonDescription,
-		"html_description": htmlDescription,
-		"medium_id":        category.MediumID,
-		"is_featured":      category.IsFeatured,
-		"meta_fields":      category.MetaFields,
-		"meta":             category.Meta,
-		"parent_id":        category.ParentID,
-		"header_code":      category.HeaderCode,
-		"footer_code":      category.FooterCode,
+		"created_at":        category.CreatedAt,
+		"updated_at":        category.UpdatedAt,
+		"updated_by_id":     uID,
+		"name":              category.Name,
+		"slug":              categorySlug,
+		"description":       jsonDescription,
+		"html_description":  htmlDescription,
+		"medium_id":         category.MediumID,
+		"is_featured":       category.IsFeatured,
+		"meta_fields":       category.MetaFields,
+		"meta":              category.Meta,
+		"parent_id":         category.ParentID,
+		"header_code":       category.HeaderCode,
+		"footer_code":       category.FooterCode,
+		"background_colour": category.BackgroundColour,
 	}
 	if category.MediumID == 0 {
 		updateMap["medium_id"] = nil

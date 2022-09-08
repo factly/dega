@@ -16,30 +16,27 @@ function CreateClaim() {
 
   const { claimantsCount } = useSelector(({ claimants }) => {
     return {
-      claimantsCount: (claimants?.req?.[0]?.data) ? claimants?.req?.[0]?.data : 0
-    }
-  })
+      claimantsCount: claimants?.req?.[0]?.data ? claimants?.req?.[0]?.data : 0,
+    };
+  });
 
   return (
     <>
       <Helmet title={'Create Claim'} />
-      {
-        claimantsCount ? (
-          <ClaimCreateForm onCreate={onCreate} />
-        )
-        : (
-          <Result
-            status={"403"}
-            title={"Please create a claimant."}
-            subTitle="You cannot create a claim without a claimant."
-            extra={
-              <Link to="/claimants/create">
-                <Button type="primary">Create claimant</Button>
-              </Link>
-            }
-          />
-        )
-      }
+      {claimantsCount ? (
+        <ClaimCreateForm onCreate={onCreate} />
+      ) : (
+        <Result
+          status={'403'}
+          title={'Please create a claimant.'}
+          subTitle="You cannot create a claim without a claimant."
+          extra={
+            <Link to="/claimants/create">
+              <Button type="primary">Create claimant</Button>
+            </Link>
+          }
+        />
+      )}
     </>
   );
 }

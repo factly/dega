@@ -22,6 +22,7 @@ export const addDefaultRatings = (query) => {
         dispatch(
           addRatingsList(
             response.data.nodes.map((rating) => {
+              rating.description = { json: rating.description, html: rating.html_description };
               return { ...rating, medium: rating.medium?.id };
             }),
           ),
@@ -58,6 +59,7 @@ export const getRatings = (query) => {
         dispatch(
           addRatingsList(
             response.data.nodes.map((rating) => {
+              rating.description = { json: rating.description, html: rating.html_description };
               return { ...rating, medium: rating.medium?.id };
             }),
           ),
@@ -85,7 +87,10 @@ export const getRating = (id) => {
       .get(RATINGS_API + '/' + id)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.html_description,
+        };
         dispatch(addRating(GET_RATING, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
@@ -120,7 +125,7 @@ export const updateRating = (data) => {
       .then((response) => {
         const rating = response.data;
         if (rating.medium) dispatch(addMedia([rating.medium]));
-
+        rating.description = { json: rating.description, html: rating.html_description };
         dispatch(addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id }));
         dispatch(addSuccessNotification('Rating updated'));
       })

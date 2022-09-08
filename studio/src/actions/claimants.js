@@ -31,6 +31,10 @@ export const getClaimants = (query) => {
         dispatch(
           addClaimantsList(
             response.data.nodes.map((claimant) => {
+              claimant.description = {
+                json: claimant.description,
+                html: claimant.html_description,
+              };
               return { ...claimant, medium: claimant.medium?.id };
             }),
           ),
@@ -58,7 +62,10 @@ export const getClaimant = (id) => {
       .get(CLAIMANTS_API + '/' + id)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.html_description,
+        };
         dispatch(addClaimant(GET_CLAIMANT, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
@@ -92,7 +99,10 @@ export const updateClaimant = (data) => {
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.html_description,
+        };
         dispatch(
           addClaimant(UPDATE_CLAIMANT, { ...response.data, medium: response.data.medium?.id }),
         );

@@ -38,6 +38,7 @@ function EditPost({ formats }) {
     return <RecordNotFound />;
 
   const onUpdate = (values) => {
+    delete post.html_description;
     dispatch(updatePost({ ...post, ...values })).then(() => {
       history.push(`/posts/${id}/edit`);
     });

@@ -147,6 +147,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"footer_code":      tag.FooterCode,
 		"medium_id":        tag.MediumID,
 		"is_featured":      tag.IsFeatured,
+		"background_colour": tag.BackgroundColour,
 	}
 	result.MediumID = &tag.MediumID
 	if tag.MediumID == 0 {

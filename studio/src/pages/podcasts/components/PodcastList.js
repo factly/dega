@@ -19,9 +19,9 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             style={{
               marginRight: 8,
             }}
-            to={`/podcasts/${record.id}/edit`}
+            to={`/podcasts/${record?.id}/edit`}
           >
-            {record.title}
+            {record?.title}
           </Link>
         );
       },
@@ -39,7 +39,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
         return (
           <Popconfirm
             title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deletePodcast(record.id)).then(() => fetchPodcasts())}
+            onConfirm={() => dispatch(deletePodcast(record?.id)).then(() => fetchPodcasts())}
             disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button

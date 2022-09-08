@@ -318,7 +318,7 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               <DescriptionInput
                 formItemProps={{ className: 'post-description' }}
                 noLabel
-                initialValue={data.description}
+                initialValue={data.description?.json}
               />
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}

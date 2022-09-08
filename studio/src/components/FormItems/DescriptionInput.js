@@ -29,7 +29,7 @@ const DescriptionInput = ({
         menuType="bubble"
         heightStrategy="flexible"
         rows={20}
-        onChange={({ json, html }) => console.log({ json, html })}
+        onChange={({ json, html }) => console.log()}
         {...inputProps}
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}
