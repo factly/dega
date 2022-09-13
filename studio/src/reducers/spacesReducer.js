@@ -91,7 +91,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         details: {
           ...state.details,
-          [action.payload.id]: action.payload,
+          [action.payload.id]: {...state.details[action.payload.id], ...action.payload},
         },
       };
     case DELETE_SPACE_SUCCESS:
