@@ -1,4 +1,4 @@
-version: v0.8.0-alpha.3
+version: v0.10.1
 
 dsn: postgres://postgres:postgres@postgres:5432/kratos?sslmode=disable
 
@@ -11,8 +11,8 @@ serve:
     base_url: http://kratos:4434/
 
 selfservice:
-  default_browser_return_url: http://127.0.0.1:4455/.factly/kavach/web/organisation
-  whitelisted_return_urls:
+  default_browser_return_url: http://127.0.0.1:4455/.factly/kavach/web/
+  allowed_return_urls:
     - http://127.0.0.1:4455
     - http://127.0.0.1:4455/.factly/dega/studio/
     - http://127.0.0.1:4455/.factly/kavach/web/
@@ -22,6 +22,37 @@ selfservice:
   methods:
     password:
       enabled: true
+      
+    oidc:
+      enabled: true
+      config:
+        providers:
+          - id: github
+            provider: github 
+            client_id: 123abc
+            client_secret: 123abc
+            mapper_url: file:///etc/config/kratos/oidc.github.jsonnet
+            scope:
+              - user:email
+
+          - id: google 
+            provider: google
+            client_id: 123abc
+            client_secret: 123abc
+            mapper_url: file:///etc/config/kratos/oidc.google.jsonnet
+            scope:
+              - email
+              - profile
+      
+    link: 
+      enabled: true
+      config:
+        lifespan: 15m
+    
+    totp:
+      enabled: true
+      config:
+        issuer: factly.in
 
   flows:
     error:
@@ -30,6 +61,7 @@ selfservice:
     settings:
       ui_url: http://127.0.0.1:4455/.factly/kavach/web/password
       privileged_session_max_age: 15m
+      required_aal: highest_available
 
     logout:
       after:
@@ -37,20 +69,29 @@ selfservice:
 
     login:
       ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/login
-      lifespan: 10m
-
-    registration:
-      lifespan: 10m
-      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/registration
+      lifespan: 10m 
       after:
         password:
           hooks:
-            -
-              hook: session
-        oidc:
-          hooks:
-            - hook: session
+            - hook: require_verified_address
 
+    verification:
+      enabled: true
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/verification
+      
+
+    registration:
+      after:
+        default_browser_return_url: http://127.0.0.1:4455/.factly/kavach/web/verification
+      lifespan: 10m
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/registration
+
+            
+    recovery:
+      enabled: true
+      ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/recovery
+    
+      
 log:
   level: debug
   format: text
@@ -62,11 +103,17 @@ secrets:
 
 hashers:
   bcrypt:
-    cost: 4 ### cost should be 12 in production
+    cost: 4
 
 identity:
-  default_schema_url: file:///etc/config/kratos/identity.schema.json
+  default_schema_id: default
+  schemas:
+    - id: default
+      url: file:///etc/config/kratos/identity.schema.json
 
 courier:
   smtp:
     connection_uri: smtps://test:test@mailslurper:1025/?skip_ssl_verify=true
+    
+
+
