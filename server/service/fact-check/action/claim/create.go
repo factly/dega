@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
