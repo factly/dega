@@ -1,19 +1,16 @@
 import React, { useState } from 'react';
-import { Row, Col, Button, Form, Input, Space, Switch } from 'antd';
+import { Row, Col, Button, Form, Space, Switch } from 'antd';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import { SketchPicker } from 'react-color';
 import Selector from '../../../components/Selector';
 import getJsonValue from '../../../utils/getJsonValue';
-import { useSelector } from 'react-redux';
 
 import { DescriptionInput, MetaForm, SlugInput, TitleInput } from '../../../components/FormItems';
 
 const CategoryForm = ({ onCreate, data = {} }) => {
-  const siteAddress = useSelector(
-    ({ spaces: { details, selected } }) => details[selected].site_address,
-  );
-  const setLoading = data?.id ? false : true;
+  const setLoading = data.id ? false : true;
+
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
