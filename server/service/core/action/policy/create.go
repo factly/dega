@@ -1,17 +1,23 @@
 package policy
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
+	"strconv"
 
-	"github.com/factly/dega-server/service/core/action/author"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
+	"github.com/spf13/viper"
 )
 
 // create - Create policy
@@ -51,7 +57,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	policyReq := policyReq{}
+	applicationID, err := util.GetApplicationID(uint(userID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	policyReq := kavachPolicy{}
 
 	err = json.NewDecoder(r.Body).Decode(&policyReq)
 	if err != nil {
@@ -60,27 +73,71 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := Mapper(Composer(organisationID, spaceID, policyReq), author.Mapper(organisationID, userID))
+	buf := new(bytes.Buffer)
+	err = json.NewEncoder(buf).Encode(policyReq)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+		return
+	}
 
-	err = insertIntoMeili(result)
+	requrl := viper.GetString("kavach_url") + "/organisations/" + fmt.Sprintf("%d", organisationID) + "/applications/" + fmt.Sprintf("%d", applicationID) + "/spaces/" + fmt.Sprintf("%d", spaceID) + "/policy"
+	req, err := http.NewRequest(http.MethodPost, requrl, buf)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	if util.CheckNats() {
-		if err = util.NC.Publish("policy.created", result); err != nil {
+	req.Header.Set("X-User", strconv.Itoa(userID))
+	req.Header.Set("Content-Type", "application/json")
+
+	client := httpx.CustomHttpClient()
+	resp, err := client.Do(req)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		loggerx.Error(errors.New("internal server error on kavach server"))
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	result := &model.KavachPolicy{}
+	err = json.NewDecoder(resp.Body).Decode(result)
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+	if config.SearchEnabled() {
+		err = insertIntoMeili(*result)
+		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 	}
 
+	if util.CheckNats() {
+		if util.CheckWebhookEvent("policy.created", strconv.Itoa(spaceID), r) {
+			if err = util.NC.Publish("policy.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
+		}
+
+	}
+
 	renderx.JSON(w, http.StatusOK, result)
 }
 
-func insertIntoMeili(result model.Policy) error {
+func insertIntoMeili(result model.KavachPolicy) error {
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":          result.ID,

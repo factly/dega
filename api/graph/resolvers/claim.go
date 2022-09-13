@@ -26,8 +26,8 @@ func (r *claimResolver) Description(ctx context.Context, obj *models.Claim) (int
 	return obj.Description, nil
 }
 
-func (r *claimResolver) HTMLDescription(ctx context.Context, obj *models.Claim) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *claimResolver) DescriptionHTML(ctx context.Context, obj *models.Claim) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *claimResolver) ClaimSources(ctx context.Context, obj *models.Claim) (interface{}, error) {

@@ -137,7 +137,7 @@ func generateSQLFilters(searchQuery string, ratingsIDs, claimantIDs []string) st
 	filters := ""
 
 	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%'", "OR fact ILIKE '%", strings.ToLower(searchQuery), "%'", " AND ")
 	}
 
 	if len(ratingsIDs) > 0 {

@@ -78,9 +78,11 @@ function BasicLayout(props) {
   });
 
   React.useEffect(() => {
-    dispatch(getSpaces()).then((org) => {
-      if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
-    });
+    dispatch(getSpaces());
+    // .then((org) => {
+    // if (org && org.length > 0) dispatch(getSuperOrganisation(org[0].id));
+    // }
+    // );
   }, [dispatch, selected]);
 
   React.useEffect(() => {

@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
+
+
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -18,6 +18,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -87,13 +88,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Store HTML description
-	var description string
-	if len(tag.Description.RawMessage) > 0 && !reflect.DeepEqual(tag.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(tag.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(tag.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(tag.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse tag description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(tag.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -104,11 +112,15 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Tag{
+		Base: config.Base{
+			CreatedAt: tag.CreatedAt,
+			UpdatedAt: tag.UpdatedAt,
+		},
 		Name:             tag.Name,
 		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
 		BackgroundColour: tag.BackgroundColour,
-		Description:      tag.Description,
-		HTMLDescription:  description,
+		Description:      jsonDescription,
+		DescriptionHTML:  descriptionHTML,
 		SpaceID:          uint(sID),
 		MediumID:         mediumID,
 		IsFeatured:       tag.IsFeatured,
@@ -147,10 +159,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("tag.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("tag.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("tag.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 

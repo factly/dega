@@ -34,8 +34,8 @@ func (r *postResolver) Description(ctx context.Context, obj *models.Post) (inter
 	return obj.Description, nil
 }
 
-func (r *postResolver) HTMLDescription(ctx context.Context, obj *models.Post) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *postResolver) DescriptionHTML(ctx context.Context, obj *models.Post) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *postResolver) HeaderCode(ctx context.Context, obj *models.Post) (*string, error) {
@@ -212,10 +212,6 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	if err != nil {
 		return nil, err
 	}
-	oID, err := validator.GetOrganisation(ctx)
-	if err != nil {
-		return nil, err
-	}
 
 	columns := []string{"created_at", "updated_at", "name", "slug"}
 	pageSortBy := "created_at"
@@ -235,7 +231,7 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	result.Nodes = make([]*models.Post, 0)
 
 	offset, pageLimit := util.Parse(page, limit)
-	
+
 	tx := config.DB.Model(&models.Post{}).Where("is_page = ?", false)
 
 	if status != nil {
@@ -247,7 +243,6 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 	userIDs := make([]int, 0)
 	// get user ids if slugs provided
 	if users != nil && len(users.Ids) == 0 && len(users.Slugs) > 0 {
-		var userID int
 		// fetch all posts of current space
 		postList := make([]models.Post, 0)
 		config.DB.Model(&models.Post{}).Where(&models.Post{
@@ -262,19 +257,15 @@ func (r *queryResolver) Posts(ctx context.Context, spaces []int, formats *models
 		postAuthors := make([]models.PostAuthor, 0)
 		config.DB.Model(&models.PostAuthor{}).Where("post_id IN (?)", postIDs).Find(&postAuthors)
 
-		if len(postAuthors) > 0 {
-			userID = int(postAuthors[0].AuthorID)
-		} else {
-			return nil, errors.New("please provide ID instead of slug")
-		}
-
 		userSlugMap := make(map[string]int)
-		url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
-
+		spaceToken, err := validator.GetSpaceToken(ctx)
+		if err != nil {
+			return nil, errors.New("space token not there")
+		}
+		url := fmt.Sprint(viper.GetString("kavach_url"), "/users/space/", sID)
 		resp, err := requestx.Request("GET", url, nil, map[string]string{
-			"Content-Type":   "application/json",
-			"X-User":         fmt.Sprint(userID),
-			"X-Organisation": fmt.Sprint(oID),
+			"Content-Type":  "application/json",
+			"X-Space-Token": spaceToken,
 		})
 
 		if err != nil {

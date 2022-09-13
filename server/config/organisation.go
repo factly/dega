@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"regexp"
 	"strings"
-
+	"github.com/factly/dega-server/util/http"
 	"github.com/spf13/viper"
 )
 
@@ -51,8 +51,7 @@ func CheckSuperOrganisation() bool {
 	// check if policy is present in keto
 	req, _ := http.NewRequest("GET", viper.GetString("keto_url")+ketoPolicyPath+"/app:dega:superorg", nil)
 	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return false
@@ -77,7 +76,6 @@ func CheckSuperOrganisation() bool {
 	req, _ = http.NewRequest("GET", viper.GetString("kavach_url")+"/organisations/"+orgID, nil)
 	req.Header.Set("Content-Type", "application/json")
 
-	client = &http.Client{}
 	resp, err = client.Do(req)
 	if err != nil {
 		return false
@@ -177,7 +175,7 @@ func createKratosUser() (*http.Response, error) {
 	req, _ := http.NewRequest("GET", viper.GetString("kratos_public_url")+"/self-service/registration/api", nil)
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -231,7 +229,7 @@ func createKavachUser(kavachUserCheckers map[string]interface{}) (*http.Response
 	req, _ := http.NewRequest("POST", viper.GetString("kavach_url")+"/users/checker", buf)
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -262,7 +260,7 @@ func createKavachOrganisation(userID string) (*http.Response, error) {
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", userID)
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {
@@ -302,7 +300,7 @@ func createKetoPolicy(organisationID uint) (*http.Response, error) {
 	req, _ := http.NewRequest("PUT", viper.GetString("keto_url")+ketoPolicyPath, buf)
 	req.Header.Set("Content-Type", "application/json")
 
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

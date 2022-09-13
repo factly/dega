@@ -1,6 +1,8 @@
 package podcast
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -9,6 +11,8 @@ import (
 
 // podcast model
 type podcast struct {
+	CreatedAt         time.Time      `json:"created_at"`
+	UpdatedAt         time.Time      `json:"updated_at"`
 	Title             string         `json:"title"  validate:"required,max=500"`
 	Slug              string         `json:"slug"`
 	Language          string         `json:"language"  validate:"required"`

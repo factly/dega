@@ -21,7 +21,7 @@ type Claim struct {
 	CheckedDate     *time.Time     `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`
 	ClaimSources    postgres.Jsonb `gorm:"column:claim_sources" json:"claim_sources" swaggertype:"primitive,string"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
-	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	ClaimantID      uint           `gorm:"column:claimant_id" json:"claimant_id"`
 	Claimant        Claimant       `json:"claimant"`
 	RatingID        uint           `gorm:"column:rating_id" json:"rating_id"`
@@ -32,7 +32,6 @@ type Claim struct {
 	ReviewSources   postgres.Jsonb `gorm:"column:review_sources" json:"review_sources" swaggertype:"primitive,string"`
 	MetaFields      postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
-	Space           *model.Space   `json:"space,omitempty"`
 	VideoID         *uint          `gorm:"column:video_id" json:"video_id"`
 	Video           *Video         `json:"video"`
 	EndTime         int            `gorm:"column:end_time" json:"end_time"`

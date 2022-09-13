@@ -70,7 +70,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).Order("posts.created_at " + sort)
 	var statusTemplate bool = false
@@ -242,7 +242,9 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	filters := ""
 
 	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' ",
+			"OR subtitle ILIKE '%", strings.ToLower(searchQuery), "%' ",
+			"OR excerpt ILIKE '%", strings.ToLower(searchQuery), "%' ")
 	}
 
 	if len(categoryIDs) > 0 {
@@ -283,7 +285,6 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
-
 	tx.Group("posts.id")
 
 	return filters

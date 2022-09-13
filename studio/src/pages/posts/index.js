@@ -241,7 +241,11 @@ function Posts({ formats }) {
       />
     </Space>
   ) : (
-    <FormatNotFound status="info" title="Article format not found" link="/formats/create" />
+    <FormatNotFound
+      status="info"
+      title="Article format not found"
+      link="/advanced/formats/create"
+    />
   );
 }
 

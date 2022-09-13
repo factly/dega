@@ -17,7 +17,7 @@ type Tag struct {
 	Slug             string          `gorm:"column:slug" json:"slug" validate:"required"`
 	Description      string          `gorm:"column:description" json:"description"`
 	BackgroundColour postgres.Jsonb  `gorm:"column:background_colour" json:"background_colour"`
-	HTMLDescription  string          `gorm:"column:html_description" json:"html_description"`
+	DescriptionHTML  string          `gorm:"column:description_html" json:"description_html"`
 	MetaFields       postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
 	Meta             postgres.Jsonb  `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string          `gorm:"column:header_code" json:"header_code"`

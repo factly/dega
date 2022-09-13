@@ -32,8 +32,8 @@ func (r *ratingResolver) TextColour(ctx context.Context, obj *models.Rating) (in
 	return obj.TextColour, nil
 }
 
-func (r *ratingResolver) HTMLDescription(ctx context.Context, obj *models.Rating) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *ratingResolver) DescriptionHTML(ctx context.Context, obj *models.Rating) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *ratingResolver) MetaFields(ctx context.Context, obj *models.Rating) (interface{}, error) {

@@ -34,6 +34,7 @@ type Space struct {
 	FooterCode        string         `gorm:"column:footer_code" json:"footer_code"`
 	MetaFields        postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	OrganisationID    int            `gorm:"column:organisation_id" json:"organisation_id"`
+	ApplicationID     uint           `gorm:"application_id" json:"application_id"`
 }
 
 // SpacePermission model
@@ -41,7 +42,6 @@ type SpacePermission struct {
 	config.Base
 	FactCheck bool   `gorm:"column:fact_check" json:"fact_check"`
 	SpaceID   uint   `gorm:"column:space_id" json:"space_id"`
-	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
 	Media     int64  `gorm:"column:media" json:"media"`
 	Posts     int64  `gorm:"column:posts" json:"posts"`
 	Podcast   bool   `gorm:"column:podcast" json:"podcast"`
@@ -49,6 +49,15 @@ type SpacePermission struct {
 	Videos    int64  `gorm:"column:videos" json:"videos"`
 }
 
+type KavachSpace struct {
+	config.Base
+	Name           string         `json:"name"`
+	Slug           string         `json:"slug"`
+	Description    string         `json:"description"`
+	ApplicationID  uint           `json:"application_id"`
+	OrganisationID uint           `json:"organisation_id"`
+	Metadata       postgres.Jsonb `json:"metadata"`
+}
 var spaceUser config.ContextKey = "space_user"
 var spacePermissionUser config.ContextKey = "space_perm_user"
 

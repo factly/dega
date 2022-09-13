@@ -20,7 +20,7 @@ type Post struct {
 	IsPage           bool           `gorm:"column:is_page" json:"is_page"`
 	Excerpt          string         `gorm:"column:excerpt" json:"excerpt"`
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb" swaggertype:"primitive,string"`
-	HTMLDescription  string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML  string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
@@ -37,7 +37,6 @@ type Post struct {
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
-	Space            *Space         `json:"space,omitempty"`
 }
 
 // PostAuthor model

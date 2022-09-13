@@ -5,7 +5,7 @@ go 1.18
 require (
 	github.com/99designs/gqlgen v0.17.12
 	github.com/DATA-DOG/go-sqlmock v1.5.0
-	github.com/factly/x v0.0.77
+	github.com/factly/x v0.0.84
 	github.com/gavv/httpexpect/v2 v2.2.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.1.1
