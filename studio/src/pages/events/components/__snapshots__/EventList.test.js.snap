@@ -228,7 +228,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/1/edit"
+                                      href="/admin/events/1/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -274,7 +274,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/2/edit"
+                                      href="/admin/events/2/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -438,7 +438,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/1/edit"
+                                            href="/admin/events/1/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -484,7 +484,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/2/edit"
+                                            href="/admin/events/2/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -907,10 +907,10 @@ exports[`Event List component snapshot testing should match component when loadi
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/1/edit"
+                                            to="/admin/events/1/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/1/edit"
+                                              href="/admin/events/1/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -919,7 +919,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                               }
                                             >
                                               <a
-                                                href="/events/1/edit"
+                                                href="/admin/events/1/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
@@ -1726,10 +1726,10 @@ exports[`Event List component snapshot testing should match component when loadi
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/2/edit"
+                                            to="/admin/events/2/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/2/edit"
+                                              href="/admin/events/2/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -1738,7 +1738,7 @@ exports[`Event List component snapshot testing should match component when loadi
                                               }
                                             >
                                               <a
-                                                href="/events/2/edit"
+                                                href="/admin/events/2/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
@@ -3117,7 +3117,7 @@ exports[`Event List component snapshot testing should match component with event
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/1/edit"
+                                      href="/admin/events/1/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -3163,7 +3163,7 @@ exports[`Event List component snapshot testing should match component with event
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/2/edit"
+                                      href="/admin/events/2/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -3327,7 +3327,7 @@ exports[`Event List component snapshot testing should match component with event
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/1/edit"
+                                            href="/admin/events/1/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -3373,7 +3373,7 @@ exports[`Event List component snapshot testing should match component with event
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/2/edit"
+                                            href="/admin/events/2/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -3796,10 +3796,10 @@ exports[`Event List component snapshot testing should match component with event
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/1/edit"
+                                            to="/admin/events/1/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/1/edit"
+                                              href="/admin/events/1/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -3808,7 +3808,7 @@ exports[`Event List component snapshot testing should match component with event
                                               }
                                             >
                                               <a
-                                                href="/events/1/edit"
+                                                href="/admin/events/1/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
@@ -4615,10 +4615,10 @@ exports[`Event List component snapshot testing should match component with event
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/2/edit"
+                                            to="/admin/events/2/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/2/edit"
+                                              href="/admin/events/2/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -4627,7 +4627,7 @@ exports[`Event List component snapshot testing should match component with event
                                               }
                                             >
                                               <a
-                                                href="/events/2/edit"
+                                                href="/admin/events/2/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
@@ -6006,7 +6006,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/1/edit"
+                                      href="/admin/events/1/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -6052,7 +6052,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                     class="ant-table-cell"
                                   >
                                     <a
-                                      href="/events/2/edit"
+                                      href="/admin/events/2/edit"
                                       style="margin-right: 8px;"
                                     >
                                       <p>
@@ -6216,7 +6216,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/1/edit"
+                                            href="/admin/events/1/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -6262,7 +6262,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                           class="ant-table-cell"
                                         >
                                           <a
-                                            href="/events/2/edit"
+                                            href="/admin/events/2/edit"
                                             style="margin-right: 8px;"
                                           >
                                             <p>
@@ -6685,10 +6685,10 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/1/edit"
+                                            to="/admin/events/1/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/1/edit"
+                                              href="/admin/events/1/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -6697,7 +6697,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                               }
                                             >
                                               <a
-                                                href="/events/1/edit"
+                                                href="/admin/events/1/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
@@ -7504,10 +7504,10 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                                 "marginRight": 8,
                                               }
                                             }
-                                            to="/events/2/edit"
+                                            to="/admin/events/2/edit"
                                           >
                                             <LinkAnchor
-                                              href="/events/2/edit"
+                                              href="/admin/events/2/edit"
                                               navigate={[Function]}
                                               style={
                                                 Object {
@@ -7516,7 +7516,7 @@ exports[`Event List component snapshot testing should render the component 1`] =
                                               }
                                             >
                                               <a
-                                                href="/events/2/edit"
+                                                href="/admin/events/2/edit"
                                                 onClick={[Function]}
                                                 style={
                                                   Object {
