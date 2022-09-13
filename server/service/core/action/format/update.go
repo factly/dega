@@ -132,6 +132,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["medium_id"] = nil
 	}
 
+
 	if format.CreatedAt.IsZero() {
 		updateMap["created_at"] = result.CreatedAt
 	}
@@ -139,6 +140,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if format.UpdatedAt.IsZero() {
 		updateMap["updated_at"] = time.Now()
 	}
+
 
 	tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result)
 
@@ -159,11 +161,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("format.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("format.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("format.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

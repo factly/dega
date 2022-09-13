@@ -131,11 +131,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("policy.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("policy.updated", strconv.Itoa(spaceID), r) {
+			if err = util.NC.Publish("policy.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

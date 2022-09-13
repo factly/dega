@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 
+
 	"github.com/factly/x/loggerx"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
@@ -179,11 +180,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("category.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("category.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("category.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

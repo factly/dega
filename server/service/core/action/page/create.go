@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
@@ -205,10 +206,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("page.created", result); err != nil {
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
-			return
+		if util.CheckWebhookEvent("page.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("page.created", result); err != nil {
+				errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

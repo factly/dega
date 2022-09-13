@@ -6,6 +6,7 @@ import (
 	"errors"
 	"net/http"
 
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
@@ -158,11 +159,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("claimant.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("claimant.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("claimant.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

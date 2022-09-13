@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
+
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -106,7 +107,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	post.SpaceID = uint(sID)
 
-	result, errMessage := createPost(r.Context(), post, status)
+	result, errMessage := createPost(r.Context(), post, status, r)
 
 	if errMessage.Code != 0 {
 		errorx.Render(w, errorx.Parser(errMessage))
@@ -116,7 +117,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusCreated, result)
 }
 
-func createPost(ctx context.Context, post post, status string) (*postData, errorx.Message) {
+func createPost(ctx context.Context, post post, status string, r *http.Request) (*postData, errorx.Message) {
 	result := &postData{}
 	result.Authors = make([]model.Author, 0)
 	result.Claims = make([]factCheckModel.Claim, 0)
@@ -365,14 +366,20 @@ func createPost(ctx context.Context, post post, status string) (*postData, error
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("post.created", result); err != nil {
-			return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+		if util.CheckWebhookEvent("post.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("post.created", result); err != nil {
+				return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+			}
+
 		}
 
 		if result.Post.Status == "publish" {
-			if err = util.NC.Publish("post.published", result); err != nil {
-				return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+			if util.CheckWebhookEvent("post.published", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.published", result); err != nil {
+					return nil, errorx.GetMessage("not able to publish event", http.StatusInternalServerError)
+				}
 			}
+
 		}
 	}
 

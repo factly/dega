@@ -463,30 +463,39 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("post.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
-		if result.Post.Status == "publish" {
-			if err = util.NC.Publish("post.published", result); err != nil {
+		if util.CheckWebhookEvent("post.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("post.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 				return
+			}
+		}
+
+		if result.Post.Status == "publish" {
+			if util.CheckWebhookEvent("post.published", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.published", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 		if oldStatus == "publish" && (result.Post.Status == "draft" || result.Post.Status == "ready") {
-			if err = util.NC.Publish("post.unpublished", result); err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+			if util.CheckWebhookEvent("post.unpublished", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.unpublished", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 		if (oldStatus == "publish" || oldStatus == "draft") && result.Post.Status == "ready" {
-			if err = util.NC.Publish("post.ready", result); err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+			if util.CheckWebhookEvent("post.ready", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.ready", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 	}

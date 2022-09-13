@@ -255,6 +255,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 
+
 	if util.CheckNats() {
 		if err = util.NC.Publish("space.created", spaceObjectforDega); err != nil {
 			loggerx.Error(err)
@@ -264,4 +265,5 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	renderx.JSON(w, http.StatusCreated, spaceObjectforDega)
+
 }

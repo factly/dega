@@ -235,8 +235,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 			_ = meilisearchx.UpdateDocument("dega", meiliObj)
 		}
 
-		tx.Commit()
-		if util.CheckNats() {
+
+	tx.Commit()
+	if util.CheckNats() {
+		if util.CheckWebhookEvent("episode.updated", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("episode.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
