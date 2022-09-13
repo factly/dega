@@ -102,12 +102,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("space.deleted", strconv.Itoa(sID), r) {
-			if err = util.NC.Publish("space.deleted", result); err != nil {
+			if err = util.NC.Publish("space.deleted", spaceObjectforDega); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 				return
 			}
-}
+		}
 	}
 
 	err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
