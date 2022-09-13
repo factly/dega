@@ -6,14 +6,13 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
-	"strconv"
+
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
+	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -93,21 +92,33 @@ func create(w http.ResponseWriter, r *http.Request) {
 		podcastID = nil
 	}
 
-	// Store HTML description
-	var description string
-	if len(episode.Description.RawMessage) > 0 && !reflect.DeepEqual(episode.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(episode.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(episode.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse episode description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(episode.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
+
 	result := &episodeData{}
 	result.Episode = model.Episode{
+		Base: config.Base{
+			CreatedAt: episode.CreatedAt,
+			UpdatedAt: episode.UpdatedAt,
+		},
 		Title:           episode.Title,
-		Description:     episode.Description,
-		HTMLDescription: description,
+		Description:     jsonDescription,
+		DescriptionHTML: descriptionHTML,
 		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
 		Season:          episode.Season,
 		Episode:         episode.Episode,

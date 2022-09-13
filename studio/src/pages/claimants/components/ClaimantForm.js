@@ -90,6 +90,7 @@ const ClaimantForm = ({ onCreate, data = {} }) => {
                   placeholder: 'Enter Description...',
                   basic: true,
                 }}
+                initialValue={data.description?.json}
               />
             </Col>
           </Row>

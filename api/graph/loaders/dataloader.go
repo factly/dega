@@ -3,6 +3,7 @@ package loaders
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,6 +14,7 @@ import (
 	"github.com/factly/dega-api/graph/models"
 	"github.com/factly/dega-api/graph/validator"
 	"github.com/factly/dega-api/util"
+	"github.com/factly/x/requestx"
 	"github.com/spf13/viper"
 )
 
@@ -305,38 +307,37 @@ func DataloaderMiddleware(next http.Handler) http.Handler {
 					return nil, nil
 				}
 
-				space := &models.Space{}
-				space.ID = sID
+				spaceToken, err := validator.GetSpaceToken(rctx)
+				if err != nil {
+					return nil, []error{errors.New("space token not there")}
+				}
 
-				config.DB.First(space)
+				url := fmt.Sprint(viper.GetString("kavach_url"), "/users/space/", sID)
+
+				resp, err := requestx.Request("GET", url, nil, map[string]string{
+					"Content-Type":  "application/json",
+					"X-Space-Token": spaceToken,
+				})
+				if err != nil {
+					return nil, []error{errors.New("space token not there")}
+				}
 
 				keys := util.Converter(ids)
 
 				result := make([]*models.User, 0)
 
 				userMap := make(map[uint]models.User)
-				url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", space.OrganisationID, "/users")
-
-				req, err := http.NewRequest("GET", url, nil)
-				if err != nil {
-					return result, nil
-				}
-				req.Header.Set("Content-Type", "application/json")
-				req.Header.Set("X-User", fmt.Sprint(keys[0]))
-				client := &http.Client{}
-				resp, err := client.Do(req)
-
-				if err != nil {
-					return result, nil
-				}
 
 				defer resp.Body.Close()
-
+				spaceUsers := models.UsersPaging{}
 				users := []models.User{}
-				err = json.NewDecoder(resp.Body).Decode(&users)
-
+				err = json.NewDecoder(resp.Body).Decode(&spaceUsers)
 				if err != nil {
 					return result, nil
+				}
+
+				for _, spaceUser := range spaceUsers.Nodes {
+					users = append(users, *spaceUser)
 				}
 
 				for _, u := range users {

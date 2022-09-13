@@ -88,7 +88,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				}
 			}
 		} else {
-			err = tx.Where("name ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+			err = tx.Where("name ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Or("description ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.DBError()))

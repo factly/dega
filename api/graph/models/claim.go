@@ -19,7 +19,7 @@ type Claim struct {
 	CheckedDate     *time.Time      `gorm:"column:checked_date" json:"checked_date" sql:"DEFAULT:NULL"`
 	ClaimSources    postgres.Jsonb  `gorm:"column:claim_sources" json:"claim_sources"`
 	Description     postgres.Jsonb  `gorm:"column:description" json:"description"`
-	HTMLDescription string          `gorm:"column:html_description" json:"html_description"`
+	DescriptionHTML string          `gorm:"column:description_html" json:"description_html"`
 	ClaimantID      uint            `gorm:"column:claimant_id" json:"claimant_id"`
 	Claimant        *Claimant       `gorm:"foreignKey:claimant_id" json:"claimant,omitempty"`
 	RatingID        uint            `gorm:"column:rating_id" json:"rating_id"`

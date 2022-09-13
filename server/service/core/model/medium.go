@@ -56,7 +56,11 @@ func (media *Medium) AfterCreate(tx *gorm.DB) (err error) {
 		_ = json.Unmarshal(media.URL.RawMessage, &resurl)
 		if rawURL, found := resurl["raw"]; found {
 			urlObj, _ := url.Parse(rawURL.(string))
-			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, "/dega.factly.in", "", 1)
+			bucket_name := ""
+			if viper.IsSet("bucket_name") {
+				bucket_name = viper.GetString("bucket_name") + "/"
+			}
+			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, bucket_name, "", 1)
 
 			rawBArr, _ := json.Marshal(resurl)
 			media.URL = postgres.Jsonb{
@@ -74,7 +78,11 @@ func (media *Medium) AfterFind(tx *gorm.DB) (err error) {
 		_ = json.Unmarshal(media.URL.RawMessage, &resurl)
 		if rawURL, found := resurl["raw"]; found {
 			urlObj, _ := url.Parse(rawURL.(string))
-			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, "/dega.factly.in", "", 1)
+			bucket_name := ""
+			if viper.IsSet("bucket_name") {
+				bucket_name = viper.GetString("bucket_name") + "/"
+			}
+			resurl["proxy"] = strings.Replace(viper.GetString("imageproxy_url")+urlObj.Path, bucket_name, "", 1)
 
 			rawBArr, _ := json.Marshal(resurl)
 			media.URL = postgres.Jsonb{

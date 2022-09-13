@@ -36,10 +36,6 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		return nil, nil
 	}
 
-	oID, err := validator.GetOrganisation(ctx)
-	if err != nil {
-		return nil, nil
-	}
 
 	posts := make([]models.Post, 0)
 
@@ -62,18 +58,21 @@ func (r *queryResolver) Users(ctx context.Context, page *int, limit *int) (*mode
 		return nil, nil
 	}
 
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/application?application=dega")
+	spaceToken, err := validator.GetSpaceToken(ctx)
+	if err != nil {
+		return nil, errors.New("space token not there")
+	}
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/users/space/", sID)
 
 	resp, err := requestx.Request("GET", url, nil, map[string]string{
-		"Content-Type":   "application/json",
-		"X-User":         fmt.Sprint(postAuthor.AuthorID),
-		"X-Organisation": fmt.Sprint(oID),
+		"Content-Type":  "application/json",
+		"X-Space-Token": spaceToken,
 	})
 
 	if err != nil {
-		return nil, nil
+		return nil, err
 	}
-
+	
 	defer resp.Body.Close()
 
 	usersResp := models.UsersPaging{}

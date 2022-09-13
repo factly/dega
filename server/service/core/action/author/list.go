@@ -11,6 +11,7 @@ import (
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
@@ -52,10 +53,24 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	applicationID, err := util.GetApplicationID(uint(uID), "dega")
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
+	sID, err := middlewarex.GetSpace(r.Context())
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
+		return
+	}
+
 	result := paging{}
 	result.Nodes = make([]model.Author, 0)
 
-	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/users")
+	url := fmt.Sprint(viper.GetString("kavach_url"), "/organisations/", oID, "/applications/", applicationID, "/spaces/", sID, "/users")
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -66,7 +81,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", strconv.Itoa(uID))
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
 
 	if err != nil {

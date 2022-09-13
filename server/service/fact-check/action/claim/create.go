@@ -5,12 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
-	"strconv"
+
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -19,6 +17,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -89,13 +88,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Store HTML description
-	var description string
-	if len(claim.Description.RawMessage) > 0 && !reflect.DeepEqual(claim.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(claim.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(claim.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(claim.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse claim description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -106,13 +112,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Claim{
+		Base: config.Base{
+			CreatedAt: claim.CreatedAt,
+			UpdatedAt: claim.UpdatedAt,
+		},
 		Claim:           claim.Claim,
 		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
 		ClaimDate:       claim.ClaimDate,
 		CheckedDate:     claim.CheckedDate,
 		ClaimSources:    claim.ClaimSources,
-		Description:     claim.Description,
-		HTMLDescription: description,
+		Description:     jsonDescription,
+		DescriptionHTML: descriptionHTML,
 		ClaimantID:      claim.ClaimantID,
 		RatingID:        claim.RatingID,
 		Fact:            claim.Fact,

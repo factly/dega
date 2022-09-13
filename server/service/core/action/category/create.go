@@ -5,15 +5,14 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
-	"strconv"
+
 
 	"github.com/factly/x/loggerx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/meilisearchx"
@@ -113,21 +112,33 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(category.Description.RawMessage) > 0 && !reflect.DeepEqual(category.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(category.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(category.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(category.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse category description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(category.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	result := &model.Category{
+		Base: config.Base{
+			CreatedAt: category.CreatedAt,
+			UpdatedAt: category.UpdatedAt,
+		},
 		Name:             category.Name,
-		Description:      category.Description,
+		Description:      jsonDescription,
 		BackgroundColour: category.BackgroundColour,
-		HTMLDescription:  description,
+		DescriptionHTML:  descriptionHTML,
 		Slug:             slugx.Approve(&config.DB, categorySlug, sID, tableName),
 		ParentID:         parentID,
 		MediumID:         mediumID,

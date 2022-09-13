@@ -33,7 +33,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 
 	err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
 		SpaceID: uint(sID),
-	}).Preload("Space").First(&result).Error
+	}).First(&result).Error
 
 	if err != nil {
 		loggerx.Error(err)

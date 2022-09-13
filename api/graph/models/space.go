@@ -35,3 +35,16 @@ type Space struct {
 	MetaFields        postgres.Jsonb  `gorm:"column:meta_fields" json:"meta_fields"`
 	OrganisationID    int             `gorm:"column:organisation_id" json:"organisation_id"`
 }
+
+type KavachSpace struct {
+	ID             uint            `gorm:"primary_key" json:"id"`
+	CreatedAt      time.Time       `json:"created_at"`
+	UpdatedAt      time.Time       `json:"updated_at"`
+	DeletedAt      *gorm.DeletedAt `sql:"index" json:"deleted_at"`
+	Name           string          `json:"name"`
+	Slug           string          `json:"slug"`
+	Description    string          `json:"description"`
+	ApplicationID  uint            `json:"application_id"`
+	OrganisationID uint            `json:"organisation_id"`
+	Metadata       postgres.Jsonb  `json:"metadata"`
+}

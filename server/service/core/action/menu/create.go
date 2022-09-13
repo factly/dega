@@ -88,6 +88,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result := &model.Menu{
+		Base: config.Base{
+			CreatedAt: menu.CreatedAt,
+			UpdatedAt: menu.UpdatedAt,
+		},
 		Name:       menu.Name,
 		Menu:       menu.Menu,
 		Slug:       slugx.Approve(&config.DB, menuSlug, sID, tableName),

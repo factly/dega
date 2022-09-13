@@ -114,13 +114,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx := config.DB.Begin()
 
-	err = tx.Model(&result).Updates(model.Menu{
-		Base:       config.Base{UpdatedByID: uint(uID)},
-		Name:       menu.Name,
-		Slug:       menuSlug,
-		Menu:       menu.Menu,
-		MetaFields: menu.MetaFields,
-	}).First(&result).Error
+	updateMap := map[string]interface{}{
+		"created_at":    menu.CreatedAt,
+		"updated_at":    menu.UpdatedAt,
+		"updated_by_id": uint(uID),
+		"name":          menu.Name,
+		"slug":          menuSlug,
+		"menu":          menu.Menu,
+		"meta_fields":   menu.MetaFields,
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).First(&result).Error
 
 	if err != nil {
 		tx.Rollback()

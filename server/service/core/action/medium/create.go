@@ -110,6 +110,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		tableName := stmt.Schema.Table
 
 		med := model.Medium{
+			Base: config.Base{
+				CreatedAt: medium.CreatedAt,
+				UpdatedAt: medium.UpdatedAt,
+			},
 			Name:        medium.Name,
 			Slug:        slugx.Approve(&config.DB, mediumSlug, sID, tableName),
 			Title:       medium.Title,

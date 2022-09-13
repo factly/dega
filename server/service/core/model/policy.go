@@ -1,5 +1,7 @@
 package model
 
+import "github.com/factly/dega-server/config"
+
 // KetoPolicy model
 type KetoPolicy struct {
 	ID          string   `json:"id"`
@@ -29,4 +31,13 @@ type Policy struct {
 	Description string       `json:"description"`
 	Permissions []Permission `json:"permissions"`
 	Users       []Author     `json:"users"`
+}
+
+type KavachPolicy struct {
+	config.Base
+	Name        string       `json:"name"`
+	Description string       `json:"description"`
+	Permissions []Permission `json:"permissions"`
+	Roles       []SpaceRole  `json:"roles"`
+	SpaceID     uint         `json:"space_id"`
 }

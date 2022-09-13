@@ -13,6 +13,19 @@ type policyReq struct {
 	Users       []string           `json:"users"`
 }
 
+type kavachPolicy struct {
+	Name        string             `json:"name"`
+	Description string             `json:"description"`
+	Permissions []model.Permission `json:"permissions"`
+	Roles       []uint             `json:"roles"`
+}
+
+type roleReq struct {
+	Name        string `json:"name"`
+	Slug        string `json:"slug"`
+	Description string `json:"description"`
+}
+
 // Router - Group of medium router
 func Router() chi.Router {
 	r := chi.NewRouter()

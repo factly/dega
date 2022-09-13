@@ -31,7 +31,6 @@ type SpacePermissionRequest struct {
 	Podcast   bool   `gorm:"column:podcast" json:"podcast"`
 	FactCheck bool   `gorm:"column:fact_check" json:"fact_check"`
 	SpaceID   uint   `gorm:"column:space_id" json:"space_id"`
-	Space     *Space `gorm:"foreignKey:space_id" json:"space,omitempty"`
 }
 
 var spaceRequestUser config.ContextKey = "space_perm_user"

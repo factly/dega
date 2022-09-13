@@ -27,8 +27,8 @@ func (r *tagResolver) SpaceID(ctx context.Context, obj *models.Tag) (int, error)
 	return int(obj.SpaceID), nil
 }
 
-func (r *tagResolver) HTMLDescription(ctx context.Context, obj *models.Tag) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *tagResolver) DescriptionHTML(ctx context.Context, obj *models.Tag) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 
 func (r *tagResolver) BackgroundColour(ctx context.Context, obj *models.Tag) (interface{}, error) {
@@ -172,7 +172,7 @@ func (r *queryResolver) FeaturedTags(ctx context.Context, featuredCount int, pos
 		SpaceID:    sID,
 		IsFeatured: true,
 	}).Limit(featuredCount).Find(&result.Nodes).Error
-	if err != nil{
+	if err != nil {
 		return nil, err
 	}
 

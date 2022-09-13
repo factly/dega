@@ -98,7 +98,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&template.Post)
+	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template.Post)
 
 	if template.Post.Format.Slug == "fact-check" {
 
