@@ -21,7 +21,7 @@ type Episode struct {
 	PodcastID       *uint          `gorm:"column:podcast_id" json:"podcast_id"`
 	Podcast         *Podcast       `json:"podcast"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
-	HTMLDescription string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	PublishedDate   *time.Time     `gorm:"column:published_date" json:"published_date" sql:"DEFAULT:NULL"`
 	MediumID        *uint          `gorm:"column:medium_id;default:NULL" json:"medium_id"`
 	Medium          *model.Medium  `json:"medium"`
@@ -30,7 +30,6 @@ type Episode struct {
 	HeaderCode      string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode      string         `gorm:"column:footer_code" json:"footer_code"`
 	SpaceID         uint           `gorm:"column:space_id" json:"space_id"`
-	Space           *model.Space   `json:"space,omitempty"`
 }
 
 // EpisodeAuthor model

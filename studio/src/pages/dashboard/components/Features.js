@@ -60,7 +60,9 @@ function Features() {
     policiesLoading,
     events,
     eventsLoading,
-  } = useSelector(({ ratings, formats, policies, events }) => {
+    validServices,
+    loadingServices,
+  } = useSelector(({ ratings, formats, policies, events, spaces }) => {
     return {
       ratings: Object.keys(ratings.details).length,
       ratingsLoading: ratings.loading,
@@ -70,8 +72,34 @@ function Features() {
       policiesLoading: policies.loading,
       events: Object.keys(events.details).length,
       eventsLoading: events.loading,
+      validServices: spaces.details[spaces.selected].services?.length
+        ? spaces.details[spaces.selected].services
+        : [],
+      loadingServices: spaces.loading,
     };
   });
+
+  React.useEffect(() => {
+    fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const fetchEntities = () => {
+    if (!loadingServices && validServices?.includes('fact-checking')) {
+      dispatch(getRatings());
+    }
+    dispatch(getFormats());
+    dispatch(getPolicies());
+  };
+
+  React.useEffect(() => {
+    if (superOrg.is_admin) {
+      fetchEvents();
+    }
+  }, [superOrg.is_admin]);
+
+  const fetchEvents = () => {
+    dispatch(getEvents());
+  };
 
   return (
     <>
@@ -83,7 +111,8 @@ function Features() {
       ) : null}
 
       <Space>
-        {ratingsLoading ? null : ratings > 0 ? null : (
+        {ratingsLoading && loadingServices ? null : ratings > 0 ||
+          !validServices.includes('fact-checking') ? null : (
           <Card
             title="Ratings"
             actions={[

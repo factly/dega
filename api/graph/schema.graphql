@@ -30,7 +30,7 @@ type Category {
 	is_featured: Boolean
 	posts: PostsPaging
 	background_colour: Any
-	html_description: String
+	description_html: String
 	meta_fields: Any
 	parent_id: Int
 	medium: Medium
@@ -47,7 +47,7 @@ type Tag {
 	name: String!
 	slug: String!
 	description: String
-	html_description: String
+	description_html: String
 	is_featured: Boolean
 	posts: PostsPaging
 	meta_fields: Any
@@ -102,7 +102,7 @@ type Post {
 	status: String!
 	excerpt: String
 	description: Any
-	html_description: String
+	description_html: String
 	is_featured: Boolean
 	is_sticky: Boolean
 	is_highlighted: Boolean
@@ -148,7 +148,7 @@ type Rating {
 	description: Any
 	background_colour: Any
 	text_colour: Any
-	html_description: String
+	description_html: String
 	numeric_value: Int!
 	medium: Medium
 	meta_fields: Any
@@ -165,7 +165,7 @@ type Claimant {
 	name: String!
 	slug: String!
 	description: Any
-	html_description: String
+	description_html: String
 	tag_line: String
 	medium: Medium
 	meta_fields: Any
@@ -185,7 +185,7 @@ type Claim {
 	checked_date: Time
 	claim_sources: Any
 	description: Any
-	html_description: String
+	description_html: String
 	fact: String
 	review_sources: Any
 	rating: Rating!
@@ -260,6 +260,8 @@ type Sitemap {
 	slug: String!
 	id: ID!
 	created_at: Time
+	published_date: Time
+	updated_at: Time
 }
 
 type Sitemaps {

@@ -32,6 +32,7 @@ import (
 // @Param user_id path string true "User ID"
 // @Success 200 {object} []model.Permission
 // @Router /core/users/{user_id}/permissions [get]
+
 func userpermissions(w http.ResponseWriter, r *http.Request) {
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
@@ -62,11 +63,13 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
 		return
 	}
-
+	isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InvalidID()))
+		return
+	}
 	var result []model.Permission
-
-	// check if the user is admin of organisation
-	isAdmin := util.CheckSpaceKetoPermission("all", uint(oID), uint(uID))
 
 	// fetch all the keto policies
 	policyList, err := policy.GetAllPolicies()
@@ -76,15 +79,15 @@ func userpermissions(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if isAdmin == nil {
+	if isAdmin {
 		// logged user is admin and user_id is also admin's
 		if id == uID {
-			allPermission := []model.Permission{
+			allPermission := append([]model.Permission{},
 				model.Permission{
 					Resource: "admin",
 					Actions:  []string{"admin"},
-				},
-			}
+				})
+
 			renderx.JSON(w, http.StatusOK, allPermission)
 			return
 		}

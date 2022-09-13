@@ -8,6 +8,7 @@ import CategoryList from './components/CategoryList';
 import Loader from '../../components/Loader';
 import { getCategories } from '../../actions/categories';
 import getUrlParams from '../../utils/getUrlParams';
+import Filters from '../../utils/filters';
 
 function Categories({ permission }) {
   const { actions } = permission;
@@ -15,14 +16,14 @@ function Categories({ permission }) {
   const location = useLocation();
   const history = useHistory();
   const query = new URLSearchParams(location.search);
-
   const params = getUrlParams(query);
   const [filters, setFilters] = React.useState({
     ...params,
   });
-
   const pathName = useLocation().pathname;
-
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [params]);
   useEffect(() => {
     history.push({
       pathname: pathName,
@@ -78,6 +79,11 @@ function Categories({ permission }) {
         style={{ width: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
+            if (changedValues.q === '') {
+              const { q, ...filtersWithoutQuery } = filters;
+              setFilters({ ...filtersWithoutQuery });
+              return;
+            }
             setFilters({ ...filters, ...changedValues });
           }
         }}

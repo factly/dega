@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 function Media({ permission }) {
   const { actions } = permission;
@@ -45,7 +46,9 @@ function Media({ permission }) {
       };
     return { media: [], total: 0, loading: state.media.loading };
   });
-
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [params]);
   React.useEffect(() => {
     fetchMedia();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -79,6 +82,11 @@ function Media({ permission }) {
         style={{ width: '100%', marginBottom: '1rem' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
+            if (changedValues.q === '') {
+              const { q, ...filtersWithoutQuery } = filters;
+              setFilters({ ...filtersWithoutQuery });
+              return;
+            }
             setFilters({ ...filters, ...changedValues });
           }
         }}

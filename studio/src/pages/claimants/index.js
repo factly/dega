@@ -9,6 +9,7 @@ import deepEqual from 'deep-equal';
 import getUrlParams from '../../utils/getUrlParams';
 import Loader from '../../components/Loader';
 import { Helmet } from 'react-helmet';
+import Filters from '../../utils/filters';
 
 function Claimants({ permission }) {
   const { actions } = permission;
@@ -45,7 +46,9 @@ function Claimants({ permission }) {
       };
     return { claimants: [], total: 0, loading: state.claimants.loading };
   });
-
+  useEffect(() => {
+    if (form) form.setFieldsValue(new Filters(params));
+  }, [params]);
   React.useEffect(() => {
     fetchClaimants();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -78,6 +81,11 @@ function Claimants({ permission }) {
         style={{ maxWidth: '100%' }}
         onValuesChange={(changedValues, allValues) => {
           if (!changedValues.q) {
+            if (changedValues.q === '') {
+              const { q, ...filtersWithoutQuery } = filters;
+              setFilters({ ...filtersWithoutQuery });
+              return;
+            }
             setFilters({ ...filters, ...changedValues });
           }
         }}

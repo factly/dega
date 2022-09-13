@@ -118,7 +118,7 @@ func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
 			Created:     *post.PublishedDate,
 			Updated:     post.UpdatedAt,
 			Description: post.Excerpt,
-			Content:     post.HTMLDescription,
+			Content:     post.DescriptionHTML,
 		}
 		authorName := fmt.Sprint(author.FirstName, " ", author.LastName)
 		if authorName != " " {

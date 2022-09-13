@@ -6,12 +6,11 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
+
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -20,6 +19,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -86,25 +86,37 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Store HTML description
-	var description string
-	if len(page.Description.RawMessage) > 0 && !reflect.DeepEqual(page.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(page.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(page.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(page.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(page.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	result.Post = model.Post{
+		Base: config.Base{
+			CreatedAt: page.CreatedAt,
+			UpdatedAt: page.UpdatedAt,
+		},
 		Title:            page.Title,
 		Slug:             slugx.Approve(&config.DB, postSlug, sID, tableName),
 		Status:           page.Status,
 		IsPage:           true,
 		Subtitle:         page.Subtitle,
 		Excerpt:          page.Excerpt,
-		Description:      page.Description,
-		HTMLDescription:  description,
+		Description:      jsonDescription,
+		DescriptionHTML:  descriptionHTML,
 		IsHighlighted:    page.IsHighlighted,
 		IsSticky:         page.IsSticky,
 		FeaturedMediumID: featuredMediumID,
@@ -194,10 +206,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("page.created", result); err != nil {
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
-			return
+		if util.CheckWebhookEvent("page.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("page.created", result); err != nil {
+				errorx.Render(w, errorx.Parser(errorx.GetMessage("not able to publish event", http.StatusInternalServerError)))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

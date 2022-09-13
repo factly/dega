@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"reflect"
+	"strconv"
 
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
@@ -67,7 +68,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hukzURL := viper.GetString("hukz_url") + "/webhooks"
+	hukzURL := viper.GetString("hukz_url") + "/webhooks/space/" + strconv.Itoa(sID)
 
 	resp, err := requestx.Request("POST", hukzURL, webhook, map[string]string{
 		"X-User": fmt.Sprint(uID),

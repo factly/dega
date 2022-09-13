@@ -1,6 +1,8 @@
 package claimant
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
@@ -9,6 +11,8 @@ import (
 
 // claimant model
 type claimant struct {
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 	Name        string         `json:"name" validate:"required,max=500"`
 	Slug        string         `json:"slug"`
 	IsFeatured  bool           `json:"is_featured"`

@@ -46,6 +46,7 @@ type ResolverRoot interface {
 	Post() PostResolver
 	Query() QueryResolver
 	Rating() RatingResolver
+	Sitemap() SitemapResolver
 	Sitemaps() SitemapsResolver
 	Space() SpaceResolver
 	Tag() TagResolver
@@ -65,8 +66,8 @@ type ComplexityRoot struct {
 		BackgroundColour func(childComplexity int) int
 		CreatedAt        func(childComplexity int) int
 		Description      func(childComplexity int) int
+		DescriptionHTML  func(childComplexity int) int
 		FooterCode       func(childComplexity int) int
-		HTMLDescription  func(childComplexity int) int
 		HeaderCode       func(childComplexity int) int
 		ID               func(childComplexity int) int
 		IsFeatured       func(childComplexity int) int
@@ -89,10 +90,10 @@ type ComplexityRoot struct {
 		Claimant        func(childComplexity int) int
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		DescriptionHTML func(childComplexity int) int
 		EndTime         func(childComplexity int) int
 		Fact            func(childComplexity int) int
 		FooterCode      func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
 		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Medium          func(childComplexity int) int
@@ -109,8 +110,8 @@ type ComplexityRoot struct {
 	Claimant struct {
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		DescriptionHTML func(childComplexity int) int
 		FooterCode      func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
 		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Medium          func(childComplexity int) int
@@ -193,10 +194,10 @@ type ComplexityRoot struct {
 		Claims          func(childComplexity int) int
 		CreatedAt       func(childComplexity int) int
 		Description     func(childComplexity int) int
+		DescriptionHTML func(childComplexity int) int
 		Excerpt         func(childComplexity int) int
 		FooterCode      func(childComplexity int) int
 		Format          func(childComplexity int) int
-		HTMLDescription func(childComplexity int) int
 		HeaderCode      func(childComplexity int) int
 		ID              func(childComplexity int) int
 		IsFeatured      func(childComplexity int) int
@@ -250,8 +251,8 @@ type ComplexityRoot struct {
 		BackgroundColour func(childComplexity int) int
 		CreatedAt        func(childComplexity int) int
 		Description      func(childComplexity int) int
+		DescriptionHTML  func(childComplexity int) int
 		FooterCode       func(childComplexity int) int
-		HTMLDescription  func(childComplexity int) int
 		HeaderCode       func(childComplexity int) int
 		ID               func(childComplexity int) int
 		Medium           func(childComplexity int) int
@@ -281,9 +282,11 @@ type ComplexityRoot struct {
 	}
 
 	Sitemap struct {
-		CreatedAt func(childComplexity int) int
-		ID        func(childComplexity int) int
-		Slug      func(childComplexity int) int
+		CreatedAt     func(childComplexity int) int
+		ID            func(childComplexity int) int
+		PublishedDate func(childComplexity int) int
+		Slug          func(childComplexity int) int
+		UpdatedAt     func(childComplexity int) int
 	}
 
 	Sitemaps struct {
@@ -323,8 +326,8 @@ type ComplexityRoot struct {
 		BackgroundColour func(childComplexity int) int
 		CreatedAt        func(childComplexity int) int
 		Description      func(childComplexity int) int
+		DescriptionHTML  func(childComplexity int) int
 		FooterCode       func(childComplexity int) int
-		HTMLDescription  func(childComplexity int) int
 		HeaderCode       func(childComplexity int) int
 		ID               func(childComplexity int) int
 		IsFeatured       func(childComplexity int) int
@@ -483,6 +486,9 @@ type RatingResolver interface {
 
 	SpaceID(ctx context.Context, obj *models.Rating) (int, error)
 }
+type SitemapResolver interface {
+	PublishedDate(ctx context.Context, obj *models.Sitemap) (*time.Time, error)
+}
 type SitemapsResolver interface {
 	Categories(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
 	Tags(ctx context.Context, obj *models.Sitemaps) ([]*models.Sitemap, error)
@@ -572,19 +578,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Category.Description(childComplexity), true
 
+	case "Category.description_html":
+		if e.complexity.Category.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Category.DescriptionHTML(childComplexity), true
+
 	case "Category.footer_code":
 		if e.complexity.Category.FooterCode == nil {
 			break
 		}
 
 		return e.complexity.Category.FooterCode(childComplexity), true
-
-	case "Category.html_description":
-		if e.complexity.Category.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Category.HTMLDescription(childComplexity), true
 
 	case "Category.header_code":
 		if e.complexity.Category.HeaderCode == nil {
@@ -719,6 +725,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claim.Description(childComplexity), true
 
+	case "Claim.description_html":
+		if e.complexity.Claim.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Claim.DescriptionHTML(childComplexity), true
+
 	case "Claim.end_time":
 		if e.complexity.Claim.EndTime == nil {
 			break
@@ -739,13 +752,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Claim.FooterCode(childComplexity), true
-
-	case "Claim.html_description":
-		if e.complexity.Claim.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Claim.HTMLDescription(childComplexity), true
 
 	case "Claim.header_code":
 		if e.complexity.Claim.HeaderCode == nil {
@@ -838,19 +844,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Claimant.Description(childComplexity), true
 
+	case "Claimant.description_html":
+		if e.complexity.Claimant.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Claimant.DescriptionHTML(childComplexity), true
+
 	case "Claimant.footer_code":
 		if e.complexity.Claimant.FooterCode == nil {
 			break
 		}
 
 		return e.complexity.Claimant.FooterCode(childComplexity), true
-
-	case "Claimant.html_description":
-		if e.complexity.Claimant.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Claimant.HTMLDescription(childComplexity), true
 
 	case "Claimant.header_code":
 		if e.complexity.Claimant.HeaderCode == nil {
@@ -1258,6 +1264,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Post.Description(childComplexity), true
 
+	case "Post.description_html":
+		if e.complexity.Post.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Post.DescriptionHTML(childComplexity), true
+
 	case "Post.excerpt":
 		if e.complexity.Post.Excerpt == nil {
 			break
@@ -1278,13 +1291,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Post.Format(childComplexity), true
-
-	case "Post.html_description":
-		if e.complexity.Post.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Post.HTMLDescription(childComplexity), true
 
 	case "Post.header_code":
 		if e.complexity.Post.HeaderCode == nil {
@@ -1679,19 +1685,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Rating.Description(childComplexity), true
 
+	case "Rating.description_html":
+		if e.complexity.Rating.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Rating.DescriptionHTML(childComplexity), true
+
 	case "Rating.footer_code":
 		if e.complexity.Rating.FooterCode == nil {
 			break
 		}
 
 		return e.complexity.Rating.FooterCode(childComplexity), true
-
-	case "Rating.html_description":
-		if e.complexity.Rating.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Rating.HTMLDescription(childComplexity), true
 
 	case "Rating.header_code":
 		if e.complexity.Rating.HeaderCode == nil {
@@ -1847,12 +1853,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Sitemap.ID(childComplexity), true
 
+	case "Sitemap.published_date":
+		if e.complexity.Sitemap.PublishedDate == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.PublishedDate(childComplexity), true
+
 	case "Sitemap.slug":
 		if e.complexity.Sitemap.Slug == nil {
 			break
 		}
 
 		return e.complexity.Sitemap.Slug(childComplexity), true
+
+	case "Sitemap.updated_at":
+		if e.complexity.Sitemap.UpdatedAt == nil {
+			break
+		}
+
+		return e.complexity.Sitemap.UpdatedAt(childComplexity), true
 
 	case "Sitemaps.categories":
 		if e.complexity.Sitemaps.Categories == nil {
@@ -2064,19 +2084,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Tag.Description(childComplexity), true
 
+	case "Tag.description_html":
+		if e.complexity.Tag.DescriptionHTML == nil {
+			break
+		}
+
+		return e.complexity.Tag.DescriptionHTML(childComplexity), true
+
 	case "Tag.footer_code":
 		if e.complexity.Tag.FooterCode == nil {
 			break
 		}
 
 		return e.complexity.Tag.FooterCode(childComplexity), true
-
-	case "Tag.html_description":
-		if e.complexity.Tag.HTMLDescription == nil {
-			break
-		}
-
-		return e.complexity.Tag.HTMLDescription(childComplexity), true
 
 	case "Tag.header_code":
 		if e.complexity.Tag.HeaderCode == nil {
@@ -2360,7 +2380,7 @@ type Category {
 	is_featured: Boolean
 	posts: PostsPaging
 	background_colour: Any
-	html_description: String
+	description_html: String
 	meta_fields: Any
 	parent_id: Int
 	medium: Medium
@@ -2377,7 +2397,7 @@ type Tag {
 	name: String!
 	slug: String!
 	description: String
-	html_description: String
+	description_html: String
 	is_featured: Boolean
 	posts: PostsPaging
 	meta_fields: Any
@@ -2432,7 +2452,7 @@ type Post {
 	status: String!
 	excerpt: String
 	description: Any
-	html_description: String
+	description_html: String
 	is_featured: Boolean
 	is_sticky: Boolean
 	is_highlighted: Boolean
@@ -2478,7 +2498,7 @@ type Rating {
 	description: Any
 	background_colour: Any
 	text_colour: Any
-	html_description: String
+	description_html: String
 	numeric_value: Int!
 	medium: Medium
 	meta_fields: Any
@@ -2495,7 +2515,7 @@ type Claimant {
 	name: String!
 	slug: String!
 	description: Any
-	html_description: String
+	description_html: String
 	tag_line: String
 	medium: Medium
 	meta_fields: Any
@@ -2515,7 +2535,7 @@ type Claim {
 	checked_date: Time
 	claim_sources: Any
 	description: Any
-	html_description: String
+	description_html: String
 	fact: String
 	review_sources: Any
 	rating: Rating!
@@ -2590,6 +2610,8 @@ type Sitemap {
 	slug: String!
 	id: ID!
 	created_at: Time
+	published_date: Time
+	updated_at: Time
 }
 
 type Sitemaps {
@@ -3490,8 +3512,8 @@ func (ec *executionContext) fieldContext_CategoriesPaging_nodes(ctx context.Cont
 				return ec.fieldContext_Category_posts(ctx, field)
 			case "background_colour":
 				return ec.fieldContext_Category_background_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Category_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Category_description_html(ctx, field)
 			case "meta_fields":
 				return ec.fieldContext_Category_meta_fields(ctx, field)
 			case "parent_id":
@@ -3941,8 +3963,8 @@ func (ec *executionContext) fieldContext_Category_background_colour(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Category_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Category_html_description(ctx, field)
+func (ec *executionContext) _Category_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Category) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Category_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -3955,7 +3977,7 @@ func (ec *executionContext) _Category_html_description(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3969,7 +3991,7 @@ func (ec *executionContext) _Category_html_description(ctx context.Context, fiel
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Category_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Category_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Category",
 		Field:      field,
@@ -4682,8 +4704,8 @@ func (ec *executionContext) fieldContext_Claim_description(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Claim_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Claim_html_description(ctx, field)
+func (ec *executionContext) _Claim_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Claim) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Claim_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -4696,7 +4718,7 @@ func (ec *executionContext) _Claim_html_description(ctx context.Context, field g
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4710,7 +4732,7 @@ func (ec *executionContext) _Claim_html_description(ctx context.Context, field g
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Claim_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Claim_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Claim",
 		Field:      field,
@@ -4860,8 +4882,8 @@ func (ec *executionContext) fieldContext_Claim_rating(ctx context.Context, field
 				return ec.fieldContext_Rating_background_colour(ctx, field)
 			case "text_colour":
 				return ec.fieldContext_Rating_text_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Rating_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Rating_description_html(ctx, field)
 			case "numeric_value":
 				return ec.fieldContext_Rating_numeric_value(ctx, field)
 			case "medium":
@@ -4934,8 +4956,8 @@ func (ec *executionContext) fieldContext_Claim_claimant(ctx context.Context, fie
 				return ec.fieldContext_Claimant_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Claimant_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claimant_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claimant_description_html(ctx, field)
 			case "tag_line":
 				return ec.fieldContext_Claimant_tag_line(ctx, field)
 			case "medium":
@@ -5575,8 +5597,8 @@ func (ec *executionContext) fieldContext_Claimant_description(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _Claimant_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Claimant_html_description(ctx, field)
+func (ec *executionContext) _Claimant_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Claimant) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Claimant_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -5589,7 +5611,7 @@ func (ec *executionContext) _Claimant_html_description(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -5603,7 +5625,7 @@ func (ec *executionContext) _Claimant_html_description(ctx context.Context, fiel
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Claimant_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Claimant_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Claimant",
 		Field:      field,
@@ -5989,8 +6011,8 @@ func (ec *executionContext) fieldContext_ClaimantsPaging_nodes(ctx context.Conte
 				return ec.fieldContext_Claimant_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Claimant_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claimant_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claimant_description_html(ctx, field)
 			case "tag_line":
 				return ec.fieldContext_Claimant_tag_line(ctx, field)
 			case "medium":
@@ -6113,8 +6135,8 @@ func (ec *executionContext) fieldContext_ClaimsPaging_nodes(ctx context.Context,
 				return ec.fieldContext_Claim_claim_sources(ctx, field)
 			case "description":
 				return ec.fieldContext_Claim_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claim_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claim_description_html(ctx, field)
 			case "fact":
 				return ec.fieldContext_Claim_fact(ctx, field)
 			case "review_sources":
@@ -8309,8 +8331,8 @@ func (ec *executionContext) fieldContext_Post_description(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _Post_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Post_html_description(ctx, field)
+func (ec *executionContext) _Post_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Post) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Post_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8323,7 +8345,7 @@ func (ec *executionContext) _Post_html_description(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -8337,7 +8359,7 @@ func (ec *executionContext) _Post_html_description(ctx context.Context, field gr
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Post_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Post_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Post",
 		Field:      field,
@@ -8755,8 +8777,8 @@ func (ec *executionContext) fieldContext_Post_categories(ctx context.Context, fi
 				return ec.fieldContext_Category_posts(ctx, field)
 			case "background_colour":
 				return ec.fieldContext_Category_background_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Category_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Category_description_html(ctx, field)
 			case "meta_fields":
 				return ec.fieldContext_Category_meta_fields(ctx, field)
 			case "parent_id":
@@ -8829,8 +8851,8 @@ func (ec *executionContext) fieldContext_Post_tags(ctx context.Context, field gr
 				return ec.fieldContext_Tag_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Tag_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Tag_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Tag_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Tag_is_featured(ctx, field)
 			case "posts":
@@ -8985,8 +9007,8 @@ func (ec *executionContext) fieldContext_Post_claims(ctx context.Context, field 
 				return ec.fieldContext_Claim_claim_sources(ctx, field)
 			case "description":
 				return ec.fieldContext_Claim_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claim_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claim_description_html(ctx, field)
 			case "fact":
 				return ec.fieldContext_Claim_fact(ctx, field)
 			case "review_sources":
@@ -9365,8 +9387,8 @@ func (ec *executionContext) fieldContext_PostsPaging_nodes(ctx context.Context, 
 				return ec.fieldContext_Post_excerpt(ctx, field)
 			case "description":
 				return ec.fieldContext_Post_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Post_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Post_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Post_is_featured(ctx, field)
 			case "is_sticky":
@@ -9810,8 +9832,8 @@ func (ec *executionContext) fieldContext_Query_category(ctx context.Context, fie
 				return ec.fieldContext_Category_posts(ctx, field)
 			case "background_colour":
 				return ec.fieldContext_Category_background_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Category_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Category_description_html(ctx, field)
 			case "meta_fields":
 				return ec.fieldContext_Category_meta_fields(ctx, field)
 			case "parent_id":
@@ -9950,8 +9972,8 @@ func (ec *executionContext) fieldContext_Query_tag(ctx context.Context, field gr
 				return ec.fieldContext_Tag_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Tag_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Tag_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Tag_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Tag_is_featured(ctx, field)
 			case "posts":
@@ -10158,8 +10180,8 @@ func (ec *executionContext) fieldContext_Query_post(ctx context.Context, field g
 				return ec.fieldContext_Post_excerpt(ctx, field)
 			case "description":
 				return ec.fieldContext_Post_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Post_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Post_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Post_is_featured(ctx, field)
 			case "is_sticky":
@@ -10268,8 +10290,8 @@ func (ec *executionContext) fieldContext_Query_page(ctx context.Context, field g
 				return ec.fieldContext_Post_excerpt(ctx, field)
 			case "description":
 				return ec.fieldContext_Post_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Post_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Post_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Post_is_featured(ctx, field)
 			case "is_sticky":
@@ -11287,8 +11309,8 @@ func (ec *executionContext) fieldContext_Rating_text_colour(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Rating_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Rating_html_description(ctx, field)
+func (ec *executionContext) _Rating_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Rating) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Rating_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11301,7 +11323,7 @@ func (ec *executionContext) _Rating_html_description(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11315,7 +11337,7 @@ func (ec *executionContext) _Rating_html_description(ctx context.Context, field 
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Rating_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Rating_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Rating",
 		Field:      field,
@@ -11708,8 +11730,8 @@ func (ec *executionContext) fieldContext_RatingsPaging_nodes(ctx context.Context
 				return ec.fieldContext_Rating_background_colour(ctx, field)
 			case "text_colour":
 				return ec.fieldContext_Rating_text_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Rating_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Rating_description_html(ctx, field)
 			case "numeric_value":
 				return ec.fieldContext_Rating_numeric_value(ctx, field)
 			case "medium":
@@ -11829,8 +11851,8 @@ func (ec *executionContext) fieldContext_SearchResult_posts(ctx context.Context,
 				return ec.fieldContext_Post_excerpt(ctx, field)
 			case "description":
 				return ec.fieldContext_Post_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Post_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Post_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Post_is_featured(ctx, field)
 			case "is_sticky":
@@ -11928,8 +11950,8 @@ func (ec *executionContext) fieldContext_SearchResult_categories(ctx context.Con
 				return ec.fieldContext_Category_posts(ctx, field)
 			case "background_colour":
 				return ec.fieldContext_Category_background_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Category_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Category_description_html(ctx, field)
 			case "meta_fields":
 				return ec.fieldContext_Category_meta_fields(ctx, field)
 			case "parent_id":
@@ -11999,8 +12021,8 @@ func (ec *executionContext) fieldContext_SearchResult_tags(ctx context.Context, 
 				return ec.fieldContext_Tag_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Tag_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Tag_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Tag_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Tag_is_featured(ctx, field)
 			case "posts":
@@ -12080,8 +12102,8 @@ func (ec *executionContext) fieldContext_SearchResult_claims(ctx context.Context
 				return ec.fieldContext_Claim_claim_sources(ctx, field)
 			case "description":
 				return ec.fieldContext_Claim_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claim_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claim_description_html(ctx, field)
 			case "fact":
 				return ec.fieldContext_Claim_fact(ctx, field)
 			case "review_sources":
@@ -12161,8 +12183,8 @@ func (ec *executionContext) fieldContext_SearchResult_claimants(ctx context.Cont
 				return ec.fieldContext_Claimant_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Claimant_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Claimant_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Claimant_description_html(ctx, field)
 			case "tag_line":
 				return ec.fieldContext_Claimant_tag_line(ctx, field)
 			case "medium":
@@ -12236,8 +12258,8 @@ func (ec *executionContext) fieldContext_SearchResult_ratings(ctx context.Contex
 				return ec.fieldContext_Rating_background_colour(ctx, field)
 			case "text_colour":
 				return ec.fieldContext_Rating_text_colour(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Rating_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Rating_description_html(ctx, field)
 			case "numeric_value":
 				return ec.fieldContext_Rating_numeric_value(ctx, field)
 			case "medium":
@@ -12461,6 +12483,88 @@ func (ec *executionContext) fieldContext_Sitemap_created_at(ctx context.Context,
 	return fc, nil
 }
 
+func (ec *executionContext) _Sitemap_published_date(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Sitemap_published_date(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Sitemap().PublishedDate(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Sitemap_published_date(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Sitemap",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Sitemap_updated_at(ctx context.Context, field graphql.CollectedField, obj *models.Sitemap) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Sitemap_updated_at(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UpdatedAt, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Sitemap_updated_at(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Sitemap",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Sitemaps_categories(ctx context.Context, field graphql.CollectedField, obj *models.Sitemaps) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Sitemaps_categories(ctx, field)
 	if err != nil {
@@ -12503,6 +12607,10 @@ func (ec *executionContext) fieldContext_Sitemaps_categories(ctx context.Context
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12552,6 +12660,10 @@ func (ec *executionContext) fieldContext_Sitemaps_tags(ctx context.Context, fiel
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12601,6 +12713,10 @@ func (ec *executionContext) fieldContext_Sitemaps_users(ctx context.Context, fie
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12650,6 +12766,10 @@ func (ec *executionContext) fieldContext_Sitemaps_formats(ctx context.Context, f
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12699,6 +12819,10 @@ func (ec *executionContext) fieldContext_Sitemaps_posts(ctx context.Context, fie
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12748,6 +12872,10 @@ func (ec *executionContext) fieldContext_Sitemaps_claims(ctx context.Context, fi
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12797,6 +12925,10 @@ func (ec *executionContext) fieldContext_Sitemaps_claimants(ctx context.Context,
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -12846,6 +12978,10 @@ func (ec *executionContext) fieldContext_Sitemaps_ratings(ctx context.Context, f
 				return ec.fieldContext_Sitemap_id(ctx, field)
 			case "created_at":
 				return ec.fieldContext_Sitemap_created_at(ctx, field)
+			case "published_date":
+				return ec.fieldContext_Sitemap_published_date(ctx, field)
+			case "updated_at":
+				return ec.fieldContext_Sitemap_updated_at(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Sitemap", field.Name)
 		},
@@ -14024,8 +14160,8 @@ func (ec *executionContext) fieldContext_Tag_description(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _Tag_html_description(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Tag_html_description(ctx, field)
+func (ec *executionContext) _Tag_description_html(ctx context.Context, field graphql.CollectedField, obj *models.Tag) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Tag_description_html(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14038,7 +14174,7 @@ func (ec *executionContext) _Tag_html_description(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.HTMLDescription, nil
+		return obj.DescriptionHTML, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14052,7 +14188,7 @@ func (ec *executionContext) _Tag_html_description(ctx context.Context, field gra
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Tag_html_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Tag_description_html(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Tag",
 		Field:      field,
@@ -14526,8 +14662,8 @@ func (ec *executionContext) fieldContext_TagsPaging_nodes(ctx context.Context, f
 				return ec.fieldContext_Tag_slug(ctx, field)
 			case "description":
 				return ec.fieldContext_Tag_description(ctx, field)
-			case "html_description":
-				return ec.fieldContext_Tag_html_description(ctx, field)
+			case "description_html":
+				return ec.fieldContext_Tag_description_html(ctx, field)
 			case "is_featured":
 				return ec.fieldContext_Tag_is_featured(ctx, field)
 			case "posts":
@@ -17246,9 +17382,9 @@ func (ec *executionContext) _Category(ctx context.Context, sel ast.SelectionSet,
 				return innerFunc(ctx)
 
 			})
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Category_html_description(ctx, field, obj)
+			out.Values[i] = ec._Category_description_html(ctx, field, obj)
 
 		case "meta_fields":
 			field := field
@@ -17464,9 +17600,9 @@ func (ec *executionContext) _Claim(ctx context.Context, sel ast.SelectionSet, ob
 				return innerFunc(ctx)
 
 			})
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Claim_html_description(ctx, field, obj)
+			out.Values[i] = ec._Claim_description_html(ctx, field, obj)
 
 		case "fact":
 
@@ -17683,9 +17819,9 @@ func (ec *executionContext) _Claimant(ctx context.Context, sel ast.SelectionSet,
 				return innerFunc(ctx)
 
 			})
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Claimant_html_description(ctx, field, obj)
+			out.Values[i] = ec._Claimant_description_html(ctx, field, obj)
 
 		case "tag_line":
 
@@ -18415,9 +18551,9 @@ func (ec *executionContext) _Post(ctx context.Context, sel ast.SelectionSet, obj
 				return innerFunc(ctx)
 
 			})
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Post_html_description(ctx, field, obj)
+			out.Values[i] = ec._Post_description_html(ctx, field, obj)
 
 		case "is_featured":
 
@@ -19256,9 +19392,9 @@ func (ec *executionContext) _Rating(ctx context.Context, sel ast.SelectionSet, o
 				return innerFunc(ctx)
 
 			})
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Rating_html_description(ctx, field, obj)
+			out.Values[i] = ec._Rating_description_html(ctx, field, obj)
 
 		case "numeric_value":
 
@@ -19456,18 +19592,39 @@ func (ec *executionContext) _Sitemap(ctx context.Context, sel ast.SelectionSet, 
 			out.Values[i] = ec._Sitemap_slug(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "id":
 
 			out.Values[i] = ec._Sitemap_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "created_at":
 
 			out.Values[i] = ec._Sitemap_created_at(ctx, field, obj)
+
+		case "published_date":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Sitemap_published_date(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "updated_at":
+
+			out.Values[i] = ec._Sitemap_updated_at(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -19916,9 +20073,9 @@ func (ec *executionContext) _Tag(ctx context.Context, sel ast.SelectionSet, obj 
 
 			out.Values[i] = ec._Tag_description(ctx, field, obj)
 
-		case "html_description":
+		case "description_html":
 
-			out.Values[i] = ec._Tag_html_description(ctx, field, obj)
+			out.Values[i] = ec._Tag_description_html(ctx, field, obj)
 
 		case "is_featured":
 

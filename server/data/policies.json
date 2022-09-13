@@ -1,7 +1,7 @@
 [
     {
         "name": "Editor",
-        "Description": "Editor",
+        "description": "Editor",
         "permissions": [
             {
                 "resource": "categories",
@@ -47,7 +47,7 @@
     },
     {
         "name": "Author",
-        "Description": "Author",
+        "description": "Author",
         "permissions": [
             {
                 "resource": "categories",
@@ -93,7 +93,7 @@
     },
     {
         "name": "Contributor",
-        "Description": "Contributor",
+        "description": "Contributor",
         "permissions": [
             {
                 "resource": "formats",

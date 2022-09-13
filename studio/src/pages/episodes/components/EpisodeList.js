@@ -19,7 +19,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
             style={{
               marginRight: 8,
             }}
-            to={`/episodes/${record.id}/edit`}
+            to={`/episodes/${record?.id}/edit`}
           >
             {record.title}
           </Link>
@@ -39,7 +39,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
         return (
           <Popconfirm
             title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deleteEpisode(record.id)).then(() => fetchEpisodes())}
+            onConfirm={() => dispatch(deleteEpisode(record?.id)).then(() => fetchEpisodes())}
             disabled={!(actions.includes('admin') || actions.includes('delete'))}
           >
             <Button

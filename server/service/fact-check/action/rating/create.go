@@ -5,11 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
+
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -18,6 +17,7 @@ import (
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -105,24 +105,35 @@ func create(w http.ResponseWriter, r *http.Request) {
 		mediumID = nil
 	}
 
-	// Store HTML description
-	var description string
-	if len(rating.Description.RawMessage) > 0 && !reflect.DeepEqual(rating.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(rating.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(rating.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(rating.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	result := &model.Rating{
+		Base: config.Base{
+			CreatedAt: rating.CreatedAt,
+			UpdatedAt: rating.UpdatedAt,
+		},
 		Name:             rating.Name,
 		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
 		BackgroundColour: rating.BackgroundColour,
 		TextColour:       rating.TextColour,
-		Description:      rating.Description,
-		HTMLDescription:  description,
+		Description:      jsonDescription,
+		DescriptionHTML:  descriptionHTML,
 		MediumID:         mediumID,
 		SpaceID:          uint(sID),
 		NumericValue:     rating.NumericValue,
@@ -151,11 +162,14 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("rating.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("rating.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("rating.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)

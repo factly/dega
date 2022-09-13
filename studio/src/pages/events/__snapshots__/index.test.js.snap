@@ -95,25 +95,6 @@ exports[`Event component snapshot testing should render the component 1`] = `
                   }
                 }
               >
-                ;
-              </div>
-            </Item>
-            <Item
-              className="ant-space-item"
-              direction="vertical"
-              index={2}
-              key="ant-space-item-2"
-              marginDirection="marginRight"
-              wrap={false}
-            >
-              <div
-                className="ant-space-item"
-                style={
-                  Object {
-                    "marginBottom": 8,
-                  }
-                }
-              >
                 <Row
                   gutter={16}
                   justify="end"
@@ -185,8 +166,8 @@ exports[`Event component snapshot testing should render the component 1`] = `
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={3}
-              key="ant-space-item-3"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1089,25 +1070,6 @@ exports[`Event component snapshot testing should render the component with data 
                   }
                 }
               >
-                ;
-              </div>
-            </Item>
-            <Item
-              className="ant-space-item"
-              direction="vertical"
-              index={2}
-              key="ant-space-item-2"
-              marginDirection="marginRight"
-              wrap={false}
-            >
-              <div
-                className="ant-space-item"
-                style={
-                  Object {
-                    "marginBottom": 8,
-                  }
-                }
-              >
                 <Row
                   gutter={16}
                   justify="end"
@@ -1179,8 +1141,8 @@ exports[`Event component snapshot testing should render the component with data 
             <Item
               className="ant-space-item"
               direction="vertical"
-              index={3}
-              key="ant-space-item-3"
+              index={2}
+              key="ant-space-item-2"
               marginDirection="marginRight"
               wrap={false}
             >
@@ -1344,7 +1306,7 @@ exports[`Event component snapshot testing should render the component with data 
                                               class="ant-table-cell"
                                             >
                                               <a
-                                                href="/events/1/edit"
+                                                href="/admin/events/1/edit"
                                                 style="margin-right: 8px;"
                                               >
                                                 <p>
@@ -1500,7 +1462,7 @@ exports[`Event component snapshot testing should render the component with data 
                                                     class="ant-table-cell"
                                                   >
                                                     <a
-                                                      href="/events/1/edit"
+                                                      href="/admin/events/1/edit"
                                                       style="margin-right: 8px;"
                                                     >
                                                       <p>
@@ -1919,10 +1881,10 @@ exports[`Event component snapshot testing should render the component with data 
                                                           "marginRight": 8,
                                                         }
                                                       }
-                                                      to="/events/1/edit"
+                                                      to="/admin/events/1/edit"
                                                     >
                                                       <LinkAnchor
-                                                        href="/events/1/edit"
+                                                        href="/admin/events/1/edit"
                                                         navigate={[Function]}
                                                         style={
                                                           Object {
@@ -1931,7 +1893,7 @@ exports[`Event component snapshot testing should render the component with data 
                                                         }
                                                       >
                                                         <a
-                                                          href="/events/1/edit"
+                                                          href="/admin/events/1/edit"
                                                           onClick={[Function]}
                                                           style={
                                                             Object {

@@ -46,13 +46,12 @@ function Branding() {
         name="create-space"
         onFinish={(values) => {
           onCreate(values);
-          onReset();
+          //onReset();
         }}
         scrollToFirstError={true}
         onFinishFailed={(errors) => {
           //let name = errors.errorFields[0].name[0];
           // if (['name', 'slug'].includes(name)) {
-          console.log({ errors });
           // }
         }}
         onValuesChange={() => {

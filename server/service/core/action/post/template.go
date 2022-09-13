@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -97,7 +98,7 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").First(&template.Post)
+	tx.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&template.Post)
 
 	if template.Post.Format.Slug == "fact-check" {
 
@@ -176,11 +177,14 @@ func createTemplate(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("post.template.created", template); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("post.template.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("post.template.created", template); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
+
 	}
 
 	renderx.JSON(w, http.StatusOK, template)

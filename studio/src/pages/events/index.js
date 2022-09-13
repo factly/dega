@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 function Events() {
   return (
     <Space direction="vertical">
-      <Helmet title={'Events'} />;
+      <Helmet title={'Events'} />
       <Row gutter={16} justify="end">
         <Link key="1" to="/admin/events/create">
           <Button type="primary">New Event</Button>

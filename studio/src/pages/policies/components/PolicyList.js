@@ -4,7 +4,7 @@ import { Popconfirm, Button, Typography, Table, Avatar, Tooltip } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePolicy } from '../../../actions/policies';
 import { Link } from 'react-router-dom';
-import { DeleteOutlined } from '@ant-design/icons';
+import { DeleteOutlined, EyeOutlined } from '@ant-design/icons';
 
 function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
   const dispatch = useDispatch();
@@ -32,6 +32,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
       title: 'Description',
       dataIndex: 'description',
       key: 'description',
+      width: '40%',
       render: (_, record) => {
         return (
           <Typography.Paragraph ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
@@ -39,45 +40,48 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
       },
     },
     {
-      title: 'Members',
-      dataIndex: 'members',
-      key: 'members',
-      width: '25%',
-      render: (_, record) => {
-        const members = record.users.map((user, index) => (
-          <Tooltip
-            title={user.first_name + user.last_name}
-            placement="top"
-            key={index + '.' + user.first_name}
-          >
-            <Avatar key={index} style={{ float: 'right', margin: '1px' }}>
-              {user.email.charAt(0).toUpperCase()}
-            </Avatar>
-          </Tooltip>
-        ));
-
-        return <>{members}</>;
-      },
-    },
-    {
       title: 'Action',
       dataIndex: 'operation',
       fixed: 'right',
       align: 'center',
-      width: 150,
+      width: '40%',
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <div
+            style={{
+              display: 'flex',
+              gap: '8px',
+              justifyContent: 'center',
+            }}
           >
-            <Button
-              icon={<DeleteOutlined />}
+            <Link
+              to={{
+                pathname: `/members/policies/${record.id}/view`,
+              }}
+            >
+              <Button
+                icon={<EyeOutlined />}
+                style={{
+                  minWidth: 100,
+                }}
+              >
+                View
+              </Button>
+            </Link>
+            <Popconfirm
+              title="Are you sure you want to delete this?"
+              onConfirm={() => dispatch(deletePolicy(record.id)).then(() => fetchPolicies())}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
-            />
-          </Popconfirm>
+            >
+              <Button
+                icon={<DeleteOutlined />}
+                disabled={!(actions.includes('admin') || actions.includes('delete'))}
+                type="danger"
+              >
+                Delete
+              </Button>
+            </Popconfirm>
+          </div>
         );
       },
     },

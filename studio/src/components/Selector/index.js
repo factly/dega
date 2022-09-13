@@ -4,6 +4,7 @@ import { Select, Empty, Button } from 'antd';
 import deepEqual from 'deep-equal';
 
 function Selector({
+  invalidOptions = [],
   setLoading = true,
   mode,
   createEntity,
@@ -16,7 +17,6 @@ function Selector({
 }) {
   const entity = action.toLowerCase();
   const selectorType = require(`../../actions/${entity}`);
-
   const [entityCreatedFlag, setEntityCreatedFlag] = React.useState(false);
   const [query, setQuery] = React.useState({
     page: 1,
@@ -127,7 +127,7 @@ function Selector({
           e.target.scrollTop + e.target.offsetHeight === e.target.scrollHeight ||
           e.target.scrollTop + e.target.offsetHeight >= e.target.scrollHeight - 16
         ) {
-          if (details.length < total) {
+          if (details.length < total && Math.ceil(total / query.limit) >= query.page + 1) {
             setQuery({ ...query, page: query.page + 1 });
           }
         }
@@ -162,11 +162,13 @@ function Selector({
       getPopupContainer={(trigger) => trigger.parentNode}
       autoClearSearchValue={true}
     >
-      {details.map((item) => (
-        <Select.Option value={item.id} key={entity + item.id}>
-          {item[display] ? item[display] : item['email'] ? item['email'] : null}
-        </Select.Option>
-      ))}
+      {details
+        .filter((item) => !invalidOptions.includes(item.id))
+        .map((item) => (
+          <Select.Option value={item.id} key={entity + item.id}>
+            {item[display] ? item[display] : item['email'] ? item['email'] : null}
+          </Select.Option>
+        ))}
     </Select>
   );
 }
