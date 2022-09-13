@@ -181,8 +181,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	//tx.Commit()
 
 	if util.CheckNats() {
-		if util.CheckWebhookEvent("space.updated", spaceID, r) {
-			if err = util.NC.Publish("space.updated", result); err != nil {
+		if util.CheckWebhookEvent("space.updated", strconv.Itoa(spaceID), r) {
+			if err = util.NC.Publish("space.updated", spaceObjectforDega); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 				return
