@@ -73,6 +73,11 @@ const initialState = {
     details: {},
     loading: true,
   },
+  roles: {
+    details: {},
+    loading: true,
+    req: [],
+  },
   sachFactChecks: {
     details: [],
     loading: true,
