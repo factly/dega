@@ -6,7 +6,7 @@
       "url": "http://kavach-web:3000"
     },
     "match": {
-      "url": "http://127.0.0.1:4455/.factly/kavach/web/<(auth/login|auth/registration|manifest.json|static/.*|config.js)(|/)>",
+      "url": "http://127.0.0.1:4455/.factly/kavach/web/<(auth/login|auth/registration|auth/verification|auth/recovery|manifest.json|static/.*|config.js)(|/)>",
       "methods": [
         "GET"
       ]
