@@ -70,10 +70,6 @@ selfservice:
     login:
       ui_url: http://127.0.0.1:4455/.factly/kavach/web/auth/login
       lifespan: 10m 
-      after:
-        password:
-          hooks:
-            - hook: require_verified_address
 
     verification:
       enabled: true

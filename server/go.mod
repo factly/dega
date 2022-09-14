@@ -62,13 +62,14 @@ require (
 	github.com/jackc/pgtype v1.11.0 // indirect
 	github.com/jackc/pgx/v4 v4.16.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.4 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
 	github.com/klauspost/compress v1.15.6 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.10.2 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
 	github.com/mailru/easyjson v0.7.7 // indirect
+	github.com/mattn/go-sqlite3 v1.14.12 // indirect
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
@@ -109,5 +110,6 @@ require (
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/sqlite v1.3.6 // indirect
 	moul.io/http2curl v1.0.1-0.20190925090545-5cd742060b0e // indirect
 )

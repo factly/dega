@@ -19,28 +19,34 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if !viper.IsSet("database_host") {
-		log.Fatal("please provide database_host config param")
-	}
-
-	if !viper.IsSet("database_user") {
-		log.Fatal("please provide database_user config param")
-	}
-
-	if !viper.IsSet("database_name") {
-		log.Fatal("please provide database_name config param")
-	}
-
-	if !viper.IsSet("database_password") {
-		log.Fatal("please provide database_password config param")
-	}
-
-	if !viper.IsSet("database_port") {
-		log.Fatal("please provide database_port config param")
-	}
-
-	if !viper.IsSet("database_ssl_mode") {
-		log.Fatal("please provide database_ssl_mode config param")
+	if !Sqlite(){
+		if !viper.IsSet("database_host") {
+			log.Fatal("please provide database_host config param")
+		}
+	
+		if !viper.IsSet("database_user") {
+			log.Fatal("please provide database_user config param")
+		}
+	
+		if !viper.IsSet("database_name") {
+			log.Fatal("please provide database_name config param")
+		}
+	
+		if !viper.IsSet("database_password") {
+			log.Fatal("please provide database_password config param")
+		}
+	
+		if !viper.IsSet("database_port") {
+			log.Fatal("please provide database_port config param")
+		}
+	
+		if !viper.IsSet("database_ssl_mode") {
+			log.Fatal("please provide database_ssl_mode config param")
+		}
+	}	else {
+		if !viper.IsSet("sqlite_db_path") {
+			log.Fatal("please provide sqlite_db_path config param")
+		}
 	}
 
 	if !viper.IsSet("kavach_url") {
@@ -51,9 +57,11 @@ func SetupVars() {
 		log.Fatal("please provide keto_url config param")
 	}
 
-	if !viper.IsSet("google_key") {
-		log.Fatal("please provide google_key config param")
-	}
+	if viper.IsSet("google_fact_check_search_enabled") && viper.GetBool("google_fact_check_search_enabled"){
+		if !viper.IsSet("google_key") {
+			log.Fatal("please provide google_key config param")
+		}
+	}	
 
 	if !viper.IsSet("create_super_organisation") {
 		log.Fatal("please provide create_super_organisation (bool) config param")
@@ -75,12 +83,6 @@ func SetupVars() {
 
 		if !viper.IsSet("meili_api_key") {
 			log.Fatal("please provide meili_api_key config param")
-		}
-	}
-
-	if Sqlite() {
-		if !viper.IsSet("sqlite_db_path") {
-			log.Fatal("please provide sqlite_db_path config param")
 		}
 	}
 
