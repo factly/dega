@@ -141,11 +141,15 @@ func generateFilters(categoryIDs, primaryCatID, language []string) string {
 
 func generateSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, primaryCatID, language []string) string {
 	filters := ""
-
-	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title LIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
 	}
-
 	if len(primaryCatID) > 0 {
 		filters = filters + " primary_category_id IN ("
 		for _, id := range primaryCatID {
