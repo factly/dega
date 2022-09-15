@@ -185,3 +185,5 @@ server/server
 
 *.db
 dist/
+
+*.sqlite

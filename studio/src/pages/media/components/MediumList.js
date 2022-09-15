@@ -43,7 +43,13 @@ function MediumList({ data, filters, setFilters }) {
                 cover={
                   <img
                     alt="ALT"
-                    src={item.url?.proxy ? `${item.url.proxy}?gravity:sm/resize:fill:220:220` : ''}
+                    src={
+                      item.url?.[window.REACT_APP_IMG_URL_PROP]
+                        ? `${
+                            item.url?.[window.REACT_APP_IMG_URL_PROP]
+                          }?gravity:sm/resize:fill:220:220`
+                        : ''
+                    }
                     style={{
                       maxWidth: '100%',
                       width: '100%',

@@ -67,7 +67,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
                   }}
                   shape="square"
                   size={174}
-                  src={item.url?.proxy}
+                  src={item.url?.[window.REACT_APP_IMG_URL_PROP]}
                   style={{ opacity: '0.7', padding: '0.5rem', border: '2px solid #1890ff' }}
                 />
                 <CheckCircleTwoTone
@@ -81,7 +81,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
                   onClick={() => onSelect(item)}
                   shape="square"
                   size={174}
-                  src={item.url?.proxy}
+                  src={item.url?.[window.REACT_APP_IMG_URL_PROP]}
                   style={{ padding: '0.5rem', border: '2px solid transparent' }}
                 />
               </div>
