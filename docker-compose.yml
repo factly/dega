@@ -322,7 +322,7 @@ services:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:0.27.2
+    image: factly/kavach-web:0.27.2-dev
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js
