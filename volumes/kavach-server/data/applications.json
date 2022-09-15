@@ -1,26 +1,8 @@
 [
     {
-        "name": "Kavach",
-        "slug": "kavach",
-        "url": "http://127.0.0.1:4455/.factly/kavach/web/",
-        "is_default": true
-    },
-    {
         "name": "Dega",
         "slug": "dega",
         "url": "http://127.0.0.1:4455/.factly/dega/studio/",
-        "is_default": true
-    },
-    {
-        "name": "Vidcheck",
-        "slug": "vidcheck",
-        "url": "http://127.0.0.1:4455/.factly/vidcheck/web/",
-        "is_default": true
-    },
-    {
-        "name": "MandE",
-        "slug": "mande",
-        "url": "http://127.0.0.1:4455/.factly/mande/web/home",
         "is_default": true
     }
 ]
