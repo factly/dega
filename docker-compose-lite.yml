@@ -264,7 +264,7 @@ services:
       - type: bind
         source: ./volumes/kavach-sqlite/kavach.db
         target: /app/kavach.db
-    entrypoint: /app/kavach-server migrate
+    entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
     networks:
       - dega
 
