@@ -84,8 +84,6 @@ services:
   #######             KRATOS, KETO AND OATHKEEPER                     #######
   ###########################################################################
   kratos-migrate:
-    # depends_on:
-    #   - postgres
     image: oryd/kratos:v0.10.1
     environment:
       - DSN=sqlite:///var/lib/sqlite/kratos-db.sqlite?_fk=true&mode=rwc
@@ -190,13 +188,36 @@ services:
   ###########################################################################
   kavach-server:
     depends_on:
-      # - postgres
       - keto
       - kratos
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server
+    image: factly/kavach-server:0.27.2
+    environment:
+      - WAIT_HOSTS=kratos:4434 , keto:4466
+      - KAVACH_KETO_READ_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_MODE=development
+      - KAVACH_USE_SQLITE=true
+      - KAVACH_SQLITE_DB_PATH=kavach.db
+      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
+      - KAVACH_MANDE_HOST=http://mande.factly.in
+      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
+      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+      - KAVACH_DISABLE_REGISTRATION=false
+      - KAVACH_APPLICATION_NAME=Kavach
+      - KAVACH_SUPER_USER_EMAIL=dega@newschecker.in
+      - KAVACH_DEFAULT_USER_EMAIL=dega@newchecker.com
+      - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
+      - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
+      - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_BUCKET_NAME=login.factly.in
     volumes:
       - type: bind
         source: ./volumes/kavach-sqlite/kavach.db
@@ -207,8 +228,6 @@ services:
       - type: bind
         source: ./volumes/kavach-server/data
         target: /app/data
-    environment:
-      - WAIT_HOSTS=kratos:4434 , keto:4466
     restart: unless-stopped
     networks:
       - dega
@@ -217,21 +236,41 @@ services:
     depends_on:
       - keto
       - kratos
-    image: factly/kavach-migrate
+    image: factly/kavach-server:0.27.2
     environment:
-      - WAIT_HOSTS=kratos:4434, keto:4466
+      - WAIT_HOSTS=kratos:4434 , keto:4466
+      - KAVACH_KETO_READ_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_MODE=development
+      - KAVACH_USE_SQLITE=true
+      - KAVACH_SQLITE_DB_PATH=kavach.db
+      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
+      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
+      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
+      - KAVACH_MANDE_HOST=http://mande.factly.in
+      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
+      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
+      - KAVACH_ENABLE_MULTITENANCY=true
+      - KAVACH_DISABLE_REGISTRATION=false
+      - KAVACH_APPLICATION_NAME=Kavach
+      - KAVACH_SUPER_USER_EMAIL=kavach-develop@factly.in
+      - KAVACH_DEFAULT_USER_EMAIL=vsumit01@gmail.com
+      - KAVACH_DEFAULT_USER_PASSWORD=Cristiano123$$
+      - KAVACH_DEFAULT_ORGANISATION_NAME=FACTLYADMIN
+      - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_BUCKET_NAME=login.factly.in
     volumes:
-      - type: bind
-        source: ./kavach-config-server.env
-        target: /app/config.env
       - type: bind
         source: ./volumes/kavach-sqlite/kavach.db
         target: /app/kavach.db
+    entrypoint: /app/kavach-server migrate
     networks:
       - dega
 
   kavach-web:
-    image: factly/kavach-web
+    image: factly/kavach-web:0.27.2
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js
@@ -259,29 +298,7 @@ services:
       context: ./server
       dockerfile: Dockerfile.dev
     environment:
-      - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
-      - KAVACH_KETO_READ_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_URL=http://keto:4466
-      - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
-      - KAVACH_MODE=development
-      - KAVACH_USE_SQLITE=false
-      - KAVACH_SQLITE_DB_PATH=kavach.db
-      - KAVACH_IMAGEPROXY_URL=http://127.0.0.1:7001
-      - KAVACH_DOMAIN_NAME=http://127.0.0.1:4455/.factly/kavach/web
-      - KAVACH_DYNAMIC_FROM_EMAIL='kavach'
-      - KAVACH_MANDE_HOST=http://mande.factly.in
-      - KAVACH_DYNAMIC_MANDE_TEMPLATE_ID=1
-      - KAVACH_DYNAMIC_SENDGRID_API_KEY=SENDGRID_API_KEY
-      - KAVACH_ENABLE_MULTITENANCY=true
-      - KAVACH_DISABLE_REGISTRATION=false
-      - KAVACH_APPLICATION_NAME=Kavach
-      - KAVACH_SUPER_USER_EMAIL=kavach-develop@factly.in
-      - KAVACH_DEFAULT_USER_EMAIL=vsumit01@gmail.com
-      - KAVACH_DEFAULT_USER_PASSWORD=Cristiano123$$
-      - KAVACH_DEFAULT_ORGANISATION_NAME=FACTLYADMIN
-      - KAVACH_ENABLE_IMGPROXY=false
-      - KAVACH_BUCKET_NAME=login.factly.in
+      - WAIT_HOSTS=kratos:4434 , keto:4466
     volumes:
       - type: bind
         source: ./server

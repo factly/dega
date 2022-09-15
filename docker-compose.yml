@@ -243,7 +243,7 @@ services:
         source: ./volumes/kavach-server/data
         target: /app/data
       - type: bind
-        source: ./kavach-config.env
+        source: ./kavach-config-server.env
         target: /app/config.env
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
@@ -302,7 +302,7 @@ services:
       - KAVACH_ENABLE_MULTITENANCY=true
     volumes:
       - type: bind
-        source: ./kavach-config.env
+        source: ./kavach-config-server.env
         target: /app/config.env
     networks:
       - dega
@@ -316,16 +316,16 @@ services:
 
     environment:
       - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web 
-      - REACT_APP_PUBLIC_URL = 'http://127.0.0.1:4455/.factly/kavach/web';
-      - REACT_APP_KAVACH_TITLE = 'FACTLY';
-      - REACT_APP_COMPANION_URL = 'http://127.0.0.1:3020';
-      - REACT_APP_API_URL = 'http://127.0.0.1:4455/.factly/kavach/server';
-      - REACT_APP_KRATOS_PUBLIC_URL = 'http://127.0.0.1:4455/.ory/kratos/public';
-      - REACT_APP_ENABLE_MULTITENANCY = 'true';
-      - REACT_APP_DISABLE_REGISTRATION = false;
-      - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS = true;
-      - REACT_APP_LOGO_URL ='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
-      - REACT_APP_ENABLE_IMGPROXY = false; 
+      - REACT_APP_PUBLIC_URL='http://127.0.0.1:4455/.factly/kavach/web';
+      - REACT_APP_KAVACH_TITLE='FACTLY';
+      - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
+      - REACT_APP_API_URL='http://127.0.0.1:4455/.factly/kavach/server';
+      - REACT_APP_KRATOS_PUBLIC_URL='http://127.0.0.1:4455/.ory/kratos/public';
+      - REACT_APP_ENABLE_MULTITENANCY='true';
+      - REACT_APP_DISABLE_REGISTRATION=false;
+      - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
+      - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
+      - REACT_APP_ENABLE_IMGPROXY=false; 
     restart: unless-stopped
     networks:
       - dega
