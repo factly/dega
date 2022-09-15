@@ -317,7 +317,7 @@ services:
       - type: bind
         source: ./kavach-config-server.env
         target: /app/config.env
-    entrypoint: /app/kavach-server migrate
+    entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
     networks:
       - dega
 
@@ -335,7 +335,7 @@ services:
       - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
       - REACT_APP_API_URL='http://127.0.0.1:4455/.factly/kavach/server';
       - REACT_APP_KRATOS_PUBLIC_URL='http://127.0.0.1:4455/.ory/kratos/public';
-      - REACT_APP_ENABLE_MULTITENANCY='true';
+      - REACT_APP_ENABLE_MULTITENANCY='false';
       - REACT_APP_DISABLE_REGISTRATION=false;
       - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
       - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
