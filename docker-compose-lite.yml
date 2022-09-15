@@ -196,8 +196,8 @@ services:
     image: factly/kavach-server:0.27.2
     environment:
       - WAIT_HOSTS=kratos:4434 , keto:4466
-      - KAVACH_KETO_READ_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
       - KAVACH_MODE=development
@@ -239,8 +239,8 @@ services:
     image: factly/kavach-server:0.27.2
     environment:
       - WAIT_HOSTS=kratos:4434 , keto:4466
-      - KAVACH_KETO_READ_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
       - KAVACH_MODE=development
