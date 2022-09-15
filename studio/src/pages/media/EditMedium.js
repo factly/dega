@@ -65,7 +65,7 @@ function EditMedium() {
       </Col>
       <Col span={'12'}>
         <img
-          src={media.url?.proxy}
+          src={media.url?.[window.REACT_APP_IMG_URL_PROP]}
           alt={'space'}
           style={{
             maxHeight: '500px',

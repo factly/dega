@@ -20,7 +20,7 @@ function SpaceSelector({ collapsed }) {
         <img
           alt="logo"
           className="menu-logo"
-          src={details[selected]?.fav_icon?.url?.proxy || degaImg}
+          src={details[selected]?.fav_icon?.url?.[window.REACT_APP_IMG_URL_PROP] || degaImg}
         />
       ) : (
         <Select
@@ -37,7 +37,11 @@ function SpaceSelector({ collapsed }) {
                     <Avatar
                       size="small"
                       shape="square"
-                      src={details[space].fav_icon ? details[space].fav_icon.url?.proxy : degaImg}
+                      src={
+                        details[space].fav_icon
+                          ? details[space].fav_icon.url?.[window.REACT_APP_IMG_URL_PROP]
+                          : degaImg
+                      }
                     />
                     <h3 style={{ margin: 0, marginLeft: '0.5rem' }}>{details[space].name}</h3>
                   </div>
