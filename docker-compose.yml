@@ -242,9 +242,6 @@ services:
       - type: bind
         source: ./volumes/kavach-server/data
         target: /app/data
-      - type: bind
-        source: ./kavach-config-server.env
-        target: /app/config.env
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
@@ -253,8 +250,8 @@ services:
       - KAVACH_DATABASE_NAME=kavach
       - KAVACH_DATABASE_PORT=5432
       - KAVACH_DATABASE_SSL_MODE=disable
-      - KAVACH_KETO_READ_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4466
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
       - KAVACH_MODE=development
@@ -292,8 +289,8 @@ services:
       - KAVACH_DATABASE_NAME=kavach
       - KAVACH_DATABASE_PORT=5432
       - KAVACH_DATABASE_SSL_MODE=disable
-      - KAVACH_KETO_READ_URL=http://keto:4466
-      - KAVACH_KETO_WRITE_URL=http://keto:4466
+      - KAVACH_KETO_READ_API_URL=http://keto:4466
+      - KAVACH_KETO_WRITE_API_URL=http://keto:4466
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
       - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
       - KAVACH_MODE=development
@@ -313,10 +310,6 @@ services:
       - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
       - KAVACH_ENABLE_IMGPROXY=false
       - KAVACH_BUCKET_NAME=login.factly.in
-    volumes:
-      - type: bind
-        source: ./kavach-config-server.env
-        target: /app/config.env
     entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
     networks:
       - dega
