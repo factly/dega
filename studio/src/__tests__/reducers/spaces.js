@@ -8,10 +8,21 @@ const initialState = {
   selected: 0,
 };
 
-const space = { id: 1, organazation: 'Organization 1', spaces: [{ id: 11, name: 'Space 11' }] };
+const space = {
+  id: 1,
+  organisation: { id: 1, title: 'organization 1' },
+  applications: [{ id: 1, name: 'Dega' }],
+  permission: [{ id: 1, role: 'owner' }],
+  spaces: [{ id: 11, name: 'Space 11' }],
+};
 const space2 = {
   id: 2,
-  organazation: 'Organization 2',
+  applications: [
+    { id: 1, name: 'Dega' },
+    { id: 2, name: 'Dataful' },
+  ],
+  permission: [{ id: 2, role: 'owner' }],
+  organisation: { id: 2, title: 'organization 2' },
   spaces: [
     { id: 21, name: 'Space 21' },
     { id: 22, name: 'Space 22' },
@@ -45,6 +56,12 @@ describe('spaces reducer', () => {
     });
   });
   it('should handle GET_SPACES_SUCCESS', () => {
+    console.log(
+      reducer(initialState, {
+        type: types.GET_SPACES_SUCCESS,
+        payload: [space, space2],
+      }),
+    );
     expect(
       reducer(initialState, {
         type: types.GET_SPACES_SUCCESS,
@@ -52,8 +69,23 @@ describe('spaces reducer', () => {
       }),
     ).toEqual({
       orgs: [
-        { id: 1, organazation: 'Organization 1', spaces: [11] },
-        { id: 2, organazation: 'Organization 2', spaces: [21, 22] },
+        {
+          id: 1,
+          title: 'organization 1',
+          permission: [{ id: 1, role: 'owner' }],
+          applications: [{ id: 1, name: 'Dega' }],
+          spaces: [11],
+        },
+        {
+          id: 2,
+          title: 'organization 2',
+          permission: [{ id: 2, role: 'owner' }],
+          applications: [
+            { id: 1, name: 'Dega' },
+            { id: 2, name: 'Dataful' },
+          ],
+          spaces: [21, 22],
+        },
       ],
       details: {
         11: { id: 11, name: 'Space 11' },
@@ -94,7 +126,18 @@ describe('spaces reducer', () => {
         },
       ),
     ).toEqual({
-      orgs: [{ id: 2, organazation: 'Organization 2', spaces: [21, 22] }],
+      orgs: [
+        {
+          id: 2,
+          title: 'organization 2',
+          permission: [{ id: 2, role: 'owner' }],
+          applications: [
+            { id: 1, name: 'Dega' },
+            { id: 2, name: 'Dataful' },
+          ],
+          spaces: [21, 22],
+        },
+      ],
       details: {
         21: { id: 21, name: 'Space 21' },
         22: { id: 22, name: 'Space 22' },
@@ -107,7 +150,15 @@ describe('spaces reducer', () => {
     expect(
       reducer(
         {
-          orgs: [{ id: 1, organazation: 'Organization 1', spaces: [11] }],
+          orgs: [
+            {
+              id: 1,
+              title: 'organization 1',
+              permission: [{ id: 1, role: 'owner' }],
+              applications: [{ id: 1, name: 'Dega' }],
+              spaces: [11],
+            },
+          ],
           details: {
             11: { id: 11, name: 'Space 11' },
           },
@@ -121,8 +172,23 @@ describe('spaces reducer', () => {
       ),
     ).toEqual({
       orgs: [
-        { id: 1, organazation: 'Organization 1', spaces: [11] },
-        { id: 2, organazation: 'Organization 2', spaces: [21, 22] },
+        {
+          id: 1,
+          title: 'organization 1',
+          permission: [{ id: 1, role: 'owner' }],
+          applications: [{ id: 1, name: 'Dega' }],
+          spaces: [11],
+        },
+        {
+          id: 2,
+          title: 'organization 2',
+          permission: [{ id: 2, role: 'owner' }],
+          applications: [
+            { id: 1, name: 'Dega' },
+            { id: 2, name: 'Dataful' },
+          ],
+          spaces: [21, 22],
+        },
       ],
       details: {
         11: { id: 11, name: 'Space 11' },
@@ -197,6 +263,84 @@ describe('spaces reducer', () => {
       },
       loading: false,
       selected: 1,
+    });
+  });
+  it('should handle ADD_SPACE_USERS', () => {
+    expect(
+      reducer(
+        {
+          orgs: [
+            {
+              id: 1,
+              title: 'organization 1',
+              permission: [{ id: 1, role: 'owner' }],
+              applications: [{ id: 1, name: 'Dega' }],
+              spaces: [11],
+            },
+            {
+              id: 2,
+              title: 'organization 2',
+              permission: [{ id: 2, role: 'owner' }],
+              applications: [
+                { id: 1, name: 'Dega' },
+                { id: 2, name: 'Dataful' },
+              ],
+              spaces: [21, 22],
+            },
+          ],
+          details: {
+            11: { id: 11, name: 'Space 11' },
+            21: { id: 21, name: 'Space 21' },
+            22: { id: 22, name: 'Space 22' },
+          },
+          loading: false,
+          selected: 11,
+        },
+        {
+          type: types.ADD_SPACE_USERS,
+          payload: {
+            data: [
+              { id: 1, email: 'testuser1@gmail.com' },
+              { id: 2, email: 'testuser2@gmail.com' },
+            ],
+            id: 11,
+          },
+        },
+      ),
+    ).toEqual({
+      orgs: [
+        {
+          id: 1,
+          title: 'organization 1',
+          permission: [{ id: 1, role: 'owner' }],
+          applications: [{ id: 1, name: 'Dega' }],
+          spaces: [11],
+        },
+        {
+          id: 2,
+          title: 'organization 2',
+          permission: [{ id: 2, role: 'owner' }],
+          applications: [
+            { id: 1, name: 'Dega' },
+            { id: 2, name: 'Dataful' },
+          ],
+          spaces: [21, 22],
+        },
+      ],
+      details: {
+        11: {
+          id: 11,
+          name: 'Space 11',
+          users: [
+            { id: 1, email: 'testuser1@gmail.com' },
+            { id: 2, email: 'testuser2@gmail.com' },
+          ],
+        },
+        21: { id: 21, name: 'Space 21' },
+        22: { id: 22, name: 'Space 22' },
+      },
+      loading: false,
+      selected: 11,
     });
   });
   it('should handle DELETE_SPACE_SUCCESS', () => {
