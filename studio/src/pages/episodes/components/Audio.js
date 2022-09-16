@@ -1,6 +1,7 @@
 import React from 'react';
 import UppyUploader from '../../../components/Uppy';
 import { Modal, Space, Button } from 'antd';
+import getMediumURLType from '../../../utils/getMediumURLType';
 
 const Audio = ({ url, onUpload }) => {
   const [show, setShow] = React.useState(false);
@@ -29,7 +30,7 @@ const Audio = ({ url, onUpload }) => {
         <Space direction="vertical">
           <UppyUploader
             onUpload={(values) => {
-              onUpload(values[0]?.url?.raw);
+              onUpload(values[0]?.url?.[getMediumURLType()]);
               setShow(false);
             }}
             allowedFileTypes={['audio/*']}

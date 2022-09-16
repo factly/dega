@@ -1,6 +1,7 @@
 import React from 'react';
 import './style.css';
 import { useSelector } from 'react-redux';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 const getGoogleContainer = ({ formData, siteAddress }) => {
   return (
@@ -102,7 +103,7 @@ const getTwitterContainer = ({ medium, formData, siteAddress }) => {
                   className="social-twitter-preview-image idiot"
                   style={{
                     backgroundImage: `url(${
-                      medium?.url?.[window.REACT_APP_IMG_URL_PROP]
+                      medium?.url?.[getMediumURLType()]
                     }?gravity:sm/resize:fill:800:418`,
                   }} // use ImgProxy url
                 ></div>
@@ -205,7 +206,7 @@ const getFacebookContainer = ({ medium, formData, siteAddress }) => {
               className="social-og-preview-image"
               style={{
                 backgroundImage: `url(${
-                  medium?.url?.[window.REACT_APP_IMG_URL_PROP]
+                  medium?.url?.[getMediumURLType()]
                 }?gravity:sm/resize:fill:1200:627)`,
               }}
             ></div>

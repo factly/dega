@@ -11,6 +11,7 @@ import MonacoEditor from '../../components/MonacoEditor';
 import getJsonValue from '../../utils/getJsonValue';
 import { TitleInput } from '../../components/FormItems';
 import { Helmet } from 'react-helmet';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 function EditMedium() {
   const [form] = Form.useForm();
@@ -65,7 +66,7 @@ function EditMedium() {
       </Col>
       <Col span={'12'}>
         <img
-          src={media.url?.[window.REACT_APP_IMG_URL_PROP]}
+          src={media.url?.[getMediumURLType()]}
           alt={'space'}
           style={{
             maxHeight: '500px',

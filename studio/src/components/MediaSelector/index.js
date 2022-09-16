@@ -3,9 +3,10 @@ import { Modal, Button, Radio, Space } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import MediaUploader from './UploadMedium';
 import MediaList from './MediaList';
-import { getMedium, getMedia } from '../../actions/media';
+import { getMedium } from '../../actions/media';
 import ImagePlaceholder from '../ErrorsAndImage/PlaceholderImage';
 import { DeleteOutlined } from '@ant-design/icons';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 function MediaSelector({
   value = null,
@@ -105,7 +106,7 @@ function MediaSelector({
             >
               {medium ? (
                 <img
-                  src={medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+                  src={medium.url?.[getMediumURLType()]}
                   alt={medium.alt_text}
                   width="100%"
                 />

@@ -6,6 +6,7 @@ import { addPost, deletePost, getPosts } from '../../actions/posts';
 import { Link, useHistory } from 'react-router-dom';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import PlaceholderImage from '../ErrorsAndImage/PlaceholderImage';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 function Template({ format }) {
   const dispatch = useDispatch();
@@ -94,7 +95,7 @@ function Template({ format }) {
                     <img
                       style={{ cursor: 'pointer' }}
                       alt="example"
-                      src={item.medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+                      src={item.medium.url?.[getMediumURLType()]}
                       height="230"
                       onClick={() => handleAddPost(item)}
                     />

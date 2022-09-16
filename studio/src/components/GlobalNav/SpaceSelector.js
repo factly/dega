@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Select, Avatar } from 'antd';
 import { setSelectedSpace } from '../../actions/spaces';
 import degaImg from '../../assets/dega.png';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 const { Option, OptGroup } = Select;
 
@@ -20,7 +21,7 @@ function SpaceSelector({ collapsed }) {
         <img
           alt="logo"
           className="menu-logo"
-          src={details[selected]?.fav_icon?.url?.[window.REACT_APP_IMG_URL_PROP] || degaImg}
+          src={details[selected]?.fav_icon?.url?.[getMediumURLType()] || degaImg}
         />
       ) : (
         <Select
@@ -39,7 +40,7 @@ function SpaceSelector({ collapsed }) {
                       shape="square"
                       src={
                         details[space].fav_icon
-                          ? details[space].fav_icon.url?.[window.REACT_APP_IMG_URL_PROP]
+                          ? details[space].fav_icon.url?.[getMediumURLType()]
                           : degaImg
                       }
                     />

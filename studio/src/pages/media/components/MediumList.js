@@ -1,6 +1,7 @@
 import React from 'react';
 import { Space, List, Card } from 'antd';
 import { Link } from 'react-router-dom';
+import getMediumURLType from '../../../utils/getMediumURLType';
 
 function MediumList({ data, filters, setFilters }) {
   return (
@@ -44,9 +45,9 @@ function MediumList({ data, filters, setFilters }) {
                   <img
                     alt="ALT"
                     src={
-                      item.url?.[window.REACT_APP_IMG_URL_PROP]
+                      item.url?.[getMediumURLType()]
                         ? `${
-                            item.url?.[window.REACT_APP_IMG_URL_PROP]
+                            item.url?.[getMediumURLType()]
                           }?gravity:sm/resize:fill:220:220`
                         : ''
                     }

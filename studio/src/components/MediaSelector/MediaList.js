@@ -4,6 +4,7 @@ import { CheckCircleTwoTone } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getMedia } from '../../actions/media';
 import deepEqual from 'deep-equal';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 function MediaList({ onSelect, selected, onUnselect, profile = false }) {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
                   }}
                   shape="square"
                   size={174}
-                  src={item.url?.[window.REACT_APP_IMG_URL_PROP]}
+                  src={item.url?.[getMediumURLType()]}
                   style={{ opacity: '0.7', padding: '0.5rem', border: '2px solid #1890ff' }}
                 />
                 <CheckCircleTwoTone
@@ -81,7 +82,7 @@ function MediaList({ onSelect, selected, onUnselect, profile = false }) {
                   onClick={() => onSelect(item)}
                   shape="square"
                   size={174}
-                  src={item.url?.[window.REACT_APP_IMG_URL_PROP]}
+                  src={item.url?.[getMediumURLType()]}
                   style={{ padding: '0.5rem', border: '2px solid transparent' }}
                 />
               </div>

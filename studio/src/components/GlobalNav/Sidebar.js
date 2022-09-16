@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Layout, Menu, Popover, List, Avatar, Button } from 'antd';
-import routes, { sidebarMenu } from '../../config/routesConfig';
+import { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
 import SpaceSelector from './SpaceSelector';
@@ -10,6 +10,7 @@ import AccountMenu from './AccountMenu';
 import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Search from '../Search';
 import { maker } from '../../utils/sluger';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -213,7 +214,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                             }}
                           >
                             {item.medium && item.medium.url ? (
-                              <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                              <img alt="logo" className="menu-logo" src={item.medium.url?.[getMediumURLType()]} />
                             ) : (
                               <Avatar shape="square" size={35}>
                                 {item.name.charAt(0)}

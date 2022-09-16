@@ -3,6 +3,7 @@ import { Divider, Layout, Popover, List, Avatar } from 'antd';
 import { AppstoreOutlined } from '@ant-design/icons';
 import AccountMenu from './AccountMenu';
 import SpaceSelector from './SpaceSelector';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 function Header({ applications }) {
   return (
@@ -31,7 +32,7 @@ function Header({ applications }) {
                     <List.Item>
                       <a href={item.url} style={{ textDecoration: 'none', color: 'inherit' }}>
                         {item.medium && item.medium.url ? (
-                          <img alt="logo" className="menu-logo" src={item.medium.url.raw} />
+                          <img alt="logo" className="menu-logo" src={item.medium.url?.[getMediumURLType()]} />
                         ) : (
                           <Avatar shape="square" size={35}>
                             {item.name.charAt(0)}

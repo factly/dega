@@ -5,6 +5,7 @@ import { LogoutOutlined, DownOutlined, EditOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfile } from '../../actions/profile';
+import getMediumURLType from '../../utils/getMediumURLType';
 
 const AccountMenu = () => {
   const dispatch = useDispatch();
@@ -69,7 +70,7 @@ const AccountMenu = () => {
           {!loading && profile && profile.medium ? (
             <Avatar
               size="small"
-              src={profile.medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+              src={profile.medium.url?.[getMediumURLType()]}
               title="Spaces"
               style={{ fontSize: '1.25rem' }}
             />
