@@ -10,6 +10,7 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/paginationx"
@@ -32,9 +33,9 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	space := model.Space{}
+	space := util.Space{}
 	space.ID = uint(sID)
-	if err := config.DB.Preload("Logo").First(&space).Error; err != nil {
+	if err := config.DB.Model(&model.Space{}).Preload("SpaceSettings.Logo").First(&space).Error; err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
@@ -57,7 +58,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func GetFeed(space model.Space) *feeds.Feed {
+func GetFeed(space util.Space) *feeds.Feed {
 	now := time.Now()
 	feed := &feeds.Feed{
 		Id:          fmt.Sprint(space.ID),
@@ -82,7 +83,7 @@ func GetFeed(space model.Space) *feeds.Feed {
 	return feed
 }
 
-func GetItemsList(postList []model.Post, space model.Space) []*feeds.Item {
+func GetItemsList(postList []model.Post, space util.Space) []*feeds.Item {
 	postIDs := make([]uint, 0)
 	for _, post := range postList {
 		postIDs = append(postIDs, post.ID)

@@ -71,7 +71,7 @@ func CheckAdmin(orgID, uID uint) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	req, err := http.NewRequest("POST", viper.GetString("keto_url")+"/relation-tuples/check", buf)
+	req, err := http.NewRequest("POST", viper.GetString("keto_read_api_url")+"/relation-tuples/check", buf)
 	if err != nil {
 		return false, err
 	}
@@ -110,7 +110,7 @@ func IsAllowed(entity, action string, orgID, spaceID, userID uint) (int, error) 
 	}
 
 	object := fmt.Sprintf("resource:org:%d:app:%d:space:%d:%s", orgID, applicationID, spaceID, entity)
-	reqURL := viper.GetString("keto_url") + "/relation-tuples/check?" + fmt.Sprintf("namespace=%s&object=%s&relation=%s&subject_id=%d", namespace, object, action, userID)
+	reqURL := viper.GetString("keto_read_api_url") + "/relation-tuples/check?" + fmt.Sprintf("namespace=%s&object=%s&relation=%s&subject_id=%d", namespace, object, action, userID)
 	req, err := http.NewRequest(http.MethodGet, reqURL, nil)
 	if err != nil {
 		return 0, err
