@@ -281,6 +281,10 @@ services:
       - keto
       - kratos
     image: factly/kavach-server:0.27.2
+    volumes:
+      - type: bind
+        source: ./volumes/kavach-server/data
+        target: /app/data
     environment:
       - WAIT_HOSTS=postgres:5432, kratos:4434 , keto:4466
       - KAVACH_DATABASE_HOST=postgres
