@@ -59,14 +59,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := &model.Space{}
+	space := &util.Space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-
+	
 	space.ID = uint(spaceID)
 	validationError := validationx.Check(space)
 	if validationError != nil {
@@ -75,30 +75,104 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requestBody := map[string]interface{}{
-		"name":        space.Name,
-		"slug":        space.Slug,
-		"description": space.Description,
-		"metadata": map[string]interface{}{
-			"meta_fields":        space.MetaFields,
+	tx := config.DB.Begin()
+	var spaceSettingCount int64
+	err = tx.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
+		SpaceID: uint(spaceID),
+	}).Count(&spaceSettingCount).Error
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+	if spaceSettingCount >= 1 {
+		updateMap := map[string]interface{}{
 			"site_address":       space.SiteAddress,
 			"tag_line":           space.TagLine,
 			"site_title":         space.SiteTitle,
-			"logo_id":            space.LogoID,
-			"logo_mobile_id":     space.LogoMobileID,
-			"fav_icon_id":        space.FavIconID,
-			"mobile_icon_id":     space.MobileIconID,
 			"verification_codes": space.VerificationCodes,
 			"social_media_urls":  space.SocialMediaURLs,
 			"contact_info":       space.ContactInfo,
 			"analytics":          space.Analytics,
 			"header_code":        space.HeaderCode,
 			"footer_code":        space.FooterCode,
-		},
+		}
+
+		if space.LogoID != nil {
+			updateMap["logo_id"] = *space.LogoID
+		}
+
+		if space.FavIconID != nil {
+			updateMap["fav_icon_id"] = *space.FavIconID
+		}
+
+		if space.MobileIconID != nil {
+			updateMap["mobile_icon_id"] = *space.MobileIconID
+		}
+
+		if space.LogoMobileID != nil {
+			updateMap["logo_mobile_id"] = *space.LogoMobileID
+		}
+
+		err = tx.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
+			SpaceID: uint(spaceID),
+		}).Updates(&updateMap).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	} else {
+		settings := model.SpaceSettings{
+			SiteAddress:       space.SiteAddress,
+			TagLine:           space.TagLine,
+			SiteTitle:         space.SiteTitle,
+			VerificationCodes: space.VerificationCodes,
+			SocialMediaURLs:   space.SocialMediaURLs,
+			ContactInfo:       space.ContactInfo,
+			Analytics:         space.Analytics,
+			HeaderCode:        space.HeaderCode,
+			FooterCode:        space.FooterCode,
+			SpaceID:           uint(spaceID),
+		}
+
+		if space.LogoID != nil {
+			settings.LogoID = space.LogoID
+		}
+
+		if space.FavIconID != nil {
+			settings.FavIconID = space.FavIconID
+		}
+
+		if space.MobileIconID != nil {
+			settings.MobileIconID = space.MobileIconID
+		}
+
+		if space.LogoMobileID != nil {
+			settings.LogoMobileID = space.LogoMobileID
+		}
+
+		err = tx.Model(&model.SpaceSettings{}).Create(&settings).Error
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
+	}
+
+	requestBody := map[string]interface{}{
+		"name":        space.Name,
+		"slug":        space.Slug,
+		"description": space.Description,
+		"meta_fields": space.MetaFields,
 	}
 	buf := new(bytes.Buffer)
 	err = json.NewEncoder(buf).Encode(&requestBody)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -107,6 +181,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	client := httpx.CustomHttpClient()
 	req, err := http.NewRequest("PUT", viper.GetString("kavach_url")+"/organisations/"+fmt.Sprintf("%d", space.OrganisationID)+"/applications/"+fmt.Sprintf("%d", applicationID)+"/spaces/"+fmt.Sprintf("%d", spaceID), buf)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -116,6 +191,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	resp, err := client.Do(req)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -124,6 +200,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
@@ -131,13 +208,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceObjectfromKavach := &model.KavachSpace{}
 	err = json.NewDecoder(resp.Body).Decode(spaceObjectfromKavach)
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return
 	}
 
-	spaceObjectforDega := model.Space{}
-	spaceObjectforDega.ID = spaceObjectfromKavach.ID
+	spaceObjectforDega := util.Space{}
+	spaceObjectforDega.ID = uint(spaceID)
 	spaceObjectforDega.CreatedAt = spaceObjectfromKavach.CreatedAt
 	spaceObjectforDega.UpdatedAt = spaceObjectfromKavach.UpdatedAt
 	spaceObjectforDega.DeletedAt = spaceObjectfromKavach.DeletedAt
@@ -148,12 +226,37 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
-	err = json.Unmarshal(spaceObjectfromKavach.Metadata.RawMessage, &spaceObjectforDega)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+	spaceSettings := model.SpaceSettings{}
+	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
+		SpaceID: spaceObjectforDega.ID,
+	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&spaceSettings)
+
+	spaceObjectforDega.SiteTitle = spaceSettings.SiteTitle
+	spaceObjectforDega.TagLine = spaceSettings.TagLine
+	spaceObjectforDega.SiteAddress = spaceSettings.SiteAddress
+	if spaceSettings.LogoID != nil {
+		spaceObjectforDega.LogoID = spaceSettings.LogoID
+		spaceObjectforDega.Logo = spaceSettings.Logo
 	}
+	if spaceSettings.FavIconID != nil {
+		spaceObjectforDega.FavIconID = spaceSettings.FavIconID
+		spaceObjectforDega.FavIcon = spaceSettings.FavIcon
+	}
+	if spaceSettings.LogoMobileID != nil {
+		spaceObjectforDega.LogoMobile = spaceSettings.LogoMobile
+		spaceObjectforDega.LogoMobile = spaceSettings.LogoMobile
+	}
+
+	if spaceSettings.MobileIconID != nil {
+		spaceObjectforDega.MobileIconID = spaceSettings.MobileIconID
+		spaceObjectforDega.MobileIcon = spaceSettings.MobileIcon
+	}
+	spaceObjectforDega.VerificationCodes = spaceSettings.VerificationCodes
+	spaceObjectforDega.SocialMediaURLs = spaceSettings.SocialMediaURLs
+	spaceObjectforDega.ContactInfo = spaceSettings.ContactInfo
+	spaceObjectforDega.Analytics = spaceSettings.Analytics
+	spaceObjectforDega.HeaderCode = spaceSettings.HeaderCode
+	spaceObjectforDega.FooterCode = spaceSettings.FooterCode
 
 	// Update into meili index
 	meiliObj := map[string]interface{}{
@@ -172,13 +275,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		err = meilisearchx.UpdateDocument("dega", meiliObj)
 		if err != nil {
+			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return
 		}
 	}
 
-	//tx.Commit()
+	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("space.updated", strconv.Itoa(spaceID), r) {

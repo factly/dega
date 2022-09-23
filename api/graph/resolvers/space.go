@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/factly/dega-api/config"
 	"github.com/factly/dega-api/graph/generated"
 	"github.com/factly/dega-api/graph/loaders"
 	"github.com/factly/dega-api/graph/models"
@@ -23,7 +24,6 @@ func (r *spaceResolver) Logo(ctx context.Context, obj *models.Space) (*models.Me
 	if obj.LogoID == 0 {
 		return nil, nil
 	}
-
 	return loaders.GetMediumLoader(ctx).Load(fmt.Sprint(obj.LogoID))
 }
 
@@ -98,7 +98,7 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 	if err != nil {
 		return nil, errors.New("http request to kavach-server was unsuccessful")
 	}
-	
+
 	spaceObjectfromKavach := &models.KavachSpace{}
 	err = json.NewDecoder(resp.Body).Decode(spaceObjectfromKavach)
 	if err != nil {
@@ -106,17 +106,43 @@ func (r *queryResolver) Space(ctx context.Context) (*models.Space, error) {
 	}
 
 	spaceObjectforDega := &models.Space{}
-	spaceObjectforDega.ID = spaceObjectfromKavach.ID
+	spaceObjectforDega.ID = sID
 	spaceObjectforDega.CreatedAt = spaceObjectfromKavach.CreatedAt
 	spaceObjectforDega.UpdatedAt = spaceObjectfromKavach.UpdatedAt
 	spaceObjectforDega.DeletedAt = spaceObjectfromKavach.DeletedAt
 	spaceObjectforDega.Name = spaceObjectfromKavach.Name
 	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
-	err = json.Unmarshal(spaceObjectfromKavach.Metadata.RawMessage, &spaceObjectforDega)
-	if err != nil {
-		return nil, err
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
+	spaceSettings := models.SpaceSettings{}
+	config.DB.Model(&models.SpaceSettings{}).Where(&models.SpaceSettings{
+		SpaceID: sID,
+	}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&spaceSettings)
+	spaceObjectforDega.SiteTitle = spaceSettings.SiteTitle
+	spaceObjectforDega.TagLine = spaceSettings.TagLine
+	spaceObjectforDega.SiteAddress = spaceSettings.SiteAddress
+	if spaceSettings.LogoID != nil {
+		spaceObjectforDega.LogoID = *spaceSettings.LogoID
+		spaceObjectforDega.Logo = spaceSettings.Logo
 	}
+	if spaceSettings.FavIconID != nil {
+		spaceObjectforDega.FavIconID = *spaceSettings.FavIconID
+		spaceObjectforDega.FavIcon = spaceSettings.FavIcon
+	}
+	if spaceSettings.LogoMobileID != nil {
+		spaceObjectforDega.LogoMobileID = *spaceSettings.LogoMobileID
+		spaceObjectforDega.LogoMobile = spaceSettings.LogoMobile
+	}
+
+	if spaceSettings.MobileIconID != nil {
+		spaceObjectforDega.MobileIconID = *spaceSettings.MobileIconID
+		spaceObjectforDega.MobileIcon = spaceSettings.MobileIcon
+	}
+	spaceObjectforDega.VerificationCodes = spaceSettings.VerificationCodes
+	spaceObjectforDega.SocialMediaURLs = spaceSettings.SocialMediaURLs
+	spaceObjectforDega.ContactInfo = spaceSettings.ContactInfo
+	spaceObjectforDega.HeaderCode = spaceSettings.HeaderCode
+	spaceObjectforDega.FooterCode = spaceSettings.FooterCode
 	return spaceObjectforDega, nil
 }
 

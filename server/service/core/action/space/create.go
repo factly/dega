@@ -51,7 +51,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	space := space{}
+	space := util.Space{}
 	err = json.NewDecoder(r.Body).Decode(&space)
 	if err != nil {
 		loggerx.Error(err)
@@ -79,12 +79,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		"name":        space.Name,
 		"description": space.Description,
 		"slug":        space.Slug,
-		"metadata": map[string]interface{}{
-			"meta_fields":  space.MetaFields,
-			"site_address": space.SiteAddress,
-			"tag_line":     space.TagLine,
-			"site_title":   space.SiteTitle,
-		},
+		"meta_fields": space.MetaFields,
 	}
 	err = json.NewEncoder(buf).Encode(&requestBody)
 	if err != nil {
@@ -164,7 +159,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	spaceObjectforDega := model.Space{}
+	spaceSettings := &model.SpaceSettings{
+		SpaceID:     spaceObjectfromKavach.ID,
+		SiteAddress: space.SiteAddress,
+		SiteTitle:   space.SiteTitle,
+		TagLine:     space.TagLine,
+	}
+	err = config.DB.Model(&model.SpaceSettings{}).Create(spaceSettings).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
+	spaceObjectforDega := util.Space{}
 	spaceObjectforDega.ID = spaceObjectfromKavach.ID
 	spaceObjectforDega.CreatedAt = spaceObjectfromKavach.CreatedAt
 	spaceObjectforDega.UpdatedAt = spaceObjectfromKavach.UpdatedAt
@@ -174,14 +181,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.Name = spaceObjectfromKavach.Name
 	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.Metadata
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
-	err = json.Unmarshal(spaceObjectfromKavach.Metadata.RawMessage, &spaceObjectforDega)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
+	spaceObjectforDega.SiteTitle = spaceSettings.SiteTitle
+	spaceObjectforDega.TagLine = spaceSettings.TagLine
+	spaceObjectforDega.SiteAddress = spaceSettings.SiteAddress
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 
@@ -254,7 +259,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx.Commit()
-
 
 	if util.CheckNats() {
 		if err = util.NC.Publish("space.created", spaceObjectforDega); err != nil {

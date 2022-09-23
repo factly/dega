@@ -12,7 +12,6 @@ import (
 	"github.com/spf13/viper"
 
 	"github.com/factly/dega-server/config"
-	//"github.com/factly/dega-server/service/core/action/policy"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -48,7 +47,7 @@ type application struct {
 }
 
 type spaceWithPermissions struct {
-	model.Space
+	util.Space
 	Permissions     []model.Permission `json:"permissions"`
 	AllowedServices []string           `json:"services"`
 }
@@ -154,12 +153,41 @@ func my(w http.ResponseWriter, r *http.Request) {
 			spaceWithPerm.Description = eachSpace.Description
 			spaceWithPerm.ApplicationID = eachSpace.ApplicationID
 			spaceWithPerm.OrganisationID = int(eachSpace.OrganisationID)
-			err = json.Unmarshal(eachSpace.Metadata.RawMessage, &spaceWithPerm)
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
+			spaceWithPerm.MetaFields = eachSpace.Metadata
+			spaceSettings := model.SpaceSettings{}
+			config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
+				SpaceID: eachSpace.ID,
+			}).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").First(&spaceSettings)
+
+			spaceWithPerm.SiteTitle = spaceSettings.SiteTitle
+			spaceWithPerm.TagLine = spaceSettings.TagLine
+			spaceWithPerm.SiteAddress = spaceSettings.SiteAddress
+			if spaceSettings.LogoID != nil {
+				spaceWithPerm.LogoID = spaceSettings.LogoID
+				spaceWithPerm.Logo = spaceSettings.Logo
 			}
+			if spaceSettings.FavIconID != nil {
+				spaceWithPerm.FavIconID = spaceSettings.FavIconID
+				spaceWithPerm.FavIcon = spaceSettings.FavIcon
+			}
+			if spaceSettings.LogoMobileID != nil {
+				spaceWithPerm.LogoMobileID = spaceSettings.LogoMobileID
+				spaceWithPerm.LogoMobile = spaceSettings.LogoMobile
+			}
+
+			if spaceSettings.MobileIconID != nil {
+				spaceWithPerm.MobileIconID = spaceSettings.MobileIconID
+				spaceWithPerm.MobileIcon = spaceSettings.MobileIcon
+			}
+
+			spaceWithPerm.VerificationCodes = spaceSettings.VerificationCodes
+			spaceWithPerm.SocialMediaURLs = spaceSettings.SocialMediaURLs
+			spaceWithPerm.ContactInfo = spaceSettings.ContactInfo
+			spaceWithPerm.Analytics = spaceSettings.Analytics
+			spaceWithPerm.HeaderCode = spaceSettings.HeaderCode
+			spaceWithPerm.FooterCode = spaceSettings.FooterCode
+
+			spaceWithPerm.SiteAddress = spaceSettings.SiteAddress
 			if organisation.Permission.Role == "owner" {
 				adminPerm := model.Permission{
 					Resource: "admin",

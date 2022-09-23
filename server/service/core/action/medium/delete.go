@@ -64,10 +64,14 @@ func delete(w http.ResponseWriter, r *http.Request) {
 
 	// check if medium is associated with posts
 	var totAssociated int64
-	config.DB.Model(&model.Post{}).Where(&model.Post{
+	err = config.DB.Model(&model.Post{}).Where(&model.Post{
 		FeaturedMediumID: &uintID,
-	}).Count(&totAssociated)
-
+	}).Count(&totAssociated).Error
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		return
+	}
 	if totAssociated != 0 {
 		loggerx.Error(errors.New("medium is associated with post"))
 		errorx.Render(w, errorx.Parser(errorx.CannotDelete("medium", "post")))
@@ -86,13 +90,13 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check if medium is associated with spaces
-	config.DB.Model(&model.Space{}).Where(&model.Space{
+	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 		LogoID: &uintID,
-	}).Or(&model.Space{
+	}).Or(&model.SpaceSettings{
 		LogoMobileID: &uintID,
-	}).Or(&model.Space{
+	}).Or(&model.SpaceSettings{
 		FavIconID: &uintID,
-	}).Or(&model.Space{
+	}).Or(&model.SpaceSettings{
 		MobileIconID: &uintID,
 	}).Count(&totAssociated)
 

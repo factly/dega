@@ -19,31 +19,31 @@ func SetupVars() {
 		log.Println("config file not found...")
 	}
 
-	if !Sqlite(){
+	if !Sqlite() {
 		if !viper.IsSet("database_host") {
 			log.Fatal("please provide database_host config param")
 		}
-	
+
 		if !viper.IsSet("database_user") {
 			log.Fatal("please provide database_user config param")
 		}
-	
+
 		if !viper.IsSet("database_name") {
 			log.Fatal("please provide database_name config param")
 		}
-	
+
 		if !viper.IsSet("database_password") {
 			log.Fatal("please provide database_password config param")
 		}
-	
+
 		if !viper.IsSet("database_port") {
 			log.Fatal("please provide database_port config param")
 		}
-	
+
 		if !viper.IsSet("database_ssl_mode") {
 			log.Fatal("please provide database_ssl_mode config param")
 		}
-	}	else {
+	} else {
 		if !viper.IsSet("sqlite_db_path") {
 			log.Fatal("please provide sqlite_db_path config param")
 		}
@@ -53,15 +53,15 @@ func SetupVars() {
 		log.Fatal("please provide kavach_url config param")
 	}
 
-	if !viper.IsSet("keto_url") {
-		log.Fatal("please provide keto_url config param")
+	if !viper.IsSet("keto_read_api_url") {
+		log.Fatal("please provide keto_read_api_url config param")
 	}
 
-	if viper.IsSet("google_fact_check_search_enabled") && viper.GetBool("google_fact_check_search_enabled"){
+	if viper.IsSet("google_fact_check_search_enabled") && viper.GetBool("google_fact_check_search_enabled") {
 		if !viper.IsSet("google_key") {
 			log.Fatal("please provide google_key config param")
 		}
-	}	
+	}
 
 	if !viper.IsSet("create_super_organisation") {
 		log.Fatal("please provide create_super_organisation (bool) config param")

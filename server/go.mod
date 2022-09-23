@@ -7,7 +7,7 @@ require (
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/eduncan911/podcast v1.4.2
-	github.com/factly/x v0.0.82
+	github.com/factly/x v0.0.87
 	github.com/gavv/httpexpect v2.0.0+incompatible
 	github.com/gavv/httpexpect/v2 v2.1.0
 	github.com/go-chi/chi v4.1.2+incompatible
@@ -23,6 +23,7 @@ require (
 	github.com/swaggo/swag v1.7.0
 	gopkg.in/h2non/gock.v1 v1.0.15
 	gorm.io/driver/postgres v1.3.8
+	gorm.io/driver/sqlite v1.3.6
 	gorm.io/gorm v1.23.8
 )
 
@@ -110,6 +111,5 @@ require (
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	gorm.io/driver/sqlite v1.3.6 // indirect
 	moul.io/http2curl v1.0.1-0.20190925090545-5cd742060b0e // indirect
 )

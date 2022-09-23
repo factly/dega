@@ -41,7 +41,7 @@ const namespace string = "spaces"
 func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error) {
 	client := httpx.CustomHttpClient()
 	roleObject := fmt.Sprintf("roles:org:%d:app:%d:space:%d", orgID, appID, spaceID)
-	requestURL := viper.GetString("keto_url") + "/relation-tuples?namespace=spaces&" + fmt.Sprintf("subject_id=%d&object=%s", uID, roleObject)
+	requestURL := viper.GetString("keto_read_api_url") + "/relation-tuples?namespace=spaces&" + fmt.Sprintf("subject_id=%d&object=%s", uID, roleObject)
 	req, err := http.NewRequest("GET", requestURL, nil)
 	if err != nil {
 		return nil, err
@@ -65,7 +65,7 @@ func GetPermissions(orgID, appID, spaceID, uID uint) ([]model.Permission, error)
 	var ketoResponse = make(map[string][]string)
 	for _, tuple := range tuples.Tuples {
 		if strings.HasPrefix(tuple.Object, "roles") {
-			baseURL, err := url.Parse(viper.GetString("keto_url"))
+			baseURL, err := url.Parse(viper.GetString("keto_read_api_url"))
 			if err != nil {
 				return nil, err
 			}

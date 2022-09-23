@@ -312,11 +312,176 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		SpaceID: uint(sID),
 	}).Order("numeric_value asc").Find(&ratings)
 
+	schemaxPost := schemax.Post{
+		Base:             schemax.Base(result.Post.Base),
+		Title:            result.Title,
+		Subtitle:         result.Subtitle,
+		Slug:             result.Slug,
+		Status:           result.Status,
+		IsPage:           result.IsPage,
+		Excerpt:          result.Excerpt,
+		Description:      result.Description,
+		DescriptionHTML:  result.DescriptionHTML,
+		IsFeatured:       result.IsFeatured,
+		IsSticky:         result.IsSticky,
+		IsHighlighted:    result.IsHighlighted,
+		FeaturedMediumID: result.FeaturedMediumID,
+		Medium: &schemax.Medium{
+			Base:        schemax.Base(result.Medium.Base),
+			Name:        result.Medium.Name,
+			Slug:        result.Medium.Slug,
+			Type:        result.Medium.Type,
+			Title:       result.Medium.Title,
+			Description: result.Medium.Description,
+			Caption:     result.Medium.Caption,
+			AltText:     result.Medium.AltText,
+			FileSize:    result.Medium.FileSize,
+			URL:         result.Medium.URL,
+			Dimensions:  result.Medium.Dimensions,
+			MetaFields:  result.Medium.MetaFields,
+			SpaceID:     result.Medium.SpaceID,
+		},
+		FormatID:      result.FormatID,
+		PublishedDate: result.PublishedDate,
+		SpaceID:       result.SpaceID,
+		Schemas:       result.Schemas,
+		Meta:          result.Meta,
+		HeaderCode:    result.HeaderCode,
+		FooterCode:    result.FooterCode,
+		MetaFields:    result.MetaFields,
+	}
+
+	schemaxAuthors := make([]schemax.PostAuthor, 0)
+	for _, author := range result.Authors {
+		schemaxAuthor := schemax.PostAuthor{
+			Base:             schemax.Base(author.Base),
+			Email:            author.Email,
+			KID:              author.KID,
+			FirstName:        author.FirstName,
+			LastName:         author.LastName,
+			Slug:             author.Slug,
+			DisplayName:      author.DisplayName,
+			BirthDate:        author.BirthDate,
+			Gender:           author.Gender,
+			FeaturedMediumID: author.FeaturedMediumID,
+			Medium: &schemax.Medium{
+				Base:        schemax.Base(author.Medium.Base),
+				Name:        author.Medium.Name,
+				Slug:        author.Medium.Slug,
+				Type:        author.Medium.Type,
+				Title:       author.Medium.Title,
+				Description: author.Medium.Description,
+				Caption:     author.Medium.Caption,
+				AltText:     author.Medium.AltText,
+				FileSize:    author.Medium.FileSize,
+				URL:         author.Medium.URL,
+				Dimensions:  author.Medium.Dimensions,
+				MetaFields:  author.Medium.MetaFields,
+				SpaceID:     author.Medium.SpaceID,
+			},
+			SocialMediaURLs: author.SocialMediaURLs,
+		}
+		schemaxAuthors = append(schemaxAuthors, schemaxAuthor)
+	}
+
+	schemaxClaims := make([]schemax.Claim, 0)
+	for _, claim := range result.Claims {
+		schemaxClaim := schemax.Claim{
+			Base:            schemax.Base(claim.Base),
+			Claim:           claim.Claim,
+			Slug:            claim.Slug,
+			ClaimDate:       claim.ClaimDate,
+			CheckedDate:     claim.CheckedDate,
+			ClaimSources:    claim.ClaimSources,
+			Description:     claim.Description,
+			DescriptionHTML: claim.DescriptionHTML,
+			ClaimantID:      claim.ClaimantID,
+			Claimant: schemax.Claimant{
+				Base:            schemax.Base(claim.Claimant.Base),
+				Name:            claim.Claimant.Name,
+				Slug:            claim.Claimant.Slug,
+				Description:     claim.Claimant.Description,
+				DescriptionHTML: claim.Claimant.DescriptionHTML,
+				IsFeatured:      claim.Claimant.IsFeatured,
+				TagLine:         claim.Claimant.TagLine,
+				MediumID:        claim.Claimant.MediumID,
+				MetaFields:      claim.Claimant.MetaFields,
+				SpaceID:         claim.Claimant.SpaceID,
+				Meta:            claim.Claimant.Meta,
+				HeaderCode:      claim.Claimant.HeaderCode,
+				FooterCode:      claim.Claimant.FooterCode,
+			},
+			RatingID:      claim.RatingID,
+			MediumID:      claim.MediumID,
+			Fact:          claim.Fact,
+			ReviewSources: claim.ReviewSources,
+			MetaFields:    claim.MetaFields,
+			SpaceID:       claim.SpaceID,
+			VideoID:       claim.VideoID,
+			EndTime:       claim.EndTime,
+			StartTime:     claim.StartTime,
+			Meta:          claim.Meta,
+			HeaderCode:    claim.HeaderCode,
+			FooterCode:    claim.FooterCode,
+		}
+		schemaxClaims = append(schemaxClaims, schemaxClaim)
+	}
+
+	schemaxRatings := make([]schemax.Rating, 0)
+	for _, rating := range ratings {
+		schemaxRating := schemax.Rating{
+			Base:             schemax.Base(rating.Base),
+			Name:             rating.Name,
+			Slug:             rating.Slug,
+			BackgroundColour: rating.BackgroundColour,
+			TextColour:       rating.TextColour,
+			Description:      rating.Description,
+			DescriptionHTML:  rating.DescriptionHTML,
+			NumericValue:     rating.NumericValue,
+			MediumID:         rating.MediumID,
+			MetaFields:       rating.MetaFields,
+			SpaceID:          rating.SpaceID,
+			Meta:             rating.Meta,
+			HeaderCode:       rating.HeaderCode,
+			FooterCode:       rating.FooterCode,
+		}
+		schemaxRatings = append(schemaxRatings, schemaxRating)
+	}
+
+	schemaxSpace := schemax.Space{
+		Base:        schemax.Base{
+			ID: spaceObjectforDega.ID,
+			CreatedAt: spaceObjectforDega.CreatedAt,
+			UpdatedAt: spaceObjectforDega.UpdatedAt,
+			DeletedAt: spaceObjectforDega.DeletedAt,
+			CreatedByID: spaceObjectforDega.CreatedByID,
+			UpdatedByID: spaceObjectforDega.UpdatedByID,
+		},
+		Name:        spaceObjectforDega.Name,
+		Slug:        spaceObjectforDega.Slug,
+		Description: spaceObjectforDega.Description,
+		MetaFields:  spaceObjectforDega.MetaFields,
+		SpaceSettings: &schemax.SpaceSettings{
+			SiteTitle:         spaceObjectforDega.SiteTitle,
+			SiteAddress:       spaceObjectforDega.SiteAddress,
+			LogoID:            spaceObjectforDega.LogoID,
+			LogoMobileID:      spaceObjectforDega.LogoMobileID,
+			FavIconID:         spaceObjectforDega.FavIconID,
+			MobileIconID:      spaceObjectforDega.MobileIconID,
+			VerificationCodes: spaceObjectforDega.VerificationCodes,
+			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
+			ContactInfo:       spaceObjectforDega.ContactInfo,
+			Analytics:         spaceObjectforDega.Analytics,
+			HeaderCode:        spaceObjectforDega.HeaderCode,
+			FooterCode:        spaceObjectforDega.FooterCode,
+		},
+	}
+
 	schemas := schemax.GetSchemas(schemax.PostData{
-		Post:    result.Post,
-		Authors: result.Authors,
-		Claims:  result.Claims,
-	}, *spaceObjectforDega, ratings)
+		Post:    schemaxPost,
+		Authors: schemaxAuthors,
+		Claims:  schemaxClaims,
+	}, schemaxSpace, schemaxRatings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
