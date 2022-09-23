@@ -409,20 +409,31 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}).Order("numeric_value asc").Find(&ratings)
 
 	schemaxPost := schemax.Post{
-		Base:             schemax.Base(result.Post.Base),
-		Title:            result.Title,
-		Subtitle:         result.Subtitle,
-		Slug:             result.Slug,
-		Status:           result.Status,
-		IsPage:           result.IsPage,
-		Excerpt:          result.Excerpt,
-		Description:      result.Description,
-		DescriptionHTML:  result.DescriptionHTML,
-		IsFeatured:       result.IsFeatured,
-		IsSticky:         result.IsSticky,
-		IsHighlighted:    result.IsHighlighted,
-		FeaturedMediumID: result.FeaturedMediumID,
-		Medium: &schemax.Medium{
+		Base:            schemax.Base(result.Post.Base),
+		Title:           result.Title,
+		Subtitle:        result.Subtitle,
+		Slug:            result.Slug,
+		Status:          result.Status,
+		IsPage:          result.IsPage,
+		Excerpt:         result.Excerpt,
+		Description:     result.Description,
+		DescriptionHTML: result.DescriptionHTML,
+		IsFeatured:      result.IsFeatured,
+		IsSticky:        result.IsSticky,
+		IsHighlighted:   result.IsHighlighted,
+		FormatID:        result.FormatID,
+		PublishedDate:   result.PublishedDate,
+		SpaceID:         result.SpaceID,
+		Schemas:         result.Schemas,
+		Meta:            result.Meta,
+		HeaderCode:      result.HeaderCode,
+		FooterCode:      result.FooterCode,
+		MetaFields:      result.MetaFields,
+	}
+
+	if result.FeaturedMediumID != nil {
+		schemaxPost.FeaturedMediumID = result.FeaturedMediumID
+		schemaxPost.Medium = &schemax.Medium{
 			Base:        schemax.Base(result.Medium.Base),
 			Name:        result.Medium.Name,
 			Slug:        result.Medium.Slug,
@@ -436,31 +447,27 @@ func update(w http.ResponseWriter, r *http.Request) {
 			Dimensions:  result.Medium.Dimensions,
 			MetaFields:  result.Medium.MetaFields,
 			SpaceID:     result.Medium.SpaceID,
-		},
-		FormatID:      result.FormatID,
-		PublishedDate: result.PublishedDate,
-		SpaceID:       result.SpaceID,
-		Schemas:       result.Schemas,
-		Meta:          result.Meta,
-		HeaderCode:    result.HeaderCode,
-		FooterCode:    result.FooterCode,
-		MetaFields:    result.MetaFields,
+		}
 	}
 
 	schemaxAuthors := make([]schemax.PostAuthor, 0)
 	for _, author := range result.Authors {
 		schemaxAuthor := schemax.PostAuthor{
-			Base:             schemax.Base(author.Base),
-			Email:            author.Email,
-			KID:              author.KID,
-			FirstName:        author.FirstName,
-			LastName:         author.LastName,
-			Slug:             author.Slug,
-			DisplayName:      author.DisplayName,
-			BirthDate:        author.BirthDate,
-			Gender:           author.Gender,
-			FeaturedMediumID: author.FeaturedMediumID,
-			Medium: &schemax.Medium{
+			Base:            schemax.Base(author.Base),
+			Email:           author.Email,
+			KID:             author.KID,
+			FirstName:       author.FirstName,
+			LastName:        author.LastName,
+			Slug:            author.Slug,
+			DisplayName:     author.DisplayName,
+			BirthDate:       author.BirthDate,
+			Gender:          author.Gender,
+			SocialMediaURLs: author.SocialMediaURLs,
+		}
+
+		if author.FeaturedMediumID != nil {
+			schemaxAuthor.FeaturedMediumID = author.FeaturedMediumID
+			schemaxAuthor.Medium = &schemax.Medium{
 				Base:        schemax.Base(author.Medium.Base),
 				Name:        author.Medium.Name,
 				Slug:        author.Medium.Slug,
@@ -474,8 +481,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 				Dimensions:  author.Medium.Dimensions,
 				MetaFields:  author.Medium.MetaFields,
 				SpaceID:     author.Medium.SpaceID,
-			},
-			SocialMediaURLs: author.SocialMediaURLs,
+			}
 		}
 		schemaxAuthors = append(schemaxAuthors, schemaxAuthor)
 	}
@@ -500,7 +506,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 				DescriptionHTML: claim.Claimant.DescriptionHTML,
 				IsFeatured:      claim.Claimant.IsFeatured,
 				TagLine:         claim.Claimant.TagLine,
-				MediumID:        claim.Claimant.MediumID,
 				MetaFields:      claim.Claimant.MetaFields,
 				SpaceID:         claim.Claimant.SpaceID,
 				Meta:            claim.Claimant.Meta,
@@ -508,7 +513,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 				FooterCode:      claim.Claimant.FooterCode,
 			},
 			RatingID:      claim.RatingID,
-			MediumID:      claim.MediumID,
 			Fact:          claim.Fact,
 			ReviewSources: claim.ReviewSources,
 			MetaFields:    claim.MetaFields,
@@ -520,6 +524,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 			HeaderCode:    claim.HeaderCode,
 			FooterCode:    claim.FooterCode,
 		}
+
+		if claim.MediumID != nil {
+			schemaxClaim.MediumID = claim.MediumID
+		}
+		if claim.Claimant.MediumID != nil {
+			schemaxClaim.Claimant.MediumID = claim.Claimant.MediumID
+		}
+
 		schemaxClaims = append(schemaxClaims, schemaxClaim)
 	}
 
@@ -534,12 +546,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 			Description:      rating.Description,
 			DescriptionHTML:  rating.DescriptionHTML,
 			NumericValue:     rating.NumericValue,
-			MediumID:         rating.MediumID,
 			MetaFields:       rating.MetaFields,
 			SpaceID:          rating.SpaceID,
 			Meta:             rating.Meta,
 			HeaderCode:       rating.HeaderCode,
 			FooterCode:       rating.FooterCode,
+		}
+		if rating.MediumID != nil {
+			schemaxRating.MediumID = rating.MediumID
 		}
 		schemaxRatings = append(schemaxRatings, schemaxRating)
 	}
@@ -560,10 +574,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		SpaceSettings: &schemax.SpaceSettings{
 			SiteTitle:         spaceObjectforDega.SiteTitle,
 			SiteAddress:       spaceObjectforDega.SiteAddress,
-			LogoID:            spaceObjectforDega.LogoID,
-			LogoMobileID:      spaceObjectforDega.LogoMobileID,
-			FavIconID:         spaceObjectforDega.FavIconID,
-			MobileIconID:      spaceObjectforDega.MobileIconID,
 			VerificationCodes: spaceObjectforDega.VerificationCodes,
 			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
 			ContactInfo:       spaceObjectforDega.ContactInfo,
@@ -573,6 +583,22 @@ func update(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
+	if spaceObjectforDega.LogoID != nil {
+		schemaxSpace.SpaceSettings.LogoID = spaceObjectforDega.LogoID
+	}
+
+	if spaceObjectforDega.LogoMobileID != nil {
+		schemaxSpace.SpaceSettings.LogoMobileID = spaceObjectforDega.LogoMobileID
+	}
+
+	if spaceObjectforDega.FavIconID != nil {
+		schemaxSpace.SpaceSettings.FavIconID = spaceObjectforDega.FavIconID
+	}
+
+	if spaceObjectforDega.MobileIconID != nil {
+		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
+	}
+	
 	schemas := schemax.GetSchemas(schemax.PostData{
 		Post:    schemaxPost,
 		Authors: schemaxAuthors,
