@@ -1,7 +1,7 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Tooltip } from 'antd';
+import { Popconfirm, Button, Table, Tooltip, Switch } from 'antd';
 import { useDispatch } from 'react-redux';
-import { deleteWebhook } from '../../../actions/webhooks';
+import { deleteWebhook, updateWebhook } from '../../../actions/webhooks';
 import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
@@ -44,8 +44,15 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
       title: 'Enabled',
       dataIndex: 'enabled',
       width: '10%',
-      render: (_, record) => {
-        return <p>{record.enabled ? 'Yes' : 'No'}</p>;
+      render: (_, webhook) => {
+        return (
+          <Switch
+            checked={webhook.enabled}
+            onClick={(value) =>
+              dispatch(updateWebhook({ ...webhook, enabled: value, event_ids: webhook.events }))
+            }
+          />
+        );
       },
     },
     {
