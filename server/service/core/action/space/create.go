@@ -181,7 +181,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.Name = spaceObjectfromKavach.Name
 	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
-	spaceObjectforDega.MetaFields = spaceObjectfromKavach.Metadata
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
 	spaceObjectforDega.SiteTitle = spaceSettings.SiteTitle

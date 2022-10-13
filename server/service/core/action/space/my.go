@@ -153,7 +153,7 @@ func my(w http.ResponseWriter, r *http.Request) {
 			spaceWithPerm.Description = eachSpace.Description
 			spaceWithPerm.ApplicationID = eachSpace.ApplicationID
 			spaceWithPerm.OrganisationID = int(eachSpace.OrganisationID)
-			spaceWithPerm.MetaFields = eachSpace.Metadata
+			spaceWithPerm.MetaFields = eachSpace.MetaFields
 			spaceSettings := model.SpaceSettings{}
 			config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 				SpaceID: eachSpace.ID,
