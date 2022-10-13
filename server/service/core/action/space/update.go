@@ -66,7 +66,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	
+
 	space.ID = uint(spaceID)
 	validationError := validationx.Check(space)
 	if validationError != nil {
@@ -226,6 +226,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
 	spaceSettings := model.SpaceSettings{}
 	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 		SpaceID: spaceObjectforDega.ID,
