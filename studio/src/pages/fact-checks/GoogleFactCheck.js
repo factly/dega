@@ -4,6 +4,7 @@ import { getGoogleFactChecks } from '../../actions/googleFactChecks';
 import { Form, Input, Select, Button, List, Typography, Space } from 'antd';
 import deepEqual from 'deep-equal';
 import { languageCode } from '../fact-checks/LanguageCode';
+import { languageCodetoName } from '../../utils/language';
 
 function GoogleFactCheck() {
   const dispatch = useDispatch();
@@ -114,7 +115,10 @@ function GoogleFactCheck() {
           <Input placeholder="search fact checks" />
         </Form.Item>
         <Form.Item name="language" label="language" style={{ width: '25%' }}>
-          <Select defaultValue={'all'}>
+          <Select 
+            mode="multiple"
+            placeholder="Select language"
+            >
             {langCode.map((e, key) => {
               return (
                 <Option key={key} value={e.code}>
