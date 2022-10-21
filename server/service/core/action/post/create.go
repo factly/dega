@@ -15,9 +15,9 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/schemax"
@@ -503,7 +503,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	if spaceObjectforDega.MobileIconID != nil {
 		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
 	}
-	
+
 	schemas := schemax.GetSchemas(schemax.PostData{
 		Post:    schemaxPost,
 		Authors: schemaxAuthors,
@@ -553,7 +553,10 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		err = searchService.GetSearchService().Add(meiliObj)
+		if err != nil {
+			return nil, errorx.InternalServerError()
+		}
 	}
 
 	tx.Commit()

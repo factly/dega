@@ -11,9 +11,9 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	httpx "github.com/factly/dega-server/util/http"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -93,10 +93,11 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 	if config.SearchEnabled() {
-		err = meilisearchx.DeleteDocument("dega", uint(sID), "space")
+		err = searchService.GetSearchService().Delete("post", uint(sID))
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
 		}
 	}
 

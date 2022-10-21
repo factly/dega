@@ -13,9 +13,9 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	httpx "github.com/factly/dega-server/util/http"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/validationx"
@@ -66,7 +66,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-	
+
 	space.ID = uint(spaceID)
 	validationError := validationx.Check(space)
 	if validationError != nil {
@@ -273,9 +273,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		err = meilisearchx.UpdateDocument("dega", meiliObj)
+		err = searchService.GetSearchService().Update(meiliObj)
 		if err != nil {
-			tx.Rollback()
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 			return

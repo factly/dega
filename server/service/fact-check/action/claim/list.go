@@ -8,9 +8,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	search "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -75,14 +75,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
+			hits, err = search.GetSearchService().SearchQuery(searchQuery, filters, "claim")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredClaimIDs := meilisearchx.GetIDArray(hits)
+			filteredClaimIDs := search.GetIDArray(hits)
 			if len(filteredClaimIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
@@ -121,10 +121,10 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 	filters := ""
 
 	if len(ratingIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
+		filters = fmt.Sprint(filters, search.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
 	}
 	if len(claimantIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
+		filters = fmt.Sprint(filters, search.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
 	}
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]

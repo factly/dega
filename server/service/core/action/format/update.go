@@ -10,9 +10,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
@@ -132,7 +132,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["medium_id"] = nil
 	}
 
-
 	if format.CreatedAt.IsZero() {
 		updateMap["created_at"] = result.CreatedAt
 	}
@@ -140,7 +139,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if format.UpdatedAt.IsZero() {
 		updateMap["updated_at"] = time.Now()
 	}
-
 
 	tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result)
 
@@ -155,7 +153,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		err = searchService.GetSearchService().Update(meiliObj)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()

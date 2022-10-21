@@ -11,9 +11,9 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -98,16 +98,17 @@ func list(w http.ResponseWriter, r *http.Request) {
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
+
 			// Search posts with filter
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "post")
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "post")
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredPostIDs := meilisearchx.GetIDArray(hits)
+			filteredPostIDs := searchService.GetIDArray(hits)
 			if len(filteredPostIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
@@ -216,19 +217,19 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
 	filters := ""
 	if len(tagIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(tagIDs, "tag_ids"), " AND ")
 	}
 
 	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
 	if len(authorIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(authorIDs, "author_ids"), " AND ")
 	}
 
 	if len(status) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(status, "status"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(status, "status"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

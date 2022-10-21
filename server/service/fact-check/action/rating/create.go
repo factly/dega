@@ -10,9 +10,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
@@ -156,7 +156,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.Rating{}).Preload("Medium").First(&result)
 
 	if config.SearchEnabled() {
-		_ = insertIntoMeili(*result)
+		err = insertIntoSearchService(*result)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()
@@ -175,7 +180,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	renderx.JSON(w, http.StatusCreated, result)
 }
 
-func insertIntoMeili(rating model.Rating) error {
+func insertIntoSearchService(rating model.Rating) error {
 	meiliObj := map[string]interface{}{
 		"id":                rating.ID,
 		"kind":              "rating",
@@ -188,5 +193,5 @@ func insertIntoMeili(rating model.Rating) error {
 		"space_id":          rating.SpaceID,
 	}
 
-	return meilisearchx.AddDocument("dega", meiliObj)
+	return searchService.GetSearchService().Add(meiliObj)
 }

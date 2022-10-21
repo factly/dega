@@ -77,6 +77,10 @@ func SetupVars() {
 	}
 
 	if SearchEnabled() {
+		if !viper.IsSet("use_meilisearch") {
+			log.Fatal("please provide use_meilisearch config param")
+		}
+
 		if !viper.IsSet("meili_url") {
 			log.Fatal("please provide meili_url config param")
 		}
