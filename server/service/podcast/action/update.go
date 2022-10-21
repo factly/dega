@@ -8,11 +8,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	coreModel "github.com/factly/dega-server/service/core/model"
+	searchService "github.com/factly/dega-server/util/search-service"
+
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
@@ -189,7 +190,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.UpdateDocument("dega", meiliObj)
+		err = searchService.GetSearchService().Update(meiliObj)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()
