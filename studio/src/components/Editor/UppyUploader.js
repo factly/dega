@@ -196,7 +196,7 @@ class UppyUploader {
           this.nodes.wrapper.children[0].setAttribute('style', `${style.img} ${style[tune]}`);
         }
       });
-      this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_IMG_URL_PROP];
+      this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
     }
     return this.nodes.wrapper;
   }
@@ -281,7 +281,7 @@ class UppyUploader {
   createDisplayList(data, query, total) {
     function handleClick(imageDetails, obj) {
       obj.data = imageDetails;
-      obj.nodes.wrapper.children[0].src = imageDetails.url?.[window.REACT_APP_IMG_URL_PROP];
+      obj.nodes.wrapper.children[0].src = imageDetails.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
       obj.nodes.wrapper.children[2].style.display = 'none';
       obj.nodes.wrapper.children[1].style.display = 'none';
     }
@@ -296,7 +296,7 @@ class UppyUploader {
     for (var i = 0; i < data.length; i++) {
       (function (obj) {
         const image = document.createElement('img');
-        image.src = data[i].url?.[window.REACT_APP_IMG_URL_PROP];
+        image.src = data[i].url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
         image.height = '154';
         image.width = '154';
         var imageDetails = data[i];
@@ -436,7 +436,7 @@ class UppyUploader {
             this.data = res.data.nodes[0];
             this.nodes.wrapper.children[2].style.display = 'none';
             this.nodes.wrapper.children[1].style.display = 'none';
-            this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_IMG_URL_PROP];
+            this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
           })
           .catch((error) => {
             this.api.notifier.show({
