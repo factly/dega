@@ -83,7 +83,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			}
 			// Search pages with filter
 			var hits []interface{}
-			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "post")
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "page", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

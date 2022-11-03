@@ -68,7 +68,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 			var hits []interface{}
 
-			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "medium")
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "medium", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

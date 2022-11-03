@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
@@ -20,8 +22,8 @@ type SearchService interface {
 	BatchAdd(data []map[string]interface{}) error
 	Delete(kind string, id uint) error
 	Update(data map[string]interface{}) error
-	UpdateDocuments(data []map[string]interface{}) error
-	SearchQuery(q, filters, kind string) ([]interface{}, error)
+	BatchUpdate(data []map[string]interface{}) error
+	SearchQuery(q, filters, kind string, limit, offset int) ([]interface{}, error)
 	DeleteAllDocuments() error
 	BatchDelete(objectIDs []string) error
 	GetAllDocumentsBySpace(space uint) ([]interface{}, error)
@@ -34,11 +36,11 @@ func SetTimeout(time time.Duration) {
 }
 
 type SearchConfig struct {
-	Name      string
-	Host      string
-	APIkey    string
-	IndexName string
-	Settings  map[string][]string
+	Name      string              `json:"name,omitempty"`
+	Host      string              `json:"host,omitempty"`
+	APIkeys   map[string]string   `json:"api_keys"`
+	IndexName string              `json:"index_name"`
+	Settings  map[string][]string `json:"settings"`
 }
 
 type Meilisearch struct {
@@ -56,16 +58,44 @@ var customSearchClient CustomSearch
 
 func GetSearchService() SearchService {
 	if viper.GetBool("use_meilisearch") {
-		return &Meilisearch{}
+		return &Meilisearch{
+			config: &SearchConfig{
+				Name: "Meilisearch",
+			},
+		}
 	} else {
-		return &CustomSearch{}
+		return &CustomSearch{
+			config: &SearchConfig{
+				Name: "Custom",
+			},
+		}
 	}
+}
+
+func GetSearchServiceConfig() (*SearchConfig, error) {
+	config := new(SearchConfig)
+	jsonFile, err := os.Open("./data/search-config.json")
+	if err != nil {
+		return nil, err
+	}
+	defer jsonFile.Close()
+	fileBuffer, err := ioutil.ReadAll(jsonFile)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(fileBuffer, config)
+	if err != nil {
+		return nil, err
+	}
+
+	return config, nil
 }
 
 func (m *Meilisearch) Connect(config *SearchConfig) error {
 	meilisearchClient.Client = meilisearch.NewClient(meilisearch.ClientConfig{
 		Host:    config.Host,
-		APIKey:  config.APIkey,
+		APIKey:  config.APIkeys["meili_api_key"],
 		Timeout: timeout,
 	})
 
@@ -166,7 +196,7 @@ func (m *Meilisearch) Update(data map[string]interface{}) error {
 	return nil
 }
 
-func (m *Meilisearch) UpdateDocuments(data []map[string]interface{}) error {
+func (m *Meilisearch) BatchUpdate(data []map[string]interface{}) error {
 	for index, docs := range data {
 		if docs["kind"] == nil || docs["kind"] == "" {
 			return errors.New("no kind field in meili document")
@@ -184,7 +214,7 @@ func (m *Meilisearch) UpdateDocuments(data []map[string]interface{}) error {
 	return err
 }
 
-func (m *Meilisearch) SearchQuery(q, filters, kind string) ([]interface{}, error) {
+func (m *Meilisearch) SearchQuery(q, filters, kind string, limit, offset int) ([]interface{}, error) {
 	filter := [][]string{}
 	filter = append(filter, []string{filters})
 	if kind != "" {
@@ -193,7 +223,8 @@ func (m *Meilisearch) SearchQuery(q, filters, kind string) ([]interface{}, error
 
 	result, err := meilisearchClient.Client.Index(meilisearchClient.config.IndexName).Search(q, &meilisearch.SearchRequest{
 		Filter: filter,
-		Limit:  100000,
+		Limit:  int64(limit),
+		Offset: int64(offset),
 	})
 
 	if err != nil {
@@ -230,55 +261,354 @@ func (m *Meilisearch) GetAllDocumentsBySpace(space uint) ([]interface{}, error) 
 }
 
 func (c *CustomSearch) Connect(config *SearchConfig) error {
+	reqBody := map[string]interface{}{
+		"name":       config.Name,
+		"host":       config.Host,
+		"index_name": config.IndexName,
+		"settings":   config.Settings,
+	}
+
+	customSearchClient.Client = &http.Client{
+		Timeout: timeout,
+	}
+
 	customSearchClient.config = config
-	var reqBody bytes.Buffer
-	err := json.NewEncoder(&reqBody).Encode(customSearchClient.config)
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(reqBody)
 	if err != nil {
 		return err
 	}
 
-	customSearchClient.Client = &http.Client{Timeout: timeout}
-	_, err = http.NewRequest(http.MethodGet, fmt.Sprintln(config.Host, "/connect"), &reqBody)
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/%s", config.Host, "connect"), byteStream)
 	if err != nil {
 		return err
+	}
+
+	for keyName, apiKey := range config.APIkeys {
+		req.Header.Add(keyName, apiKey)
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+	if response.StatusCode != 202 {
+		return errors.New("error in connecting to the search index")
 	}
 
 	return nil
 }
 
 func (c *CustomSearch) Add(data map[string]interface{}) error {
+	if data["kind"] == nil || data["kind"] == "" {
+		return errors.New("no kind field in meili document")
+	}
+	if data["id"] == nil || data["id"] == "" {
+		return errors.New("no id field in meili document")
+	}
+
+	data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&data)
+	if err != nil {
+		return err
+	}
+	if customSearchClient.Client == nil {
+		return errors.New("http client in custom search not connected")
+	}
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/%s", customSearchClient.config.Host, "add"), byteStream)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusCreated {
+		return errors.New("unable to add object to the search index")
+	}
+
 	return nil
 }
 
-func (c *CustomSearch) BatchAdd(data []map[string]interface{}) error {
+func (c *CustomSearch) BatchAdd(objects []map[string]interface{}) error {
+	for _, data := range objects {
+		if data["kind"] == nil || data["kind"] == "" {
+			return errors.New("no kind field in search document")
+		}
+		if data["id"] == nil || data["id"] == "" {
+			return errors.New("no id field in search document")
+		}
+
+		data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+	}
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&objects)
+	if err != nil {
+		return err
+	}
+	if customSearchClient.Client == nil {
+		return errors.New("http client in custom search not connected")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/%s/%s", customSearchClient.config.Host, "batch", "add"), byteStream)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusCreated {
+		return errors.New("unable to add objects to the search index")
+	}
+
 	return nil
 }
 
 func (c *CustomSearch) Delete(kind string, id uint) error {
+	if customSearchClient.Client == nil {
+		return errors.New("http client in custom search not connected")
+	}
+
+	objectID := fmt.Sprintf("%s_%d", kind, id)
+	reqURL := customSearchClient.config.Host + "/delete?object_id=" + objectID
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return errors.New("unable to delete object in the search index")
+	}
+
 	return nil
 }
 
 func (c *CustomSearch) Update(data map[string]interface{}) error {
+	if data["kind"] == nil || data["kind"] == "" {
+		return errors.New("no kind field in meili document")
+	}
+	if data["id"] == nil || data["id"] == "" {
+		return errors.New("no id field in meili document")
+	}
+
+	data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&data)
+	if err != nil {
+		return err
+	}
+	if customSearchClient.Client == nil {
+		return errors.New("http client in custom search not connected")
+	}
+	req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("%s/%s", customSearchClient.config.Host, "update"), byteStream)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return errors.New("unable to update the object in the search index")
+	}
+
 	return nil
 }
 
-func (c *CustomSearch) SearchQuery(q, filters, kind string) ([]interface{}, error) {
-	return nil, nil
+func (c *CustomSearch) SearchQuery(q, filters, kind string, limit, offset int) ([]interface{}, error) {
+	reqBody := map[string]interface{}{
+		"query":  q,
+		"offset": offset,
+	}
+
+	if limit != -1 {
+		reqBody["limit"] = limit
+	}
+
+	if filters != "" {
+		reqBody["filters"] = filters + "AND kind=" + kind
+	} else {
+		reqBody["filters"] = "kind=" + kind
+	}
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/%s", customSearchClient.config.Host, "search"), byteStream)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return nil, errors.New("unable to execute the search query")
+	}
+
+	var results []interface{}
+	err = json.NewDecoder(response.Body).Decode(&results)
+	if err != nil {
+		return nil, err
+	}
+
+	return results, nil
 }
 
 func (c *CustomSearch) DeleteAllDocuments() error {
+	reqURL := customSearchClient.config.Host + "/delete/all"
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return errors.New("unable to delete objects in the search index")
+	}
+
 	return nil
 }
 
 func (c *CustomSearch) BatchDelete(objectIDs []string) error {
+	objectIDString := ""
+	for i := 0; i < len(objectIDs)-1; i++ {
+		objectIDString += objectIDs[i] + ","
+	}
+	objectIDString += objectIDs[len(objectIDs)-1]
+	reqURL := customSearchClient.config.Host + "/batch/delete?object_ids=" + objectIDString
+	req, err := http.NewRequest(http.MethodDelete, reqURL, nil)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return errors.New("unable to delete objects in the search index")
+	}
+
 	return nil
 }
 
 func (c *CustomSearch) GetAllDocumentsBySpace(space uint) ([]interface{}, error) {
-	return nil, nil
+	reqBody := map[string]interface{}{
+		"query":   "",
+		"filters": "space_id=" + fmt.Sprintf("%d", space),
+	}
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&reqBody)
+	if err != nil {
+		return nil, err
+	}
+
+	req, err := http.NewRequest(http.MethodPost, fmt.Sprintf("%s/%s", customSearchClient.config.Host, "search"), byteStream)
+	if err != nil {
+		return nil, err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return nil, err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != 200 {
+		return nil, errors.New("unable to execute the search query")
+	}
+
+	var results []interface{}
+	err = json.NewDecoder(response.Body).Decode(&results)
+	if err != nil {
+		return nil, err
+	}
+	return results, nil
 }
 
-func (c *CustomSearch) UpdateDocuments(data []map[string]interface{}) error {
+func (c *CustomSearch) BatchUpdate(objects []map[string]interface{}) error {
+	if customSearchClient.Client == nil {
+		return errors.New("http client in custom search not connected")
+	}
+
+	for _, data := range objects {
+		if data["kind"] == nil || data["kind"] == "" {
+			return errors.New("no kind field in search document")
+		}
+		if data["id"] == nil || data["id"] == "" {
+			return errors.New("no id field in search document")
+		}
+
+		data["object_id"] = fmt.Sprint(data["kind"], "_", data["id"])
+	}
+
+	byteStream := new(bytes.Buffer)
+	err := json.NewEncoder(byteStream).Encode(&objects)
+	if err != nil {
+		return err
+	}
+
+	req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("%s/%s/%s", customSearchClient.config.Host, "batch", "update"), byteStream)
+	if err != nil {
+		return err
+	}
+
+	response, err := customSearchClient.Client.Do(req)
+	if err != nil {
+		return err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return errors.New("unable to add objects to the search index")
+	}
+
 	return nil
 }
 

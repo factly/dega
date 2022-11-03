@@ -93,7 +93,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 	defer resp.Body.Close()
 	if config.SearchEnabled() {
-		err = searchService.GetSearchService().Delete("post", uint(sID))
+		err = searchService.GetSearchService().Delete("space", uint(sID))
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

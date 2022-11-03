@@ -101,7 +101,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 			// Search posts with filter
 			var hits []interface{}
-			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "post")
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "post", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -117,7 +117,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				if !statusTemplate {
 					tx.Where("status != ?", "template")
 				}
-				err = tx.Where(filteredPostIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&posts).Error
+				err = tx.Where(filteredPostIDs).Count(&result.Total).Find(&posts).Error
 				if err != nil {
 					loggerx.Error(err)
 					errorx.Render(w, errorx.Parser(errorx.DBError()))

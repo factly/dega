@@ -27,9 +27,7 @@ func ReindexAllEntities(spaceID uint) error {
 	if err = AddMenu(spaceID); err != nil {
 		return err
 	}
-	if err = AddSpace(spaceID); err != nil {
-		return err
-	}
+
 	if err = AddClaim(spaceID); err != nil {
 		return err
 	}
@@ -90,7 +88,9 @@ func AddPosts(spaceID uint) error {
 	for _, p := range posts {
 		var meiliPublishDate int64
 		if p.Status == "publish" {
-			meiliPublishDate = p.PublishedDate.Unix()
+			if p.PublishedDate != nil {
+				meiliPublishDate = p.PublishedDate.Unix()
+			}
 		}
 
 		tagIDs := make([]uint, 0)
@@ -139,7 +139,7 @@ func AddPosts(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err = searchService.UpdateDocuments(meiliPostObjects)
+	err = searchService.BatchUpdate(meiliPostObjects)
 	if err != nil {
 		return err
 	}
@@ -171,7 +171,7 @@ func AddCategories(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliCategoryObjects)
+	err := searchService.BatchUpdate(meiliCategoryObjects)
 	if err != nil {
 		return err
 	}
@@ -201,7 +201,7 @@ func AddTags(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliTagObjects)
+	err := searchService.BatchUpdate(meiliTagObjects)
 	if err != nil {
 		return err
 	}
@@ -237,7 +237,7 @@ func AddMedium(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err = searchService.UpdateDocuments(meiliMediumObjects)
+	err = searchService.BatchUpdate(meiliMediumObjects)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -269,7 +269,7 @@ func AddMenu(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliMenuObjects)
+	err := searchService.BatchUpdate(meiliMenuObjects)
 	if err != nil {
 		return err
 	}
@@ -304,7 +304,7 @@ func AddSpace(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliSpaceObjects)
+	err := searchService.BatchUpdate(meiliSpaceObjects)
 	if err != nil {
 		return err
 	}
@@ -351,7 +351,7 @@ func AddClaim(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliClaimObjects)
+	err := searchService.BatchUpdate(meiliClaimObjects)
 	if err != nil {
 		return err
 	}
@@ -383,7 +383,7 @@ func AddClaimant(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliClaimantObjects)
+	err := searchService.BatchUpdate(meiliClaimantObjects)
 	if err != nil {
 		return err
 	}
@@ -417,7 +417,7 @@ func AddRating(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliRatingObjects)
+	err := searchService.BatchUpdate(meiliRatingObjects)
 	if err != nil {
 		return err
 	}
@@ -457,7 +457,7 @@ func AddPodcast(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliPodcastObjects)
+	err := searchService.BatchUpdate(meiliPodcastObjects)
 	if err != nil {
 		return err
 	}
@@ -501,7 +501,7 @@ func AddEpisode(spaceID uint) error {
 	}
 
 	searchService := search.GetSearchService()
-	err := searchService.UpdateDocuments(meiliEpisodeObjects)
+	err := searchService.BatchUpdate(meiliEpisodeObjects)
 	if err != nil {
 		return err
 	}

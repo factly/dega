@@ -51,8 +51,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 	}
 
 	filters := fmt.Sprint("space_id=", sID)
-
-	result, err := searchService.GetSearchService().SearchQuery(searchQuery.Query, filters, "")
+	limit := -1 // limit is -1 when no limit is needed
+	offset := 0
+	result, err := searchService.GetSearchService().SearchQuery(searchQuery.Query, filters, "", limit, offset)
 
 	if err != nil {
 		loggerx.Error(err)

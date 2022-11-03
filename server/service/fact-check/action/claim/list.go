@@ -75,7 +75,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			if filters != "" {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
-			hits, err = search.GetSearchService().SearchQuery(searchQuery, filters, "claim")
+			hits, err = search.GetSearchService().SearchQuery(searchQuery, filters, "claim", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

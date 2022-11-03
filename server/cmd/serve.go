@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 
@@ -10,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/util"
 	search "github.com/factly/dega-server/util/search-service"
-	"github.com/factly/x/meilisearchx"
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -26,31 +24,20 @@ var serveCmd = &cobra.Command{
 	Use:   "serve",
 	Short: "Starts server for dega-server.",
 	Run: func(cmd *cobra.Command, args []string) {
-		// db setup
-		settingsMap := make(map[string][]string)
-		settingsMap["searchable_attributes"] = []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}
-		settingsMap["filterable_attributes"] = []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"}
-		searchService := &search.Meilisearch{}
-		searchConfig := &search.SearchConfig{
-			IndexName: "dega",
-			Host:      viper.GetString("meili_url"),
-			APIkey:    viper.GetString("meili_api_key"),
-			Settings:  settingsMap,
-		}
+		if config.SearchEnabled() {
+			searchService := search.GetSearchService()
+			searchConfig, err := search.GetSearchServiceConfig()
+			if err != nil {
+				log.Fatal("server was not able to load search service config file")
+			}
 
-		err := searchService.Connect(searchConfig)
-		if err != nil {
-			fmt.Println("could not connecting to the service using search service interface")
+			err = searchService.Connect(searchConfig)
+			if err != nil {
+				log.Fatal("error in connecting to search index - either enable search or verify host, api key and other attributes")
+			}
 		}
 
 		config.SetupDB()
-
-		if config.SearchEnabled() {
-			err := meilisearchx.SetupMeiliSearch("dega", []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
-			if err != nil {
-				fmt.Println(err)
-			}
-		}
 
 		if util.CheckNats() {
 			util.ConnectNats()

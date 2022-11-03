@@ -75,7 +75,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.Claimant{}).Delete(&result)
 
 	if config.SearchEnabled() {
-		err = searchService.GetSearchService().Delete("category", result.ID)
+		err = searchService.GetSearchService().Delete("claimant", result.ID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

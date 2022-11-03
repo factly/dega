@@ -132,7 +132,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Delete(&result)
 
 	if config.SearchEnabled() {
-		err = searchService.GetSearchService().Delete("post", result.ID)
+		err = searchService.GetSearchService().Delete("medium", result.ID)
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
