@@ -6,4 +6,3 @@ window.REACT_APP_KAVACH_PUBLIC_URL = 'http://127.0.0.1:4455/.factly/kavach/web';
 window.REACT_APP_SACH_API_URL = 'https://sach-server.factly.in';
 window.REACT_APP_IFRAMELY_URL = 'http://127.0.0.1:4455/.factly/dega/server/meta';
 window.REACT_APP_ENABLE_IMGPROXY = true;
-window.REACT_APP_IMG_URL_PROP = window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw';

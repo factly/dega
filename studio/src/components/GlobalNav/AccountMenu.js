@@ -69,7 +69,7 @@ const AccountMenu = () => {
           {!loading && profile && profile.medium ? (
             <Avatar
               size="small"
-              src={profile.medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+              src={profile.medium.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
               title="Spaces"
               style={{ fontSize: '1.25rem' }}
             />
