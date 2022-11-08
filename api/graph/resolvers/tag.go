@@ -78,7 +78,9 @@ func (r *tagResolver) Posts(ctx context.Context, obj *models.Tag) (*models.Posts
 			return nil, err
 		}
 
-		posts = append(posts, post)
+		if post.Status == "publish" {
+			posts = append(posts, post)
+		}
 	}
 	response := new(models.PostsPaging)
 	response.Nodes = posts
