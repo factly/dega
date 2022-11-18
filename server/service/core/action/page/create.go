@@ -125,6 +125,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		MetaFields:       page.MetaFields,
 		HeaderCode:       page.HeaderCode,
 		FooterCode:       page.FooterCode,
+		PageHTML:         page.PageHTML,
 		SpaceID:          uint(sID),
 	}
 

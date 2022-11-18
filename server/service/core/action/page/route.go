@@ -30,6 +30,7 @@ type page struct {
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	PageHTML         postgres.Jsonb `json:"page_html" swaggertype:"primitive,string"`
 	SpaceID          uint           `json:"space_id"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`

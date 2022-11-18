@@ -188,6 +188,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"featured_medium_id": page.FeaturedMediumID,
 		"meta":               page.Meta,
 		"meta_fields":        page.MetaFields,
+		"page_html":          page.PageHTML,
 		"header_code":        page.HeaderCode,
 		"footer_code":        page.FooterCode,
 		"is_featured":        page.IsFeatured,
