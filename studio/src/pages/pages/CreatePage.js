@@ -14,6 +14,7 @@ function CreatePage({ formats }) {
   const dispatch = useDispatch();
 
   const onCreate = (values) => {
+    console.log({ form: values });
     dispatch(addPage(values)).then((page) => {
       if (page && page.id) history.replace(`/pages/${page.id}/edit`);
     });
