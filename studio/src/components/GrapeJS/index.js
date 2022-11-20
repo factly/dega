@@ -6,6 +6,7 @@ import 'grapesjs/dist/css/grapes.min.css';
 import './Uppy/grapesjs-uppy.min.css';
 import 'grapesjs/dist/css/grapes.min.css';
 import 'grapesjs/dist/grapes.min.js';
+import './grapesjs.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createMedium } from '../../actions/media';
 import gjsUppy from './Uppy';
