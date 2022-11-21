@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import 'antd/dist/antd.css';
 import BasicLayout from './layouts/basic';
@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getFormats } from '../src/actions/formats';
 import deepEqual from 'deep-equal';
 import './App.css';
+import Loader from './components/Loader';
 
 function App() {
   const [reloadFlag, setReloadFlag] = React.useState(false);
@@ -48,6 +49,7 @@ function App() {
     <div className="App">
       <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
+        <Suspense fallback={<div>LOADING ..... </div>}>
           <Switch>
             {Object.values(routes).map((route) =>
               route.permission ? (
@@ -94,6 +96,7 @@ function App() {
               )}
             />
           </Switch>
+          </Suspense>
         </BasicLayout>
       </Router>
     </div>

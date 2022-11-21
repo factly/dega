@@ -7,6 +7,7 @@ import {
   SecurityScanTwoTone,
 } from '@ant-design/icons';
 
+import React, { lazy } from 'react';
 //Pages
 import Dashboard from '../pages/dashboard';
 import Analytics from '../pages/analytics';
@@ -115,9 +116,7 @@ import CreateEvent from '../pages/events/CreateEvent';
 import EditEvent from '../pages/events/EditEvent';
 
 //Pages
-import Pages from '../pages/pages';
-import CreatePage from '../pages/pages/CreatePage';
-import EditPage from '../pages/pages/EditPage';
+
 
 //Webhooks
 import Webhooks from '../pages/webhooks';
@@ -148,7 +147,9 @@ import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import RoleUsers from '../pages/roles/users';
 import EditRole from '../pages/roles/EditRole';
-
+const Pages = lazy(()=>import('../pages/pages')) ;
+const CreatePage = lazy(()=>import('../pages/pages/CreatePage'));
+const EditPage =  lazy(()=>import('../pages/pages/EditPage')) ;
 const routes = {
   dashboard: {
     path: '/dashboard',
