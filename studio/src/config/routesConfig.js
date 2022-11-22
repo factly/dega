@@ -47,11 +47,6 @@ import Formats from '../pages/formats';
 import CreateFormat from '../pages/formats/CreateFormat';
 import EditFormat from '../pages/formats/EditFormat';
 
-//Post
-import Posts from '../pages/posts';
-import CreatePost from '../pages/posts/CreatePost';
-import EditPost from '../pages/posts/EditPost';
-
 //Ratings
 import Ratings from '../pages/ratings';
 import CreateRating from '../pages/ratings/CreateRating';
@@ -146,9 +141,17 @@ import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import RoleUsers from '../pages/roles/users';
 import EditRole from '../pages/roles/EditRole';
+
+//Pages
 const Pages = lazy(() => import('../pages/pages').then((component) => component));
 const CreatePage = lazy(() => import('../pages/pages/CreatePage').then((component) => component));
 const EditPage = lazy(() => import('../pages/pages/EditPage').then((component) => component));
+
+//Posts
+const Posts = lazy(() => import('../pages/posts').then((component) => component));
+const CreatePost = lazy(() => import('../pages/posts/CreatePost').then((component) => component));
+const EditPost = lazy(() => import('../pages/posts/EditPost').then((component) => component));
+
 const routes = {
   dashboard: {
     path: '/dashboard',
