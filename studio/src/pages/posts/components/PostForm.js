@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import {
   Row,
   Col,
@@ -26,7 +26,7 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { getDatefromStringWithoutDay } from '../../../utils/date';
-import PageBuilder from '../../../components/GrapeJS';
+const PageBuilder = React.lazy(() => import('../../../components/GrapeJS'));
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -468,7 +468,9 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
             >
               Back
             </Button>
-            <PageBuilder form={form} visible={pageBuilderVisible} />
+            <Suspense fallback={<div>LOADING ..... </div>}>
+              <PageBuilder form={form} visible={pageBuilderVisible} />
+            </Suspense>
           </div>
         </>
       )}
