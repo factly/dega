@@ -26,7 +26,7 @@ import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { getDatefromStringWithoutDay } from '../../../utils/date';
-const PageBuilder = React.lazy(() => import('../../../components/GrapeJS'));
+import PageBuilder from '../../../components/GrapeJS';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -468,9 +468,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
             >
               Back
             </Button>
-            <Suspense fallback={<div>LOADING ..... </div>}>
-              <PageBuilder form={form} visible={pageBuilderVisible} />
-            </Suspense>
+            <PageBuilder form={form} visible={pageBuilderVisible} />
           </div>
         </>
       )}

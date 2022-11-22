@@ -117,7 +117,6 @@ import EditEvent from '../pages/events/EditEvent';
 
 //Pages
 
-
 //Webhooks
 import Webhooks from '../pages/webhooks';
 import CreateWebhook from '../pages/webhooks/CreateWebhook';
@@ -147,9 +146,9 @@ import { Component } from 'react';
 import ViewPolicy from '../pages/policies/components/ViewPolicy';
 import RoleUsers from '../pages/roles/users';
 import EditRole from '../pages/roles/EditRole';
-const Pages = lazy(()=>import('../pages/pages')) ;
-const CreatePage = lazy(()=>import('../pages/pages/CreatePage'));
-const EditPage =  lazy(()=>import('../pages/pages/EditPage')) ;
+const Pages = lazy(() => import('../pages/pages').then((component) => component));
+const CreatePage = lazy(() => import('../pages/pages/CreatePage').then((component) => component));
+const EditPage = lazy(() => import('../pages/pages/EditPage').then((component) => component));
 const routes = {
   dashboard: {
     path: '/dashboard',
