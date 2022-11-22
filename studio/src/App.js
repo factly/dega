@@ -49,53 +49,53 @@ function App() {
     <div className="App">
       <Router basename={process.env.PUBLIC_URL}>
         <BasicLayout>
-        <Suspense fallback={<div>LOADING ..... </div>}>
-          <Switch>
-            {Object.values(routes).map((route) =>
-              route.permission ? (
-                <ProtectedRoute
-                  key={route.path}
-                  permission={route.permission}
-                  exact
-                  path={route.path}
-                  component={route.Component}
-                  formats={formats}
-                  setReloadFlag={setReloadFlag}
-                  reloadFlag={reloadFlag}
-                />
-              ) : route.isAdmin ? (
-                <AdminRoute
-                  key={route.path}
-                  exact
-                  path={route.path}
-                  component={route.Component}
-                  formats={formats}
-                />
-              ) : (
-                <Route
-                  key={route.path}
-                  exact
-                  path={route.path}
-                  isOwner={route.isOwner}
-                  render={(props) => <route.Component {...props} formats={formats} />}
-                />
-              ),
-            )}
-            <Route
-              render={() => (
-                <Result
-                  status="403"
-                  title="404"
-                  subTitle="Sorry, page not found"
-                  extra={
-                    <Link to="/">
-                      <Button type="primary">Back Home</Button>
-                    </Link>
-                  }
-                />
+          <Suspense fallback={<Loader />}>
+            <Switch>
+              {Object.values(routes).map((route) =>
+                route.permission ? (
+                  <ProtectedRoute
+                    key={route.path}
+                    permission={route.permission}
+                    exact
+                    path={route.path}
+                    component={route.Component}
+                    formats={formats}
+                    setReloadFlag={setReloadFlag}
+                    reloadFlag={reloadFlag}
+                  />
+                ) : route.isAdmin ? (
+                  <AdminRoute
+                    key={route.path}
+                    exact
+                    path={route.path}
+                    component={route.Component}
+                    formats={formats}
+                  />
+                ) : (
+                  <Route
+                    key={route.path}
+                    exact
+                    path={route.path}
+                    isOwner={route.isOwner}
+                    render={(props) => <route.Component {...props} formats={formats} />}
+                  />
+                ),
               )}
-            />
-          </Switch>
+              <Route
+                render={() => (
+                  <Result
+                    status="403"
+                    title="404"
+                    subTitle="Sorry, page not found"
+                    extra={
+                      <Link to="/">
+                        <Button type="primary">Back Home</Button>
+                      </Link>
+                    }
+                  />
+                )}
+              />
+            </Switch>
           </Suspense>
         </BasicLayout>
       </Router>
