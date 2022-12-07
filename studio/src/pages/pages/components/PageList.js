@@ -141,7 +141,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 <Button
                   icon={ <DeleteOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                //  type="danger"
+                  danger
                   style={{
                     margin: '0.5rem',
                     padding: '4px 22px',

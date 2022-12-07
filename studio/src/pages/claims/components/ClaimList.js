@@ -57,7 +57,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );
