@@ -52,7 +52,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
-              Published on {moment(item.published_date).format('MMMM Do YYYY')}
+              Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
             </p>
           )}
           <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p> 
@@ -139,12 +139,29 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               >
                 <Button
+                  icon={ <DeleteOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  type="danger"
-                  style={{ margin: '0.5rem' }}
+                //  type="danger"
+                  style={{
+                    margin: '0.5rem',
+                    padding: '4px 22px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
                 >
-                  <DeleteOutlined />
                 </Button>
+               {/* <Button
+                  icon={<EditOutlined />}
+                  disabled={!(actions.includes('admin') || actions.includes('update'))}
+                  style={{
+                    margin: '0.5rem',
+                    padding: '4px 22px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                /> */}
               </Popconfirm>
             </div>
           </>

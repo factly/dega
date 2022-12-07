@@ -2,7 +2,7 @@ import { Form, DatePicker, Button, Space, Select } from 'antd';
 import React from 'react';
 import { maker } from '../../utils/sluger';
 import Selector from '../Selector';
-import moment from 'moment';
+ import dayjs from 'dayjs'
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
 import { updatePage } from '../../actions/pages';
@@ -40,7 +40,7 @@ function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => 
       form={form}
       initialValues={{
         ...data,
-        published_date: data.published_date ? moment(data.published_date) : null,
+        published_date: data.published_date ? dayjs(data.published_date) : null,
       }}
       style={{ marginTop: 10 }}
       onFinish={(values) => {
@@ -50,8 +50,8 @@ function QuickEdit({ data, setID, slug, page = false, onQuickEditUpdate = () => 
         values.claim_ids = values.claims || [];
         values.status === 'publish'
           ? (values.published_date = values.published_date
-              ? moment(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-              : moment(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ'))
+              ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+              : dayjs(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ'))
           : (values.published_date = null);
         if (page) {
           dispatch(

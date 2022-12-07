@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
-import { PageHeader as AntPageHeader } from 'antd';
+import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
 
-function PageHeader() {
+function PageHeaders() {
   const state = useSelector((state) => state);
   const location = useLocation();
   const history = useHistory();
@@ -143,4 +143,4 @@ function PageHeader() {
   else return null;
 }
 
-export default PageHeader;
+export default PageHeaders;

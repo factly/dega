@@ -3,7 +3,7 @@ import { MEDIA_API } from '../../constants/media';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
 import Tunes from './Tunes';

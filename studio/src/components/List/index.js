@@ -65,7 +65,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
-              Published on {moment(item.published_date).format('MMMM Do YYYY')}
+              Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
             </p>
           )}
           <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p> 
