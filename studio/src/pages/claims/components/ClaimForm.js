@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form, Input, DatePicker, Row, Col, Collapse } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
- import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, MetaForm, SlugInput } from '../../../components/FormItems';

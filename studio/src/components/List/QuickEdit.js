@@ -2,7 +2,7 @@ import { Form, DatePicker, Button, Space, Select } from 'antd';
 import React from 'react';
 import { maker } from '../../utils/sluger';
 import Selector from '../Selector';
- import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import { useDispatch } from 'react-redux';
 import { updatePost } from '../../actions/posts';
 import { updatePage } from '../../actions/pages';

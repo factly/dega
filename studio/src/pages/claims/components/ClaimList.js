@@ -3,7 +3,7 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
- import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {

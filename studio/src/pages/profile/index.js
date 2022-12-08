@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio } from 'antd';
- import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import MediaSelector from '../../components/MediaSelector';
 import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';

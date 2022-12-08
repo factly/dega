@@ -159,12 +159,11 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               >
                 <Button
-                  icon={ <DeleteOutlined />}
+                  icon={<DeleteOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('delete'))}
                   danger
                   style={{ margin: '0.5rem' }}
-                >
-                </Button>
+                ></Button>
               </Popconfirm>
             </div>
           </>

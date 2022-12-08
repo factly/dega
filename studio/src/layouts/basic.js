@@ -7,7 +7,7 @@ import Header from '../components/GlobalNav/Header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
-import { getSuperOrganisation } from '../actions/admin'
+import { getSuperOrganisation } from '../actions/admin';
 import PageHeaders from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
@@ -113,42 +113,44 @@ function BasicLayout(props) {
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
-    <ConfigProvider  theme={{
-      token: {
-        colorPrimary: '#4F46E5',
-        colorLink: '#4F46E5',
-      },
-      "components": {
-        "Menu": {
-          "colorItemBgSelected": "#D1D5DB"
-        }
-      }
-    }}>
-    <Layout hasSider={true}>
-      <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-      {!hideSidebar && (
-        <Sidebar
-          permission={permission}
-          menuKey={enteredRoute?.menuKey}
-          orgs={orgs}
-          loading={loading}
-          superOrg={superOrg}
-          applications={applications}
-          services={services}
-        />
-      )}
-      <Layout style={{ background: '#fff' }}>
-        {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
-        <Content className="layout-content">
-          <PageHeaders location={location} />
-          <Card key={selected.toString()} className="wrap-children-content">
-            {children}
-          </Card>
-        </Content>
-        <BackTop style={{ right: 50 }} />
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#4F46E5',
+          colorLink: '#4F46E5',
+        },
+        components: {
+          Menu: {
+            colorItemBgSelected: '#D1D5DB',
+          },
+        },
+      }}
+    >
+      <Layout hasSider={true}>
+        <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
+        {!hideSidebar && (
+          <Sidebar
+            permission={permission}
+            menuKey={enteredRoute?.menuKey}
+            orgs={orgs}
+            loading={loading}
+            superOrg={superOrg}
+            applications={applications}
+            services={services}
+          />
+        )}
+        <Layout style={{ background: '#fff' }}>
+          {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
+          <Content className="layout-content">
+            <PageHeaders location={location} />
+            <Card key={selected.toString()} className="wrap-children-content">
+              {children}
+            </Card>
+          </Content>
+          <BackTop style={{ right: 50 }} />
+        </Layout>
       </Layout>
-    </Layout>
-  </ConfigProvider>
+    </ConfigProvider>
   );
 }
 

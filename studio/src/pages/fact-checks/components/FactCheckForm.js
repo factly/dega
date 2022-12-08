@@ -23,7 +23,7 @@ import { createClaim, updateClaim } from '../../../actions/claims';
 import { addTemplate } from '../../../actions/posts';
 import { Prompt, useHistory } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
- import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import ClaimList from './ClaimList';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -245,16 +245,13 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
             <Space direction="horizontal">
               {data.id ? (
                 <Form.Item name="template">
-                  <Button   onClick={createTemplate}>
-                    Create Template
-                  </Button>
+                  <Button onClick={createTemplate}>Create Template</Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
                 <Dropdown overlay={readyToPublish}>
                   <Button
                     disabled={!valueChange}
-                     
                     htmlType="submit"
                     onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
                   >
@@ -264,13 +261,13 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
-                  <Button   htmlType="submit" onClick={() => setStatus('publish')}>
+                  <Button htmlType="submit" onClick={() => setStatus('publish')}>
                     {data.id && status === 'publish' ? 'Update' : 'Publish'}
                   </Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="drawerOpen">
-                <Button   onClick={showDrawer}>
+                <Button onClick={showDrawer}>
                   <SettingFilled />
                 </Button>
               </Form.Item>
@@ -326,7 +323,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={drawerVisible}
-                
                 width={366}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -430,7 +426,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={metaDrawer}
-                
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -457,7 +452,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={codeDrawer}
-                
                 width={710}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
@@ -481,7 +475,6 @@ function FactCheckForm({ onCreate, data = {}, actions = {}, format }) {
                 closable={true}
                 onClose={onClose}
                 open={metaFieldsDrawer}
-                
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}

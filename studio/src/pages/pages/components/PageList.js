@@ -139,7 +139,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               >
                 <Button
-                  icon={ <DeleteOutlined />}
+                  icon={<DeleteOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('delete'))}
                   danger
                   style={{
@@ -149,9 +149,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                     alignItems: 'center',
                     justifyContent: 'center',
                   }}
-                >
-                </Button>
-               {/* <Button
+                ></Button>
+                {/* <Button
                   icon={<EditOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
                   style={{

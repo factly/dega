@@ -26,7 +26,3 @@ export const MonacoEditor = ({ value, onChange, language, width }) => {
 };
 
 export default MonacoEditor;
-
-
-
-

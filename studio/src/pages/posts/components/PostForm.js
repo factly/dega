@@ -21,15 +21,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
-import dayjs from 'dayjs'
+import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
 import { getDatefromStringWithoutDay } from '../../../utils/date';
-
-const Nest2 = (props) => {console.log(props , "props"); return <></>}
-const Nest = (props)=> <Nest2 {...props}/>
-
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -94,7 +90,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [shouldBlockNavigation, setShouldBlockNavigation] = useState(false);
 
   const getCurrentDate = () => {
-    return  dayjs(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
+    return dayjs(Date.now()).format('YYYY-MM-DDTHH:mm:ssZ');
   };
 
   const onSave = (values) => {
@@ -109,7 +105,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     values.status = status;
     values.status === 'publish'
       ? (values.published_date = values.published_date
-          ?  dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
           : getCurrentDate())
       : (values.published_date = null);
     onCreate(values);
@@ -124,7 +120,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   };
 
   if (data && data.id) {
-    data.published_date = data.published_date ?  dayjs(data.published_date) : null;
+    data.published_date = data.published_date ? dayjs(data.published_date) : null;
     if (data.meta_fields && typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
     }
@@ -157,17 +153,17 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     };
   }, [shouldBlockNavigation]);
   const formProps = {
-    form:form,
-    ref:formRef,
-    initialValues:{ ...data },
-    style:{ maxWidth: '100%', width: '100%' },
-    onFinish:(values) => onSave(values),
-    onValuesChange:() => {
+    form: form,
+    ref: formRef,
+    initialValues: { ...data },
+    style: { maxWidth: '100%', width: '100%' },
+    onFinish: (values) => onSave(values),
+    onValuesChange: () => {
       setShouldBlockNavigation(true);
       setValueChange(true);
     },
-    layout:"vertical"
-  }
+    layout: 'vertical',
+  };
 
   return (
     <>
@@ -192,16 +188,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
             <Space direction="horizontal">
               {data.id ? (
                 <Form.Item name="template">
-                  <Button   onClick={createTemplate}>
-                    Create Template
-                  </Button>
+                  <Button onClick={createTemplate}>Create Template</Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="draft">
                 <Dropdown overlay={readyToPublish}>
                   <Button
                     disabled={!valueChange}
-                     
                     htmlType="submit"
                     onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
                   >
@@ -211,13 +204,13 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="submit">
-                  <Button   htmlType="submit" onClick={() => setStatus('publish')}>
+                  <Button htmlType="submit" onClick={() => setStatus('publish')}>
                     {data.id && status === 'publish' ? 'Update' : 'Publish'}
                   </Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="drawerOpen">
-                <Button   onClick={showDrawer}>
+                <Button onClick={showDrawer}>
                   <SettingFilled />
                 </Button>
               </Form.Item>
@@ -265,151 +258,145 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={onClose}
                 visible={drawerVisible}
-               //  //getContainer={false}
+                //  //getContainer={false}
                 width={366}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
-                 <Form
-        form={form}
-        initialValues={{ ...data }}
-        style={{ maxWidth: '100%', width: '100%' }}
-        onFinish={(values) => onSave(values)}
-        onValuesChange={() => {
-          setShouldBlockNavigation(true);
-          setValueChange(true);
-        }}
-        layout="vertical"
-      >
-                <Form.Item name="featured_medium_id" label="Featured Image">
-                  <MediaSelector />
-                </Form.Item>
-
-                <Form.Item
-                  name="excerpt"
-                  label="Excerpt"
-                  rules={[
-                    { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
-                    {
-                      message: 'Add Excerpt',
-                    },
-                  ]}
+                <Form
+                  form={form}
+                  initialValues={{ ...data }}
+                  style={{ maxWidth: '100%', width: '100%' }}
+                  onFinish={(values) => onSave(values)}
+                  onValuesChange={() => {
+                    setShouldBlockNavigation(true);
+                    setValueChange(true);
+                  }}
+                  layout="vertical"
                 >
-                  <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
-                </Form.Item>
+                  <Form.Item name="featured_medium_id" label="Featured Image">
+                    <MediaSelector />
+                  </Form.Item>
 
-                <Form.Item name="subtitle" label="Subtitle">
-                  <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
-                </Form.Item>
-                <SlugInput />
-                <Form.Item name="published_date" label="Published Date">
-                  <DatePicker />
-                </Form.Item>
-                <Form.Item name="categories" label="Categories">
-                  <Selector mode="multiple" action="Categories" createEntity="Category" />
-                </Form.Item>
-                <Form.Item name="tags" label="Tags">
-                  <Selector mode="multiple" action="Tags" createEntity="Tag" />
-                </Form.Item>
-                <Form.Item name="authors" label="Authors">
-                  <Selector mode="multiple" display={'display_name'} action="Authors" />
-                </Form.Item>
-                <Form.Item>
-                  <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                    Add Meta Data
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
-                    Code Injection
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
-                    View Schemas
-                  </Button>
-                </Form.Item>
-                <Form.Item>
-                  <Button
-                    style={{ width: '100%' }}
-                    onClick={() => setMetaFieldsDrawerVisible(true)}
+                  <Form.Item
+                    name="excerpt"
+                    label="Excerpt"
+                    rules={[
+                      { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
+                      {
+                        message: 'Add Excerpt',
+                      },
+                    ]}
                   >
-                    Add Meta Fields
-                  </Button>
-                </Form.Item>
-                <Modal
-                  title="View Schemas"
-                  visible={isModalVisible}
-                  onOk={handleSchemaModalOk}
-                  onCancel={handleSchemaModalCancel}
-                  footer={[
-                    <Button
-                      onClick={() => {
-                        const copyText = data.schemas.map(
-                          (schema) =>
-                            `<script type="application/ld+json">${JSON.stringify(schema)}</script>`,
-                        );
-                        copySchema(copyText);
-                      }}
-                    >
-                      Copy
-                    </Button>,
-                    // <a
-                    //   href="https://search.google.com/test/rich-results"
-                    //   target="_blank"
-                    //   rel="noreferrer noopener"
-                    //   className="ant-btn ant-btn-secondary"
-                    // >
-                    //  
-                    // </a>,
-                    <Button
-                          href="https://search.google.com/test/rich-results"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                    >
-                    Test in Google Rich Results Text
+                    <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                  </Form.Item>
+
+                  <Form.Item name="subtitle" label="Subtitle">
+                    <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                  </Form.Item>
+                  <SlugInput />
+                  <Form.Item name="published_date" label="Published Date">
+                    <DatePicker />
+                  </Form.Item>
+                  <Form.Item name="categories" label="Categories">
+                    <Selector mode="multiple" action="Categories" createEntity="Category" />
+                  </Form.Item>
+                  <Form.Item name="tags" label="Tags">
+                    <Selector mode="multiple" action="Tags" createEntity="Tag" />
+                  </Form.Item>
+                  <Form.Item name="authors" label="Authors">
+                    <Selector mode="multiple" display={'display_name'} action="Authors" />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                      Add Meta Data
                     </Button>
-                  ]}
-                >
-                  <div id="schemas-container">
-                    {data.schemas &&
-                      data.schemas.map((schema) => (
-                        <Typography.Text key={schema} code>
-                          {JSON.stringify(schema)}
-                        </Typography.Text>
-                      ))}
-                  </div>
-                </Modal>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                      Code Injection
+                    </Button>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                      View Schemas
+                    </Button>
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      style={{ width: '100%' }}
+                      onClick={() => setMetaFieldsDrawerVisible(true)}
+                    >
+                      Add Meta Fields
+                    </Button>
+                  </Form.Item>
+                  <Modal
+                    title="View Schemas"
+                    visible={isModalVisible}
+                    onOk={handleSchemaModalOk}
+                    onCancel={handleSchemaModalCancel}
+                    footer={[
+                      <Button
+                        onClick={() => {
+                          const copyText = data.schemas.map(
+                            (schema) =>
+                              `<script type="application/ld+json">${JSON.stringify(
+                                schema,
+                              )}</script>`,
+                          );
+                          copySchema(copyText);
+                        }}
+                      >
+                        Copy
+                      </Button>,
+                      <Button
+                        href="https://search.google.com/test/rich-results"
+                        target="_blank"
+                        rel="noreferrer noopener"
+                      >
+                        Test in Google Rich Results Text
+                      </Button>,
+                    ]}
+                  >
+                    <div id="schemas-container">
+                      {data.schemas &&
+                        data.schemas.map((schema) => (
+                          <Typography.Text key={schema} code>
+                            {JSON.stringify(schema)}
+                          </Typography.Text>
+                        ))}
+                    </div>
+                  </Modal>
                 </Form>
               </Drawer>
-             
+
               <Drawer
                 title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
                 placement="right"
                 closable={true}
                 onClose={onClose}
                 visible={metaDrawer}
-            //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
+                //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form {...formProps}>
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setMetaDrawer(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item name={['meta', 'title']} label="Meta Title">
-                  <Input />
-                </Form.Item>
-                <Form.Item name={['meta', 'description']} label="Meta Description">
-                  <Input.TextArea />
-                </Form.Item>
-                <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                  <Input />
-                </Form.Item>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setMetaDrawer(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <Form.Item name={['meta', 'title']} label="Meta Title">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'description']} label="Meta Description">
+                    <Input.TextArea />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                    <Input />
+                  </Form.Item>
                 </Form>
               </Drawer>
               <Drawer
@@ -418,24 +405,24 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={onClose}
                 visible={codeDrawer}
-                 //getContainer={false}
+                //getContainer={false}
                 width={710}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form {...formProps}>
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item name="header_code" label="Header Code">
-                  <MonacoEditor language="html" width={650} />
-                </Form.Item>
-                <Form.Item name="footer_code" label="Footer Code">
-                  <MonacoEditor language="html" width={650} />
-                </Form.Item>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setCodeDrawerVisible(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <Form.Item name="header_code" label="Header Code">
+                    <MonacoEditor language="html" width={650} />
+                  </Form.Item>
+                  <Form.Item name="footer_code" label="Footer Code">
+                    <MonacoEditor language="html" width={650} />
+                  </Form.Item>
                 </Form>
               </Drawer>
               <Drawer
@@ -444,25 +431,25 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 closable={true}
                 onClose={onClose}
                 visible={metaFieldsDrawer}
-                 //getContainer={false}
+                //getContainer={false}
                 width={480}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
                 <Form {...formProps}>
-                <Form.Item style={{ marginLeft: '-20px' }}>
-                  <Button type="text" onClick={() => setMetaFieldsDrawerVisible(false)}>
-                    <LeftOutlined />
-                    Back
-                  </Button>
-                </Form.Item>
-                <Form.Item
-                  name="meta_fields"
-                  label="Meta Fields"
-                  extra="add JSON if you have to pass any extra data"
-                >
-                  <MonacoEditor language="json" />
-                </Form.Item>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setMetaFieldsDrawerVisible(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <Form.Item
+                    name="meta_fields"
+                    label="Meta Fields"
+                    extra="add JSON if you have to pass any extra data"
+                  >
+                    <MonacoEditor language="json" />
+                  </Form.Item>
                 </Form>
               </Drawer>
             </Col>

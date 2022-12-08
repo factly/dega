@@ -10,7 +10,7 @@ const DescriptionInput = ({
   name = 'description',
   label = 'Description',
   noLabel = false,
-  onChange = () => console.log({  }),
+  onChange = () => console.log({}),
   inputProps,
   formItemProps,
   initialValue,
