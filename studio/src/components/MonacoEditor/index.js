@@ -1,67 +1,32 @@
 import React from 'react';
-import MonacoEditor from 'react-monaco-editor';
+import Editor from '@monaco-editor/react';
 
-const MONACOEditor = ({ value, onChange, language, width }) => {
-  console.log(width , "width")
+export const MonacoEditor = ({ value, onChange, language, width }) => {
   return (
-    <MonacoEditor
-      language={language}
-      options={{
-        autoClosingBrackets: 'auto',
-        autoClosingQuotes: 'auto',
-        cursorBlinking: 'smooth',
-        folding: true,
-        lineNumbersMinChars: 4,
-        minimap: { enabled: false },
-        scrollBeyondLastLine: false,
-        wordWrap: 'on',
-        theme: 'vs-dark',
-        scrollbar: {
-          alwaysConsumeMouseWheel: false,
-        },
-      }}
-      height="240"
-      width={width ? width : 440}
-      value={value}
+    <Editor
+      height={'240px'}
+      width={width ? '100%' : '440px'}
+      theme="vs-dark"
+      autoClosingBrackets="auto"
+      autoClosingQuotes="auto"
+      cursorBlinking="smooth"
+      folding={true}
+      lineNumbersMinChars={4}
+      minimap={{ enabled: false }}
+      scrollBeyondLastLine={false}
+      wordWrap="on"
       onChange={onChange}
+      scrollbar={{
+        alwaysConsumeMouseWheel: false,
+      }}
+      defaultLanguage={language}
+      defaultValue={value}
     />
   );
 };
 
-// class MONACOEditor extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-//   render() {
-//    const { value, onChange, language, width } = this.props
-//   console.log(width , "width")
-
-//     return (
-//       <MonacoEditor
-//       language={language}
-//       options={{
-//         autoClosingBrackets: 'auto',
-//         autoClosingQuotes: 'auto',
-//         cursorBlinking: 'smooth',
-//         folding: true,
-//         lineNumbersMinChars: 4,
-//         minimap: { enabled: false },
-//         scrollBeyondLastLine: false,
-//         wordWrap: 'on',
-//         theme: 'vs-dark',
-//         scrollbar: {
-//           alwaysConsumeMouseWheel: false,
-//         },
-//       }}
-//       height="240"
-//       width={width ? width : 440}
-//         value={value}
-//         onChange={onChange}
-//       />
-//     );
-//   }
-// }
+export default MonacoEditor;
 
 
 
-export default MONACOEditor;
+

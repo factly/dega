@@ -9,7 +9,6 @@
   ],
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
-    "@ant-design/moment-webpack-plugin": "^0.0.2",
     "@ant-design/pro-layout": "^7.2.6",
     "@editorjs/editorjs": "^2.18.0",
     "@editorjs/header": "^2.5.0",
@@ -19,6 +18,7 @@
     "@editorjs/raw": "^2.1.2",
     "@editorjs/table": "^1.2.2",
     "@factly/scooter": "^0.0.7",
+    "@monaco-editor/react": "^4.4.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -38,7 +38,6 @@
     "react-color": "^2.19.3",
     "react-dom": "^16.13.1",
     "react-helmet": "^6.1.0",
-    "react-monaco-editor": "^0.43.0",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.0",
@@ -63,12 +62,12 @@
     ]
   },
   "scripts": {
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "react-app-rewired test",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
     "test:watch": "npm test -- --watch",
     "test:coverage": "npm test -- --coverage",
-    "eject": "react-app-rewired eject",
+    "eject": "react-scripts eject",
     "format:check": "prettier --check \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\"",
     "format": "prettier --write \"**/*.{js,jsx,yml,yaml,json,css,scss,md}\""
   },
@@ -102,9 +101,7 @@
     "eslint-plugin-react": "^7.20.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
-    "monaco-editor-webpack-plugin": "^4.0.0",
     "prettier": "2.0.5",
-    "react-app-rewired": "^2.1.8",
     "react-test-renderer": "^16.13.1",
     "redux-mock-store": "^1.5.4",
     "semantic-release": "^17.1.1"
