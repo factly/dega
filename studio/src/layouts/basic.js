@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
 import { getSuperOrganisation } from '../actions/admin';
-import PageHeaders from '../components/PageHeader';
+import Pageheader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
 
@@ -142,7 +142,7 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            <PageHeaders location={location} />
+            <Pageheader location={location} />
             <Card key={selected.toString()} className="wrap-children-content">
               {children}
             </Card>

@@ -6,7 +6,7 @@ import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
 
-function PageHeaders() {
+function Pageheader() {
   const state = useSelector((state) => state);
   const location = useLocation();
   const history = useHistory();
@@ -112,12 +112,18 @@ function PageHeaders() {
   const itemRender = (route, params, routes, paths) => {
     const last = routes.indexOf(route) === routes.length - 1;
     if (last && routes.length > 1) {
-      return !isBreadCrumbsHidden && <h2 style={{ display: 'inline' }}>{route.breadcrumbName}</h2>;
+      return (
+        !isBreadCrumbsHidden && (
+          <h2 style={{ display: 'inline', color: '#000000d9' }}>{route.breadcrumbName}</h2>
+        )
+      );
     }
     return (
       !isBreadCrumbsHidden && (
         <h2 style={{ display: 'inline' }}>
-          <Link to={route.path}>{route.breadcrumbName}</Link>
+          <Link style={routes.length === 1 ? { color: '#000000d9' } : null} to={route.path}>
+            {route.breadcrumbName}
+          </Link>
         </h2>
       )
     );
@@ -143,4 +149,4 @@ function PageHeaders() {
   else return null;
 }
 
-export default PageHeaders;
+export default Pageheader;
