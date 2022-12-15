@@ -217,6 +217,9 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		FooterCode:       post.FooterCode,
 		MetaFields:       post.MetaFields,
 		SpaceID:          uint(sID),
+		DescriptionAMP:   post.DescriptionAMP,
+		IsMigrated:       post.IsMigrated,
+		MigratedHTML:     post.MigratedHTML,
 	}
 
 	if status == "publish" {
@@ -503,7 +506,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 	if spaceObjectforDega.MobileIconID != nil {
 		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
 	}
-	
+
 	schemas := schemax.GetSchemas(schemax.PostData{
 		Post:    schemaxPost,
 		Authors: schemaxAuthors,

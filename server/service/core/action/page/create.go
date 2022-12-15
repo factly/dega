@@ -126,6 +126,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		HeaderCode:       page.HeaderCode,
 		FooterCode:       page.FooterCode,
 		SpaceID:          uint(sID),
+		DescriptionAMP:   page.DescriptionAMP,
+		IsMigrated:       page.IsMigrated,
+		MigratedHTML:     page.MigratedHTML,
 	}
 
 	if len(page.TagIDs) > 0 {
