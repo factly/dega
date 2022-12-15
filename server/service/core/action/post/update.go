@@ -201,6 +201,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":        post.HeaderCode,
 		"footer_code":        post.FooterCode,
 		"meta_fields":        post.MetaFields,
+		"is_migrated":        post.IsMigrated,
+		"description_amp":    post.DescriptionAMP,
+		"migrated_html":      post.MigratedHTML,
 	}
 
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID
@@ -598,7 +601,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if spaceObjectforDega.MobileIconID != nil {
 		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
 	}
-	
+
 	schemas := schemax.GetSchemas(schemax.PostData{
 		Post:    schemaxPost,
 		Authors: schemaxAuthors,

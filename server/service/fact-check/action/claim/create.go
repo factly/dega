@@ -134,6 +134,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 		FooterCode:      claim.FooterCode,
 		SpaceID:         uint(sID),
 		MediumID:        mediumID,
+		DescriptionAMP:  claim.DescriptionAMP,
+		IsMigrated:      claim.IsMigrated,
+		MigratedHTML:    claim.MigratedHTML,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
