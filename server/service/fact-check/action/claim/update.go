@@ -157,7 +157,6 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":      claim.HeaderCode,
 		"footer_code":      claim.FooterCode,
 		"medium_id":        claim.MediumID,
-		"migration_id":     claim.MigrationID,
 		"description_amp":  claim.DescriptionAMP,
 		"migrated_html":    claim.MigratedHTML,
 	}
