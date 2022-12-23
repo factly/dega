@@ -191,7 +191,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":        page.HeaderCode,
 		"footer_code":        page.FooterCode,
 		"is_featured":        page.IsFeatured,
-		"is_migrated":        page.IsMigrated,
+		"migration_id":       page.MigrationID,
 		"description_amp":    page.DescriptionAMP,
 		"migrated_html":      page.MigratedHTML,
 	}

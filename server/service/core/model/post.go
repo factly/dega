@@ -35,7 +35,7 @@ type Post struct {
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
 	DescriptionAMP   string         `gorm:"column:description_amp" json:"description_amp"`
-	IsMigrated       bool           `gorm:"column:is_migrated;default:false;" json:"is_migrated"`
+	MigrationID     uint           `gorm:"column:migration_id;default:false;" json:"migration_id"`
 	MigratedHTML     string         `gorm:"column:migrated_html" json:"migrated_html"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`

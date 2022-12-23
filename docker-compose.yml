@@ -112,7 +112,7 @@ services:
   #######             SEARCH SERVICES                                 #######
   ###########################################################################
   meilisearch:
-    image: getmeili/meilisearch:v0.28.0
+    image: getmeili/meilisearch:v0.28.2
     ports:
       - "7700:7700"
     volumes:
@@ -237,7 +237,7 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server:0.27.4
+    image: factly/kavach-server:0.28.2
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -281,7 +281,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server:0.27.4
+    image: factly/kavach-server:0.28.2
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -321,7 +321,7 @@ services:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:0.27.4-dev
+    image: factly/kavach-web:0.28.2-dev
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js

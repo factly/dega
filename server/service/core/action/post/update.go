@@ -201,7 +201,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":        post.HeaderCode,
 		"footer_code":        post.FooterCode,
 		"meta_fields":        post.MetaFields,
-		"is_migrated":        post.IsMigrated,
+		"migration_id":       post.MigrationID,
 		"description_amp":    post.DescriptionAMP,
 		"migrated_html":      post.MigratedHTML,
 	}

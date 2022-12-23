@@ -127,7 +127,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		FooterCode:       page.FooterCode,
 		SpaceID:          uint(sID),
 		DescriptionAMP:   page.DescriptionAMP,
-		IsMigrated:       page.IsMigrated,
+		MigrationID:      page.MigrationID,
 		MigratedHTML:     page.MigratedHTML,
 	}
 

@@ -218,7 +218,7 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		MetaFields:       post.MetaFields,
 		SpaceID:          uint(sID),
 		DescriptionAMP:   post.DescriptionAMP,
-		IsMigrated:       post.IsMigrated,
+		MigrationID:       post.MigrationID,
 		MigratedHTML:     post.MigratedHTML,
 	}
 
