@@ -218,10 +218,13 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		MetaFields:       post.MetaFields,
 		SpaceID:          uint(sID),
 		DescriptionAMP:   post.DescriptionAMP,
-		MigrationID:       post.MigrationID,
 		MigratedHTML:     post.MigratedHTML,
 	}
 
+	if post.MigrationID != nil {
+		result.Post.MigrationID = *post.MigrationID
+	}
+	
 	if status == "publish" {
 		if post.PublishedDate == nil {
 			currTime := time.Now()
