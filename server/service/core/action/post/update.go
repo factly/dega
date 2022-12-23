@@ -201,9 +201,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":        post.HeaderCode,
 		"footer_code":        post.FooterCode,
 		"meta_fields":        post.MetaFields,
-		"is_migrated":        post.IsMigrated,
 		"description_amp":    post.DescriptionAMP,
 		"migrated_html":      post.MigratedHTML,
+	}
+
+	if post.MigrationID != nil {
+		updateMap["migration_id"] = *post.MigrationID
 	}
 
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID

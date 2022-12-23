@@ -135,7 +135,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		SpaceID:         uint(sID),
 		MediumID:        mediumID,
 		DescriptionAMP:  claim.DescriptionAMP,
-		IsMigrated:      claim.IsMigrated,
+		MigrationID:     claim.MigrationID,
 		MigratedHTML:    claim.MigratedHTML,
 	}
 

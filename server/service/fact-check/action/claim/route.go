@@ -29,7 +29,7 @@ type claim struct {
 	HeaderCode     string         `json:"header_code"`
 	FooterCode     string         `json:"footer_code"`
 	DescriptionAMP string         `json:"description_amp"`
-	IsMigrated     bool           `json:"is_migrated"`
+	MigrationID    *uint           `json:"migration_id"`
 	MigratedHTML   string         `json:"migrated_html"`
 }
 

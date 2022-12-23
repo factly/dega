@@ -157,10 +157,14 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":      claim.HeaderCode,
 		"footer_code":      claim.FooterCode,
 		"medium_id":        claim.MediumID,
-		"is_migrated":      claim.IsMigrated,
 		"description_amp":  claim.DescriptionAMP,
 		"migrated_html":    claim.MigratedHTML,
 	}
+
+	if claim.MigrationID != nil {
+		updateMap["migration_id"] = *claim.MigrationID
+	}
+
 	if claim.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}

@@ -23,7 +23,7 @@ type Claim struct {
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
 	DescriptionHTML string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	DescriptionAMP  string         `gorm:"column:description_amp" json:"description_amp"`
-	IsMigrated      bool           `gorm:"column:is_migrated;default:false;" json:"is_migrated"`
+	MigrationID     *uint          `gorm:"column:migration_id;default:NULL;" json:"migration_id"`
 	MigratedHTML    string         `gorm:"column:migrated_html" json:"migrated_html"`
 	ClaimantID      uint           `gorm:"column:claimant_id" json:"claimant_id"`
 	Claimant        Claimant       `json:"claimant"`

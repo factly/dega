@@ -34,7 +34,7 @@ type post struct {
 	FooterCode       string         `json:"footer_code"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
 	DescriptionAMP   string         `json:"description_amp"`
-	IsMigrated       bool           `json:"is_migrated"`
+	MigrationID      *uint           `json:"migration_id"`
 	MigratedHTML     string         `json:"migrated_html"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
