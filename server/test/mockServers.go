@@ -39,6 +39,8 @@ func KavachGock() {
 		Persist().
 		Reply(http.StatusOK)
 
+	gock.New(viper.GetString("kavach_url") + "util/space/1/getOrganisation").Persist().Reply(http.StatusOK)
+
 }
 
 func KetoGock() {
