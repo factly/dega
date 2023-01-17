@@ -20,7 +20,7 @@ type Post struct {
 	IsPage           bool           `gorm:"column:is_page" json:"is_page"`
 	Excerpt          string         `gorm:"column:excerpt" json:"excerpt"`
 	Description      postgres.Jsonb `gorm:"column:description" json:"description" sql:"jsonb" swaggertype:"primitive,string"`
-	HTMLDescription  string         `gorm:"column:html_description" json:"html_description,omitempty"`
+	DescriptionHTML  string         `gorm:"column:description_html" json:"description_html,omitempty"`
 	IsFeatured       bool           `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool           `gorm:"column:is_sticky" json:"is_sticky"`
 	IsHighlighted    bool           `gorm:"column:is_highlighted" json:"is_highlighted"`
@@ -34,10 +34,12 @@ type Post struct {
 	Meta             postgres.Jsonb `gorm:"column:meta" json:"meta" swaggertype:"primitive,string"`
 	HeaderCode       string         `gorm:"column:header_code" json:"header_code"`
 	FooterCode       string         `gorm:"column:footer_code" json:"footer_code"`
+	DescriptionAMP   string         `gorm:"column:description_amp" json:"description_amp"`
+	MigrationID      uint           `gorm:"column:migration_id;default:NULL;" json:"migration_id"`
+	MigratedHTML     string         `gorm:"column:migrated_html" json:"migrated_html"`
 	MetaFields       postgres.Jsonb `gorm:"column:meta_fields" json:"meta_fields" swaggertype:"primitive,string"`
 	Tags             []Tag          `gorm:"many2many:post_tags;" json:"tags"`
 	Categories       []Category     `gorm:"many2many:post_categories;" json:"categories"`
-	Space            *Space         `json:"space,omitempty"`
 }
 
 // PostAuthor model

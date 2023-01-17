@@ -20,8 +20,49 @@ function Features() {
     fetchEntities();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  React.useEffect(() => {
+    if (superOrg.is_admin) {
+      fetchEvents();
+    }
+  }, [superOrg.is_admin]);
+
+  const {
+    ratings,
+    ratingsLoading,
+    formats,
+    formatsLoading,
+    policies,
+    policiesLoading,
+    events,
+    eventsLoading,
+    validServices,
+    loadingServices,
+  } = useSelector(({ ratings, formats, policies, events, spaces }) => {
+    return {
+      ratings: Object.keys(ratings.details).length,
+      ratingsLoading: ratings.loading,
+      formats: Object.keys(formats.details).length,
+      formatsLoading: formats.loading,
+      policies: Object.keys(policies.details).length,
+      policiesLoading: policies.loading,
+      events: Object.keys(events.details).length,
+      eventsLoading: events.loading,
+      validServices: spaces.details[spaces.selected].services?.length
+        ? spaces.details[spaces.selected].services
+        : [],
+      loadingServices: spaces.loading,
+    };
+  });
+
+  React.useEffect(() => {
+    fetchEntities();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const fetchEntities = () => {
-    dispatch(getRatings());
+    if (!loadingServices && validServices?.includes('fact-checking')) {
+      dispatch(getRatings());
+    }
     dispatch(getFormats());
     dispatch(getPolicies());
   };
@@ -36,28 +77,6 @@ function Features() {
     dispatch(getEvents());
   };
 
-  const {
-    ratings,
-    ratingsLoading,
-    formats,
-    formatsLoading,
-    policies,
-    policiesLoading,
-    events,
-    eventsLoading,
-  } = useSelector(({ ratings, formats, policies, events }) => {
-    return {
-      ratings: Object.keys(ratings.details).length,
-      ratingsLoading: ratings.loading,
-      formats: Object.keys(formats.details).length,
-      formatsLoading: formats.loading,
-      policies: Object.keys(policies.details).length,
-      policiesLoading: policies.loading,
-      events: Object.keys(events.details).length,
-      eventsLoading: events.loading,
-    };
-  });
-
   return (
     <>
       {!ratingsLoading &&
@@ -68,7 +87,8 @@ function Features() {
       ) : null}
 
       <Space>
-        {ratingsLoading ? null : ratings > 0 ? null : (
+        {ratingsLoading && loadingServices ? null : ratings > 0 ||
+          !validServices.includes('fact-checking') ? null : (
           <Card
             title="Ratings"
             actions={[

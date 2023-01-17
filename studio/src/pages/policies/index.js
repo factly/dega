@@ -58,7 +58,6 @@ function Policies() {
           </Button>
         </Link>
       </Row>
-
       <PolicyList
         actions={actions}
         data={{ policies, total, loading }}

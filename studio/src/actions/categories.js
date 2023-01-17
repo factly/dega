@@ -35,6 +35,10 @@ export const getCategories = (query, setLoading = true) => {
         dispatch(
           addCategoriesList(
             response.data.nodes.map((category) => {
+              category.description = {
+                json: category.description,
+                html: category.description_html,
+              };
               return { ...category, medium: category.medium?.id };
             }),
           ),
@@ -64,7 +68,10 @@ export const getCategory = (id) => {
       .get(CATEGORIES_API + '/' + id)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.description_html,
+        };
         dispatch(addCategory(GET_CATEGORY, { ...response.data, medium: response.data.medium?.id }));
       })
       .catch((error) => {
@@ -98,7 +105,10 @@ export const updateCategory = (data) => {
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-
+        response.data.description = {
+          json: response.data.description,
+          html: response.data.description_html,
+        };
         dispatch(
           addCategory(UPDATE_CATEGORY, { ...response.data, medium: response.data.medium?.id }),
         );
@@ -135,6 +145,10 @@ export const addCategories = (categories) => {
     dispatch(
       addCategoriesList(
         categories.map((category) => {
+          category.description = {
+            json: category.description,
+            html: category.description_html,
+          };
           return { ...category, medium: category.medium?.id };
         }),
       ),

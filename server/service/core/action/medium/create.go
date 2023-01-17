@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
@@ -109,6 +110,10 @@ func create(w http.ResponseWriter, r *http.Request) {
 		tableName := stmt.Schema.Table
 
 		med := model.Medium{
+			Base: config.Base{
+				CreatedAt: medium.CreatedAt,
+				UpdatedAt: medium.UpdatedAt,
+			},
 			Name:        medium.Name,
 			Slug:        slugx.Approve(&config.DB, mediumSlug, sID, tableName),
 			Title:       medium.Title,
@@ -160,10 +165,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("media.created", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("media.created", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("media.created", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 

@@ -104,20 +104,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	tx := config.DB.Begin()
-	err = tx.Model(&result).Updates(model.Medium{
-		Base:        config.Base{UpdatedByID: uint(uID)},
-		Name:        medium.Name,
-		Slug:        mediumSlug,
-		Title:       medium.Title,
-		Type:        medium.Type,
-		Description: medium.Description,
-		AltText:     medium.AltText,
-		Caption:     medium.Caption,
-		FileSize:    medium.FileSize,
-		URL:         medium.URL,
-		Dimensions:  medium.Dimensions,
-		MetaFields:  medium.MetaFields,
-	}).First(&result).Error
+
+	updateMap := map[string]interface{}{
+		"created_at":    medium.CreatedAt,
+		"updated_at":    medium.UpdatedAt,
+		"updated_by_id": uint(uID),
+		"name":          medium.Name,
+		"slug":          mediumSlug,
+		"title":         medium.Title,
+		"type":          medium.Type,
+		"alt_text":      medium.AltText,
+		"caption":       medium.Caption,
+		"file_size":     medium.FileSize,
+		"url":           medium.URL,
+		"dimensions":    medium.Dimensions,
+		"description":   medium.Description,
+		"meta_fields":   medium.MetaFields,
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).First(&result).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -145,10 +150,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("media.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("media.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("media.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 

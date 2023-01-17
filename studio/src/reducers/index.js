@@ -33,6 +33,8 @@ import webhooks from './webhooksReducer';
 import profile from './profileReducer';
 import search from './searchReducer';
 import sachFactChecks from './sachFactChecksReducer';
+import roles from './rolesReducer';
+import webhooklogs from './webhooklogsReducer';
 
 const appReducer = combineReducers({
   admin,
@@ -65,9 +67,11 @@ const appReducer = combineReducers({
   sidebar,
   events,
   webhooks,
+  webhooklogs,
   profile,
   search,
   sachFactChecks,
+  roles,
 });
 
 const rootReducer = (state, action) => {

@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/core/model"
+	httpx "github.com/factly/dega-server/util/http"
 	"github.com/factly/x/loggerx"
 	"github.com/spf13/viper"
 )
@@ -22,9 +23,8 @@ func Mapper(oID int, uID int) map[string]model.Author {
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("X-User", fmt.Sprint(uID))
-	client := &http.Client{}
+	client := httpx.CustomHttpClient()
 	resp, err := client.Do(req)
-
 	if err != nil {
 		return userMap
 	}

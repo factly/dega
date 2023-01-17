@@ -94,7 +94,7 @@ function Template({ format }) {
                     <img
                       style={{ cursor: 'pointer' }}
                       alt="example"
-                      src={item.medium.url.proxy}
+                      src={item.medium.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
                       height="230"
                       onClick={() => handleAddPost(item)}
                     />

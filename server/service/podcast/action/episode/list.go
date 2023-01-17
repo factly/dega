@@ -168,9 +168,14 @@ func generateFilters(podcast []string) string {
 
 func generateSQLFilters(searchQuery string, podcasts []string) string {
 	filters := ""
-
-	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title LIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
 	}
 
 	if len(podcasts) > 0 {

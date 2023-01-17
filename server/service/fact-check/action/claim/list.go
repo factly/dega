@@ -135,9 +135,15 @@ func generateFilters(ratingIDs, claimantIDs []string) string {
 
 func generateSQLFilters(searchQuery string, ratingsIDs, claimantIDs []string) string {
 	filters := ""
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "claim LIKE '%", strings.ToLower(searchQuery), "%'", "OR fact LIKE '%", strings.ToLower(searchQuery), "%'", " AND ")
+		}
 
-	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%'", "OR fact ILIKE '%", strings.ToLower(searchQuery), "%'", " AND ")
+		}
 	}
 
 	if len(ratingsIDs) > 0 {

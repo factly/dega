@@ -101,7 +101,9 @@ const getTwitterContainer = ({ medium, formData, siteAddress }) => {
                 <div
                   className="social-twitter-preview-image idiot"
                   style={{
-                    backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fill:800:418`,
+                    backgroundImage: `url(${
+                      medium?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                    }?gravity:sm/resize:fill:800:418`,
                   }} // use ImgProxy url
                 ></div>
               )}
@@ -202,7 +204,9 @@ const getFacebookContainer = ({ medium, formData, siteAddress }) => {
             <div
               className="social-og-preview-image"
               style={{
-                backgroundImage: `url(${medium?.url?.proxy}?gravity:sm/resize:fill:1200:627)`,
+                backgroundImage: `url(${
+                  medium?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                }?gravity:sm/resize:fill:1200:627)`,
               }}
             ></div>
           )}

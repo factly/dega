@@ -18,7 +18,6 @@ func FactCheckPermission(h http.Handler) http.Handler {
 				w.WriteHeader(http.StatusUnauthorized)
 				return
 			}
-
 			permission := model.SpacePermission{}
 			err = config.DB.Model(&model.SpacePermission{}).Where(&model.SpacePermission{
 				SpaceID: uint(sID),

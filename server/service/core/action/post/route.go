@@ -13,6 +13,8 @@ import (
 
 // post request body
 type post struct {
+	CreatedAt        time.Time      `json:"created_at"`
+	UpdatedAt        time.Time      `json:"updated_at"`
 	Title            string         `json:"title" validate:"required,max=500"`
 	Subtitle         string         `json:"subtitle"`
 	Slug             string         `json:"slug"`
@@ -31,6 +33,9 @@ type post struct {
 	HeaderCode       string         `json:"header_code"`
 	FooterCode       string         `json:"footer_code"`
 	MetaFields       postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	DescriptionAMP   string         `json:"description_amp"`
+	MigrationID      *uint           `json:"migration_id"`
+	MigratedHTML     string         `json:"migrated_html"`
 	CategoryIDs      []uint         `json:"category_ids"`
 	TagIDs           []uint         `json:"tag_ids"`
 	ClaimIDs         []uint         `json:"claim_ids"`

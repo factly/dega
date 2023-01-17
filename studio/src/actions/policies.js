@@ -18,12 +18,12 @@ export const addDefaultPolicies = (query) => {
     return axios
       .post(POLICIES_API + '/default')
       .then((response) => {
-        dispatch(addPolicies(response.data.nodes));
+        dispatch(addPolicies(response.data));
         dispatch(
           addPoliciesRequest({
-            data: response.data.nodes.map((item) => item.id),
+            data: response.data.map((item) => item.id),
             query: query,
-            total: response.data.total,
+            total: response.data.length,
           }),
         );
       })

@@ -20,12 +20,12 @@ function SpaceSelector({ collapsed }) {
         <img
           alt="logo"
           className="menu-logo"
-          src={details[selected]?.fav_icon?.url?.proxy || degaImg}
+          src={details[selected]?.fav_icon?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg}
         />
       ) : (
         <Select
           style={{ width: '200px' }}
-          value={selected}
+          value={selected!==0?selected:orgs[0]?.title}
           onChange={handleSpaceChange}
           bordered={false}
         >
@@ -37,7 +37,11 @@ function SpaceSelector({ collapsed }) {
                     <Avatar
                       size="small"
                       shape="square"
-                      src={details[space].fav_icon ? details[space].fav_icon.url?.proxy : degaImg}
+                      src={
+                        details[space].fav_icon
+                          ? details[space].fav_icon.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                          : degaImg
+                      }
                     />
                     <h3 style={{ margin: 0, marginLeft: '0.5rem' }}>{details[space].name}</h3>
                   </div>

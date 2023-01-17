@@ -143,6 +143,7 @@ const TagForm = ({ onCreate, data = {} }) => {
                     placeholder: 'Enter Description...',
                     basic: true,
                   }}
+                  initialValue={data.description_html}
                 />
               </Col>
             </Row>

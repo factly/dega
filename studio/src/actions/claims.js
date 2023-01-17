@@ -54,6 +54,7 @@ export const getClaims = (query) => {
         dispatch(
           addClaimsList(
             response.data.nodes.map((claim) => {
+              claim.description = { json: claim.description, html: claim.description_html };
               return { ...claim, claimant: claim.claimant.id, rating: claim.rating.id };
             }),
           ),
@@ -81,6 +82,7 @@ export const getClaim = (id) => {
       .get(CLAIMS_API + '/' + id)
       .then((response) => {
         let claim = response.data;
+        claim.description = { json: claim.description, html: claim.description_html };
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 
@@ -103,6 +105,7 @@ export const createClaim = (data) => {
       .post(CLAIMS_API, data)
       .then((response) => {
         let claim = response.data;
+        claim.description = { json: claim.description, html: claim.description_html };
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 
@@ -124,6 +127,7 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
+        claim.description = { json: claim.description, html: claim.description_html };
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 

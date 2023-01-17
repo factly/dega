@@ -29,7 +29,7 @@ Once the Space is created, the user then needs to create [Formats](/docs/core-co
 1. Article
 1. Fact Check
 
-## Step 3: Create Policies
+## Step 3: Create Policies and Roles
 
 Once the Space is created, the user then needs to create [Policies](/docs/core-concepts/policies) for that space from the `Policies` menu item by clicking on the `Create Default Policies` button. The default policies that are created and are mandatory for Dega to function as expected would be:
 

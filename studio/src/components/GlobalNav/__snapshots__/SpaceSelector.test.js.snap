@@ -166,11 +166,8 @@ exports[`SpaceSelector component snapshot testing should render the component wi
       />
     </span>
     <span
-      className="ant-select-selection-item"
-      title="0"
-    >
-      0
-    </span>
+      className="ant-select-selection-placeholder"
+    />
   </div>
   <span
     aria-hidden={true}

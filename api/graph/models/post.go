@@ -19,7 +19,7 @@ type Post struct {
 	Status           string          `gorm:"column:status" json:"status"`
 	Excerpt          string          `gorm:"column:excerpt" json:"excerpt"`
 	Description      postgres.Jsonb  `gorm:"column:description" json:"description" sql:"jsonb"`
-	HTMLDescription  string          `gorm:"column:html_description" json:"html_description"`
+	DescriptionHTML  string          `gorm:"column:description_html" json:"description_html"`
 	IsPage           bool            `gorm:"column:is_page" json:"is_page"`
 	IsFeatured       bool            `gorm:"column:is_featured" json:"is_featured"`
 	IsSticky         bool            `gorm:"column:is_sticky" json:"is_sticky"`

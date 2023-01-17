@@ -5,13 +5,11 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -22,6 +20,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -85,6 +84,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Episode{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).First(&result.Episode).Error
 
@@ -109,58 +111,52 @@ func update(w http.ResponseWriter, r *http.Request) {
 		episodeSlug = slugx.Approve(&config.DB, slugx.Make(episode.Title), sID, tableName)
 	}
 
-	// Store HTML description
-	var description string
-	if len(episode.Description.RawMessage) > 0 && !reflect.DeepEqual(episode.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(episode.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(episode.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse episode description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(episode.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	tx := config.DB.Begin()
-	mediumID := &episode.MediumID
-	result.MediumID = &episode.MediumID
+
+	updateMap := map[string]interface{}{
+		"created_at":       episode.CreatedAt,
+		"updated_at":       episode.UpdatedAt,
+		"updated_by_id":    uint(uID),
+		"title":            episode.Title,
+		"slug":             episodeSlug,
+		"description_html": descriptionHTML,
+		"description":      jsonDescription,
+		"season":           episode.Season,
+		"episode":          episode.Episode,
+		"audio_url":        episode.AudioURL,
+		"podcast_id":       episode.PodcastID,
+		"published_date":   episode.PublishedDate,
+		"medium_id":        episode.MediumID,
+		"meta_fields":      episode.MetaFields,
+	}
+
 	if episode.MediumID == 0 {
-		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["medium_id"] = nil
 	}
 
-	podcastID := &episode.PodcastID
-	result.PodcastID = &episode.PodcastID
 	if episode.PodcastID == 0 {
-		err = tx.Model(&result.Episode).Updates(map[string]interface{}{"podcast_id": nil}).Error
-		podcastID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+		updateMap["podcast_id"] = nil
 	}
 
-	tx.Model(&result.Episode).Select("PublishedDate").Updates(model.Episode{PublishedDate: episode.PublishedDate})
-	tx.Model(&result.Episode).Updates(model.Episode{
-		Base:            config.Base{UpdatedByID: uint(uID)},
-		Title:           episode.Title,
-		HTMLDescription: description,
-		Description:     episode.Description,
-		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
-		Season:          episode.Season,
-		Episode:         episode.Episode,
-		AudioURL:        episode.AudioURL,
-		PodcastID:       podcastID,
-		MediumID:        mediumID,
-		MetaFields:      episode.MetaFields,
-	}).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
+	tx.Model(&result.Episode).Updates(&updateMap).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
 
 	// fetch old authors
 	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
@@ -242,10 +238,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	tx.Commit()
 	if util.CheckNats() {
-		if err = util.NC.Publish("episode.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("episode.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("episode.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 	renderx.JSON(w, http.StatusOK, result)

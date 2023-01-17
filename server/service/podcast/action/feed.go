@@ -81,7 +81,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	p := pcast.New(
 		result.Title,
 		fmt.Sprint("http://factly.org/podcasts/", result.Slug),
-		result.HTMLDescription,
+		result.DescriptionHTML,
 		&now, &now,
 	)
 
@@ -98,7 +98,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	if result.PrimaryCategory != nil {
 		p.Category = result.PrimaryCategory.Name
 	}
-	p.Description = result.HTMLDescription
+	p.Description = result.DescriptionHTML
 
 	for _, cat := range result.Categories {
 		icat := pcast.ICategory{
@@ -142,7 +142,7 @@ func Feeds(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for _, episode := range episodeList {
-		description := episode.HTMLDescription
+		description := episode.DescriptionHTML
 		if description == "" {
 			description = "----"
 		}

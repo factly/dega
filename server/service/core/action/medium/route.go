@@ -1,6 +1,8 @@
 package medium
 
 import (
+	"time"
+
 	"github.com/factly/dega-server/config"
 
 	"github.com/factly/dega-server/util"
@@ -10,6 +12,8 @@ import (
 
 // medium model
 type medium struct {
+	CreatedAt   time.Time      `json:"created_at"`
+	UpdatedAt   time.Time      `json:"updated_at"`
 	Name        string         `json:"name" validate:"required"`
 	Slug        string         `json:"slug"`
 	Type        string         `json:"type" validate:"required"`

@@ -4,12 +4,10 @@ import (
 	"encoding/json"
 	"errors"
 	"net/http"
-	"reflect"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -19,6 +17,7 @@ import (
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/go-chi/chi"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gorm.io/gorm"
 )
 
@@ -81,6 +80,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Rating{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -127,47 +129,49 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Store HTML description
-	var description string
-	if len(rating.Description.RawMessage) > 0 && !reflect.DeepEqual(rating.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(rating.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(rating.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(rating.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
 
 	tx := config.DB.Begin()
 
-	mediumID := &rating.MediumID
-	result.MediumID = &rating.MediumID
-	if rating.MediumID == 0 {
-		err = tx.Model(&result).Updates(map[string]interface{}{"medium_id": nil}).Error
-		mediumID = nil
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	updateMap := map[string]interface{}{
+		"created_at":        rating.CreatedAt,
+		"updated_at":        rating.UpdatedAt,
+		"updated_by_id":     uint(uID),
+		"name":              rating.Name,
+		"slug":              ratingSlug,
+		"background_colour": rating.BackgroundColour,
+		"text_colour":       rating.TextColour,
+		"medium_id":         rating.MediumID,
+		"description":       jsonDescription,
+		"description_html":  descriptionHTML,
+		"numeric_value":     rating.NumericValue,
+		"meta_fields":       rating.MetaFields,
+		"meta":              rating.Meta,
+		"header_code":       rating.HeaderCode,
+		"footer_code":       rating.FooterCode,
 	}
 
-	err = tx.Model(&result).Updates(model.Rating{
-		Base:             config.Base{UpdatedByID: uint(uID)},
-		Name:             rating.Name,
-		Slug:             ratingSlug,
-		BackgroundColour: rating.BackgroundColour,
-		TextColour:       rating.TextColour,
-		MediumID:         mediumID,
-		Description:      rating.Description,
-		HTMLDescription:  description,
-		NumericValue:     rating.NumericValue,
-		MetaFields:       rating.MetaFields,
-		Meta:             rating.Meta,
-		HeaderCode:       rating.HeaderCode,
-		FooterCode:       rating.FooterCode,
-	}).Preload("Medium").First(&result).Error
+	if rating.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -196,10 +200,12 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("rating.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
+		if util.CheckWebhookEvent("rating.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("rating.updated", result); err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+				return
+			}
 		}
 	}
 

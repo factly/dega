@@ -44,8 +44,8 @@ func (r *categoryResolver) IsFeatured(ctx context.Context, obj *models.Category)
 	return &obj.IsFeatured, nil
 }
 
-func (r *categoryResolver) HTMLDescription(ctx context.Context, obj *models.Category) (*string, error) {
-	return &obj.HTMLDescription, nil
+func (r *categoryResolver) DescriptionHTML(ctx context.Context, obj *models.Category) (*string, error) {
+	return &obj.DescriptionHTML, nil
 }
 func (r *categoryResolver) BackgroundColour(ctx context.Context, obj *models.Category) (interface{}, error) {
 	return &obj.BackgroundColour, nil
@@ -86,8 +86,9 @@ func (r *categoryResolver) Posts(ctx context.Context, obj *models.Category) (*mo
 		if err != nil {
 			return nil, err
 		}
-
-		posts = append(posts, post)
+		if post.Status == "publish" {
+			posts = append(posts, post)
+		}
 	}
 	response := new(models.PostsPaging)
 	response.Nodes = posts

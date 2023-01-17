@@ -162,7 +162,7 @@ describe('Event List component', () => {
       });
       const link = wrapper.find(Link).at(0);
       expect(link.text()).toEqual('Event Deleted');
-      expect(link.prop('to')).toEqual('/events/1/edit');
+      expect(link.prop('to')).toEqual('/admin/events/1/edit');
     });
     it('should have no delete and edit buttons', () => {
       store = mockStore({

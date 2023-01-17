@@ -70,7 +70,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 		sort = "desc"
 	}
 
-	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Model(&model.Post{}).Where(&model.Post{
+	tx := config.DB.Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Model(&model.Post{}).Where(&model.Post{
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).Order("posts.created_at " + sort)
 	var statusTemplate bool = false
@@ -240,9 +240,18 @@ func generateFilters(tagIDs, categoryIDs, authorIDs, status []string) string {
 
 func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, authorIDs, status []string) string {
 	filters := ""
-
-	if searchQuery != "" {
-		filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title LIKE '%", strings.ToLower(searchQuery), "%' ",
+				"OR subtitle LIKE '%", strings.ToLower(searchQuery), "%' ",
+				"OR excerpt LIKE '%", strings.ToLower(searchQuery), "%' ")
+		}
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' ",
+				"OR subtitle ILIKE '%", strings.ToLower(searchQuery), "%' ",
+				"OR excerpt ILIKE '%", strings.ToLower(searchQuery), "%' ")
+		}
 	}
 
 	if len(categoryIDs) > 0 {
@@ -283,7 +292,6 @@ func generateSQLFilters(tx *gorm.DB, searchQuery string, tagIDs, categoryIDs, au
 	if filters != "" && filters[len(filters)-5:] == " AND " {
 		filters = filters[:len(filters)-5]
 	}
-
 	tx.Group("posts.id")
 
 	return filters

@@ -8,7 +8,6 @@ func Migration() {
 		&Medium{},
 		&Category{},
 		&Tag{},
-		&Space{},
 		&Format{},
 		&Post{},
 		&PostAuthor{},
@@ -17,5 +16,6 @@ func Migration() {
 		&OrganisationPermissionRequest{},
 		&SpacePermissionRequest{},
 		&Menu{},
+		&SpaceSettings{},
 	)
 }

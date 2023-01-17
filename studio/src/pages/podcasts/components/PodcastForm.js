@@ -80,6 +80,7 @@ const PodcastForm = ({ onCreate, data = {} }) => {
           <DescriptionInput
             type="editor"
             inputProps={{ style: { width: '600px' }, placeholder: 'Enter Description...' }}
+            initialValue={data.description_html}
           />
           <MetaForm />
           <Form.Item {...tailLayout}>

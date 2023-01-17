@@ -6,7 +6,6 @@ import (
 	"errors"
 	"fmt"
 	"net/http"
-	"reflect"
 	"strconv"
 	"time"
 
@@ -14,7 +13,6 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/test"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
@@ -111,6 +109,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	// check record exists or not
 	err = config.DB.Where(&model.Post{
+		Base: config.Base{
+			ID: uint(id),
+		},
 		SpaceID: uint(sID),
 	}).Where("is_page = ?", false).First(&result.Post).Error
 	if err != nil {
@@ -135,13 +136,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 		postSlug = slugx.Approve(&config.DB, slugx.Make(post.Title), sID, tableName)
 	}
 
-	// Store HTML description
-	var description string
-	if len(post.Description.RawMessage) > 0 && !reflect.DeepEqual(post.Description, test.NilJsonb()) {
-		description, err = util.HTMLDescription(post.Description)
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(post.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(post.Description)
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse post description", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
+			return
+		}
+
+		jsonDescription, err = util.GetJSONDescription(post.Description)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 			return
 		}
 	}
@@ -175,14 +183,15 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	updateMap := map[string]interface{}{
-		"updated_at":         time.Now(),
+		"created_at":         post.CreatedAt,
+		"updated_at":         post.UpdatedAt,
 		"updated_by_id":      uint(uID),
 		"title":              post.Title,
 		"slug":               postSlug,
 		"subtitle":           post.Subtitle,
 		"excerpt":            post.Excerpt,
-		"description":        post.Description,
-		"html_description":   description,
+		"description":        jsonDescription,
+		"description_html":   descriptionHTML,
 		"is_highlighted":     post.IsHighlighted,
 		"is_sticky":          post.IsSticky,
 		"is_featured":        post.IsFeatured,
@@ -192,11 +201,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"header_code":        post.HeaderCode,
 		"footer_code":        post.FooterCode,
 		"meta_fields":        post.MetaFields,
+		"description_amp":    post.DescriptionAMP,
+		"migrated_html":      post.MigratedHTML,
+	}
+
+	if post.MigrationID != nil {
+		updateMap["migration_id"] = *post.MigrationID
 	}
 
 	result.Post.FeaturedMediumID = &post.FeaturedMediumID
 	if post.FeaturedMediumID == 0 {
 		updateMap["featured_medium_id"] = nil
+	}
+
+	if post.CreatedAt.IsZero() {
+		updateMap["created_at"] = result.CreatedAt
+	}
+
+	if post.UpdatedAt.IsZero() {
+		updateMap["updated_at"] = time.Now()
 	}
 
 	oldStatus := result.Post.Status
@@ -252,7 +275,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["status"] = "draft"
 	}
 
-	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").Preload("Space").Preload("Space.Logo").First(&result.Post).Error
+	err = tx.Model(&result.Post).Updates(&updateMap).Preload("Medium").Preload("Format").Preload("Tags").Preload("Categories").First(&result.Post).Error
 
 	if err != nil {
 		tx.Rollback()
@@ -379,16 +402,214 @@ func update(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	spaceObjectforDega, err := util.GetSpacefromKavach(uint(uID), uint(oID), uint(sID))
+	if err != nil {
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
 	ratings := make([]factCheckModel.Rating, 0)
 	config.DB.Model(&factCheckModel.Rating{}).Where(factCheckModel.Rating{
 		SpaceID: uint(sID),
 	}).Order("numeric_value asc").Find(&ratings)
 
+	schemaxPost := schemax.Post{
+		Base:            schemax.Base(result.Post.Base),
+		Title:           result.Title,
+		Subtitle:        result.Subtitle,
+		Slug:            result.Slug,
+		Status:          result.Status,
+		IsPage:          result.IsPage,
+		Excerpt:         result.Excerpt,
+		Description:     result.Description,
+		DescriptionHTML: result.DescriptionHTML,
+		IsFeatured:      result.IsFeatured,
+		IsSticky:        result.IsSticky,
+		IsHighlighted:   result.IsHighlighted,
+		FormatID:        result.FormatID,
+		PublishedDate:   result.PublishedDate,
+		SpaceID:         result.SpaceID,
+		Schemas:         result.Schemas,
+		Meta:            result.Meta,
+		HeaderCode:      result.HeaderCode,
+		FooterCode:      result.FooterCode,
+		MetaFields:      result.MetaFields,
+	}
+
+	if result.FeaturedMediumID != nil {
+		schemaxPost.FeaturedMediumID = result.FeaturedMediumID
+		schemaxPost.Medium = &schemax.Medium{
+			Base:        schemax.Base(result.Medium.Base),
+			Name:        result.Medium.Name,
+			Slug:        result.Medium.Slug,
+			Type:        result.Medium.Type,
+			Title:       result.Medium.Title,
+			Description: result.Medium.Description,
+			Caption:     result.Medium.Caption,
+			AltText:     result.Medium.AltText,
+			FileSize:    result.Medium.FileSize,
+			URL:         result.Medium.URL,
+			Dimensions:  result.Medium.Dimensions,
+			MetaFields:  result.Medium.MetaFields,
+			SpaceID:     result.Medium.SpaceID,
+		}
+	}
+
+	schemaxAuthors := make([]schemax.PostAuthor, 0)
+	for _, author := range result.Authors {
+		schemaxAuthor := schemax.PostAuthor{
+			Base:            schemax.Base(author.Base),
+			Email:           author.Email,
+			KID:             author.KID,
+			FirstName:       author.FirstName,
+			LastName:        author.LastName,
+			Slug:            author.Slug,
+			DisplayName:     author.DisplayName,
+			BirthDate:       author.BirthDate,
+			Gender:          author.Gender,
+			SocialMediaURLs: author.SocialMediaURLs,
+		}
+
+		if author.FeaturedMediumID != nil {
+			schemaxAuthor.FeaturedMediumID = author.FeaturedMediumID
+			schemaxAuthor.Medium = &schemax.Medium{
+				Base:        schemax.Base(author.Medium.Base),
+				Name:        author.Medium.Name,
+				Slug:        author.Medium.Slug,
+				Type:        author.Medium.Type,
+				Title:       author.Medium.Title,
+				Description: author.Medium.Description,
+				Caption:     author.Medium.Caption,
+				AltText:     author.Medium.AltText,
+				FileSize:    author.Medium.FileSize,
+				URL:         author.Medium.URL,
+				Dimensions:  author.Medium.Dimensions,
+				MetaFields:  author.Medium.MetaFields,
+				SpaceID:     author.Medium.SpaceID,
+			}
+		}
+		schemaxAuthors = append(schemaxAuthors, schemaxAuthor)
+	}
+
+	schemaxClaims := make([]schemax.Claim, 0)
+	for _, claim := range result.Claims {
+		schemaxClaim := schemax.Claim{
+			Base:            schemax.Base(claim.Base),
+			Claim:           claim.Claim,
+			Slug:            claim.Slug,
+			ClaimDate:       claim.ClaimDate,
+			CheckedDate:     claim.CheckedDate,
+			ClaimSources:    claim.ClaimSources,
+			Description:     claim.Description,
+			DescriptionHTML: claim.DescriptionHTML,
+			ClaimantID:      claim.ClaimantID,
+			Claimant: schemax.Claimant{
+				Base:            schemax.Base(claim.Claimant.Base),
+				Name:            claim.Claimant.Name,
+				Slug:            claim.Claimant.Slug,
+				Description:     claim.Claimant.Description,
+				DescriptionHTML: claim.Claimant.DescriptionHTML,
+				IsFeatured:      claim.Claimant.IsFeatured,
+				TagLine:         claim.Claimant.TagLine,
+				MetaFields:      claim.Claimant.MetaFields,
+				SpaceID:         claim.Claimant.SpaceID,
+				Meta:            claim.Claimant.Meta,
+				HeaderCode:      claim.Claimant.HeaderCode,
+				FooterCode:      claim.Claimant.FooterCode,
+			},
+			RatingID:      claim.RatingID,
+			Fact:          claim.Fact,
+			ReviewSources: claim.ReviewSources,
+			MetaFields:    claim.MetaFields,
+			SpaceID:       claim.SpaceID,
+			VideoID:       claim.VideoID,
+			EndTime:       claim.EndTime,
+			StartTime:     claim.StartTime,
+			Meta:          claim.Meta,
+			HeaderCode:    claim.HeaderCode,
+			FooterCode:    claim.FooterCode,
+		}
+
+		if claim.MediumID != nil {
+			schemaxClaim.MediumID = claim.MediumID
+		}
+		if claim.Claimant.MediumID != nil {
+			schemaxClaim.Claimant.MediumID = claim.Claimant.MediumID
+		}
+
+		schemaxClaims = append(schemaxClaims, schemaxClaim)
+	}
+
+	schemaxRatings := make([]schemax.Rating, 0)
+	for _, rating := range ratings {
+		schemaxRating := schemax.Rating{
+			Base:             schemax.Base(rating.Base),
+			Name:             rating.Name,
+			Slug:             rating.Slug,
+			BackgroundColour: rating.BackgroundColour,
+			TextColour:       rating.TextColour,
+			Description:      rating.Description,
+			DescriptionHTML:  rating.DescriptionHTML,
+			NumericValue:     rating.NumericValue,
+			MetaFields:       rating.MetaFields,
+			SpaceID:          rating.SpaceID,
+			Meta:             rating.Meta,
+			HeaderCode:       rating.HeaderCode,
+			FooterCode:       rating.FooterCode,
+		}
+		if rating.MediumID != nil {
+			schemaxRating.MediumID = rating.MediumID
+		}
+		schemaxRatings = append(schemaxRatings, schemaxRating)
+	}
+
+	schemaxSpace := schemax.Space{
+		Base: schemax.Base{
+			ID:          spaceObjectforDega.ID,
+			CreatedAt:   spaceObjectforDega.CreatedAt,
+			UpdatedAt:   spaceObjectforDega.UpdatedAt,
+			DeletedAt:   spaceObjectforDega.DeletedAt,
+			CreatedByID: spaceObjectforDega.CreatedByID,
+			UpdatedByID: spaceObjectforDega.UpdatedByID,
+		},
+		Name:        spaceObjectforDega.Name,
+		Slug:        spaceObjectforDega.Slug,
+		Description: spaceObjectforDega.Description,
+		MetaFields:  spaceObjectforDega.MetaFields,
+		SpaceSettings: &schemax.SpaceSettings{
+			SiteTitle:         spaceObjectforDega.SiteTitle,
+			SiteAddress:       spaceObjectforDega.SiteAddress,
+			VerificationCodes: spaceObjectforDega.VerificationCodes,
+			SocialMediaURLs:   spaceObjectforDega.SocialMediaURLs,
+			ContactInfo:       spaceObjectforDega.ContactInfo,
+			Analytics:         spaceObjectforDega.Analytics,
+			HeaderCode:        spaceObjectforDega.HeaderCode,
+			FooterCode:        spaceObjectforDega.FooterCode,
+		},
+	}
+
+	if spaceObjectforDega.LogoID != nil {
+		schemaxSpace.SpaceSettings.LogoID = spaceObjectforDega.LogoID
+	}
+
+	if spaceObjectforDega.LogoMobileID != nil {
+		schemaxSpace.SpaceSettings.LogoMobileID = spaceObjectforDega.LogoMobileID
+	}
+
+	if spaceObjectforDega.FavIconID != nil {
+		schemaxSpace.SpaceSettings.FavIconID = spaceObjectforDega.FavIconID
+	}
+
+	if spaceObjectforDega.MobileIconID != nil {
+		schemaxSpace.SpaceSettings.MobileIconID = spaceObjectforDega.MobileIconID
+	}
+
 	schemas := schemax.GetSchemas(schemax.PostData{
-		Post:    result.Post,
-		Authors: result.Authors,
-		Claims:  result.Claims,
-	}, *result.Space, ratings)
+		Post:    schemaxPost,
+		Authors: schemaxAuthors,
+		Claims:  schemaxClaims,
+	}, schemaxSpace, schemaxRatings)
 
 	byteArr, err := json.Marshal(schemas)
 	if err != nil {
@@ -439,30 +660,39 @@ func update(w http.ResponseWriter, r *http.Request) {
 	tx.Commit()
 
 	if util.CheckNats() {
-		if err = util.NC.Publish("post.updated", result); err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-			return
-		}
-		if result.Post.Status == "publish" {
-			if err = util.NC.Publish("post.published", result); err != nil {
+		if util.CheckWebhookEvent("post.updated", strconv.Itoa(sID), r) {
+			if err = util.NC.Publish("post.updated", result); err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 				return
+			}
+		}
+
+		if result.Post.Status == "publish" {
+			if util.CheckWebhookEvent("post.published", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.published", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 		if oldStatus == "publish" && (result.Post.Status == "draft" || result.Post.Status == "ready") {
-			if err = util.NC.Publish("post.unpublished", result); err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+			if util.CheckWebhookEvent("post.unpublished", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.unpublished", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 		if (oldStatus == "publish" || oldStatus == "draft") && result.Post.Status == "ready" {
-			if err = util.NC.Publish("post.ready", result); err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-				return
+			if util.CheckWebhookEvent("post.ready", strconv.Itoa(sID), r) {
+				if err = util.NC.Publish("post.ready", result); err != nil {
+					loggerx.Error(err)
+					errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+					return
+				}
 			}
 		}
 	}
@@ -471,18 +701,8 @@ func update(w http.ResponseWriter, r *http.Request) {
 }
 
 func getPublishPermissions(oID, sID, uID int) (int, error) {
-	commonString := fmt.Sprint(":org:", oID, ":app:dega:space:", sID, ":")
 
-	kresource := fmt.Sprint("resources", commonString, "posts")
-	kaction := fmt.Sprint("actions", commonString, "posts:publish")
-
-	result := util.KetoAllowed{}
-
-	result.Action = kaction
-	result.Resource = kresource
-	result.Subject = fmt.Sprint(uID)
-
-	resStatus, err := util.IsAllowed(result)
+	resStatus, err := util.IsAllowed("posts", "publish", uint(oID), uint(sID), uint(uID))
 	if err != nil {
 		return 0, err
 	}
