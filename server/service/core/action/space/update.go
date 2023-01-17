@@ -118,7 +118,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		err = tx.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 			SpaceID: uint(spaceID),
-		}).Updates(&updateMap).Find(&spaceSettings).Error
+		}).Updates(&updateMap).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Find(&spaceSettings).Error
 
 		if err != nil {
 			tx.Rollback()
@@ -156,7 +156,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 			settings.LogoMobileID = space.LogoMobileID
 		}
 
-		err = tx.Model(&model.SpaceSettings{}).Create(&settings).Error
+		err = tx.Model(&model.SpaceSettings{}).Create(&settings).Preload("Logo").Preload("LogoMobile").Preload("FavIcon").Preload("MobileIcon").Error
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
