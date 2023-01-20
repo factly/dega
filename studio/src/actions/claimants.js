@@ -35,6 +35,16 @@ export const getClaimants = (query) => {
                 json: claimant.description,
                 html: claimant.description_html,
               };
+              // ! this needs to be modified as it is duplicating the value of description_html but not removing it from original object hence results in object structure = {
+              // ! ...
+              // ! description: {
+              // !   json: ...
+              // !   html: ::
+              // ! },
+              // ! description_html: ...
+              // ! }
+              //! possible solution is to delete the description_html
+              // delete claimant.description_html;
               return { ...claimant, medium: claimant.medium?.id };
             }),
           ),
@@ -139,6 +149,20 @@ export const addClaimants = (claimants) => {
     dispatch(
       addClaimantsList(
         claimants.map((claimant) => {
+          // !here description and description value is not copied inside the description so if clamaint has these properties they are directly copied = {
+          //!   ...
+          //!   description: ...
+          //!   description_html: ...
+          //! }
+          //! whereas above they are copied inside single object = {
+          //!   ...
+          //!   description: {
+          //!     json: ...
+          //!     html: ...
+          //! }
+          //!   description_html: ...
+          //! }
+
           return { ...claimant, medium: claimant.medium?.id };
         }),
       ),

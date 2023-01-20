@@ -102,10 +102,11 @@ describe('tags actions', () => {
       .dispatch(actions.getTags(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
 
-      expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, {
+    expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, {
       params: query,
     });
   });
+
   it('should create actions to fetch tags failure', () => {
     const query = { page: 1, limit: 5 };
     const errorMessage = 'Unable to fetch';
@@ -135,13 +136,47 @@ describe('tags actions', () => {
     store
       .dispatch(actions.getTags(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, {
-      params: query,
-    });
+    expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, { params: query, });
   });
+
+  it('should create action when there is no tags in response`', () => {
+    const query = { page: 1, limit: 5 };
+    const resp = { data: { nodes: [], total: 0 } };
+    axios.get.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: true,
+      },
+      {
+        type: types.ADD_TAGS,
+        payload: [],
+      },
+      {
+        type: types.ADD_TAGS_REQUEST,
+        payload: {
+          data: [],
+          query: query,
+          total: 0,
+        },
+      },
+      {
+        type: types.SET_TAGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.getTags(query))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, { params: query });
+  });
+
   it('should create actions to get tag by id success', () => {
     const id = 1;
-    const tag = { id, name: 'Tag'};
+    const tag = { id, name: 'Tag' };
     const resp = { data: tag };
     axios.get.mockResolvedValue(resp);
 
