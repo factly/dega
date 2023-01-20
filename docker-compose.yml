@@ -10,7 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
-      - ~/factly/dega/postgresql:/var/lib/postgresql/data/
+      - ./volumes/postgres:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -165,7 +165,7 @@ services:
     image: oryd/keto:v0.9.0-alpha.0
     ports:
       - "4466:4466" # read
-      - "4467:4467" # write 
+      - "4467:4467" # write
       - "4468:4468" # metric
     environment:
       - LOG_LEVEL=debug
@@ -253,7 +253,7 @@ services:
       - KAVACH_KETO_READ_API_URL=http://keto:4466
       - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
       - KAVACH_MODE=development
       - KAVACH_USE_SQLITE=false
       - KAVACH_SQLITE_DB_PATH=kavach.db
@@ -297,7 +297,7 @@ services:
       - KAVACH_KETO_READ_API_URL=http://keto:4466
       - KAVACH_KETO_WRITE_API_URL=http://keto:4467
       - KAVACH_KRATOS_ADMIN_URL=http://kratos:4434
-      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433 
+      - KAVACH_KRATOS_PUBLIC_URL=http://kratos:4433
       - KAVACH_MODE=development
       - KAVACH_USE_SQLITE=false
       - KAVACH_SQLITE_DB_PATH=kavach.db
@@ -316,7 +316,12 @@ services:
       - KAVACH_ENABLE_IMGPROXY=false
       - KAVACH_DYNAMIC_EMAIL_ENABLED=true
       - KAVACH_BUCKET_NAME=login.factly.in
-    entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
+    entrypoint:
+      [
+        "/bin/sh",
+        "-c",
+        "/app/kavach-server migrate && /app/kavach-server create-super-org",
+      ]
     networks:
       - dega
 
@@ -328,7 +333,7 @@ services:
         target: /app/public/config.js
 
     environment:
-      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web 
+      - PUBLIC_URL=http://127.0.0.1:4455/.factly/kavach/web
       - REACT_APP_PUBLIC_URL='http://127.0.0.1:4455/.factly/kavach/web';
       - REACT_APP_KAVACH_TITLE='FACTLY';
       - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
@@ -338,7 +343,7 @@ services:
       - REACT_APP_DISABLE_REGISTRATION=false;
       - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
       - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
-      - REACT_APP_ENABLE_IMGPROXY=false; 
+      - REACT_APP_ENABLE_IMGPROXY=false;
     restart: unless-stopped
     networks:
       - dega
@@ -479,7 +484,7 @@ services:
     volumes:
       - type: bind
         source: ./api
-        target: /app
+        target: /appendonly
     restart: unless-stopped
     networks:
       - dega

@@ -118,6 +118,7 @@ export const deleteTag = (id) => {
   };
 };
 
+//? tested
 export const loadingTags = () => ({
   type: SET_TAGS_LOADING,
   payload: true,
@@ -133,16 +134,17 @@ export const addTag = (type, payload) => ({
   payload,
 });
 
+// ?tested
 export const addTags = (data) => ({
   type: ADD_TAGS,
   payload: data,
 });
-
+// ?tested
 export const addTagsRequest = (data) => ({
   type: ADD_TAGS_REQUEST,
   payload: data,
 });
-
+// ?tested
 export const resetTags = () => ({
   type: RESET_TAGS,
 });

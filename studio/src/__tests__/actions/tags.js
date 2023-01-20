@@ -18,6 +18,7 @@ const initialState = {
 };
 
 describe('tags actions', () => {
+  // loading actions
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
       type: types.SET_TAGS_LOADING,
@@ -33,6 +34,8 @@ describe('tags actions', () => {
     };
     expect(actions.stopTagsLoading()).toEqual(stopLoadingAction);
   });
+
+  // addtags
   it('should create an action to add tags list', () => {
     const data = [
       { id: 1, name: 'tester 1' },
@@ -45,6 +48,8 @@ describe('tags actions', () => {
     };
     expect(actions.addTags(data)).toEqual(addTagsAction);
   });
+
+  // add tags request
   it('should create an action to add tags request', () => {
     const data = [{ query: 'query' }];
     const addTagsRequestAction = {
@@ -53,12 +58,16 @@ describe('tags actions', () => {
     };
     expect(actions.addTagsRequest(data)).toEqual(addTagsRequestAction);
   });
+
+  // reset tags
   it('should create an action to reset tags', () => {
     const resetTagsRequestAction = {
       type: types.RESET_TAGS,
     };
     expect(actions.resetTags()).toEqual(resetTagsRequestAction);
   });
+
+  // fetch tags
   it('should create actions to fetch tags success', () => {
     const query = { page: 1, limit: 5 };
     const tags = [{ id: 1, name: 'Tag' }];
@@ -72,7 +81,7 @@ describe('tags actions', () => {
       },
       {
         type: types.ADD_TAGS,
-        payload: [{ id: 1, name: 'Tag' }],
+        payload: tags,
       },
       {
         type: types.ADD_TAGS_REQUEST,
@@ -92,7 +101,8 @@ describe('tags actions', () => {
     store
       .dispatch(actions.getTags(query))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, {
+
+      expect(axios.get).toHaveBeenCalledWith(types.TAGS_API, {
       params: query,
     });
   });
@@ -131,7 +141,7 @@ describe('tags actions', () => {
   });
   it('should create actions to get tag by id success', () => {
     const id = 1;
-    const tag = { id, name: 'Tag' };
+    const tag = { id, name: 'Tag'};
     const resp = { data: tag };
     axios.get.mockResolvedValue(resp);
 
@@ -142,7 +152,7 @@ describe('tags actions', () => {
       },
       {
         type: types.GET_TAG,
-        payload: { id, name: 'Tag' },
+        payload: { id, name: 'Tag', description: { json: undefined, html: undefined } },
       },
       {
         type: types.SET_TAGS_LOADING,
@@ -187,6 +197,7 @@ describe('tags actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.TAGS_API + '/' + id);
   });
+
   it('should not create actions for fetching tag when spaceID is 0 ', () => {
     const query = { page: 1, limit: 5 };
     const expectedActions = [];
@@ -194,6 +205,7 @@ describe('tags actions', () => {
     store.dispatch(actions.getTags(query));
     expect(store.getActions()).toEqual(expectedActions);
   });
+
   it('should create actions to create tag success', () => {
     const tag = { name: 'Tag' };
     const resp = { data: tag };
@@ -224,6 +236,7 @@ describe('tags actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.TAGS_API, tag);
   });
+
   it('should create actions to create tag failure', () => {
     const tag = { name: 'Tag' };
     const errorMessage = 'Failed to create tag';
@@ -263,7 +276,7 @@ describe('tags actions', () => {
       },
       {
         type: types.UPDATE_TAG,
-        payload: { id: 1, name: 'Tag' },
+        payload: tag,
       },
       {
         type: ADD_NOTIFICATION,
