@@ -57,6 +57,8 @@ describe('episodes actions', () => {
         podcast: {
           id: 1,
         },
+        description: { "hello": "test" },
+        description_html: "<p>test</p>",
       },
     ];
     const resp = { data: { nodes: episodes, total: 1 } };
@@ -73,7 +75,7 @@ describe('episodes actions', () => {
       },
       {
         type: types.ADD_EPISODES,
-        payload: [{ id: 1, title: 'Episode', podcast: 1 }],
+        payload: [{ id: 1, title: 'Episode', podcast: 1, description: { json: { "hello": "test" }, html: "<p>test</p>" }, }],
       },
       {
         type: types.ADD_EPISODES_REQUEST,
@@ -131,7 +133,7 @@ describe('episodes actions', () => {
   it('should create actions to get episode by id success', () => {
     const id = 1;
     const podcast = { id: 1 };
-    const episode = { id, title: 'Episode', podcast: podcast };
+    const episode = { id, title: 'Episode', podcast: podcast, description: { "hello": "test" }, description_html: "<p>test</p>" };
     const resp = { data: episode };
     axios.get.mockResolvedValue(resp);
 
@@ -146,7 +148,7 @@ describe('episodes actions', () => {
       },
       {
         type: types.GET_EPISODE,
-        payload: { id, title: 'Episode', podcast: 1 },
+        payload: { id, title: 'Episode', podcast: 1, description: { json: { "hello": "test" }, html: "<p>test</p>" }, },
       },
       {
         type: types.SET_EPISODES_LOADING,
@@ -191,7 +193,7 @@ describe('episodes actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.EPISODES_API + '/' + id);
   });
-  it('should create actions to get episode by id with no podcast ', () => {
+  it('should create actions to get episode by id with no podcast no description', () => {
     const id = 1;
     const podcast = {};
     const episode = { id, title: 'Episode', podcast: podcast };
@@ -205,7 +207,7 @@ describe('episodes actions', () => {
       },
       {
         type: types.GET_EPISODE,
-        payload: { id, title: 'Episode' },
+        payload: { id, title: 'Episode', podcast: undefined, description: { json: undefined, html: undefined }, },
       },
       {
         type: types.SET_EPISODES_LOADING,
@@ -278,7 +280,8 @@ describe('episodes actions', () => {
   });
   it('should create actions to update episode success', () => {
     const podcast = { id: 1 };
-    const episode = { id: 1, title: 'Episode', podcast: podcast };
+    const episode = { id: 1, title: 'Episode', podcast: podcast, description: { json: { "hello": "test" }, html: "<p>test</p>" }
+  };
     const resp = { data: episode };
     axios.put.mockResolvedValue(resp);
 
@@ -293,7 +296,7 @@ describe('episodes actions', () => {
       },
       {
         type: types.UPDATE_EPISODE,
-        payload: { id: 1, title: 'Episode', podcast: 1 },
+        payload: { id: 1, title: 'Episode', podcast: 1, description: { json: { "hello": "test" }, html: "<p>test</p>" } },
       },
       {
         type: ADD_NOTIFICATION,
@@ -347,9 +350,10 @@ describe('episodes actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.EPISODES_API + '/1', episode);
   });
-  it('should create actions to update episode success without podcast', () => {
+  it('should create actions to update episode success without podcast and without description ', () => {
     const podcast = {};
-    const episode = { id: 1, title: 'Episode', podcast: podcast };
+    const description = {json: undefined, html: undefined};
+    const episode = { id: 1, title: 'Episode', podcast: podcast, description: description };
     const resp = { data: episode };
     axios.put.mockResolvedValue(resp);
 
@@ -360,7 +364,7 @@ describe('episodes actions', () => {
       },
       {
         type: types.UPDATE_EPISODE,
-        payload: { id: 1, title: 'Episode' },
+        payload: { id: 1, title: 'Episode', podcast: undefined, description: { json: undefined, html: undefined } },
       },
       {
         type: ADD_NOTIFICATION,

@@ -19,6 +19,7 @@ const initialState = {
 };
 
 describe('claimants actions', () => {
+
   it('should create an action to set loading to true', () => {
     const startLoadingAction = {
       type: types.SET_CLAIMANTS_LOADING,
@@ -26,6 +27,7 @@ describe('claimants actions', () => {
     };
     expect(actions.loadingClaimants()).toEqual(startLoadingAction);
   });
+
   it('should create an action to set loading to false', () => {
     const stopLoadingAction = {
       type: types.SET_CLAIMANTS_LOADING,
@@ -33,6 +35,7 @@ describe('claimants actions', () => {
     };
     expect(actions.stopClaimantsLoading()).toEqual(stopLoadingAction);
   });
+
   it('should create an action to add claimants list', () => {
     const data = [
       { id: 1, name: 'tester 1' },
@@ -45,6 +48,7 @@ describe('claimants actions', () => {
     };
     expect(actions.addClaimantsList(data)).toEqual(addClaimantsAction);
   });
+
   it('should create an action to add claimants request', () => {
     const data = [{ query: 'query' }];
     const addClaimantsRequestAction = {
@@ -53,6 +57,7 @@ describe('claimants actions', () => {
     };
     expect(actions.addClaimantsRequest(data)).toEqual(addClaimantsRequestAction);
   });
+
   it('should create an action to reset claimants', () => {
     const resetClaimantsRequestAction = {
       type: types.RESET_CLAIMANTS,
@@ -100,6 +105,7 @@ describe('claimants actions', () => {
       params: query,
     });
   });
+  // !needs to be modified remove description_html on line 132 object after making changes to /actions/claimants.js
   it('should create actions to fetch claimants success not all with media and not all with description and html', () => {
     const query = { page: 1, limit: 5 };
 
@@ -123,7 +129,8 @@ describe('claimants actions', () => {
         type: types.ADD_CLAIMANTS,
         payload: [
           { id: 1, name: 'Claimant', medium: 11, description: { html: undefined, json: undefined, } },
-          { id: 2, name: 'Claimant 2', medium: undefined, description: { json: { "hello": "test" }, html: "<h1>Hello test</h1>" }, description_html: "<h1>Hello test</h1>" },
+          { id: 2, name: 'Claimant 2', medium: undefined, description: { json: { "hello": "test" }, html: "<h1>Hello test</h1>" },
+          /*!here */ description_html: "<h1>Hello test</h1>" },
         ],
       },
       {
@@ -148,6 +155,7 @@ describe('claimants actions', () => {
       params: query,
     });
   });
+  // !needs to be modified remove description_html on line 191,192 object after making changes to /actions/claimants.js
   it('should create actions to fetch claimants success all with media and all with description and html', () => {
     const query = { page: 1, limit: 5 };
 
@@ -180,8 +188,8 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          { id: 1, name: 'Claimant', medium: 11, description: { json: description1, html: description_html1 }, description_html: description_html1 },
-          { id: 2, name: 'Claimant 2', medium: 21, description: { json: description2, html: description_html2 }, description_html: description_html2 },
+          /*!here */ { id: 1, name: 'Claimant', medium: 11, description: { json: description1, html: description_html1 }, description_html: description_html1 },
+          /*!here */ { id: 2, name: 'Claimant 2', medium: 21, description: { json: description2, html: description_html2 }, description_html: description_html2 },
         ],
       },
       {
@@ -299,6 +307,7 @@ describe('claimants actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.CLAIMANTS_API + '/' + id);
   });
+  // !needs to be modified remove description_html on line 191,192 object after making changes to /actions/claimants.js
 
   it('should create actions to get claimant by id where claimant has medium and has description and html', () => {
     const id = 1;
@@ -320,7 +329,7 @@ describe('claimants actions', () => {
       },
       {
         type: types.GET_CLAIMANT,
-        payload: { id, name: 'Claimant', medium: 1, description: { html: description_html, json: description, }, description_html },
+/*!here */         payload: { id, name: 'Claimant', medium: 1, description: { html: description_html, json: description, }, description_html },
       },
       {
         type: types.SET_CLAIMANTS_LOADING,
@@ -426,6 +435,7 @@ describe('claimants actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1', claimant);
   });
+  // !needs to be modified remove description_html on line  object after making changes to /actions/claimants.js
   it('should create actions to update claimant with medium and description success', () => {
     const medium = { id: 4, name: 'medium' };
     const description = { "hello": "test" }
@@ -445,7 +455,7 @@ describe('claimants actions', () => {
       },
       {
         type: types.UPDATE_CLAIMANT,
-        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }, description_html },
+/* here */        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }, description_html },
       },
       {
         type: ADD_NOTIFICATION,
@@ -553,12 +563,13 @@ describe('claimants actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1');
   });
+  // !this to be fully modified after making changes to /actions/claimants.js
   it('should create actions to add claimants list', () => {
     const medium = { id: 4, name: 'mediumm' };
     const description = {"hello": "test"}
     const description_html = "<h1>hello test</h1>"
     const claimants = [
-      { id: 1, name: 'Claimant', description, description_html },
+      { id: 1, name: 'Claimant' },
       { id: 2, name: 'Claimant', medium: medium },
     ];
 
@@ -570,8 +581,8 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          { id: 1, name: 'Claimant', medium: undefined, description: { json: description, html: description_html }, description_html: description_html},
-          { id: 2, name: 'Claimant', medium: 4, description: { json: undefined, html: undefined } },
+          { id: 1, name: 'Claimant', medium: undefined, },
+          { id: 2, name: 'Claimant', medium: 4, },
         ],
       },
     ];
@@ -594,8 +605,8 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          { id: 1, name: 'Claimant', medium: undefined, description: { json: undefined, html: undefined } },
-          { id: 2, name: 'Claimant', medium: undefined, description: { json: undefined, html: undefined } },
+          { id: 1, name: 'Claimant', medium: undefined },
+          { id: 2, name: 'Claimant', medium: undefined },
         ],
       },
     ];

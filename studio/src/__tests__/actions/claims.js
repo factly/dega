@@ -44,6 +44,8 @@ const claim3 = {
   name: 'New Claim',
   claimant: { id: 13, name: 'Claimant 3', medium: { id: 23, name: 'Medium-Claimant 3' } },
   rating: { id: 300, name: 'Rating 3', medium: { id: 320, name: 'Medium-Rating 3' } },
+  description: { "hello": "test" },
+  description_html: "<h1>hello test</h1>"
 };
 
 describe('claims actions', () => {
@@ -120,7 +122,7 @@ describe('claims actions', () => {
       },
       {
         type: types.ADD_CLAIMS,
-        payload: [{ id: 1, name: 'Claim 1', claimant: 11, rating: 100 }],
+        payload: [{ id: 1, name: 'Claim 1', claimant: 11, description: { json: undefined, html: undefined }, rating: 100 }],
       },
       {
         type: types.ADD_CLAIMS_REQUEST,
@@ -137,7 +139,6 @@ describe('claims actions', () => {
     ];
 
     const params = new URLSearchParams('claimant=11&rating=100&page=1&limit=5&sort=asc&q=claimant');
-
     const store = mockStore({ initialState });
     store
       .dispatch(actions.getClaims(query))
@@ -175,7 +176,7 @@ describe('claims actions', () => {
       },
       {
         type: types.ADD_CLAIMS,
-        payload: [{ id: 3, name: 'New Claim', claimant: 13, rating: 300 }],
+        payload: [{ id: 3, name: 'New Claim', claimant: 13, rating: 300, description: { json: { "hello": "test" }, html: "<h1>hello test</h1>" } }],
       },
       {
         type: types.ADD_CLAIMS_REQUEST,
@@ -283,6 +284,12 @@ describe('claims actions', () => {
   });
   it('should create actions to get claim by id success', () => {
     const id = 1;
+    const claim = {
+      id: 1,
+      ...claim_without_id,
+      description: {"hello":"test"},
+      description_html: "<h1>hello test</h1>"
+    };
     const resp = { data: claim };
     axios.get.mockResolvedValue(resp);
 
@@ -309,7 +316,7 @@ describe('claims actions', () => {
       },
       {
         type: types.GET_CLAIM,
-        payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100 },
+        payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100, description: {json: {"hello":"test"}, html: "<h1>hello test</h1>"} },
       },
       {
         type: types.SET_CLAIMS_LOADING,
@@ -458,9 +465,13 @@ describe('claims actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.CLAIMS_API, claim);
   });
   it('should create actions to update claim success with claim and rating', () => {
+    let claim = {
+      id: 1,
+      description: { json: { "hello": "test" }, html: "<h1>hello test</h1>" },
+      ...claim_without_id,
+    };
     const resp = { data: claim };
     axios.put.mockResolvedValue(resp);
-
     const expectedActions = [
       {
         type: types.SET_CLAIMS_LOADING,
@@ -484,7 +495,7 @@ describe('claims actions', () => {
       },
       {
         type: types.UPDATE_CLAIM,
-        payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100 },
+        payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100, description: { json: { "hello": "test" }, html: "<h1>hello test</h1>" }, },
       },
       {
         type: ADD_NOTIFICATION,
@@ -662,7 +673,19 @@ describe('claims actions', () => {
     }
   });
   it('should create actions to add claims list with claimants and ratings', () => {
-    const claims = [claim, claim2];
+    const local_claim1 = {
+      id: 1,
+      ...claim_without_id,
+    };
+
+    const local_claim2 = {
+      id: 2,
+      name: 'Claim 2',
+      claimant: { id: 12, name: 'Claimant 2', medium: { id: 22, name: 'Medium-Claimant 2' } },
+      rating: { id: 200, name: 'Rating 2', medium: { id: 220, name: 'Medium-Rating 2' } },
+    };
+
+    const claims = [local_claim1, local_claim2]
 
     const expectedActions = [
       {
