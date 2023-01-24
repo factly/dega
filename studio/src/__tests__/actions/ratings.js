@@ -60,7 +60,7 @@ describe('ratings actions', () => {
     };
     expect(actions.resetRatings()).toEqual(resetRatingsAction);
   });
-  it('should create actions to fetch ratings with none having media', () => {
+  it('should create actions to fetch ratings with none having media and description', () => {
     const query = { page: 1, limit: 5 };
     const ratings = [{ id: 1, name: 'Rating' }];
     const resp = { data: { nodes: ratings, total: 2 } };
@@ -77,7 +77,7 @@ describe('ratings actions', () => {
       },
       {
         type: types.ADD_RATINGS,
-        payload: [{ id: 1, name: 'Rating', medium: undefined }],
+        payload: [{ id: 1, name: 'Rating', medium: undefined, description: { json: undefined, html: undefined } }],
       },
       {
         type: types.ADD_RATINGS_REQUEST,
@@ -101,11 +101,11 @@ describe('ratings actions', () => {
       params: query,
     });
   });
-  it('should create actions to fetch ratings success with some having media', () => {
+  it('should create actions to fetch ratings success with some having media and some having description', () => {
     const query = { page: 1, limit: 5 };
     const ratings = [
       { id: 1, name: 'Rating 1', medium: { id: 10, medium: 'Medium 1' } },
-      { id: 2, name: 'Rating 2' },
+      { id: 2, name: 'Rating 2', description: { "hello": "test" }, description_html: "<p>test</p>" },
     ];
     const resp = { data: { nodes: ratings, total: 2 } };
     axios.get.mockResolvedValue(resp);
@@ -122,8 +122,8 @@ describe('ratings actions', () => {
       {
         type: types.ADD_RATINGS,
         payload: [
-          { id: 1, name: 'Rating 1', medium: 10 },
-          { id: 2, name: 'Rating 2', medium: undefined },
+          { id: 1, name: 'Rating 1', medium: 10, description: { json: undefined, html: undefined } },
+          { id: 2, name: 'Rating 2', medium: undefined, description: { json: { "hello": "test" }, html: "<p>test</p>" } },
         ],
       },
       {
@@ -148,11 +148,11 @@ describe('ratings actions', () => {
       params: query,
     });
   });
-  it('should create actions to fetch ratings success with all having media', () => {
+  it('should create actions to fetch ratings success with all having media and all having description ', () => {
     const query = { page: 1, limit: 5 };
     const ratings = [
-      { id: 1, name: 'Rating 1', medium: { id: 10, medium: 'Medium 1' } },
-      { id: 2, name: 'Rating 2', medium: { id: 20, medium: 'Medium 2' } },
+      { id: 1, name: 'Rating 1', medium: { id: 10, medium: 'Medium 1' }, description: { "hello": "test1" }, description_html: "<p>test1</p>" },
+      { id: 2, name: 'Rating 2', medium: { id: 20, medium: 'Medium 2' }, description: { "hello": "test2" }, description_html: "<p>test2</p>" },
     ];
     const resp = { data: { nodes: ratings, total: 2 } };
     axios.get.mockResolvedValue(resp);
@@ -172,8 +172,18 @@ describe('ratings actions', () => {
       {
         type: types.ADD_RATINGS,
         payload: [
-          { id: 1, name: 'Rating 1', medium: 10 },
-          { id: 2, name: 'Rating 2', medium: 20 },
+          {
+            id: 1, name: 'Rating 1', medium: 10, description: {
+              json: { "hello": "test1" },
+              html: "<p>test1</p>",
+            }
+          },
+          {
+            id: 2, name: 'Rating 2', medium: 20, description: {
+              json: { "hello": "test2" },
+              html: "<p>test2</p>",
+            }
+          },
         ],
       },
       {
@@ -262,7 +272,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.RATINGS_API + '/' + id);
   });
-  it('should create actions to get rating by id without medium', () => {
+  it('should create actions to get rating by id without medium and description', () => {
     const id = 1;
     const rating = { id, name: 'Rating' };
     const resp = { data: rating };
@@ -275,7 +285,12 @@ describe('ratings actions', () => {
       },
       {
         type: types.GET_RATING,
-        payload: { id, name: 'Rating', medium: undefined },
+        payload: {
+          id, name: 'Rating', medium: undefined, description: {
+            json: undefined,
+            html: undefined,
+          }
+        },
       },
       {
         type: types.SET_RATINGS_LOADING,
@@ -289,10 +304,12 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.get).toHaveBeenCalledWith(types.RATINGS_API + '/' + id);
   });
-  it('should create actions to get rating by id with medium', () => {
+  it('should create actions to get rating by id with medium and description', () => {
     const id = 1;
     const medium = { id: 1, medium: 'Medium' };
-    const rating = { id, name: 'Rating', medium };
+    const description = { "hello": "test" }
+    const description_html = "<p>test</p>"
+    const rating = { id, name: 'Rating', medium, description, description_html };
     const resp = { data: rating };
     axios.get.mockResolvedValue(resp);
 
@@ -307,7 +324,7 @@ describe('ratings actions', () => {
       },
       {
         type: types.GET_RATING,
-        payload: { id, name: 'Rating', medium: 1 },
+        payload: { id, name: 'Rating', medium: 1, description: { json: description, html: description_html } },
       },
       {
         type: types.SET_RATINGS_LOADING,
@@ -378,7 +395,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.RATINGS_API, rating);
   });
-  it('should create actions to update rating without medium', () => {
+  it('should create actions to update rating without medium and description', () => {
     const rating = { id: 1, name: 'Rating' };
     const resp = { data: rating };
     axios.put.mockResolvedValue(resp);
@@ -390,7 +407,7 @@ describe('ratings actions', () => {
       },
       {
         type: types.UPDATE_RATING,
-        payload: { id: 1, name: 'Rating', medium: undefined },
+        payload: { id: 1, name: 'Rating', medium: undefined, description: { json: undefined, html: undefined } },
       },
       {
         type: ADD_NOTIFICATION,
@@ -413,9 +430,10 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.RATINGS_API + '/1', rating);
   });
-  it('should create actions to update rating with medium', () => {
+  it('should create actions to update rating with medium and description', () => {
     const medium = { id: 4, name: 'medium' };
-    const rating = { id: 1, name: 'Rating', medium: medium };
+    const description = { json: { "hello": "test" }, html: "<p>test</p>" }
+    const rating = { id: 1, name: 'Rating', medium: medium, description: description };
     const resp = { data: rating };
     axios.put.mockResolvedValue(resp);
 
@@ -430,7 +448,7 @@ describe('ratings actions', () => {
       },
       {
         type: types.UPDATE_RATING,
-        payload: { id: 1, name: 'Rating', medium: 4 },
+        payload: { id: 1, name: 'Rating', medium: 4, description},
       },
       {
         type: ADD_NOTIFICATION,
@@ -529,7 +547,7 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.delete).toHaveBeenCalledWith(types.RATINGS_API + '/1');
   });
-  it('should create actions to add ratings list with none having medium', () => {
+  it('should create actions to add ratings list with none having medium and description', () => {
     const ratings = [
       { id: 1, name: 'Rating' },
       { id: 2, name: 'Rating 2' },
@@ -543,8 +561,18 @@ describe('ratings actions', () => {
       {
         type: types.ADD_RATINGS,
         payload: [
-          { id: 1, name: 'Rating', medium: undefined },
-          { id: 2, name: 'Rating 2', medium: undefined },
+          {
+            id: 1, name: 'Rating', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
+          {
+            id: 2, name: 'Rating 2', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
         ],
       },
     ];
@@ -553,10 +581,12 @@ describe('ratings actions', () => {
     store.dispatch(actions.addRatings(ratings));
     expect(store.getActions()).toEqual(expectedActions);
   });
-  it('should create actions to add ratings list with some having medium', () => {
+  it('should create actions to add ratings list with some having medium and some having description', () => {
     const medium = { id: 4, name: 'medium' };
+    const description = { "hello": "test" };
+    const description_html = "<p>test</p>";
     const ratings = [
-      { id: 1, name: 'Rating' },
+      { id: 1, name: 'Rating', description, description_html },
       { id: 2, name: 'Rating 2', medium: medium },
     ];
 
@@ -568,8 +598,11 @@ describe('ratings actions', () => {
       {
         type: types.ADD_RATINGS,
         payload: [
-          { id: 1, name: 'Rating', medium: undefined },
-          { id: 2, name: 'Rating 2', medium: 4 },
+          {
+            id: 1, name: 'Rating', medium: undefined,
+            description: { json: description, html: description_html }
+          },
+          { id: 2, name: 'Rating 2', medium: 4, description: { json: undefined, html: undefined } },
         ],
       },
     ];
@@ -608,12 +641,13 @@ describe('ratings actions', () => {
       },
       {
         type: types.ADD_RATINGS,
-        payload: [{ id: 1, name: 'Rating', medium: undefined }],
+        payload: [{ id: 1, name: 'Rating', medium: undefined, description: { json: undefined, html: undefined } }],
       },
       {
         type: types.ADD_RATINGS_REQUEST,
         payload: {
           data: [1],
+          query: undefined,
           total: 1,
         },
       },

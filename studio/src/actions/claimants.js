@@ -44,7 +44,7 @@ export const getClaimants = (query) => {
               // ! description_html: ...
               // ! }
               //! possible solution is to delete the description_html
-              // delete claimant.description_html;
+              delete claimant.description_html;
               return { ...claimant, medium: claimant.medium?.id };
             }),
           ),
