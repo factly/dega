@@ -154,6 +154,9 @@ export const addClaimants = (claimants) => {
           //!   description: ...
           //!   description_html: ...
           //! }
+          claimant.description = { json: claimant.description, html: claimant.description_html };
+          delete claimant.description_html;
+
           //! whereas above they are copied inside single object = {
           //!   ...
           //!   description: {

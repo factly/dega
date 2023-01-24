@@ -105,7 +105,6 @@ describe('claimants actions', () => {
       params: query,
     });
   });
-  // !needs to be modified remove description_html on line 132 object after making changes to /actions/claimants.js
   it('should create actions to fetch claimants success not all with media and not all with description and html', () => {
     const query = { page: 1, limit: 5 };
 
@@ -129,8 +128,7 @@ describe('claimants actions', () => {
         type: types.ADD_CLAIMANTS,
         payload: [
           { id: 1, name: 'Claimant', medium: 11, description: { html: undefined, json: undefined, } },
-          { id: 2, name: 'Claimant 2', medium: undefined, description: { json: { "hello": "test" }, html: "<h1>Hello test</h1>" },
-          /*!here */ description_html: "<h1>Hello test</h1>" },
+          { id: 2, name: 'Claimant 2', medium: undefined, description: { json: { "hello": "test" }, html: "<h1>Hello test</h1>" } },
         ],
       },
       {
@@ -155,7 +153,6 @@ describe('claimants actions', () => {
       params: query,
     });
   });
-  // !needs to be modified remove description_html on line 191,192 object after making changes to /actions/claimants.js
   it('should create actions to fetch claimants success all with media and all with description and html', () => {
     const query = { page: 1, limit: 5 };
 
@@ -188,8 +185,8 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          /*!here */ { id: 1, name: 'Claimant', medium: 11, description: { json: description1, html: description_html1 }, description_html: description_html1 },
-          /*!here */ { id: 2, name: 'Claimant 2', medium: 21, description: { json: description2, html: description_html2 }, description_html: description_html2 },
+          { id: 1, name: 'Claimant', medium: 11, description: { json: description1, html: description_html1 } },
+          { id: 2, name: 'Claimant 2', medium: 21, description: { json: description2, html: description_html2 } },
         ],
       },
       {
@@ -566,7 +563,7 @@ describe('claimants actions', () => {
   // !this to be fully modified after making changes to /actions/claimants.js
   it('should create actions to add claimants list', () => {
     const medium = { id: 4, name: 'mediumm' };
-    const description = {"hello": "test"}
+    const description = { "hello": "test" }
     const description_html = "<h1>hello test</h1>"
     const claimants = [
       { id: 1, name: 'Claimant' },

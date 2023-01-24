@@ -374,7 +374,7 @@ describe('categories actions', () => {
     expect(axios.post).toHaveBeenCalledWith(types.CATEGORIES_API, category);
   });
   it('should create actions to update category without medium success', () => {
-    const category = { id: 1, name: 'Category' };
+    const category = { id: 1, name: 'Category', medium: undefined, description: { html: undefined, json: undefined, } };
     const resp = { data: category };
     axios.put.mockResolvedValue(resp);
 
@@ -385,7 +385,7 @@ describe('categories actions', () => {
       },
       {
         type: types.UPDATE_CATEGORY,
-        payload: { id: 1, name: 'Category', medium: undefined, description: { "html": undefined, "json": undefined, } },
+        payload: { id: 1, name: 'Category', medium: undefined, description: { html: undefined, json: undefined, } },
       },
       {
         type: ADD_NOTIFICATION,
@@ -410,7 +410,7 @@ describe('categories actions', () => {
   });
   it('should create actions to update category with medium success', () => {
     const medium = { id: 4, name: 'mediumm' };
-    const category = { id: 1, name: 'Category', medium: medium };
+    const category = { id: 1, name: 'Category', medium: medium, description: { html: undefined, json: undefined, } };
     const resp = { data: category };
     axios.put.mockResolvedValue(resp);
 

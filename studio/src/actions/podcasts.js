@@ -51,7 +51,10 @@ export const getPodcasts = (query) => {
         dispatch(
           addPodcastsList(
             response.data.nodes.map((podcast) => {
-              podcast = { json: podcast.description, html: podcast.description_html };
+              // !here podast.description should be modified not podcast
+              // podcast = { json: podcast.description, html: podcast.description_html };
+              podcast.description = { json: podcast.description, html: podcast.description_html };
+              delete podcast.description_html;
               return {
                 ...podcast,
                 categories: podcast.categories?.map((category) => category.id),
@@ -81,7 +84,10 @@ export const getPodcast = (id) => {
       .get(PODCASTS_API + '/' + id)
       .then((response) => {
         let podcast = response.data;
-        podcast = { json: podcast.description, html: podcast.description_html };
+        // !here podast.description should be modified not podcast
+        // podcast = { json: podcast.description, html: podcast.description_html };
+        podcast.description = { json: podcast.description, html: podcast.description_html };
+        delete podcast.description_html;
         dispatch(addCategories(podcast.categories));
         dispatch(
           getPodcastByID({
@@ -119,7 +125,8 @@ export const updatePodcast = (data) => {
       .put(PODCASTS_API + '/' + data.id, data)
       .then((response) => {
         let podcast = response.data;
-        podcast = { json: podcast.description, html: podcast.description_html };
+        // !here podast.description should not be modified neither podcast
+        // podcast = { json: podcast.description, html: podcast.description_html };
         dispatch(addCategories(podcast.categories));
         dispatch(
           getPodcastByID({

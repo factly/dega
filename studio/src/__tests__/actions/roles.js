@@ -507,7 +507,7 @@ describe('roles actions', () => {
 				payload: {
 					type: "success",
 					title: "Success",
-					message: "User Removed Succesfully",
+					message: "User Deleted Succesfully",
 					time: Date.now(),
 				},
 			},
@@ -519,7 +519,7 @@ describe('roles actions', () => {
 
 		const store = mockStore(initialState);
 		store
-			.dispatch(actions.removeRoleUser(role.id, role.users[0]))
+			.dispatch(actions.deleteRoleUser(role.id, role.users[0].id))
 			.then(() => expect(store.getActions()).toEqual(expectedActions));
 		const space = store.getState().spaces.selected;
 		expect(axios.delete).toHaveBeenCalledWith(types.ROLES_API(space) + "/" + role.id + "/users/" + role.users[0].id);
@@ -552,7 +552,7 @@ describe('roles actions', () => {
 
 		const store = mockStore(initialState);
 		store
-			.dispatch(actions.removeRoleUser(role.id, role.users[0]))
+			.dispatch(actions.deleteRoleUser(role.id, role.users[0].id))
 			.then(() => expect(store.getActions()).toEqual(expectedActions));
 		const space = store.getState().spaces.selected;
 		expect(axios.delete).toHaveBeenCalledWith(types.ROLES_API(space) + "/" + role.id + "/users/" + role.users[0].id);
