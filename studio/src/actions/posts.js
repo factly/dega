@@ -120,6 +120,8 @@ export const getPosts = (query) => {
           addPostsList(
             response.data.nodes.map((post) => {
               post.description = { json: post.description, html: post.description_html };
+              // need to delete the html description from the post object
+              delete post.description_html;
               return {
                 ...post,
                 categories: post.categories.map((category) => category.id),
@@ -155,6 +157,8 @@ export const getPost = (id) => {
       .then((response) => {
         let post = response.data;
         post.description = { json: post.description, html: post.description_html };
+        // need to delete the html description from the post object
+        delete post.description_html;
         dispatch(addTags(post.tags));
         dispatch(addAuthors(post.authors));
         dispatch(addCategories(post.categories));
@@ -200,8 +204,8 @@ export const addPost = (data) => {
         post.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
           : post.status === 'draft'
-          ? dispatch(addSuccessNotification('Post added'))
-          : dispatch(addSuccessNotification('Post added & Ready to Publish'));
+            ? dispatch(addSuccessNotification('Post added'))
+            : dispatch(addSuccessNotification('Post added & Ready to Publish'));
         return post;
       })
       .catch((error) => {
@@ -217,7 +221,10 @@ export const publish = (data) => {
       .post(POSTS_API + '/publish', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.description_html };
+        if (typeof post.description !== 'object') {
+          post.description = { json: post.description, html: post.description_html };
+          delete post.description_html;
+        }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -252,7 +259,10 @@ export const addTemplate = (data) => {
       .post(POSTS_API + '/templates', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.description_html };
+        if (typeof post.description !== 'object') {
+          post.description = { json: post.description, html: post.description_html };
+          delete post.description_html;
+        }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors || []));
@@ -287,7 +297,10 @@ export const publishPost = (data) => {
       .put(POSTS_API + '/' + data.id + '/publish', data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.description_html };
+        if (typeof post.description !== 'object') {
+          post.description = { json: post.description, html: post.description_html };
+          delete post.description_html;
+        }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -322,7 +335,10 @@ export const updatePost = (data) => {
       .put(POSTS_API + '/' + data.id, data)
       .then((response) => {
         let post = response.data;
-        post.description = { json: post.description, html: post.description_html };
+        if (typeof post.description !== 'object') {
+          post.description = { json: post.description, html: post.description_html };
+          delete post.description_html;
+        }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
         dispatch(addAuthors(post.authors));
@@ -344,8 +360,8 @@ export const updatePost = (data) => {
         data.status === 'publish'
           ? dispatch(addSuccessNotification(`${post.format.name} Published`))
           : data.status === 'draft'
-          ? dispatch(addSuccessNotification('Draft Saved'))
-          : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
+            ? dispatch(addSuccessNotification('Draft Saved'))
+            : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

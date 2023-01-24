@@ -566,7 +566,7 @@ describe('claimants actions', () => {
     const description = { "hello": "test" }
     const description_html = "<h1>hello test</h1>"
     const claimants = [
-      { id: 1, name: 'Claimant' },
+      { id: 1, name: 'Claimant', description, description_html: description_html },
       { id: 2, name: 'Claimant', medium: medium },
     ];
 
@@ -578,8 +578,11 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          { id: 1, name: 'Claimant', medium: undefined, },
-          { id: 2, name: 'Claimant', medium: 4, },
+          {
+            id: 1, name: 'Claimant', medium: undefined,
+            description: { json: description, html: description_html },
+          },
+          { id: 2, name: 'Claimant', medium: 4, description: { json: undefined, html: undefined } },
         ],
       },
     ];
@@ -602,8 +605,18 @@ describe('claimants actions', () => {
       {
         type: types.ADD_CLAIMANTS,
         payload: [
-          { id: 1, name: 'Claimant', medium: undefined },
-          { id: 2, name: 'Claimant', medium: undefined },
+          {
+            id: 1, name: 'Claimant', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
+          {
+            id: 2, name: 'Claimant', medium: undefined, description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
         ],
       },
     ];
