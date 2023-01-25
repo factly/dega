@@ -18,7 +18,7 @@ func TestCategoryCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
-	test.MockServer()
+	// test.MockServer()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -30,7 +30,8 @@ func TestCategoryCreate(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("Unprocessable category", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		test.MockServer()
+		// test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
 			WithJSON(invalidData).
@@ -42,6 +43,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("Unable to decode category", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
@@ -52,6 +54,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("create category without parent", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
@@ -72,6 +75,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("parent category does not exist", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
@@ -89,6 +93,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("create category with empty slug", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
@@ -112,6 +117,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("medium does not belong same space", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
@@ -129,6 +135,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("medium does not exist", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
@@ -146,6 +153,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("when category with same name exist", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 1, Data["name"])
@@ -159,6 +167,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("cannot parse category description", func(t *testing.T) {
+		test.MockServer()
 		test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])

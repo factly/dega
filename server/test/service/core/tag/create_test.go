@@ -2,7 +2,6 @@ package tag
 
 import (
 	"errors"
-	"fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -18,7 +17,7 @@ func TestTagCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
 
-	test.MockServer()
+	// test.MockServer()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -30,19 +29,19 @@ func TestTagCreate(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("Unprocessable tag", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		fmt.Println("sdfasdf,", e)
+		test.MockServer()
+		// test.CheckSpaceMock(mock)
 
-		fmt.Println("e=", e.POST(basePath).
+		e.POST(basePath).
 			WithJSON(invalidData).
-			WithHeaders(headers).Expect())
-		// Status(http.StatusUnprocessableEntity)
+			WithHeaders(headers).Expect().
+			Status(http.StatusUnprocessableEntity)
 
 	})
 
 	t.Run("Unable to decode tag", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
+		test.MockServer()
+		// test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -52,8 +51,8 @@ func TestTagCreate(t *testing.T) {
 	})
 
 	t.Run("create tag", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
+		test.MockServer()
+		// test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
 
@@ -72,8 +71,8 @@ func TestTagCreate(t *testing.T) {
 	})
 
 	t.Run("creating tag fails", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
+		test.MockServer()
+		// test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
 
@@ -95,8 +94,9 @@ func TestTagCreate(t *testing.T) {
 	})
 
 	t.Run("tag with same name exist", func(t *testing.T) {
+		test.MockServer()
 
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 1, Data["name"])
 
@@ -109,8 +109,9 @@ func TestTagCreate(t *testing.T) {
 	})
 
 	t.Run("create tag with slug is empty", func(t *testing.T) {
+		test.MockServer()
 
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
 
@@ -131,8 +132,9 @@ func TestTagCreate(t *testing.T) {
 	})
 
 	t.Run("cannot parse tag description", func(t *testing.T) {
+		test.MockServer()
 
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		sameNameCount(mock, 0, Data["name"])
 

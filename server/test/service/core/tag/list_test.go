@@ -18,7 +18,7 @@ import (
 func TestTagList(t *testing.T) {
 	mock := test.SetupMockDB()
 
-	test.MockServer()
+	// test.MockServer()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -43,6 +43,7 @@ func TestTagList(t *testing.T) {
 	}
 
 	t.Run("get empty list of tags", func(t *testing.T) {
+		test.MockServer() 
 		test.CheckSpaceMock(mock)
 		tagCountQuery(mock, 0)
 
@@ -61,6 +62,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("get non-empty list of tags", func(t *testing.T) {
+		test.MockServer() 
 		test.CheckSpaceMock(mock)
 		tagCountQuery(mock, len(taglist))
 
@@ -86,6 +88,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("get tags with pagination", func(t *testing.T) {
+		test.MockServer() 
 		test.CheckSpaceMock(mock)
 		tagCountQuery(mock, len(taglist))
 
@@ -115,6 +118,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("get list of tags based on search query q", func(t *testing.T) {
+		test.MockServer() 
 		test.CheckSpaceMock(mock)
 		tagCountQuery(mock, len(taglist))
 
@@ -144,6 +148,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("when query does not match any tag", func(t *testing.T) {
+		test.MockServer() 
 		test.CheckSpaceMock(mock)
 		test.DisableMeiliGock(testServer.URL)
 
@@ -170,6 +175,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("search with query q when meili is down", func(t *testing.T) {
+		test.MockServer() 
 		test.DisableMeiliGock(testServer.URL)
 		test.CheckSpaceMock(mock)
 

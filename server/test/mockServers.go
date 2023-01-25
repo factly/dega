@@ -34,12 +34,15 @@ func KavachGock() {
 		Reply(http.StatusOK).
 		JSON(PaiganatedOrg)
 
-		// Creates a mock server for kavach URL with an appropriate dummy response.
+	// Creates a mock server for kavach URL with an appropriate dummy response.
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/dega/access").
 		Persist().
 		Reply(http.StatusOK)
 
-	gock.New(viper.GetString("kavach_url") + "util/space/1/getOrganisation").Persist().Reply(http.StatusOK)
+	// Creates a mock server for getting organisationID of the space
+	gock.New(viper.GetString("kavach_url") + "/util/space/1/getOrganisation").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
+		"organisation_id": 1,
+	})
 
 }
 
@@ -99,6 +102,16 @@ func KetoGock() {
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)
+
+	// Creates a mock server for validating the relation tuples
+	gock.New(viper.GetString("keto_read_api_url")+"/relation-tuples/check").
+		MatchParam("namespace", "organisation").
+		MatchParam("relation", "edit").
+		MatchParam("object", "org:1").
+		MatchParam("subject_id", "1").
+		Persist().
+		Reply(http.StatusOK)
+		
 }
 
 func MeiliGock() {
