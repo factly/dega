@@ -536,6 +536,65 @@ describe('claims actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.CLAIMS_API + '/1', claim);
   });
+
+  it('should create actions to update claim success with claim and rating', () => {
+    let claim = {
+      id: 1,
+      description: { "hello": "test" },
+      description_html: "<h1>hello test</h1>",
+      name: 'Claim 1',
+      claimant: { id: 11, name: 'Claimant 1', medium: { id: 21, name: 'Medium-Claimant 1' } },
+      rating: { id: 100, name: 'Rating 1', medium: { id: 110, name: 'Medium-Rating 1' } },
+    };
+    const resp = { data: claim };
+    axios.put.mockResolvedValue(resp);
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 21, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{ id: 11, name: 'Claimant 1', medium: 21, description: { json: undefined, html: undefined } }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 110, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{ id: 100, name: 'Rating 1', medium: 110, description: { json: undefined, html: undefined } }],
+      },
+      {
+        type: types.UPDATE_CLAIM,
+        payload: { id: 1, name: 'Claim 1', claimant: 11, rating: 100, description: { json: { "hello": "test" }, html: "<h1>hello test</h1>" }, },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Claim updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_CLAIMS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateClaim(claim))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.CLAIMS_API + '/1', claim);
+  });
+
   it('should create actions to update claim without claimant and rating', () => {
     const store = mockStore({ initialState });
 

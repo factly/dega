@@ -452,7 +452,7 @@ describe('claimants actions', () => {
       },
       {
         type: types.UPDATE_CLAIMANT,
-/* here */        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }, description_html },
+        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }},
       },
       {
         type: ADD_NOTIFICATION,

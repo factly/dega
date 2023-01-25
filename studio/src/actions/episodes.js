@@ -138,6 +138,15 @@ export const updateEpisode = (data) => {
         //!   }
         //!   ...
         //! }
+        if ((response.data.description === undefined)
+          ||(typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         if (episode.podcast.id > 0) dispatch(addPodcasts([episode.podcast]));
         dispatch(addEpisode(UPDATE_EPISODE, { ...episode, podcast: episode.podcast.id }));
         dispatch(addSuccessNotification('Episode updated'));

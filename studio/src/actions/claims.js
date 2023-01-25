@@ -131,27 +131,13 @@ export const updateClaim = (data) => {
       .put(CLAIMS_API + '/' + data.id, data)
       .then((response) => {
         let claim = response.data;
-        //! this needs to modified claim object current structure
-        //! claim = {
-        //!   ...
-        //!   description: {
-        //!     json: {}
-        //!     html: ..
-        //!   }
-        //! }
-        // claim.description = { json: claim.description, html: claim.description_html };
-        //! after above it becomes
-        //! claim ={
-        //!     ...
-        //!   description: {
-        //!     json: {
-        //!       json: {}
-        //!       html: ...
-        //!     }
-        //!     html: ..
-        //!   }
-        //!   ...
-        //! }
+
+        if ((typeof claim.description !== 'object' && claim.hasOwnProperty('description_html'))
+          || (!claim.description.hasOwnProperty('json') && !claim.description.hasOwnProperty('html'))) {
+          claim.description = { json: claim.description, html: claim.description_html };
+          delete claim.description_html
+        }
+
         dispatch(addClaimants([claim.claimant]));
         dispatch(addRatings([claim.rating]));
 

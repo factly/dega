@@ -109,10 +109,18 @@ export const updateClaimant = (data) => {
       .put(CLAIMANTS_API + '/' + data.id, data)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-        response.data.description = {
-          json: response.data.description,
-          html: response.data.description_html,
-        };
+
+        if ((response.data.description === undefined)
+          ||
+          (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))
+        ) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         dispatch(
           addClaimant(UPDATE_CLAIMANT, { ...response.data, medium: response.data.medium?.id }),
         );
@@ -149,23 +157,8 @@ export const addClaimants = (claimants) => {
     dispatch(
       addClaimantsList(
         claimants.map((claimant) => {
-          // !here description and description value is not copied inside the description so if clamaint has these properties they are directly copied = {
-          //!   ...
-          //!   description: ...
-          //!   description_html: ...
-          //! }
           claimant.description = { json: claimant.description, html: claimant.description_html };
           delete claimant.description_html;
-
-          //! whereas above they are copied inside single object = {
-          //!   ...
-          //!   description: {
-          //!     json: ...
-          //!     html: ...
-          //! }
-          //!   description_html: ...
-          //! }
-
           return { ...claimant, medium: claimant.medium?.id };
         }),
       ),
