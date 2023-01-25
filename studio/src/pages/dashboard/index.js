@@ -30,7 +30,7 @@ function Dashboard() {
   return (
     <Space direction="vertical">
       <Helmet title={'Dashboard'} />
-      <Typography.Title level={2}>new</Typography.Title>
+      <Typography.Title level={2}>Dashboard</Typography.Title>
       <Row justify="start" gutter={[16, 16]}>
         <Col>
           <Card size="small" className="stats-wrapper" style={{ background: '#f0f2f5' }}>
