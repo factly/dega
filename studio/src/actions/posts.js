@@ -221,7 +221,9 @@ export const publish = (data) => {
       .post(POSTS_API + '/publish', data)
       .then((response) => {
         let post = response.data;
-        if (typeof post.description !== 'object') {
+        if ((typeof post.description !== 'object' && post.hasOwnProperty('description_html'))
+        || (!post.description.hasOwnProperty('json') && !post.description.hasOwnProperty('html'))
+        ) {
           post.description = { json: post.description, html: post.description_html };
           delete post.description_html;
         }

@@ -139,6 +139,16 @@ describe('posts actions', () => {
     };
     expect(actions.resetPosts()).toEqual(resetPostsRequestAction);
   });
+  it('should return if currentSpaceID is 0', () => {
+    // mock the getState function to return an object with a `selected` property of 0
+    const mockGetState = jest.fn(() => ({ spaces: { selected: 0 } }));
+    // call the getPosts action with the mocked getState function
+    actions.getPosts()(jest.fn(), mockGetState);
+    // assert that the mocked getState function is called once
+    expect(mockGetState).toHaveBeenCalledTimes(1);
+    // assert that the mocked dispatch function is not called
+    expect(axios.get).not.toHaveBeenCalled();
+  });
   it('should create actions to fetch posts success', () => {
     const query = {
       page: 1,
@@ -1415,7 +1425,7 @@ describe('posts actions', () => {
     axios.put.mockResolvedValue(resp);
 
     const expectedActions = [
-       {
+      {
         type: types.SET_POSTS_LOADING,
         payload: true,
       },
@@ -1671,43 +1681,12 @@ describe('posts actions', () => {
 
     const store = mockStore({ initialState });
     store
-      .dispatch(actions.publish(post_without_media))
+      .dispatch(actions.publish(post_local))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post_without_media);
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post_local);
   });
 
-  it('should create actions to publish failure', () => {
-    const errorMessage = 'Failed to publish post';
-    axios.post.mockRejectedValue(new Error(errorMessage));
-
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'error',
-          title: 'Error',
-          message: errorMessage,
-          time: Date.now(),
-        },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
-
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.publish(post))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post);
-  });
-
-  it('should create actions to template success', () => {
+  it('should handle post with description and description_html', () => {
     const post_local = {
       name: 'Post 1',
       authors: [{ id: 11, name: 'Author 1' }],
@@ -1730,11 +1709,10 @@ describe('posts actions', () => {
         },
       ],
       id: 1,
-      description: {
-        json: { "hello": "test" },
-        html: "<p>hello</p>",
-      }
+      description: { "hello": "test" },
+      description_html: "<p>hello</p>"
     };
+
     const resp = { data: post_local };
     axios.post.mockResolvedValue(resp);
 
@@ -1837,7 +1815,7 @@ describe('posts actions', () => {
         payload: {
           type: 'success',
           title: 'Success',
-          message: 'Template created',
+          message: 'Post published',
           time: Date.now(),
         },
       },
@@ -1847,499 +1825,678 @@ describe('posts actions', () => {
       },
     ];
 
-    const store = mockStore({ initialState });
+    const store = mockStore({initialState});
     store
-      .dispatch(actions.addTemplate(post))
+      .dispatch(actions.publish(post_local))
       .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
-  });
+    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post_local);
+});
 
-  it('should create actions to template success without medium', () => {
-    const post_local = {
-      name: 'Post 1',
-      authors: [{ id: 11, name: 'Author 1' }],
-      tags: [
+
+it('should create actions to publish failure', () => {
+  const errorMessage = 'Failed to publish post';
+  axios.post.mockRejectedValue(new Error(errorMessage));
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'error',
+        title: 'Error',
+        message: errorMessage,
+        time: Date.now(),
+      },
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
+
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.publish(post))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/publish', post);
+});
+
+it('should create actions to template success', () => {
+  const post_local = {
+    name: 'Post 1',
+    authors: [{ id: 11, name: 'Author 1' }],
+    tags: [
+      { id: 21, name: 'Tag 21' },
+      { id: 22, name: 'Tag 22' },
+    ],
+    categories: [
+      { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+      { id: 32, name: 'category 32', description: { "hello": "test" }, description_html: "<p>hello</p>" },
+    ],
+    format: { id: 41, name: 'Format 1' },
+    medium: { id: 51, name: 'Medium 1' },
+    claims: [
+      {
+        id: 61,
+        name: 'Claim 1',
+        claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
+        rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
+      },
+    ],
+    id: 1,
+    description: {
+      json: { "hello": "test" },
+      html: "<p>hello</p>",
+    }
+  };
+  const resp = { data: post_local };
+  axios.post.mockResolvedValue(resp);
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_TAGS,
+      payload: [
         { id: 21, name: 'Tag 21' },
         { id: 22, name: 'Tag 22' },
       ],
-      categories: [
-        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
-        { id: 32, name: 'category 32', description: { "hello": "test" }, description_html: "<p>hello</p>" },
-      ],
-      format: { id: 41, name: 'Format 1' },
-      claims: [
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 311, name: 'Category-Medium-311' }],
+    },
+    {
+      type: ADD_CATEGORIES,
+      payload: [
         {
-          id: 61,
-          name: 'Claim 1',
-          claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
-          rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
+          id: 31, name: 'category 31', medium: 311,
+          description: {
+            json: undefined,
+            html: undefined,
+          }
+        },
+        {
+          id: 32, name: 'category 32', medium: undefined,
+          description: {
+            json: { "hello": "test" },
+            html: "<p>hello</p>",
+          }
         },
       ],
-      id: 1,
-    };
+    },
+    {
+      type: ADD_AUTHORS,
+      payload: [{ id: 11, name: 'Author 1' }],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+    },
+    {
+      type: ADD_CLAIMANTS,
+      payload: [{
+        id: 601, name: 'Claimant 1', medium: 621, description: {
+          json: undefined,
+          html: undefined,
+        }
+      }],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 622, name: 'Medium-Rating 1' }],
+    },
+    {
+      type: ADD_RATINGS,
+      payload: [{
+        id: 602, name: 'Rating 1', medium: 622, description: {
+          json: undefined,
+          html: undefined,
+        }
+      }],
+    },
+    {
+      type: ADD_CLAIMS,
+      payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+    },
+    {
+      type: ADD_FORMATS,
+      payload: [{ id: 41, name: 'Format 1' }],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 51, name: 'Medium 1' }],
+    },
+    {
+      type: types.ADD_POST,
+      payload: {
+        id: 1,
+        name: 'Post 1',
+        authors: [11],
+        tags: [21, 22],
+        categories: [31, 32],
+        format: 41,
+        medium: 51,
+        claims: [61],
+        description: {
+          json: { "hello": "test" },
+          html: "<p>hello</p>",
+        }
+      },
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'success',
+        title: 'Success',
+        message: 'Template created',
+        time: Date.now(),
+      },
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
 
-    const resp = { data: post_local };
-    axios.post.mockResolvedValue(resp);
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.addTemplate(post))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
+});
 
-    const expectedActions = [
+it('should create actions to template success without medium', () => {
+  const post_local = {
+    name: 'Post 1',
+    authors: [{ id: 11, name: 'Author 1' }],
+    tags: [
+      { id: 21, name: 'Tag 21' },
+      { id: 22, name: 'Tag 22' },
+    ],
+    categories: [
+      { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+      { id: 32, name: 'category 32', description: { "hello": "test" }, description_html: "<p>hello</p>" },
+    ],
+    format: { id: 41, name: 'Format 1' },
+    claims: [
       {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
+        id: 61,
+        name: 'Claim 1',
+        claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
+        rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
       },
-      {
-        type: ADD_TAGS,
-        payload: [
-          { id: 21, name: 'Tag 21' },
-          { id: 22, name: 'Tag 22' },
-        ],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [{ id: 311, name: 'Category-Medium-311' }],
-      },
-      {
-        type: ADD_CATEGORIES,
-        payload: [
-          {
-            id: 31, name: 'category 31', medium: 311,
-            description: {
-              json: undefined,
-              html: undefined,
-            }
-          },
-          {
-            id: 32, name: 'category 32', medium: undefined,
-            description: {
-              json: { "hello": "test" },
-              html: "<p>hello</p>",
-            }
-          },
-        ],
-      },
-      {
-        type: ADD_AUTHORS,
-        payload: [{ id: 11, name: 'Author 1' }],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
-      },
-      {
-        type: ADD_CLAIMANTS,
-        payload: [{
-          id: 601, name: 'Claimant 1', medium: 621, description: {
-            json: undefined,
-            html: undefined,
-          }
-        }],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [{ id: 622, name: 'Medium-Rating 1' }],
-      },
-      {
-        type: ADD_RATINGS,
-        payload: [{
-          id: 602, name: 'Rating 1', medium: 622, description: {
-            json: undefined,
-            html: undefined,
-          }
-        }],
-      },
-      {
-        type: ADD_CLAIMS,
-        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
-      },
-      {
-        type: ADD_FORMATS,
-        payload: [{ id: 41, name: 'Format 1' }],
-      },
-      {
-        type: types.ADD_POST,
-        payload: {
-          id: 1,
-          name: 'Post 1',
-          authors: [11],
-          tags: [21, 22],
-          categories: [31, 32],
-          format: 41,
-          medium: undefined,
-          claims: [61],
+    ],
+    id: 1,
+  };
+
+  const resp = { data: post_local };
+  axios.post.mockResolvedValue(resp);
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_TAGS,
+      payload: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 311, name: 'Category-Medium-311' }],
+    },
+    {
+      type: ADD_CATEGORIES,
+      payload: [
+        {
+          id: 31, name: 'category 31', medium: 311,
           description: {
             json: undefined,
             html: undefined,
           }
         },
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'success',
-          title: 'Success',
-          message: 'Template created',
-          time: Date.now(),
-        },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
-
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.addTemplate(post_local))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post_local);
-  });
-
-  it('should create actions to template failure', () => {
-    const errorMessage = 'Failed to publish post';
-    axios.post.mockRejectedValue(new Error(errorMessage));
-
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'error',
-          title: 'Error',
-          message: errorMessage,
-          time: Date.now(),
-        },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
-
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.addTemplate(post))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
-  });
-
-  it('should create actions to update success without any optional fields', () => {
-    const post_without_fields = { ...post };
-    post_without_fields.categories = [];
-    post_without_fields.authors = [];
-    post_without_fields.tags = [];
-    post_without_fields.claims = [];
-    post_without_fields.medium = undefined;
-    post_without_fields.status = 'publish';
-
-    const resp = { data: post_without_fields };
-    axios.put.mockResolvedValue(resp);
-
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: ADD_TAGS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_CATEGORIES,
-        payload: [],
-      },
-      {
-        type: ADD_AUTHORS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_CLAIMANTS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_RATINGS,
-        payload: [],
-      },
-      {
-        type: ADD_CLAIMS,
-        payload: [],
-      },
-      {
-        type: ADD_FORMATS,
-        payload: [{ id: 41, name: 'Format 1' }],
-      },
-      {
-        type: types.ADD_POST,
-        payload: {
-          id: 1,
-          name: 'Post 1',
-          authors: [],
-          tags: [],
-          categories: [],
-          format: 41,
-          medium: undefined,
-          claims: [],
-          status: 'publish',
+        {
+          id: 32, name: 'category 32', medium: undefined,
           description: {
-            json: undefined,
-            html: undefined,
+            json: { "hello": "test" },
+            html: "<p>hello</p>",
           }
         },
+      ],
+    },
+    {
+      type: ADD_AUTHORS,
+      payload: [{ id: 11, name: 'Author 1' }],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+    },
+    {
+      type: ADD_CLAIMANTS,
+      payload: [{
+        id: 601, name: 'Claimant 1', medium: 621, description: {
+          json: undefined,
+          html: undefined,
+        }
+      }],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [{ id: 622, name: 'Medium-Rating 1' }],
+    },
+    {
+      type: ADD_RATINGS,
+      payload: [{
+        id: 602, name: 'Rating 1', medium: 622, description: {
+          json: undefined,
+          html: undefined,
+        }
+      }],
+    },
+    {
+      type: ADD_CLAIMS,
+      payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+    },
+    {
+      type: ADD_FORMATS,
+      payload: [{ id: 41, name: 'Format 1' }],
+    },
+    {
+      type: types.ADD_POST,
+      payload: {
+        id: 1,
+        name: 'Post 1',
+        authors: [11],
+        tags: [21, 22],
+        categories: [31, 32],
+        format: 41,
+        medium: undefined,
+        claims: [61],
+        description: {
+          json: undefined,
+          html: undefined,
+        }
       },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'success',
-          title: 'Success',
-          message: 'Format 1 Published',
-          time: Date.now(),
-        },
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'success',
+        title: 'Success',
+        message: 'Template created',
+        time: Date.now(),
       },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.updatePost(post_without_fields))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_fields);
-  });
-  it('should create actions to update success without any optional fields with ready status', () => {
-    const post_without_fields = { ...post };
-    post_without_fields.categories = [];
-    post_without_fields.authors = [];
-    post_without_fields.tags = [];
-    post_without_fields.claims = [];
-    post_without_fields.medium = undefined;
-    post_without_fields.status = 'ready';
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.addTemplate(post_local))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post_local);
+});
 
-    const resp = { data: post_without_fields };
-    axios.put.mockResolvedValue(resp);
+it('should create actions to template failure', () => {
+  const errorMessage = 'Failed to publish post';
+  axios.post.mockRejectedValue(new Error(errorMessage));
 
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'error',
+        title: 'Error',
+        message: errorMessage,
+        time: Date.now(),
       },
-      {
-        type: ADD_TAGS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_CATEGORIES,
-        payload: [],
-      },
-      {
-        type: ADD_AUTHORS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_CLAIMANTS,
-        payload: [],
-      },
-      {
-        type: ADD_MEDIA,
-        payload: [],
-      },
-      {
-        type: ADD_RATINGS,
-        payload: [],
-      },
-      {
-        type: ADD_CLAIMS,
-        payload: [],
-      },
-      {
-        type: ADD_FORMATS,
-        payload: [{ id: 41, name: 'Format 1' }],
-      },
-      {
-        type: types.ADD_POST,
-        payload: {
-          id: 1,
-          name: 'Post 1',
-          authors: [],
-          tags: [],
-          categories: [],
-          format: 41,
-          medium: undefined,
-          claims: [],
-          status: 'ready',
-          description: {
-            json: undefined,
-            html: undefined,
-          }
-        },
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'success',
-          title: 'Success',
-          message: 'Draft saved & Ready to Publish',
-          time: Date.now(),
-        },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.updatePost(post_without_fields))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_fields);
-  });
-  it('should throw error on update post without required field format', () => {
-    const { format, ...post_without_format } = post;
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.addTemplate(post))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.post).toHaveBeenCalledWith(types.POSTS_API + '/templates', post);
+});
 
-    const resp = { data: post_without_format };
-    axios.put.mockResolvedValue(resp);
+it('should create actions to update success without any optional fields', () => {
+  const post_without_fields = { ...post };
+  post_without_fields.categories = [];
+  post_without_fields.authors = [];
+  post_without_fields.tags = [];
+  post_without_fields.claims = [];
+  post_without_fields.medium = undefined;
+  post_without_fields.status = 'publish';
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.updatePost(post_without_format))
-      .catch((err) => expect(err).toBeInstanceOf(TypeError));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_format);
-  });
-  it('should create actions to update post failure', () => {
-    const errorMessage = 'Failed to update post';
-    axios.put.mockRejectedValue(new Error(errorMessage));
+  const resp = { data: post_without_fields };
+  axios.put.mockResolvedValue(resp);
 
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_TAGS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_CATEGORIES,
+      payload: [],
+    },
+    {
+      type: ADD_AUTHORS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_CLAIMANTS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_RATINGS,
+      payload: [],
+    },
+    {
+      type: ADD_CLAIMS,
+      payload: [],
+    },
+    {
+      type: ADD_FORMATS,
+      payload: [{ id: 41, name: 'Format 1' }],
+    },
+    {
+      type: types.ADD_POST,
+      payload: {
+        id: 1,
+        name: 'Post 1',
+        authors: [],
+        tags: [],
+        categories: [],
+        format: 41,
+        medium: undefined,
+        claims: [],
+        status: 'publish',
+        description: {
+          json: undefined,
+          html: undefined,
+        }
       },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'error',
-          title: 'Error',
-          message: errorMessage,
-          time: Date.now(),
-        },
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'success',
+        title: 'Success',
+        message: 'Format 1 Published',
+        time: Date.now(),
       },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.updatePost(post))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post);
-  });
-  it('should create actions to publish post failure', () => {
-    const errorMessage = 'Failed to publish post';
-    axios.put.mockRejectedValue(new Error(errorMessage));
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.updatePost(post_without_fields))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_fields);
+});
+it('should create actions to update success without any optional fields with ready status', () => {
+  const post_without_fields = { ...post };
+  post_without_fields.categories = [];
+  post_without_fields.authors = [];
+  post_without_fields.tags = [];
+  post_without_fields.claims = [];
+  post_without_fields.medium = undefined;
+  post_without_fields.status = 'ready';
 
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'error',
-          title: 'Error',
-          message: errorMessage,
-          time: Date.now(),
-        },
-      },
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: false,
-      },
-    ];
+  const resp = { data: post_without_fields };
+  axios.put.mockResolvedValue(resp);
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.publishPost(post))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
-  });
-  it('should create actions to delete post success', () => {
-    axios.delete.mockResolvedValue();
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_TAGS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_CATEGORIES,
+      payload: [],
+    },
+    {
+      type: ADD_AUTHORS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_CLAIMANTS,
+      payload: [],
+    },
+    {
+      type: ADD_MEDIA,
+      payload: [],
+    },
+    {
+      type: ADD_RATINGS,
+      payload: [],
+    },
+    {
+      type: ADD_CLAIMS,
+      payload: [],
+    },
+    {
+      type: ADD_FORMATS,
+      payload: [{ id: 41, name: 'Format 1' }],
+    },
+    {
+      type: types.ADD_POST,
+      payload: {
+        id: 1,
+        name: 'Post 1',
+        authors: [],
+        tags: [],
+        categories: [],
+        format: 41,
+        medium: undefined,
+        claims: [],
+        status: 'ready',
+        description: {
+          json: undefined,
+          html: undefined,
+        }
+      },
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'success',
+        title: 'Success',
+        message: 'Draft saved & Ready to Publish',
+        time: Date.now(),
+      },
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
 
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: types.RESET_POSTS,
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'success',
-          title: 'Success',
-          message: 'Post deleted',
-          time: Date.now(),
-        },
-      },
-    ];
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.updatePost(post_without_fields))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_fields);
+});
+it('should throw error on update post without required field format', () => {
+  const { format, ...post_without_format } = post;
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.deletePost(1))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.delete).toHaveBeenCalledWith(types.POSTS_API + '/1');
-  });
-  it('should create actions to delete post failure', () => {
-    const errorMessage = 'Failed to delete post';
-    axios.delete.mockRejectedValue(new Error(errorMessage));
+  const resp = { data: post_without_format };
+  axios.put.mockResolvedValue(resp);
 
-    const expectedActions = [
-      {
-        type: types.SET_POSTS_LOADING,
-        payload: true,
-      },
-      {
-        type: ADD_NOTIFICATION,
-        payload: {
-          type: 'error',
-          title: 'Error',
-          message: errorMessage,
-          time: Date.now(),
-        },
-      },
-    ];
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.updatePost(post_without_format))
+    .catch((err) => expect(err).toBeInstanceOf(TypeError));
+  expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post_without_format);
+});
+it('should create actions to update post failure', () => {
+  const errorMessage = 'Failed to update post';
+  axios.put.mockRejectedValue(new Error(errorMessage));
 
-    const store = mockStore({ initialState });
-    store
-      .dispatch(actions.deletePost(1))
-      .then(() => expect(store.getActions()).toEqual(expectedActions));
-    expect(axios.delete).toHaveBeenCalledWith(types.POSTS_API + '/1');
-  });
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'error',
+        title: 'Error',
+        message: errorMessage,
+        time: Date.now(),
+      },
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
+
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.updatePost(post))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1', post);
+});
+it('should create actions to publish post failure', () => {
+  const errorMessage = 'Failed to publish post';
+  axios.put.mockRejectedValue(new Error(errorMessage));
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'error',
+        title: 'Error',
+        message: errorMessage,
+        time: Date.now(),
+      },
+    },
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: false,
+    },
+  ];
+
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.publishPost(post))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
+});
+it('should create actions to delete post success', () => {
+  axios.delete.mockResolvedValue();
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: types.RESET_POSTS,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'success',
+        title: 'Success',
+        message: 'Post deleted',
+        time: Date.now(),
+      },
+    },
+  ];
+
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.deletePost(1))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.delete).toHaveBeenCalledWith(types.POSTS_API + '/1');
+});
+it('should create actions to delete post failure', () => {
+  const errorMessage = 'Failed to delete post';
+  axios.delete.mockRejectedValue(new Error(errorMessage));
+
+  const expectedActions = [
+    {
+      type: types.SET_POSTS_LOADING,
+      payload: true,
+    },
+    {
+      type: ADD_NOTIFICATION,
+      payload: {
+        type: 'error',
+        title: 'Error',
+        message: errorMessage,
+        time: Date.now(),
+      },
+    },
+  ];
+
+  const store = mockStore({ initialState });
+  store
+    .dispatch(actions.deletePost(1))
+    .then(() => expect(store.getActions()).toEqual(expectedActions));
+  expect(axios.delete).toHaveBeenCalledWith(types.POSTS_API + '/1');
+});
 });
