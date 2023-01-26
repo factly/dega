@@ -448,7 +448,7 @@ describe('ratings actions', () => {
       },
       {
         type: types.UPDATE_RATING,
-        payload: { id: 1, name: 'Rating', medium: 4, description},
+        payload: { id: 1, name: 'Rating', medium: 4, description },
       },
       {
         type: ADD_NOTIFICATION,
@@ -471,6 +471,92 @@ describe('ratings actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.RATINGS_API + '/1', rating);
   });
+
+
+  it('should create actions to update rating with medium and description', () => {
+    const medium = { id: 4, name: 'medium' };
+    const description = { "hello": "test" }
+    const description_html = "<p>test</p>"
+    const rating = { id: 1, name: 'Rating', medium: medium, description, description_html };
+    const resp = { data: rating };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_RATING,
+        payload: { id: 1, name: 'Rating', medium: 4, description: { json: { "hello": "test" }, html: "<p>test</p>" } },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Rating updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateRating(rating))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.RATINGS_API + '/1', rating);
+  });
+
+  it('should create actions to update rating without description', () => {
+    const medium = { id: 4, name: 'medium' };
+    const rating = { id: 1, name: 'Rating', medium: medium };
+    const resp = { data: rating };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_RATING,
+        payload: { id: 1, name: 'Rating', medium: 4, description: { json: undefined, html: undefined } },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Rating updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_RATINGS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateRating(rating))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.RATINGS_API + '/1', rating);
+  });
+
   it('should create actions to update rating failure', () => {
     const rating = { id: 1, name: 'Rating' };
     const errorMessage = 'Failed to update rating';

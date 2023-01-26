@@ -183,8 +183,8 @@ export const addPage = (data) => {
         page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
           : page.status === 'draft'
-          ? dispatch(addSuccessNotification('Page added'))
-          : dispatch(addSuccessNotification('Page added & Ready to Publish'));
+            ? dispatch(addSuccessNotification('Page added'))
+            : dispatch(addSuccessNotification('Page added & Ready to Publish'));
         return page;
       })
       .catch((error) => {
@@ -200,7 +200,15 @@ export const updatePage = (data) => {
       .put(PAGES_API + '/' + data.id, data)
       .then((response) => {
         let page = response.data;
-        // ! not needed
+        if ((response.data.description === undefined)
+          || (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
         // page.description = { json: page.description, html: page.description_html };
         // delete page.description_html;
         dispatch(addTags(page.tags));
@@ -220,8 +228,8 @@ export const updatePage = (data) => {
         page.status === 'publish'
           ? dispatch(addSuccessNotification(`Page Published`))
           : page.status === 'draft'
-          ? dispatch(addSuccessNotification('Draft Saved'))
-          : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
+            ? dispatch(addSuccessNotification('Draft Saved'))
+            : dispatch(addSuccessNotification('Draft saved & Ready to Publish'));
       })
       .catch((error) => {
         dispatch(addErrorNotification(getError(error)));

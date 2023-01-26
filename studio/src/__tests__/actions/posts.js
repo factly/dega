@@ -1397,6 +1397,296 @@ describe('posts actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
   });
+  it('should create actions to publish post success with description and description_html', () => {
+    const post_local = {
+      name: 'Post 1',
+      authors: [{ id: 11, name: 'Author 1' }],
+      tags: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+      categories: [
+        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+        { id: 32, name: 'category 32', description: { "hello": "test" }, description_html: "<p>hello</p>" },
+      ],
+      format: { id: 41, name: 'Format 1' },
+      medium: { id: 51, name: 'Medium 1' },
+      claims: [
+        {
+          id: 61,
+          name: 'Claim 1',
+          claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
+          rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
+        },
+      ],
+      id: 1,
+      description: { "hello": "test" },
+      description_html: "<p>hello</p>",
+    };
+
+    const resp = { data: post_local };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          {
+            id: 31, name: 'category 31', medium: 311,
+            description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
+          {
+            id: 32, name: 'category 32', medium: undefined,
+            description: {
+              json: { "hello": "test" },
+              html: "<p>hello</p>",
+            }
+          },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{
+          id: 601, name: 'Claimant 1', medium: 621, description: {
+            json: undefined,
+            html: undefined,
+          }
+        }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{
+          id: 602, name: 'Rating 1', medium: 622, description: {
+            json: undefined,
+            html: undefined,
+          }
+        }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 1,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          medium: 51,
+          claims: [61],
+          description: {
+            json: { "hello": "test" },
+            html: "<p>hello</p>",
+          }
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Post published',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publishPost(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
+  });
+
+  it('should create actions to publish post success without description and description_html', () => {
+    const post_local = {
+      name: 'Post 1',
+      authors: [{ id: 11, name: 'Author 1' }],
+      tags: [
+        { id: 21, name: 'Tag 21' },
+        { id: 22, name: 'Tag 22' },
+      ],
+      categories: [
+        { id: 31, name: 'category 31', medium: { id: 311, name: 'Category-Medium-311' } },
+        { id: 32, name: 'category 32', description: { "hello": "test" }, description_html: "<p>hello</p>" },
+      ],
+      format: { id: 41, name: 'Format 1' },
+      medium: { id: 51, name: 'Medium 1' },
+      claims: [
+        {
+          id: 61,
+          name: 'Claim 1',
+          claimant: { id: 601, name: 'Claimant 1', medium: { id: 621, name: 'Medium-Claimant 1' } },
+          rating: { id: 602, name: 'Rating 1', medium: { id: 622, name: 'Medium-Rating 1' } },
+        },
+      ],
+      id: 1,
+    };
+
+    const resp = { data: post_local };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          {
+            id: 31, name: 'category 31', medium: 311,
+            description: {
+              json: undefined,
+              html: undefined,
+            }
+          },
+          {
+            id: 32, name: 'category 32', medium: undefined,
+            description: {
+              json: { "hello": "test" },
+              html: "<p>hello</p>",
+            }
+          },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 621, name: 'Medium-Claimant 1' }],
+      },
+      {
+        type: ADD_CLAIMANTS,
+        payload: [{
+          id: 601, name: 'Claimant 1', medium: 621, description: {
+            json: undefined,
+            html: undefined,
+          }
+        }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 622, name: 'Medium-Rating 1' }],
+      },
+      {
+        type: ADD_RATINGS,
+        payload: [{
+          id: 602, name: 'Rating 1', medium: 622, description: {
+            json: undefined,
+            html: undefined,
+          }
+        }],
+      },
+      {
+        type: ADD_CLAIMS,
+        payload: [{ id: 61, name: 'Claim 1', claimant: 601, rating: 602 }],
+      },
+      {
+        type: ADD_FORMATS,
+        payload: [{ id: 41, name: 'Format 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_POST,
+        payload: {
+          id: 1,
+          name: 'Post 1',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: 41,
+          medium: 51,
+          claims: [61],
+          description: {
+            json: undefined,
+            html: undefined
+          }
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Post published',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_POSTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.publishPost(post))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.POSTS_API + '/1' + '/publish', post);
+  });
+
   it('should create actions to publish post success without medium', () => {
     const post_local = {
       name: 'Post 1',
@@ -1538,6 +1828,7 @@ describe('posts actions', () => {
       post_without_media,
     );
   });
+  
   it('should create actions to publish success', () => {
     const post_local = {
       name: 'Post 1',

@@ -919,6 +919,155 @@ describe('pages actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
   });
+  it('should create actions to update page success with description and html', () => {
+    const data2 = { ...page1, description: { "hello": "world" }, description_html: "<p>hello world</p>" };
+    data2.status = 'draft';
+    const resp = { data: data2 };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_PAGE,
+        payload: {
+          id: 1,
+          name: 'Page 1',
+          status: 'draft',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: { id: 41, name: 'Format 1' },
+          medium: 51,
+          description: {
+            json: { "hello": 'world' }, html: "<p>hello world</p>"
+          },
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft Saved',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePage(page1))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
+  });
+
+  it('should create actions to update page success with description and html', () => {
+    const data2 = { ...page1 };
+    data2.status = 'draft';
+    const resp = { data: data2 };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_TAGS,
+        payload: [
+          { id: 21, name: 'Tag 21' },
+          { id: 22, name: 'Tag 22' },
+        ],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 311, name: 'Category-Medium-311' }],
+      },
+      {
+        type: ADD_CATEGORIES,
+        payload: [
+          { id: 31, name: 'category 31', medium: 311, description: { json: { "hello": 'world' }, html: "<p>hello world</p>" } },
+          { id: 32, name: 'category 32', medium: undefined, description: { json: undefined, html: undefined } },
+        ],
+      },
+      {
+        type: ADD_AUTHORS,
+        payload: [{ id: 11, name: 'Author 1' }],
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [{ id: 51, name: 'Medium 1' }],
+      },
+      {
+        type: types.ADD_PAGE,
+        payload: {
+          id: 1,
+          name: 'Page 1',
+          status: 'draft',
+          authors: [11],
+          tags: [21, 22],
+          categories: [31, 32],
+          format: { id: 41, name: 'Format 1' },
+          medium: 51,
+          description: {
+            json: undefined , html: undefined
+          },
+        },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Draft Saved',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_PAGES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updatePage(page1))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.PAGES_API + '/1', page1);
+  });
 
   it('should create actions to update page success with ready status', () => {
     const data2 = { ...page1, description: { json: { "hello": "world" }, html: "<p>hello world</p>" } };

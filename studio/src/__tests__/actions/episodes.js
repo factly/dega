@@ -280,8 +280,9 @@ describe('episodes actions', () => {
   });
   it('should create actions to update episode success', () => {
     const podcast = { id: 1 };
-    const episode = { id: 1, title: 'Episode', podcast: podcast, description: { json: { "hello": "test" }, html: "<p>test</p>" }
-  };
+    const episode = {
+      id: 1, title: 'Episode', podcast: podcast, description: { json: { "hello": "test" }, html: "<p>test</p>" }
+    };
     const resp = { data: episode };
     axios.put.mockResolvedValue(resp);
 
@@ -319,6 +320,91 @@ describe('episodes actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.EPISODES_API + '/1', episode);
   });
+  it('should create actions to update episode success with description and html', () => {
+    const podcast = { id: 1 };
+    const episode = {
+      id: 1, title: 'Episode', podcast: podcast, description: { "hello": "test" }, description_html: "<p>test</p>"
+    };
+    const resp = { data: episode };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_PODCASTS,
+        payload: [podcast],
+      },
+      {
+        type: types.UPDATE_EPISODE,
+        payload: { id: 1, title: 'Episode', podcast: 1, description: { json: { "hello": "test" }, html: "<p>test</p>" } },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Episode updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateEpisode(episode))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.EPISODES_API + '/1', episode);
+  });
+  it('should create actions to update episode success without description and html', () => {
+    const podcast = { id: 1 };
+    const episode = {
+      id: 1, title: 'Episode', podcast: podcast
+    };
+    const resp = { data: episode };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_PODCASTS,
+        payload: [podcast],
+      },
+      {
+        type: types.UPDATE_EPISODE,
+        payload: { id: 1, title: 'Episode', podcast: 1, description: { json: undefined , html: undefined } },
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Episode updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_EPISODES_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateEpisode(episode))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.EPISODES_API + '/1', episode);
+  });
+
   it('should create actions to update episode failure', () => {
     const episode = { id: 1, title: 'Episode' };
     const errorMessage = 'Failed to update episode';
@@ -352,7 +438,7 @@ describe('episodes actions', () => {
   });
   it('should create actions to update episode success without podcast and without description ', () => {
     const podcast = {};
-    const description = {json: undefined, html: undefined};
+    const description = { json: undefined, html: undefined };
     const episode = { id: 1, title: 'Episode', podcast: podcast, description: description };
     const resp = { data: episode };
     axios.put.mockResolvedValue(resp);

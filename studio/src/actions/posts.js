@@ -221,11 +221,14 @@ export const publish = (data) => {
       .post(POSTS_API + '/publish', data)
       .then((response) => {
         let post = response.data;
-        if ((typeof post.description !== 'object' && post.hasOwnProperty('description_html'))
-        || (!post.description.hasOwnProperty('json') && !post.description.hasOwnProperty('html'))
-        ) {
-          post.description = { json: post.description, html: post.description_html };
-          delete post.description_html;
+        if ((response.data.description === undefined)
+          || (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
         }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
@@ -261,9 +264,14 @@ export const addTemplate = (data) => {
       .post(POSTS_API + '/templates', data)
       .then((response) => {
         let post = response.data;
-        if (typeof post.description !== 'object') {
-          post.description = { json: post.description, html: post.description_html };
-          delete post.description_html;
+        if ((response.data.description === undefined)
+          || (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
         }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
@@ -299,9 +307,14 @@ export const publishPost = (data) => {
       .put(POSTS_API + '/' + data.id + '/publish', data)
       .then((response) => {
         let post = response.data;
-        if (typeof post.description !== 'object') {
-          post.description = { json: post.description, html: post.description_html };
-          delete post.description_html;
+        if ((response.data.description === undefined)
+          || (response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
         }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
@@ -337,9 +350,14 @@ export const updatePost = (data) => {
       .put(POSTS_API + '/' + data.id, data)
       .then((response) => {
         let post = response.data;
-        if (typeof post.description !== 'object') {
-          post.description = { json: post.description, html: post.description_html };
-          delete post.description_html;
+        if ((response.data.description === undefined)
+          || (response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
         }
         dispatch(addTags(post.tags));
         dispatch(addCategories(post.categories));
