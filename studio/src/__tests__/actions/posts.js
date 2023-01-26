@@ -1100,6 +1100,7 @@ describe('posts actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.post).toHaveBeenCalledWith(types.POSTS_API, post);
   });
+
   it('should create actions to update post success', () => {
     const post_local = {
       name: 'Post 1',

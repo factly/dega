@@ -110,9 +110,8 @@ export const updateClaimant = (data) => {
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        if ((response.data.description === undefined)
-          ||
-          (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+        if ( (response.data.description === undefined)
+          || (response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))
         ) {
           response.data.description = {

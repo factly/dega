@@ -432,12 +432,96 @@ describe('claimants actions', () => {
       .then(() => expect(store.getActions()).toEqual(expectedActions));
     expect(axios.put).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1', claimant);
   });
-  // !needs to be modified remove description_html on line  object after making changes to /actions/claimants.js
   it('should create actions to update claimant with medium and description success', () => {
     const medium = { id: 4, name: 'medium' };
     const description = { "hello": "test" }
     const description_html = "<h1>hello test 1</h1>"
     const claimant = { id: 1, name: 'Claimant', medium, description, description_html };
+    const resp = { data: claimant };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_CLAIMANT,
+        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }},
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Claimant updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateClaimant(claimant))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1', claimant);
+  });
+
+  it('should create actions to update claimant with medium and with modified description success', () => {
+    const medium = { id: 4, name: 'medium' };
+    const description = { "hello": "test" }
+    const description_html = "<h1>hello test 1</h1>"
+    const claimant = { id: 1, name: 'Claimant', medium, description: { json: description, html: description_html } };
+    const resp = { data: claimant };
+    axios.put.mockResolvedValue(resp);
+
+    const expectedActions = [
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: true,
+      },
+      {
+        type: ADD_MEDIA,
+        payload: [medium],
+      },
+      {
+        type: types.UPDATE_CLAIMANT,
+        payload: { id: 1, name: 'Claimant', medium: 4, description: { json: description, html: description_html }},
+      },
+      {
+        type: ADD_NOTIFICATION,
+        payload: {
+          type: 'success',
+          title: 'Success',
+          message: 'Claimant updated',
+          time: Date.now(),
+        },
+      },
+      {
+        type: types.SET_CLAIMANTS_LOADING,
+        payload: false,
+      },
+    ];
+
+    const store = mockStore({ initialState });
+    store
+      .dispatch(actions.updateClaimant(claimant))
+      .then(() => expect(store.getActions()).toEqual(expectedActions));
+    expect(axios.put).toHaveBeenCalledWith(types.CLAIMANTS_API + '/1', claimant);
+  });
+  it('should create actions to update claimant with medium and with modified description success', () => {
+    const medium = { id: 4, name: 'medium' };
+    const description = undefined
+    const description_html = undefined
+    const claimant = { id: 1, name: 'Claimant', medium};
     const resp = { data: claimant };
     axios.put.mockResolvedValue(resp);
 
