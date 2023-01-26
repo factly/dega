@@ -138,7 +138,7 @@ export const updateRating = (data) => {
             json: response.data.description,
             html: response.data.description_html,
           };
-          // delete response.data.description_html
+          delete response.data.description_html
         }
         dispatch(addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id }));
         dispatch(addSuccessNotification('Rating updated'));

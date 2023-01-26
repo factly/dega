@@ -125,13 +125,18 @@ export const updatePodcast = (data) => {
       .put(PODCASTS_API + '/' + data.id, data)
       .then((response) => {
         let podcast = response.data;
-        // !here podast.description should not be modified neither podcast
-        // podcast = { json: podcast.description, html: podcast.description_html };
-        dispatch(addCategories(podcast.categories));
+        if ((!podcast.description)
+          || (typeof podcast.description !== 'object' && podcast.hasOwnProperty('description_html'))
+          || (!podcast.description.hasOwnProperty('json') && !podcast.description.hasOwnProperty('html'))) {
+            podcast.description = { json: podcast.description, html: podcast.description_html };
+            delete podcast.description_html
+          }
+          // console.log(podcast)
+        dispatch(addCategories(response.data.categories));
         dispatch(
           getPodcastByID({
             ...podcast,
-            categories: podcast.categories.map((category) => category.id),
+            categories: podcast.categories && podcast.categories.map((category) => category.id),
           }),
         );
         dispatch(addSuccessNotification('Podcast updated'));

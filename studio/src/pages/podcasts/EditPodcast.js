@@ -30,7 +30,6 @@ function EditPodcast() {
   if (!podcast) {
     return <RecordNotFound />;
   }
-
   const onUpdate = (values) => {
     dispatch(updatePodcast({ ...podcast, ...values })).then(() =>
       history.push(`/podcasts/${id}/edit`),

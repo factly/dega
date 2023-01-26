@@ -200,7 +200,7 @@ export const updatePage = (data) => {
       .put(PAGES_API + '/' + data.id, data)
       .then((response) => {
         let page = response.data;
-        if ((response.data.description === undefined)
+        if ((!response.data.description)
           || (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {
