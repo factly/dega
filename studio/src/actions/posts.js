@@ -221,7 +221,7 @@ export const publish = (data) => {
       .post(POSTS_API + '/publish', data)
       .then((response) => {
         let post = response.data;
-        if ((response.data.description === undefined)
+        if ((!response.data.description)
           || (typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {
@@ -307,7 +307,7 @@ export const publishPost = (data) => {
       .put(POSTS_API + '/' + data.id + '/publish', data)
       .then((response) => {
         let post = response.data;
-        if ((response.data.description === undefined)
+        if ((!response.data.description)
           || (response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {
@@ -350,7 +350,7 @@ export const updatePost = (data) => {
       .put(POSTS_API + '/' + data.id, data)
       .then((response) => {
         let post = response.data;
-        if ((response.data.description === undefined)
+        if ((!response.data.description)
           || (response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {

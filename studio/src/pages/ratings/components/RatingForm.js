@@ -233,7 +233,7 @@ const RatingForm = ({ onCreate, data = {} }) => {
                   placeholder: 'Enter Description...',
                   basic: true,
                 }}
-                initialValue={data.description_html}
+                initialValue={data.description.html}
               />
             </Col>
           </Row>

@@ -105,10 +105,18 @@ export const updateCategory = (data) => {
       .put(CATEGORIES_API + '/' + data.id, data)
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
-        // response.data.description = {
-        //   json: response.data.description,
-        //   html: response.data.description_html,
-        // };
+
+        if ( (response.data.description === undefined)
+          || (response.data.hasOwnProperty('description_html'))
+          || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))
+        ) {
+          response.data.description = {
+            json: response.data.description,
+            html: response.data.description_html,
+          };
+          delete response.data.description_html
+        }
+
         dispatch(
           addCategory(UPDATE_CATEGORY, { ...response.data, medium: response.data.medium?.id }),
         );
@@ -145,10 +153,17 @@ export const addCategories = (categories) => {
     dispatch(
       addCategoriesList(
         categories.map((category) => {
-          category.description = typeof category.description === 'object' && category.description.hasOwnProperty('json') && category.description.hasOwnProperty('html')  ? category.description : {
+
+        if ( (!category.description)
+          || (category.hasOwnProperty('description_html'))
+          || (!category.description.hasOwnProperty('json') && !category.description.hasOwnProperty('html'))
+        ) {
+          category.description = {
             json: category.description,
             html: category.description_html,
           };
+          delete category.description_html
+        }
           category.description_html && delete category.description_html;
           return { ...category, medium: category.medium?.id };
         }),

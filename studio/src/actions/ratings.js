@@ -131,14 +131,14 @@ export const updateRating = (data) => {
       .then((response) => {
         const rating = response.data;
         if (rating.medium) dispatch(addMedia([rating.medium]));
-        if ( (response.data.description === undefined)
+        if ( (!response.data.description)
           || (response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {
             json: response.data.description,
             html: response.data.description_html,
           };
-          delete response.data.description_html
+          // delete response.data.description_html
         }
         dispatch(addRating(UPDATE_RATING, { ...rating, medium: rating.medium?.id }));
         dispatch(addSuccessNotification('Rating updated'));
