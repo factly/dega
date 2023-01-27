@@ -106,7 +106,7 @@ export const updateCategory = (data) => {
       .then((response) => {
         if (response.data.medium) dispatch(addMedia([response.data.medium]));
 
-        if ( (response.data.description === undefined)
+        if ( (!response.data.description)
           || (response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))
         ) {

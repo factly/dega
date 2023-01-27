@@ -117,29 +117,8 @@ export const updateEpisode = (data) => {
       .put(EPISODES_API + '/' + data.id, data)
       .then((response) => {
         let episode = response.data;
-        //! this needs to modified claim object current structure
-        //! episode = {
-        //!   ...
-        //!   description: {
-        //!     json: {}
-        //!     html: ..
-        //!   }
-        //! }
-        // episode.description = { json: episode.description, html: episode.description_html };=
-        //! after above it becomes
-        //! episode ={
-        //!     ...
-        //!   description: {
-        //!     json: {
-        //!       json: {}
-        //!       html: ...
-        //!     }
-        //!     html: ..
-        //!   }
-        //!   ...
-        //! }
-        if ((response.data.description === undefined)
-          ||(typeof response.data.description !== 'object' && response.data.hasOwnProperty('description_html'))
+        if ((!response.data.description)
+          ||(response.data.hasOwnProperty('description_html'))
           || (!response.data.description.hasOwnProperty('json') && !response.data.description.hasOwnProperty('html'))) {
           response.data.description = {
             json: response.data.description,
