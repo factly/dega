@@ -126,12 +126,11 @@ export const updatePodcast = (data) => {
       .then((response) => {
         let podcast = response.data;
         if ((!podcast.description)
-          || (typeof podcast.description !== 'object' && podcast.hasOwnProperty('description_html'))
+          || (podcast.hasOwnProperty('description_html'))
           || (!podcast.description.hasOwnProperty('json') && !podcast.description.hasOwnProperty('html'))) {
             podcast.description = { json: podcast.description, html: podcast.description_html };
             delete podcast.description_html
           }
-          // console.log(podcast)
         dispatch(addCategories(response.data.categories));
         dispatch(
           getPodcastByID({

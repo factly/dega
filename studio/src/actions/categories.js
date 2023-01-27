@@ -164,7 +164,6 @@ export const addCategories = (categories) => {
           };
           delete category.description_html
         }
-          category.description_html && delete category.description_html;
           return { ...category, medium: category.medium?.id };
         }),
       ),
