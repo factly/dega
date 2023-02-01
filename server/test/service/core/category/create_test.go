@@ -19,6 +19,7 @@ func TestCategoryCreate(t *testing.T) {
 	mock := test.SetupMockDB()
 
 	// test.MockServer()
+	// test.MockServer()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())

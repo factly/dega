@@ -34,7 +34,7 @@ func KavachGock() {
 		Reply(http.StatusOK).
 		JSON(PaiganatedOrg)
 
-		// Creates a mock server for kavach URL with an appropriate dummy response.
+	// Creates a mock server for kavach URL with an appropriate dummy response.
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/dega/access").
 		Persist().
 		Reply(http.StatusOK)

@@ -167,6 +167,7 @@ func TestTagList(t *testing.T) {
 	})
 
 	t.Run("search with query q when meili is down", func(t *testing.T) {
+		test.MockServer() 
 		test.DisableMeiliGock(testServer.URL)
 		test.MockServer()
 
