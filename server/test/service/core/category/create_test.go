@@ -56,7 +56,7 @@ func TestCategoryCreate(t *testing.T) {
 
 	t.Run("create category without parent", func(t *testing.T) {
 		// test.CheckSpaceMock(mock)
-
+		mock := test.SetupMockDB()
 		sameNameCount(mock, 0, Data["name"])
 		slugCheckMock(mock, Data)
 

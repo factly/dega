@@ -142,7 +142,7 @@ func TestMediumUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
-		mock.ExpectQuery(`SELECT slug, space_id FROM "de_media"`).
+		mock.ExpectQuery(`SELECT slug, space_id FROM "media"`).
 			WithArgs(fmt.Sprint(updatedMedium["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 
@@ -170,7 +170,7 @@ func TestMediumUpdate(t *testing.T) {
 
 		SelectWithSpace(mock)
 
-		mock.ExpectQuery(`SELECT slug, space_id FROM "de_media"`).
+		mock.ExpectQuery(`SELECT slug, space_id FROM "media"`).
 			WithArgs(fmt.Sprint(updatedMedium["slug"], "%"), 1).
 			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
 

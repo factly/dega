@@ -23,11 +23,42 @@ var Data map[string]interface{} = map[string]interface{}{
 	"description": postgres.Jsonb{
 		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 	},
-	"html_description": "<p>Test Description</p>",
+	"description_html": "<p>Test Description</p>",
 	"parent_id":        0,
 	"medium_id":        1,
 	"is_featured":      true,
 	"meta_fields": postgres.Jsonb{
+		RawMessage: []byte(`{"type":"description"}`),
+	},
+	"header_code":      "header test",
+	"footer_code":      "footer test",
+	"background_color": nil,
+	// "background_color": postgres.Jsonb{
+	// 	RawMessage: []byte(`{
+	// 		"hsl": {
+	// 			"h": 0,
+	// 			"s": 0.9131432944327529,
+	// 			"l": 0.49478782000000004,
+	// 			"a": 1
+	// 		},
+	// 		"hex": "#f10b0b",
+	// 		"rgb": {
+	// 			"r": 241,
+	// 			"g": 11,
+	// 			"b": 11,
+	// 			"a": 1
+	// 		},
+	// 		"hsv": {
+	// 			"h": 0,
+	// 			"s": 0.9545999999999999,
+	// 			"v": 0.9466,
+	// 			"a": 1
+	// 		},
+	// 		"oldHue": 0,
+	// 		"source": "hsv"
+	// 	}`),
+	// },
+	"meta": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
 	},
 }
@@ -85,6 +116,7 @@ var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", 
 var selectQuery string = regexp.QuoteMeta(`SELECT * FROM "categories"`)
 var countQuery string = regexp.QuoteMeta(`SELECT count(*) FROM "categories"`)
 var deleteQuery string = regexp.QuoteMeta(`UPDATE "categories" SET "deleted_at"=`)
+var insertQuery string = regexp.QuoteMeta(`INSERT INTO "categories"`)
 
 const path string = "/core/categories/{category_id}"
 const basePath string = "/core/categories"
@@ -118,8 +150,8 @@ func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
 func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
-	mock.ExpectQuery(`INSERT INTO "categories"`).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["is_featured"], 1, Data["meta_fields"], Data["medium_id"]).
+	mock.ExpectQuery(insertQuery).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], nil, Data["description"], Data["description_html"], Data["is_featured"], 1, Data["meta_fields"], Data["meta"], Data["header_code"], Data["footer_code"], Data["medium_id"]).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"parent_id", "medium_id", "id"}).
 			AddRow(1, 1, 1))
@@ -127,7 +159,7 @@ func insertMock(mock sqlmock.Sqlmock) {
 
 func insertWithMediumError(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "de_media"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
 		WithArgs(1, 1).
 		WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "html_description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}))
 

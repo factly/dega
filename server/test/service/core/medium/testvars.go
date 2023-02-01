@@ -46,20 +46,20 @@ var invalidData = []map[string]interface{}{
 
 var columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "meta_fields", "space_id"}
 
-var selectQuery = regexp.QuoteMeta(`SELECT * FROM "de_media"`)
-var deleteQuery = regexp.QuoteMeta(`UPDATE "de_media" SET "deleted_at"=`)
-var paginationQuery = `SELECT \* FROM "de_media" (.+) LIMIT 1 OFFSET 1`
+var selectQuery = regexp.QuoteMeta(`SELECT * FROM "media"`)
+var deleteQuery = regexp.QuoteMeta(`UPDATE "media" SET "deleted_at"=`)
+var paginationQuery = `SELECT \* FROM "media" (.+) LIMIT 1 OFFSET 1`
 
 var basePath = "/core/media"
 var path = "/core/media/{medium_id}"
 
 func slugCheckMock(mock sqlmock.Sqlmock, medium map[string]interface{}) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "de_media"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT slug, space_id FROM "media"`)).
 		WithArgs(fmt.Sprint(medium["slug"], "%"), 1).
 		WillReturnRows(sqlmock.NewRows(columns))
 }
 
-//check medium exits or not
+// check medium exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 100).
@@ -68,7 +68,7 @@ func recordNotFoundMock(mock sqlmock.Sqlmock) {
 
 func mediumInsertError(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	mock.ExpectQuery(`INSERT INTO "de_media"`).
+	mock.ExpectQuery(`INSERT INTO "media"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], Data["meta_fields"], 1).
 		WillReturnError(errors.New(`pq: insert or update on table "medium" violates foreign key constraint "media_space_id_spaces_id_foreign"`))
 	mock.ExpectRollback()
@@ -76,7 +76,7 @@ func mediumInsertError(mock sqlmock.Sqlmock) {
 
 func mediumInsertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	mock.ExpectQuery(`INSERT INTO "de_media"`).
+	mock.ExpectQuery(`INSERT INTO "media"`).
 		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], Data["meta_fields"], 1).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"id"}).
@@ -86,11 +86,11 @@ func mediumInsertMock(mock sqlmock.Sqlmock) {
 func mediumUpdateMock(mock sqlmock.Sqlmock, medium map[string]interface{}, err error) {
 	mock.ExpectBegin()
 	if err != nil {
-		mock.ExpectExec(`UPDATE \"de_media\"`).
+		mock.ExpectExec(`UPDATE \"media\"`).
 			WithArgs(test.AnyTime{}, 1, medium["name"], medium["slug"], medium["type"], medium["title"], medium["description"], medium["caption"], medium["alt_text"], medium["file_size"], medium["url"], medium["dimensions"], medium["meta_fields"], 1).
 			WillReturnError(errors.New("update failed"))
 	} else {
-		mock.ExpectExec(`UPDATE \"de_media\"`).
+		mock.ExpectExec(`UPDATE \"media\"`).
 			WithArgs(test.AnyTime{}, 1, medium["name"], medium["slug"], medium["type"], medium["title"], medium["description"], medium["caption"], medium["alt_text"], medium["file_size"], medium["url"], medium["dimensions"], medium["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 	}
@@ -131,7 +131,7 @@ func EmptyRowMock(mock sqlmock.Sqlmock) {
 }
 
 func countQuery(mock sqlmock.Sqlmock, count int) {
-	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "de_media"`)).
+	mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "media"`)).
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
