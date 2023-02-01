@@ -39,7 +39,9 @@ func KavachGock() {
 		Persist().
 		Reply(http.StatusOK)
 
-	gock.New(viper.GetString("kavach_url") + "util/space/1/getOrganisation").Persist().Reply(http.StatusOK)
+	gock.New(viper.GetString("kavach_url") + "/util/space/1/getOrganisation").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
+		"organisation_id": 1,
+	})
 
 }
 
@@ -99,6 +101,13 @@ func KetoGock() {
 		Post("/engines/acp/ory/regex/allowed").
 		Persist().
 		Reply(http.StatusOK)
+
+	gock.New(viper.GetString("keto_read_api_url") + "/relation-tuples/check").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(map[string]interface{}{
+			"allowed": true,
+		})
 }
 
 func MeiliGock() {
