@@ -37,16 +37,20 @@ var TestMeta = postgres.Jsonb{
 	RawMessage: []byte(`{"type":"description"}`),
 }
 
+var currentTime = time.Now()
+var createdAt = currentTime
+var updatedAt = currentTime
 var TestDescriptionHtml = "<h2>This is movies Heading</h2><p>THis is test descruoption</p>"
 var TestDescriptionJson = postgres.Jsonb{RawMessage: []byte(`{"type":"doc","content":[{"type":"heading","attrs":{"textAlign":"left","level":2},"content":[{"type":"text","text":"This is movies Heading"}]},{"type":"paragraph","attrs":{"textAlign":"left"},"content":[{"type":"text","text":"THis is test descruoption"}]}]}`)}
 var TestMedium = testModel.Medium{
 	Base: config.Base{
 		ID:          1,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		CreatedAt:   createdAt,
+		UpdatedAt:   updatedAt,
 		UpdatedByID: 1,
 		CreatedByID: 1,
 	},
+	SpaceID: 1,
 	Name:        "Image",
 	Slug:        "image",
 	Type:        "jpg",
@@ -112,12 +116,12 @@ var newData = &testModel.Category{
 	MediumID:         TestMediumId,
 	// ParentID: ,
 }
-
+var parentID uint = 0 
 var newResData = model.Category{
 	Base: config.Base{
 		ID:          1,
-		CreatedAt:   time.Now(),
-		UpdatedAt:   time.Now(),
+		CreatedAt:   createdAt,
+		UpdatedAt:   updatedAt,
 		UpdatedByID: 1,
 		CreatedByID: 1,
 	},
@@ -133,7 +137,7 @@ var newResData = model.Category{
 	DescriptionHTML:  TestDescriptionHtml,
 	MediumID:         &TestMediumId,
 	Medium:           (*model.Medium)(&TestMedium),
-	ParentID:         nil,
+	ParentID:         &parentID,
 }
 
 var Data map[string]interface{} = map[string]interface{}{
@@ -278,7 +282,7 @@ func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(insertQuery).
-		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, newData.Name, newData.Slug, newData.BackgroundColour, TestDescriptionJson, TestDescriptionHtml, newData.IsFeatured, 1, newData.MetaFields, newData.Meta, newData.HeaderCode, newData.FooterCode, newData.MediumID).
+		WithArgs(currentTime, currentTime, nil, 1, 1, newData.Name, newData.Slug, newData.BackgroundColour, TestDescriptionJson, TestDescriptionHtml, newData.IsFeatured, 1, newData.MetaFields, newData.Meta, newData.HeaderCode, newData.FooterCode, newData.MediumID).
 		// WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["background_colour"], Data["description"], Data["description_html"], Data["is_featured"], 1, Data["meta_fields"], Data["meta"], Data["header_code"], Data["footer_code"], Data["medium_id"]).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"parent_id", "medium_id", "id"}).
