@@ -58,7 +58,7 @@ func TestCategoryList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["html_description"], categorylist[0]["parent_id"], categorylist[0]["meta_fields"], categorylist[0]["medium_id"], categorylist[0]["is_featured"], 1).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
 
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 
 		delete(categorylist[0], "parent_id")
 		delete(categorylist[0], "medium_id")
@@ -89,7 +89,7 @@ func TestCategoryList(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows(Columns).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
 
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 
 		delete(categorylist[1], "parent_id")
 		delete(categorylist[1], "medium_id")
@@ -125,7 +125,7 @@ func TestCategoryList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["html_description"], 0, categorylist[0]["meta_fields"], 1, categorylist[0]["is_featured"], 1).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], 0, categorylist[1]["meta_fields"], 1, categorylist[1]["is_featured"], 1))
 
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 
 		e.GET(basePath).
 			WithHeaders(headers).

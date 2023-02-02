@@ -99,7 +99,7 @@ func TestCategoryUpdate(t *testing.T) {
 
 		selectWithSpace(mock)
 
-		slugCheckMock(mock, Data)
+		slugCheckMock(mock, newData)
 
 		updateMock(mock)
 		mock.ExpectCommit()
@@ -135,7 +135,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["parent_id"], Data["medium_id"], Data["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 		mock.ExpectCommit()
 
 		e.PUT(path).

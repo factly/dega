@@ -57,19 +57,19 @@ func TestCategoryCreate(t *testing.T) {
 	t.Run("create category without parent", func(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		mock := test.SetupMockDB()
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock, Data)
-
+		sameNameCount(mock, 0, newData.Name)
+		slugCheckMock(mock, newData)
+		// medium.SelectWithSpace(mock)
 		insertMock(mock)
 		SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 		mock.ExpectCommit()
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
+			Status(http.StatusCreated).JSON().Object().ContainsMap(newResData)
 		test.ExpectationsMet(t, mock)
 
 	})
@@ -95,13 +95,13 @@ func TestCategoryCreate(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		test.MockServer()
 
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock, Data)
+		sameNameCount(mock, 0, newData.Name)
+		slugCheckMock(mock, newData)
 
 		insertMock(mock)
 
 		SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
+		medium.SelectWithOutSpace(mock, *newData)
 		mock.ExpectCommit()
 
 		Data["slug"] = ""
@@ -120,7 +120,7 @@ func TestCategoryCreate(t *testing.T) {
 		test.MockServer()
 
 		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock, Data)
+		slugCheckMock(mock, newData)
 
 		insertWithMediumError(mock)
 
@@ -138,7 +138,7 @@ func TestCategoryCreate(t *testing.T) {
 		test.MockServer()
 
 		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock, Data)
+		slugCheckMock(mock, newData)
 
 		insertWithMediumError(mock)
 
@@ -184,5 +184,9 @@ func TestCategoryCreate(t *testing.T) {
 		}
 		test.ExpectationsMet(t, mock)
 	})
+
+}
+
+func TestCreateCategoryWithParent(t *testing.T) {
 
 }
