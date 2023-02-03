@@ -37,7 +37,7 @@ func SetupMockDB() sqlmock.Sqlmock {
 	viper.Set("kavach_url", "http://kavach:6620")
 	viper.Set("keto_url", "http://keto:6644")
 	viper.Set("keto_read_api_url", "http://keto:4466")
-	viper.Set("meili_url", "http://meili:7700")
+	viper.Set("meili_url", "http://meilisearch:7700")
 	viper.Set("meili_key", "password")
 	viper.Set("imageproxy_url", "http://imageproxy")
 	viper.Set("create_super_organisation", true)

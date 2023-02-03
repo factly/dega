@@ -28,7 +28,6 @@ func TestCategoryList(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get empty list of categories", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
@@ -48,20 +47,24 @@ func TestCategoryList(t *testing.T) {
 	})
 
 	t.Run("get list of categories", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(categorylist)))
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["html_description"], categorylist[0]["parent_id"], categorylist[0]["meta_fields"], categorylist[0]["medium_id"], categorylist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0].Name, categorylist[0].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, categorylist[0].ParentID, categorylist[0].MetaFields, categorylist[0].MediumID, categorylist[0].IsFeatured, 1, categorylist[0].Meta, categorylist[0].HeaderCode, categorylist[0].FooterCode).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, categorylist[1].ParentID, categorylist[1].MetaFields, categorylist[1].MediumID, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
 		medium.SelectWithOutSpace(mock, *newData)
 
-		delete(categorylist[0], "parent_id")
-		delete(categorylist[0], "medium_id")
+		// delete(categorylist[0], "parent_id")
+		// delete(categorylist[0], "medium_id")
+
+		categorylist[0].ParentID = nil
+		categorylist[0].MediumID = nil
+
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
@@ -73,26 +76,31 @@ func TestCategoryList(t *testing.T) {
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(categorylist[0])
+			ContainsMap(newResData)
 
 		test.ExpectationsMet(t, mock)
 
 	})
 
 	t.Run("get list of categories with paiganation", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(categorylist)))
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], categorylist[1]["parent_id"], categorylist[1]["meta_fields"], categorylist[1]["medium_id"], categorylist[1]["is_featured"], 1))
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[1].BackgroundColour, categorylist[1].ParentID, categorylist[1].MetaFields, categorylist[1].MediumID, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
 		medium.SelectWithOutSpace(mock, *newData)
 
-		delete(categorylist[1], "parent_id")
-		delete(categorylist[1], "medium_id")
+		// delete(categorylist[1], "parent_id")
+		// delete(categorylist[1], "medium_id")
+		categorylist[1].ParentID = &TestParentID
+		var TestMediumId uint = 0
+		categorylist[1].MediumID = &TestMediumId
+		newResData["name"] = "Test Name 2"
+		newResData["slug"] = "testname2"
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
 				"limit": "1",
@@ -108,22 +116,24 @@ func TestCategoryList(t *testing.T) {
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(categorylist[1])
+			ContainsMap(newResData)
+		newResData["name"] = TestName
+		newResData["slug"] = TestSlug
 
 		test.ExpectationsMet(t, mock)
 
 	})
 
 	t.Run("get list of categories based on search query q", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(countQuery).
 			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(len(categorylist)))
 
 		mock.ExpectQuery(selectQuery).
 			WillReturnRows(sqlmock.NewRows(Columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0]["name"], categorylist[0]["slug"], categorylist[0]["description"], categorylist[0]["html_description"], 0, categorylist[0]["meta_fields"], 1, categorylist[0]["is_featured"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1]["name"], categorylist[1]["slug"], categorylist[1]["description"], categorylist[1]["html_description"], 0, categorylist[1]["meta_fields"], 1, categorylist[1]["is_featured"], 1))
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0].Name, categorylist[0].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, 0, categorylist[0].MetaFields, 1, categorylist[0].IsFeatured, 1, categorylist[0].Meta, categorylist[0].HeaderCode, categorylist[0].FooterCode).
+				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[1].BackgroundColour, 0, categorylist[1].MetaFields, 1, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
 		medium.SelectWithOutSpace(mock, *newData)
 

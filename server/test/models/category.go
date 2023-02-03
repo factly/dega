@@ -14,7 +14,6 @@ type Category struct {
 	Slug             string         `json:"slug"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`
 	Description      postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	DescriptionHTML  string         `json:"description_html"`
 	SpaceID          uint           `json:"space_id"`
 	ParentID         *uint          `json:"parent_id"`
 	MediumID         *uint          `json:"medium_id"`

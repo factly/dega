@@ -25,7 +25,7 @@ func TestCategoryDetails(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("invalid category id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 		e.GET(path).
 			WithPath("category_id", "invalid_id").
 			WithHeaders(headers).
@@ -36,7 +36,7 @@ func TestCategoryDetails(t *testing.T) {
 	})
 
 	t.Run("category record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
@@ -53,7 +53,7 @@ func TestCategoryDetails(t *testing.T) {
 
 	t.Run("get category by id", func(t *testing.T) {
 
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
 
@@ -66,7 +66,7 @@ func TestCategoryDetails(t *testing.T) {
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(resData)
+			ContainsMap(newResData)
 
 		test.ExpectationsMet(t, mock)
 	})

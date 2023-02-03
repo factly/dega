@@ -149,36 +149,17 @@ var invalidData map[string]interface{} = map[string]interface{}{
 	"slg": "test-category",
 }
 
-var categorylist []map[string]interface{} = []map[string]interface{}{
-	{
-		"name": "Test category 1",
-		"slug": "test-category-1",
-		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 1"}}],"version":"2.19.0"}`),
-		},
-		"html_description": "<p>Test Description 1</p>",
-		"parent_id":        0,
-		"medium_id":        1,
-		"meta_fields": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description"}`),
-		},
-		"is_featured": true,
-	},
-	{
-		"name": "Test category 2",
-		"slug": "test-category-2",
-		"description": postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 2"}}],"version":"2.19.0"}`),
-		},
-		"html_description": "<p>Test Description 2</p>",
-		"parent_id":        0,
-		"medium_id":        1,
-		"meta_fields": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"description"}`),
-		},
-		"is_featured": true,
-	},
-}
+var categorylist []testModel.Category = []testModel.Category{*newData, {
+	Name:             "Test Name 2",
+	Slug:             "testname2",
+	BackgroundColour: TestBackgroundColour,
+	FooterCode:       TestFooterCode,
+	HeaderCode:       TestHeaderCode,
+	MetaFields:       TestMetaFields,
+	Meta:             TestMeta,
+	Description:      TestDescriptionFromRequest,
+	MediumID:         &TestMediumId,
+}}
 
 var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "description_html", "background_colour", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id", "meta", "header_code", "footer_code"}
 
