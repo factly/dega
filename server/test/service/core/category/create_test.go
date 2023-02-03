@@ -59,7 +59,6 @@ func TestCategoryCreate(t *testing.T) {
 		mock := test.SetupMockDB()
 		sameNameCount(mock, 0, newData.Name)
 		slugCheckMock(mock, newData)
-		// medium.SelectWithSpace(mock)
 		insertMock(mock)
 		SelectWithOutSpace(mock)
 		medium.SelectWithOutSpace(mock, *newData)
@@ -80,14 +79,15 @@ func TestCategoryCreate(t *testing.T) {
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(Columns))
-
-		Data["parent_id"] = 1
+		var parent_id_test uint = 1
+		var parent_id_act uint = 0
+		newData.ParentID = &parent_id_test
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		Data["parent_id"] = 0
+		newData.ParentID = &parent_id_act
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -104,14 +104,14 @@ func TestCategoryCreate(t *testing.T) {
 		medium.SelectWithOutSpace(mock, *newData)
 		mock.ExpectCommit()
 
-		Data["slug"] = ""
+		newData.Slug = ""
 		res := e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "test-category"
-		res.ContainsMap(resData)
+		newData.Slug = "test-category"
+		res.ContainsMap(newResData)
 		test.ExpectationsMet(t, mock)
 	})
 
@@ -119,14 +119,14 @@ func TestCategoryCreate(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		test.MockServer()
 
-		sameNameCount(mock, 0, Data["name"])
+		sameNameCount(mock, 0, newData.Name)
 		slugCheckMock(mock, newData)
 
 		insertWithMediumError(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -137,14 +137,14 @@ func TestCategoryCreate(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		test.MockServer()
 
-		sameNameCount(mock, 0, Data["name"])
+		sameNameCount(mock, 0, newData.Name)
 		slugCheckMock(mock, newData)
 
 		insertWithMediumError(mock)
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusInternalServerError)
 
@@ -155,11 +155,11 @@ func TestCategoryCreate(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		test.MockServer()
 
-		sameNameCount(mock, 1, Data["name"])
+		sameNameCount(mock, 1, newData.Name)
 
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 		test.ExpectationsMet(t, mock)
@@ -169,17 +169,17 @@ func TestCategoryCreate(t *testing.T) {
 		// test.CheckSpaceMock(mock)
 		test.MockServer()
 
-		sameNameCount(mock, 0, Data["name"])
+		sameNameCount(mock, 1, newData.Name)
 
-		Data["description"] = postgres.Jsonb{
+		newData.Description = postgres.Jsonb{
 			RawMessage: []byte(`{"block": "new"}`),
 		}
 		e.POST(basePath).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		Data["description"] = postgres.Jsonb{
+		newData.Description = postgres.Jsonb{
 			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
 		}
 		test.ExpectationsMet(t, mock)
