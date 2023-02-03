@@ -31,10 +31,10 @@ func TestCategoryUpdate(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("invalid category id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 		e.PUT(path).
 			WithPath("category_id", "invalid_id").
-			WithJSON(Data).
+			WithJSON(newData).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
@@ -42,14 +42,14 @@ func TestCategoryUpdate(t *testing.T) {
 	})
 
 	t.Run("category record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.PUT(path).
 			WithPath("category_id", "1").
-			WithJSON(Data).
+			WithJSON(newData).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
@@ -135,7 +135,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["parent_id"], Data["medium_id"], Data["meta_fields"], 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		e.PUT(path).

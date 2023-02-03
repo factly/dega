@@ -57,7 +57,7 @@ func TestCategoryList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0].Name, categorylist[0].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, categorylist[0].ParentID, categorylist[0].MetaFields, categorylist[0].MediumID, categorylist[0].IsFeatured, 1, categorylist[0].Meta, categorylist[0].HeaderCode, categorylist[0].FooterCode).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, categorylist[1].ParentID, categorylist[1].MetaFields, categorylist[1].MediumID, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 
 		// delete(categorylist[0], "parent_id")
 		// delete(categorylist[0], "medium_id")
@@ -92,7 +92,7 @@ func TestCategoryList(t *testing.T) {
 			WillReturnRows(sqlmock.NewRows(Columns).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[1].BackgroundColour, categorylist[1].ParentID, categorylist[1].MetaFields, categorylist[1].MediumID, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 
 		// delete(categorylist[1], "parent_id")
 		// delete(categorylist[1], "medium_id")
@@ -135,7 +135,7 @@ func TestCategoryList(t *testing.T) {
 				AddRow(1, time.Now(), time.Now(), nil, 1, 1, categorylist[0].Name, categorylist[0].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[0].BackgroundColour, 0, categorylist[0].MetaFields, 1, categorylist[0].IsFeatured, 1, categorylist[0].Meta, categorylist[0].HeaderCode, categorylist[0].FooterCode).
 				AddRow(2, time.Now(), time.Now(), nil, 1, 1, categorylist[1].Name, categorylist[1].Slug, TestDescriptionJson, TestDescriptionHtml, categorylist[1].BackgroundColour, 0, categorylist[1].MetaFields, 1, categorylist[1].IsFeatured, 1, categorylist[1].Meta, categorylist[1].HeaderCode, categorylist[1].FooterCode))
 
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 
 		e.GET(basePath).
 			WithHeaders(headers).

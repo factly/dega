@@ -8,7 +8,6 @@ import (
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/test"
-	model "github.com/factly/dega-server/test/models"
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
@@ -118,7 +117,7 @@ func SelectWithSpace(mock sqlmock.Sqlmock) {
 			AddRow(1, time.Now(), time.Now(), nil, 1, 1, Data["name"], Data["slug"], Data["type"], Data["title"], Data["description"], Data["caption"], Data["alt_text"], Data["file_size"], Data["url"], Data["dimensions"], Data["meta_fields"], 1))
 }
 
-func SelectWithOutSpace(mock sqlmock.Sqlmock, newData model.Category) {
+func SelectWithOutSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1).
 		WillReturnRows(sqlmock.NewRows(columns).

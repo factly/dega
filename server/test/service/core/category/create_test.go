@@ -61,7 +61,7 @@ func TestCategoryCreate(t *testing.T) {
 		slugCheckMock(mock, newData)
 		insertMock(mock)
 		SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		e.POST(basePath).
@@ -101,7 +101,7 @@ func TestCategoryCreate(t *testing.T) {
 		insertMock(mock)
 
 		SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		newData.Slug = ""

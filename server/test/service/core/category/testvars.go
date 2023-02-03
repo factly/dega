@@ -233,7 +233,7 @@ func updateMock(mock sqlmock.Sqlmock) {
 		WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["medium_id"], Data["meta_fields"], 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
 	selectWithSpace(mock)
-	medium.SelectWithOutSpace(mock, *newData)
+	medium.SelectWithOutSpace(mock)
 }
 
 func categoryPostAssociation(mock sqlmock.Sqlmock, count int) {

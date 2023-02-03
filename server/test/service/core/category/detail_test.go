@@ -57,7 +57,7 @@ func TestCategoryDetails(t *testing.T) {
 
 		selectWithSpace(mock)
 
-		medium.SelectWithOutSpace(mock, *newData)
+		medium.SelectWithOutSpace(mock)
 
 		e.GET(path).
 			WithPath("category_id", "1").
