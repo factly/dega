@@ -97,7 +97,7 @@ func RunServerWithConfig(configFile string) (*server.Server, *server.Options) {
 	return gnatsd.RunServerWithConfig(configFile)
 }
 
-//ExpectationsMet checks if all the expectations are fulfilled
+// ExpectationsMet checks if all the expectations are fulfilled
 func ExpectationsMet(t *testing.T, mock sqlmock.Sqlmock) {
 	if err := mock.ExpectationsWereMet(); err != nil {
 		t.Errorf("there were unfulfilled expectations: %s", err)

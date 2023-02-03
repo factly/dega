@@ -30,7 +30,7 @@ func TestTagCreate(t *testing.T) {
 
 	t.Run("Unprocessable tag", func(t *testing.T) {
 		test.MockServer()
-		// test.CheckSpaceMock(mock)
+		test.CheckSpaceMock(mock)
 
 		e.POST(basePath).
 			WithJSON(invalidData).

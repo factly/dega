@@ -186,7 +186,3 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 }
-
-func TestCreateCategoryWithParent(t *testing.T) {
-
-}

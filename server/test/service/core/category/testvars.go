@@ -7,8 +7,6 @@ import (
 	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/config"
-	model "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
 	testModel "github.com/factly/dega-server/test/models"
 	"github.com/factly/dega-server/test/service/core/medium"
@@ -20,10 +18,12 @@ var headers = map[string]string{
 	"X-User":  "1",
 }
 
+// Test Variables
 var TestName = "Test category"
 var TestSlug = "test-category"
 var TestParentID uint = 0
 var TestMediumId uint = 1
+var TestSpaceId uint = 1
 var TestIsFeatured = false
 var TestMetaFields = postgres.Jsonb{
 	RawMessage: []byte(`{"type":"description"}`),
@@ -36,37 +36,8 @@ var TestBackgroundColour = postgres.Jsonb{
 var TestMeta = postgres.Jsonb{
 	RawMessage: []byte(`{"type":"description"}`),
 }
-
-var currentTime = time.Now()
-var createdAt = currentTime
-var updatedAt = currentTime
 var TestDescriptionHtml = "<h2>This is movies Heading</h2><p>THis is test descruoption</p>"
 var TestDescriptionJson = postgres.Jsonb{RawMessage: []byte(`{"type":"doc","content":[{"type":"heading","attrs":{"textAlign":"left","level":2},"content":[{"type":"text","text":"This is movies Heading"}]},{"type":"paragraph","attrs":{"textAlign":"left"},"content":[{"type":"text","text":"THis is test descruoption"}]}]}`)}
-var TestMedium = testModel.Medium{
-	Base: config.Base{
-		ID:          1,
-		CreatedAt:   createdAt,
-		UpdatedAt:   updatedAt,
-		UpdatedByID: 1,
-		CreatedByID: 1,
-	},
-	SpaceID: 1,
-	Name:        "Image",
-	Slug:        "image",
-	Type:        "jpg",
-	Title:       "Sample image",
-	Description: "desc",
-	Caption:     "sample",
-	AltText:     "sample",
-	FileSize:    100,
-	URL: postgres.Jsonb{
-		RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg","proxy":"http://imageproxy/test.jpg"}`),
-	},
-	Dimensions: "testdims",
-	MetaFields: postgres.Jsonb{
-		RawMessage: []byte(`{"type":"meta field"}`),
-	},
-}
 var TestDescriptionFromRequest = postgres.Jsonb{
 	RawMessage: []byte(`{
 		"html": "<h2>This is movies Heading</h2><p>THis is test descruoption</p>",
@@ -103,7 +74,7 @@ var TestDescriptionFromRequest = postgres.Jsonb{
 	}`),
 }
 
-// var descriptionHTML =
+// updated Test Data
 var newData = &testModel.Category{
 	Name:             TestName,
 	Slug:             TestSlug,
@@ -113,31 +84,24 @@ var newData = &testModel.Category{
 	MetaFields:       TestMetaFields,
 	Meta:             TestMeta,
 	Description:      TestDescriptionFromRequest,
-	MediumID:         TestMediumId,
-	// ParentID: ,
-}
-var parentID uint = 0 
-var newResData = model.Category{
-	Base: config.Base{
-		ID:          1,
-		CreatedAt:   createdAt,
-		UpdatedAt:   updatedAt,
-		UpdatedByID: 1,
-		CreatedByID: 1,
-	},
-	SpaceID:          1,
-	Name:             TestName,
-	Slug:             TestSlug,
-	BackgroundColour: TestBackgroundColour,
-	FooterCode:       TestFooterCode,
-	HeaderCode:       TestHeaderCode,
-	MetaFields:       TestMetaFields,
-	Meta:             TestMeta,
-	Description:      TestDescriptionJson,
-	DescriptionHTML:  TestDescriptionHtml,
 	MediumID:         &TestMediumId,
-	Medium:           (*model.Medium)(&TestMedium),
-	ParentID:         &parentID,
+}
+
+// updated Test Response Data
+var newResData = map[string]interface{}{
+	"space_id":          TestSpaceId,
+	"name":              TestName,
+	"slug":              TestSlug,
+	"background_colour": TestBackgroundColour,
+	"footer_code":       TestFooterCode,
+	"header_code":       TestHeaderCode,
+	"meta":              TestMeta,
+	"meta_fields":       TestMetaFields,
+	"description":       TestDescriptionJson,
+	"description_html":  TestDescriptionHtml,
+	"medium_id":         TestMediumId,
+	"parent_id":         nil,
+	"is_featured":       TestIsFeatured,
 }
 
 var Data map[string]interface{} = map[string]interface{}{
@@ -156,35 +120,11 @@ var Data map[string]interface{} = map[string]interface{}{
 	"header_code":       "header test",
 	"footer_code":       "footer test",
 	"background_colour": nil,
-	// "background_color": postgres.Jsonb{
-	// 	RawMessage: []byte(`{
-	// 		"hsl": {
-	// 			"h": 0,
-	// 			"s": 0.9131432944327529,
-	// 			"l": 0.49478782000000004,
-	// 			"a": 1
-	// 		},
-	// 		"hex": "#f10b0b",
-	// 		"rgb": {
-	// 			"r": 241,
-	// 			"g": 11,
-	// 			"b": 11,
-	// 			"a": 1
-	// 		},
-	// 		"hsv": {
-	// 			"h": 0,
-	// 			"s": 0.9545999999999999,
-	// 			"v": 0.9466,
-	// 			"a": 1
-	// 		},
-	// 		"oldHue": 0,
-	// 		"source": "hsv"
-	// 	}`),
-	// },
 	"meta": postgres.Jsonb{
 		RawMessage: []byte(`{"type":"description"}`),
 	},
 }
+
 var resData map[string]interface{} = map[string]interface{}{
 	"name": "Test category",
 	"slug": "test-category",
@@ -276,14 +216,11 @@ func sameNameCount(mock sqlmock.Sqlmock, count int, name interface{}) {
 		WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(count))
 }
 
-// var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "description_html", "background_colour", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id", "meta", "header_code", "footer_code"}
-
 func insertMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
 	medium.SelectWithSpace(mock)
 	mock.ExpectQuery(insertQuery).
-		WithArgs(currentTime, currentTime, nil, 1, 1, newData.Name, newData.Slug, newData.BackgroundColour, TestDescriptionJson, TestDescriptionHtml, newData.IsFeatured, 1, newData.MetaFields, newData.Meta, newData.HeaderCode, newData.FooterCode, newData.MediumID).
-		// WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["background_colour"], Data["description"], Data["description_html"], Data["is_featured"], 1, Data["meta_fields"], Data["meta"], Data["header_code"], Data["footer_code"], Data["medium_id"]).
+		WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, newData.Name, newData.Slug, newData.BackgroundColour, TestDescriptionJson, TestDescriptionHtml, newData.IsFeatured, 1, newData.MetaFields, newData.Meta, newData.HeaderCode, newData.FooterCode, newData.MediumID).
 		WillReturnRows(sqlmock.
 			NewRows([]string{"parent_id", "medium_id", "id"}).
 			AddRow(1, 1, 1))
@@ -297,10 +234,6 @@ func insertWithMediumError(mock sqlmock.Sqlmock) {
 
 	mock.ExpectRollback()
 }
-
-// func selectMediumMock(mock sqlmock.Sqlmock) {
-
-// }
 
 func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()

@@ -27,11 +27,9 @@ var Data = map[string]interface{}{
 	"html_description": "<p>Test Description</p>",
 }
 
-var invalidData = map[string]interface{}{
-	"name": "a",
-}
+var invalidData = `{"name":}`
 
-var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "html_description", "is_featured", "meta_fields", "space_id"}
+var Columns = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "description_html", "is_featured", "meta_fields", "space_id", "background_colour", "medium_id", "header_code", "footer_code"}
 
 var selectQuery = regexp.QuoteMeta(`SELECT * FROM "tags"`)
 var deleteQuery = regexp.QuoteMeta(`UPDATE "tags" SET "deleted_at"=`)
@@ -55,7 +53,7 @@ func tagInsertMock(mock sqlmock.Sqlmock) {
 			AddRow(1))
 }
 
-//check tag exits or not
+// check tag exits or not
 func recordNotFoundMock(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
 		WithArgs(1, 100).
