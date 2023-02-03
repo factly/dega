@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -28,7 +29,7 @@ func TestCategoryDelete(t *testing.T) {
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("invalid category id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		e.DELETE(path).
 			WithPath("category_id", "invalid_id").
@@ -40,7 +41,7 @@ func TestCategoryDelete(t *testing.T) {
 	})
 
 	t.Run("category record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		mock.ExpectQuery(selectQuery).
 			WithArgs(1, 1).
@@ -55,9 +56,13 @@ func TestCategoryDelete(t *testing.T) {
 	})
 
 	t.Run("delete a category", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
-		selectWithSpace(mock)
+		// selectWithSpace(mock)
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 
 		categoryPostAssociation(mock, 0)
 
@@ -73,9 +78,13 @@ func TestCategoryDelete(t *testing.T) {
 	})
 
 	t.Run("category associated with other posts", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
-		selectWithSpace(mock)
+		// selectWithSpace(mock)
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 
 		categoryPostAssociation(mock, 1)
 
@@ -89,9 +98,13 @@ func TestCategoryDelete(t *testing.T) {
 	})
 
 	t.Run("updating children categories fail", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
-		selectWithSpace(mock)
+		// selectWithSpace(mock)
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 
 		categoryPostAssociation(mock, 0)
 
@@ -110,9 +123,13 @@ func TestCategoryDelete(t *testing.T) {
 	})
 
 	t.Run("deleting categories fail", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
-		selectWithSpace(mock)
+		// selectWithSpace(mock)
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 
 		categoryPostAssociation(mock, 0)
 

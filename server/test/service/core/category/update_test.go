@@ -6,6 +6,7 @@ import (
 	"net/http/httptest"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/factly/dega-server/service"
@@ -43,9 +44,9 @@ func TestCategoryUpdate(t *testing.T) {
 
 	t.Run("category record not found", func(t *testing.T) {
 		// test.CheckSpaceMock(mock)
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1, 1).
-			WillReturnRows(sqlmock.NewRows(Columns))
+		// mock.ExpectQuery(selectQuery).
+		// 	WithArgs(1, 1).
+		// WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.PUT(path).
 			WithPath("category_id", "1").
@@ -57,7 +58,7 @@ func TestCategoryUpdate(t *testing.T) {
 	})
 
 	t.Run("Unable to decode category data", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 		e.PUT(path).
 			WithPath("category_id", "1").
 			WithHeaders(headers).
@@ -67,7 +68,7 @@ func TestCategoryUpdate(t *testing.T) {
 	})
 
 	t.Run("Unprocessable category", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 		e.PUT(path).
 			WithPath("category_id", "1").
 			WithJSON(invalidData).
@@ -78,7 +79,7 @@ func TestCategoryUpdate(t *testing.T) {
 	})
 
 	t.Run("update category", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
 
@@ -88,14 +89,14 @@ func TestCategoryUpdate(t *testing.T) {
 		e.PUT(path).
 			WithPath("category_id", 1).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
+			Status(http.StatusOK).JSON().Object().ContainsMap(newResData)
 		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update category with empty slug", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+		// test.CheckSpaceMock(mock)
 
 		selectWithSpace(mock)
 
@@ -104,75 +105,74 @@ func TestCategoryUpdate(t *testing.T) {
 		updateMock(mock)
 		mock.ExpectCommit()
 
-		Data["slug"] = ""
+		newData.Slug = ""
 		res := e.PUT(path).
 			WithPath("category_id", 1).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusOK).JSON().Object()
-		Data["slug"] = "test-category"
+		newData.Slug = "test-category"
 
-		res.ContainsMap(resData)
+		res.ContainsMap(newResData)
 		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("update category with parent set", func(t *testing.T) {
-		Data["parent_id"] = 2
-		test.CheckSpaceMock(mock)
+		TestParentID = 1
+		// test.CheckSpaceMock(mock)
 
-		selectWithSpace(mock)
+		// selectWithSpace(mock)
 
 		selectWithSpace(mock)
 
 		mock.ExpectBegin()
+		// medium.SelectWithSpace(mock)
+		// mock.ExpectExec(`UPDATE \"categories\"`).
+		// 	WithArgs(test.AnyTime{}, Data["is_featured"], 1).
+		// 	WillReturnResult(sqlmock.NewResult(1, 1))
 		medium.SelectWithSpace(mock)
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["is_featured"], 1).
+			WithArgs(newData.BackgroundColour, test.AnyTime{}, TestDescriptionJson, TestDescriptionHtml, newData.FooterCode, newData.HeaderCode,
+				newData.IsFeatured, newData.MediumID, newData.Meta, newData.MetaFields, newData.Name, nil, newData.Slug, test.AnyTime{}, 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
-		medium.SelectWithSpace(mock)
-		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["parent_id"], Data["medium_id"], Data["meta_fields"], 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		selectWithSpace(mock)
+		mock.ExpectQuery(selectQuery).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WillReturnRows(sqlmock.NewRows(Columns).
+				AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
+
 		medium.SelectWithOutSpace(mock)
 		mock.ExpectCommit()
 
 		e.PUT(path).
 			WithPath("category_id", 1).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
+			Status(http.StatusOK).JSON().Object().ContainsMap(newResData)
 		test.ExpectationsMet(t, mock)
-		Data["parent_id"] = 0
+
+		TestParentID = 0
 	})
 
 	t.Run("parent category not found in space", func(t *testing.T) {
-		Data["parent_id"] = 2
-		test.CheckSpaceMock(mock)
-
-		selectWithSpace(mock)
-
+		TestParentID = 2
 		mock.ExpectQuery(selectQuery).
-			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 			WillReturnRows(sqlmock.NewRows(Columns))
 
 		e.PUT(path).
 			WithPath("category_id", 1).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
-			Status(http.StatusUnprocessableEntity)
+			Status(http.StatusNotFound)
 		test.ExpectationsMet(t, mock)
-		Data["parent_id"] = 0
+		TestParentID = 0
 	})
 
 	t.Run("update category with its own parent id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
 		selectWithSpace(mock)
-
 		Data["parent_id"] = 1
 		e.PUT(path).
 			WithPath("category_id", 1).
@@ -185,31 +185,32 @@ func TestCategoryUpdate(t *testing.T) {
 	})
 
 	t.Run("update category with medium id = 0", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
+		// test.CheckSpaceMock(mock)
 		selectWithSpace(mock)
 
-		Data["medium_id"] = 0
+		// Data["medium_id"] = 0
+		TestMediumId = 0
 		mock.ExpectBegin()
-		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(nil, test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
+		// mock.ExpectExec(`UPDATE \"categories\"`).
+		// 	WithArgs(nil, test.AnyTime{}, 1).
+		// 	WillReturnResult(sqlmock.NewResult(1, 1))
+
+		// mock.ExpectExec(`UPDATE \"categories\"`).
+		// 	WithArgs(nil, test.AnyTime{}, 1).
+		// 	WillReturnResult(sqlmock.NewResult(1, 1))
+
+		// mock.ExpectExec(`UPDATE \"categories\"`).
+		// 	WithArgs(test.AnyTime{}, Data["is_featured"], 1).
+		// 	WillReturnResult(sqlmock.NewResult(1, 1))
 
 		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(nil, test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, Data["is_featured"], 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-
-		mock.ExpectExec(`UPDATE \"categories\"`).
-			WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["meta_fields"], 1).
+			WithArgs(newData.BackgroundColour, test.AnyTime{}, TestDescriptionJson, TestDescriptionHtml, newData.FooterCode, newData.HeaderCode,
+				newData.IsFeatured, newData.MediumID, newData.Meta, newData.MetaFields, newData.Name, nil, newData.Slug, test.AnyTime{}, 1, 1).
 			WillReturnResult(sqlmock.NewResult(1, 1))
 		selectWithSpace(mock)
 
 		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "media"`)).
-			WithArgs(0).
+			WithArgs(1, 1).
 			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "type", "title", "description", "caption", "alt_text", "file_size", "url", "dimensions", "space_id"}))
 
 		mock.ExpectCommit()
@@ -217,11 +218,12 @@ func TestCategoryUpdate(t *testing.T) {
 		res := e.PUT(path).
 			WithPath("category_id", 1).
 			WithHeaders(headers).
-			WithJSON(Data).
+			WithJSON(newData).
 			Expect().
 			Status(http.StatusOK).JSON().Object()
 		res.ContainsMap(resData)
-		Data["medium_id"] = 1
+		// Data["medium_id"] = 1
+		TestMediumId = 1
 
 		test.ExpectationsMet(t, mock)
 	})

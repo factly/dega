@@ -85,6 +85,7 @@ var newData = &testModel.Category{
 	Meta:             TestMeta,
 	Description:      TestDescriptionFromRequest,
 	MediumID:         &TestMediumId,
+	// ParentID:         &TestParentID,
 }
 
 // updated Test Response Data
@@ -173,7 +174,7 @@ const basePath string = "/core/categories"
 
 func selectWithSpace(mock sqlmock.Sqlmock) {
 	mock.ExpectQuery(selectQuery).
-		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg(), sqlmock.AnyArg()).
 		WillReturnRows(sqlmock.NewRows(Columns).
 			AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 }
@@ -218,21 +219,27 @@ func insertWithMediumError(mock sqlmock.Sqlmock) {
 
 func updateMock(mock sqlmock.Sqlmock) {
 	mock.ExpectBegin()
-	medium.SelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"categories\"`).
-		WithArgs(nil, test.AnyTime{}, 1).
-		WillReturnResult(sqlmock.NewResult(1, 1))
+	// medium.SelectWithSpace(mock)
+	// mock.ExpectExec(`UPDATE \"categories\"`).
+	// 	WithArgs(nil, test.AnyTime{}, 1).
+	// 	WillReturnResult(sqlmock.NewResult(1, 1))
+
+	// medium.SelectWithSpace(mock)
+	// mock.ExpectExec(`UPDATE \"categories\"`).
+	// 	WithArgs(test.AnyTime{}, newData.IsFeatured, 1).
+	// 	WillReturnResult(sqlmock.NewResult(1, 1))
 
 	medium.SelectWithSpace(mock)
 	mock.ExpectExec(`UPDATE \"categories\"`).
-		WithArgs(test.AnyTime{}, Data["is_featured"], 1).
+		WithArgs(newData.BackgroundColour, test.AnyTime{}, TestDescriptionJson, TestDescriptionHtml, newData.FooterCode, newData.HeaderCode,
+			newData.IsFeatured, newData.MediumID, newData.Meta, newData.MetaFields, newData.Name, nil, newData.Slug, test.AnyTime{}, 1, 1).
 		WillReturnResult(sqlmock.NewResult(1, 1))
+	// selectWithSpace(mock)
+	mock.ExpectQuery(selectQuery).
+		WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
+		WillReturnRows(sqlmock.NewRows(Columns).
+			AddRow(1, time.Now(), time.Now(), nil, 1, 1, newData.Name, newData.Slug, TestDescriptionJson, TestDescriptionHtml, newData.BackgroundColour, newData.ParentID, newData.MetaFields, newData.MediumID, newData.IsFeatured, 1, newData.Meta, newData.HeaderCode, newData.FooterCode))
 
-	medium.SelectWithSpace(mock)
-	mock.ExpectExec(`UPDATE \"categories\"`).
-		WithArgs(test.AnyTime{}, 1, Data["name"], Data["slug"], Data["description"], Data["html_description"], Data["medium_id"], Data["meta_fields"], 1).
-		WillReturnResult(sqlmock.NewResult(1, 1))
-	selectWithSpace(mock)
 	medium.SelectWithOutSpace(mock)
 }
 
