@@ -17,9 +17,6 @@ import (
 func TestCategoryCreate(t *testing.T) {
 
 	mock := test.SetupMockDB()
-
-	// test.MockServer()
-	// test.MockServer()
 	defer gock.DisableNetworking()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -40,7 +37,7 @@ func TestCategoryCreate(t *testing.T) {
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 
-		// test.ExpectationsMet(t, mock)
+		test.ExpectationsMet(t, mock)
 	})
 
 	t.Run("Unable to decode category", func(t *testing.T) {

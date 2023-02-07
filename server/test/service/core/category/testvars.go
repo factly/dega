@@ -85,7 +85,7 @@ var newData = &testModel.Category{
 	Meta:             TestMeta,
 	Description:      TestDescriptionFromRequest,
 	MediumID:         &TestMediumId,
-	// ParentID:         &TestParentID,
+	ParentID:         &TestParentID,
 }
 
 // updated Test Response Data
@@ -101,7 +101,7 @@ var newResData = map[string]interface{}{
 	"description":       TestDescriptionJson,
 	"description_html":  TestDescriptionHtml,
 	"medium_id":         TestMediumId,
-	"parent_id":         nil,
+	"parent_id":         0,
 	"is_featured":       TestIsFeatured,
 }
 

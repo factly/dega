@@ -1,4 +1,4 @@
-package test
+package newtest
 
 import "time"
 
