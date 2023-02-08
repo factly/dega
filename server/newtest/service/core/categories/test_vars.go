@@ -145,7 +145,5 @@ var categoryList []model.Category = []model.Category{{
 	MediumID:         &TestMediumId},
 }
 
-var Columns []string = []string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "name", "slug", "description", "description_html", "background_colour", "parent_id", "meta_fields", "medium_id", "is_featured", "space_id", "meta", "header_code", "footer_code"}
-
 const path string = "/core/categories/{category_id}"
 const basePath string = "/core/categories"
