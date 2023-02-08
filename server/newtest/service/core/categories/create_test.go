@@ -69,6 +69,7 @@ func TestCategoryCreate(t *testing.T) {
 	})
 
 	t.Run("create category without parent", func(t *testing.T) {
+		resData["parent_id"] = nil
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
@@ -77,6 +78,7 @@ func TestCategoryCreate(t *testing.T) {
 			JSON().
 			Object().
 			ContainsMap(resData)
+		resData["parent_id"] = 0
 	})
 
 	t.Run("parent category does not exist", func(t *testing.T) {
@@ -100,7 +102,9 @@ func TestCategoryCreate(t *testing.T) {
 			Status(http.StatusCreated).JSON().Object()
 		resData["name"] = "New Test Category"
 		resData["slug"] = "new-test-category"
+		resData["parent_id"] = nil
 		res.ContainsMap(resData)
+		resData["parent_id"] = 0
 
 	})
 

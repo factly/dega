@@ -33,7 +33,7 @@ func TestCategoryList(t *testing.T) {
 	})
 	t.Run("get list of categories", func(t *testing.T) {
 		config.DB.CreateInBatches(categoryList, 2)
-
+		resData["parent_id"] = nil
 		resData["name"] = "List Test Name 1"
 		resData["slug"] = "list-test-name1"
 		e.GET(basePath).
@@ -48,7 +48,7 @@ func TestCategoryList(t *testing.T) {
 			Element(0).
 			Object().
 			ContainsMap(resData)
-
+		resData["parent_id"] = 0
 		resData["name"] = TestName
 		resData["slug"] = TestSlug
 	})
@@ -56,6 +56,7 @@ func TestCategoryList(t *testing.T) {
 	t.Run("get list of categories with pagination", func(t *testing.T) {
 		resData["name"] = categoryList[1].Name
 		resData["slug"] = categoryList[1].Slug
+		resData["parent_id"] = nil
 		e.GET(basePath).
 			WithQueryObject(map[string]interface{}{
 				"limit": 1,

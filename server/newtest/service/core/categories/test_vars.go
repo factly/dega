@@ -92,7 +92,7 @@ var resData = map[string]interface{}{
 	"description":       TestDescriptionJson,
 	"description_html":  TestDescriptionHtml,
 	"medium_id":         &TestMediumId,
-	"parent_id":         nil,
+	"parent_id":         0,
 	"is_featured":       TestIsFeatured,
 }
 

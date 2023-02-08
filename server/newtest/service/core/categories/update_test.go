@@ -9,6 +9,7 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -21,7 +22,7 @@ func TestCategoryUpdate(t *testing.T) {
 	defer testServer.Close()
 	// insert test data
 	insertData := model.Category{
-		Name:             "new test",
+		Name:             TestName,
 		Slug:             "new-test",
 		HeaderCode:       TestHeaderCode,
 		Description:      TestDescriptionFromRequest,
@@ -150,6 +151,7 @@ func TestCategoryUpdate(t *testing.T) {
 			WithPath("category_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(map[string]interface{}{
+				"Name":      "PatentId Update Test",
 				"parent_id": insertData.ID,
 			}).
 			Expect().
@@ -161,14 +163,41 @@ func TestCategoryUpdate(t *testing.T) {
 			WithPath("category_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(map[string]interface{}{
-				"medium_id": nil,
+				"name":      "MediumId Update Test",
+				"medium_id": 0,
 			}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
 			ContainsMap(map[string]interface{}{
-				"medium_id": 0,
+				"medium_id": nil,
+				"name":      "MediumId Update Test",
+				"slug":      "mediumid-update-test",
 			})
+	})
+
+	t.Run("category with same name exists", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("category_id", insertData.ID).
+			WithHeaders(headers).
+			WithJSON(map[string]interface{}{
+				"name": TestName,
+			}).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
+	t.Run("cannot parse category description", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("category_id", insertData.ID).
+			WithHeaders(headers).
+			WithJSON(map[string]interface{}{
+				"description": postgres.Jsonb{
+					RawMessage: []byte(`{"block": "new"}`),
+				},
+			}).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
 	})
 }
