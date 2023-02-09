@@ -92,7 +92,7 @@ func TestTagDelete(t *testing.T) {
 			SpaceID:          TestSpaceId,
 		}
 		if err := config.DB.Model(&model.Tag{}).Create(&insertData2).Error; err != nil {
-			log.Fatal("@@@@@@@@@@@@@@@2", err)
+			log.Fatal(err)
 		}
 		// log.Fatal("@@@@@@@@@@@@@@@", config.DB.Model(insertData2).Association("Posts").Count())
 		e.DELETE(path).
