@@ -1,6 +1,7 @@
 package medium
 
 import (
+	"log"
 	"os"
 	"testing"
 
@@ -18,9 +19,9 @@ func TestMain(m *testing.M) {
 	config.DB.AutoMigrate(&model.Medium{}, &model.SpacePermission{}, &model.Post{}, &model.Category{} /*&model.SpaceSettings{},*/, &fatchCheckModel.Rating{}, &fatchCheckModel.Claimant{})
 	defer gock.DisableNetworking()
 	exitValue := m.Run()
-	// if err := os.Remove("./media.db"); err != nil {
-	// 	log.Fatal(err)
-	// }
+	if err := os.Remove("./media.db"); err != nil {
+		log.Fatal(err)
+	}
 	os.Exit(exitValue)
 
 }
