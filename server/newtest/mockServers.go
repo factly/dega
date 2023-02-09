@@ -19,7 +19,7 @@ func MockServer() {
 	viper.Set("keto_read_api_url", "http://keto:4466")
 	viper.Set("meili_url", "http://meilisearch:7700")
 	viper.Set("meili_key", "password")
-	viper.Set("imageproxy_url", "http://imageproxy")
+	// viper.Set("imageproxy_url", "http://imageproxy")
 	viper.Set("create_super_organisation", true)
 	viper.Set("nats_url", "nats://127.0.0.1:4222")
 	viper.Set("enable_hukz", false)
