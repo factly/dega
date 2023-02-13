@@ -1,4 +1,4 @@
-package categories
+package category
 
 import (
 	testModel "github.com/factly/dega-server/newtest/models"

@@ -64,6 +64,10 @@ func KavachGock() {
 	gock.New(viper.GetString("kavach_url") + "/util/space/1/getOrganisation").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
 		"organisation_id": 1,
 	})
+
+	gock.New(viper.GetString("kavach_url") + "/util/application/").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
+		"application_id": 1,
+	})
 }
 
 func KetoGock() {
