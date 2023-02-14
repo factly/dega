@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateWebhook, getWebhook } from '../../actions/webhooks';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
-import { Skeleton } from 'antd';
+import { Skeleton , Row , Col } from 'antd';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
 import { Helmet } from 'react-helmet';
+import Webhooklogs from './webhooklogs';
 
 function EditWebhook() {
   const history = useHistory();
@@ -37,7 +38,10 @@ function EditWebhook() {
   return (
     <>
       <Helmet title={'Edit Webhook'} />
-      <WebhookEditForm data={webhook} onCreate={onUpdate} />
+       <Row>
+        <Col span={16}><WebhookEditForm data={webhook} onCreate={onUpdate} /></Col>
+       <Col span={8}><Webhooklogs WebhookId={webhook.id}/></Col>
+       </Row>
     </>
   );
 }
