@@ -15,8 +15,8 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/meilisearch/meilisearch-go v0.20.0
 	github.com/nats-io/gnatsd v1.4.1
-	github.com/nats-io/nats.go v1.10.0
-	github.com/prometheus/client_golang v1.9.0
+	github.com/nats-io/nats.go v1.23.0
+	github.com/prometheus/client_golang v1.11.1
 	github.com/spf13/cobra v1.1.3
 	github.com/spf13/viper v1.8.1
 	github.com/swaggo/http-swagger v1.0.0
@@ -65,7 +65,7 @@ require (
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/josharian/intern v1.0.0 // indirect
-	github.com/klauspost/compress v1.15.6 // indirect
+	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
 	github.com/lib/pq v1.10.2 // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -75,16 +75,16 @@ require (
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
 	github.com/nats-io/go-nats v1.7.2 // indirect
-	github.com/nats-io/jwt v1.1.0 // indirect
-	github.com/nats-io/nkeys v0.1.4 // indirect
+	github.com/nats-io/nats-server/v2 v2.9.14 // indirect
+	github.com/nats-io/nkeys v0.3.0 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/pelletier/go-toml v1.9.3 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/prometheus/client_model v0.2.0 // indirect
-	github.com/prometheus/common v0.15.0 // indirect
-	github.com/prometheus/procfs v0.2.0 // indirect
+	github.com/prometheus/common v0.26.0 // indirect
+	github.com/prometheus/procfs v0.6.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/afero v1.6.0 // indirect
@@ -102,11 +102,11 @@ require (
 	github.com/yalp/jsonpath v0.0.0-20180802001716-5cc68e5049a0 // indirect
 	github.com/yudai/gojsondiff v1.0.0 // indirect
 	github.com/yudai/golcs v0.0.0-20170316035057-ecda9a501e82 // indirect
-	golang.org/x/crypto v0.0.0-20220214200702-86341886e292 // indirect
-	golang.org/x/net v0.0.0-20220225172249-27dd8689420f // indirect
-	golang.org/x/sys v0.0.0-20220227234510-4e6760a101f9 // indirect
-	golang.org/x/text v0.3.7 // indirect
-	golang.org/x/tools v0.1.2 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
+	golang.org/x/tools v0.1.12 // indirect
 	google.golang.org/protobuf v1.26.0 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
