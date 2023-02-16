@@ -39,6 +39,8 @@ func MockServer() {
 }
 
 func KavachGock() {
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/users").Persist().Get("/").Reply(http.StatusOK).JSON(Dummy_AuthorList)
+
 	// Mock server to return a user from kavach
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/users").
 		Persist().
