@@ -4,8 +4,6 @@ import (
 	"net/http"
 
 	"github.com/factly/dega-server/service/fact-check/action/google"
-	"github.com/factly/x/meilisearchx"
-	"github.com/meilisearch/meilisearch-go"
 	"github.com/nats-io/gnatsd/server"
 	gnatsd "github.com/nats-io/gnatsd/test"
 	"github.com/nats-io/go-nats"
@@ -17,24 +15,27 @@ func MockServer() {
 	viper.Set("kavach_url", "http://kavach:6620")
 	viper.Set("keto_url", "http://keto:6644")
 	viper.Set("keto_read_api_url", "http://keto:4466")
-	viper.Set("meili_url", "http://meilisearch:7700")
-	viper.Set("meili_key", "password")
-	// viper.Set("imageproxy_url", "http://imageproxy")
+	viper.Set("meili_url", "http://0.0.0.0:7700")
+	viper.Set("meili_api_key", "password")
 	viper.Set("create_super_organisation", true)
 	viper.Set("nats_url", "nats://127.0.0.1:4222")
 	viper.Set("enable_hukz", false)
-	viper.Set("enable_search_indexing", true)
-	viper.Set("templates_path", "../../../../web/templates/*")
 	viper.Set("enable_search_indexing", false)
+	viper.Set("templates_path", "../../../../web/templates/*")
+	viper.Set("MEILISEARCH_INDEX", "dega-test")
 	google.GoogleURL = "http://googlefactchecktest.com"
 
-	meilisearchx.Client = meilisearch.NewClient(meilisearch.ClientConfig{
-		Host:   viper.GetString("meili_url"),
-		APIKey: viper.GetString("meili_key"),
-	})
+	// meilisearchx.Client = meilisearch.NewClient(meilisearch.ClientConfig{
+	// 	Host:   viper.GetString("meili_url"),
+	// 	APIKey: viper.GetString("meili_key"),
+	// })
+	// meiliIndex := viper.GetString("MEILISEARCH_INDEX")
+	// err := meilisearchx.SetupMeiliSearch(meiliIndex, []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 	KavachGock()
 	KetoGock()
-	MeiliGock()
 }
 
 func KavachGock() {
@@ -135,39 +136,6 @@ func KetoGock() {
 		})
 }
 
-func MeiliGock() {
-	gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
-		HeaderPresent("X-Meili-API-Key").
-		Persist().
-		Reply(http.StatusOK).
-		JSON(MeiliHits)
-
-	gock.New(viper.GetString("meili_url")).
-		Post("/indexes/dega/documents").
-		HeaderPresent("X-Meili-API-Key").
-		Persist().
-		Reply(http.StatusAccepted).
-		JSON(ReturnUpdate)
-
-	gock.New(viper.GetString("meili_url")).
-		Put("/indexes/dega/documents").
-		HeaderPresent("X-Meili-API-Key").
-		Persist().
-		Reply(http.StatusAccepted).
-		JSON(ReturnUpdate)
-
-	gock.New(viper.GetString("meili_url")).
-		Delete("/indexes/dega/documents/(.+)").
-		HeaderPresent("X-Meili-API-Key").
-		Persist().
-		Reply(http.StatusAccepted).
-		JSON(ReturnUpdate)
-	// err := meilisearchx.SetupMeiliSearch("dega", []string{"space_id", "name", "slug", "description", "title", "subtitle", "excerpt", "claim", "fact", "site_title", "site_address", "tag_line", "review", "review_tag_line"}, []string{"kind", "space_id", "status", "tag_ids", "category_ids", "author_ids", "claimant_id", "rating_id"})
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-}
-
 func GoogleFactCheckGock() {
 	gock.New(google.GoogleURL).
 		Persist().
@@ -204,8 +172,6 @@ func DisableMeiliGock(serverURL string) {
 
 func DisableKavachGock(serverURL string) {
 	gock.Off()
-
-	MeiliGock()
 	KetoGock()
 
 	gock.New(serverURL).EnableNetworking().Persist()
@@ -214,8 +180,6 @@ func DisableKavachGock(serverURL string) {
 
 func DisableKetoGock(serverURL string) {
 	gock.Off()
-
-	MeiliGock()
 	KavachGock()
 
 	gock.New(serverURL).EnableNetworking().Persist()
