@@ -21,7 +21,6 @@ func TestTagList(t *testing.T) {
 	defer testServer.Close()
 	//delete all entries from the db
 	config.DB.Exec("DELETE FROM tags")
-
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get empty list of tags", func(t *testing.T) {
@@ -33,6 +32,7 @@ func TestTagList(t *testing.T) {
 			Object().
 			ContainsMap(map[string]interface{}{"total": 0})
 	})
+	// var meilisearch_index = viper.Get("MEILISEARCH_INDEX")
 
 	t.Run("get non-empty list of tags", func(t *testing.T) {
 
@@ -82,4 +82,61 @@ func TestTagList(t *testing.T) {
 		resData["name"] = TestName
 		resData["slug"] = TestSlug
 	})
+
+	// t.Run("get list of tages based on search query q", func(t *testing.T) {
+
+	// 	insertData := model.Tag{
+	// 		Name:             TestName,
+	// 		SpaceID:          TestSpaceId,
+	// 		Slug:             TestSlug,
+	// 		Description:      TestDescriptionJson,
+	// 		BackgroundColour: TestBackgroundColour,
+	// 	}
+	// 	config.DB.Model(&model.Tag{}).Create(&insertData)
+	// 	meiliObj := map[string]interface{}{
+	// 		"id":                insertData.ID,
+	// 		"kind":              "tag",
+	// 		"name":              insertData.Name,
+	// 		"slug":              insertData.Slug,
+	// 		"background_colour": insertData.BackgroundColour,
+	// 		"description":       insertData.Description,
+	// 		"space_id":          insertData.SpaceID,
+	// 	}
+	// 	if err := meilisearchx.AddDocument(meilisearch_index.(string), meiliObj); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "test").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 1}).
+	// 		Value("nodes").
+	// 		Array().
+	// 		Element(0).
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{
+	// 			"name":              insertData.Name,
+	// 			"slug":              insertData.Slug,
+	// 			"background_colour": insertData.BackgroundColour,
+	// 			"description":       insertData.Description,
+	// 			"space_id":          insertData.SpaceID,
+	// 		})
+	// 	if err := meilisearchx.DeleteDocument(viper.GetString("MEILISEARCH_INDEX"), insertData.ID, "tag"); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// })
+	// t.Run("when query does not match any tag", func(t *testing.T) {
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 0})
+	// })
+
 }

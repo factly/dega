@@ -22,8 +22,9 @@ func TestMediumList(t *testing.T) {
 	config.DB.Exec("DELETE FROM media")
 	config.DB.Exec("DELETE FROM space_permissions")
 
-	e := httpexpect.New(t, testServer.URL)
+	var insertData model.Medium
 
+	e := httpexpect.New(t, testServer.URL)
 	t.Run("get empty list of media", func(t *testing.T) {
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -35,7 +36,7 @@ func TestMediumList(t *testing.T) {
 	})
 
 	t.Run("get non-empty list of media", func(t *testing.T) {
-		var insertData = &model.Medium{
+		insertData = model.Medium{
 			Name:        "Create Medium Test 1",
 			Slug:        "create-medium-test-1",
 			Description: TestDescription,
@@ -49,8 +50,8 @@ func TestMediumList(t *testing.T) {
 			MetaFields:  TestMetaFields,
 			SpaceID:     TestSpaceID,
 		}
-		config.DB.Create(insertData)
-		insertData = &model.Medium{
+		config.DB.Create(&insertData)
+		insertData = model.Medium{
 			Name:        "Create Medium Test 2",
 			Slug:        "create-medium-test-2",
 			Description: TestDescription,
@@ -64,7 +65,7 @@ func TestMediumList(t *testing.T) {
 			MetaFields:  TestMetaFields,
 			SpaceID:     TestSpaceID,
 		}
-		config.DB.Create(insertData)
+		config.DB.Create(&insertData)
 		insertSpacePermission := &model.SpacePermission{
 			SpaceID:   1,
 			FactCheck: true,
@@ -110,5 +111,40 @@ func TestMediumList(t *testing.T) {
 
 		res.ContainsMap(Data)
 
+	})
+	t.Run("get list of posts based on query", func(t *testing.T) {
+		// meiliObj := map[string]interface{}{
+		// 	"id":       insertData.ID,
+		// 	"name":     insertData.Name,
+		// 	"slug":     insertData.Slug,
+		// 	"kind":     "medium",
+		// 	"type":     insertData.Type,
+		// 	"space_id": insertData.SpaceID,
+		// }
+		// if err := meilisearchx.AddDocument(viper.GetString("MEILISEARCH_INDEX"), meiliObj); err != nil {
+		// 	log.Fatal(err)
+		// }
+		// e.GET(basePath).
+		// 	WithQuery("q", "te").
+		// 	WithHeaders(headers).
+		// 	Expect().
+		// 	Status(http.StatusOK).
+		// 	JSON().
+		// 	Object().
+		// 	ContainsMap(map[string]interface{}{"total": 1}).
+		// 	Value("nodes").
+		// 	Array().
+		// 	Element(0).
+		// 	Object().
+		// 	ContainsMap(map[string]interface{}{
+		// 		"space_id": insertData.SpaceID,
+		// 		"name":     insertData.Name,
+		// 		"slug":     insertData.Slug,
+		// 		"type":     insertData.Type,
+		// 	})
+		// log.Fatal(viper.GetString("MEILISEARCH_INDEX"))
+		// if err := meilisearchx.DeleteDocument("dega-test", insertData.ID, "medium"); err != nil {
+		// 	log.Fatal(err)
+		// }
 	})
 }

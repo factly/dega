@@ -31,12 +31,13 @@ func TestPostUpdate(t *testing.T) {
 	var insertSpacePermission model.SpacePermission
 	var insertFormatData model.Format
 	var insertPostAuthorData model.PostAuthor
+	var insertData model.Post
 	insertArthorData = model.Author{
 		FirstName: "Arthur",
 		LastName:  "Dent",
 	}
 	config.DB.Create(&insertArthorData)
-	var insertData model.Post = model.Post{
+	insertData = model.Post{
 		Title:            "TestTitle",
 		Subtitle:         TestSubTitle,
 		Slug:             "test-title-2",
@@ -88,6 +89,7 @@ func TestPostUpdate(t *testing.T) {
 		Description: "desc",
 		SpaceID:     TestSpaceID,
 	}
+	insertFormatData.ID = TestFormatID
 	insertSpaceSettings := model.SpaceSettings{
 		SpaceID: TestSpaceID,
 	}
@@ -119,7 +121,6 @@ func TestPostUpdate(t *testing.T) {
 	resData["title"] = "TestTitle"
 	resData["slug"] = "test-title-2"
 	delete(resData, "authors")
-
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("invalid post id", func(t *testing.T) {
@@ -154,7 +155,6 @@ func TestPostUpdate(t *testing.T) {
 		resData["slug"] = "update-title"
 		Data["title"] = "Update Title"
 		Data["slug"] = "update-title"
-
 		e.PUT(path).
 			WithPath("post_id", insertData.ID).
 			WithHeaders(headers).

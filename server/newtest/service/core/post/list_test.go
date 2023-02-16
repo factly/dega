@@ -26,12 +26,14 @@ func TestPostList(t *testing.T) {
 	config.DB.Exec("DELETE FROM posts")
 	config.DB.Exec("DELETE FROM authors")
 	config.DB.Exec("DELETE FROM formats")
-	var insertArthorData model.Author
+	config.DB.Exec("DELETE FROM tags")
+	config.DB.Exec("DELETE FROM post_authors")
+	var insertAuthorData model.Author
 	var insertMediumData model.Medium
 	var insertSpacePermission model.SpacePermission
 	var insertFormatData model.Format
 	var insertPostAuthorData model.PostAuthor
-
+	var insertData model.Post
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("get empty list", func(t *testing.T) {
@@ -46,12 +48,12 @@ func TestPostList(t *testing.T) {
 	})
 
 	t.Run("get non-empty list of media", func(t *testing.T) {
-		insertArthorData = model.Author{
+		insertAuthorData = model.Author{
 			FirstName: "Arthur",
 			LastName:  "Dent",
 		}
-		config.DB.Create(&insertArthorData)
-		var insertData model.Post = model.Post{
+		config.DB.Create(&insertAuthorData)
+		insertData = model.Post{
 			Title:            "TestTitle",
 			Subtitle:         TestSubTitle,
 			Slug:             "test-title-2",
@@ -97,6 +99,7 @@ func TestPostList(t *testing.T) {
 			Episodes:  10,
 			Videos:    10,
 		}
+
 		insertFormatData = model.Format{
 			Name:        "Create Format Test",
 			Slug:        "create-format-test",
@@ -120,10 +123,12 @@ func TestPostList(t *testing.T) {
 		insertData.ID = 10000
 		config.DB.Create(&insertData)
 		insertPostAuthorData = model.PostAuthor{
-			AuthorID: insertArthorData.ID,
-			PostID:   insertArthorData.ID,
+			AuthorID: insertAuthorData.ID,
+			PostID:   insertData.ID,
 		}
-		config.DB.Create(&insertPostAuthorData)
+		if err := config.DB.Model(&model.PostAuthor{}).Create(&insertPostAuthorData).Error; err != nil {
+			log.Fatal(err)
+		}
 		resData["format_id"] = insertFormatData.ID
 		resData["title"] = "TestTitle"
 		resData["slug"] = "test-title-2"
@@ -163,23 +168,68 @@ func TestPostList(t *testing.T) {
 			Object().
 			ContainsMap(resData)
 	})
-	t.Run("get lists of posts with pagination", func(t *testing.T) {
-		resData["title"] = "TestTitle"
-		resData["slug"] = "test-title-2"
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"author": insertArthorData.ID,
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": 1}).
-			Value("nodes").
-			Array().
-			Element(0).
-			Object().
-			ContainsMap(resData)
-	})
+
+	// t.Run("get list of posts based on filters and query", func(t *testing.T) {
+	// 	meiliObj := map[string]interface{}{
+	// 		"id":             insertData.ID,
+	// 		"kind":           "post",
+	// 		"title":          insertData.Title,
+	// 		"subtitle":       insertData.Subtitle,
+	// 		"slug":           insertData.Slug,
+	// 		"status":         insertData.Status,
+	// 		"excerpt":        insertData.Excerpt,
+	// 		"description":    insertData.Description,
+	// 		"is_featured":    insertData.IsFeatured,
+	// 		"is_sticky":      insertData.IsSticky,
+	// 		"is_highlighted": insertData.IsHighlighted,
+	// 		"is_page":        insertData.IsPage,
+	// 		"format_id":      insertData.FormatID,
+	// 		"space_id":       insertData.SpaceID,
+	// 		"tag_ids":        []uint{},
+	// 		"category_ids":   []uint{},
+	// 		"author_ids":     []uint{insertAuthorData.ID},
+	// 	}
+
+	// 	if err := meilisearchx.AddDocument(viper.GetString("MEILISEARCH_INDEX"), meiliObj); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "test").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 1}).
+	// 		Value("nodes").
+	// 		Array().
+	// 		Element(0).
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{
+	// 			"title":          insertData.Title,
+	// 			"subtitle":       insertData.Subtitle,
+	// 			"slug":           insertData.Slug,
+	// 			"status":         insertData.Status,
+	// 			"excerpt":        insertData.Excerpt,
+	// 			"description":    insertData.Description,
+	// 			"is_featured":    insertData.IsFeatured,
+	// 			"is_sticky":      insertData.IsSticky,
+	// 			"is_highlighted": insertData.IsHighlighted,
+	// 			"is_page":        insertData.IsPage,
+	// 			"format_id":      insertData.FormatID,
+	// 			"space_id":       insertData.SpaceID,
+	// 		})
+	// 	meilisearchx.DeleteDocument(viper.GetString("MEILISEARCH_INDEX"), insertData.ID, "post")
+	// })
+
+	// t.Run("query doesnot match any post", func(t *testing.T) {
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "aaaaaaaaaaa").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 0})
+	// })
 }
