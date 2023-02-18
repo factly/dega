@@ -1,8 +1,7 @@
 import React from 'react';
 import { Form } from 'antd';
 import axios from 'axios';
-// import Editor from '../Editor';
-import { Editor } from '@factly/scooter';
+import { ScooterCore } from '@factly/scooter-core';
 import { MEDIA_API } from '../../constants/media';
 import { useSelector } from 'react-redux';
 
@@ -10,11 +9,12 @@ const DescriptionInput = ({
   name = 'description',
   label = 'Description',
   noLabel = false,
-  onChange = () => {},
+  onChange = () => { },
   inputProps,
   formItemProps,
   initialValue,
 }) => {
+
   const space_slug = useSelector((state) => {
     return state.spaces.details[state.spaces.selected]?.slug;
   });
@@ -24,8 +24,7 @@ const DescriptionInput = ({
 
   return (
     <Form.Item name={name} {...formItemProps}>
-      {/* <Editor {...inputProps} /> */}
-      <Editor
+      <ScooterCore
         menuType="bubble"
         heightStrategy="flexible"
         rows={20}
