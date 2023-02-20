@@ -18,29 +18,6 @@ var Data = map[string]interface{}{
 	},
 }
 
-var menulist = []map[string]interface{}{
-	{
-		"name": "Elections",
-		"slug": "elections",
-		"menu": postgres.Jsonb{
-			RawMessage: []byte(`{"item1":"description1"}`),
-		},
-		"meta_fields": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"meta field"}`),
-		},
-	},
-	{
-		"name": "India",
-		"slug": "india",
-		"menu": postgres.Jsonb{
-			RawMessage: []byte(`{"item2":"description2"}`),
-		},
-		"meta_fields": postgres.Jsonb{
-			RawMessage: []byte(`{"type":"meta field"}`),
-		},
-	},
-}
-
 var invalidData = map[string]interface{}{
 	"name": "a",
 }
