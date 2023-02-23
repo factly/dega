@@ -1,6 +1,11 @@
 package newtest
 
-import "time"
+import (
+	"time"
+
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/model"
+)
 
 // Dummy response body for the mock server requesting organisation data
 // Endpoint this is sent for is /organisations
@@ -310,4 +315,58 @@ var OembedResponse = map[string]interface{}{
 	"thumbnail_url":    "https://github.githubassets.com/images/modules/open_graph/github-mark.png",
 	"thumbnail_width":  1200,
 	"thumbnail_height": 620,
+}
+
+//	{
+//	    "name": "new policy",
+//	    "description": "this a des",
+//	    "roles": [
+//	        5
+//	    ],
+//	    "permissions": [
+//	        {
+//	            "resource": "posts",
+//	            "actions": [
+//	                "get",
+//	                "create",
+//	                "update"
+//	            ]
+//	        },
+//	        {
+//	            "resource": "categories",
+//	            "actions": [
+//	                "update"
+//	            ]
+//	        },
+//	        {
+//	            "resource": "tags",
+//	            "actions": [
+//	                "create",
+//	                "update"
+//	            ]
+//	        }
+//	    ]
+//	}
+var KavachPolicy = []map[string]interface{}{{
+	"id":          1,
+	"name":        "new policy",
+	"description": "this a des",
+	"permissions": []map[string]interface{}{
+		{
+			"resource": "posts",
+			"actions":  []string{"get", "create", "update"},
+		},
+	},
+	"roles": []model.SpaceRole{{
+		Base:        config.Base{ID: 1},
+		Name:        "test",
+		Description: "test",
+		Slug:        "test",
+		SpaceID:     1,
+		Users: []model.User{{
+			FirstName: "test",
+			LastName:  "test",
+		}},
+	}},
+	"space_id": 1},
 }

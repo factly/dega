@@ -15,7 +15,7 @@ func TestMain(m *testing.M) {
 	defer gock.Disable()
 	newtest.MockServer()
 	newtest.SetupSqlite("./policy.db")
-	config.DB.AutoMigrate(&model.Policy{})
+	config.DB.AutoMigrate(&model.Author{})
 	defer gock.DisableNetworking()
 	exitValue := m.Run()
 	if err := os.Remove("./policy.db"); err != nil {
