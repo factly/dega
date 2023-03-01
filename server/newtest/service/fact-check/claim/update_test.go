@@ -15,8 +15,7 @@ import (
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimCreate(t *testing.T) {
-
+func TestClaimUpdate(t *testing.T) {
 	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
@@ -78,62 +77,103 @@ func TestClaimCreate(t *testing.T) {
 
 	e := httpexpect.New(t, testServer.URL)
 
-	// unprocessable entity
-	t.Run("unprocessable entity", func(t *testing.T) {
-		e.POST(basePath).
+	// invalid claim id
+	t.Run("invalid claim id", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("claim_id", "invalid_id").
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusBadRequest)
+	})
+
+	// claim record not found
+
+	t.Run("claim record not found", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("claim_id", "1000000").
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusNotFound)
+	})
+
+	// unable to decode claim data
+	t.Run("unable to decode claim data", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
+
+	// unprocessable claim
+	t.Run("unprocessable claim", func(t *testing.T) {
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(invalidData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	// unable to decode claim
-	t.Run("unable to decode claim", func(t *testing.T) {
-		e.POST(basePath).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-	})
-
-	// create claim
-	t.Run("create claim", func(t *testing.T) {
-		e.POST(basePath).
+	// update claim
+	t.Run("update claim", func(t *testing.T) {
+		Data["claim"] = "Updated Claim 1"
+		Data["slug"] = "updated-claim-1"
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).
-			JSON().Object().ContainsMap(resData)
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{
+				"claim": "Updated Claim 1",
+				"slug":  "updated-claim-1",
+			})
 	})
 
-	t.Run("cannot parse claim description", func(t *testing.T) {
-		Data["description"] = "invalid"
-		e.POST(basePath).
+	// update claim with empty slug
+	t.Run("update claim with empty slug", func(t *testing.T) {
+		Data["claim"] = "Updated Claim 2"
+		Data["slug"] = ""
+		resData["claim"] = "Updated Claim 2"
+		resData["slug"] = "updated-claim-2"
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusUnprocessableEntity)
-		Data["description"] = TestDescriptionFromRequest
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{
+				"claim": "Updated Claim 2",
+				"slug":  "updated-claim-2",
+			})
 	})
 
-	// claimant does not belong to same space
-	t.Run("claimant does not belong to same space", func(t *testing.T) {
-		Data["claimant_id"] = 100
-		e.POST(basePath).
+	// claimant do not belong to same space
+	t.Run("claimant do not belong to same space", func(t *testing.T) {
+		Data["claimant_id"] = 987632
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-		Data["claimant_id"] = insertClaimantData.ID
 	})
 
-	// rating does not belong to same space
-	t.Run("rating does not belong to same space", func(t *testing.T) {
-		Data["rating_id"] = 100
-		e.POST(basePath).
+	// rating do not belong to same space
+	t.Run("rating do not belong to same space", func(t *testing.T) {
+		Data["rating_id"] = 987632
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-		Data["rating_id"] = insertRatingData.ID
 	})
 }
