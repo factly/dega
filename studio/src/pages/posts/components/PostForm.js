@@ -17,7 +17,7 @@ import {
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import { SettingFilled, LeftOutlined } from '@ant-design/icons';
@@ -249,7 +249,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
-                initialValue={data.description?.json}
+                initialValue={data.description_html}
                 noLabel
               />
               <Drawer

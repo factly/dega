@@ -163,10 +163,10 @@ function Selector({
       autoClearSearchValue={true}
     >
       {details
-        .filter((item) => !invalidOptions.includes(item.id))
+        .filter((item) => !invalidOptions.includes(item?.id))
         .map((item) => (
-          <Select.Option value={item.id} key={entity + item.id}>
-            {item[display] ? item[display] : item['email'] ? item['email'] : null}
+          <Select.Option value={item?.id} key={entity + item?.id}>
+            {item?.[display] ? item?.[display] : item?.['email'] ? item?.['email'] : null}
           </Select.Option>
         ))}
     </Select>
