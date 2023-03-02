@@ -114,17 +114,20 @@ function BasicLayout(props) {
     (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
     <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '#4F46E5',
-          colorLink: '#4F46E5',
-        },
-        components: {
-          Menu: {
-            colorItemBgSelected: '#D1D5DB',
-          },
-        },
-      }}
+    // theme={
+    // {
+    // we can customize the theme here , commenting it for now.
+    // token: {
+    //   colorPrimary: '#4F46E5',
+    //   colorLink: '#4F46E5',
+    // },
+    // components: {
+    //   Menu: {
+    //     colorItemBgSelected: '#D1D5DB',
+    //   },
+    // },
+    // }
+    // }
     >
       <Layout hasSider={true}>
         <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
