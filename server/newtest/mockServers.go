@@ -41,12 +41,16 @@ func MockServer() {
 func KavachGock() {
 
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/policy/[0-9]+").Persist().Reply(http.StatusOK).JSON(KavachPolicy[0])
-
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/policy").Persist().Get("/").Reply(http.StatusOK).JSON(KavachPolicy)
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/policy").Persist().Post("/").Reply(http.StatusOK).JSON(KavachPolicy[0])
-
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+/users").Persist().Get("/").Reply(http.StatusOK).JSON(Dummy_AuthorList)
-
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]/roles").Persist().Post("/").Reply(http.StatusOK).JSON(SpaceRole)
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]").Persist().Get("/").Reply(http.StatusOK).JSON(KavachPolicy[0])
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces").Persist().Post("/").Reply(http.StatusCreated).JSON(KavachCreateSpace)
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces").Persist().Get("/").Reply(http.StatusOK).JSON([]interface{}{KavachCreateSpace})
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/999").Persist().Put("/").Reply(http.StatusNotFound)
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+").Persist().Put("/").Reply(http.StatusOK).JSON(KavachCreateSpace)
+	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/applications/[0-9]+/spaces/[0-9]+").Persist().Delete("/").Reply(http.StatusOK).JSON(KavachCreateSpace)
 	// Mock server to return a user from kavach
 	gock.New(viper.GetString("kavach_url") + "/organisations/[0-9]+/users").
 		Persist().
@@ -73,7 +77,6 @@ func KavachGock() {
 	gock.New(viper.GetString("kavach_url") + "/util/space/1/getOrganisation").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
 		"organisation_id": 1,
 	})
-
 	gock.New(viper.GetString("kavach_url") + "/util/application/").Persist().Reply(http.StatusOK).JSON(map[string]interface{}{
 		"application_id": 1,
 	})
@@ -142,6 +145,21 @@ func KetoGock() {
 		JSON(map[string]interface{}{
 			"allowed": true,
 		})
+
+	gock.New(viper.GetString("keto_read_api_url") + "/relation-tuples").
+		Persist().
+		Reply(http.StatusOK).
+		JSON(map[string]interface{}{
+			"relation_tuples": []interface{}{
+				map[string]interface{}{
+					"namespace":  "superorganisation",
+					"object":     "org:2",
+					"relation":   "superorganisation",
+					"subject_id": "Kavach",
+				},
+			},
+		})
+
 }
 
 func GoogleFactCheckGock() {
