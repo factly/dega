@@ -5,11 +5,12 @@ import { Layout, Menu, Popover, List, Avatar, Button } from 'antd';
 import routes, { sidebarMenu } from '../../config/routesConfig';
 import _ from 'lodash';
 import { setCollapse } from './../../actions/sidebar';
-import SpaceSelector from './SpaceSelector';
+import { setSpaceSelectorPage } from './../../actions/spaceSelectorPage'
 import AccountMenu from './AccountMenu';
-import { AppstoreOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, DownOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import Search from '../Search';
 import { maker } from '../../utils/sluger';
+import degaImg from '../../assets/dega.png';
 
 const { Sider } = Layout;
 const { SubMenu } = Menu;
@@ -17,11 +18,14 @@ const { SubMenu } = Menu;
 function Sidebar({ superOrg, permission, orgs, loading, applications, services, menuKey }) {
   const { collapsed } = useSelector((state) => state.sidebar);
   const dispatch = useDispatch();
+  const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [showCoreMenu, setCoreMenu] = useState(false);
+  const [spaceSelection, setSpaceSelectionDrawer] = useState(false);
   const onCollapse = (collapsed) => {
     collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };
+
   if (loading) {
     return null;
   }
@@ -82,7 +86,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+          route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -136,16 +140,40 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
       <div
         style={{
           display: 'flex',
-          flexDirection: collapsed ? 'column' : 'row',
+          flexDirection: 'column',
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: collapsed ? '0 0.5rem' : '0 24px',
         }}
       >
-        <div className="menu-header" style={{}}>
-          <SpaceSelector collapsed={collapsed} />
+        <div className="menu-header" style={{ width: '100%' }}>
+          {collapsed ? (
+            <img
+              alt="logo"
+              className="menu-logo"
+              src={details[selected]?.fav_icon?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg}
+            />
+          ) : (
+            <Button style={{
+              background: '#DCE4E7', width: '100%', color: '#1E1E1E', border: "none", fontWeight: "600", fontSize: "1rem", display: 'flex', marginTop: '1rem',
+              padding: '1.3rem', justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+              type="primary" onClick={() => dispatch(setSpaceSelectorPage(true))} >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Avatar
+                  src={
+                    details[selected].fav_icon
+                      ? details[selected].fav_icon.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                      : degaImg
+                  }
+                />
+                {details[selected]?.name}
+              </div>
+              <DownOutlined />
+            </Button>
+          )}
         </div>
-
         <Search collapsed={collapsed} />
       </div>
       <Menu
@@ -161,14 +189,14 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           return menu.title === 'CORE' && !showCoreMenu
             ? null
             : !menu.isService
-            ? !menu.isAdmin
-              ? getSubMenuItems(menu, index, Icon)
-              : permission.filter((each) => each.resource === 'admin').length > 0
-              ? getSubMenuItems(menu, index, Icon)
-              : null
-            : services?.includes(maker(menu.title))
-            ? getSubMenuItems(menu, index, Icon)
-            : null;
+              ? !menu.isAdmin
+                ? getSubMenuItems(menu, index, Icon)
+                : permission.filter((each) => each.resource === 'admin').length > 0
+                  ? getSubMenuItems(menu, index, Icon)
+                  : null
+              : services?.includes(maker(menu.title))
+                ? getSubMenuItems(menu, index, Icon)
+                : null;
         })}
       </Menu>
       {!collapsed ? (

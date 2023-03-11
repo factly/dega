@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Layout, Card, notification, BackTop } from 'antd';
+import SpaceSelector from '../components/GlobalNav/SpaceSelector';
 import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
@@ -11,6 +12,7 @@ import { getSuperOrganisation } from '../actions/admin';
 import PageHeader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
+import { setSpaceSelectorPage } from '../actions/spaceSelectorPage';
 
 function BasicLayout(props) {
   const { location } = props;
@@ -106,6 +108,15 @@ function BasicLayout(props) {
   //   if (orgs.length > 0 && selected === 0) history.push('/spaces/create');
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [orgs, location.pathname]);
+  const spaceSelectorVisible = useSelector((state) => state.spaceSelectorPage);
+
+  if (spaceSelectorVisible.visible) {
+    return (
+      (
+        <SpaceSelector open={spaceSelectorVisible.visible} onClose={() => dispatch(setSpaceSelectorPage(false))} />
+      )
+    )
+  }
 
   const hideSidebar =
     (location.pathname.includes('posts') ||

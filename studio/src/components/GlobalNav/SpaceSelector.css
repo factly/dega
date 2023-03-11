@@ -1,0 +1,23 @@
+.list-item-action {
+	transition: opacity 0.2s ease-in-out !important;
+}
+
+.list-item-action:hover {
+	background: #f5f5f5 !important;
+	border: 0 !important;
+}
+
+.list-item {
+	transition: background 0.2s ease-in-out !important;
+	padding: 10px;
+	cursor: pointer;
+}
+
+.list-item:hover {
+	background: #f5f5f5 !important;
+	border: 0 !important;
+}
+
+.list-item:hover .list-item-action {
+	opacity: 1 !important;
+}
