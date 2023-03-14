@@ -94,6 +94,7 @@ function SpaceSelector({ onClose }) {
 
 
   const OrgSpaceList = ({ org }) => {
+    console.log(details[org.spaces[0]])
     return (
       <div key={org.id + org.title}
         className="org-space-list"
@@ -142,7 +143,7 @@ function SpaceSelector({ onClose }) {
                 }}
                 avatar={<Avatar
                   src={
-                    details[item]?.fav_icon?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg
+                    details[item]?.logo?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg
                   }
                 />}
                 description={
