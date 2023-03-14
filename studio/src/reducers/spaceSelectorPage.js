@@ -1,7 +1,7 @@
 import { SET_VISIBLE } from './../constants/spaceSelectorPage';
 
 const initialState = {
-  visible: true,
+  visible: false,
 };
 
 export default function spaceSelectorReducer(state = initialState, action = {}) {

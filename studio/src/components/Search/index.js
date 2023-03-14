@@ -65,7 +65,7 @@ function Search({ collapsed }) {
             setOpen(true);
             setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
           }}
-          style={{ borderRadius: '8px', padding: '12px 14px', marginBottom: '1rem' }}
+          style={{ borderRadius: '8px', padding: '12px 14px', width: '100%', marginBottom: '1rem' }}
           placeholder={'Search..'}
         />
         :

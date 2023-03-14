@@ -146,7 +146,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           padding: collapsed ? '0 0.5rem' : '0 24px',
         }}
       >
-        <div className="menu-header" style={{ width: '100%' }}>
+        <div className="menu-header" style={{ width: '100%', }}>
           {collapsed ? (
             <img
               alt="logo"
@@ -155,7 +155,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             />
           ) : (
             <Button style={{
-              background: '#DCE4E7', width: '100%', color: '#1E1E1E', border: "none", fontWeight: "600", fontSize: "1rem", display: 'flex', marginTop: '1rem',
+              background: '#DCE4E7', width: '100%', color: '#1E1E1E', border: "none", fontWeight: "600", fontSize: "1rem", display: 'flex', marginTop: '0.8rem',
               padding: '1.3rem', justifyContent: 'space-between',
               alignItems: 'center',
             }}
@@ -163,9 +163,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                 <Avatar
                   src={
-                    details[selected].fav_icon
-                      ? details[selected].fav_icon.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                      : degaImg
+                    details[selected]?.fav_icon?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg
                   }
                 />
                 {details[selected]?.name}
