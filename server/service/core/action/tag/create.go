@@ -1,24 +1,18 @@
 package tag
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"gorm.io/gorm"
 )
 
 // create - Create tag
@@ -50,96 +44,20 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tag := &tag{}
-
+	tag := &service.Tag{}
 	err = json.NewDecoder(r.Body).Decode(&tag)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
 
-	validationError := validationx.Check(tag)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
-	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Tag{})
-	tableName := stmt.Schema.Table
-
-	var tagSlug string
-	if tag.Slug != "" && slugx.Check(tag.Slug) {
-		tagSlug = tag.Slug
-	} else {
-		tagSlug = slugx.Make(tag.Name)
-	}
-
-	// Check if tag with same name exist
-	if util.CheckName(uint(sID), tag.Name, tableName) {
-		loggerx.Error(errors.New(`tag with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(tag.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(tag.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(tag.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	mediumID := &tag.MediumID
-	if tag.MediumID == 0 {
-		mediumID = nil
-	}
-
-	result := &model.Tag{
-		Base: config.Base{
-			CreatedAt: tag.CreatedAt,
-			UpdatedAt: tag.UpdatedAt,
-		},
-		Name:             tag.Name,
-		Slug:             slugx.Approve(&config.DB, tagSlug, sID, tableName),
-		BackgroundColour: tag.BackgroundColour,
-		Description:      jsonDescription,
-		DescriptionHTML:  descriptionHTML,
-		SpaceID:          uint(sID),
-		MediumID:         mediumID,
-		IsFeatured:       tag.IsFeatured,
-		MetaFields:       tag.MetaFields,
-		Meta:             tag.Meta,
-		HeaderCode:       tag.HeaderCode,
-		FooterCode:       tag.FooterCode,
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Tag{}).Create(&result).Error
-
+	tagService := service.GetTagService()
+	result, serviceErr := tagService.Create(r.Context(), sID, uID, tag)
 	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	tx.Model(&model.Tag{}).Preload("Medium").First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -155,7 +73,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("tag.created", strconv.Itoa(sID), r) {
