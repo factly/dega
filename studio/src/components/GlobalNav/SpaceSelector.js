@@ -14,7 +14,6 @@ const contentStyle = {
   display: 'flex',
   justifyContent: 'space-around',
   alignItems: 'baseline',
-  backgroundColor: '#F9FAFB',
   fontSize: '1rem',
   marginTop: '1rem',
   fontWeight: 'bold',
@@ -97,17 +96,22 @@ function SpaceSelector({ onClose }) {
   const OrgSpaceList = ({ org }) => {
     return (
       <div key={org.id + org.title}
+        className="org-space-list"
         style={{
           justifyContent: 'center',
           display: 'flex',
           width: '100%',
           flexDirection: 'column',
+          marginBottom: '1rem',
+          padding: '14px 27px 21px 27px',
+          borderRadius: '8px',
+          backgroundColor: '#F1F4F8'
         }}>
         <List
           header=
           {searchquery && org.title.toLowerCase().includes(searchquery.toLowerCase()) ?
             // highlight the search query in the organization title
-            <Typography.Text strong style={{ color: "#6B6B6B" }}>
+            <Typography.Text strong style={{ color: "#6B6B6B", fontSize: '12px', lineHeight: '20px', textTransform: 'uppercase' }} className="space-list-header">
               {org.title.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) => (
                 text.toLowerCase() === searchquery.toLowerCase() ?
                   <span key={i} style={{ color: '#fff', backgroundColor: '#1890FF' }}>{text}</span>
@@ -116,26 +120,41 @@ function SpaceSelector({ onClose }) {
               ))}
             </Typography.Text>
             :
-            <Typography.Text strong style={{ color: "#6B6B6B" }}>{org.title}</Typography.Text>
+            <Typography.Text strong style={{ color: "#6B6B6B", fontSize: '12px', lineHeight: '20px', textTransform: 'uppercase' }} className="space-list-header">{org.title}</Typography.Text>
           }
           dataSource={org.spaces}
           renderItem={(item) => (
-            <List.Item className="list-item" onClick={
-              () => {
-                dispatch(setSelectedSpace(details[item]))
-                onClose();
-              }
-            }>
+            <List.Item className="list-item"
+              style={{
+                backgroundColor: '#fff',
+                marginBottom: '0.5rem',
+              }}
+              onClick={
+                () => {
+                  dispatch(setSelectedSpace(details[item]))
+                  onClose();
+                }
+              }>
               <List.Item.Meta
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                }}
                 avatar={<Avatar
                   src={
                     details[item]?.fav_icon?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg
                   }
                 />}
-                title={
+                description={
                   searchquery && details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     // Highlight the search query within the name
-                    <p>
+                    <p
+                      style={{
+                        color: '#101828',
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        margin: '0',
+                      }}>
                       {details[item].name.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) => (
                         text.toLowerCase() === searchquery.toLowerCase() ? (
                           <span key={i} style={{ backgroundColor: '#1890FF', color: '#fff' }}>{text}</span>
@@ -145,7 +164,13 @@ function SpaceSelector({ onClose }) {
                       ))}
                     </p>
                   ) : (
-                    <p>{details[item].name}</p>
+                    <p
+                      style={{
+                        color: '#101828',
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        margin: '0',
+                      }}>{details[item].name}</p>
                   )}
 
               />
@@ -162,14 +187,13 @@ function SpaceSelector({ onClose }) {
             </List.Item>
           )}
         />
-        <Divider style={{ margin: 0 }} />
       </div>
     )
   }
 
 
   return (
-    <Layout Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }} >
+    <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }} >
       <Content style={contentStyle}>
         <Link to="/" onClick={onClose} style={{ color: '#1E1E1E', }}>
           <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} /> Home

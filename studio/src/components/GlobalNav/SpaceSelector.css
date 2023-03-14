@@ -27,3 +27,12 @@
 	width: 400px !important;
 	/* border-radius: 8px !important; */
 }
+
+.org-space-list .ant-list-header {
+	padding: 0 !important;
+	padding-bottom: 8px !important;
+}
+
+.org-space-list .ant-empty {
+	margin: 0;
+}
