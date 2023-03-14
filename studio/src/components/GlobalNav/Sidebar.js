@@ -26,7 +26,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
   const { details, selected } = useSelector((state) => state.spaces);
   const { navTheme } = useSelector((state) => state.settings);
   const [showCoreMenu, setCoreMenu] = useState(false);
-  const [spaceSelection, setSpaceSelectionDrawer] = useState(false);
   const onCollapse = (collapsed) => {
     collapsed ? dispatch(setCollapse(true)) : dispatch(setCollapse(false));
   };

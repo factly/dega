@@ -60,7 +60,6 @@ export const addSpace = (data) => {
 };
 
 export const deleteSpace = (id) => {
-  console.log('deleteSpace', id);
   return (dispatch) => {
     dispatch(loadingSpaces());
     return axios
