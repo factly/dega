@@ -10,4 +10,5 @@ export const getDatefromStringWithoutDay = (dateString) => {
   return `${listOfMonths[dateObj.getMonth()]} ${dateObj.getDate()} ${dateObj.getFullYear()}`;
 };
 
-export const getDateAndTimeFromString = (dateString) =>  new Date(dateString).toLocaleString().replaceAll(",","").replaceAll("/","-")
+export const getDateAndTimeFromString = (dateString) =>
+  new Date(dateString).toLocaleString().replaceAll(',', '').replaceAll('/', '-');

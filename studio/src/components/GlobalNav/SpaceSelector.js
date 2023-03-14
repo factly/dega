@@ -38,7 +38,7 @@ function SpaceSelector({ onClose }) {
       orgs: [...orgsSpaces, ...orgsNoSpaces],
       details: state.spaces.details,
     };
-  })
+  });
   const [searchquery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
@@ -92,11 +92,11 @@ function SpaceSelector({ onClose }) {
     setSearchResults(results);
   };
 
-
   const OrgSpaceList = ({ org }) => {
-    console.log(details[org.spaces[0]])
+    console.log(details[org.spaces[0]]);
     return (
-      <div key={org.id + org.title}
+      <div
+        key={org.id + org.title}
         className="org-space-list"
         style={{
           justifyContent: 'center',
@@ -106,79 +106,124 @@ function SpaceSelector({ onClose }) {
           marginBottom: '1rem',
           padding: '14px 27px 21px 27px',
           borderRadius: '8px',
-          backgroundColor: '#F1F4F8'
-        }}>
+          backgroundColor: '#F1F4F8',
+        }}
+      >
         <List
-          header=
-          {searchquery && org.title.toLowerCase().includes(searchquery.toLowerCase()) ?
-            // highlight the search query in the organization title
-            <Typography.Text strong style={{ color: "#6B6B6B", fontSize: '12px', lineHeight: '20px', textTransform: 'uppercase' }} className="space-list-header">
-              {org.title.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) => (
-                text.toLowerCase() === searchquery.toLowerCase() ?
-                  <span key={i} style={{ color: '#fff', backgroundColor: '#1890FF' }}>{text}</span>
-                  :
-                  <span key={i}>{text}</span>
-              ))}
-            </Typography.Text>
-            :
-            <Typography.Text strong style={{ color: "#6B6B6B", fontSize: '12px', lineHeight: '20px', textTransform: 'uppercase' }} className="space-list-header">{org.title}</Typography.Text>
+          header={
+            searchquery && org.title.toLowerCase().includes(searchquery.toLowerCase()) ? (
+              // highlight the search query in the organization title
+              <Typography.Text
+                strong
+                style={{
+                  color: '#6B6B6B',
+                  fontSize: '12px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                }}
+                className="space-list-header"
+              >
+                {org.title.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) =>
+                  text.toLowerCase() === searchquery.toLowerCase() ? (
+                    <span key={i} style={{ color: '#fff', backgroundColor: '#1890FF' }}>
+                      {text}
+                    </span>
+                  ) : (
+                    <span key={i}>{text}</span>
+                  ),
+                )}
+              </Typography.Text>
+            ) : (
+              <Typography.Text
+                strong
+                style={{
+                  color: '#6B6B6B',
+                  fontSize: '12px',
+                  lineHeight: '20px',
+                  textTransform: 'uppercase',
+                }}
+                className="space-list-header"
+              >
+                {org.title}
+              </Typography.Text>
+            )
           }
           dataSource={org.spaces}
           renderItem={(item) => (
-            <List.Item className="list-item"
+            <List.Item
+              className="list-item"
               style={{
                 backgroundColor: '#fff',
                 marginBottom: '0.5rem',
               }}
-              onClick={
-                () => {
-                  dispatch(setSelectedSpace(details[item]))
-                  onClose();
-                }
-              }>
+              onClick={() => {
+                dispatch(setSelectedSpace(details[item]));
+                onClose();
+              }}
+            >
               <List.Item.Meta
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                 }}
-                avatar={<Avatar
-                  src={
-                    details[item]?.logo?.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'] || degaImg
-                  }
-                />}
+                avatar={
+                  <Avatar
+                    src={
+                      details[item]?.logo?.url?.[
+                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      ] || degaImg
+                    }
+                  />
+                }
                 description={
-                  searchquery && details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                  searchquery &&
+                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     // Highlight the search query within the name
                     <p
                       style={{
                         color: '#101828',
-                        fontSize: "14px",
+                        fontSize: '14px',
                         fontWeight: 500,
                         margin: '0',
-                      }}>
-                      {details[item].name.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) => (
-                        text.toLowerCase() === searchquery.toLowerCase() ? (
-                          <span key={i} style={{ backgroundColor: '#1890FF', color: '#fff' }}>{text}</span>
-                        ) : (
-                          <span key={i}>{text}</span>
-                        )
-                      ))}
+                      }}
+                    >
+                      {details[item].name
+                        .split(new RegExp(`(${searchquery})`, 'gi'))
+                        .map((text, i) =>
+                          text.toLowerCase() === searchquery.toLowerCase() ? (
+                            <span key={i} style={{ backgroundColor: '#1890FF', color: '#fff' }}>
+                              {text}
+                            </span>
+                          ) : (
+                            <span key={i}>{text}</span>
+                          ),
+                        )}
                     </p>
                   ) : (
                     <p
                       style={{
                         color: '#101828',
-                        fontSize: "14px",
+                        fontSize: '14px',
                         fontWeight: 500,
                         margin: '0',
-                      }}>{details[item].name}</p>
-                  )}
-
+                      }}
+                    >
+                      {details[item].name}
+                    </p>
+                  )
+                }
               />
-              <Button className="list-item-action" icon={<DeleteOutlined />} style={{
-                backgroundColor: 'transparent', color: '#858585', opacity: 0,
-                borderRadius: '4px', border: '2px solid #E0E0E0'
-              }} type="primary"
+              <Button
+                className="list-item-action"
+                icon={<DeleteOutlined />}
+                style={{
+                  backgroundColor: 'transparent',
+                  color: '#858585',
+                  opacity: 0,
+                  borderRadius: '4px',
+                  border: '2px solid #E0E0E0',
+                }}
+                type="primary"
                 onClick={(event) => {
                   event.stopPropagation();
                   setItemToDelete(item);
@@ -189,29 +234,35 @@ function SpaceSelector({ onClose }) {
           )}
         />
       </div>
-    )
-  }
-
+    );
+  };
 
   return (
-    <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }} >
+    <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
       <Content style={contentStyle}>
-        <Link to="/" onClick={onClose} style={{ color: '#1E1E1E', }}>
+        <Link to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
           <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} /> Home
         </Link>
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          flexDirection: 'column',
-          alignSelf: 'start',
-          width: '40%'
-        }}>
-          <Input value={searchquery} onChange={onSearch}
-            placeholder="Search" style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }} suffix={<SearchOutlined />} />
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            flexDirection: 'column',
+            alignSelf: 'start',
+            width: '40%',
+          }}
+        >
+          <Input
+            value={searchquery}
+            onChange={onSearch}
+            placeholder="Search"
+            style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }}
+            suffix={<SearchOutlined />}
+          />
           <div style={ListsStyle}>
-            {(modalOpen && itemToDelete)
-              ? <Modal
+            {modalOpen && itemToDelete ? (
+              <Modal
                 title="Delete Space"
                 visible={modalOpen}
                 centered
@@ -233,31 +284,35 @@ function SpaceSelector({ onClose }) {
               >
                 <p>Are you sure you want to delete this space?</p>
               </Modal>
-              : null}
-            {
-              searchquery.length < 1 ?
-                orgs.map((org) => {
-                  return (
-                    <OrgSpaceList org={org} />
-                  )
-                })
-                : searchResults.length !== 0 ?
-                  searchResults.map((item) => {
-                    return (
-                      <OrgSpaceList org={item} />
-                    )
-                  })
-                  : <Empty />
-            }
+            ) : null}
+            {searchquery.length < 1 ? (
+              orgs.map((org) => {
+                return <OrgSpaceList org={org} />;
+              })
+            ) : searchResults.length !== 0 ? (
+              searchResults.map((item) => {
+                return <OrgSpaceList org={item} />;
+              })
+            ) : (
+              <Empty />
+            )}
           </div>
         </div>
-        <Link Link key="1" onClick={onClose} to="/admin/spaces/create" >
-          <Button icon={<PlusOutlined />} size="large" style={{
-            backgroundColor: '#1890FF', borderRadius: '4px',
-          }} type="primary">New Space</Button>
+        <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
+          <Button
+            icon={<PlusOutlined />}
+            size="large"
+            style={{
+              backgroundColor: '#1890FF',
+              borderRadius: '4px',
+            }}
+            type="primary"
+          >
+            New Space
+          </Button>
         </Link>
       </Content>
     </Layout>
-  )
+  );
 }
 export default SpaceSelector;

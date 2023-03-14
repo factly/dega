@@ -81,7 +81,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         selected: action.payload.id,
       };
     case SET_SELECTED_SPACE:
-      localStorage.setItem('space', action.payload.id)
+      localStorage.setItem('space', action.payload.id);
       return {
         ...state,
         selected: action.payload.id,
@@ -91,7 +91,7 @@ export default function spacesReducer(state = initialState, action = {}) {
         ...state,
         details: {
           ...state.details,
-          [action.payload.id]: {...state.details[action.payload.id], ...action.payload},
+          [action.payload.id]: { ...state.details[action.payload.id], ...action.payload },
         },
       };
     case DELETE_SPACE_SUCCESS:

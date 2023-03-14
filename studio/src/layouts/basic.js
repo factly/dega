@@ -112,10 +112,11 @@ function BasicLayout(props) {
 
   if (spaceSelectorVisible.visible) {
     return (
-      (
-        <SpaceSelector open={spaceSelectorVisible.visible} onClose={() => dispatch(setSpaceSelectorPage(false))} />
-      )
-    )
+      <SpaceSelector
+        open={spaceSelectorVisible.visible}
+        onClose={() => dispatch(setSpaceSelectorPage(false))}
+      />
+    );
   }
 
   const hideSidebar =
