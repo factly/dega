@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, Form, Input, Button, DatePicker, Radio } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import MediaSelector from '../../components/MediaSelector';
 import { maker } from '../../utils/sluger';
 import { useDispatch, useSelector } from 'react-redux';
@@ -40,7 +40,7 @@ function Profile() {
 
   const update = (values) => {
     values.birth_date = values.birth_date
-      ? moment(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.birth_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
     dispatch(updateProfile(values));
   };
@@ -62,7 +62,7 @@ function Profile() {
           onFinish={update}
           initialValues={{
             ...profile,
-            birth_date: profile && profile.birth_date ? moment(profile.birth_date) : null,
+            birth_date: profile && profile.birth_date ? dayjs(profile.birth_date) : null,
           }}
           onValuesChange={(changedValues, allValues) => {
             setValueChange(true);

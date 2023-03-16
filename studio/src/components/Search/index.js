@@ -55,6 +55,7 @@ function Search({ collapsed }) {
         });
         setSelected({ entityIndex, indexItem });
       }}
+      style={{ width: '100%' }}
     >
       {!collapsed ? (
         <Input
@@ -63,7 +64,12 @@ function Search({ collapsed }) {
             setOpen(true);
             setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
           }}
-          style={{ borderRadius: '8px', padding: '12px 14px', width: '100%', marginBottom: '1rem' }}
+          style={{
+            borderRadius: '8px',
+            padding: '12px, 14px, 12px, 6px',
+            width: '100%',
+            height: '36px',
+          }}
           placeholder={'Search..'}
         />
       ) : (
@@ -105,7 +111,7 @@ function Search({ collapsed }) {
                           <List.Item
                             style={
                               indexItem === selected.indexItem &&
-                                entityIndex === selected.entityIndex
+                              entityIndex === selected.entityIndex
                                 ? { backgroundColor: '#5468ff', padding: 5 }
                                 : {}
                             }
@@ -113,7 +119,7 @@ function Search({ collapsed }) {
                             <Typography.Text
                               style={
                                 indexItem === selected.indexItem &&
-                                  entityIndex === selected.entityIndex
+                                entityIndex === selected.entityIndex
                                   ? { color: '#fff' }
                                   : {}
                               }

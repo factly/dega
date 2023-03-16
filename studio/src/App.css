@@ -1,35 +1,3 @@
 .ant-form {
   max-width: 100%;
 }
-
-
-.ant-menu-item-selected a,
-.ant-menu-item-selected a:hover {
-  color: #000 !important;
-  font-weight: 600 !important;
-  font-size: 14px !important;
-}
-
-.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-  background-color: #0000000F !important;
-}
-
-.ant-menu-submenu-title:hover,
-.ant-menu-item:hover,
-.ant-menu-submenu-selected,
-.ant-menu-submenu-active {
-  color: #000 !important;
-}
-
-.ant-menu-item a:hover {
-  color: #000 !important;
-  font-weight: 600 !important;
-}
-
-.ant-menu-submenu:hover > .ant-menu-submenu-title > .ant-menu-submenu-arrow {
-  color: #000 !important;
-}
-
-/* .main-sidebar::-webkit-scrollbar {
-  display: none !important;
-} */

@@ -11,6 +11,7 @@ import {
   AppstoreOutlined,
   DownOutlined,
   MenuFoldOutlined,
+  SettingOutlined,
   MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import Search from '../Search';
@@ -69,7 +70,10 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     'permissions',
   ];
   let buttonStyle = {
-    borderRadius: '50px',
+    width: '40px',
+    height: '40px',
+    background: '#DCE4E7',
+    borderRadius: '21px',
     padding: '0.25rem 0.5rem',
   };
   permission.forEach((each) => {
@@ -90,7 +94,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-          route.isAdmin !== superOrg.is_admin ? null : (
+        route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -101,7 +105,11 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     });
 
   const getSubMenuItems = (menu, index, Icon) => (
-    <SubMenu key={index} title={menu.title} icon={<Icon style={{color:"#000", fontSize: '15px', fontWeight: '700'}} />}>
+    <SubMenu
+      key={index}
+      title={menu.title}
+      icon={<Icon style={{ color: '#000', fontSize: '15px', fontWeight: '700' }} />}
+    >
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
           {menu.submenu.map((submenuItem, index) => {
@@ -125,7 +133,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     <Sider
       breakpoint="xl"
       className="main-sidebar"
-      width="256"
+      width="264px"
       theme={navTheme}
       collapsible
       collapsed={collapsed}
@@ -150,9 +158,10 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           padding: collapsed ? '0 0.5rem' : '0 24px',
           position: 'sticky',
           top: 0,
-          height: !collapsed ? '130px' : '100px',
+          gap: '8px',
+          height: collapsed && '100px',
           zIndex: 100,
-          background: '#f0f2f5',
+          background: '#F1F1F1',
         }}
       >
         <div className="menu-header" style={{ width: '100%' }}>
@@ -162,7 +171,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
               className="menu-logo"
               src={
                 details[selected]?.fav_icon?.url?.[
-                window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                  window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                 ] || degaImg
               }
             />
@@ -177,7 +186,8 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                 fontSize: '1rem',
                 display: 'flex',
                 marginTop: '0.8rem',
-                padding: '1.3rem',
+                height: '43px',
+                padding: '9px, 6px, 9px, 6px',
                 justifyContent: 'space-between',
                 alignItems: 'center',
               }}
@@ -188,7 +198,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                 <Avatar
                   src={
                     details[selected]?.fav_icon?.url?.[
-                    window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                     ] || degaImg
                   }
                 />
@@ -205,7 +215,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
         mode="inline"
         className="slider-menu"
         defaultOpenKeys={['0', '1']}
-        style={{ background: '#f0f2f5' }}
+        style={{ background: '#F1F1F1', padding: '8px' }}
         selectedKeys={menuKey}
       >
         {sidebarMenu.map((menu, index) => {
@@ -213,14 +223,14 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           return menu.title === 'CORE' && !showCoreMenu
             ? null
             : !menu.isService
-              ? !menu.isAdmin
-                ? getSubMenuItems(menu, index, Icon)
-                : permission.filter((each) => each.resource === 'admin').length > 0
-                  ? getSubMenuItems(menu, index, Icon)
-                  : null
-              : services?.includes(maker(menu.title))
-                ? getSubMenuItems(menu, index, Icon)
-                : null;
+            ? !menu.isAdmin
+              ? getSubMenuItems(menu, index, Icon)
+              : permission.filter((each) => each.resource === 'admin').length > 0
+              ? getSubMenuItems(menu, index, Icon)
+              : null
+            : services?.includes(maker(menu.title))
+            ? getSubMenuItems(menu, index, Icon)
+            : null;
         })}
       </Menu>
       {!collapsed ? (
@@ -232,13 +242,16 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             lineHeight: '40px',
             alignItems: 'center',
             width: '100%',
-            position: 'sticky',
+            position: 'absolute',
             bottom: '0',
             background: '#f0f2f5',
           }}
         >
           <AccountMenu />
           <div>
+            <Button style={{ ...buttonStyle }} onClick={() => alert('Setting page')}>
+              <SettingOutlined />
+            </Button>
             {applications.length > 0 ? (
               <>
                 <Popover
@@ -256,6 +269,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                           <a
                             href={item.url}
                             style={{
+                              margin: '8px',
                               textDecoration: 'none',
                               color: 'inherit',
                               display: 'flex',
@@ -279,7 +293,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                   }
                   trigger="click"
                 >
-                  <Button style={buttonStyle}>
+                  <Button style={{ ...buttonStyle, marginLeft: '0.25rem' }}>
                     <AppstoreOutlined />
                   </Button>
                 </Popover>
@@ -304,7 +318,6 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             width: '100%',
             position: 'absolute',
             bottom: '0',
-            height: '80px',
             background: '#f0f2f5',
           }}
         >

@@ -5,7 +5,7 @@ import {
   AudioOutlined,
   ToolOutlined,
   SettingOutlined,
-  SecurityScanOutlined
+  SecurityScanOutlined,
 } from '@ant-design/icons';
 
 //Pages
@@ -865,7 +865,7 @@ export const sidebarMenu = [
   },
   {
     title: 'Core',
-    Icon: (props) => <InfoCircleOutlined  {...props} />,
+    Icon: (props) => <InfoCircleOutlined {...props} />,
     children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
     isService: true,
   },
