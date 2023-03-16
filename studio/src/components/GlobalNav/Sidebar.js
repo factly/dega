@@ -90,7 +90,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     children.map((route, childIndex) => {
       return resource.includes(route.title.toLowerCase()) ? (
         ['Events', 'Permissions'].indexOf(route.title) !== -1 &&
-        route.isAdmin !== superOrg.is_admin ? null : (
+          route.isAdmin !== superOrg.is_admin ? null : (
           <Menu.Item key={route.menuKey}>
             <Link to={route.path}>
               <span>{route.title}</span>
@@ -101,7 +101,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
     });
 
   const getSubMenuItems = (menu, index, Icon) => (
-    <SubMenu key={index} title={menu.title} icon={<Icon />}>
+    <SubMenu key={index} title={menu.title} icon={<Icon style={{color:"#000", fontSize: '15px', fontWeight: '700'}} />}>
       {menu.submenu && menu.submenu.length > 0 ? (
         <>
           {menu.submenu.map((submenuItem, index) => {
@@ -148,6 +148,11 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           justifyContent: 'space-between',
           alignItems: 'center',
           padding: collapsed ? '0 0.5rem' : '0 24px',
+          position: 'sticky',
+          top: 0,
+          height: !collapsed ? '130px' : '100px',
+          zIndex: 100,
+          background: '#f0f2f5',
         }}
       >
         <div className="menu-header" style={{ width: '100%' }}>
@@ -157,7 +162,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
               className="menu-logo"
               src={
                 details[selected]?.fav_icon?.url?.[
-                  window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                 ] || degaImg
               }
             />
@@ -183,7 +188,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
                 <Avatar
                   src={
                     details[selected]?.fav_icon?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                    window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                     ] || degaImg
                   }
                 />
@@ -208,14 +213,14 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
           return menu.title === 'CORE' && !showCoreMenu
             ? null
             : !menu.isService
-            ? !menu.isAdmin
-              ? getSubMenuItems(menu, index, Icon)
-              : permission.filter((each) => each.resource === 'admin').length > 0
-              ? getSubMenuItems(menu, index, Icon)
-              : null
-            : services?.includes(maker(menu.title))
-            ? getSubMenuItems(menu, index, Icon)
-            : null;
+              ? !menu.isAdmin
+                ? getSubMenuItems(menu, index, Icon)
+                : permission.filter((each) => each.resource === 'admin').length > 0
+                  ? getSubMenuItems(menu, index, Icon)
+                  : null
+              : services?.includes(maker(menu.title))
+                ? getSubMenuItems(menu, index, Icon)
+                : null;
         })}
       </Menu>
       {!collapsed ? (
@@ -227,7 +232,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             lineHeight: '40px',
             alignItems: 'center',
             width: '100%',
-            position: 'absolute',
+            position: 'sticky',
             bottom: '0',
             background: '#f0f2f5',
           }}
@@ -299,6 +304,7 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
             width: '100%',
             position: 'absolute',
             bottom: '0',
+            height: '80px',
             background: '#f0f2f5',
           }}
         >

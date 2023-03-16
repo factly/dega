@@ -1,10 +1,11 @@
+import React from 'react';
 import {
-  PieChartTwoTone,
-  ControlTwoTone,
-  AudioTwoTone,
-  ToolTwoTone,
-  SettingTwoTone,
-  SecurityScanTwoTone,
+  HomeOutlined,
+  InfoCircleOutlined,
+  AudioOutlined,
+  ToolOutlined,
+  SettingOutlined,
+  SecurityScanOutlined
 } from '@ant-design/icons';
 
 //Pages
@@ -858,19 +859,19 @@ const routes = {
 export const sidebarMenu = [
   {
     title: 'Dashboard',
-    Icon: PieChartTwoTone,
+    Icon: (props) => <HomeOutlined {...props} />,
     children: [routes.home, routes.analytics],
     isService: false,
   },
   {
     title: 'Core',
-    Icon: ControlTwoTone,
+    Icon: (props) => <InfoCircleOutlined  {...props} />,
     children: [routes.posts, routes.pages, routes.categories, routes.tags, routes.media],
     isService: true,
   },
   {
     title: 'Fact Checking',
-    Icon: SecurityScanTwoTone,
+    Icon: (props) => <SecurityScanOutlined {...props} />,
     children: [
       routes.factCheck,
       routes.claims,
@@ -883,20 +884,20 @@ export const sidebarMenu = [
   },
   {
     title: 'Podcast',
-    Icon: AudioTwoTone,
+    Icon: (props) => <AudioOutlined {...props} />,
     children: [routes.episodes, routes.podcasts],
     isService: true,
   },
   {
     title: 'Settings',
-    Icon: SettingTwoTone,
+    Icon: (props) => <SettingOutlined {...props} />,
     children: [routes.website, routes.members, routes.advanced],
     isService: false,
     isAdmin: true,
   },
   {
     title: 'Administration',
-    Icon: ToolTwoTone,
+    Icon: (props) => <ToolOutlined {...props} />,
     children: [routes.spaces, routes.requests, routes.permissions, routes.events],
     isService: false,
   },

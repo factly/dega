@@ -72,7 +72,7 @@ function Search({ collapsed }) {
             setOpen(true);
             setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
           }}
-          style={{ fontSize: collapsed ? '16px' : '20px' }}
+          style={{ fontSize: collapsed ? '16px' : '20px', margin: '4px 0' }}
         />
       )}
       <Modal visible={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
@@ -105,7 +105,7 @@ function Search({ collapsed }) {
                           <List.Item
                             style={
                               indexItem === selected.indexItem &&
-                              entityIndex === selected.entityIndex
+                                entityIndex === selected.entityIndex
                                 ? { backgroundColor: '#5468ff', padding: 5 }
                                 : {}
                             }
@@ -113,7 +113,7 @@ function Search({ collapsed }) {
                             <Typography.Text
                               style={
                                 indexItem === selected.indexItem &&
-                                entityIndex === selected.entityIndex
+                                  entityIndex === selected.entityIndex
                                   ? { color: '#fff' }
                                   : {}
                               }
