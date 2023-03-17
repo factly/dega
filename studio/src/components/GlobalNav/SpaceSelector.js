@@ -121,14 +121,14 @@ function SpaceSelector({ onClose }) {
                   <Avatar
                     src={
                       details[item]?.logo?.url?.[
-                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
                 }
                 description={
                   searchquery &&
-                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                    details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
@@ -237,7 +237,9 @@ function SpaceSelector({ onClose }) {
                   );
                 })
               ) : (
-                <Empty />
+                <Col span={24}>
+                  <Empty />
+                </Col>
               )}
             </Row>
           </Col>
