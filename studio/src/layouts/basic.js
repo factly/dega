@@ -127,15 +127,16 @@ function BasicLayout(props) {
   return (
     <ConfigProvider
       theme={{
-        // we can customize the theme here
-        token: {
-          colorPrimary: '#4F46E5',
-          colorLink: '#4F46E5',
-        },
+        // // we can customize the theme here
+        // token: {
+        //   colorPrimary: '#2f54eb',
+        //   colorLink: '#2f54eb',
+        // },
         components: {
           Menu: {
             colorItemBgSelected: '#0000000F',
             colorItemTextSelected: '#000',
+            colorLink: '#000',
           },
         },
       }}

@@ -3,7 +3,7 @@ import {
   HomeOutlined,
   InfoCircleOutlined,
   AudioOutlined,
-  ToolOutlined,
+  GlobalOutlined,
   SettingOutlined,
   SecurityScanOutlined,
 } from '@ant-design/icons';
@@ -897,7 +897,7 @@ export const sidebarMenu = [
   },
   {
     title: 'Administration',
-    Icon: (props) => <ToolOutlined {...props} />,
+    Icon: (props) => <GlobalOutlined {...props} />,
     children: [routes.spaces, routes.requests, routes.permissions, routes.events],
     isService: false,
   },

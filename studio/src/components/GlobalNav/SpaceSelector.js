@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { Avatar, Button, Divider, Modal, Layout } from 'antd';
-import { Input, List, Typography, Empty } from 'antd';
+import { Avatar, Button, Row, Col, Modal, Layout, Input, List, Typography, Empty } from 'antd';
 import { LeftOutlined, PlusOutlined, SearchOutlined, DeleteOutlined } from '@ant-design/icons';
 import { setSelectedSpace } from '../../actions/spaces';
 import { Link } from 'react-router-dom';
@@ -10,15 +9,6 @@ import { deleteSpace } from '../../actions/spaces';
 import degaImg from '../../assets/dega.png';
 import './SpaceSelector.css';
 
-const contentStyle = {
-  display: 'flex',
-  justifyContent: 'space-around',
-  alignItems: 'baseline',
-  fontSize: '1rem',
-  marginTop: '1rem',
-  fontWeight: 'bold',
-  color: '#1E1E1E',
-};
 const ListsStyle = {
   width: '100%',
   display: 'flex',
@@ -93,39 +83,16 @@ function SpaceSelector({ onClose }) {
   };
 
   const OrgSpaceList = ({ org }) => {
-    console.log(details[org.spaces[0]]);
     return (
-      <div
-        key={org.id + org.title}
-        className="org-space-list"
-        style={{
-          justifyContent: 'center',
-          display: 'flex',
-          width: '100%',
-          flexDirection: 'column',
-          marginBottom: '1rem',
-          padding: '14px 27px 21px 27px',
-          borderRadius: '8px',
-          backgroundColor: '#F1F4F8',
-        }}
-      >
+      <div key={org.id + org.title} className="org-space-list-container">
         <List
+          className="org-space-list"
           header={
             searchquery && org.title.toLowerCase().includes(searchquery.toLowerCase()) ? (
-              // highlight the search query in the organization title
-              <Typography.Text
-                strong
-                style={{
-                  color: '#6B6B6B',
-                  fontSize: '12px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase',
-                }}
-                className="space-list-header"
-              >
+              <Typography.Text strong className="space-list-header">
                 {org.title.split(new RegExp(`(${searchquery})`, 'gi')).map((text, i) =>
                   text.toLowerCase() === searchquery.toLowerCase() ? (
-                    <span key={i} style={{ color: '#fff', backgroundColor: '#1890FF' }}>
+                    <span key={i} className="highlighted-text">
                       {text}
                     </span>
                   ) : (
@@ -134,16 +101,7 @@ function SpaceSelector({ onClose }) {
                 )}
               </Typography.Text>
             ) : (
-              <Typography.Text
-                strong
-                style={{
-                  color: '#6B6B6B',
-                  fontSize: '12px',
-                  lineHeight: '20px',
-                  textTransform: 'uppercase',
-                }}
-                className="space-list-header"
-              >
+              <Typography.Text strong className="space-list-header">
                 {org.title}
               </Typography.Text>
             )
@@ -152,20 +110,13 @@ function SpaceSelector({ onClose }) {
           renderItem={(item) => (
             <List.Item
               className="list-item"
-              style={{
-                backgroundColor: '#fff',
-                marginBottom: '0.5rem',
-              }}
               onClick={() => {
                 dispatch(setSelectedSpace(details[item]));
                 onClose();
               }}
             >
               <List.Item.Meta
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
+                className="list-item-meta"
                 avatar={
                   <Avatar
                     src={
@@ -178,51 +129,27 @@ function SpaceSelector({ onClose }) {
                 description={
                   searchquery &&
                   details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
-                    // Highlight the search query within the name
-                    <p
-                      style={{
-                        color: '#101828',
-                        fontSize: '14px',
-                        fontWeight: 500,
-                        margin: '0',
-                      }}
-                    >
+                    <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
                         .map((text, i) =>
                           text.toLowerCase() === searchquery.toLowerCase() ? (
-                            <span key={i} style={{ backgroundColor: '#1890FF', color: '#fff' }}>
+                            <span key={i} className="highlighted-text">
                               {text}
                             </span>
                           ) : (
                             <span key={i}>{text}</span>
                           ),
                         )}
-                    </p>
+                    </Typography.Text>
                   ) : (
-                    <p
-                      style={{
-                        color: '#101828',
-                        fontSize: '14px',
-                        fontWeight: 500,
-                        margin: '0',
-                      }}
-                    >
-                      {details[item].name}
-                    </p>
+                    <Typography.Text strong>{details[item].name}</Typography.Text>
                   )
                 }
               />
               <Button
                 className="list-item-action"
                 icon={<DeleteOutlined />}
-                style={{
-                  backgroundColor: 'transparent',
-                  color: '#858585',
-                  opacity: 0,
-                  borderRadius: '4px',
-                  border: '2px solid #E0E0E0',
-                }}
                 type="primary"
                 onClick={(event) => {
                   event.stopPropagation();
@@ -239,78 +166,97 @@ function SpaceSelector({ onClose }) {
 
   return (
     <Layout style={{ backgroundColor: '#F9FAFB', minHeight: '100vh' }}>
-      <Content style={contentStyle}>
-        <Link to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
-          <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} /> Home
-        </Link>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-            alignSelf: 'start',
-            width: '40%',
-          }}
+      <Content>
+        <Row
+          style={{ width: '100%', alignItems: 'baseline', marginTop: '2.6rem' }}
+          justify="space-between"
         >
-          <Input
-            value={searchquery}
-            onChange={onSearch}
-            placeholder="Search"
-            style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }}
-            suffix={<SearchOutlined />}
-          />
-          <div style={ListsStyle}>
-            {modalOpen && itemToDelete ? (
-              <Modal
-                title="Delete Space"
-                visible={modalOpen}
-                centered
-                width="400px"
-                className="delete-modal-container"
-                style={{
-                  borderRadius: '18px',
-                }}
-                onOk={() => {
-                  dispatch(deleteSpace(itemToDelete));
-                  setModalOpen(false);
-                  setItemToDelete(null);
-                  setSearchQuery('');
-                  setSearchResults([]);
-                }}
-                onCancel={() => {
-                  setModalOpen(false);
-                }}
-              >
-                <p>Are you sure you want to delete this space?</p>
-              </Modal>
-            ) : null}
-            {searchquery.length < 1 ? (
-              orgs.map((org) => {
-                return <OrgSpaceList org={org} />;
-              })
-            ) : searchResults.length !== 0 ? (
-              searchResults.map((item) => {
-                return <OrgSpaceList org={item} />;
-              })
-            ) : (
-              <Empty />
-            )}
-          </div>
-        </div>
-        <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
-          <Button
-            icon={<PlusOutlined />}
-            size="large"
+          <Col span={2} style={{ textAlign: 'right' }}>
+            <Link to="/" onClick={onClose} style={{ color: '#1E1E1E' }}>
+              <LeftOutlined style={{ fontSize: '12px', paddingRight: '6px' }} />{' '}
+              <Typography.Text strong>Home</Typography.Text>
+            </Link>
+          </Col>
+          <Col
             style={{
-              backgroundColor: '#1890FF',
-              borderRadius: '4px',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexDirection: 'column',
+              alignSelf: 'start',
+              width: '45.27vw',
             }}
-            type="primary"
           >
-            New Space
-          </Button>
-        </Link>
+            <Input
+              value={searchquery}
+              onChange={onSearch}
+              placeholder="Search"
+              style={{ padding: '0.8rem', borderRadius: '8px', marginBottom: '1rem' }}
+              suffix={<SearchOutlined />}
+            />
+            <Row style={{ width: '100%', color: '1E1E1E' }}>
+              {modalOpen && itemToDelete ? (
+                <Modal
+                  title="Delete Space"
+                  open={modalOpen}
+                  closable={false}
+                  centered
+                  width="400px"
+                  className="delete-modal-container"
+                  style={{
+                    borderRadius: '18px',
+                  }}
+                  onOk={() => {
+                    dispatch(deleteSpace(itemToDelete));
+                    setModalOpen(false);
+                    setItemToDelete(null);
+                    setSearchQuery('');
+                    setSearchResults([]);
+                  }}
+                  onCancel={() => {
+                    setModalOpen(false);
+                  }}
+                >
+                  <p>Are you sure you want to delete this space?</p>
+                </Modal>
+              ) : null}
+              {searchquery.length < 1 ? (
+                orgs.map((org) => {
+                  return (
+                    <Col span={24}>
+                      <OrgSpaceList org={org} />
+                    </Col>
+                  );
+                })
+              ) : searchResults.length !== 0 ? (
+                searchResults.map((item) => {
+                  return (
+                    <Col span={24}>
+                      <OrgSpaceList org={item} />
+                    </Col>
+                  );
+                })
+              ) : (
+                <Empty />
+              )}
+            </Row>
+          </Col>
+          <Col span={3}>
+            <Link Link key="1" onClick={onClose} to="/admin/spaces/create">
+              <Button
+                icon={<PlusOutlined />}
+                size="large"
+                style={{
+                  backgroundColor: '#1890FF',
+                  borderRadius: '4px',
+                }}
+                type="primary"
+              >
+                New Space
+              </Button>
+            </Link>
+          </Col>
+        </Row>
       </Content>
     </Layout>
   );
