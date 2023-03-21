@@ -11,6 +11,7 @@ import (
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // details - Get claim by id
@@ -51,6 +52,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 	}).First(&result).Error
 
 	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			return
+		}
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DBError()))
 		return

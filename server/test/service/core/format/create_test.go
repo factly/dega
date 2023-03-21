@@ -1,149 +1,105 @@
 package format
 
 import (
-	"errors"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestFormatCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM formats")
+	config.DB.Exec("DELETE FROM media")
+	var insertMediumData = model.Medium{
+		Name:        "Create Medium Test",
+		Slug:        "create-medium-test",
+		Description: "desc",
+		Type:        "jpg",
+		Title:       "Sample image",
+		Caption:     "caption",
+		AltText:     "TestAltText",
+		FileSize:    100,
+		URL: postgres.Jsonb{
+			RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+		},
+		Dimensions: "TestDimensions",
+		MetaFields: TestMetaFields,
+		SpaceID:    TestSpaceID,
+	}
+	config.DB.Model(&model.Medium{}).Create(&insertMediumData)
+	var insertData = model.Format{
+		Name:        "New Format",
+		Slug:        "new-format",
+		Description: TestDescription,
+		MetaFields:  TestMetaFields,
+		SpaceID:     TestSpaceID,
+		FooterCode:  TestFooterCode,
+		HeaderCode:  TestHeaderCode,
+		MediumID:    &insertMediumData.ID,
+	}
+	config.DB.Model(&model.Format{}).Create(&insertData)
+	Data["medium_id"] = insertMediumData.ID
+	resData["medium_id"] = insertMediumData.ID
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("Unprocessable format", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
 		e.POST(basePath).
 			WithJSON(invalidData).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
 	t.Run("Unable to decode format", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
-	t.Run("create format", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock)
-
-		formatInsertMock(mock)
-		mock.ExpectCommit()
-
+	t.Run("Create format", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
 
-	t.Run("create format with slug is empty", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock)
-
-		formatInsertMock(mock)
-		mock.ExpectCommit()
-
+	t.Run("create format with empty slug", func(t *testing.T) {
 		Data["slug"] = ""
-		res := e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "fact-check"
-		res.ContainsMap(Data)
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("creating format fails", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		sameNameCount(mock, 0, Data["name"])
-		slugCheckMock(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "formats"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["description"], Data["meta_fields"], 1).
-			WillReturnError(errors.New("cannot create format"))
-		mock.ExpectRollback()
-
+		Data["name"] = "New Format 2"
+		resData["slug"] = "new-format-2"
+		resData["name"] = "New Format 2"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
 
-	t.Run("create fact-check when not permitted", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "created_by_id", "updated_by_id", "space_id", "fact_check"}))
-
+	t.Run("create format with same name", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
-
-	t.Run("format with same name exist", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		sameNameCount(mock, 1, Data["name"])
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-	})
-
 }

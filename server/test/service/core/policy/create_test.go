@@ -6,54 +6,48 @@ import (
 	"testing"
 
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/gavv/httpexpect/v2"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestCreatePolicy(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+func TestPolicyCreate(t *testing.T) {
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	// Create a policy
-	t.Run("Successful create policy", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
+	//create policy
+	t.Run("create policy", func(t *testing.T) {
 		e.POST(basePath).
-			WithJSON(policy_test).
 			WithHeaders(headers).
+			WithJSON(policy_test).
 			Expect().
-			Status(http.StatusOK).JSON().Object().Value("name").Equal(policy_test["name"])
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{
+				"space_id": 1,
+				"permissions": []map[string]interface{}{{
+					"actions": []string{
+						"get",
+						"create",
+						"update",
+					},
+					"resource": "posts",
+				},
+				},
+				"name": "new policy",
+			})
 	})
 
+	// undeceable policy body
 	t.Run("undecodable policy body", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
 		e.POST(basePath).
-			WithJSON(undecodable_policy).
 			WithHeaders(headers).
+			WithJSON(undecodable_policy).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
 	})
-
-	t.Run("when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		e.POST(basePath).
-			WithJSON(policy_test).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
-
 }

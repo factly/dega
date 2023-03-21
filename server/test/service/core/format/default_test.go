@@ -4,103 +4,61 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/factly/dega-server/service/core/action/format"
-
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/action/format"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestDefaultFormatCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all the entries from the db and then insert some data
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM formats")
 
 	format.DataFile = "../../../../data/formats.json"
-
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
-
 	t.Run("create default formats", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectBegin()
-		for i := 0; i < 2; i++ {
-			mock.ExpectQuery(selectQuery).
-				WillReturnRows(sqlmock.NewRows(columns))
-
-			mock.ExpectQuery(`INSERT INTO "formats"`).
-				WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], nil, 1).
-				WillReturnRows(sqlmock.
-					NewRows([]string{"id"}).
-					AddRow(1))
-		}
-		mock.ExpectCommit()
-
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated).JSON().
+			Status(http.StatusCreated).
+			JSON().
 			Object().
 			Value("nodes").
 			Array()
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("default formats already created", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectBegin()
-		for i := 0; i < 2; i++ {
-			mock.ExpectQuery(selectQuery).
-				WillReturnRows(sqlmock.NewRows(columns).
-					AddRow(1, time.Now(), time.Now(), nil, 1, 1, defaultData[i]["name"], defaultData[i]["slug"], defaultData[i]["description"], nil))
-		}
-		mock.ExpectCommit()
-
+	t.Run("create default formats already created", func(t *testing.T) {
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated).JSON().
+			Status(http.StatusCreated).
+			JSON().
 			Object().
 			Value("nodes").
 			Array()
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("when cannot open data file", func(t *testing.T) {
-		format.DataFile = "nofile.json"
-		test.CheckSpaceMock(mock)
-
+	t.Run("create default formats when data file is not present", func(t *testing.T) {
+		format.DataFile = "wrong path"
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		format.DataFile = "../../../../data/formats.json"
 	})
 
 	t.Run("when cannot parse data file", func(t *testing.T) {
-		format.DataFile = "invalidData.json"
-		test.CheckSpaceMock(mock)
-
+		format.DataFile = "./invalidData.json"
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		format.DataFile = "../../../../data/formats.json"
 	})
-
 }

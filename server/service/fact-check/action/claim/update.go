@@ -168,6 +168,25 @@ func update(w http.ResponseWriter, r *http.Request) {
 	if claim.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}
+	// check if claimant with claimant_id exists also check if claimant belongs to same space
+	var claimant model.Claimant
+	err = tx.Model(&model.Claimant{}).Where("id = ? AND space_id = ?", claim.ClaimantID, sID).First(&claimant).Error
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
+
+	// check if rating with rating_id exists also check if rating belongs to same space
+	var rating model.Rating
+	err = tx.Model(&model.Rating{}).Where("id = ? AND space_id = ?", claim.RatingID, sID).First(&rating).Error
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+		return
+	}
 
 	err = tx.Model(&result).Updates(&updateMap).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Preload("Medium").First(&result).Error
 

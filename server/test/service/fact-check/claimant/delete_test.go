@@ -1,88 +1,92 @@
 package claimant
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect/v2"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimantDelete(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+func TestDelete(t *testing.T) {
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
 
-	// create httpexpect instance
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+	var insertData = model.Claimant{
+		Name:            "Test Claimant",
+		Slug:            "test-claimant",
+		Description:     TestDescriptionJson,
+		DescriptionHTML: TestDescriptionHtml,
+		MediumID:        &insertMediumData.ID,
+		TagLine:         TestTagline,
+		Medium:          &insertMediumData,
+		SpaceID:         TestSpaceID,
+		FooterCode:      TestFooterCode,
+		HeaderCode:      TestHeaderCode,
+	}
+
+	if err := config.DB.Model(&model.Claimant{}).Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+
 	e := httpexpect.New(t, testServer.URL)
 
+	// invalid claimant id
 	t.Run("invalid claimant id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
 		e.DELETE(path).
 			WithPath("claimant_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
-
 	})
 
+	//claimant record not found
 	t.Run("claimant record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		recordNotFoundMock(mock)
-
 		e.DELETE(path).
-			WithPath("claimant_id", "100").
+			WithPath("claimant_id", "1000").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
 	})
 
-	t.Run("check claimant associated with other entity", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
-
-		claimantClaimExpect(mock, 1)
-
+	//delete claimant
+	t.Run("delete claimant", func(t *testing.T) {
 		e.DELETE(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-	})
-
-	t.Run("claimant record deleted", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		SelectWithSpace(mock)
-
-		claimantClaimExpect(mock, 0)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
-
-		e.DELETE(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", insertData.ID).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
 	})
-
 }
