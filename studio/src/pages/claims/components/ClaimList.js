@@ -3,7 +3,7 @@ import { Popconfirm, Button, Table, Space } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaim } from '../../../actions/claims';
 import { Link } from 'react-router-dom';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
@@ -36,7 +36,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
       render: (_, record) => {
         return (
           <span title={record.claim_date}>
-            {record.claim_date ? moment(record.claim_date).format('MMMM Do YYYY') : null}
+            {record.claim_date ? dayjs(record.claim_date).format('MMMM Do YYYY') : null}
           </span>
         );
       },
@@ -57,7 +57,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

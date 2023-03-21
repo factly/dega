@@ -47,7 +47,7 @@ function MediaSelector({
   return (
     <>
       <Modal
-        visible={show}
+        open={show}
         onCancel={() => setShow(false)}
         closable={false}
         width={'800px'}

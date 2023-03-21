@@ -112,10 +112,10 @@ const WebhookForm = ({ onCreate, data = {} }) => {
             onClick={() => {
               setFilters({ page: filters.page + 1, limit: filters.limit });
             }}
-            size="small"
-            style={{
-              width: '90%',
-            }}
+            // size="small"
+            // style={{
+            //   width: '90%',
+            // }}
           >
             Load More Events
           </Button>
