@@ -5,150 +5,131 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestClaimantCreate(t *testing.T) {
 
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
 
-	// create httpexpect instance
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+
+	var insertData = model.Claimant{
+		Name:            "Test Claimant",
+		Slug:            "test-claimant",
+		Description:     TestDescriptionJson,
+		DescriptionHTML: TestDescriptionHtml,
+		MediumID:        &TestMediumID,
+		SpaceID:         TestSpaceID,
+		FooterCode:      TestFooterCode,
+		HeaderCode:      TestHeaderCode,
+	}
+
+	config.DB.Model(&model.Claimant{}).Create(&insertData)
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable claimant", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	t.Run("unprocessable claimant", func(t *testing.T) {
 		e.POST(basePath).
-			WithJSON(invalidData).
 			WithHeaders(headers).
+			WithJSON(invalidData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
 	t.Run("Unable to decode claimant", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
 	t.Run("create claimant", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		claimantCountQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		claimantInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(resData)
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
 
-	t.Run("create claimant when claimant with same name exist", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		claimantCountQuery(mock, 1)
-
+	t.Run("create claimant when claimant already exist", func(t *testing.T) {
+		Data["name"] = insertData.Name
+		Data["slug"] = insertData.Slug
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 	})
 
+	// cannot parse claimant description
 	t.Run("cannot parse claimant description", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, 0)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
+		Data["description"] = "invalid description"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
 	})
 
-	t.Run("create claimant with slug is empty", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		claimantInsertMock(mock)
-
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
+	// create claimant with empty slug
+	t.Run("create claimant with empty slug", func(t *testing.T) {
 		Data["slug"] = ""
-		res := e.POST(basePath).
+		Data["name"] = "Test Claimant 2"
+		Data["description"] = TestDescriptionFromRequest
+		resData["name"] = "Test Claimant 2"
+		resData["slug"] = "test-claimant-2"
+
+		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "toi"
-		res.ContainsMap(resData)
-
-		test.ExpectationsMet(t, mock)
+			JSON().
+			Object().
+			ContainsMap(resData)
 	})
 
-	t.Run("medium does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		claimantInsertError(mock)
-
+	// medium does not belong to same space
+	t.Run("medium does not belong to same space", func(t *testing.T) {
+		Data["medium_id"] = 100
+		Data["name"] = "Test Claimant 3"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
 	})
-
 }

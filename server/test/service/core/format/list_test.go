@@ -4,37 +4,29 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestFormatList(t *testing.T) {
-	mock := test.SetupMockDB()
-
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM formats")
+	var insertMediumData model.Medium
+	var insertData model.Format
 	e := httpexpect.New(t, testServer.URL)
 
-	formatlist := []map[string]interface{}{
-		{"name": "Test Format 1", "slug": "test-format-1", "description": "desc 1"},
-		{"name": "Test Format 2", "slug": "test-format-2", "description": "desc 2"},
-	}
-
-	t.Run("get empty list of formats", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		formatCountQuery(mock, 0)
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
+	t.Run("get empty list", func(t *testing.T) {
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -43,61 +35,73 @@ func TestFormatList(t *testing.T) {
 			JSON().
 			Object().
 			ContainsMap(map[string]interface{}{"total": 0})
-
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("get non-empty list of formats", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		formatCountQuery(mock, len(formatlist))
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, formatlist[0]["name"], formatlist[0]["slug"], formatlist[0]["description"], test.NilJsonb()).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"], formatlist[1]["description"], test.NilJsonb()))
-
+	t.Run("get non-empty list of media", func(t *testing.T) {
+		insertMediumData = model.Medium{
+			Name:        "Create Medium Test",
+			Slug:        "create-medium-test",
+			Description: "desc",
+			Type:        "jpg",
+			Title:       "Sample image",
+			Caption:     "caption",
+			AltText:     "TestAltText",
+			FileSize:    100,
+			URL: postgres.Jsonb{
+				RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+			},
+			Dimensions: "TestDimensions",
+			MetaFields: TestMetaFields,
+			SpaceID:    TestSpaceID,
+		}
+		config.DB.Create(&insertMediumData)
+		insertData = model.Format{
+			Name:        TestName,
+			Slug:        TestSlug,
+			Description: TestDescription,
+			MetaFields:  TestMetaFields,
+			SpaceID:     TestSpaceID,
+			MediumID:    &insertMediumData.ID,
+			FooterCode:  TestFooterCode,
+			HeaderCode:  TestHeaderCode,
+		}
+		config.DB.Create(&insertData)
+		insertData.ID = 100000
+		insertData.Name = "TestName2"
+		insertData.Slug = "test-name-2"
+		config.DB.Create(&insertData)
+		resData["name"] = "TestName2"
+		resData["slug"] = "test-name-2"
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(formatlist)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(formatlist[0])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
 
 	t.Run("get formats with pagination", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		formatCountQuery(mock, len(formatlist))
-
-		mock.ExpectQuery(paginationQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, formatlist[1]["name"], formatlist[1]["slug"], formatlist[1]["description"], test.NilJsonb()))
-
+		resData["name"] = TestName
+		resData["slug"] = TestSlug
 		e.GET(basePath).
-			WithQueryObject(map[string]interface{}{
-				"limit": "1",
-				"page":  "2",
-			}).
 			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{"page": 2, "limit": 1}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(formatlist)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(formatlist[1])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 
 	})
 }

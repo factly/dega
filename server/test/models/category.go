@@ -1,12 +1,14 @@
-package model
+package models
 
 import (
 	"time"
 
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gorm.io/gorm"
 )
 
 type Category struct {
+	gorm.Model
 	Base
 	CreatedAt        time.Time      `json:"created_at"`
 	UpdatedAt        time.Time      `json:"updated_at"`

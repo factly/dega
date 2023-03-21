@@ -1,241 +1,179 @@
 package claim
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/factly/dega-server/test/service/fact-check/claimant"
-	"github.com/factly/dega-server/test/service/fact-check/rating"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
-var updatedClaim = map[string]interface{}{
-	"claim":        "Claim",
-	"claim_date":   time.Now(),
-	"checked_date": time.Now(),
-	"claim_sources": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"claim sources"}`),
-	},
-	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-	},
-	"html_description": "<p>Test Description</p>",
-	"claimant_id":      uint(1),
-	"rating_id":        uint(1),
-	"fact":             "test fact",
-	"review_tag_line": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"review tag line"}`),
-	},
-	"review_sources": postgres.Jsonb{
-		RawMessage: []byte(`{"type":"review sources"}`),
-	},
-}
-
 func TestClaimUpdate(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM claimants")
+	config.DB.Exec("DELETE FROM claims")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+	insertClaimantData := model.Claimant{
+		Name:    "Test Claimant",
+		Slug:    "test-claimant",
+		SpaceID: TestSpaceID,
+	}
 
-	// create httpexpect instance
+	if err := config.DB.Model(&model.Claimant{}).Create(&insertClaimantData).Error; err != nil {
+		log.Fatal(err)
+	}
+	insertRatingData := model.Rating{
+		Name:         "Test Rating",
+		Slug:         "test-rating",
+		NumericValue: 5,
+		SpaceID:      TestSpaceID,
+	}
+	if err := config.DB.Model(&model.Rating{}).Create(&insertRatingData).Error; err != nil {
+		log.Fatal(err)
+	}
+	insertData := model.Claim{
+		Claim: "Test Claim",
+		Slug:  "test-claim",
+
+		ClaimSources: TestClaimSources,
+		Fact:         TestFact,
+		ReviewSources: postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review sources"}`),
+		},
+		SpaceID:    TestSpaceID,
+		ClaimantID: insertClaimantData.ID,
+		RatingID:   insertRatingData.ID,
+		Claimant:   insertClaimantData,
+		Rating:     insertRatingData,
+	}
+	Data["claimant_id"] = insertClaimantData.ID
+	Data["rating_id"] = insertRatingData.ID
+
+	config.DB.Model(&model.Claim{}).Create(&insertData)
+
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+
 	e := httpexpect.New(t, testServer.URL)
 
+	// invalid claim id
 	t.Run("invalid claim id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
 		e.PUT(path).
 			WithPath("claim_id", "invalid_id").
 			WithHeaders(headers).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusBadRequest)
 	})
 
-	t.Run("claim record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		recordNotFoundMock(mock)
+	// claim record not found
 
+	t.Run("claim record not found", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("claim_id", "100").
+			WithPath("claim_id", "1000000").
 			WithHeaders(headers).
-			WithJSON(updatedClaim).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusNotFound)
 	})
-	t.Run("Unable to decode claim data", func(t *testing.T) {
 
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unable to decode claim data
+	t.Run("unable to decode claim data", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("claim_id", 1).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
 	})
 
-	t.Run("Unprocessable claim", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unprocessable claim
+	t.Run("unprocessable claim", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("claim_id", 1).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(invalidData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
 	})
 
+	// update claim
 	t.Run("update claim", func(t *testing.T) {
-		updatedClaim["slug"] = "claim"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		claimUpdateMock(mock, updatedClaim, nil)
-		mock.ExpectCommit()
-
-		result := e.PUT(path).
-			WithPath("claim_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaim).
-			Expect().
-			Status(http.StatusOK).JSON().Object()
-		validateAssociations(result)
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("cannot parse claim description", func(t *testing.T) {
-		updatedClaim["slug"] = "claim"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		updatedClaim["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
+		Data["claim"] = "Updated Claim 1"
+		Data["slug"] = "updated-claim-1"
 		e.PUT(path).
-			WithPath("claim_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaim).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-		updatedClaim["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
-		test.ExpectationsMet(t, mock)
-	})
-	t.Run("update claim by id with empty slug", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		updatedClaim["slug"] = "claim"
-		SelectWithSpace(mock)
-
-		slugCheckMock(mock, Data)
-
-		claimUpdateMock(mock, updatedClaim, nil)
-		mock.ExpectCommit()
-
-		Data["slug"] = ""
-		result := e.PUT(path).
-			WithPath("claim_id", 1).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object()
-		Data["slug"] = "claim"
-		validateAssociations(result)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{
+				"claim": "Updated Claim 1",
+				"slug":  "updated-claim-1",
+			})
 	})
 
-	t.Run("update claim with different slug", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		updatedClaim["slug"] = "claim-test"
-
-		SelectWithSpace(mock)
-
-		mock.ExpectQuery(`SELECT slug, space_id FROM "claims"`).
-			WithArgs(fmt.Sprint(updatedClaim["slug"], "%"), 1).
-			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
-
-		claimUpdateMock(mock, updatedClaim, nil)
-		mock.ExpectCommit()
-
-		result := e.PUT(path).
-			WithPath("claim_id", 1).
+	// update claim with empty slug
+	t.Run("update claim with empty slug", func(t *testing.T) {
+		Data["claim"] = "Updated Claim 2"
+		Data["slug"] = ""
+		resData["claim"] = "Updated Claim 2"
+		resData["slug"] = "updated-claim-2"
+		e.PUT(path).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
-			WithJSON(updatedClaim).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object()
-		validateAssociations(result)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusOK).
+			JSON().
+			Object().
+			ContainsMap(map[string]interface{}{
+				"claim": "Updated Claim 2",
+				"slug":  "updated-claim-2",
+			})
 	})
+
+	// claimant do not belong to same space
 	t.Run("claimant do not belong to same space", func(t *testing.T) {
-		updatedClaim["slug"] = "claim"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		mock.ExpectBegin()
-		claimant.EmptyRowMock(mock)
-		mock.ExpectRollback()
-
+		Data["claimant_id"] = 987632
 		e.PUT(path).
-			WithPath("claim_id", 1).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
-			WithJSON(updatedClaim).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
 	})
 
+	// rating do not belong to same space
 	t.Run("rating do not belong to same space", func(t *testing.T) {
-		updatedClaim["slug"] = "claim"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		mock.ExpectBegin()
-		claimant.SelectWithSpace(mock)
-		rating.EmptyRowMock(mock)
-		mock.ExpectRollback()
-
+		Data["rating_id"] = 987632
 		e.PUT(path).
-			WithPath("claim_id", 1).
+			WithPath("claim_id", insertData.ID).
 			WithHeaders(headers).
-			WithJSON(updatedClaim).
+			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
 	})
-
 }

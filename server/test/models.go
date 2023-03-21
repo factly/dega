@@ -1,16 +1,41 @@
 package test
 
-import "time"
+import (
+	"time"
+
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/model"
+)
 
 // Dummy response body for the mock server requesting organisation data
 // Endpoint this is sent for is /organisations
 var Dummy_Org = map[string]interface{}{
-	"id":         1,
-	"created_at": time.Now(),
-	"updated_at": time.Now(),
-	"deleted_at": nil,
-	"title":      "test org",
-	"slug":       "test-org",
+	"id":           1,
+	"created_at":   time.Now(),
+	"updated_at":   time.Now(),
+	"deleted_at":   nil,
+	"title":        "test org",
+	"slug":         "test-org",
+	"organisation": map[string]interface{}{},
+	"applications": []map[string]interface{}{
+		{"id": 1, "name": "test", "description": "test", "url": "test", "medium_id": 1},
+	},
+	"spaces": []map[string]interface{}{
+		{
+			"id":              1,
+			"name":            "Test",
+			"slug":            "test",
+			"organisation_id": 1,
+			"application_id":  1,
+			"permissions": []map[string]interface{}{
+				{
+					"resource": "posts",
+					"actions":  []string{"create", "update", "delete", "read"},
+				},
+			},
+			"allowed_services": []string{"posts", "tags", "categories", "media", "pages", "formats", "spaces", "users", "organisations", "permissions"},
+		},
+	},
 	"permission": map[string]interface{}{
 		"id":              1,
 		"created_at":      time.Now(),
@@ -310,4 +335,79 @@ var OembedResponse = map[string]interface{}{
 	"thumbnail_url":    "https://github.githubassets.com/images/modules/open_graph/github-mark.png",
 	"thumbnail_width":  1200,
 	"thumbnail_height": 620,
+}
+
+//	{
+//	    "name": "new policy",
+//	    "description": "this a des",
+//	    "roles": [
+//	        5
+//	    ],
+//	    "permissions": [
+//	        {
+//	            "resource": "posts",
+//	            "actions": [
+//	                "get",
+//	                "create",
+//	                "update"
+//	            ]
+//	        },
+//	        {
+//	            "resource": "categories",
+//	            "actions": [
+//	                "update"
+//	            ]
+//	        },
+//	        {
+//	            "resource": "tags",
+//	            "actions": [
+//	                "create",
+//	                "update"
+//	            ]
+//	        }
+//	    ]
+//	}
+var KavachPolicy = []map[string]interface{}{{
+	"id":          1,
+	"name":        "new policy",
+	"description": "this a des",
+	"permissions": []map[string]interface{}{
+		{
+			"resource": "posts",
+			"actions":  []string{"get", "create", "update"},
+		},
+	},
+	"roles": []model.SpaceRole{{
+		Base:        config.Base{ID: 1},
+		Name:        "test",
+		Description: "test",
+		Slug:        "test",
+		SpaceID:     1,
+		Users: []model.User{{
+			FirstName: "test",
+			LastName:  "test",
+		}},
+	}},
+	"space_id": 1},
+}
+
+var SpaceRole = model.SpaceRole{
+	Base:        config.Base{ID: 1},
+	Name:        "test",
+	Description: "test",
+	Slug:        "test",
+	SpaceID:     1,
+	Users: []model.User{{
+		FirstName: "test",
+		LastName:  "test",
+	}},
+}
+
+var KavachCreateSpace = map[string]interface{}{
+	"name":            "Test",
+	"slug":            "test",
+	"description":     "Test",
+	"id":              1,
+	"organisation_id": 1,
+	"application_id":  1,
 }

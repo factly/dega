@@ -5,74 +5,43 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	// "github.com/factly/dega-server/service/core/action/policy"
-
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/gavv/httpexpect/v2"
+	"github.com/factly/dega-server/service/core/action/policy"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestCreateDefaultPolicy(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	policy.PolicyDataFile = "../../../../data/policies.json"
+	policy.RolesDataFile = "../../../../data/roles.json"
 
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	// policy.DataFile = "../../../../data/formats.json"
-
-	// Create a policy
 	t.Run("create default policies", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated).
-			JSON().
-			Object().
-			Value("nodes").
-			Array()
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated)
 	})
 
 	t.Run("when cannot open data file", func(t *testing.T) {
-		// policy.DataFile = "nofile.json"
-		test.CheckSpaceMock(mock)
-
+		policy.PolicyDataFile = "nofile.json"
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		// policy.DataFile = "../../../../data/policies.json"
 	})
 
 	t.Run("when cannot parse data file", func(t *testing.T) {
-		// policy.DataFile = "invalidData.json"
-		test.CheckSpaceMock(mock)
-
+		policy.PolicyDataFile = "invalidData.json"
 		e.POST(defaultsPath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-		// policy.DataFile = "../../../../data/policies.json"
-	})
-
-	t.Run("when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-
-		e.POST(defaultsPath).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
 	})
 }

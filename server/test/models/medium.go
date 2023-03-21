@@ -1,10 +1,12 @@
-package model
+package models
 
 import (
 	"github.com/jinzhu/gorm/dialects/postgres"
+	"gorm.io/gorm"
 )
 
 type Medium struct {
+	gorm.Model
 	Base
 	Name        string         `gorm:"column:name" json:"name"`
 	Slug        string         `gorm:"column:slug" json:"slug"`
