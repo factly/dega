@@ -167,10 +167,28 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	if podcast.MediumID == 0 {
 		updateMap["medium_id"] = nil
+	} else {
+		// check if medium exists and belongs to same space
+		var medium coreModel.Medium
+		if err = config.DB.Where("id = ? AND space_id = ?", podcast.MediumID, sID).First(&medium).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("BAD REQUEST", http.StatusBadRequest)))
+			return
+		}
 	}
 
 	if podcast.PrimaryCategoryID == 0 {
 		updateMap["primary_category_id"] = nil
+	} else {
+		// check if category exists and belongs to same space
+		var category coreModel.Category
+		if err = config.DB.Where("id = ? AND space_id = ?", podcast.PrimaryCategoryID, sID).First(&category).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("BAD REQUEST", http.StatusBadRequest)))
+			return
+		}
 	}
 
 	tx.Model(&result).Omit("Categories").Updates(&updateMap).Preload("Categories").Preload("Medium").First(&result)

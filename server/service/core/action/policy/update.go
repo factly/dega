@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	httpx "github.com/factly/dega-server/util/http"
@@ -116,18 +117,20 @@ func update(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Update into meili index
-	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "policy",
-		"name":        result.Name,
-		"description": result.Description,
-	}
 
-	err = meilisearchx.UpdateDocument("dega", meiliObj)
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
-		return
+	if config.SearchEnabled() {
+		meiliObj := map[string]interface{}{
+			"id":          result.ID,
+			"kind":        "policy",
+			"name":        result.Name,
+			"description": result.Description,
+		}
+		err = meilisearchx.UpdateDocument("dega", meiliObj)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	if util.CheckNats() {

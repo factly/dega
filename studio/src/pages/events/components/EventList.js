@@ -69,7 +69,7 @@ function EventList() {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteEvent(record.id)).then(() => fetchEvents())}
           >
-            <Button type="danger" icon={<DeleteOutlined />} />
+            <Button danger icon={<DeleteOutlined />} />
           </Popconfirm>
         );
       },

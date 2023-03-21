@@ -54,7 +54,7 @@ function FormatList({ actions, data, filters, setFilters, fetchFormats }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

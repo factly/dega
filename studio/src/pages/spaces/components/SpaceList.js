@@ -69,7 +69,7 @@ function SpaceList() {
             title="Are you sure you want to delete this?"
             onConfirm={() => dispatch(deleteSpace(record.id)).then(() => fetchSpaces())}
           >
-            <Button type="danger" icon={<DeleteOutlined />} />
+            <Button danger icon={<DeleteOutlined />} />
           </Popconfirm>
         );
       },

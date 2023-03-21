@@ -36,7 +36,7 @@
   background: #f0f2f5;
   margin: 1rem auto;
 }
-.ant-btn.button-secondary {
+/* .ant-btn.button-secondary {
   color: #fff;
   background: #15171a;
   font-weight: 500;
@@ -58,7 +58,7 @@
   color: #15171a;
   background: #fff;
   border-color: #15171a;
-}
+} */
 
 .layout-header {
   background-color: #ffffff;

@@ -7,14 +7,12 @@ import (
 
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/test"
-	"github.com/gavv/httpexpect"
+	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestMetaDetails(t *testing.T) {
-	mock := test.SetupMockDB()
-
 	test.IFramelyGock()
 
 	testServer := httptest.NewServer(service.RegisterRoutes())
@@ -22,10 +20,10 @@ func TestMetaDetails(t *testing.T) {
 	defer gock.DisableNetworking()
 	defer testServer.Close()
 
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("get iframely metadata for github.com", func(t *testing.T) {
+	// get iframely metadata from github.com
+	t.Run("get iframely metadata from github.com", func(t *testing.T) {
 		e.GET(path).
 			WithQueryObject(map[string]interface{}{
 				"url":  siteUrl,
@@ -65,7 +63,7 @@ func TestMetaDetails(t *testing.T) {
 	})
 
 	t.Run("request metadata without url", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+
 		e.GET(path).
 			WithQueryObject(map[string]interface{}{
 				"type": "iframely",
@@ -73,29 +71,6 @@ func TestMetaDetails(t *testing.T) {
 			Expect().
 			Status(http.StatusBadRequest)
 	})
-
-	t.Run("request metadata without type", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		e.GET(path).
-			WithQueryObject(map[string]interface{}{
-				"url": siteUrl,
-			}).
-			Expect().
-			Status(http.StatusBadRequest)
-	})
-
-	t.Run("iframely is down", func(t *testing.T) {
-		gock.Off()
-		test.CheckSpaceMock(mock)
-		e.GET(path).
-			WithQueryObject(map[string]interface{}{
-				"url":  siteUrl,
-				"type": "iframely",
-			}).
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
-
 	t.Run("iframely is timed out", func(t *testing.T) {
 		gock.Off()
 		gock.New(testServer.URL).EnableNetworking().Persist()

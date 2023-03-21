@@ -48,7 +48,7 @@ function MenuList({ actions, data, filters, setFilters, fetchMenus }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

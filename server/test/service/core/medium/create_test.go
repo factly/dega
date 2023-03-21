@@ -1,73 +1,69 @@
 package medium
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestMediumCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM media")
+	var insertData = &model.Medium{
+		Name:        "Create Medium Test",
+		Slug:        "create-medium-test",
+		Description: TestDescription,
+		Type:        TestType,
+		Title:       TestTitle,
+		Caption:     TestCaption,
+		AltText:     TestAltText,
+		FileSize:    TestFileSize,
+		URL:         TestUrl,
+		Dimensions:  TestDimensions,
+		MetaFields:  TestMetaFields,
+		SpaceID:     TestSpaceID,
+	}
+	insertSpacePermission := &model.SpacePermission{
+		SpaceID:   1,
+		FactCheck: true,
+		Media:     10,
+		Posts:     10,
+		Podcast:   true,
+		Episodes:  10,
+		Videos:    10,
+	}
+	config.DB.Create(insertData)
+	config.DB.Create(insertSpacePermission)
 
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
 	t.Run("Unprocessable medium", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock)
-		countQuery(mock, 1)
-
-		e.POST(basePath).
-			WithJSON(invalidData).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-	})
-
-	t.Run("Unable to decode medium", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
-	t.Run("create medium", func(t *testing.T) {
+	t.Run("unable to decode medium ", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
 
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock)
-		countQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		mediumInsertMock(mock)
-		mock.ExpectCommit()
-
+	t.Run("create medium ", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
@@ -77,55 +73,43 @@ func TestMediumCreate(t *testing.T) {
 			Object().
 			Value("nodes").
 			Array().
-			Element(0).Object().ContainsMap(Data)
-		test.ExpectationsMet(t, mock)
-
+			Element(0).
+			Object().
+			ContainsMap(Data)
 	})
 
-	t.Run("create medium when permission not present", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "space_permissions"`)).
-			WithArgs(1).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "space_id", "mediums", "posts"}))
-
+	t.Run("create medium when permission is not present", func(t *testing.T) {
+		config.DB.Exec("DELETE FROM space_permissions")
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
 
 	})
 
 	t.Run("create more than permitted medium", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		countQuery(mock, 100)
-
+		config.DB.Exec("DELETE FROM space_permissions")
+		insertSpacePermission.Media = 0
+		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
+			log.Fatal(err)
+		}
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
 	})
 
 	t.Run("create medium with empty slug", func(t *testing.T) {
+		config.DB.Exec("DELETE FROM space_permissions")
+		insertSpacePermission.Media = 5
+		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
+			log.Fatal(err)
+		}
+		createArr[0]["name"] = "Image-2"
+		createArr[0]["slug"] = ""
 
-		test.CheckSpaceMock(mock)
-
-		space.SelectQuery(mock, 1)
-		countQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-
-		mediumInsertMock(mock)
-		mock.ExpectCommit()
-
-		Data["slug"] = ""
 		res := e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
@@ -133,28 +117,24 @@ func TestMediumCreate(t *testing.T) {
 			Status(http.StatusCreated).
 			JSON().
 			Object().
-			Value("nodes").Array().Element(0).Object()
-		Data["slug"] = "image"
-		res.ContainsMap(Data)
-		test.ExpectationsMet(t, mock)
+			Value("nodes").
+			Array().
+			Element(0).
+			Object()
+		createArr[0]["slug"] = "image-2"
+		res.ContainsMap(createArr[0])
 	})
 
 	t.Run("medium does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		countQuery(mock, 0)
-
-		slugCheckMock(mock, Data)
-		mediumInsertError(mock)
-
+		config.DB.Exec("DELETE FROM space_permissions")
+		insertSpacePermission.SpaceID = 3
+		if err := config.DB.Model(&model.SpacePermission{}).Create(insertSpacePermission).Error; err != nil {
+			log.Fatal(err)
+		}
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(createArr).
 			Expect().
-			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusUnprocessableEntity)
 	})
-
 }

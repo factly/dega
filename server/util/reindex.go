@@ -55,17 +55,17 @@ func AddPosts(spaceID uint) error {
 	err := config.DB.Model(&model.Post{}).Where(&model.Post{
 		SpaceID: spaceID,
 	}).Preload("Format").Preload("Tags").Preload("Categories").Find(&posts).Error
-
-	if err!=nil{
-		tx.Rollback();
+	if err != nil {
+		tx.Rollback()
 		return err
 	}
+	// log.Fatal("============================================================", posts)
 
 	postAuthorMap := make(map[uint][]uint)
 	postAuthors := make([]model.PostAuthor, 0)
 
 	err = tx.Model(&model.PostAuthor{}).Find(&postAuthors).Error
-	if err!=nil{
+	if err != nil {
 		tx.Rollback()
 		return err
 	}
@@ -78,7 +78,7 @@ func AddPosts(spaceID uint) error {
 	postClaims := make([]factCheckModel.PostClaim, 0)
 
 	err = tx.Model(&factCheckModel.PostClaim{}).Find(&postClaims).Error
-	if err!=nil{
+	if err != nil {
 		tx.Rollback()
 		return err
 	}
@@ -137,9 +137,9 @@ func AddPosts(spaceID uint) error {
 
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
-
+	// log.Fatal("===============================", meiliPostObjects)
 	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliPostObjects)
-	tx.Commit();
+	tx.Commit()
 	return err
 }
 
@@ -204,8 +204,8 @@ func AddMedium(spaceID uint) error {
 	err := config.DB.Model(&model.Medium{}).Where(&model.Medium{
 		SpaceID: spaceID,
 	}).Find(&medium).Error
-	
-	if err!=nil{
+
+	if err != nil {
 		tx.Rollback()
 		return err
 	}

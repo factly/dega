@@ -13,6 +13,7 @@ import (
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/spf13/viper"
 )
 
 // list response
@@ -68,7 +69,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 			var hits []interface{}
 
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "medium")
+			hits, err = meilisearchx.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "medium")
+
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))

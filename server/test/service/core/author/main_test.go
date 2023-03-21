@@ -1,34 +1,25 @@
 package author
 
 import (
+	"log"
 	"os"
 	"testing"
 
+	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
 	"gopkg.in/h2non/gock.v1"
 )
 
-var headers = map[string]string{
-	"X-Space": "1",
-	"X-User":  "1",
-}
-
-var missingSpace = map[string]string{
-	"X-User": "1",
-}
-
-var missingUser = map[string]string{
-	"X-Space": "1",
-}
-
-var basePath = "/core/authors"
-
 func TestMain(m *testing.M) {
-
-	// Mock kavach server and allowing persisted external traffic
 	defer gock.Disable()
 	test.MockServer()
+	test.SetupSqlite("./author.db")
+	config.DB.AutoMigrate(&model.Author{}, &model.PostAuthor{}, &model.Post{})
 	defer gock.DisableNetworking()
 	exitValue := m.Run()
+	if err := os.Remove("./author.db"); err != nil {
+		log.Fatal(err)
+	}
 	os.Exit(exitValue)
 }
