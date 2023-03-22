@@ -178,7 +178,7 @@ const routes = {
   createSpace: {
     path: '/admin/spaces/create',
     menuKey: '/admin/spaces',
-    Component: CreateSpace,
+    // Component: CreateSpace,
     title: 'New Space',
     permission: {
       resource: 'spaces',

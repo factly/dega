@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Button, Space, Tag, Table } from 'antd';
+import { Modal, Button, Space, Tag, Table, Typography } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -9,8 +9,9 @@ import {
   CloseOutlined,
   FormOutlined,
 } from '@ant-design/icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
+import { getDateAndTimeFromString, formatDate, getDifferenceInModifiedTime } from '../../utils/date'
 import { Link } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
@@ -21,6 +22,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const getTagList = (tagids) => {
     return tagids?.map((id) => (
@@ -51,6 +53,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
   // const getAuthorsList = (ids) => {
   //   return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
   // };
+  const authors = useSelector((state) => state.authors.details);
+
   const columns = [
     {
       title: 'Title',
@@ -61,68 +65,61 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
         <Link
           to={format.slug === 'article' ? `/posts/${item.id}/edit` : `/fact-checks/${item.id}/edit`}
         >
-          <p style={{ fontSize: '1.125rem', fontWeight: 500 }}>{item.title}</p>
+          {/* <p style={{ fontSize: '1rem', fontWeight: 500 }}></p> */}
+          <Typography.Text style={{ fontSize: '1rem' }} strong>
+            {item.title}
+          </Typography.Text>
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
               Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
             </p>
           )}
-          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p> 
+          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p>
           */}
         </Link>
       ),
     },
     {
-      title: 'Categories',
-      dataIndex: 'categories',
+      title: 'Published Date',
+      dataIndex: ['created_at', 'updated_at'],
       key: 'categories',
       ellipsis: true,
-      render: (item) => {
-        return item.length > 0 ? getCategoryList(item) : null;
+      render: (_, item) => {
+        return item &&
+          <>
+            <Typography.Text strong>
+              {formatDate(getDateAndTimeFromString(item.created_at))}<br />
+            </Typography.Text>
+            <Typography.Text type="secondary">
+              {getDifferenceInModifiedTime(item.updated_at)}
+            </Typography.Text>
+          </>
       },
     },
     {
-      title: 'Tags',
-      dataIndex: 'tags',
-      key: 'tags',
-      ellipsis: true,
-      render: (item) => {
-        return getTagList(item);
-      },
-    },
-    {
-      title: 'Status',
-      dataIndex: 'status',
+      title: 'Authors',
+      dataIndex: 'authors',
       key: 'status',
       width: 200,
-      render: (status) => {
-        return status === 'publish' ? (
-          <Tag icon={<CheckCircleOutlined />} color="green">
-            Published
-          </Tag>
-        ) : status === 'draft' ? (
-          <Tag color="red" icon={<ExceptionOutlined />}>
-            Draft
-          </Tag>
-        ) : status === 'ready' ? (
-          <Tag color="gold" icon={<ClockCircleOutlined />}>
-            Ready to Publish
-          </Tag>
-        ) : null;
+      render: (items) => {
+        return items?.map((author) => (
+          <Typography.Text strong>
+            {authors[author]?.display_name ? authors[author]?.display_name : authors[author]?.['email'] ? authors[author]?.['email'] : null}
+          </Typography.Text>
+        ));
       },
     },
     {
       title: 'Actions',
       dataIndex: 'actions',
       fixed: 'right',
-      align: 'center',
       width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
           <>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', gap: '16px' }}>
               <Link
                 style={{ display: 'block' }}
                 to={
@@ -132,39 +129,44 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 }
               >
                 <Button
-                  icon={<EditOutlined />}
+                  size="large"
+                  icon={<EditOutlined style={{ color: "#858585" }} />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
-                  style={{
-                    margin: '0.5rem',
-                    padding: '4px 22px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
                 />
               </Link>
               <Button
+                size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
                 onClick={() => {
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
-                style={{ margin: '0.5rem' }}
-              >
-                {isOpen ? <CloseOutlined /> : <FormOutlined />}
-              </Button>
-              <Popconfirm
-                title="Are you sure you want to delete this?"
-                onConfirm={() => dispatch(deletePost(item.id)).then(() => fetchPosts())}
+                icon={isOpen ? <CloseOutlined style={{ color: "#858585" }} /> : <FormOutlined style={{ color: "#858585" }} />}
+              />
+              <Button
+                size="large"
+                icon={<DeleteOutlined style={{ color: "#858585" }} />}
+                onClick={() => { setModalOpen(true) }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              />
+              <Modal
+                open={modalOpen}
+                closable={false}
+                centered
+                width={400}
+                className="delete-modal-container"
+                style={{
+                  borderRadius: '18px',
+                }}
+                onOk={() => {
+                  () => dispatch(deletePost(item.id)).then(() => fetchPosts())
+                }}
+                onCancel={() => {
+                  setModalOpen(false);
+                }}
               >
-                <Button
-                  icon={<DeleteOutlined />}
-                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  danger
-                  style={{ margin: '0.5rem' }}
-                ></Button>
-              </Popconfirm>
+                <p>Are you sure you want to delete this post?</p>
+              </Modal>
             </div>
           </>
         );
@@ -178,6 +180,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
         dataSource={data.posts}
         columns={columns}
         rowKey={(record) => record.id}
+        loading={data.loading}
         expandable={{
           expandIconColumnIndex: -1,
           expandedRowKeys,
@@ -197,7 +200,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

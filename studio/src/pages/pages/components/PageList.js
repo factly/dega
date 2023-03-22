@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Popconfirm, Button, Space, Tag, Table } from 'antd';
+import { ConfigProvider, Button, Space, Tag, Table, Typography, Modal } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
@@ -18,6 +18,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const getTagList = (tagids) => {
     return tagids.map((id) => (
@@ -48,35 +49,19 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       width: 400,
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
-          <p style={{ fontSize: '1.125rem', fontWeight: 500 }}>{item.title}</p>
+          <Typography.Text style={{ fontSize: '1rem' }} strong>
+            {item.title}
+          </Typography.Text>
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
               Published on {dayjs(item.published_date).format('MMMM Do YYYY')}
             </p>
           )}
-          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p> 
+          <p style={{ color: 'CaptionText' }}>by {getAuthorsList(item.authors)}</p>
           */}
         </Link>
       ),
-    },
-    {
-      title: 'Categories',
-      dataIndex: 'categories',
-      key: 'categories',
-      ellipsis: true,
-      render: (item) => {
-        return item.length > 0 ? getCategoryList(item) : null;
-      },
-    },
-    {
-      title: 'Tags',
-      dataIndex: 'tags',
-      key: 'tags',
-      ellipsis: true,
-      render: (item) => {
-        return getTagList(item);
-      },
     },
     {
       title: 'Status',
@@ -103,54 +88,61 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Actions',
       dataIndex: 'actions',
       fixed: 'right',
-      align: 'center',
       width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
-          <>
-            <div style={{ display: 'flex', padding: '0 1rem' }}>
+          <ConfigProvider theme={{
+            components: {
+              Button: {
+                controlHeight: 35,
+                colorBorder: "#F2F2F2",
+                colorPrimaryHover: "#F2F2F2"
+              }
+            }
+          }}>
+            <div style={{ display: 'flex', gap: "0.5rem" }}>
               <Link style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
                 <Button
-                  icon={<EditOutlined />}
+                  size="large"
+                  icon={<EditOutlined style={{ color: "#858585" }} />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
-                  style={{
-                    margin: '0.5rem',
-                    padding: '4px 22px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
                 />
               </Link>
               <Button
+                size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
                 onClick={() => {
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
-                style={{ margin: '0.5rem' }}
-              >
-                {isOpen ? <CloseOutlined /> : <FormOutlined />}
-              </Button>
-              <Popconfirm
-                title="Are you sure you want to delete this?"
-                onConfirm={() => dispatch(deletePage(item.id)).then(() => fetchPages())}
+                icon={isOpen ? <CloseOutlined style={{ color: "#858585" }} /> : <FormOutlined style={{ color: "#858585" }} />}
+              />
+              <Button
+                size="large"
+                onClick={() => { setModalOpen(true) }}
+                icon={<DeleteOutlined style={{ color: "#858585" }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              />
+              <Modal
+                open={modalOpen}
+                closable={false}
+                centered
+                width={400}
+                className="delete-modal-container"
+                style={{
+                  borderRadius: '18px',
+                }}
+                onOk={() => {
+                  () => dispatch(deletePage(item.id)).then(() => fetchPages())
+                }}
+                onCancel={() => {
+                  setModalOpen(false);
+                }}
               >
-                <Button
-                  icon={<DeleteOutlined />}
-                  disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                  danger
-                  style={{
-                    margin: '0.5rem',
-                    padding: '4px 22px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                ></Button>
-                {/* <Button
+                <p>Are you sure you want to delete this Page?</p>
+              </Modal>
+              {/* <Button
                   icon={<EditOutlined />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
                   style={{
@@ -161,9 +153,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                     justifyContent: 'center',
                   }}
                 /> */}
-              </Popconfirm>
             </div>
-          </>
+          </ConfigProvider>
         );
       },
     },
@@ -173,6 +164,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
     <Space direction="vertical">
       <Table
         dataSource={data.pages}
+        loading={data.loading}
         columns={columns}
         rowKey={(record) => record.id}
         locale={{
@@ -197,7 +189,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

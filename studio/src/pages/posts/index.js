@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Form, Col, Row, Input, Select } from 'antd';
+import { Space, Button, Form, Col, Row, Input, Select, Tabs, Typography, Tooltip, ConfigProvider } from 'antd';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import PostList from '../../components/List';
 import getUserPermission from '../../utils/getUserPermission';
@@ -25,6 +26,7 @@ function Posts({ formats }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const [expand, setExpand] = React.useState(false);
+  const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
   const getFields = () => {
     const children = [];
     expand &&
@@ -70,7 +72,8 @@ function Posts({ formats }) {
   useEffect(() => {
     fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, formats.loading]);
+  }, [search]);
+
 
   const fetchPosts = () => {
     dispatch(getPosts(params));
@@ -105,6 +108,25 @@ function Posts({ formats }) {
     };
   });
 
+  const postStatusItems = [
+    {
+      key: 'all',
+      label: 'All',
+    },
+    {
+      key: 'publish',
+      label: 'Published'
+    },
+    {
+      key: 'ready',
+      label: 'Ready to Pubish'
+    },
+    {
+      key: 'draft',
+      label: 'Drafts'
+    },
+  ]
+
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
     Object.keys(values).forEach(function (key) {
@@ -136,94 +158,157 @@ function Posts({ formats }) {
     });
   };
 
-  return formats.loading ? (
-    <Loader />
-  ) : formats.article ? (
+  return (formats.loading)
+  ? <Loader />
+  : formats.article ? (
     <Space direction="vertical">
       <Helmet title={'Posts'} />
       <Template format={formats.article} />
-
-      <Form
-        initialValues={params}
-        form={form}
-        name="filters"
-        onFinish={(values) => onSave(values)}
-        style={{ maxWidth: '100%' }}
-        className="ant-advanced-search-form"
-        onValuesChange={(changedValues, allValues) => {
-          if (!changedValues.q) {
-            onSave(allValues);
-          }
-        }}
-      >
-        <Row justify="end" gutter={16} style={{ marginBottom: '1rem' }}>
-          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
-            <Form.Item name="q">
-              <Input placeholder="Search posts" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit">Search</Button>
-            </Form.Item>
-          </Col>
-          <Col key={4}>
-            <Form.Item label="Status" name="status">
-              <Select placeholder="Status" defaultValue="all">
-                <Option value="all" key={'all'}>
-                  All
-                </Option>
-                <Option value="draft" key={'draft'}>
-                  Draft
-                </Option>
-                <Option value="publish" key={'publish'}>
-                  Publish
-                </Option>
-                <Option value="ready" key={'ready'}>
-                  Ready to Publish
-                </Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item label="Sort By" name="sort">
-              <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
-                <Option value="desc" key={'desc'}>
-                  Latest
-                </Option>
-                <Option value="asc" key={'asc'}>
-                  Old
-                </Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Button
-            type="link"
-            onClick={() => {
-              setExpand(!expand);
+      <Row justify="space-between" gutter={16} >
+        <Col>
+          <Row gutter={16}>
+            <Col>
+              <Typography.Title level={3} style={{ margin: 0, display: "inline" }}>
+                Posts
+              </Typography.Title>
+            </Col>
+            <Col>
+              <Form
+                initialValues={params}
+                form={form}
+                name="filters"
+                onFinish={(values) => onSave(values)}
+                style={{ maxWidth: '100%' }}
+                className="ant-advanced-search-form"
+                onValuesChange={(changedValues, allValues) => {
+                  if (!changedValues.q) {
+                    onSave(allValues);
+                  }
+                }}
+              >
+                {
+                  searchFieldExpand
+                    ? <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search posts" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>Search</Button>
+                      </Form.Item>
+                    </Row>
+                    : <Tooltip title="search">
+                      <Button shape="circle" style={{ border: 'none' }} onFocus={() => {
+                        setSearchFieldExpand(true)
+                        setTimeout(() => {
+                          form.getFieldsValue().q === undefined && setSearchFieldExpand(false)
+                        }, 10000)
+                      }} icon={<SearchOutlined />} />
+                    </Tooltip>
+                }
+              </Form>
+            </Col>
+          </Row>
+        </Col>
+        <Col>
+          <ConfigProvider theme={{
+            components: {
+              Form: {
+                marginLG: 0
+              }
+            }
+          }}>
+            <Form
+              initialValues={params}
+              form={form}
+              name="filters"
+              onFinish={(values) => onSave(values)}
+              style={{ maxWidth: '100%' }}
+              className="ant-advanced-search-form"
+              onValuesChange={(changedValues, allValues) => {
+                if (!changedValues.q) {
+                  onSave(allValues);
+                }
+              }}
+            >
+              <Row justify="end" gutter={16}>
+                <Col>
+                  <Row justify="end">
+                    <Link to="/posts/create">
+                      <Button
+                        disabled={!(actions.includes('admin') || actions.includes('create'))}
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        style={{ marginBottom: 16 }}
+                      >
+                        Create
+                      </Button>
+                    </Link>
+                  </Row>
+                  <Row gutter={16}>
+                    <Col>
+                      <Form.Item label="Sort By" name="sort">
+                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                          <Option value="desc" key={'desc'}>
+                            Latest
+                          </Option>
+                          <Option value="asc" key={'asc'}>
+                            Old
+                          </Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                    <Col>
+                      <Button
+                        type="secondary"
+                        style={{ background: '#F1F1F1' }}
+                        onClick={() => {
+                          setExpand(!expand);
+                        }}
+                      >
+                        {expand ? (
+                          <>
+                            Hide Filters <UpOutlined />
+                          </>
+                        ) : (
+                          <>
+                            More Filters <DownOutlined />
+                          </>
+                        )}
+                      </Button>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Form>
+          </ConfigProvider>
+        </Col>
+        <Col span={24}>
+          <Form
+            initialValues={params}
+            form={form}
+            name="filters"
+            onFinish={(values) => onSave(values)}
+            style={{ maxWidth: '100%' }}
+            className="ant-advanced-search-form"
+            onValuesChange={(changedValues, allValues) => {
+              if (!changedValues.q) {
+                onSave(allValues);
+              }
             }}
           >
-            {expand ? (
-              <>
-                Hide Filters <UpOutlined />
-              </>
-            ) : (
-              <>
-                More Filters <DownOutlined />
-              </>
-            )}
-          </Button>
-          <Col key={1}>
-            <Link to="/posts/create">
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('create'))}
-                type="primary"
-              >
-                New Post
-              </Button>
-            </Link>
-          </Col>
-        </Row>
-        <Row gutter={16}>{getFields()}</Row>
-      </Form>
+            <Row justify='space-between' style={{ marginTop: 16 }} gutter={42}>{getFields()}</Row>
+          </Form>
+        </Col>
+      </Row>
+      <Tabs defaultActiveKey={
+        query.get('status') || "all"
+      } items={postStatusItems} onChange={(key) => {
+        const formValues = form.getFieldsValue()
+        onSave({
+          ...formValues,
+          status: key
+        })
+      }} />
       <PostList
         actions={actions}
         format={formats.article}
@@ -241,7 +326,7 @@ function Posts({ formats }) {
       />
     </Space>
   ) : (
-    <FormatNotFound
+     <FormatNotFound
       status="info"
       title="Article format not found"
       link="/advanced/formats/create"
