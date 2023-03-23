@@ -72,7 +72,7 @@ function Posts({ formats }) {
   useEffect(() => {
     fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search]);
+  }, [search, formats.loading])
 
 
   const fetchPosts = () => {
@@ -160,76 +160,62 @@ function Posts({ formats }) {
 
   return (formats.loading)
   ? <Loader />
-  : formats.article ? (
+  : (!formats.loading && formats.article) ? (
     <Space direction="vertical">
       <Helmet title={'Posts'} />
       <Template format={formats.article} />
-      <Row justify="space-between" gutter={16} >
-        <Col>
-          <Row gutter={16}>
-            <Col>
-              <Typography.Title level={3} style={{ margin: 0, display: "inline" }}>
-                Posts
-              </Typography.Title>
-            </Col>
-            <Col>
-              <Form
-                initialValues={params}
-                form={form}
-                name="filters"
-                onFinish={(values) => onSave(values)}
-                style={{ maxWidth: '100%' }}
-                className="ant-advanced-search-form"
-                onValuesChange={(changedValues, allValues) => {
-                  if (!changedValues.q) {
-                    onSave(allValues);
-                  }
-                }}
-              >
-                {
-                  searchFieldExpand
-                    ? <Row>
-                      <Form.Item name="q">
-                        <Input placeholder="Search posts" />
-                      </Form.Item>
-                      <Form.Item>
-                        <Button htmlType="submit" icon={<SearchOutlined />}>Search</Button>
-                      </Form.Item>
-                    </Row>
-                    : <Tooltip title="search">
-                      <Button shape="circle" style={{ border: 'none' }} onFocus={() => {
-                        setSearchFieldExpand(true)
-                        setTimeout(() => {
-                          form.getFieldsValue().q === undefined && setSearchFieldExpand(false)
-                        }, 10000)
-                      }} icon={<SearchOutlined />} />
-                    </Tooltip>
-                }
-              </Form>
-            </Col>
-          </Row>
-        </Col>
-        <Col>
-          <ConfigProvider theme={{
-            components: {
-              Form: {
-                marginLG: 0
-              }
+      <ConfigProvider theme={{
+        components: {
+          Form: {
+            marginLG: 0
+          }
+        }
+      }}>
+        <Form
+          initialValues={params}
+          form={form}
+          name="filters"
+          onFinish={(values) => onSave(values)}
+          style={{ width: '100%' }}
+          className="ant-advanced-search-form"
+          onValuesChange={(changedValues, allValues) => {
+            if (!changedValues.q) {
+              onSave(allValues);
             }
-          }}>
-            <Form
-              initialValues={params}
-              form={form}
-              name="filters"
-              onFinish={(values) => onSave(values)}
-              style={{ maxWidth: '100%' }}
-              className="ant-advanced-search-form"
-              onValuesChange={(changedValues, allValues) => {
-                if (!changedValues.q) {
-                  onSave(allValues);
-                }
-              }}
-            >
+          }}
+        >
+          <Row justify="space-between" gutter={16} >
+            <Col>
+              <Row gutter={16}>
+                <Col>
+                  <Typography.Title level={3} style={{ margin: 0, display: "inline" }}>
+                    Posts
+                  </Typography.Title>
+                </Col>
+                <Col>
+                  {
+                    searchFieldExpand
+                      ? <Row>
+                        <Form.Item name="q">
+                          <Input placeholder="Search pages" />
+                        </Form.Item>
+                        <Form.Item>
+                          <Button htmlType="submit" icon={<SearchOutlined />}>Search</Button>
+                        </Form.Item>
+                      </Row>
+                      : <Tooltip title="search">
+                        <Button shape="circle" style={{ border: 'none' }} onFocus={() => {
+                          setSearchFieldExpand(true)
+                          setTimeout(() => {
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false)
+                          }, 10000)
+                        }} icon={<SearchOutlined />} />
+                      </Tooltip>
+                  }
+                </Col>
+              </Row>
+            </Col>
+            <Col>
               <Row justify="end" gutter={16}>
                 <Col>
                   <Row justify="end">
@@ -279,27 +265,13 @@ function Posts({ formats }) {
                   </Row>
                 </Col>
               </Row>
-            </Form>
-          </ConfigProvider>
-        </Col>
-        <Col span={24}>
-          <Form
-            initialValues={params}
-            form={form}
-            name="filters"
-            onFinish={(values) => onSave(values)}
-            style={{ maxWidth: '100%' }}
-            className="ant-advanced-search-form"
-            onValuesChange={(changedValues, allValues) => {
-              if (!changedValues.q) {
-                onSave(allValues);
-              }
-            }}
-          >
-            <Row justify='space-between' style={{ marginTop: 16 }} gutter={42}>{getFields()}</Row>
-          </Form>
-        </Col>
-      </Row>
+            </Col>
+            <Col span={24}>
+              <Row justify='space-between' style={{ marginTop: 16 }} gutter={42}>{getFields()}</Row>
+            </Col>
+          </Row>
+        </Form>
+      </ConfigProvider>
       <Tabs defaultActiveKey={
         query.get('status') || "all"
       } items={postStatusItems} onChange={(key) => {

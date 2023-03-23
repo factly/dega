@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { Modal, Button, Space, Tag, Table, Typography } from 'antd';
+import { Modal, Button, Space, Tag, Table, Typography, ConfigProvider } from 'antd';
 import {
   EditOutlined,
   DeleteOutlined,
-  ClockCircleOutlined,
-  CheckCircleOutlined,
-  ExceptionOutlined,
   CloseOutlined,
   FormOutlined,
 } from '@ant-design/icons';
@@ -85,6 +82,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
       dataIndex: ['created_at', 'updated_at'],
       key: 'categories',
       ellipsis: true,
+      width: 200,
       render: (_, item) => {
         return item &&
           <>
@@ -104,9 +102,11 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
       width: 200,
       render: (items) => {
         return items?.map((author) => (
-          <Typography.Text strong>
-            {authors[author]?.display_name ? authors[author]?.display_name : authors[author]?.['email'] ? authors[author]?.['email'] : null}
-          </Typography.Text>
+          <>
+            <Typography.Text strong>
+              {authors[author]?.display_name ? authors[author]?.display_name : authors[author]?.['email'] ? authors[author]?.['email'] : null}
+            </Typography.Text> <br />
+          </>
         ));
       },
     },
@@ -114,12 +114,20 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
       title: 'Actions',
       dataIndex: 'actions',
       fixed: 'right',
-      width: 240,
+      width: 200,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
-          <>
-            <div style={{ display: 'flex', gap: '16px' }}>
+          <ConfigProvider theme={{
+            components: {
+              Button: {
+                controlHeight: 35,
+                colorBorder: "#F2F2F2",
+                colorPrimaryHover: "#F2F2F2"
+              }
+            }
+          }}>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
               <Link
                 style={{ display: 'block' }}
                 to={
@@ -168,7 +176,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 <p>Are you sure you want to delete this post?</p>
               </Modal>
             </div>
-          </>
+          </ConfigProvider>
         );
       },
     },

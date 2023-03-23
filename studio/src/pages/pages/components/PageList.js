@@ -160,16 +160,14 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
     },
   ];
 
+
   return (
     <Space direction="vertical">
       <Table
-        dataSource={data.pages}
+        dataSource={data.pages.length !== 0 ? data.pages : []}
         loading={data.loading}
         columns={columns}
         rowKey={(record) => record.id}
-        locale={{
-          emptyText: '-',
-        }}
         expandable={{
           expandIconColumnIndex: -1,
           expandedRowKeys,
