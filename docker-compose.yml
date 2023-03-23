@@ -10,7 +10,7 @@ services:
       - "5432:5432"
     volumes:
       - ./pg-init-scripts:/docker-entrypoint-initdb.d
-      - ./volumes/postgres:/var/lib/postgresql/data/
+      - ~/factly/dega/postgresql:/var/lib/postgresql/data/
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -316,12 +316,7 @@ services:
       - KAVACH_ENABLE_IMGPROXY=false
       - KAVACH_DYNAMIC_EMAIL_ENABLED=true
       - KAVACH_BUCKET_NAME=login.factly.in
-    entrypoint:
-      [
-        "/bin/sh",
-        "-c",
-        "/app/kavach-server migrate && /app/kavach-server create-super-org",
-      ]
+    entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
     networks:
       - dega
 
@@ -484,7 +479,7 @@ services:
     volumes:
       - type: bind
         source: ./api
-        target: /appendonly
+        target: /app
     restart: unless-stopped
     networks:
       - dega
