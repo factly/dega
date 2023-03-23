@@ -56,7 +56,7 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	}
 
 	serviceErr := tagService.Delete(sID, id)
-	if err != nil {
+	if serviceErr != nil {
 		loggerx.Error(err)
 		errorx.Render(w, serviceErr)
 		return

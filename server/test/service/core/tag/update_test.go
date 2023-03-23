@@ -101,7 +101,7 @@ func TestTagUpdate(t *testing.T) {
 			ContainsMap(updatedTag)
 	})
 
-	t.Run("update tag by ud with empty slug", func(t *testing.T) {
+	t.Run("update tag by id with empty slug", func(t *testing.T) {
 		updatedTag := map[string]interface{}{
 			"name": "NewElections",
 			"slug": "",

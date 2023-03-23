@@ -163,6 +163,7 @@ func (ts TagService) Create(ctx context.Context, sID, uID int, tag *Tag) (model.
 	var err error
 	var descriptionHTML string
 	var jsonDescription postgres.Jsonb
+
 	if len(tag.Description.RawMessage) > 0 {
 		descriptionHTML, err = util.GetDescriptionHTML(tag.Description)
 		if err != nil {
@@ -298,11 +299,13 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 
 	tx.Model(&result).Select("IsFeatured").Updates(model.Tag{IsFeatured: tag.IsFeatured})
 	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
-
 	if err != nil {
+		tx.Rollback()
 		loggerx.Error(err)
 		return model.Tag{}, errorx.Parser(errorx.DBError())
 	}
+
+	tx.Commit()
 
 	return *result, nil
 }

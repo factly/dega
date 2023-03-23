@@ -54,7 +54,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	tagService := service.GetTagService()
 	result, serviceErr := tagService.Create(r.Context(), sID, uID, tag)
-	if err != nil {
+	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
