@@ -1,6 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Select, Form, Col, Row, Input, Tabs, Typography, Tooltip, ConfigProvider } from 'antd';
+import {
+  Space,
+  Button,
+  Select,
+  Form,
+  Col,
+  Row,
+  Input,
+  Tabs,
+  Typography,
+  Tooltip,
+  ConfigProvider,
+} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import PageList from './components/PageList';
@@ -95,7 +107,6 @@ function Pages({ formats }) {
     return { pages: [], total: 0, loading: state.pages.loading, tags: {}, categories: {} };
   });
 
-
   const pageStatusItems = [
     {
       key: 'all',
@@ -103,18 +114,17 @@ function Pages({ formats }) {
     },
     {
       key: 'publish',
-      label: 'Published'
+      label: 'Published',
     },
     {
       key: 'ready',
-      label: 'Ready to Pubish'
+      label: 'Ready to Pubish',
     },
     {
       key: 'draft',
-      label: 'Drafts'
+      label: 'Drafts',
     },
-  ]
-
+  ];
 
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
@@ -151,13 +161,15 @@ function Pages({ formats }) {
   ) : formats.article ? (
     <Space direction="vertical">
       <Helmet title={'Pages'} />
-      <ConfigProvider theme={{
-        components: {
-          Form: {
-            marginLG: 0
-          }
-        }
-      }}>
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 0,
+            },
+          },
+        }}
+      >
         <Form
           initialValues={params}
           form={form}
@@ -171,34 +183,41 @@ function Pages({ formats }) {
             }
           }}
         >
-          <Row justify="space-between" gutter={16} >
+          <Row justify="space-between" gutter={16}>
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: "inline" }}>
+                  <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
                     Pages
                   </Typography.Title>
                 </Col>
                 <Col>
-                  {
-                    searchFieldExpand
-                      ? <Row>
-                        <Form.Item name="q">
-                          <Input placeholder="Search pages" />
-                        </Form.Item>
-                        <Form.Item>
-                          <Button htmlType="submit" icon={<SearchOutlined />}>Search</Button>
-                        </Form.Item>
-                      </Row>
-                      : <Tooltip title="search">
-                        <Button shape="circle" style={{ border: 'none' }} onFocus={() => {
-                          setSearchFieldExpand(true)
+                  {searchFieldExpand ? (
+                    <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search pages" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>
+                          Search
+                        </Button>
+                      </Form.Item>
+                    </Row>
+                  ) : (
+                    <Tooltip title="search">
+                      <Button
+                        shape="circle"
+                        style={{ border: 'none' }}
+                        onFocus={() => {
+                          setSearchFieldExpand(true);
                           setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false)
-                          }, 10000)
-                        }} icon={<SearchOutlined />} />
-                      </Tooltip>
-                  }
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
+                          }, 10000);
+                        }}
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  )}
                 </Col>
               </Row>
             </Col>
@@ -254,20 +273,24 @@ function Pages({ formats }) {
               </Row>
             </Col>
             <Col span={24}>
-              <Row justify='space-between' style={{ marginTop: 16 }} gutter={42}>{getFields()}</Row>
+              <Row justify="space-between" style={{ marginTop: 16 }} gutter={42}>
+                {getFields()}
+              </Row>
             </Col>
           </Row>
         </Form>
       </ConfigProvider>
-      <Tabs defaultActiveKey={
-        query.get('status') || "all"
-      } items={pageStatusItems} onChange={(key) => {
-        const formValues = form.getFieldsValue()
-        onSave({
-          ...formValues,
-          status: key
-        })
-      }} />
+      <Tabs
+        defaultActiveKey={query.get('status') || 'all'}
+        items={pageStatusItems}
+        onChange={(key) => {
+          const formValues = form.getFieldsValue();
+          onSave({
+            ...formValues,
+            status: key,
+          });
+        }}
+      />
       <PageList
         actions={actions}
         format={formats.article}
@@ -294,4 +317,4 @@ function Pages({ formats }) {
 
 export default Pages;
 
-// things to fix 
+// things to fix

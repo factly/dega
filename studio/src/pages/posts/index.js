@@ -1,6 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Form, Col, Row, Input, Select, Tabs, Typography, Tooltip, ConfigProvider } from 'antd';
+import {
+  Space,
+  Button,
+  Form,
+  Col,
+  Row,
+  Input,
+  Select,
+  Tabs,
+  Typography,
+  Tooltip,
+  ConfigProvider,
+} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import PostList from '../../components/List';
@@ -72,8 +84,7 @@ function Posts({ formats }) {
   useEffect(() => {
     fetchPosts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [search, formats.loading])
-
+  }, [search, formats.loading]);
 
   const fetchPosts = () => {
     dispatch(getPosts(params));
@@ -115,17 +126,17 @@ function Posts({ formats }) {
     },
     {
       key: 'publish',
-      label: 'Published'
+      label: 'Published',
     },
     {
       key: 'ready',
-      label: 'Ready to Pubish'
+      label: 'Ready to Pubish',
     },
     {
       key: 'draft',
-      label: 'Drafts'
+      label: 'Drafts',
     },
-  ]
+  ];
 
   const onSave = (values) => {
     let searchFilter = new URLSearchParams();
@@ -158,19 +169,21 @@ function Posts({ formats }) {
     });
   };
 
-  return (formats.loading)
-  ? <Loader />
-  : (!formats.loading && formats.article) ? (
+  return formats.loading ? (
+    <Loader />
+  ) : !formats.loading && formats.article ? (
     <Space direction="vertical">
       <Helmet title={'Posts'} />
       <Template format={formats.article} />
-      <ConfigProvider theme={{
-        components: {
-          Form: {
-            marginLG: 0
-          }
-        }
-      }}>
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 0,
+            },
+          },
+        }}
+      >
         <Form
           initialValues={params}
           form={form}
@@ -184,34 +197,41 @@ function Posts({ formats }) {
             }
           }}
         >
-          <Row justify="space-between" gutter={16} >
+          <Row justify="space-between" gutter={16}>
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: "inline" }}>
+                  <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
                     Posts
                   </Typography.Title>
                 </Col>
                 <Col>
-                  {
-                    searchFieldExpand
-                      ? <Row>
-                        <Form.Item name="q">
-                          <Input placeholder="Search pages" />
-                        </Form.Item>
-                        <Form.Item>
-                          <Button htmlType="submit" icon={<SearchOutlined />}>Search</Button>
-                        </Form.Item>
-                      </Row>
-                      : <Tooltip title="search">
-                        <Button shape="circle" style={{ border: 'none' }} onFocus={() => {
-                          setSearchFieldExpand(true)
+                  {searchFieldExpand ? (
+                    <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search pages" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>
+                          Search
+                        </Button>
+                      </Form.Item>
+                    </Row>
+                  ) : (
+                    <Tooltip title="search">
+                      <Button
+                        shape="circle"
+                        style={{ border: 'none' }}
+                        onFocus={() => {
+                          setSearchFieldExpand(true);
                           setTimeout(() => {
-                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false)
-                          }, 10000)
-                        }} icon={<SearchOutlined />} />
-                      </Tooltip>
-                  }
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
+                          }, 10000);
+                        }}
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  )}
                 </Col>
               </Row>
             </Col>
@@ -267,20 +287,24 @@ function Posts({ formats }) {
               </Row>
             </Col>
             <Col span={24}>
-              <Row justify='space-between' style={{ marginTop: 16 }} gutter={42}>{getFields()}</Row>
+              <Row justify="space-between" style={{ marginTop: 16 }} gutter={42}>
+                {getFields()}
+              </Row>
             </Col>
           </Row>
         </Form>
       </ConfigProvider>
-      <Tabs defaultActiveKey={
-        query.get('status') || "all"
-      } items={postStatusItems} onChange={(key) => {
-        const formValues = form.getFieldsValue()
-        onSave({
-          ...formValues,
-          status: key
-        })
-      }} />
+      <Tabs
+        defaultActiveKey={query.get('status') || 'all'}
+        items={postStatusItems}
+        onChange={(key) => {
+          const formValues = form.getFieldsValue();
+          onSave({
+            ...formValues,
+            status: key,
+          });
+        }}
+      />
       <PostList
         actions={actions}
         format={formats.article}
@@ -298,7 +322,7 @@ function Posts({ formats }) {
       />
     </Space>
   ) : (
-     <FormatNotFound
+    <FormatNotFound
       status="info"
       title="Article format not found"
       link="/advanced/formats/create"

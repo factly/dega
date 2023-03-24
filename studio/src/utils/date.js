@@ -14,8 +14,15 @@ export const getDateAndTimeFromString = (dateString) =>
   new Date(dateString).toLocaleString().replaceAll(',', '').replaceAll('/', '-');
 
 export const formatDate = (dateString) => {
-  const date = new Date('3-20-2023 12:57:45 PM');
-  const options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric', hour12: true };
+  const date = new Date(dateString);
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
   const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
 
   return formattedDate;
@@ -39,5 +46,5 @@ export const getDifferenceInModifiedTime = (updated_at) => {
   } else {
     lastModified = `Last modified: a few seconds ago`;
   }
-  return lastModified
+  return lastModified;
 };

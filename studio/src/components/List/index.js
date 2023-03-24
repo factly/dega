@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { Modal, Button, Space, Tag, Table, Typography, ConfigProvider } from 'antd';
-import {
-  EditOutlined,
-  DeleteOutlined,
-  CloseOutlined,
-  FormOutlined,
-} from '@ant-design/icons';
+import { EditOutlined, DeleteOutlined, CloseOutlined, FormOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
-import { getDateAndTimeFromString, formatDate, getDifferenceInModifiedTime } from '../../utils/date'
+import {
+  getDateAndTimeFromString,
+  formatDate,
+  getDifferenceInModifiedTime,
+} from '../../utils/date';
 import { Link } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
@@ -51,7 +50,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
   //   return ids?.map((id) => <span>{data.authors[id].display_name}</span>);
   // };
   const authors = useSelector((state) => state.authors.details);
-
   const columns = [
     {
       title: 'Title',
@@ -79,20 +77,26 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
     },
     {
       title: 'Published Date',
-      dataIndex: ['created_at', 'updated_at'],
+      dataIndex: ['published_date', 'updated_at'],
       key: 'categories',
       ellipsis: true,
       width: 200,
       render: (_, item) => {
-        return item &&
-          <>
-            <Typography.Text strong>
-              {formatDate(getDateAndTimeFromString(item.created_at))}<br />
-            </Typography.Text>
-            <Typography.Text type="secondary">
-              {getDifferenceInModifiedTime(item.updated_at)}
-            </Typography.Text>
-          </>
+        return (
+          item && (
+            <>
+              <Typography.Text strong>
+                {item.published_date
+                  ? formatDate(getDateAndTimeFromString(item.published_date))
+                  : '---'}
+                <br />
+              </Typography.Text>
+              <Typography.Text type="secondary">
+                {getDifferenceInModifiedTime(item.updated_at)}
+              </Typography.Text>
+            </>
+          )
+        );
       },
     },
     {
@@ -104,8 +108,13 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
         return items?.map((author) => (
           <>
             <Typography.Text strong>
-              {authors[author]?.display_name ? authors[author]?.display_name : authors[author]?.['email'] ? authors[author]?.['email'] : null}
-            </Typography.Text> <br />
+              {authors[author]?.display_name
+                ? authors[author]?.display_name
+                : authors[author]?.['email']
+                ? authors[author]?.['email']
+                : null}
+            </Typography.Text>{' '}
+            <br />
           </>
         ));
       },
@@ -118,15 +127,17 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
-          <ConfigProvider theme={{
-            components: {
-              Button: {
-                controlHeight: 35,
-                colorBorder: "#F2F2F2",
-                colorPrimaryHover: "#F2F2F2"
-              }
-            }
-          }}>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#F2F2F2',
+                },
+              },
+            }}
+          >
             <div style={{ display: 'flex', gap: '0.5rem' }}>
               <Link
                 style={{ display: 'block' }}
@@ -138,7 +149,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               >
                 <Button
                   size="large"
-                  icon={<EditOutlined style={{ color: "#858585" }} />}
+                  icon={<EditOutlined style={{ color: '#858585' }} />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
                 />
               </Link>
@@ -149,12 +160,20 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
-                icon={isOpen ? <CloseOutlined style={{ color: "#858585" }} /> : <FormOutlined style={{ color: "#858585" }} />}
+                icon={
+                  isOpen ? (
+                    <CloseOutlined style={{ color: '#858585' }} />
+                  ) : (
+                    <FormOutlined style={{ color: '#858585' }} />
+                  )
+                }
               />
               <Button
                 size="large"
-                icon={<DeleteOutlined style={{ color: "#858585" }} />}
-                onClick={() => { setModalOpen(true) }}
+                icon={<DeleteOutlined style={{ color: '#858585' }} />}
+                onClick={() => {
+                  setModalOpen(true);
+                }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
               <Modal
@@ -167,7 +186,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                   borderRadius: '18px',
                 }}
                 onOk={() => {
-                  () => dispatch(deletePost(item.id)).then(() => fetchPosts())
+                  () => dispatch(deletePost(item.id)).then(() => fetchPosts());
                 }}
                 onCancel={() => {
                   setModalOpen(false);
@@ -208,7 +227,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

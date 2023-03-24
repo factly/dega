@@ -140,13 +140,13 @@ function BasicLayout(props) {
           },
           Table: {
             paddingContentVerticalLG: 12,
-            colorTextHeading: "#475467",
+            colorTextHeading: '#475467',
             fontWeightStrong: 500,
-            fontSize: 12
+            fontSize: 12,
           },
           Tabs: {
-            margin: 10
-          }
+            margin: 10,
+          },
         },
       }}
     >
@@ -166,7 +166,9 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            {(location.pathname === '/posts' || location.pathname === '/pages') ||<Pageheader location={location} />}
+            {location.pathname === '/posts' || location.pathname === '/pages' || (
+              <Pageheader location={location} />
+            )}
             <Card key={selected.toString()} className="wrap-children-content">
               {children}
             </Card>

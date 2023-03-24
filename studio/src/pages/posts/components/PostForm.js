@@ -94,21 +94,31 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   };
 
   const onSave = (values) => {
-    setShouldBlockNavigation(false);
-    if (values.meta_fields) {
-      values.meta_fields = getJsonValue(values.meta_fields);
+    const finalData = { ...values };
+
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (!finalData.hasOwnProperty(key)) {
+          finalData[key] = data[key];
+        }
+      }
     }
-    values.category_ids = values.categories || [];
-    values.tag_ids = values.tags || [];
-    values.format_id = format.id;
-    values.author_ids = values.authors || [];
-    values.status = status;
-    values.status === 'publish'
-      ? (values.published_date = values.published_date
-          ? dayjs(values.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+
+    setShouldBlockNavigation(false);
+    if (finalData.meta_fields) {
+      finalData.meta_fields = getJsonValue(finalData.meta_fields);
+    }
+    finalData.category_ids = finalData.categories || [];
+    finalData.tag_ids = finalData.tags || [];
+    finalData.format_id = format.id;
+    finalData.author_ids = finalData.authors || [];
+    finalData.status = status;
+    finalData.status === 'publish'
+      ? (finalData.published_date = finalData.published_date
+          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
           : getCurrentDate())
-      : (values.published_date = null);
-    onCreate(values);
+      : (finalData.published_date = null);
+    onCreate(finalData);
   };
 
   const onTitleChange = (string) => {
@@ -265,6 +275,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               >
                 <Form
                   form={form}
+                  ref={formRef}
                   initialValues={{ ...data }}
                   style={{ maxWidth: '100%', width: '100%' }}
                   onFinish={(values) => onSave(values)}

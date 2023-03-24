@@ -92,20 +92,22 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
         return (
-          <ConfigProvider theme={{
-            components: {
-              Button: {
-                controlHeight: 35,
-                colorBorder: "#F2F2F2",
-                colorPrimaryHover: "#F2F2F2"
-              }
-            }
-          }}>
-            <div style={{ display: 'flex', gap: "0.5rem" }}>
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#F2F2F2',
+                },
+              },
+            }}
+          >
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
               <Link style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
                 <Button
                   size="large"
-                  icon={<EditOutlined style={{ color: "#858585" }} />}
+                  icon={<EditOutlined style={{ color: '#858585' }} />}
                   disabled={!(actions.includes('admin') || actions.includes('update'))}
                 />
               </Link>
@@ -116,12 +118,20 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
-                icon={isOpen ? <CloseOutlined style={{ color: "#858585" }} /> : <FormOutlined style={{ color: "#858585" }} />}
+                icon={
+                  isOpen ? (
+                    <CloseOutlined style={{ color: '#858585' }} />
+                  ) : (
+                    <FormOutlined style={{ color: '#858585' }} />
+                  )
+                }
               />
               <Button
                 size="large"
-                onClick={() => { setModalOpen(true) }}
-                icon={<DeleteOutlined style={{ color: "#858585" }} />}
+                onClick={() => {
+                  setModalOpen(true);
+                }}
+                icon={<DeleteOutlined style={{ color: '#858585' }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
               />
               <Modal
@@ -134,7 +144,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   borderRadius: '18px',
                 }}
                 onOk={() => {
-                  () => dispatch(deletePage(item.id)).then(() => fetchPages())
+                  () => dispatch(deletePage(item.id)).then(() => fetchPages());
                 }}
                 onCancel={() => {
                   setModalOpen(false);
@@ -159,7 +169,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       },
     },
   ];
-
 
   return (
     <Space direction="vertical">
@@ -187,7 +196,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
