@@ -6,9 +6,9 @@ import (
 
 	"github.com/dlmiddlecote/sqlstats"
 	"github.com/factly/dega-server/config"
+	"github.com/factly/dega-server/plugin/search"
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/util"
-	search "github.com/factly/dega-server/util/search-service"
 	"github.com/go-chi/chi"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -25,15 +25,20 @@ var serveCmd = &cobra.Command{
 	Short: "Starts server for dega-server.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if config.SearchEnabled() {
-			searchService := search.GetSearchService()
+			searchSingleton, err := search.GetSearchSingleton()
+			if err != nil {
+				log.Fatal("server was not able to load search service from plugin")
+			}
+			defer searchSingleton.Client.Kill()
+
 			searchConfig, err := search.GetSearchServiceConfig()
 			if err != nil {
 				log.Fatal("server was not able to load search service config file")
 			}
 
-			err = searchService.Connect(searchConfig)
+			err = searchSingleton.Service.Connect(searchConfig)
 			if err != nil {
-				log.Fatal("error in connecting to search index - either enable search or verify host, api key and other attributes")
+				log.Fatal("error in connecting to search index - either enable search or verify host, api key and other attributes: ", err)
 			}
 		}
 
