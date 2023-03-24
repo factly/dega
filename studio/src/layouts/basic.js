@@ -42,6 +42,7 @@ function BasicLayout(props) {
       }
     }
   }, [location]);
+
   const dispatch = useDispatch();
 
   const { permission, orgs, loading, selected, applications, services } = useSelector((state) => {
@@ -166,7 +167,7 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            {location.pathname === '/posts' || location.pathname === '/pages' || (
+            {['/posts', '/pages', '/categories'].includes(location.pathname) || (
               <Pageheader location={location} />
             )}
             <Card key={selected.toString()} className="wrap-children-content">
