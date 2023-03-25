@@ -47,7 +47,7 @@ function MediaSelector({
   return (
     <>
       <Modal
-        visible={show}
+        open={show}
         onCancel={() => setShow(false)}
         closable={false}
         width={'800px'}
@@ -105,7 +105,7 @@ function MediaSelector({
             >
               {medium ? (
                 <img
-                  src={medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+                  src={medium.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
                   alt={medium.alt_text}
                   width="100%"
                 />

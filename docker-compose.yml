@@ -116,7 +116,7 @@ services:
     ports:
       - "7700:7700"
     volumes:
-      - ~/factly/dega/meilisearch-0-27-1/data.ms/:/data.ms
+      - ~/factly/dega/meilisearch-0-28-0/data.ms/:/data.ms
     environment:
       # To put an upper limit of 100MB for the payload size during indexing
       - MEILI_HTTP_PAYLOAD_SIZE_LIMIT=104857600
@@ -270,6 +270,7 @@ services:
       - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
       - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
       - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_DYNAMIC_EMAIL_ENABLED=true
       - KAVACH_BUCKET_NAME=login.factly.in
     restart: unless-stopped
     networks:
@@ -313,6 +314,7 @@ services:
       - KAVACH_DEFAULT_USER_PASSWORD=Data123@#
       - KAVACH_DEFAULT_ORGANISATION_NAME=NEWSCHECKER
       - KAVACH_ENABLE_IMGPROXY=false
+      - KAVACH_DYNAMIC_EMAIL_ENABLED=true
       - KAVACH_BUCKET_NAME=login.factly.in
     entrypoint: ["/bin/sh", "-c" , "/app/kavach-server migrate && /app/kavach-server create-super-org"]
     networks:

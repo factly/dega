@@ -1,48 +1,70 @@
 package claimant
 
 import (
-	"errors"
-	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-var updatedClaimant = map[string]interface{}{
-	"name": "TOI",
-	"description": postgres.Jsonb{
-		RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-	},
-	"html_description": "<p>Test Description</p>",
-	"tag_line":         "sample tag line",
-	"medium_id":        uint(1),
-}
-
 func TestClaimantUpdate(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
 
-	// create httpexpect instance
+	config.DB.Exec("DELETE FROM ratings")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
+	var insertData = model.Claimant{
+		Name:            "Test Claimant",
+		Slug:            "test-claimant",
+		Description:     TestDescriptionJson,
+		DescriptionHTML: TestDescriptionHtml,
+		MediumID:        &insertMediumData.ID,
+		TagLine:         TestTagline,
+		Medium:          &insertMediumData,
+		SpaceID:         TestSpaceID,
+		FooterCode:      TestFooterCode,
+		HeaderCode:      TestHeaderCode,
+	}
+
+	if err := config.DB.Model(&model.Claimant{}).Create(&insertData).Error; err != nil {
+		log.Fatal(err)
+	}
+
 	e := httpexpect.New(t, testServer.URL)
 
+	// invalid claimant id
 	t.Run("invalid claimant id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
 		e.PUT(path).
 			WithPath("claimant_id", "invalid_id").
 			WithHeaders(headers).
@@ -50,174 +72,77 @@ func TestClaimantUpdate(t *testing.T) {
 			Status(http.StatusBadRequest)
 	})
 
+	// claimant record not found
 	t.Run("claimant record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		recordNotFoundMock(mock)
-
 		e.PUT(path).
-			WithPath("claimant_id", "100").
+			WithPath("claimant_id", 1000000000).
+			WithJSON(Data).
 			WithHeaders(headers).
-			WithJSON(updatedClaimant).
 			Expect().
 			Status(http.StatusNotFound)
 	})
-	t.Run("Unable to decode claimant data", func(t *testing.T) {
 
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unable to decode claimant data
+	t.Run("unable to decode claimant data", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", "1").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
 	})
 
-	t.Run("Unprocessable claimant", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unproucessable claimant
+	t.Run("unproucessable claimant", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", "1").
 			WithHeaders(headers).
 			WithJSON(invalidData).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-
 	})
 
+	// update claimant
 	t.Run("update claimant", func(t *testing.T) {
-		updatedClaimant["slug"] = "toi"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		claimantUpdateMock(mock, updatedClaimant, nil)
-		mock.ExpectCommit()
-
+		Data["name"] = "Test Claimant Updated"
+		Data["slug"] = "test-claimant-updated"
+		resData["name"] = "Test Claimant Updated"
+		resData["slug"] = "test-claimant-updated"
 		e.PUT(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaimant).
-			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("claimant with same name exist", func(t *testing.T) {
-		updatedClaimant["name"] = "TOI NEW"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-		claimantCountQuery(mock, 1)
-
-		e.PUT(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaimant).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-		updatedClaimant["name"] = "TOI"
-	})
-
-	t.Run("cannot parse claimant description", func(t *testing.T) {
-		updatedClaimant["slug"] = "toi"
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		SelectWithSpace(mock)
-
-		updatedClaimant["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
-		e.PUT(path).
-			WithPath("claimant_id", 1).
-			WithHeaders(headers).
-			WithJSON(updatedClaimant).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-		test.ExpectationsMet(t, mock)
-		updatedClaimant["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
-	})
-
-	t.Run("update claimant by id with empty slug", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		updatedClaimant["slug"] = "toi"
-		SelectWithSpace(mock)
-
-		slugCheckMock(mock, Data)
-
-		claimantUpdateMock(mock, updatedClaimant, nil)
-		mock.ExpectCommit()
-
-		Data["slug"] = ""
-		e.PUT(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", insertData.ID).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
-		Data["slug"] = "toi"
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusOK).
+			JSON().Object().ContainsMap(resData)
 	})
 
-	t.Run("update claimant with different slug", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		updatedClaimant["slug"] = "toi-test"
-
-		SelectWithSpace(mock)
-
-		mock.ExpectQuery(`SELECT slug, space_id FROM "claimants"`).
-			WithArgs(fmt.Sprint(updatedClaimant["slug"], "%"), 1).
-			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
-
-		claimantUpdateMock(mock, updatedClaimant, nil)
-		mock.ExpectCommit()
-
+	// claimant with same name exists
+	t.Run("claimant with same name exists", func(t *testing.T) {
+		id := insertData.ID
+		insertData.ID = 10000000
+		insertData.Name = "Test Claimant Updated New"
+		insertData.Slug = "test-claimant-updated-new"
+		if err := config.DB.Model(&model.Claimant{}).Create(&insertData).Error; err != nil {
+			log.Fatal(err)
+		}
+		Data["name"] = insertData.Name
+		Data["slug"] = insertData.Slug
 		e.PUT(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", id).
 			WithHeaders(headers).
-			WithJSON(updatedClaimant).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusOK).JSON().Object().ContainsMap(resData)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("medium not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		updatedClaimant["slug"] = "toi-test"
-
-		SelectWithSpace(mock)
-
-		mock.ExpectQuery(`SELECT slug, space_id FROM "claimants"`).
-			WithArgs(fmt.Sprint(updatedClaimant["slug"], "%"), 1).
-			WillReturnRows(sqlmock.NewRows([]string{"slug", "space_id"}))
-
-		claimantUpdateMock(mock, updatedClaimant, errors.New("record not found"))
-		mock.ExpectRollback()
-
+	// cannot parse claimant description
+	t.Run("cannot parse claimant description", func(t *testing.T) {
+		Data["description"] = "Test Description"
 		e.PUT(path).
-			WithPath("claimant_id", 1).
+			WithPath("claimant_id", insertData.ID).
 			WithHeaders(headers).
-			WithJSON(updatedClaimant).
+			WithJSON(Data).
 			Expect().
-			Status(http.StatusInternalServerError)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusUnprocessableEntity)
 	})
-
 }

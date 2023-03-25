@@ -81,7 +81,7 @@ func GetSpacefromKavach(userID, orgID, spaceID uint) (*Space, error) {
 	spaceObjectforDega.Slug = spaceObjectfromKavach.Slug
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
-	spaceObjectforDega.MetaFields = spaceObjectfromKavach.Metadata
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
 	spaceSettings := model.SpaceSettings{}
 	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 		SpaceID: spaceObjectforDega.ID,

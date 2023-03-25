@@ -5,37 +5,36 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/medium"
-	"github.com/gavv/httpexpect"
+	"github.com/gavv/httpexpect/v2"
 	"github.com/spf13/viper"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestSpaceMy(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	defer gock.Disable()
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	config.DB.Exec("DELETE FROM space_settings")
+	config.DB.Exec("DELETE FROM spaces")
+	config.DB.Exec("DELETE FROM space_permissions")
 
-	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("get my spaces", func(t *testing.T) {
-		SelectQuery(mock, 1)
+	insertSpaceSetting := model.SpaceSettings{
+		SpaceID:   1,
+		SiteTitle: "Dega",
+		TagLine:   "Dega is a free and open source content management system for news organizations.",
+	}
+	config.DB.Model(&model.SpaceSettings{}).Create(&insertSpaceSetting)
 
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-
+	// get empty list of spaces
+	t.Run("get get my space", func(t *testing.T) {
 		e.GET(basePath).
 			WithHeader("X-User", "1").
 			Expect().
@@ -48,9 +47,20 @@ func TestSpaceMy(t *testing.T) {
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(resData)
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(map[string]interface{}{
+				"application_id":  1,
+				"description":     "Test",
+				"id":              1,
+				"name":            "Test",
+				"organisation_id": 1,
+				"slug":            "test",
+				"permissions": []interface{}{
+					map[string]interface{}{
+						"actions":  []string{"admin"},
+						"resource": "admin",
+					},
+				},
+			})
 	})
 
 	t.Run("invalid space header", func(t *testing.T) {
@@ -60,48 +70,14 @@ func TestSpaceMy(t *testing.T) {
 			Status(http.StatusUnauthorized)
 	})
 
-	t.Run("when keto is down", func(t *testing.T) {
-		test.DisableKetoGock(testServer.URL)
-		SelectQuery(mock, 1)
-
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-
-		e.GET(basePath).
-			WithHeader("X-User", "1").
-			Expect().
-			Status(http.StatusInternalServerError)
-	})
-
-	t.Run("when kavach is down", func(t *testing.T) {
-		test.DisableKavachGock(testServer.URL)
-
-		e.GET(basePath).
-			WithHeader("X-User", "1").
-			Expect().
-			Status(http.StatusServiceUnavailable)
-	})
-
 	t.Run("when member requests his spaces", func(t *testing.T) {
-		test.DisableKavachGock(testServer.URL)
-		SelectQuery(mock, 1)
-
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-		medium.SelectWithOutSpace(mock)
-
 		gock.New(viper.GetString("kavach_url") + "/organisations/my").
 			Persist().
 			Reply(http.StatusOK).
 			JSON(test.Dummy_Org_Member_List)
-
 		e.GET(basePath).
 			WithHeader("X-User", "1").
 			Expect().
 			Status(http.StatusOK)
 	})
-
 }

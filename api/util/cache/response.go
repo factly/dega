@@ -27,7 +27,6 @@ func (myrw *CacheResponseWriter) WriteHeader(header int) {
 
 func RespMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		log.Println(" RespMiddleware entry")
 		// Create a response writer:
 		crw := &CacheResponseWriter{
 			ResponseWriter: w,
@@ -36,6 +35,7 @@ func RespMiddleware(next http.Handler) http.Handler {
 
 		body := requestBody{}
 		bodyBytes, _ := ioutil.ReadAll(r.Body)
+		spaceId := r.Header.Get("x-space")
 		err := json.Unmarshal(bodyBytes, &body)
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -58,7 +58,7 @@ func RespMiddleware(next http.Handler) http.Handler {
 
 		_ = json.Unmarshal(saveBytes, &data)
 
-		err = SaveToCache(r.Context(), fmt.Sprint(queryStr, varString), data)
+		err = SaveToCache(r.Context(), fmt.Sprint(queryStr, varString, spaceId), data)
 		if err != nil {
 			log.Println(err.Error())
 		}
@@ -67,6 +67,5 @@ func RespMiddleware(next http.Handler) http.Handler {
 			log.Printf("Failed to send out response: %v", err)
 		}
 
-		log.Println(" RespMiddleware exit")
 	})
 }

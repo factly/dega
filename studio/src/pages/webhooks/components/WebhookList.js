@@ -71,7 +71,7 @@ function WebhookList({ actions, data, filters, setFilters, fetchWebhooks }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

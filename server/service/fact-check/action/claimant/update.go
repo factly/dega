@@ -64,6 +64,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(r.Body).Decode(&claimant)
 
 	if err != nil {
+		println(err)
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
@@ -172,18 +173,17 @@ func update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Update into meili index
-	meiliObj := map[string]interface{}{
-		"id":          result.ID,
-		"kind":        "claimant",
-		"name":        result.Name,
-		"slug":        result.Slug,
-		"description": result.Description,
-		"tag_line":    result.TagLine,
-		"space_id":    result.SpaceID,
-	}
-
 	if config.SearchEnabled() {
+		// Update into meili index
+		meiliObj := map[string]interface{}{
+			"id":          result.ID,
+			"kind":        "claimant",
+			"name":        result.Name,
+			"slug":        result.Slug,
+			"description": result.Description,
+			"tag_line":    result.TagLine,
+			"space_id":    result.SpaceID,
+		}
 		err = searchService.GetSearchService().Update(meiliObj)
 		if err != nil {
 			loggerx.Error(err)

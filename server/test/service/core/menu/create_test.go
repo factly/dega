@@ -3,94 +3,73 @@ package menu
 import (
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestMenuCreate(t *testing.T) {
-
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+func TestCreateMenu(t *testing.T) {
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	config.DB.Exec("DELETE FROM menus")
 
+	var insertData = model.Menu{
+		Name:       "Test Menu",
+		Slug:       "test-menu",
+		Menu:       TestMenu,
+		MetaFields: TestMetaFields,
+		SpaceID:    TestSpaceID,
+	}
+
+	config.DB.Model(&model.Menu{}).Create(&insertData)
 	// create httpexpect instance
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable menu", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+	//test to check unprocessable menu
+	t.Run("unprocessable menu", func(t *testing.T) {
 
 		e.POST(basePath).
 			WithJSON(invalidData).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("Undecodable menu", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("menu with same name exists", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(1))
+	// Create a menu
+	t.Run("Successful create menu", func(t *testing.T) {
 
 		e.POST(basePath).
 			WithJSON(Data).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusUnprocessableEntity)
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusCreated).
+			JSON().
+			Object().
+			ContainsMap(Data)
 	})
 
-	t.Run("create menu", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
+	t.Run("undecodable menu", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(headers).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+	})
 
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT count(*) FROM "menus"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"count"}).AddRow(0))
-
-		slugCheckMock(mock)
-
-		mock.ExpectBegin()
-		mock.ExpectQuery(`INSERT INTO "menus"`).
-			WithArgs(test.AnyTime{}, test.AnyTime{}, nil, 1, 1, Data["name"], Data["slug"], Data["menu"], 1, Data["meta_fields"]).
-			WillReturnRows(sqlmock.
-				NewRows([]string{"id"}).
-				AddRow(1))
-
-		SelectQuery(mock)
-		mock.ExpectCommit()
-
+	//menu with same name
+	t.Run("create menu with same name", func(t *testing.T) {
+		Data["name"] = insertData.Name
 		e.POST(basePath).
 			WithJSON(Data).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusCreated)
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusUnprocessableEntity)
 	})
 
 }

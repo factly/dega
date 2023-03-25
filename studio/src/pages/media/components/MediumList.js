@@ -44,9 +44,9 @@ function MediumList({ data, filters, setFilters }) {
                   <img
                     alt="ALT"
                     src={
-                      item.url?.[window.REACT_APP_IMG_URL_PROP]
+                      item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
                         ? `${
-                            item.url?.[window.REACT_APP_IMG_URL_PROP]
+                            item.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
                           }?gravity:sm/resize:fill:220:220`
                         : ''
                     }

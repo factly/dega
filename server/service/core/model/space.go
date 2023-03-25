@@ -39,7 +39,7 @@ type KavachSpace struct {
 	Description    string         `json:"description"`
 	ApplicationID  uint           `json:"application_id"`
 	OrganisationID uint           `json:"organisation_id"`
-	Metadata     postgres.Jsonb `json:"meta_fields"`
+	MetaFields     postgres.Jsonb `json:"meta_fields"`
 }
 
 var spaceUser config.ContextKey = "space_user"

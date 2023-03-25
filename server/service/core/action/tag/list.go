@@ -2,6 +2,7 @@ package tag
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -69,6 +70,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 			searchService := search.GetSearchService()
 			hits, err = searchService.SearchQuery(searchQuery, filters, "tag", limit, offset)
 			if err != nil {
+				log.Fatal(err)
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return

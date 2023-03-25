@@ -103,8 +103,16 @@ func create(w http.ResponseWriter, r *http.Request) {
 	mediumID := &category.MediumID
 	if category.MediumID == 0 {
 		mediumID = nil
-	}
+	} else {
+		var medium model.Medium
+		config.DB.Where(&model.Medium{Base: config.Base{ID: *mediumID}}).First(&medium)
 
+		if medium.SpaceID != uint(sID) {
+			loggerx.Error(errors.New(`medium does not belong to same space`))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("medium does not belong to the space", http.StatusInternalServerError)))
+			return
+		}
+	}
 	parentID := &category.ParentID
 	if category.ParentID == 0 {
 		parentID = nil

@@ -11,23 +11,26 @@ import (
 )
 
 type claim struct {
-	CreatedAt     time.Time      `json:"created_at"`
-	UpdatedAt     time.Time      `json:"updated_at"`
-	Claim         string         `json:"claim" validate:"required,max=5000"`
-	Slug          string         `json:"slug"`
-	ClaimDate     *time.Time     `json:"claim_date" `
-	CheckedDate   *time.Time     `json:"checked_date"`
-	ClaimSources  postgres.Jsonb `json:"claim_sources" swaggertype:"primitive,string"`
-	Description   postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
-	ClaimantID    uint           `json:"claimant_id" validate:"required"`
-	RatingID      uint           `json:"rating_id" validate:"required"`
-	MediumID      uint           `json:"medium_id"`
-	Fact          string         `json:"fact"`
-	ReviewSources postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
-	MetaFields    postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
-	Meta          postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
-	HeaderCode    string         `json:"header_code"`
-	FooterCode    string         `json:"footer_code"`
+	CreatedAt      time.Time      `json:"created_at"`
+	UpdatedAt      time.Time      `json:"updated_at"`
+	Claim          string         `json:"claim" validate:"required,max=5000"`
+	Slug           string         `json:"slug"`
+	ClaimDate      *time.Time     `json:"claim_date" `
+	CheckedDate    *time.Time     `json:"checked_date"`
+	ClaimSources   postgres.Jsonb `json:"claim_sources" swaggertype:"primitive,string"`
+	Description    postgres.Jsonb `json:"description" swaggertype:"primitive,string"`
+	ClaimantID     uint           `json:"claimant_id" validate:"required"`
+	RatingID       uint           `json:"rating_id" validate:"required"`
+	MediumID       uint           `json:"medium_id"`
+	Fact           string         `json:"fact"`
+	ReviewSources  postgres.Jsonb `json:"review_sources" swaggertype:"primitive,string"`
+	MetaFields     postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
+	Meta           postgres.Jsonb `json:"meta" swaggertype:"primitive,string"`
+	HeaderCode     string         `json:"header_code"`
+	FooterCode     string         `json:"footer_code"`
+	DescriptionAMP string         `json:"description_amp"`
+	MigrationID    *uint           `json:"migration_id"`
+	MigratedHTML   string         `json:"migrated_html"`
 }
 
 var userContext config.ContextKey = "claim_user"

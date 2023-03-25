@@ -74,8 +74,9 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	validationError := validationx.Check(post)
-
+	// log.Fatal(post.FormatID)
 	if validationError != nil {
+		// log.Fatalf("validation error: %v", validationError)
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return
@@ -157,9 +158,10 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 			SpaceID: uint(sID),
 		}).Where("status != 'template'").Count(&totPosts)
 
-		if totPosts >= permission.Posts && permission.Posts > 0 {
+		if totPosts >= permission.Posts || permission.Posts == 0 {
 			return nil, errorx.GetMessage("cannot create more posts", http.StatusUnprocessableEntity)
 		}
+
 	}
 
 	// Get table name
@@ -217,6 +219,12 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 		FooterCode:       post.FooterCode,
 		MetaFields:       post.MetaFields,
 		SpaceID:          uint(sID),
+		DescriptionAMP:   post.DescriptionAMP,
+		MigratedHTML:     post.MigratedHTML,
+	}
+
+	if post.MigrationID != nil {
+		result.Post.MigrationID = *post.MigrationID
 	}
 
 	if status == "publish" {

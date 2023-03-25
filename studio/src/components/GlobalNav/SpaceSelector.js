@@ -20,12 +20,16 @@ function SpaceSelector({ collapsed }) {
         <img
           alt="logo"
           className="menu-logo"
-          src={details[selected]?.fav_icon?.url?.[window.REACT_APP_IMG_URL_PROP] || degaImg}
+          src={
+            details[selected]?.fav_icon?.url?.[
+              window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+            ] || degaImg
+          }
         />
       ) : (
         <Select
           style={{ width: '200px' }}
-          value={selected!==0?selected:orgs[0]?.title}
+          value={selected !== 0 ? selected : orgs[0]?.title}
           onChange={handleSpaceChange}
           bordered={false}
         >
@@ -39,7 +43,9 @@ function SpaceSelector({ collapsed }) {
                       shape="square"
                       src={
                         details[space].fav_icon
-                          ? details[space].fav_icon.url?.[window.REACT_APP_IMG_URL_PROP]
+                          ? details[space].fav_icon.url?.[
+                              window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                            ]
                           : degaImg
                       }
                     />

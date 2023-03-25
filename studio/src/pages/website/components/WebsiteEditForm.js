@@ -16,7 +16,7 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
   }
   const [form] = Form.useForm();
   const orgs = useSelector((state) => state.spaces.orgs);
-
+  const currentSpaceID = useSelector((state) => state.spaces.selected);
   const onReset = () => {
     form.resetFields();
   };
@@ -28,7 +28,7 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
       <Form
         layout="vertical"
         form={form}
-        initialValues={data}
+        initialValues={{ ...data, space_id: currentSpaceID }}
         name="create-space"
         onFinish={(values) => {
           if (values.meta_fields) {
@@ -76,6 +76,9 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
                   </Option>
                 ))}
               </Select>
+            </Form.Item>
+            <Form.Item rules={[{ required: true }]} name="space_id" label="SpaceID">
+              <Input disabled />
             </Form.Item>
             <Form.Item
               name="name"

@@ -76,7 +76,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
               <Button
                 icon={<DeleteOutlined />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
-                type="danger"
+                danger
               >
                 Delete
               </Button>

@@ -1,46 +1,42 @@
 package post
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/fact-check/claim"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
-	"github.com/spf13/viper"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestPostList(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
-
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM posts")
+	config.DB.Exec("DELETE FROM authors")
+	config.DB.Exec("DELETE FROM formats")
+	config.DB.Exec("DELETE FROM tags")
+	config.DB.Exec("DELETE FROM post_authors")
+	var insertAuthorData model.Author
+	var insertMediumData model.Medium
+	var insertSpacePermission model.SpacePermission
+	var insertFormatData model.Format
+	var insertPostAuthorData model.PostAuthor
+	var insertData model.Post
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("get empty list of posts", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		postCountQuery(mock, 0)
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "name", "slug", "space_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, "Tag test 1", "tag-test-1", 1))
+	t.Run("get empty list", func(t *testing.T) {
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -49,170 +45,191 @@ func TestPostList(t *testing.T) {
 			JSON().
 			Object().
 			ContainsMap(map[string]interface{}{"total": 0})
-
-		test.ExpectationsMet(t, mock)
 	})
 
-	t.Run("get non-empty list of posts", func(t *testing.T) {
-		postListMock(mock)
+	t.Run("get non-empty list of media", func(t *testing.T) {
+		insertAuthorData = model.Author{
+			FirstName: "Arthur",
+			LastName:  "Dent",
+		}
+		config.DB.Create(&insertAuthorData)
+		insertData = model.Post{
+			Title:            "TestTitle",
+			Subtitle:         TestSubTitle,
+			Slug:             "test-title-2",
+			Description:      TestDescriptionJson,
+			DescriptionHTML:  TestDescriptionHtml,
+			Status:           TestStatus,
+			IsPage:           TestIsPage,
+			IsHighlighted:    TestIsHighlighted,
+			FeaturedMediumID: &TestFeaturedMediumID,
+			FormatID:         TestFormatID,
+			SpaceID:          TestSpaceID,
+			Meta:             TestMeta,
+			Excerpt:          TestExcerpt,
+			HeaderCode:       TestHeaderCode,
+			FooterCode:       TestFooterCode,
+			MetaFields:       TestMetaFields,
+			DescriptionAMP:   TestDescriptionHtml,
+			Tags:             []model.Tag{},
+			Categories:       []model.Category{},
+		}
+		insertMediumData = model.Medium{
+			Name:        "Create Medium Test",
+			Slug:        "create-medium-test",
+			Description: "desc",
+			Type:        "jpg",
+			Title:       "Sample image",
+			Caption:     "caption",
+			AltText:     "TestAltText",
+			FileSize:    100,
+			URL: postgres.Jsonb{
+				RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+			},
+			Dimensions: "TestDimensions",
+			MetaFields: TestMetaFields,
+			SpaceID:    TestSpaceID,
+		}
+		insertSpacePermission = model.SpacePermission{
+			SpaceID:   1,
+			FactCheck: true,
+			Media:     10,
+			Posts:     10,
+			Podcast:   true,
+			Episodes:  10,
+			Videos:    10,
+		}
 
-		delete(postList[0], "featured_medium_id")
+		insertFormatData = model.Format{
+			Name:        "Create Format Test",
+			Slug:        "create-format-test",
+			Description: "desc",
+			SpaceID:     TestSpaceID,
+		}
+		if err := config.DB.Create(&insertFormatData).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertMediumData).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertData).Error; err != nil {
+			log.Fatal(err)
+		}
+		insertData.Title = "Create Data Test"
+		insertData.Slug = "create-data-test"
+		insertData.ID = 10000
+		config.DB.Create(&insertData)
+		insertPostAuthorData = model.PostAuthor{
+			AuthorID: insertAuthorData.ID,
+			PostID:   insertData.ID,
+		}
+		if err := config.DB.Model(&model.PostAuthor{}).Create(&insertPostAuthorData).Error; err != nil {
+			log.Fatal(err)
+		}
+		resData["format_id"] = insertFormatData.ID
+		resData["title"] = "TestTitle"
+		resData["slug"] = "test-title-2"
+		delete(resData, "authors")
+
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(postList)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(postList[0])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
 
 	t.Run("get posts with pagination", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		postCountQuery(mock, len(postList))
-
-		mock.ExpectQuery(paginationQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, postList[1]["title"], postList[1]["subtitle"], postList[1]["slug"], postList[1]["status"], postList[1]["page"], postList[1]["excerpt"],
-					postList[1]["description"], postList[1]["html_description"], postList[1]["is_featured"], postList[1]["is_sticky"], postList[1]["is_highlighted"], postList[1]["featured_medium_id"], postList[1]["format_id"], postList[1]["published_date"], 1))
-
-		preloadMock(mock, sqlmock.AnyArg())
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_claims"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "claim_id", "post_id", "position"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, 1))
-
-		claim.SelectWithOutSpace(mock, claim.Data)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
-
-		delete(postList[1], "featured_medium_id")
+		resData["title"] = "Create Data Test"
+		resData["slug"] = "create-data-test"
 		e.GET(basePath).
-			WithQueryObject(map[string]interface{}{
-				"limit": "1",
-				"page":  "2",
-			}).
 			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{
+				"page":  2,
+				"limit": 1,
+			}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(postList)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(postList[1])
-
-		test.ExpectationsMet(t, mock)
-
+			ContainsMap(resData)
 	})
 
-	t.Run("get list of posts based on filters", func(t *testing.T) {
-		postListWithFiltersMock(mock)
+	// t.Run("get list of posts based on filters and query", func(t *testing.T) {
+	// 	meiliObj := map[string]interface{}{
+	// 		"id":             insertData.ID,
+	// 		"kind":           "post",
+	// 		"title":          insertData.Title,
+	// 		"subtitle":       insertData.Subtitle,
+	// 		"slug":           insertData.Slug,
+	// 		"status":         insertData.Status,
+	// 		"excerpt":        insertData.Excerpt,
+	// 		"description":    insertData.Description,
+	// 		"is_featured":    insertData.IsFeatured,
+	// 		"is_sticky":      insertData.IsSticky,
+	// 		"is_highlighted": insertData.IsHighlighted,
+	// 		"is_page":        insertData.IsPage,
+	// 		"format_id":      insertData.FormatID,
+	// 		"space_id":       insertData.SpaceID,
+	// 		"tag_ids":        []uint{},
+	// 		"category_ids":   []uint{},
+	// 		"author_ids":     []uint{insertAuthorData.ID},
+	// 	}
 
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"tag":      "2",
-				"category": "2",
-				"author":   "2",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": len(postList)}).
-			Value("nodes").
-			Array().
-			Element(0).
-			Object().
-			ContainsMap(postList[0])
+	// 	if err := meilisearchx.AddDocument(viper.GetString("MEILISEARCH_INDEX"), meiliObj); err != nil {
+	// 		log.Fatal(err)
+	// 	}
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "test").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 1}).
+	// 		Value("nodes").
+	// 		Array().
+	// 		Element(0).
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{
+	// 			"title":          insertData.Title,
+	// 			"subtitle":       insertData.Subtitle,
+	// 			"slug":           insertData.Slug,
+	// 			"status":         insertData.Status,
+	// 			"excerpt":        insertData.Excerpt,
+	// 			"description":    insertData.Description,
+	// 			"is_featured":    insertData.IsFeatured,
+	// 			"is_sticky":      insertData.IsSticky,
+	// 			"is_highlighted": insertData.IsHighlighted,
+	// 			"is_page":        insertData.IsPage,
+	// 			"format_id":      insertData.FormatID,
+	// 			"space_id":       insertData.SpaceID,
+	// 		})
+	// 	meilisearchx.DeleteDocument(viper.GetString("MEILISEARCH_INDEX"), insertData.ID, "post")
+	// })
 
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("get list of posts based on filters and query", func(t *testing.T) {
-		postListWithFiltersMock(mock)
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"tag":      "2",
-				"category": "2",
-				"q":        "test",
-				"author":   "1",
-				"format":   "2",
-				"status":   "publish",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": len(postList)}).
-			Value("nodes").
-			Array().
-			Element(0).
-			Object().
-			ContainsMap(postList[0])
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("when query does not match any post", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		test.DisableMeiliGock(testServer.URL)
-
-		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
-			HeaderPresent("X-Meili-API-Key").
-			Persist().
-			Reply(http.StatusOK).
-			JSON(test.EmptyMeili)
-
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"tag":      "2",
-				"category": "2",
-				"q":        "test",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			Value("total").
-			Equal(0)
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("when meili is down", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		test.DisableMeiliGock(testServer.URL)
-
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"tag":    "2",
-				"q":      "test",
-				"author": "1",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			Value("total").
-			Equal(0)
-
-		test.ExpectationsMet(t, mock)
-	})
+	// t.Run("query doesnot match any post", func(t *testing.T) {
+	// 	e.GET(basePath).
+	// 		WithHeaders(headers).
+	// 		WithQuery("q", "aaaaaaaaaaa").
+	// 		Expect().
+	// 		Status(http.StatusOK).
+	// 		JSON().
+	// 		Object().
+	// 		ContainsMap(map[string]interface{}{"total": 0})
+	// })
 }

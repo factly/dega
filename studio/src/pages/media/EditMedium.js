@@ -65,7 +65,7 @@ function EditMedium() {
       </Col>
       <Col span={'12'}>
         <img
-          src={media.url?.[window.REACT_APP_IMG_URL_PROP]}
+          src={media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
           alt={'space'}
           style={{
             maxHeight: '500px',
@@ -115,7 +115,7 @@ function EditMedium() {
                 }}
               >
                 <Button
-                  type="danger"
+                  danger
                   disabled={disabled} // icon={<DeleteOutlined />}
                 >
                   Delete

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Form, Input, DatePicker, Row, Col, Collapse } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, MetaForm, SlugInput } from '../../../components/FormItems';
@@ -41,10 +41,10 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     values.claimant_id = values.claimant || 0;
     values.rating_id = values.rating || 0;
     values.claim_date = values.claim_date
-      ? moment(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.claim_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
     values.checked_date = values.checked_date
-      ? moment(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
+      ? dayjs(values.checked_date).format('YYYY-MM-DDTHH:mm:ssZ')
       : null;
 
     onCreate(values);
@@ -63,8 +63,8 @@ const ClaimForm = ({ onCreate, data = {} }) => {
   };
 
   if (data && data.id) {
-    data.claim_date = data.claim_date ? moment(data.claim_date) : null;
-    data.checked_date = data.checked_date ? moment(data.checked_date) : null;
+    data.claim_date = data.claim_date ? dayjs(data.claim_date) : null;
+    data.checked_date = data.checked_date ? dayjs(data.checked_date) : null;
   }
 
   const handleCollapse = (props) => {
@@ -189,7 +189,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
             </Form.Item>
             <DescriptionInput
               inputProps={{ placeholder: 'Enter Description...' }}
-              initialValue={data.description?.json}
+              initialValue={data.description_html}
             />
           </Panel>
           <Panel header="Sources" key="2">

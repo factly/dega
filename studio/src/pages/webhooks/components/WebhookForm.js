@@ -3,15 +3,8 @@ import { Button, Form, Input, Space, Switch, Checkbox, Row, Col } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { getEvents } from '../../../actions/events';
 import deepEqual from 'deep-equal';
+import { getEventName } from '../../../utils/event';
 
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 10,
-  },
-};
 const tailLayout = {
   wrapperCol: {
     offset: 10,
@@ -19,13 +12,21 @@ const tailLayout = {
   },
 };
 
-const buttonLayout = {
-  wrapperCol: {
-    offset: 2,
-    span: 10,
-  },
-};
 const WebhookForm = ({ onCreate, data = {} }) => {
+  const layout = {
+    labelCol: {
+      span: data?.id ? 5 : 8,
+    },
+    wrapperCol: {
+      span: 10,
+    },
+  };
+  const buttonLayout = {
+    wrapperCol: {
+      offset: data?.id ? 1 : 2,
+      span: 10,
+    },
+  };
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
   const dispatch = useDispatch();
@@ -61,13 +62,6 @@ const WebhookForm = ({ onCreate, data = {} }) => {
 
   const fetchEvents = () => {
     dispatch(getEvents(filters));
-  };
-  const getEventName = (eventLabel) => {
-    var labelArr = eventLabel.split('.');
-    for (var i = 0; i < labelArr.length; i++) {
-      labelArr[i] = labelArr[i][0].toUpperCase() + labelArr[i].slice(1);
-    }
-    return labelArr.join(' ');
   };
   if (events) {
     return (
@@ -110,7 +104,7 @@ const WebhookForm = ({ onCreate, data = {} }) => {
           {...buttonLayout}
           style={{
             display: 'flex',
-            justifyContent: 'center',
+            justifyContent: 'space-around',
             alignItems: 'center',
           }}
         >
@@ -118,10 +112,10 @@ const WebhookForm = ({ onCreate, data = {} }) => {
             onClick={() => {
               setFilters({ page: filters.page + 1, limit: filters.limit });
             }}
-            size="small"
-            style={{
-              width: '90%',
-            }}
+            // size="small"
+            // style={{
+            //   width: '90%',
+            // }}
           >
             Load More Events
           </Button>

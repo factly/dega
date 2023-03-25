@@ -55,3 +55,4 @@ To run test cases
 
 To watch the test results display in your browser:
   `go tool cover -html=coverage.out`
+To check the coverage run: `go tool cover -func={path/to/coverage.out}`

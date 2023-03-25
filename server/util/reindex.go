@@ -53,11 +53,11 @@ func AddPosts(spaceID uint) error {
 	err := config.DB.Model(&model.Post{}).Where(&model.Post{
 		SpaceID: spaceID,
 	}).Preload("Format").Preload("Tags").Preload("Categories").Find(&posts).Error
-
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
+	// log.Fatal("============================================================", posts)
 
 	postAuthorMap := make(map[uint][]uint)
 	postAuthors := make([]model.PostAuthor, 0)

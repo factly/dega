@@ -109,7 +109,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 		if err != nil {
 			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category does not exist", http.StatusUnprocessableEntity)))
+			errorx.Render(w, errorx.Parser(errorx.GetMessage("Parent category not found in space", http.StatusNotFound)))
 			return
 		}
 	}

@@ -226,6 +226,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 	spaceObjectforDega.Description = spaceObjectfromKavach.Description
 	spaceObjectforDega.ApplicationID = spaceObjectfromKavach.ApplicationID
 	spaceObjectforDega.OrganisationID = int(spaceObjectfromKavach.OrganisationID)
+	spaceObjectforDega.MetaFields = spaceObjectfromKavach.MetaFields
 	spaceSettings := model.SpaceSettings{}
 	config.DB.Model(&model.SpaceSettings{}).Where(&model.SpaceSettings{
 		SpaceID: spaceObjectforDega.ID,

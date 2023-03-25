@@ -64,6 +64,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	validationError := validationx.Check(claimant)
 
 	if validationError != nil {
+		// log.Fatal(validationError, claimant.Name)
 		loggerx.Error(errors.New("validation error"))
 		errorx.Render(w, validationError)
 		return

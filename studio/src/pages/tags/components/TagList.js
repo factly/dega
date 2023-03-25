@@ -42,7 +42,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

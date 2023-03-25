@@ -94,7 +94,7 @@ function Template({ format }) {
                     <img
                       style={{ cursor: 'pointer' }}
                       alt="example"
-                      src={item.medium.url?.[window.REACT_APP_IMG_URL_PROP]}
+                      src={item.medium.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']}
                       height="230"
                       onClick={() => handleAddPost(item)}
                     />
@@ -124,7 +124,7 @@ function Template({ format }) {
                         .then(() => dispatch(getPosts({ page: 1, limit: 5, format: [format.id] })))
                     }
                   >
-                    <DeleteOutlined key="delete" type="danger" />
+                    <DeleteOutlined key="delete" danger />
                   </Popconfirm>,
                 ]}
               >
