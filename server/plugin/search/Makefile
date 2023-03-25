@@ -1,5 +1,5 @@
 clean: search-plugin 
 	rm search-plugin 
 
-meilisearch-plugin:
+search-plugin:
 	go build -o search-plugin ./meilisearch-plugin

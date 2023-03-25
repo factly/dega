@@ -31,12 +31,17 @@ var serveCmd = &cobra.Command{
 			}
 			defer searchSingleton.Client.Kill()
 
+			searchService, err := searchSingleton.GetSearchPlugin("meilisearch")
+			if err != nil {
+				log.Fatal(err)
+			}
+
 			searchConfig, err := search.GetSearchServiceConfig()
 			if err != nil {
 				log.Fatal("server was not able to load search service config file")
 			}
 
-			err = searchSingleton.Service.Connect(searchConfig)
+			err = searchService.Connect(searchConfig)
 			if err != nil {
 				log.Fatal("error in connecting to search index - either enable search or verify host, api key and other attributes: ", err)
 			}

@@ -2,6 +2,7 @@ package search
 
 import (
 	"encoding/json"
+	"errors"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -17,7 +18,14 @@ var lock = &sync.Mutex{}
 
 type SearchSingleton struct {
 	Client  *plugin.Client
-	Service shared.SearchService
+	Service map[string]shared.SearchService
+}
+
+func (s SearchSingleton) GetSearchPlugin(pluginIndentifier string) (shared.SearchService, error) {
+	if _, ok := s.Service[pluginIndentifier]; !ok {
+		return nil, errors.New("plugin not supported")
+	}
+	return s.Service[pluginIndentifier], nil
 }
 
 func GetSearchSingleton() (*SearchSingleton, error) {
@@ -25,19 +33,35 @@ func GetSearchSingleton() (*SearchSingleton, error) {
 		lock.Lock()
 		defer lock.Unlock()
 
-		client, searchService, err := LoadSearchPlugin("meilisearch")
+		client := LoadSearchPluginClient()
+
+		rpcClient, err := client.Client()
 		if err != nil {
 			return nil, err
 		}
+
+		serviceMap := map[string]shared.SearchService{}
+		// for each plugin, we need to get the service
+		for key := range shared.PluginMap {
+			raw, err := rpcClient.Dispense(key)
+			if err != nil {
+				return nil, err
+			}
+
+			searchService := raw.(shared.SearchService)
+
+			serviceMap[key] = searchService
+		}
+
 		singletonInstance = &SearchSingleton{
 			Client:  client,
-			Service: searchService,
+			Service: serviceMap,
 		}
 	}
 	return singletonInstance, nil
 }
 
-func LoadSearchPlugin(pluginIdentifier string) (*plugin.Client, shared.SearchService, error) {
+func LoadSearchPluginClient() *plugin.Client {
 	client := plugin.NewClient(&plugin.ClientConfig{
 		HandshakeConfig: shared.Handshake,
 		Plugins:         shared.PluginMap,
@@ -47,19 +71,23 @@ func LoadSearchPlugin(pluginIdentifier string) (*plugin.Client, shared.SearchSer
 		},
 	})
 
-	rpcClient, err := client.Client()
-	if err != nil {
-		return nil, nil, err
-	}
+	return client
 
-	raw, err := rpcClient.Dispense(pluginIdentifier)
-	if err != nil {
-		return nil, nil, err
-	}
+	// rpcClient, err := client.Client()
+	// if err != nil {
+	// 	return nil, err
+	// }
 
-	searchService := raw.(shared.SearchService)
+	// return rpcClient, nil
 
-	return client, searchService, nil
+	// raw, err := rpcClient.Dispense(pluginIdentifier)
+	// if err != nil {
+	// 	return nil, nil, err
+	// }
+
+	// searchService := raw.(shared.SearchService)
+
+	// return client, searchService, nil
 }
 
 func GetSearchServiceConfig() (*shared.SearchConfig, error) {
