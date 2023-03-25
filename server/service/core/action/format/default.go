@@ -74,7 +74,12 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if config.SearchEnabled() {
-			_ = insertIntoMeili(formats[i])
+			err = insertIntoSearchService(formats[i])
+			if err != nil {
+				loggerx.Error(err)
+				errorx.Render(w, errorx.Parser(errorx.DBError()))
+				return
+			}
 		}
 	}
 

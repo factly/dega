@@ -87,7 +87,7 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 
 		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
 		if config.SearchEnabled() {
-			_ = insertIntoMeili(ratings[i])
+			_ = insertIntoSearchService(ratings[i])
 		}
 	}
 

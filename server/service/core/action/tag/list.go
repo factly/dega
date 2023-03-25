@@ -6,15 +6,15 @@ import (
 	"net/http"
 	"strings"
 
+	search "github.com/factly/dega-server/util/search-service"
+
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 // list response
@@ -67,7 +67,8 @@ func list(w http.ResponseWriter, r *http.Request) {
 		if config.SearchEnabled() {
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "tag")
+			searchService := search.GetSearchService()
+			hits, err = searchService.SearchQuery(searchQuery, filters, "tag", limit, offset)
 			if err != nil {
 				log.Fatal(err)
 				loggerx.Error(err)
@@ -75,7 +76,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
-			filteredTagIDs := meilisearchx.GetIDArray(hits)
+			filteredTagIDs := search.GetIDArray(hits)
 			if len(filteredTagIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return

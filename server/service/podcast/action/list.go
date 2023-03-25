@@ -8,9 +8,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/model"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -77,14 +77,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "podcast", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredPodcastIDs := meilisearchx.GetIDArray(hits)
+			filteredPodcastIDs := searchService.GetIDArray(hits)
 			if len(filteredPodcastIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
@@ -121,15 +121,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(categoryIDs, primaryCatID, language []string) string {
 	filters := ""
 	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
 	}
 
 	if len(primaryCatID) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
 	}
 
 	if len(language) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(language, "language"), " AND ")
+		filters = fmt.Sprint(filters, searchService.GenerateFieldFilter(language, "language"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

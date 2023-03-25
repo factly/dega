@@ -237,7 +237,7 @@ services:
       - kavach-migrate
     ports:
       - 5001:8000
-    image: factly/kavach-server:0.28.2
+    image: factly/kavach-server:0.27.4
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -281,7 +281,7 @@ services:
       - postgres
       - keto
       - kratos
-    image: factly/kavach-server:0.28.2
+    image: factly/kavach-server:0.27.4
     volumes:
       - type: bind
         source: ./volumes/kavach-server/data
@@ -321,7 +321,7 @@ services:
       - dega
 
   kavach-web:
-    image: factly/kavach-web:0.28.2-dev
+    image: factly/kavach-web:0.27.4-dev
     volumes:
       - type: bind
         source: ./volumes/kavach-web/config.js
@@ -334,7 +334,7 @@ services:
       - REACT_APP_COMPANION_URL='http://127.0.0.1:3020';
       - REACT_APP_API_URL='http://127.0.0.1:4455/.factly/kavach/server';
       - REACT_APP_KRATOS_PUBLIC_URL='http://127.0.0.1:4455/.ory/kratos/public';
-      - REACT_APP_ENABLE_MULTITENANCY='false';
+      - REACT_APP_ENABLE_MULTITENANCY='true';
       - REACT_APP_DISABLE_REGISTRATION=false;
       - REACT_APP_REDIRECT_SINGLE_APPLICATION_USERS=true;
       - REACT_APP_LOGO_URL='https://images.factly.in/login/applications/logos/factly.png?rs:fill/h:60';
@@ -435,6 +435,20 @@ services:
     networks:
       - dega
 
+  custom-search-service:
+    ports:
+      - 8089:8089
+    build: 
+      context: ./custom-search
+      dockerfile: Dockerfile.dev
+    volumes:
+      - type: bind
+        source: ./custom-search
+        target: /app
+    restart: unless-stopped
+    networks: 
+      - dega
+    
   nats:
     depends_on:
       - dega-server
@@ -480,6 +494,9 @@ services:
       - type: bind
         source: ./api
         target: /app
+      - type: bind 
+        source: ./server/dega.db
+        target: /app/dega.db
     restart: unless-stopped
     networks:
       - dega

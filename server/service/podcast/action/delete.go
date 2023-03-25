@@ -7,9 +7,9 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
@@ -68,7 +68,12 @@ func delete(w http.ResponseWriter, r *http.Request) {
 	tx.Model(&model.Podcast{}).Delete(&result)
 
 	if config.SearchEnabled() {
-		_ = meilisearchx.DeleteDocument("dega", result.ID, "podcast")
+		err = searchService.GetSearchService().Delete("podcast", result.ID)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()

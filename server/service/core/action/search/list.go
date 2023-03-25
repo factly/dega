@@ -6,8 +6,7 @@ import (
 	"fmt"
 	"net/http"
 
-	meilisearchx "github.com/factly/x/meilisearchx"
-	meilisearch "github.com/meilisearch/meilisearch-go"
+	searchService "github.com/factly/dega-server/util/search-service"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -51,13 +50,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filters := []string{}
-	filters = append(filters, fmt.Sprint("space_id=", sID))
-
-	result, err := meilisearchx.Client.Index("dega").Search(searchQuery.Query, &meilisearch.SearchRequest{
-		Filter: filters,
-		Limit:  searchQuery.Limit,
-	})
+	filters := fmt.Sprint("space_id=", sID)
+	limit := -1 // limit is -1 when no limit is needed
+	offset := 0
+	result, err := searchService.GetSearchService().SearchQuery(searchQuery.Query, filters, "", limit, offset)
 
 	if err != nil {
 		loggerx.Error(err)
@@ -65,5 +61,5 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	renderx.JSON(w, http.StatusOK, result.Hits)
+	renderx.JSON(w, http.StatusOK, result)
 }

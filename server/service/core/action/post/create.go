@@ -15,9 +15,9 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/schemax"
@@ -530,38 +530,41 @@ func createPost(ctx context.Context, post post, status string, r *http.Request) 
 
 	result.Post.Schemas = postgres.Jsonb{RawMessage: byteArr}
 
-	// Insert into meili index
-	var meiliPublishDate int64
-	if result.Post.Status == "publish" {
-		meiliPublishDate = result.Post.PublishedDate.Unix()
-	}
-	meiliObj := map[string]interface{}{
-		"id":             result.ID,
-		"kind":           "post",
-		"title":          result.Title,
-		"subtitle":       result.Subtitle,
-		"slug":           result.Slug,
-		"status":         result.Status,
-		"excerpt":        result.Excerpt,
-		"description":    result.Description,
-		"is_featured":    result.IsFeatured,
-		"is_sticky":      result.IsSticky,
-		"is_highlighted": result.IsHighlighted,
-		"is_page":        result.IsPage,
-		"format_id":      result.FormatID,
-		"published_date": meiliPublishDate,
-		"space_id":       result.SpaceID,
-		"tag_ids":        post.TagIDs,
-		"category_ids":   post.CategoryIDs,
-		"author_ids":     post.AuthorIDs,
-	}
-
-	if result.Format.Slug == "fact-check" {
-		meiliObj["claim_ids"] = post.ClaimIDs
-	}
-
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		// Insert into search index
+		var meiliPublishDate int64
+		if result.Post.Status == "publish" {
+			meiliPublishDate = result.Post.PublishedDate.Unix()
+		}
+		meiliObj := map[string]interface{}{
+			"id":             result.ID,
+			"kind":           "post",
+			"title":          result.Title,
+			"subtitle":       result.Subtitle,
+			"slug":           result.Slug,
+			"status":         result.Status,
+			"excerpt":        result.Excerpt,
+			"description":    result.Description,
+			"is_featured":    result.IsFeatured,
+			"is_sticky":      result.IsSticky,
+			"is_highlighted": result.IsHighlighted,
+			"is_page":        result.IsPage,
+			"format_id":      result.FormatID,
+			"published_date": meiliPublishDate,
+			"space_id":       result.SpaceID,
+			"tag_ids":        post.TagIDs,
+			"category_ids":   post.CategoryIDs,
+			"author_ids":     post.AuthorIDs,
+		}
+
+		if result.Format.Slug == "fact-check" {
+			meiliObj["claim_ids"] = post.ClaimIDs
+		}
+		
+		err = searchService.GetSearchService().Add(meiliObj)
+		if err != nil {
+			return nil, errorx.InternalServerError()
+		}
 	}
 
 	tx.Commit()

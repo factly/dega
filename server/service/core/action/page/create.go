@@ -12,9 +12,9 @@ import (
 	"github.com/factly/dega-server/service/core/action/author"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/factly/x/slugx"
@@ -175,38 +175,42 @@ func create(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	// Insert into meili index
-	var meiliPublishDate int64
-	if result.Post.PublishedDate != nil {
-		meiliPublishDate = result.Post.PublishedDate.Unix()
-	}
-	meiliObj := map[string]interface{}{
-		"id":             result.ID,
-		"kind":           "page",
-		"title":          result.Title,
-		"subtitle":       result.Subtitle,
-		"slug":           result.Slug,
-		"status":         result.Status,
-		"is_page":        result.IsPage,
-		"excerpt":        result.Excerpt,
-		"description":    result.Description,
-		"is_featured":    result.IsFeatured,
-		"is_sticky":      result.IsSticky,
-		"is_highlighted": result.IsHighlighted,
-		"format_id":      result.FormatID,
-		"published_date": meiliPublishDate,
-		"space_id":       result.SpaceID,
-		"tag_ids":        page.TagIDs,
-		"category_ids":   page.CategoryIDs,
-		"author_ids":     page.AuthorIDs,
-		"meta":           result.Meta,
-		"meta_fields":    result.MetaFields,
-		"header_code":    result.HeaderCode,
-		"footer_code":    result.FooterCode,
-	}
-
 	if config.SearchEnabled() {
-		_ = meilisearchx.AddDocument("dega", meiliObj)
+		// Insert into meili index
+		var meiliPublishDate int64
+		if result.Post.PublishedDate != nil {
+			meiliPublishDate = result.Post.PublishedDate.Unix()
+		}
+		meiliObj := map[string]interface{}{
+			"id":             result.ID,
+			"kind":           "page",
+			"title":          result.Title,
+			"subtitle":       result.Subtitle,
+			"slug":           result.Slug,
+			"status":         result.Status,
+			"is_page":        result.IsPage,
+			"excerpt":        result.Excerpt,
+			"description":    result.Description,
+			"is_featured":    result.IsFeatured,
+			"is_sticky":      result.IsSticky,
+			"is_highlighted": result.IsHighlighted,
+			"format_id":      result.FormatID,
+			"published_date": meiliPublishDate,
+			"space_id":       result.SpaceID,
+			"tag_ids":        page.TagIDs,
+			"category_ids":   page.CategoryIDs,
+			"author_ids":     page.AuthorIDs,
+			"meta":           result.Meta,
+			"meta_fields":    result.MetaFields,
+			"header_code":    result.HeaderCode,
+			"footer_code":    result.FooterCode,
+		}
+		err = searchService.GetSearchService().Add(meiliObj)
+		if err != nil {
+			loggerx.Error(err)
+			errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
+			return
+		}
 	}
 
 	tx.Commit()

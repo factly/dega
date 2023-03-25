@@ -7,7 +7,7 @@ import (
 	"github.com/factly/dega-server/service/core/model"
 	factCheckModel "github.com/factly/dega-server/service/fact-check/model"
 	podcastModel "github.com/factly/dega-server/service/podcast/model"
-	"github.com/factly/x/meilisearchx"
+	search "github.com/factly/dega-server/util/search-service"
 )
 
 func ReindexAllEntities(spaceID uint) error {
@@ -27,9 +27,7 @@ func ReindexAllEntities(spaceID uint) error {
 	if err = AddMenu(spaceID); err != nil {
 		return err
 	}
-	if err = AddSpace(spaceID); err != nil {
-		return err
-	}
+
 	if err = AddClaim(spaceID); err != nil {
 		return err
 	}
@@ -90,7 +88,9 @@ func AddPosts(spaceID uint) error {
 	for _, p := range posts {
 		var meiliPublishDate int64
 		if p.Status == "publish" {
-			meiliPublishDate = p.PublishedDate.Unix()
+			if p.PublishedDate != nil {
+				meiliPublishDate = p.PublishedDate.Unix()
+			}
 		}
 
 		tagIDs := make([]uint, 0)
@@ -137,8 +137,12 @@ func AddPosts(spaceID uint) error {
 
 		meiliPostObjects = append(meiliPostObjects, meiliObj)
 	}
-	// log.Fatal("===============================", meiliPostObjects)
-	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliPostObjects)
+
+	searchService := search.GetSearchService()
+	err = searchService.BatchUpdate(meiliPostObjects)
+	if err != nil {
+		return err
+	}
 	tx.Commit()
 	return err
 }
@@ -166,8 +170,11 @@ func AddCategories(spaceID uint) error {
 		meiliCategoryObjects = append(meiliCategoryObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliCategoryObjects)
-
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliCategoryObjects)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -193,8 +200,11 @@ func AddTags(spaceID uint) error {
 		meiliTagObjects = append(meiliTagObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliTagObjects)
-
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliTagObjects)
+	if err != nil {
+		return err
+	}
 	return err
 }
 
@@ -226,7 +236,12 @@ func AddMedium(spaceID uint) error {
 		meiliMediumObjects = append(meiliMediumObjects, meiliObj)
 	}
 
-	_, err = meilisearchx.Client.Index("dega").UpdateDocuments(meiliMediumObjects)
+	searchService := search.GetSearchService()
+	err = searchService.BatchUpdate(meiliMediumObjects)
+	if err != nil {
+		tx.Rollback()
+		return err
+	}
 	tx.Commit()
 	return err
 }
@@ -253,7 +268,11 @@ func AddMenu(spaceID uint) error {
 		meiliMenuObjects = append(meiliMenuObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliMenuObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliMenuObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -284,7 +303,11 @@ func AddSpace(spaceID uint) error {
 		meiliSpaceObjects = append(meiliSpaceObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliSpaceObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliSpaceObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -327,7 +350,11 @@ func AddClaim(spaceID uint) error {
 		meiliClaimObjects = append(meiliClaimObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliClaimObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -355,7 +382,11 @@ func AddClaimant(spaceID uint) error {
 		meiliClaimantObjects = append(meiliClaimantObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliClaimantObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliClaimantObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -385,7 +416,11 @@ func AddRating(spaceID uint) error {
 		meiliRatingObjects = append(meiliRatingObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliRatingObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliRatingObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -421,7 +456,11 @@ func AddPodcast(spaceID uint) error {
 		meiliPodcastObjects = append(meiliPodcastObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliPodcastObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliPodcastObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }
@@ -461,7 +500,11 @@ func AddEpisode(spaceID uint) error {
 		meiliEpisodeObjects = append(meiliEpisodeObjects, meiliObj)
 	}
 
-	_, err := meilisearchx.Client.Index("dega").UpdateDocuments(meiliEpisodeObjects)
+	searchService := search.GetSearchService()
+	err := searchService.BatchUpdate(meiliEpisodeObjects)
+	if err != nil {
+		return err
+	}
 
 	return err
 }

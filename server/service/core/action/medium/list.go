@@ -7,13 +7,12 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	searchService "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"github.com/spf13/viper"
 )
 
 // list response
@@ -69,15 +68,14 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 			var hits []interface{}
 
-			hits, err = meilisearchx.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "medium")
-
+			hits, err = searchService.GetSearchService().SearchQuery(searchQuery, filters, "medium", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredMediumIDs = meilisearchx.GetIDArray(hits)
+			filteredMediumIDs = searchService.GetIDArray(hits)
 			if len(filteredMediumIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return

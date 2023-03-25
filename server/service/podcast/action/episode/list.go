@@ -9,6 +9,8 @@ import (
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/action/author"
 	coreModel "github.com/factly/dega-server/service/core/model"
+	search "github.com/factly/dega-server/util/search-service"
+
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -77,7 +79,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 				filters = fmt.Sprint(filters, " AND space_id=", sID)
 			}
 			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "episode")
+			hits, err = search.GetSearchService().SearchQuery(searchQuery, filters, "episode", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
@@ -156,7 +158,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 func generateFilters(podcast []string) string {
 	filters := ""
 	if len(podcast) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
+		filters = fmt.Sprint(filters, search.GenerateFieldFilter(podcast, "podcast_id"), " AND ")
 	}
 
 	if filters != "" && filters[len(filters)-5:] == " AND " {

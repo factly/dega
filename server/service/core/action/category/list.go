@@ -7,9 +7,9 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
+	search "github.com/factly/dega-server/util/search-service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -65,16 +65,15 @@ func list(w http.ResponseWriter, r *http.Request) {
 		if config.SearchEnabled() {
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
-
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "category")
-
+			searchService := search.GetSearchService()
+			hits, err = searchService.SearchQuery(searchQuery, filters, "category", limit, offset)
 			if err != nil {
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
 			}
 
-			filteredCategoryIDs := meilisearchx.GetIDArray(hits)
+			filteredCategoryIDs := search.GetIDArray(hits)
 			if len(filteredCategoryIDs) == 0 {
 				renderx.JSON(w, http.StatusOK, result)
 				return
