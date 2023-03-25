@@ -73,21 +73,6 @@ func LoadSearchPluginClient() *plugin.Client {
 
 	return client
 
-	// rpcClient, err := client.Client()
-	// if err != nil {
-	// 	return nil, err
-	// }
-
-	// return rpcClient, nil
-
-	// raw, err := rpcClient.Dispense(pluginIdentifier)
-	// if err != nil {
-	// 	return nil, nil, err
-	// }
-
-	// searchService := raw.(shared.SearchService)
-
-	// return client, searchService, nil
 }
 
 func GetSearchServiceConfig() (*shared.SearchConfig, error) {
