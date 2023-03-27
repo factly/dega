@@ -1,12 +1,11 @@
 package category
 
 import (
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -44,60 +43,25 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-
-	result := &model.Category{}
-
-	result.ID = uint(id)
-
 	// check record exists or not
-	err = config.DB.Where(&model.Category{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	categoryService := service.GetCategoryService()
+	result, err := categoryService.GetById(sID, int(id))
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	// check if the category is associated with posts
-	category := new(model.Category)
-	category.ID = uint(id)
-	totAssociated := config.DB.Model(category).Association("Posts").Count()
-
-	if totAssociated != 0 {
-		loggerx.Error(errors.New("category is associated with post"))
-		errorx.Render(w, errorx.Parser(errorx.CannotDelete("category", "post")))
-		return
-	}
-
-	tx := config.DB.Begin()
-	// Updates all children categories
-	err = tx.Model(&model.Category{}).Where(&model.Category{
-		SpaceID:  uint(sID),
-		ParentID: &result.ID,
-	}).UpdateColumn("parent_id", nil).Error
-
+	serviceErr := categoryService.Delete(sID, id)
 	if err != nil {
-		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	err = tx.Delete(&result).Error
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
 
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "category")
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("category.deleted", strconv.Itoa(sID), r) {
