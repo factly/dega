@@ -79,7 +79,6 @@ const CategoryForm = ({ onCreate, data = {} }) => {
             values.meta_fields = getJsonValue(values.meta_fields);
           }
           values.background_colour = backgroundColour;
-          console.log('Received values of form: ', values);
           onCreate(values);
           onReset();
         }}
