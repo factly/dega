@@ -44,14 +44,14 @@ const MetaForm = ({ form, formData, style }) => {
       <Collapse
         expandIconPosition="right"
         expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
-        style={{ width: '100%',...style }}
+        style={{ width: '100%', ...style }}
       >
         <Collapse.Panel header="Meta Fields">
           <Form.Item name="meta_fields">
             <MonacoEditor language="json" width="100%" />
           </Form.Item>
         </Collapse.Panel>
-      </Collapse >
+      </Collapse>
     </>
   );
 };

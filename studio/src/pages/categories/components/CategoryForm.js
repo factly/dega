@@ -58,14 +58,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
     setFormData(form.getFieldValue());
   };
 
-
   return (
     <ConfigProvider
       theme={{
         components: {
           Collapse: {
-            colorBgContainer: "#F9FAFB"
-          }
+            colorBgContainer: '#F9FAFB',
+          },
         },
       }}
     >
@@ -89,7 +88,11 @@ const CategoryForm = ({ onCreate, data = {} }) => {
           setFormData(allFields);
         }}
       >
-        <Row justify="center" gutter={[0, 16]} style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
+        <Row
+          justify="center"
+          gutter={[0, 16]}
+          style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}
+        >
           <Col span={24}>
             <Row justify="end" gutter={40}>
               <Form.Item>
@@ -109,9 +112,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="General">
-                  <Row
-                    style={{ background: '#F9FAFB', marginBottom: '1rem', gap: "2rem", }}
-                  >
+                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '2rem' }}>
                     <Col span={10}>
                       <TitleInput
                         name="name"
@@ -131,19 +132,24 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                         <Form.Item name="is_featured" valuePropName="checked">
                           <Row justify="space-between">
                             <Col> Featured </Col>
-                            <Col><Switch onChange={(checked) => form.setFieldsValue({ is_featured: checked })}
-                              defaultChecked={data.is_featured} />
+                            <Col>
+                              <Switch
+                                onChange={(checked) =>
+                                  form.setFieldsValue({ is_featured: checked })
+                                }
+                                defaultChecked={data.is_featured}
+                              />
                             </Col>
                           </Row>
                         </Form.Item>
                       </Col>
                       <Col>
                         <Form.Item name="background_colour" label="Colour">
-                          <div style={{ position: 'relative', width: "100%" }}>
+                          <div style={{ position: 'relative', width: '100%' }}>
                             <div
                               style={{
                                 padding: '5px',
-                                width: "100%",
+                                width: '100%',
                                 background: '#fff',
                                 borderRadius: '1px',
                                 boxShadow: '0 0 0 1px rgba(0,0,0,.1)',
@@ -162,7 +168,9 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                               />
                             </div>
                             {displayBgColorPicker ? (
-                              <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '100%' }}>
+                              <div
+                                style={{ position: 'absolute', zIndex: '2', top: 0, left: '100%' }}
+                              >
                                 <div
                                   style={{
                                     position: 'fixed',
@@ -203,7 +211,13 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                       />
                       <DescriptionInput
                         inputProps={{
-                          style: { minHeight: "92px", background: '#F9FAFB', padding: '0.25rem 0.5rem', borderRadius: '0.25rem', border: "1px solid rgba(0, 0, 0, 0.15)" },
+                          style: {
+                            minHeight: '92px',
+                            background: '#F9FAFB',
+                            padding: '0.25rem 0.5rem',
+                            borderRadius: '0.25rem',
+                            border: '1px solid rgba(0, 0, 0, 0.15)',
+                          },
                           placeholder: 'Enter Description...',
                           basic: true,
                         }}
@@ -213,7 +227,10 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                     </Col>
                     <Col span={6}>
                       <Form.Item label="Featured Image" name="medium_id">
-                        <MediaSelector maxWidth={'350px'} containerStyles={{ justifyContent: 'start' }} />
+                        <MediaSelector
+                          maxWidth={'350px'}
+                          containerStyles={{ justifyContent: 'start' }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>
@@ -223,11 +240,15 @@ const CategoryForm = ({ onCreate, data = {} }) => {
           </Col>
           <Col span={24}>
             <Row gutter={40}>
-              <MetaForm form={form} formData={formData} style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }} />
+              <MetaForm
+                form={form}
+                formData={formData}
+                style={{ marginBottom: 16, background: '#f0f2f5', border: 0 }}
+              />
             </Row>
           </Col>
-        </Row >
-      </Form >
+        </Row>
+      </Form>
     </ConfigProvider>
   );
 };

@@ -1,5 +1,16 @@
 import React, { useEffect } from 'react';
-import { Space, Button, Form, Input, Select, Row, Col, ConfigProvider, Typography, Tooltip } from 'antd';
+import {
+  Space,
+  Button,
+  Form,
+  Input,
+  Select,
+  Row,
+  Col,
+  ConfigProvider,
+  Typography,
+  Tooltip,
+} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -146,7 +157,7 @@ function Categories({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: "1.5rem" }}
+                        style={{ marginBottom: '1.5rem' }}
                       >
                         Create
                       </Button>

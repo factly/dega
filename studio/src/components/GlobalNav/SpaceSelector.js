@@ -121,14 +121,14 @@ function SpaceSelector({ onClose }) {
                   <Avatar
                     src={
                       details[item]?.logo?.url?.[
-                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
                 }
                 description={
                   searchquery &&
-                    details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
@@ -216,7 +216,9 @@ function SpaceSelector({ onClose }) {
                     setModalOpen(false);
                   }}
                 >
-                  <Typography.Text strong>Are you sure you want to delete this space?</Typography.Text>
+                  <Typography.Text strong>
+                    Are you sure you want to delete this space?
+                  </Typography.Text>
                 </Modal>
               ) : null}
               {searchquery.length < 1 ? (

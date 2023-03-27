@@ -197,7 +197,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

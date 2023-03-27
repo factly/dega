@@ -1,7 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import TagList from './components/TagList';
-import { Space, Button, Form, Input, Select, Row, Col, ConfigProvider, Typography, Tooltip } from 'antd';
+import {
+  Space,
+  Button,
+  Form,
+  Input,
+  Select,
+  Row,
+  Col,
+  ConfigProvider,
+  Typography,
+  Tooltip,
+} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { getTags } from '../../actions/tags';
@@ -149,7 +160,7 @@ function Tags({ permission }) {
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
                         icon={<PlusOutlined />}
-                        style={{ marginBottom: "1.5rem" }}
+                        style={{ marginBottom: '1.5rem' }}
                       >
                         Create
                       </Button>

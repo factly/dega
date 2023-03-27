@@ -29,7 +29,7 @@ const DescriptionInput = ({
       <Editor
         menuType="bubble"
         heightStrategy="flexible"
-        rows={ rows ? rows : 10 }
+        rows={rows ? rows : 10}
         {...inputProps}
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}

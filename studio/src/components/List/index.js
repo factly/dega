@@ -111,8 +111,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                  ? authors[author]?.['email']
-                  : null}
+                ? authors[author]?.['email']
+                : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -228,7 +228,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

@@ -187,3 +187,5 @@ server/server
 dist/
 
 *.sqlite
+
+./prebuild.sh

@@ -42,8 +42,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             }}
             to={`/categories/${record.id}/edit`}
           >
-            <Typography.Text style={{ fontSize: '1rem' }}
-              strong>
+            <Typography.Text style={{ fontSize: '1rem' }} strong>
               {record.slug}
             </Typography.Text>
           </Link>
@@ -51,7 +50,9 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       },
     },
     {
-      title: 'Parent Category', dataIndex: ['parent_category'], key: 'parent_id',
+      title: 'Parent Category',
+      dataIndex: ['parent_category'],
+      key: 'parent_id',
       render: (_, record) => {
         return (
           <Link
@@ -60,8 +61,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             }}
             to={`/categories/${record.id}/edit`}
           >
-            <Typography.Text style={{ fontSize: '1rem' }}
-              strong>
+            <Typography.Text style={{ fontSize: '1rem' }} strong>
               {record.parent_category?.name}
             </Typography.Text>
           </Link>
