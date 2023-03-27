@@ -1,24 +1,18 @@
 package rating
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"gorm.io/gorm"
 )
 
 // create - Create rating
@@ -49,118 +43,19 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
-
-	rating := &rating{}
-
+	rating := &service.Rating{}
 	err = json.NewDecoder(r.Body).Decode(&rating)
-
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
-
-	validationError := validationx.Check(rating)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+	ratingService := service.GetRatingService()
+	result, serviceErr := ratingService.Create(r.Context(), sID, uID, rating)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Rating{})
-	tableName := stmt.Schema.Table
-
-	var ratingSlug string
-	if rating.Slug != "" && slugx.Check(rating.Slug) {
-		ratingSlug = rating.Slug
-	} else {
-		ratingSlug = slugx.Make(rating.Name)
-	}
-
-	// Check if rating with same name exist
-	if util.CheckName(uint(sID), rating.Name, tableName) {
-		loggerx.Error(errors.New(`rating with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
-	// Check if rating with same numeric value exist
-	var sameValueRatings int64
-	config.DB.Model(&model.Rating{}).Where(&model.Rating{
-		SpaceID:      uint(sID),
-		NumericValue: rating.NumericValue,
-	}).Count(&sameValueRatings)
-
-	if sameValueRatings > 0 {
-		loggerx.Error(errors.New(`rating with same numeric value exist`))
-		errorx.Render(w, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnprocessableEntity)))
-		return
-	}
-
-	mediumID := &rating.MediumID
-	if rating.MediumID == 0 {
-		mediumID = nil
-	}
-
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(rating.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(rating.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	result := &model.Rating{
-		Base: config.Base{
-			CreatedAt: rating.CreatedAt,
-			UpdatedAt: rating.UpdatedAt,
-		},
-		Name:             rating.Name,
-		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
-		BackgroundColour: rating.BackgroundColour,
-		TextColour:       rating.TextColour,
-		Description:      jsonDescription,
-		DescriptionHTML:  descriptionHTML,
-		MediumID:         mediumID,
-		SpaceID:          uint(sID),
-		NumericValue:     rating.NumericValue,
-		MetaFields:       rating.MetaFields,
-		Meta:             rating.Meta,
-		HeaderCode:       rating.HeaderCode,
-		FooterCode:       rating.FooterCode,
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Rating{}).Create(&result).Error
-
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	tx.Model(&model.Rating{}).Preload("Medium").First(&result)
-
-	if config.SearchEnabled() {
-		_ = insertIntoMeili(*result)
-	}
-
-	tx.Commit()
-
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.created", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("rating.created", result); err != nil {
