@@ -1,24 +1,19 @@
 package menu
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/x/loggerx"
-	"gorm.io/gorm"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
 )
 
 // create - Create menu
@@ -50,7 +45,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	menu := &menu{}
+	menu := &service.Menu{}
 
 	err = json.NewDecoder(r.Body).Decode(&menu)
 
@@ -60,55 +55,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(menu)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
-		return
-	}
-
-	var menuSlug string
-	if menu.Slug != "" && slugx.Check(menu.Slug) {
-		menuSlug = menu.Slug
-	} else {
-		menuSlug = slugx.Make(menu.Name)
-	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Menu{})
-	tableName := stmt.Schema.Table
-
-	// Check if menu with same name exist
-	if util.CheckName(uint(sID), menu.Name, tableName) {
-		loggerx.Error(errors.New(`menu with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
-	result := &model.Menu{
-		Base: config.Base{
-			CreatedAt: menu.CreatedAt,
-			UpdatedAt: menu.UpdatedAt,
-		},
-		Name:       menu.Name,
-		Menu:       menu.Menu,
-		Slug:       slugx.Approve(&config.DB, menuSlug, sID, tableName),
-		MetaFields: menu.MetaFields,
-		SpaceID:    uint(sID),
-	}
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
-	err = tx.Model(&model.Menu{}).Create(&result).Error
-
+	menuService := service.GetMenuService()
+	result, serviceErr := menuService.Create(r.Context(), sID, uID, menu)
 	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	tx.Model(&model.Menu{}).First(&result)
 
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
@@ -123,8 +75,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("menu.created", strconv.Itoa(sID), r) {

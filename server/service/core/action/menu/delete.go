@@ -5,7 +5,7 @@ import (
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -44,36 +44,24 @@ func delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Menu{}
-
-	result.ID = uint(id)
-
-	// check record exists or not
-	err = config.DB.Where(&model.Menu{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
+	menuService := service.GetMenuService()
+	result, err := menuService.GetById(sID, id)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
 		return
 	}
 
-	tx := config.DB.Begin()
-
-	err = tx.Delete(&result).Error
+	serviceErr := menuService.Delete(sID, id)
 	if err != nil {
-		tx.Rollback()
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+		errorx.Render(w, serviceErr)
 		return
 	}
 
 	if config.SearchEnabled() {
 		_ = meilisearchx.DeleteDocument("dega", result.ID, "menu")
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("menu.deleted", strconv.Itoa(sID), r) {
