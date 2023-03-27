@@ -62,7 +62,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           >
             <Typography.Text style={{ fontSize: '1rem' }}
               strong>
-                {record.parent_category?.name}
+              {record.parent_category?.name}
             </Typography.Text>
           </Link>
         );
@@ -82,7 +82,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
                 Button: {
                   controlHeight: 35,
                   colorBorder: '#F2F2F2',
-                  colorPrimaryHover: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
                 },
               },
             }}
@@ -99,17 +99,18 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
               open={modalOpen}
               closable={false}
               centered
-              width={400}
+              width={311}
               className="delete-modal-container"
               style={{
                 borderRadius: '18px',
               }}
               onOk={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
+              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
               onCancel={() => {
                 setModalOpen(false);
               }}
             >
-              <p>Are you sure you want to delete this Page?</p>
+              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
             </Modal>
           </ConfigProvider>
         );

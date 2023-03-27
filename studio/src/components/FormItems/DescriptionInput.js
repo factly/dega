@@ -14,6 +14,7 @@ const DescriptionInput = ({
   inputProps,
   formItemProps,
   initialValue,
+  rows,
 }) => {
   const space_slug = useSelector((state) => {
     return state.spaces.details[state.spaces.selected]?.slug;
@@ -28,7 +29,7 @@ const DescriptionInput = ({
       <Editor
         menuType="bubble"
         heightStrategy="flexible"
-        rows={20}
+        rows={ rows ? rows : 10 }
         {...inputProps}
         initialValue={initialValue}
         uploadEndpoint={window.REACT_APP_COMPANION_URL}

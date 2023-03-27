@@ -27,3 +27,7 @@ code {
   height: 36px;
   width: 36px;
 }
+
+.ant-collapse-item-active {
+  border: 0 !important;
+}

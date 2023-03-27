@@ -121,14 +121,14 @@ function SpaceSelector({ onClose }) {
                   <Avatar
                     src={
                       details[item]?.logo?.url?.[
-                        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+                      window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
                       ] || degaImg
                     }
                   />
                 }
                 description={
                   searchquery &&
-                  details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
+                    details[item].name.toLowerCase().includes(searchquery.toLowerCase()) ? (
                     <Typography.Text strong>
                       {details[item].name
                         .split(new RegExp(`(${searchquery})`, 'gi'))
@@ -197,11 +197,10 @@ function SpaceSelector({ onClose }) {
             <Row style={{ width: '100%', color: '1E1E1E' }}>
               {modalOpen && itemToDelete ? (
                 <Modal
-                  title="Delete Space"
                   open={modalOpen}
                   closable={false}
                   centered
-                  width="400px"
+                  width="311px"
                   className="delete-modal-container"
                   style={{
                     borderRadius: '18px',
@@ -217,7 +216,7 @@ function SpaceSelector({ onClose }) {
                     setModalOpen(false);
                   }}
                 >
-                  <p>Are you sure you want to delete this space?</p>
+                  <Typography.Text strong>Are you sure you want to delete this space?</Typography.Text>
                 </Modal>
               ) : null}
               {searchquery.length < 1 ? (

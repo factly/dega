@@ -111,8 +111,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                ? authors[author]?.['email']
-                : null}
+                  ? authors[author]?.['email']
+                  : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -133,7 +133,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 Button: {
                   controlHeight: 35,
                   colorBorder: '#F2F2F2',
-                  colorPrimaryHover: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
                 },
               },
             }}
@@ -180,8 +180,9 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 open={modalOpen}
                 closable={false}
                 centered
-                width={400}
+                width={311}
                 className="delete-modal-container"
+                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
                 style={{
                   borderRadius: '18px',
                 }}
@@ -192,7 +193,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                   setModalOpen(false);
                 }}
               >
-                <p>Are you sure you want to delete this post?</p>
+                <Typography.Text strong>Are you sure you want to delete this post?</Typography.Text>
               </Modal>
             </div>
           </ConfigProvider>
@@ -227,7 +228,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

@@ -232,7 +232,7 @@ function Pages({ formats }) {
                         icon={<PlusOutlined />}
                         style={{ marginBottom: 16 }}
                       >
-                        New Page
+                        Create
                       </Button>
                     </Link>
                   </Row>

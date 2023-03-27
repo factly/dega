@@ -98,7 +98,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 Button: {
                   controlHeight: 35,
                   colorBorder: '#F2F2F2',
-                  colorPrimaryHover: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
                 },
               },
             }}
@@ -138,7 +138,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 open={modalOpen}
                 closable={false}
                 centered
-                width={400}
+                width={311}
                 className="delete-modal-container"
                 style={{
                   borderRadius: '18px',
@@ -146,11 +146,12 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 onOk={() => {
                   () => dispatch(deletePage(item.id)).then(() => fetchPages());
                 }}
+                cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
                 onCancel={() => {
                   setModalOpen(false);
                 }}
               >
-                <p>Are you sure you want to delete this Page?</p>
+                <Typography.Text strong>Are you sure you want to delete this page?</Typography.Text>
               </Modal>
               {/* <Button
                   icon={<EditOutlined />}
@@ -196,7 +197,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

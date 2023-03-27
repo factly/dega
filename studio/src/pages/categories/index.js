@@ -184,4 +184,3 @@ function Categories({ permission }) {
 }
 
 export default Categories;
-
