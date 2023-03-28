@@ -64,7 +64,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result, serviceErr := categoryService.Create(r.Context(), sID, uID, category)
-	if err != nil {
+	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
