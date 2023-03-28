@@ -150,8 +150,22 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 }
 
 // Delete implements IRatingService
-func (RatingService) Delete(sID int64, id int64) []errorx.Message {
-	panic("unimplemented")
+func (rs RatingService) Delete(sID int64, id int64) []errorx.Message {
+	//check if rating is associated with any post
+	rating := new(model.Rating)
+	rating.ID = uint(id)
+
+	totAssociated := rs.model.Model(rating).Association("Claims").Count()
+	if totAssociated != 0 {
+		loggerx.Error(errors.New(`rating is associated with post`))
+		return errorx.Parser(errorx.CannotDelete("rating", "claim"))
+	}
+
+	tx := rs.model.Begin()
+	tx.Delete(rating)
+	tx.Commit()
+
+	return nil
 }
 
 // GetById implements IRatingService
