@@ -33,9 +33,15 @@ type Rating struct {
 	FooterCode       string         `json:"footer_code"`
 }
 
+// paging
+type paging struct {
+	Total int64          `json:"total"`
+	Nodes []model.Rating `json:"nodes"`
+}
+
 type IRatingService interface {
 	GetById(sID, id int) (model.Rating, error)
-	List(sID int64, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	List(sID int64, offset, limit int, all string, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, rating *Rating) (model.Rating, []errorx.Message)
 	Update(sID, uID int, tag *Rating) (model.Rating, []errorx.Message)
 	Delete(sID, id int64) []errorx.Message
@@ -159,8 +165,29 @@ func (rs RatingService) GetById(sID int, id int) (model.Rating, error) {
 }
 
 // List implements IRatingService
-func (RatingService) List(sID int64, offset int, limit int, searchQuery string, sort string) (paging, []errorx.Message) {
-	panic("unimplemented")
+func (rs RatingService) List(sID int64, offset int, limit int, all string, sort string) (paging, []errorx.Message) {
+
+	result := paging{}
+	result.Nodes = make([]model.Rating, 0)
+
+	stmt := rs.model.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
+		SpaceID: uint(sID),
+	}).Count(&result.Total).Order(sort)
+
+	var err error
+
+	if all == "true" {
+		err = stmt.Find(&result.Nodes).Error
+	} else {
+		err = stmt.Offset(offset).Limit(limit).Find(&result.Nodes).Error
+	}
+
+	if err != nil {
+		loggerx.Error(err)
+		return result, errorx.Parser(errorx.DBError())
+	}
+
+	return result, nil
 }
 
 // Update implements IRatingService

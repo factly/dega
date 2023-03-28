@@ -3,8 +3,8 @@ package rating
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -33,31 +33,22 @@ type paging struct {
 // @Router /fact-check/ratings [get]
 func list(w http.ResponseWriter, r *http.Request) {
 	sID, err := middlewarex.GetSpace(r.Context())
+
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
 
-	result := paging{}
-	result.Nodes = make([]model.Rating, 0)
-
 	all := r.URL.Query().Get("all")
 	offset, limit := paginationx.Parse(r.URL.Query())
+	sort := "id desc"
 
-	stmt := config.DB.Model(&model.Rating{}).Preload("Medium").Where(&model.Rating{
-		SpaceID: uint(sID),
-	}).Count(&result.Total).Order("id desc")
+	ratingService := service.GetRatingService()
 
-	if all == "true" {
-		err = stmt.Find(&result.Nodes).Error
-	} else {
-		err = stmt.Offset(offset).Limit(limit).Find(&result.Nodes).Error
-	}
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+	result, serviceErr := ratingService.List(int64(sID), offset, limit, all, sort)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 

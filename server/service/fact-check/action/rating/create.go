@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/dega-server/util"
@@ -56,6 +57,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, serviceErr)
 		return
 	}
+
+	// TODO: HANDLE ERROR
+	if config.SearchEnabled() {
+		_ = insertIntoMeili(result)
+	}
+
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("rating.created", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("rating.created", result); err != nil {
