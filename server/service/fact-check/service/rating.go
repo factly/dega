@@ -46,6 +46,7 @@ type IRatingService interface {
 	Create(ctx context.Context, sID, uID int, rating *Rating) (model.Rating, []errorx.Message)
 	Update(sID, uID, id int, rating *Rating) (model.Rating, []errorx.Message)
 	Delete(sID, id int64) []errorx.Message
+	Default(ctx context.Context, sID, uID int, ratings []model.Rating) (paging, []errorx.Message)
 }
 
 var userContext config.ContextKey = "rating_user"
@@ -320,4 +321,34 @@ func GetRatingService() IRatingService {
 	return RatingService{
 		model: config.DB.Model(&model.Rating{}),
 	}
+}
+
+func (rs RatingService) Default(ctx context.Context, sID, uID int, ratings []model.Rating) (paging, []errorx.Message) {
+	tx := rs.model.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+
+	var err error
+	for i := range ratings {
+		ratings[i].SpaceID = uint(sID)
+		ratings[i].DescriptionHTML, err = util.GetDescriptionHTML(ratings[i].Description)
+		if err != nil {
+			loggerx.Error(err)
+			return paging{}, errorx.Parser(errorx.DecodeError())
+		}
+
+		ratings[i].BackgroundColour, err = util.GetJSONDescription(ratings[i].Description)
+		if err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			return paging{}, errorx.Parser(errorx.DecodeError())
+		}
+
+		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
+
+	}
+	result := paging{}
+	result.Nodes = ratings
+	result.Total = int64(len(ratings))
+	tx.Commit()
+	return result, nil
+
 }

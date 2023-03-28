@@ -1,7 +1,6 @@
 package rating
 
 import (
-	"context"
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
@@ -9,7 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
-	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -65,37 +64,18 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
+	ratingSercice := service.GetRatingService()
+	result, serviceErr := ratingSercice.Default(r.Context(), sID, uID, ratings)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
+		return
+	}
 
-	for i := range ratings {
-		ratings[i].SpaceID = uint(sID)
-		ratings[i].DescriptionHTML, err = util.GetDescriptionHTML(ratings[i].Description)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
-			return
-		}
-
-		ratings[i].Description, err = util.GetJSONDescription(ratings[i].Description)
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot parse rating description", http.StatusUnprocessableEntity)))
-			return
-		}
-
-		tx.Model(&model.Rating{}).FirstOrCreate(&ratings[i], &ratings[i])
+	for i := range result.Nodes {
 		if config.SearchEnabled() {
 			_ = insertIntoMeili(ratings[i])
 		}
 	}
-
-	result := paging{}
-	result.Nodes = ratings
-	result.Total = int64(len(ratings))
-
-	tx.Commit()
 
 	renderx.JSON(w, http.StatusCreated, result)
 }
