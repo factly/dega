@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"net/http"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -43,7 +44,7 @@ type IRatingService interface {
 	GetById(sID, id int) (model.Rating, error)
 	List(sID int64, offset, limit int, all string, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, rating *Rating) (model.Rating, []errorx.Message)
-	Update(sID, uID int, tag *Rating) (model.Rating, []errorx.Message)
+	Update(sID, uID, id int, rating *Rating) (model.Rating, []errorx.Message)
 	Delete(sID, id int64) []errorx.Message
 }
 
@@ -74,7 +75,7 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 	} else {
 		ratingSlug = slugx.Make(rating.Name)
 	}
-	// check  if  tag name exists
+	// check  if  rating name exists
 	if util.CheckName(uint(sID), rating.Name, tableName) {
 		loggerx.Error(errors.New(`rating with same name exist`))
 		return model.Rating{}, errorx.Parser(errorx.SameNameExist())
@@ -191,8 +192,114 @@ func (rs RatingService) List(sID int64, offset int, limit int, all string, sort 
 }
 
 // Update implements IRatingService
-func (RatingService) Update(sID int, uID int, tag *Rating) (model.Rating, []errorx.Message) {
-	panic("unimplemented")
+func (rs RatingService) Update(sID int, uID int, id int, rating *Rating) (model.Rating, []errorx.Message) {
+	result := &model.Rating{}
+	result.ID = uint(id)
+
+	validationErr := validationx.Check(rating)
+	if validationErr != nil {
+		loggerx.Error(errors.New("validation error"))
+		return model.Rating{}, validationErr
+	}
+
+	err := rs.model.Where(&model.Rating{
+		SpaceID: uint(sID),
+		Base: config.Base{
+			ID: uint(id),
+		},
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		return model.Rating{}, errorx.Parser(errorx.RecordNotFound())
+	}
+
+	var ratingSlug string
+
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Rating{})
+	tableName := stmt.Schema.Table
+
+	if result.Slug == rating.Slug {
+		ratingSlug = result.Slug
+	} else if rating.Slug != "" && slugx.Check(rating.Slug) {
+		ratingSlug = slugx.Approve(&config.DB, rating.Slug, sID, tableName)
+	} else {
+		ratingSlug = slugx.Approve(&config.DB, slugx.Make(rating.Name), sID, tableName)
+	}
+
+	// Check if rating with same name exist
+	if rating.Name != result.Name && util.CheckName(uint(sID), rating.Name, tableName) {
+		loggerx.Error(errors.New(`rating with same name exist`))
+		return model.Rating{}, errorx.Parser(errorx.GetMessage(`rating with same name exist`, http.StatusUnprocessableEntity))
+	}
+
+	if rating.NumericValue != result.NumericValue {
+		// Check if rating with same numeric value exist
+		var sameValueRatings int64
+		config.DB.Model(&model.Rating{}).Where(&model.Rating{
+			SpaceID:      uint(sID),
+			NumericValue: rating.NumericValue,
+		}).Count(&sameValueRatings)
+
+		if sameValueRatings > 0 {
+			loggerx.Error(errors.New(`rating with same numeric value exist`))
+			return model.Rating{}, errorx.Parser(errorx.GetMessage(`rating with same numeric value exist`, http.StatusUnprocessableEntity))
+		}
+	}
+
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(rating.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(rating.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return model.Rating{}, errorx.Parser(errorx.DecodeError())
+		}
+
+		jsonDescription, err = util.GetJSONDescription(rating.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return model.Rating{}, errorx.Parser(errorx.DecodeError())
+		}
+	}
+
+	tx := config.DB.Begin()
+
+	updateMap := map[string]interface{}{
+		"created_at":        rating.CreatedAt,
+		"updated_at":        rating.UpdatedAt,
+		"updated_by_id":     uint(uID),
+		"name":              rating.Name,
+		"slug":              ratingSlug,
+		"background_colour": rating.BackgroundColour,
+		"text_colour":       rating.TextColour,
+		"medium_id":         rating.MediumID,
+		"description":       jsonDescription,
+		"description_html":  descriptionHTML,
+		"numeric_value":     rating.NumericValue,
+		"meta_fields":       rating.MetaFields,
+		"meta":              rating.Meta,
+		"header_code":       rating.HeaderCode,
+		"footer_code":       rating.FooterCode,
+	}
+
+	if rating.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Medium").First(&result).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		return model.Rating{}, errorx.Parser(errorx.DBError())
+	}
+
+	tx.Commit()
+
+	return *result, nil
 }
 
 func GetRatingService() IRatingService {

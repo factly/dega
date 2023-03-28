@@ -44,6 +44,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return
 	}
+
 	rating := &service.Rating{}
 	err = json.NewDecoder(r.Body).Decode(&rating)
 	if err != nil {
@@ -51,6 +52,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))
 		return
 	}
+
 	ratingService := service.GetRatingService()
 	result, serviceErr := ratingService.Create(r.Context(), sID, uID, rating)
 	if serviceErr != nil {
@@ -71,7 +73,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 		}
-
 	}
 
 	renderx.JSON(w, http.StatusCreated, result)
