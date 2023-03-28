@@ -134,8 +134,28 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 }
 
 // Delete implements IClaimantService
-func (claimantService) Delete(sID int, id int) []errorx.Message {
-	panic("unimplemented")
+func (cs claimantService) Delete(sID int, id int) []errorx.Message {
+
+	result := new(model.Claimant)
+
+	result.ID = uint(id)
+
+	// check if claimant is associated with claims
+	var totAssociated int64
+	config.DB.Model(&model.Claim{}).Where(&model.Claim{
+		ClaimantID: uint(id),
+	}).Count(&totAssociated)
+
+	if totAssociated != 0 {
+		loggerx.Error(errors.New("claimant is associated with claim"))
+		return errorx.Parser(errorx.CannotDelete("claimant", "claim"))
+	}
+
+	tx := config.DB.Begin()
+	tx.Model(&model.Claimant{}).Delete(&result)
+	tx.Commit()
+
+	return nil
 }
 
 // GetById implements IClaimantService
