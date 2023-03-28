@@ -45,7 +45,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

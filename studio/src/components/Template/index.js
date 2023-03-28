@@ -124,7 +124,7 @@ function Template({ format }) {
                         .then(() => dispatch(getPosts({ page: 1, limit: 5, format: [format.id] })))
                     }
                   >
-                    <DeleteOutlined key="delete" type="danger" />
+                    <DeleteOutlined key="delete" danger />
                   </Popconfirm>,
                 ]}
               >

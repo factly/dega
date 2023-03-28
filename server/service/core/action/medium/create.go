@@ -67,6 +67,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 			SpaceID: uint(sID),
 		}).First(&permission).Error
 
+		// log.Fatal(err)
+
 		if err != nil {
 			loggerx.Error(err)
 			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
@@ -78,11 +80,17 @@ func create(w http.ResponseWriter, r *http.Request) {
 		config.DB.Model(&model.Medium{}).Where(&model.Medium{
 			SpaceID: uint(sID),
 		}).Count(&totMedia)
+		// log.Fatal(totMedia)
+		// log.Fatal()
+		// if totMedia+int64(len(mediumList)) > permission.Media && permission.Media > 0 {
+		// 	errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
+		// 	return
+		// }
 
-		if totMedia+int64(len(mediumList)) > permission.Media && permission.Media > 0 {
-			errorx.Render(w, errorx.Parser(errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity)))
-			return
+		if permission.Media != -1 && totMedia+int64(len(mediumList)) > permission.Media {
+			errorx.Render(w, errorx.Parser((errorx.GetMessage("cannot create more media", http.StatusUnprocessableEntity))))
 		}
+
 	}
 
 	result := paging{}

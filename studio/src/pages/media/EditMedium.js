@@ -115,7 +115,7 @@ function EditMedium() {
                 }}
               >
                 <Button
-                  type="danger"
+                  danger
                   disabled={disabled} // icon={<DeleteOutlined />}
                 >
                   Delete

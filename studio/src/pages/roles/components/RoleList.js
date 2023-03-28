@@ -59,7 +59,7 @@ function RoleList({ roles, total, loading }) {
                 </Button>
               </Link>
               <Popconfirm title="Sure to Revoke?" onConfirm={() => onDelete(record.id)}>
-                <Button type="danger" icon={<DeleteOutlined />}>
+                <Button danger icon={<DeleteOutlined />}>
                   Delete
                 </Button>
               </Popconfirm>

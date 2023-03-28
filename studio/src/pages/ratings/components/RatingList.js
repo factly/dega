@@ -62,7 +62,7 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

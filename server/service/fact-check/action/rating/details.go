@@ -11,6 +11,7 @@ import (
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
+	"gorm.io/gorm"
 )
 
 // details - Get rating by id
@@ -52,8 +53,13 @@ func details(w http.ResponseWriter, r *http.Request) {
 
 	if err != nil {
 		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
+		if err == gorm.ErrRecordNotFound {
+			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+			return
+		} else {
+			errorx.Render(w, errorx.Parser(errorx.DBError()))
+			return
+		}
 	}
 
 	renderx.JSON(w, http.StatusOK, result)

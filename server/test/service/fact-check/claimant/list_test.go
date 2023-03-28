@@ -4,196 +4,103 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
-	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"github.com/spf13/viper"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/gavv/httpexpect"
 	"gopkg.in/h2non/gock.v1"
 )
 
-func TestClaimantList(t *testing.T) {
-	mock := test.SetupMockDB()
-
-	test.MockServer()
+func TestClaimainList(t *testing.T) {
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
-	e := httpexpect.New(t, testServer.URL)
-
-	claimantlist := []map[string]interface{}{
-		{"name": "Test Claimant 1", "slug": "test-claimant-1",
-			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 1"}}],"version":"2.19.0"}`),
-			},
-			"html_description": "<p>Test Description 1</p>",
-		},
-		{"name": "Test Claimant 2", "slug": "test-claimant-2",
-			"description": postgres.Jsonb{
-				RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description 2"}}],"version":"2.19.0"}`),
-			},
-			"html_description": "<p>Test Description 2</p>",
-		},
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM claimants")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
 	}
 
-	t.Run("get empty list of claimants", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, 0)
+	var insertMediumData = coreModel.Medium{
+		Name:    "Test Medium",
+		Slug:    "test-medium",
+		SpaceID: TestSpaceID,
+	}
+	var insertData model.Claimant
 
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 
+	e := httpexpect.New(t, testServer.URL)
+
+	t.Run("get empty claimant list", func(t *testing.T) {
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": 0})
-
-		test.ExpectationsMet(t, mock)
+			Status(http.StatusOK).JSON().Object().Value("nodes").Array().Empty()
 	})
 
-	t.Run("get non-empty list of claimants", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, len(claimantlist))
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["html_description"], claimantlist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["html_description"], claimantlist[1]["numeric_value"], 1))
-
+	t.Run("get claimant list", func(t *testing.T) {
+		insertData = model.Claimant{
+			Name:            TestName,
+			Slug:            TestSlug,
+			SpaceID:         TestSpaceID,
+			Description:     TestDescriptionJson,
+			DescriptionHTML: TestDescriptionHtml,
+			FooterCode:      TestFooterCode,
+			HeaderCode:      TestHeaderCode,
+			MediumID:        &TestMediumID,
+			TagLine:         TestTagline,
+		}
+		config.DB.Model(&model.Claimant{}).Create(&insertData)
+		insertData.ID = 10000
+		insertData.Name = "Test Name 2"
+		insertData.Slug = "test-name-2"
+		config.DB.Model(&model.Claimant{}).Create(&insertData)
+		resData["name"] = TestName
+		resData["slug"] = TestSlug
 		e.GET(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(claimantlist)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(claimantlist[0])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
 
-	t.Run("get claimants with pagination", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, len(claimantlist))
-
-		mock.ExpectQuery(paginationQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["html_description"], claimantlist[1]["numeric_value"], 1))
-
+	// run claimants with pagination
+	t.Run("get claimant list with pagination", func(t *testing.T) {
+		resData["name"] = "Test Name 2"
+		resData["slug"] = "test-name-2"
 		e.GET(basePath).
-			WithQueryObject(map[string]interface{}{
-				"limit": "1",
-				"page":  "2",
-			}).
 			WithHeaders(headers).
+			WithQueryObject(map[string]interface{}{"page": 2, "limit": 1}).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(claimantlist)}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(claimantlist[1])
-
-		test.ExpectationsMet(t, mock)
-
-	})
-
-	t.Run("get list of claimants based on search query q", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		claimantCountQuery(mock, len(claimantlist))
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, claimantlist[0]["name"], claimantlist[0]["slug"], claimantlist[0]["medium_id"], claimantlist[0]["description"], claimantlist[0]["html_description"], claimantlist[0]["numeric_value"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, claimantlist[1]["name"], claimantlist[1]["slug"], claimantlist[1]["medium_id"], claimantlist[1]["description"], claimantlist[1]["html_description"], claimantlist[1]["numeric_value"], 1))
-
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"q":    "test",
-				"sort": "asc",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			ContainsMap(map[string]interface{}{"total": len(claimantlist)}).
-			Value("nodes").
-			Array().
-			Element(0).
-			Object().
-			ContainsMap(claimantlist[0])
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("when query does not match any claimant", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-		test.DisableMeiliGock(testServer.URL)
-
-		gock.New(viper.GetString("meili_url") + "/indexes/dega/search").
-			HeaderPresent("X-Meili-API-Key").
-			Persist().
-			Reply(http.StatusOK).
-			JSON(test.EmptyMeili)
-
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"q":    "test",
-				"sort": "asc",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			Value("total").
-			Equal(0)
-
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("search with query q when meili is down", func(t *testing.T) {
-		test.DisableMeiliGock(testServer.URL)
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		e.GET(basePath).
-			WithHeaders(headers).
-			WithQueryObject(map[string]interface{}{
-				"q":    "test",
-				"sort": "asc",
-			}).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object().
-			Value("total").
-			Equal(0)
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
 
 }

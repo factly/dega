@@ -45,7 +45,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             <Button
               icon={<DeleteOutlined />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              type="danger"
+              danger
             />
           </Popconfirm>
         );

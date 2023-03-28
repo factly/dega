@@ -1,40 +1,43 @@
 package page
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
-	"regexp"
 	"testing"
-	"time"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
+	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
+// TestListPage test cases for list page
 func TestPageList(t *testing.T) {
-	mock := test.SetupMockDB()
 
-	test.MockServer()
-
+	defer gock.DisableNetworking()
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
-
-	// create httpexpect instance
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM media")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM posts")
+	config.DB.Exec("DELETE FROM authors")
+	config.DB.Exec("DELETE FROM formats")
+	config.DB.Exec("DELETE FROM tags")
+	config.DB.Exec("DELETE FROM post_authors")
+	var insertAuthorData model.Author
+	var insertMediumData model.Medium
+	var insertSpacePermission model.SpacePermission
+	var insertFormatData model.Format
+	var insertPostAuthorData model.PostAuthor
+	var insertData model.Post
 	e := httpexpect.New(t, testServer.URL)
-
-	t.Run("get empty list of pages", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		pageCountQuery(mock, 0)
-
-		mock.ExpectQuery(selectQuery).
-			WillReturnRows(sqlmock.NewRows(columns))
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "post_id", "author_id"}))
+	t.Run("get empty list", func(t *testing.T) {
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -43,28 +46,93 @@ func TestPageList(t *testing.T) {
 			JSON().
 			Object().
 			ContainsMap(map[string]interface{}{"total": 0})
-
-		test.ExpectationsMet(t, mock)
 	})
+	t.Run("get non-empty list of media", func(t *testing.T) {
+		insertAuthorData = model.Author{
+			FirstName: "Arthur",
+			LastName:  "Dent",
+		}
+		config.DB.Create(&insertAuthorData)
+		insertData = model.Post{
+			Title:            "TestTitle",
+			Subtitle:         TestSubTitle,
+			Slug:             "test-title-2",
+			Description:      TestDescriptionJson,
+			DescriptionHTML:  TestDescriptionHtml,
+			Status:           TestStatus,
+			IsPage:           TestIsPage,
+			IsHighlighted:    TestIsHighlighted,
+			FeaturedMediumID: &TestFeaturedMediumID,
+			FormatID:         TestFormatID,
+			SpaceID:          TestSpaceID,
+			Meta:             TestMeta,
+			Excerpt:          TestExcerpt,
+			HeaderCode:       TestHeaderCode,
+			FooterCode:       TestFooterCode,
+			MetaFields:       TestMetaFields,
+			DescriptionAMP:   TestDescriptionHtml,
+			Tags:             []model.Tag{},
+			Categories:       []model.Category{},
+		}
+		insertMediumData = model.Medium{
+			Name:        "Create Medium Test",
+			Slug:        "create-medium-test",
+			Description: "desc",
+			Type:        "jpg",
+			Title:       "Sample image",
+			Caption:     "caption",
+			AltText:     "TestAltText",
+			FileSize:    100,
+			URL: postgres.Jsonb{
+				RawMessage: []byte(`{"raw":"http://testimage.com/test.jpg"}`),
+			},
+			Dimensions: "TestDimensions",
+			MetaFields: TestMetaFields,
+			SpaceID:    TestSpaceID,
+		}
+		insertSpacePermission = model.SpacePermission{
+			SpaceID:   1,
+			FactCheck: true,
+			Media:     10,
+			Posts:     10,
+			Podcast:   true,
+			Episodes:  10,
+			Videos:    10,
+		}
 
-	t.Run("get non-empty list of pages", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		pageCountQuery(mock, len(pageList))
-
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1, true, "template").
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1, pageList[0]["title"], pageList[0]["subtitle"], pageList[0]["slug"], pageList[0]["status"], pageList[0]["is_page"], pageList[0]["excerpt"],
-					pageList[0]["description"], pageList[0]["html_description"], pageList[0]["is_featured"], pageList[0]["is_sticky"], pageList[0]["is_highlighted"], pageList[0]["featured_medium_id"], pageList[0]["format_id"], pageList[0]["published_date"], 1).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, pageList[1]["title"], pageList[1]["subtitle"], pageList[1]["slug"], pageList[1]["status"], pageList[1]["is_page"], pageList[1]["excerpt"],
-					pageList[1]["description"], pageList[1]["html_description"], pageList[1]["is_featured"], pageList[1]["is_sticky"], pageList[1]["is_highlighted"], pageList[1]["featured_medium_id"], pageList[1]["format_id"], pageList[1]["published_date"], 1))
-
-		preloadMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WithArgs(sqlmock.AnyArg(), sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
+		insertFormatData = model.Format{
+			Name:        "Create Format Test",
+			Slug:        "create-format-test",
+			Description: "desc",
+			SpaceID:     TestSpaceID,
+		}
+		if err := config.DB.Create(&insertFormatData).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertMediumData).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertSpacePermission).Error; err != nil {
+			log.Fatal(err)
+		}
+		if err := config.DB.Create(&insertData).Error; err != nil {
+			log.Fatal(err)
+		}
+		insertData.Title = "Create Data Test"
+		insertData.Slug = "create-data-test"
+		insertData.ID = 10000
+		config.DB.Create(&insertData)
+		insertPostAuthorData = model.PostAuthor{
+			AuthorID: insertAuthorData.ID,
+			PostID:   insertData.ID,
+		}
+		if err := config.DB.Model(&model.PostAuthor{}).Create(&insertPostAuthorData).Error; err != nil {
+			log.Fatal(err)
+		}
+		resData["format_id"] = insertFormatData.ID
+		resData["title"] = "TestTitle"
+		resData["slug"] = "test-title-2"
+		delete(resData, "authors")
 
 		e.GET(basePath).
 			WithHeaders(headers).
@@ -72,51 +140,33 @@ func TestPageList(t *testing.T) {
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(pageList)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(pageList[0])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
+	// should run this test after the previous test
+	t.Run("get pages with pagination", func(t *testing.T) {
 
-	t.Run("get pages with paiganation", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		pageCountQuery(mock, len(pageList))
-
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1, true, "template").
-			WillReturnRows(sqlmock.NewRows(columns).
-				AddRow(2, time.Now(), time.Now(), nil, 1, 1, pageList[1]["title"], pageList[1]["subtitle"], pageList[1]["slug"], pageList[1]["status"], pageList[1]["is_page"], pageList[1]["excerpt"],
-					pageList[1]["description"], pageList[1]["html_description"], pageList[1]["is_featured"], pageList[1]["is_sticky"], pageList[1]["is_highlighted"], pageList[1]["featured_medium_id"], pageList[1]["format_id"], pageList[1]["published_date"], 1))
-
-		preloadMock(mock)
-
-		mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "post_authors"`)).
-			WithArgs(sqlmock.AnyArg()).
-			WillReturnRows(sqlmock.NewRows([]string{"id", "created_at", "updated_at", "deleted_at", "author_id", "post_id"}).
-				AddRow(1, time.Now(), time.Now(), nil, 1, 1))
-
+		resData["title"] = "Create Data Test"
+		resData["slug"] = "create-data-test"
 		e.GET(basePath).
+			WithHeaders(headers).
 			WithQueryObject(map[string]interface{}{
 				"page":  2,
 				"limit": 1,
-				"sort":  "asc",
 			}).
-			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK).
 			JSON().
 			Object().
-			ContainsMap(map[string]interface{}{"total": len(pageList)}).
+			ContainsMap(map[string]interface{}{"total": 2}).
 			Value("nodes").
 			Array().
 			Element(0).
 			Object().
-			ContainsMap(pageList[1])
-
-		test.ExpectationsMet(t, mock)
+			ContainsMap(resData)
 	})
 }

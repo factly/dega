@@ -2,6 +2,7 @@ package tag
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -13,6 +14,7 @@ import (
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
+	"github.com/spf13/viper"
 )
 
 // list response
@@ -65,9 +67,9 @@ func list(w http.ResponseWriter, r *http.Request) {
 		if config.SearchEnabled() {
 			filters := fmt.Sprint("space_id=", sID)
 			var hits []interface{}
-
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "tag")
+			hits, err = meilisearchx.SearchWithQuery(viper.GetString("MEILISEARCH_INDEX"), searchQuery, filters, "tag")
 			if err != nil {
+				log.Fatal(err)
 				loggerx.Error(err)
 				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
 				return
