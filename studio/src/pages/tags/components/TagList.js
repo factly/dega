@@ -1,11 +1,13 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Space } from 'antd';
+import { Button, Table, Space, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
 import { Link } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function TagList({ actions, filters, setFilters, fetchTags, data }) {
+  const [modalOpen, setModalOpen] = React.useState(false);
+
   const dispatch = useDispatch();
   const columns = [
     {
@@ -20,12 +22,32 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
             }}
             to={`/tags/${record.id}/edit`}
           >
-            {record.name}
+            <Typography.Text style={{ fontSize: '1rem' }} strong>
+              {record.name}
+            </Typography.Text>
           </Link>
         );
       },
     },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
+    {
+      title: 'Slug',
+      dataIndex: 'slug',
+      key: 'slug',
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/tags/${record.id}/edit`}
+          >
+            <Typography.Text style={{ fontSize: '1rem' }} strong>
+              {record.slug}
+            </Typography.Text>
+          </Link>
+        );
+      },
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
@@ -34,17 +56,44 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
       width: 150,
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+              },
+            }}
           >
             <Button
-              icon={<DeleteOutlined />}
+              size="large"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              danger
             />
-          </Popconfirm>
+            <Modal
+              open={modalOpen}
+              closable={false}
+              centered
+              width={311}
+              className="delete-modal-container"
+              style={{
+                borderRadius: '18px',
+              }}
+              onOk={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+              disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+              onCancel={() => {
+                setModalOpen(false);
+              }}
+            >
+              <Typography.Text strong>Are you sure you want to delete this ?</Typography.Text>
+            </Modal>
+          </ConfigProvider>
         );
       },
     },
@@ -53,7 +102,6 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
   return (
     <Space direction={'vertical'}>
       <Table
-        bordered
         columns={columns}
         dataSource={data.tags}
         loading={data.loading}
