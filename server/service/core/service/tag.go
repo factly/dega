@@ -234,9 +234,7 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 	result := &model.Tag{}
 	result.ID = uint(id)
 
-	if result.Slug == tag.Slug {
-		tagSlug = result.Slug
-	} else if tag.Slug != "" && slugx.Check(tag.Slug) {
+	if tag.Slug != "" && slugx.Check(tag.Slug) {
 		tagSlug = slugx.Approve(&config.DB, tag.Slug, sID, tableName)
 	} else {
 		tagSlug = slugx.Approve(&config.DB, slugx.Make(tag.Name), sID, tableName)
@@ -306,7 +304,6 @@ func (ts TagService) Update(sID, uID, id int, tag *Tag) (model.Tag, []errorx.Mes
 	}
 
 	tx.Commit()
-
 	return *result, nil
 }
 
