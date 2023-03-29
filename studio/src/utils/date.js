@@ -5,13 +5,12 @@ export const getDatefromString = (dateString) => {
   return dateObj.toDateString();
 };
 
+export const getDateAndTimeFromString = (dateString) =>  new Date(dateString).toLocaleString().replaceAll(",","").replaceAll("/","-")
+
 export const getDatefromStringWithoutDay = (dateString) => {
   const dateObj = new Date(Date.parse(dateString));
   return `${listOfMonths[dateObj.getMonth()]} ${dateObj.getDate()} ${dateObj.getFullYear()}`;
 };
-
-export const getDateAndTimeFromString = (dateString) =>
-  new Date(dateString).toLocaleString().replaceAll(',', '').replaceAll('/', '-');
 
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -23,9 +22,14 @@ export const formatDate = (dateString) => {
     minute: 'numeric',
     hour12: true,
   };
-  const formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
+  formattedDate = formattedDate.replaceAll(',', '').replaceAll('/', '-');
+  console.log(formattedDate);
+  const [month, day, year, time] = formattedDate.split(' ');
+  const formattedTime = time.split(':').map((str) => str.padStart(2, '0')).join(':');
+  const formattedDateString = `${month} ${day}, ${year} ${formattedTime}`;
 
-  return formattedDate;
+  return formattedDateString;
 };
 
 export const getDifferenceInModifiedTime = (updated_at) => {
@@ -46,5 +50,6 @@ export const getDifferenceInModifiedTime = (updated_at) => {
   } else {
     lastModified = `Last modified: a few seconds ago`;
   }
+
   return lastModified;
 };

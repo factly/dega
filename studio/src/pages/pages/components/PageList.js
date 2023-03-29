@@ -11,14 +11,17 @@ import {
 } from '@ant-design/icons';
 import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
+
 
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const history = useHistory();
 
   const getTagList = (tagids) => {
     return tagids.map((id) => (
@@ -49,7 +52,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       width: 400,
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
-          <Typography.Text style={{ fontSize: '1rem' }} strong>
+          <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>
             {item.title}
           </Typography.Text>
           {/*
@@ -67,7 +70,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 200,
+      // width: 200,
       render: (status) => {
         return status === 'publish' ? (
           <Tag icon={<CheckCircleOutlined />} color="green">
@@ -87,7 +90,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
     {
       title: 'Actions',
       dataIndex: 'actions',
-      fixed: 'right',
       width: 240,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
@@ -104,7 +106,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
             }}
           >
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <Link style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
+              <Link onClick={(e) => e.stopPropagation()}
+                style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
                 <Button
                   size="large"
                   icon={<EditOutlined style={{ color: '#858585' }} />}
@@ -114,7 +117,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               <Button
                 size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
@@ -128,7 +132,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               />
               <Button
                 size="large"
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   setModalOpen(true);
                 }}
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
@@ -151,7 +156,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   setModalOpen(false);
                 }}
               >
-                <Typography.Text strong>Are you sure you want to delete this page?</Typography.Text>
+                <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>Are you sure you want to delete this page?</Typography.Text>
               </Modal>
               {/* <Button
                   icon={<EditOutlined />}
@@ -176,6 +181,20 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       <Table
         dataSource={data.pages.length !== 0 ? data.pages : []}
         loading={data.loading}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/pages/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            }
+          };
+        }}
+        style={{ maxWidth: '100vw', overflowX: 'auto' }}
         columns={columns}
         rowKey={(record) => record.id}
         expandable={{
@@ -186,18 +205,18 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
             if (expanded) {
               keys.push(record.id);
             }
-
             setExpandedRowKeys(keys);
           },
           expandedRowRender: (item) => (
             <QuickEdit
               data={item}
+              page={true}
               setID={setID}
               slug={format.slug}
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
@@ -214,3 +233,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
 }
 
 export default PageList;
+
+// color changing according to Figma
+// status icons when all posts/pages rendered
+// index page and table responsiveness for all entities

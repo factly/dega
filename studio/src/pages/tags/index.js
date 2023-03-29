@@ -118,7 +118,7 @@ function Tags({ permission }) {
               <Row gutter={16}>
                 <Col>
                   <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
-                    Categories
+                    Tags
                   </Typography.Title>
                 </Col>
                 <Col>

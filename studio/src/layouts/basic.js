@@ -147,7 +147,11 @@ function BasicLayout(props) {
           },
           Tabs: {
             margin: 10,
+            colorText: "#6C6C6C",
           },
+          Pagination: {
+            colorPrimary: "#1E1E1E"
+          }
         },
       }}
     >
@@ -167,7 +171,7 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            {['/posts', '/pages', '/categories', '/tags'].includes(location.pathname) || (
+            {['/posts', '/pages', '/categories', '/tags', "/media"].includes(location.pathname) || (
               <Pageheader location={location} />
             )}
             <Card key={selected.toString()} className="wrap-children-content">

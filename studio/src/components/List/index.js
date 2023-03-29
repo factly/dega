@@ -4,7 +4,6 @@ import { EditOutlined, DeleteOutlined, CloseOutlined, FormOutlined } from '@ant-
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
 import {
-  getDateAndTimeFromString,
   formatDate,
   getDifferenceInModifiedTime,
 } from '../../utils/date';
@@ -12,9 +11,6 @@ import { Link } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
 function PostList({ actions, format, filters, onPagination, data, fetchPosts }) {
-  /**
-   * TODO: Add Authors detail on table
-   */
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
@@ -87,7 +83,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
             <>
               <Typography.Text strong>
                 {item.published_date
-                  ? formatDate(getDateAndTimeFromString(item.published_date))
+                  ? formatDate(item.published_date)
                   : '---'}
                 <br />
               </Typography.Text>
@@ -122,7 +118,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
     {
       title: 'Actions',
       dataIndex: 'actions',
-      fixed: 'right',
+      // fixed: 'right',
       width: 200,
       render: (_, item, idx) => {
         const isOpen = item.id === expandedRowKeys[0];
@@ -209,6 +205,10 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
         columns={columns}
         rowKey={(record) => record.id}
         loading={data.loading}
+        style={{ maxWidth: '100vw', overflowX: 'auto' }}
+        // scroll={{
+        //   x: 1300,
+        // }}
         expandable={{
           expandIconColumnIndex: -1,
           expandedRowKeys,

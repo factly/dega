@@ -40,21 +40,36 @@ function Pages({ formats }) {
   const [expand, setExpand] = React.useState(false);
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
 
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []); //how useEffect works??
+
   const getFields = () => {
     const children = [];
     expand &&
       children.push(
-        <Col span={8} key={5} style={{ marginBottom: 16 }}>
+        <Col span={isMobileScreen ? 24 : 8} key={5} style={{ marginBottom: 16 }}>
           <Form.Item name="tag" label="Tags">
             <Selector mode="multiple" action="Tags" placeholder="Filter Tags" />
           </Form.Item>
         </Col>,
-        <Col span={8} key={6} style={{ marginBottom: 16 }}>
+        <Col span={isMobileScreen ? 24 : 8} key={6} style={{ marginBottom: 16 }}>
           <Form.Item name="category" label="Categories">
             <Selector mode="multiple" action="Categories" placeholder="Filter Categories" />
           </Form.Item>
         </Col>,
-        <Col span={8} key={7} style={{ marginBottom: 16 }}>
+        <Col span={isMobileScreen ? 24 : 8} key={7} style={{ marginBottom: 16 }}>
           <Form.Item name="author" label="Authors">
             <Selector
               mode="multiple"
@@ -173,6 +188,7 @@ function Pages({ formats }) {
         <Form
           initialValues={params}
           form={form}
+          layout="horizontal"
           name="filters"
           onFinish={(values) => onSave(values)}
           style={{ width: '100%' }}
@@ -187,7 +203,7 @@ function Pages({ formats }) {
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
+                  <Typography.Title level={3} style={{ margin: 0, display: 'inline', color: "#1E1E1E" }}>
                     Pages
                   </Typography.Title>
                 </Col>
@@ -195,7 +211,7 @@ function Pages({ formats }) {
                   {searchFieldExpand ? (
                     <Row>
                       <Form.Item name="q">
-                        <Input placeholder="Search pages" />
+                        <Input placeholder="Search pages" />{/**/}
                       </Form.Item>
                       <Form.Item>
                         <Button htmlType="submit" icon={<SearchOutlined />}>
@@ -221,11 +237,11 @@ function Pages({ formats }) {
                 </Col>
               </Row>
             </Col>
-            <Col>
+            <Col span={ isMobileScreen ? 24 : 8 }>
               <Row justify="end" gutter={16}>
-                <Col>
+                <Col span={24}>
                   <Row justify="end">
-                    <Link to="/pages/create">
+                    <Link to="/pages/create">{/**/}
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
@@ -236,7 +252,7 @@ function Pages({ formats }) {
                       </Button>
                     </Link>
                   </Row>
-                  <Row gutter={16}>
+                  <Row gutter={16} justify= { isMobileScreen ? 'space-between' : 'end' }>
                     <Col>
                       <Form.Item label="Sort By" name="sort">
                         <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
@@ -316,5 +332,3 @@ function Pages({ formats }) {
 }
 
 export default Pages;
-
-// things to fix
