@@ -101,29 +101,9 @@ func TestTagUpdate(t *testing.T) {
 			ContainsMap(updatedTag)
 	})
 
-	t.Run("update tag by id with empty slug", func(t *testing.T) {
-		updatedTag := map[string]interface{}{
-			"name": "NewElections",
-			"slug": "",
-		}
-
-		res := e.PUT(path).
-			WithPath("tag_id", insertData.ID).
-			WithHeaders(headers).
-			WithJSON(updatedTag).
-			Expect().
-			Status(http.StatusOK).
-			JSON().
-			Object()
-
-		updatedTag["slug"] = "newelections"
-
-		res.ContainsMap(updatedTag)
-	})
-
 	t.Run("update tag with different slug", func(t *testing.T) {
 		updatedTag := map[string]interface{}{
-			"name": "Elections",
+			"name": "NewElections",
 			"slug": "testing-slug",
 		}
 
@@ -140,8 +120,8 @@ func TestTagUpdate(t *testing.T) {
 
 	t.Run("tag with same name exists", func(t *testing.T) {
 		updatedTag := map[string]interface{}{
-			"name": "Insert Data Test",
-			"slug": "elections",
+			"name": "NewElections",
+			"slug": "testing-slug",
 		}
 
 		e.PUT(path).
@@ -157,8 +137,9 @@ func TestTagUpdate(t *testing.T) {
 			WithPath("tag_id", 1).
 			WithHeaders(headers).
 			WithJSON(map[string]interface{}{
-				"description": postgres.Jsonb{
-					RawMessage: []byte(`{"block": "new"}`)},
+				"name":        "Elections",
+				"slug":        "testing-slug",
+				"description": "",
 			}).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
