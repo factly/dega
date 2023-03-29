@@ -91,7 +91,7 @@ func (rs RatingService) Create(ctx context.Context, sID int, uID int, rating *Ra
 
 	if sameValueRatings > 0 {
 		loggerx.Error(errors.New(`rating with same numeric value exist`))
-		return model.Rating{}, errorx.Parser(errorx.GetMessage("rating with same numeric value exists", 409))
+		return model.Rating{}, errorx.Parser(errorx.GetMessage("rating with same numeric value exists", http.StatusUnprocessableEntity))
 	}
 	mediumID := &rating.MediumID
 	if rating.MediumID == 0 {

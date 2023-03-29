@@ -76,7 +76,7 @@ func TestRatingUpdate(t *testing.T) {
 	//record not found
 	t.Run("record not found", func(t *testing.T) {
 		e.PUT(path).
-			WithPath("rating_id", "10000000").
+			WithPath("rating_id", 10000000).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().

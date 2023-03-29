@@ -10,6 +10,7 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect"
+	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -59,7 +60,7 @@ func TestRatingCreate(t *testing.T) {
 	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
 	config.DB.Model(&coreModel.Medium{}).Create(&insertMediumData)
 	e := httpexpect.New(t, testServer.URL)
-	// unprocessable entity
+
 	t.Run("unprocessable entity", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
@@ -145,13 +146,26 @@ func TestRatingCreate(t *testing.T) {
 	})
 
 	t.Run("cannot parse rating description", func(t *testing.T) {
-		Data["description"] = "invalid json"
+		Data["description"] = postgres.Jsonb{RawMessage: []byte(`{"json": "<p>Test Description</p>"}`)}
 		// Data
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
+		Data["description"] = TestDescriptionFromRequest
+	})
+
+	t.Run("create a rating with same numeric value", func(t *testing.T) {
+		Data["numeric_value"] = insertData.NumericValue
+		Data["Name"] = "Test Rating 4"
+		Data["slug"] = "test-rating-4"
+		e.POST(basePath).
+			WithHeaders(headers).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnprocessableEntity)
+
 	})
 
 }
