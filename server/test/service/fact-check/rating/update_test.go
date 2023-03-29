@@ -193,4 +193,10 @@ func TestRatingUpdate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
 }

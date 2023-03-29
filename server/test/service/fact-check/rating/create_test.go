@@ -68,6 +68,17 @@ func TestRatingCreate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
+	t.Run("invalid space header", func(t *testing.T) {
+		e.POST(basePath).
+			WithHeaders(map[string]string{
+				"X-Space": "invalid",
+				"X-User":  "1",
+			}).
+			WithJSON(Data).
+			Expect().
+			Status(http.StatusUnauthorized)
+	})
+
 	// unable to decode rating
 	t.Run("unable to decode rating", func(t *testing.T) {
 		e.POST(basePath).
