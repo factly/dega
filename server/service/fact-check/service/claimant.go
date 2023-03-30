@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
+	"log"
+	"strings"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -10,6 +13,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -17,7 +21,7 @@ import (
 )
 
 type paging struct {
-	Total int        `json:"total"`
+	Total int64      `json:"total"`
 	Nodes []Claimant `json:"nodes"`
 }
 
@@ -41,7 +45,7 @@ var userContext config.ContextKey = "claimant_user"
 
 type IClaimantService interface {
 	GetById(sID, id int) (model.Claimant, error)
-	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, all, searchQuery, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, claimant *Claimant) (model.Claimant, []errorx.Message)
 	Update(sID, uID, id int, claimant *Claimant) (model.Claimant, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
@@ -170,8 +174,66 @@ func (cs claimantService) GetById(sID int, id int) (model.Claimant, error) {
 }
 
 // List implements IClaimantService
-func (claimantService) List(sID uint, offset int, limit int, searchQuery string, sort string) (paging, []errorx.Message) {
-	panic("unimplemented")
+func (claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (paging, []errorx.Message) {
+	var result paging
+	var err error
+	tx := config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
+		SpaceID: uint(sID),
+	}).Order("created_at " + sort)
+
+	if all == "true" {
+		err = tx.Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			log.Println("*****", err)
+			return result, errorx.Parser(errorx.DBError())
+		}
+	} else if searchQuery != "" {
+
+		if config.SearchEnabled() {
+			filters := fmt.Sprint("space_id=", sID)
+			var hits []interface{}
+
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claimant")
+			if err != nil {
+				loggerx.Error(err)
+				return result, errorx.Parser(errorx.NetworkError())
+			}
+
+			filteredClaimantIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredClaimantIDs) == 0 {
+				return result, nil
+			} else {
+				err = tx.Where(filteredClaimantIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					return result, errorx.Parser(errorx.DBError())
+				}
+			}
+		} else {
+			if config.Sqlite() {
+				err = tx.Where("name LIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					return result, errorx.Parser(errorx.DBError())
+				}
+			} else {
+				err = tx.Where("name ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					return result, errorx.Parser(errorx.DBError())
+				}
+			}
+		}
+	} else {
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			log.Println("*****", err)
+			return result, errorx.Parser(errorx.DBError())
+		}
+	}
+	return result, nil
 }
 
 // Update implements IClaimantService

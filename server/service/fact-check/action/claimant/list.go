@@ -1,15 +1,13 @@
 package claimant
 
 import (
-	"fmt"
+	"log"
 	"net/http"
-	"strings"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
@@ -48,76 +46,18 @@ func list(w http.ResponseWriter, r *http.Request) {
 	sort := r.URL.Query().Get("sort")
 	all := r.URL.Query().Get("all")
 
-	result := paging{}
-	result.Nodes = make([]model.Claimant, 0)
-
 	if sort != "asc" {
 		sort = "desc"
 	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx := config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
-		SpaceID: uint(sID),
-	}).Order("created_at " + sort)
-
-	if all == "true" {
-		err = tx.Find(&result.Nodes).Error
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	} else if searchQuery != "" {
-
-		if config.SearchEnabled() {
-			filters := fmt.Sprint("space_id=", sID)
-			var hits []interface{}
-
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claimant")
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-				return
-			}
-
-			filteredClaimantIDs := meilisearchx.GetIDArray(hits)
-			if len(filteredClaimantIDs) == 0 {
-				renderx.JSON(w, http.StatusOK, result)
-				return
-			} else {
-				err = tx.Where(filteredClaimantIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			}
-		} else {
-			if config.Sqlite() {
-				err = tx.Where("name LIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			} else {
-				err = tx.Where("name ILIKE ?", "%"+strings.ToLower(searchQuery)+"%").Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			}
-		}
-	} else {
-		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	claimantService := service.GetClaimantService()
+	result, serviceErr := claimantService.List(uint(sID), offset, limit, all, searchQuery, sort)
+	if serviceErr != nil {
+		log.Println("=======>", serviceErr)
+		errorx.Render(w, serviceErr)
+		return
 	}
-
 	renderx.JSON(w, http.StatusOK, result)
 }
