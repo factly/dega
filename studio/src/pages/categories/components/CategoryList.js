@@ -3,18 +3,20 @@ import { Popconfirm, Button, Table, Space, Typography, Modal, ConfigProvider } f
 
 import { useDispatch } from 'react-redux';
 import { deleteCategory } from '../../../actions/categories';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = React.useState(false);
+  const history = useHistory();
 
   const columns = [
     {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: 400,
       render: (_, record) => {
         return (
           <Link
@@ -34,6 +36,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       title: 'Slug',
       dataIndex: 'slug',
       key: 'slug',
+      width: 200,
       render: (_, record) => {
         return (
           <Link
@@ -53,6 +56,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       title: 'Parent Category',
       dataIndex: ['parent_category'],
       key: 'parent_id',
+      width: 200,
       render: (_, record) => {
         return (
           <Link
@@ -61,7 +65,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             }}
             to={`/categories/${record.id}/edit`}
           >
-            <Typography.Text style={{ fontSize: '1rem' }} strong>
+            <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>
               {record.parent_category?.name}
             </Typography.Text>
           </Link>
@@ -71,8 +75,6 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
-      align: 'center',
       width: 150,
       render: (_, record) => {
         return (
@@ -89,7 +91,8 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           >
             <Button
               size="large"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setModalOpen(true);
               }}
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
@@ -106,7 +109,8 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
               }}
               onOk={() => dispatch(deleteCategory(record.id)).then(() => fetchCategories())}
               cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-              onCancel={() => {
+              onCancel={(e) => {
+                e.stopPropagation();
                 setModalOpen(false);
               }}
             >
@@ -119,22 +123,46 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   ];
 
   return (
-    <Space direction={'vertical'}>
-      <Table
-        columns={columns}
-        dataSource={data.categories}
-        loading={data.loading}
-        rowKey={'id'}
-        pagination={{
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-          total: data.total,
-          current: filters.page,
-          pageSize: filters.limit,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
-          pageSizeOptions: ['10', '15', '20'],
+    <Space direction='vertical'>
+      <ConfigProvider
+        theme={{
+          components: {
+            Typography: {
+              "colorText": "#101828"
+            },
+          }
         }}
-      />
+      >
+        <Table
+          columns={columns}
+          dataSource={data.categories}
+          loading={data.loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(`/categories/${record.id}/edit`);
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              }
+            };
+          }}
+          rowKey={'id'}
+          style={{ maxWidth: '100vw', overflowX: 'auto' }}
+          pagination={{
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+            total: data.total,
+            current: filters.page,
+            pageSize: filters.limit,
+            onChange: (pageNumber, pageSize) =>
+              setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+            pageSizeOptions: ['10', '15', '20'],
+          }}
+        />
+      </ConfigProvider>
     </Space>
   );
 }

@@ -53,7 +53,7 @@ function Pages({ formats }) {
     window.addEventListener('resize', handleResize);
     handleResize();
     return () => window.removeEventListener('resize', handleResize);
-  }, []); //how useEffect works??
+  }, []);
 
   const getFields = () => {
     const children = [];
@@ -188,7 +188,6 @@ function Pages({ formats }) {
         <Form
           initialValues={params}
           form={form}
-          layout="horizontal"
           name="filters"
           onFinish={(values) => onSave(values)}
           style={{ width: '100%' }}

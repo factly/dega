@@ -24,7 +24,6 @@ export const formatDate = (dateString) => {
   };
   let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
   formattedDate = formattedDate.replaceAll(',', '').replaceAll('/', '-');
-  console.log(formattedDate);
   const [month, day, year, time] = formattedDate.split(' ');
   const formattedTime = time.split(':').map((str) => str.padStart(2, '0')).join(':');
   const formattedDateString = `${month} ${day}, ${year} ${formattedTime}`;

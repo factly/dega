@@ -1,20 +1,24 @@
 import React, { useState } from 'react';
 import { Modal, Button, Space, Tag, Table, Typography, ConfigProvider } from 'antd';
-import { EditOutlined, DeleteOutlined, CloseOutlined, FormOutlined } from '@ant-design/icons';
+import QuickEditIcon from '../../assets/QuickEditIcon'
+import ThreeDotIcon from '../../assets/ThreeDotIcon'
+import { EditOutlined, DeleteOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
 import {
   formatDate,
   getDifferenceInModifiedTime,
 } from '../../utils/date';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
-function PostList({ actions, format, filters, onPagination, data, fetchPosts }) {
+function PostList({ actions, format, filters, onPagination, data, fetchPosts, query }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
   const [modalOpen, setModalOpen] = useState(false);
+  const history = useHistory();
+
 
   const getTagList = (tagids) => {
     return tagids?.map((id) => (
@@ -57,9 +61,18 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
           to={format.slug === 'article' ? `/posts/${item.id}/edit` : `/fact-checks/${item.id}/edit`}
         >
           {/* <p style={{ fontSize: '1rem', fontWeight: 500 }}></p> */}
-          <Typography.Text style={{ fontSize: '1rem' }} strong>
-            {item.title}
+          <Typography.Text style={{
+            fontSize: '1rem', color:
+              ['draft', 'ready', 'publish'].includes(query) ? '#101828' : (item.status === 'draft' ? '#454545' : "#101828")
+
+          }} strong>
+            {item.title} {item.status}
           </Typography.Text>
+          {['draft', 'ready', 'publish'].includes(query) ? null :
+            ((item.status === 'draft')
+              ? <EditOutlined style={{ color: "#454545", marginLeft: '10px', fontSize: '14px' }} />
+              : (item.status === 'ready') ? <CheckOutlined style={{ color: "#101828", marginLeft: '10px', fontSize: '14px' }} /> : null
+            )}
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
@@ -107,8 +120,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                ? authors[author]?.['email']
-                : null}
+                  ? authors[author]?.['email']
+                  : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -135,20 +148,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
             }}
           >
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <Link
-                style={{ display: 'block' }}
-                to={
-                  format.slug === 'article'
-                    ? `/posts/${item.id}/edit`
-                    : `/fact-checks/${item.id}/edit`
-                }
-              >
-                <Button
-                  size="large"
-                  icon={<EditOutlined style={{ color: '#858585' }} />}
-                  disabled={!(actions.includes('admin') || actions.includes('update'))}
-                />
-              </Link>
               <Button
                 size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
@@ -160,17 +159,25 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                   isOpen ? (
                     <CloseOutlined style={{ color: '#858585' }} />
                   ) : (
-                    <FormOutlined style={{ color: '#858585' }} />
+                    <QuickEditIcon style={{ color: '#858585' }} />
                   )
                 }
               />
               <Button
                 size="large"
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
-                onClick={() => {
+                onClick={(e) => {
+                  // e.stopPropagation();
                   setModalOpen(true);
                 }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              />
+               <Button
+                size="large"
+                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
+                onClick={() => {
+                  alert("this do nothing")
+                }}
               />
               <Modal
                 open={modalOpen}
@@ -185,7 +192,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
                 onOk={() => {
                   () => dispatch(deletePost(item.id)).then(() => fetchPosts());
                 }}
-                onCancel={() => {
+                onCancel={(e) => {
+                  e.stopPropagation();
                   setModalOpen(false);
                 }}
               >
@@ -205,6 +213,19 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
         columns={columns}
         rowKey={(record) => record.id}
         loading={data.loading}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              // history.push(`/posts/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            }
+          };
+        }}
         style={{ maxWidth: '100vw', overflowX: 'auto' }}
         // scroll={{
         //   x: 1300,
@@ -228,7 +249,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts }) 
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

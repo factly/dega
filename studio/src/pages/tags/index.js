@@ -117,7 +117,7 @@ function Tags({ permission }) {
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: 'inline' }}>
+                  <Typography.Title level={3} style={{ margin: 0, display: 'inline', color: "#1E1E1E" }}>
                     Tags
                   </Typography.Title>
                 </Col>

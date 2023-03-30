@@ -2,13 +2,15 @@ import React from 'react';
 import { Button, Table, Space, ConfigProvider, Typography, Modal } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteTag } from '../../../actions/tags';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function TagList({ actions, filters, setFilters, fetchTags, data }) {
   const [modalOpen, setModalOpen] = React.useState(false);
 
   const dispatch = useDispatch();
+
+  const history = useHistory();
   const columns = [
     {
       title: 'Name',
@@ -69,7 +71,8 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
           >
             <Button
               size="large"
-              onClick={() => {
+              onClick={(e) => {
+                e.stopPropagation();
                 setModalOpen(true);
               }}
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
@@ -87,7 +90,8 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
               onOk={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
               cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-              onCancel={() => {
+              onCancel={(e) => {
+                e.stopPropagation();
                 setModalOpen(false);
               }}
             >
@@ -101,21 +105,44 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
 
   return (
     <Space direction={'vertical'}>
-      <Table
-        columns={columns}
-        dataSource={data.tags}
-        loading={data.loading}
-        rowKey={'id'}
-        pagination={{
-          showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
-          total: data.total,
-          current: filters.page,
-          pageSize: filters.limit,
-          onChange: (pageNumber, pageSize) =>
-            setFilters({ ...filters, page: pageNumber, limit: pageSize }),
-          pageSizeOptions: ['10', '15', '20'],
+      <ConfigProvider
+        theme={{
+          components: {
+            Typography: {
+              "colorText": "#101828"
+            },
+          }
         }}
-      />
+      >
+        <Table
+          columns={columns}
+          dataSource={data.tags}
+          loading={data.loading}
+          rowKey={'id'}
+          onRow={(record, rowIndex) => {
+            return {
+              onClick: (event) => {
+                history.push(`/tags/${record.id}/edit`);
+              },
+              onMouseEnter: (event) => {
+                document.body.style.cursor = 'pointer';
+              },
+              onMouseLeave: (event) => {
+                document.body.style.cursor = 'default';
+              }
+            };
+          }}
+          pagination={{
+            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
+            total: data.total,
+            current: filters.page,
+            pageSize: filters.limit,
+            onChange: (pageNumber, pageSize) =>
+              setFilters({ ...filters, page: pageNumber, limit: pageSize }),
+            pageSizeOptions: ['10', '15', '20'],
+          }}
+        />
+      </ConfigProvider>
     </Space>
   );
 }

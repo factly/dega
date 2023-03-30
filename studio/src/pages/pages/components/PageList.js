@@ -13,6 +13,8 @@ import { useDispatch } from 'react-redux';
 import { deletePage } from '../../../actions/pages';
 import { Link, useHistory } from 'react-router-dom';
 import QuickEdit from '../../../components/List/QuickEdit';
+import QuickEditIcon from '../../../assets/QuickEditIcon';
+import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 
 
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
@@ -106,14 +108,6 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
             }}
           >
             <div style={{ display: 'flex', gap: '0.5rem' }}>
-              <Link onClick={(e) => e.stopPropagation()}
-                style={{ display: 'block' }} to={`/pages/${item.id}/edit`}>
-                <Button
-                  size="large"
-                  icon={<EditOutlined style={{ color: '#858585' }} />}
-                  disabled={!(actions.includes('admin') || actions.includes('update'))}
-                />
-              </Link>
               <Button
                 size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
@@ -126,7 +120,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   isOpen ? (
                     <CloseOutlined style={{ color: '#858585' }} />
                   ) : (
-                    <FormOutlined style={{ color: '#858585' }} />
+                    <QuickEditIcon style={{ color: '#858585' }} />
                   )
                 }
               />
@@ -138,6 +132,13 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 }}
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
+              />
+              <Button
+                size="large"
+                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
+                onClick={() => {
+                  alert("this do nothing")
+                }}
               />
               <Modal
                 open={modalOpen}
@@ -152,7 +153,8 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   () => dispatch(deletePage(item.id)).then(() => fetchPages());
                 }}
                 cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
-                onCancel={() => {
+                onCancel={(e) => {
+                  e.stopPropagation();
                   setModalOpen(false);
                 }}
               >
