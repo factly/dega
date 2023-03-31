@@ -258,7 +258,132 @@ func (*claimService) List(sID uint, offset int, limit int, searchQuery string, s
 
 // Update implements IClaimService
 func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim, []errorx.Message) {
-	panic("unimplemented")
+
+	validationError := validationx.Check(claim)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		return model.Claim{}, validationError
+	}
+
+	result := &model.Claim{}
+	result.ID = uint(id)
+	var err error
+	// check record exists or not
+	err = config.DB.Where(&model.Claim{
+		Base: config.Base{
+			ID: uint(id),
+		},
+		SpaceID: uint(sID),
+	}).First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		return model.Claim{}, errorx.Parser(errorx.RecordNotFound())
+	}
+
+	var claimSlug string
+
+	slug := claim.Slug
+	if len(slug) > 150 {
+		slug = claim.Slug[:150]
+	}
+
+	// Get table name
+	stmt := &gorm.Statement{DB: config.DB}
+	_ = stmt.Parse(&model.Claim{})
+	tableName := stmt.Schema.Table
+
+	if result.Slug == claim.Slug {
+		claimSlug = result.Slug
+	} else if claim.Slug != "" && slugx.Check(slug) {
+		claimSlug = slugx.Approve(&config.DB, slug, sID, tableName)
+	} else {
+		if len(claim.Claim) > 150 {
+			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim[:150]), sID, tableName)
+		} else {
+			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
+		}
+	}
+
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(claim.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return model.Claim{}, errorx.Parser(errorx.DecodeError())
+		}
+
+		jsonDescription, err = util.GetJSONDescription(claim.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return model.Claim{}, errorx.Parser(errorx.DecodeError())
+		}
+	}
+
+	tx := config.DB.Begin()
+
+	updateMap := map[string]interface{}{
+		"created_at":       claim.CreatedAt,
+		"updated_at":       claim.UpdatedAt,
+		"updated_by_id":    uint(uID),
+		"claim":            claim.Claim,
+		"slug":             claimSlug,
+		"claim_sources":    claim.ClaimSources,
+		"description":      jsonDescription,
+		"description_html": descriptionHTML,
+		"claimant_id":      claim.ClaimantID,
+		"rating_id":        claim.RatingID,
+		"fact":             claim.Fact,
+		"review_sources":   claim.ReviewSources,
+		"meta_fields":      claim.MetaFields,
+		"claim_date":       claim.ClaimDate,
+		"checked_date":     claim.CheckedDate,
+		"meta":             claim.Meta,
+		"header_code":      claim.HeaderCode,
+		"footer_code":      claim.FooterCode,
+		"medium_id":        claim.MediumID,
+		"description_amp":  claim.DescriptionAMP,
+		"migrated_html":    claim.MigratedHTML,
+	}
+
+	if claim.MigrationID != nil {
+		updateMap["migration_id"] = *claim.MigrationID
+	}
+
+	if claim.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+	// check if claimant with claimant_id exists also check if claimant belongs to same space
+	var claimant model.Claimant
+	err = tx.Model(&model.Claimant{}).Where("id = ? AND space_id = ?", claim.ClaimantID, sID).First(&claimant).Error
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		return model.Claim{}, errorx.Parser(errorx.InternalServerError())
+	}
+
+	// check if rating with rating_id exists also check if rating belongs to same space
+	var rating model.Rating
+	err = tx.Model(&model.Rating{}).Where("id = ? AND space_id = ?", claim.RatingID, sID).First(&rating).Error
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		return model.Claim{}, errorx.Parser(errorx.InternalServerError())
+	}
+
+	err = tx.Model(&result).Updates(&updateMap).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Preload("Medium").First(&result).Error
+
+	if err != nil {
+		tx.Rollback()
+		loggerx.Error(err)
+		return model.Claim{}, errorx.Parser(errorx.DBError())
+	}
+
+	tx.Commit()
+
+	return *result, nil
 }
 
 func GetClaimService() IClaimService {
