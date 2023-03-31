@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -10,6 +13,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -48,7 +52,7 @@ type Claim struct {
 
 type IClaimService interface {
 	GetById(sID, id int) (model.Claim, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, claim *Claim) (model.Claim, []errorx.Message)
 	Update(sID, uID, id int, claim *Claim) (model.Claim, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
@@ -200,8 +204,56 @@ func (*claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
 }
 
 // List implements IClaimService
-func (*claimService) List(sID uint, offset int, limit int, searchQuery string, sort string) (paging, []errorx.Message) {
-	panic("unimplemented")
+func (*claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+	var result paging
+	result.Nodes = make([]model.Claim, 0)
+	tx := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
+		SpaceID: uint(sID),
+	}).Order("created_at " + sort)
+	var err error
+	filters := generateFilters(queryMap["rating"], queryMap["claimant"])
+	if filters != "" || searchQuery != "" {
+		if config.SearchEnabled() {
+			// search claims with filter
+			var hits []interface{}
+			if filters != "" {
+				filters = fmt.Sprint(filters, " AND space_id=", sID)
+			}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "claim")
+			if err != nil {
+				loggerx.Error(err)
+				return paging{}, errorx.Parser(errorx.NetworkError())
+			}
+
+			filteredClaimIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredClaimIDs) == 0 {
+				return result, nil
+			} else {
+				err = tx.Where(filteredClaimIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					return paging{}, errorx.Parser(errorx.DBError())
+				}
+			}
+		} else {
+			// search index is disabled
+			filters = generateSQLFilters(searchQuery, queryMap["rating"], queryMap["claimant"])
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+			if err != nil {
+				loggerx.Error(err)
+				return paging{}, errorx.Parser(errorx.DBError())
+			}
+		}
+	} else {
+		// no search parameters
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			return paging{}, errorx.Parser(errorx.DBError())
+		}
+	}
+
+	return result, nil
 }
 
 // Update implements IClaimService
@@ -211,4 +263,56 @@ func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim
 
 func GetClaimService() IClaimService {
 	return &claimService{model: config.DB}
+}
+
+func generateSQLFilters(searchQuery string, ratingsIDs, claimantIDs []string) string {
+	filters := ""
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "claim LIKE '%", strings.ToLower(searchQuery), "%'", "OR fact LIKE '%", strings.ToLower(searchQuery), "%'", " AND ")
+		}
+
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "claim ILIKE '%", strings.ToLower(searchQuery), "%'", "OR fact ILIKE '%", strings.ToLower(searchQuery), "%'", " AND ")
+		}
+	}
+
+	if len(ratingsIDs) > 0 {
+		filters = filters + " rating_id IN ("
+		for _, id := range ratingsIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(claimantIDs) > 0 {
+		filters = filters + " claimant_id IN ("
+		for _, id := range claimantIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
+}
+
+func generateFilters(ratingIDs, claimantIDs []string) string {
+	filters := ""
+
+	if len(ratingIDs) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(ratingIDs, "rating_id"), " AND ")
+	}
+	if len(claimantIDs) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(claimantIDs, "claimant_id"), " AND ")
+	}
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
 }
