@@ -47,7 +47,7 @@ type Claim struct {
 }
 
 type IClaimService interface {
-	GetById(sID, id int) (model.Claim, error)
+	GetById(sID, id int) (model.Claim, []errorx.Message)
 	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, claim *Claim) (model.Claim, []errorx.Message)
 	Update(sID, uID, id int, claim *Claim) (model.Claim, []errorx.Message)
@@ -153,12 +153,50 @@ func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim)
 
 // Delete implements IClaimService
 func (*claimService) Delete(sID int, id int) []errorx.Message {
-	panic("unimplemented")
+
+	claim := model.Claim{}
+	claim.ID = uint(id)
+
+	// check if claim is associated with posts
+	var totAssociated int64
+	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
+		ClaimID: uint(id),
+	}).Count(&totAssociated)
+
+	if totAssociated != 0 {
+		loggerx.Error(errors.New("claim is associated with post"))
+		return errorx.Parser(errorx.CannotDelete("claim", "post"))
+	}
+
+	tx := config.DB.Begin()
+	tx.Delete(&claim)
+
+	tx.Commit()
+
+	return nil
 }
 
 // GetById implements IClaimService
-func (*claimService) GetById(sID int, id int) (model.Claim, error) {
-	panic("unimplemented")
+func (*claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
+
+	result := &model.Claim{}
+
+	result.ID = uint(id)
+
+	err := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
+		SpaceID: uint(sID),
+	}).First(&result).Error
+
+	if err != nil {
+		if err == gorm.ErrRecordNotFound {
+			loggerx.Error(err)
+			return model.Claim{}, errorx.Parser(errorx.RecordNotFound())
+		}
+		loggerx.Error(err)
+		return model.Claim{}, errorx.Parser(errorx.DBError())
+	}
+
+	return *result, nil
 }
 
 // List implements IClaimService
