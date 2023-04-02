@@ -151,7 +151,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               <Button
                 size="large"
                 disabled={!(actions.includes('admin') || actions.includes('update'))}
-                onClick={() => {
+                onClick={(e) => {
+                  e.stopPropagation();
                   isOpen ? setExpandedRowKeys([]) : setExpandedRowKeys([item.id]);
                   return setID(item.id);
                 }}
@@ -167,17 +168,10 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 size="large"
                 icon={<DeleteOutlined style={{ color: '#858585' }} />}
                 onClick={(e) => {
-                  // e.stopPropagation();
+                  e.stopPropagation();
                   setModalOpen(true);
                 }}
                 disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              />
-               <Button
-                size="large"
-                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
-                onClick={() => {
-                  alert("this do nothing")
-                }}
               />
               <Modal
                 open={modalOpen}
@@ -199,6 +193,14 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               >
                 <Typography.Text strong>Are you sure you want to delete this post?</Typography.Text>
               </Modal>
+              <Button
+                size="large"
+                icon={<ThreeDotIcon style={{ color: '#858585' }} />}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  alert("this do nothing")
+                }}
+              />
             </div>
           </ConfigProvider>
         );
@@ -216,7 +218,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              // history.push(`/posts/${record.id}/edit`);
+              history.push(`/posts/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';
@@ -259,7 +261,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
           pageSizeOptions: ['10', '15', '20'],
         }}
-      />
+      />\\\\\\.
     </Space>
   );
 }

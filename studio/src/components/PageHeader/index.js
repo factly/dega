@@ -1,10 +1,12 @@
 import React, { useMemo } from 'react';
 import { Link, useLocation, useHistory } from 'react-router-dom';
+import { LeftOutlined } from '@ant-design/icons';
 import { PageHeader as AntPageHeader } from '@ant-design/pro-layout';
 import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
+import './index.css';
 
 function Pageheader() {
   const state = useSelector((state) => state);
@@ -18,8 +20,8 @@ function Pageheader() {
         (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'formats') ||
         (pathSnippets[0] === 'admin' && pathSnippets[1] === 'events') ||
         (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'webhooks')
-      ? pathSnippets[1]
-      : pathSnippets[0];
+        ? pathSnippets[1]
+        : pathSnippets[0];
 
   const isBreadCrumbsHidden =
     (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&
@@ -136,6 +138,7 @@ function Pageheader() {
   )
     return (
       <AntPageHeader
+        backIcon={isBreadCrumbsHidden ? <LeftOutlined /> : null}
         ghost={false}
         title={isBreadCrumbsHidden ? getTitle(pathSnippets[0]) : null}
         onBack={handleOnBack}

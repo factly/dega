@@ -10,6 +10,7 @@ import {
   DatePicker,
   Dropdown,
   Switch,
+  Tag,
   Menu,
   Modal,
   Typography,
@@ -20,12 +21,16 @@ import MediaSelector from '../../../components/MediaSelector';
 import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
-import { SettingFilled, LeftOutlined } from '@ant-design/icons';
+import {
+  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined, CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined
+} from '@ant-design/icons';
 import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
-import { getDatefromStringWithoutDay } from '../../../utils/date';
+import {
+  getDatefromStringWithoutDay
+} from '../../../utils/date';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -115,8 +120,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.status = status;
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
-          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : getCurrentDate())
+        ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+        : getCurrentDate())
       : (finalData.published_date = null);
     onCreate(finalData);
   };
@@ -175,6 +180,31 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     layout: 'vertical',
   };
 
+  const postActions = [
+    {
+      key: 'save',
+      label: (
+        <Button
+          type="link"
+
+          disabled={!valueChange}
+        >
+          Save Draft
+        </Button>
+      ),
+      onClick: () => { setStatus('draft'); form.submit(); },
+    },
+    {
+      key: 'publish',
+      label: (
+        <Button type="ready" disabled={!valueChange}>
+          Ready to Publish
+        </Button>
+      ),
+      onClick: () => { setStatus('ready'); form.submit(); }
+    },
+  ]
+
   return (
     <>
       <Prompt
@@ -201,27 +231,23 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   <Button onClick={createTemplate}>Create Template</Button>
                 </Form.Item>
               ) : null}
-              <Form.Item name="draft">
-                <Dropdown overlay={readyToPublish}>
-                  <Button
-                    disabled={!valueChange}
-                    htmlType="submit"
-                    onClick={() => (status === 'ready' ? setStatus('ready') : setStatus('draft'))}
-                  >
-                    Save
-                  </Button>
-                </Dropdown>
-              </Form.Item>
               {actions.includes('admin') || actions.includes('publish') ? (
-                <Form.Item name="submit">
-                  <Button htmlType="submit" onClick={() => setStatus('publish')}>
-                    {data.id && status === 'publish' ? 'Update' : 'Publish'}
-                  </Button>
+                <Form.Item name="actions">
+                  <Dropdown.Button type='primary'
+                    onClick={
+                      () => { setStatus('publish'); form.submit(); }
+                    }
+                    menu={{ items: postActions }} htmlType="submit" icon={<DownOutlined style={{ fontSize: '14px' }} />}>
+                    <span style={{ width: '100px' }}>
+
+                      {data.id && status === 'publish' ? 'Update' : 'Publish'}
+                    </span>
+                  </Dropdown.Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="drawerOpen">
-                <Button onClick={showDrawer}>
-                  <SettingFilled />
+                <Button onClick={showDrawer} type='link'>
+                  <SettingFilled style={{ fontSize: '14px', color: "#000" }} />
                 </Button>
               </Form.Item>
             </Space>
@@ -251,11 +277,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   autoSize={{ minRows: 2, maxRows: 6 }}
                 />
               </Form.Item>
-              {data?.updated_at ? (
-                <p style={{ fontSize: '18px', color: '#595E60' }}>
-                  Last updated on : {getDatefromStringWithoutDay(data.updated_at)}
-                </p>
-              ) : null}
               <DescriptionInput
                 type="editor"
                 formItemProps={{ className: 'post-description' }}
@@ -263,7 +284,24 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 noLabel
               />
               <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Post Settings</h4>}
+                title={
+                  <>
+                    {actions.includes('admin') || actions.includes('publish') ? (
+                      <Form.Item name="actions" style={{ float: 'right', margin: 0 }}>
+                        <Dropdown.Button type='primary'
+                          onClick={
+                            () => { setStatus('publish'); form.submit(); }
+                          }
+                          menu={{ items: postActions }} htmlType="submit" icon={<DownOutlined style={{ fontSize: '12px' }} />}>
+                          <span style={{ width: '60px' }}>
+
+                            {data.id && status === 'publish' ? 'Update' : 'Publish'}
+                          </span>
+                        </Dropdown.Button>
+                      </Form.Item>
+                    ) : null}
+                  </>
+                }
                 placement="right"
                 closable={true}
                 onClose={onClose}
@@ -285,7 +323,52 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   }}
                   layout="vertical"
                 >
-                  <Form.Item name="featured_medium_id" label="Featured Image">
+                  <div>
+                    <span style={{
+                      borderRadius: "50%", background: "#E8EFF2", display: "inline-flex", justifyContent: "center", alignItems: "center", marginRight: "8px",
+                      width: "28px", height: "28px", padding: '8px'
+                    }}>
+                      <MenuUnfoldOutlined style={{ color: "#3473ED", }} />
+                    </span>
+                    <Typography.Title level={5} style={{ display: 'inline', color: "#3473ED" }}>
+                      Details
+                    </Typography.Title>
+                  </div>
+                  <Row justify="space-between" style={{ margin: '16px 0' }}>
+                    {data?.updated_at ? (
+                      <Col span={16}>
+                        <Typography.Text style={{ color: '#575757E0' }}>
+                          <span style={{ color: '#000', fontWeight: 'bold' }}>
+
+                            Last updated on: {' '}
+                          </span>
+                          {getDatefromStringWithoutDay(data.updated_at)}
+                        </Typography.Text>
+                      </Col>
+                    ) : null}
+                    <Col span={6}>
+                      {status === 'publish' ? (
+                        <Tag icon={<CheckCircleOutlined />} color="green">
+                          Published
+                        </Tag>
+                      ) : status === 'draft' ? (
+                        <Tag color="red" icon={<ExceptionOutlined />}>
+                          Draft
+                        </Tag>
+                      ) : status === 'ready' ? (
+                        <Tag color="gold" icon={<ClockCircleOutlined />}>
+                          Ready to Publish
+                        </Tag>
+                      ) : null}
+                    </Col>
+                  </Row>
+                  <Form.Item name="published_date" label="Published Date">
+                    <DatePicker style={{ width: '100%' }} />
+                  </Form.Item>
+                  <Form.Item name="authors" label="Authors">
+                    <Selector mode="multiple" display={'display_name'} action="Authors" />
+                  </Form.Item>
+                  <Form.Item name="featured_medium_id" label="Featured Image" style={{ marginTop: '16px' }}>
                     <MediaSelector />
                   </Form.Item>
 
@@ -306,17 +389,11 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
                   </Form.Item>
                   <SlugInput />
-                  <Form.Item name="published_date" label="Published Date">
-                    <DatePicker />
-                  </Form.Item>
                   <Form.Item name="categories" label="Categories">
                     <Selector mode="multiple" action="Categories" createEntity="Category" />
                   </Form.Item>
                   <Form.Item name="tags" label="Tags">
                     <Selector mode="multiple" action="Tags" createEntity="Tag" />
-                  </Form.Item>
-                  <Form.Item name="authors" label="Authors">
-                    <Selector mode="multiple" display={'display_name'} action="Authors" />
                   </Form.Item>
                   <Form.Item>
                     <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>

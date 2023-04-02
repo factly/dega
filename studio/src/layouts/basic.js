@@ -151,6 +151,9 @@ function BasicLayout(props) {
           },
           Pagination: {
             colorPrimary: "#1E1E1E"
+          },
+          Modal: {
+            colorBgMask: "#00000059"
           }
         },
       }}
