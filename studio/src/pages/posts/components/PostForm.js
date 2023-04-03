@@ -25,8 +25,11 @@ import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import {
-  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined, CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined, AppstoreOutlined
+  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined,
+  CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined,
+  AppstoreOutlined, TagsOutlined, FileSearchOutlined, ProfileOutlined
 } from '@ant-design/icons';
+import ThreeDotIcon from '../../../assets/ThreeDotIcon'
 import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
@@ -90,8 +93,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const onClose = () => {
     setDrawerVisible(false);
     setCodeDrawerVisible(false);
-    setMetaDrawer(false);
     setMetaFieldsDrawerVisible(false);
+    setSeoDrawerVisible(false);
   };
 
   if (!data.status) data.status = 'draft';
@@ -328,65 +331,61 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   }}
                   layout="vertical"
                 >
-                  <div>
-                    <span style={{
-                      borderRadius: "50%", background: "#E8EFF2", display: "inline-flex", justifyContent: "center", alignItems: "center", marginRight: "8px",
-                      width: "28px", height: "28px", padding: '8px'
-                    }}>
-                      <MenuUnfoldOutlined style={{ color: "#3473ED", }} />
-                    </span>
-                    <Typography.Title level={5} style={{ display: 'inline', color: "#3473ED" }}>
-                      Details
-                    </Typography.Title>
-                  </div>
-                  <Row justify="space-between" style={{ margin: '16px 0' }}>
-                    {data?.updated_at ? (
-                      <Col span={16}>
-                        <Typography.Text style={{ color: '#575757E0' }}>
-                          <span style={{ color: '#000', fontWeight: 'bold' }}>
+                  <Collapse bordered={false} accordion={true} defaultActiveKey={['1']}
+                    expandIcon={({ isActive }) => <MenuUnfoldOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }}
+                    />}
+                  >
+                    <Collapse.Panel header="Details" key="1">
+                      <Row justify="space-between" style={{ margin: '8px 0', marginTop: 0 }}>
+                        {data?.updated_at ? (
+                          <Col span={16}>
+                            <Typography.Text style={{ color: '#575757E0' }}>
+                              <span style={{ color: '#000', fontWeight: 'bold' }}>
 
-                            Last updated on: {' '}
-                          </span>
-                          {getDatefromStringWithoutDay(data.updated_at)}
-                        </Typography.Text>
-                      </Col>
-                    ) : null}
-                    <Col span={6}>
-                      {status === 'publish' ? (
-                        <Tag icon={<CheckCircleOutlined />} color="green">
-                          Published
-                        </Tag>
-                      ) : status === 'draft' ? (
-                        <Tag color="red" icon={<ExceptionOutlined />}>
-                          Draft
-                        </Tag>
-                      ) : status === 'ready' ? (
-                        <Tag color="gold" icon={<ClockCircleOutlined />}>
-                          Ready to Publish
-                        </Tag>
-                      ) : null}
-                    </Col>
-                  </Row>
-                  <Form.Item name="published_date" label="Published Date">
-                    <DatePicker style={{ width: '100%' }} />
-                  </Form.Item>
-                  <Form.Item name="authors" label="Authors">
-                    <Selector mode="multiple" display={'display_name'} action="Authors" />
-                  </Form.Item>
-                  <Form.Item name="featured_medium_id" label="Featured Image">
-                    <MediaSelector />
-                  </Form.Item>
-                  <Form.Item name="is_featured" id="is_featured" style={{ marginBottom: '8px' }} >
-                    <Switch defaultChecked onChange={() => console.log("checked")} />
-                    <label htmlFor="is_featured"> Mark as Featured </label>
-                  </Form.Item>
-                  <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage" >
-                    <Switch defaultChecked onChange={() => console.log("checked")} />
-                    <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
-                  </Form.Item>
+                                Last updated on: {' '}
+                              </span>
+                              {getDatefromStringWithoutDay(data.updated_at)}
+                            </Typography.Text>
+                          </Col>
+                        ) : null}
+                        <Col span={6}>
+                          {status === 'publish' ? (
+                            <Tag icon={<CheckCircleOutlined />} color="green">
+                              Published
+                            </Tag>
+                          ) : status === 'draft' ? (
+                            <Tag color="red" icon={<ExceptionOutlined />}>
+                              Draft
+                            </Tag>
+                          ) : status === 'ready' ? (
+                            <Tag color="gold" icon={<ClockCircleOutlined />}>
+                              Ready to Publish
+                            </Tag>
+                          ) : null}
+                        </Col>
+                      </Row>
+                      <Form.Item name="published_date" label="Published Date">
+                        <DatePicker style={{ width: '100%' }} />
+                      </Form.Item>
+                      <Form.Item name="authors" label="Authors">
+                        <Selector mode="multiple" display={'display_name'} action="Authors" />
+                      </Form.Item>
+                      <Form.Item name="featured_medium_id" label="Featured Image">
+                        <MediaSelector />
+                      </Form.Item>
+                      <Form.Item name="is_featured" id="is_featured" style={{ marginBottom: '8px' }} >
+                        <Switch defaultChecked onChange={() => console.log("checked")} />
+                        <label htmlFor="is_featured"> Mark as Featured </label>
+                      </Form.Item>
+                      <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage" >
+                        <Switch defaultChecked onChange={() => console.log("checked")} />
+                        <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                    expandIcon={({ isActive }) => <ProfileOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />}
                   >
                     <Collapse.Panel header="Other Details" key="1">
                       <Form.Item name="subtitle" label="Subtitle">
@@ -408,7 +407,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                    expandIcon={({ isActive }) => <AppstoreOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />
+                    }
                   >
                     <Collapse.Panel header="Categories" key="1">
                       <Form.Item name="categories" style={{ marginBottom: '8px' }}>
@@ -418,7 +418,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                    expandIcon={({ isActive }) => <TagsOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />
+                    }
                   >
                     <Collapse.Panel header="Tags" key="1">
                       <Form.Item name="tags" style={{ marginBottom: '8px' }}>
@@ -428,44 +429,14 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <div style={{ display: 'flex', gap: '10px', cursor: "pointer", padding: '1rem 0' }} onClick={() => setSeoDrawerVisible(true)}>
-                    <AppstoreOutlined />
-                    <Typography.Text>
+                    <FileSearchOutlined style={{ fontSize: '14px', color: seoDrawer ? "#3473ED" : "#000" }} />
+                    <Typography.Text strong >
                       SEO
                     </Typography.Text>
                   </div>
                   <Divider style={{ margin: '0 10px' }} />
-                  <Drawer
-                    title={<h4 style={{ fontWeight: 'bold' }}>Seo Data</h4>}
-                    placement="right"
-                    closable={true}
-                    onClose={onClose}
-                    visible={seoDrawer}
-                    //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
-                    width={480}
-                    bodyStyle={{ paddingBottom: 40 }}
-                    headerStyle={{ fontWeight: 'bold' }}
-                  >
-                    <Form {...formProps}>
-                      <Form.Item style={{ marginLeft: '-20px' }}>
-                        <Button type="text" onClick={() => setMetaDrawer(false)}>
-                          <LeftOutlined />
-                          Back
-                        </Button>
-                      </Form.Item>
-                      <SlugInput />
-                      <Form.Item name={['meta', 'title']} label="Meta Title">
-                        <Input />
-                      </Form.Item>
-                      <Form.Item name={['meta', 'description']} label="Meta Description">
-                        <Input.TextArea />
-                      </Form.Item>
-                      <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                        <Input />
-                      </Form.Item>
-                    </Form>
-                  </Drawer>
                   <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                    expandIcon={({ isActive }) =>  <ThreeDotIcon color={ isActive ? "#3473ED" : "#000"} />}
                   >
                     <Collapse.Panel header="Others" key="1">
                       <Form.Item>
@@ -578,6 +549,37 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     extra="add JSON if you have to pass any extra data"
                   >
                     <MonacoEditor language="json" />
+                  </Form.Item>
+                </Form>
+              </Drawer>
+              <Drawer
+                title={<h4 style={{ fontWeight: 'bold' }}>Seo Data</h4>}
+                placement="right"
+                style={{ width: '100%' }}
+                closable={true}
+                onClose={() => setSeoDrawerVisible(false)}
+                visible={seoDrawer}
+                //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
+                width={366}
+                bodyStyle={{ paddingBottom: 40 }}
+                headerStyle={{ fontWeight: 'bold' }}
+              >
+                <Form {...formProps}>
+                  <Form.Item style={{ marginLeft: '-20px' }}>
+                    <Button type="text" onClick={() => setSeoDrawerVisible(false)}>
+                      <LeftOutlined />
+                      Back
+                    </Button>
+                  </Form.Item>
+                  <SlugInput />
+                  <Form.Item name={['meta', 'title']} label="Meta Title">
+                    <Input />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'description']} label="Meta Description">
+                    <Input.TextArea />
+                  </Form.Item>
+                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                    <Input />
                   </Form.Item>
                 </Form>
               </Drawer>

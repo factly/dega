@@ -35,6 +35,12 @@ code {
 
 .ant-collapse-header {
  padding: 1rem 0 !important;
+ font-weight: 600 !important;
+}
+
+.ant-collapse-item-active .ant-collapse-header {
+  color: #3473ED !important;
+  font-weight: 600 !important;
 }
 
 .ant-collapse-content-box {
