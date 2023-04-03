@@ -3,6 +3,9 @@ package service
 import (
 	"context"
 	"errors"
+	"fmt"
+	"net/url"
+	"strings"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -11,6 +14,7 @@ import (
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
+	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/slugx"
 	"github.com/factly/x/validationx"
 	"github.com/jinzhu/gorm/dialects/postgres"
@@ -42,7 +46,7 @@ type Podcast struct {
 
 type IPodcastService interface {
 	GetById(sID, id int) (model.Podcast, []errorx.Message)
-	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Update(sID, uID, id int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Delete(sID, id int, result model.Podcast) []errorx.Message
@@ -183,8 +187,56 @@ func (ps *PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Mess
 }
 
 // List implements IPodcastService
-func (*PodcastService) List(sID uint, offset int, limit int, searchQuery string, sort string) (paging, []errorx.Message) {
-	panic("unimplemented")
+func (ps *PodcastService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+
+	var result paging
+	var err error
+	tx := ps.model.Model(&model.Podcast{}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").Where(&model.Podcast{
+		SpaceID: uint(sID),
+	}).Order("created_at " + sort)
+
+	filters := generateFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
+	if filters != "" || searchQuery != "" {
+
+		if config.SearchEnabled() {
+			if filters != "" {
+				filters = fmt.Sprint(filters, " AND space_id=", sID)
+			}
+			var hits []interface{}
+			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
+			if err != nil {
+				loggerx.Error(err)
+				return paging{}, errorx.Parser(errorx.NetworkError())
+			}
+
+			filteredPodcastIDs := meilisearchx.GetIDArray(hits)
+			if len(filteredPodcastIDs) == 0 {
+				return result, nil
+			} else {
+				err = tx.Where(filteredPodcastIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+				if err != nil {
+					loggerx.Error(err)
+					return paging{}, errorx.Parser(errorx.DBError())
+				}
+			}
+		} else {
+			// filter by sql filters
+			filters = generateSQLFilters(tx, searchQuery, queryMap["category"], queryMap["primary_category"], queryMap["language"])
+			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+			if err != nil {
+				loggerx.Error(err)
+				return paging{}, errorx.Parser(errorx.DBError())
+			}
+		}
+	} else {
+		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
+		if err != nil {
+			loggerx.Error(err)
+			return paging{}, errorx.Parser(errorx.DBError())
+		}
+	}
+
+	return result, nil
 }
 
 // Update implements IPodcastService
@@ -194,4 +246,68 @@ func (*PodcastService) Update(sID int, uID int, id int, podcast *Podcast) (model
 
 func GetPodcastService() IPodcastService {
 	return &PodcastService{model: config.DB}
+}
+
+func generateFilters(categoryIDs, primaryCatID, language []string) string {
+	filters := ""
+	if len(categoryIDs) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
+	}
+
+	if len(primaryCatID) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
+	}
+
+	if len(language) > 0 {
+		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(language, "language"), " AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
+}
+
+func generateSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, primaryCatID, language []string) string {
+	filters := ""
+	if config.Sqlite() {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title LIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
+	} else {
+		if searchQuery != "" {
+			filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
+		}
+	}
+	if len(primaryCatID) > 0 {
+		filters = filters + " primary_category_id IN ("
+		for _, id := range primaryCatID {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(language) > 0 {
+		filters = filters + " language IN ("
+		for _, lan := range language {
+			filters = fmt.Sprint(filters, "'", lan, "'", ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if len(categoryIDs) > 0 {
+		tx.Joins("INNER JOIN podcast_categories ON podcasts.id = podcast_categories.podcast_id")
+		filters = filters + " podcast_categories.category_id IN ("
+		for _, id := range categoryIDs {
+			filters = fmt.Sprint(filters, id, ", ")
+		}
+		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
+	}
+
+	if filters != "" && filters[len(filters)-5:] == " AND " {
+		filters = filters[:len(filters)-5]
+	}
+
+	return filters
 }

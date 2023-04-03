@@ -8,6 +8,7 @@ import (
 
 	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -56,65 +57,19 @@ func list(w http.ResponseWriter, r *http.Request) {
 	u, _ := url.Parse(r.URL.String())
 	queryMap := u.Query()
 
-	result := paging{}
-	result.Nodes = make([]model.Podcast, 0)
-
 	if sort != "asc" {
 		sort = "desc"
 	}
 
 	offset, limit := paginationx.Parse(r.URL.Query())
 
-	tx := config.DB.Model(&model.Podcast{}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").Where(&model.Podcast{
-		SpaceID: uint(sID),
-	}).Order("created_at " + sort)
+	podcastService := service.GetPodcastService()
+	result, serviceErr := podcastService.List(uint(sID), offset, limit, searchQuery, sort, queryMap)
 
-	filters := generateFilters(queryMap["category"], queryMap["primary_category"], queryMap["language"])
-	if filters != "" || searchQuery != "" {
-
-		if config.SearchEnabled() {
-			if filters != "" {
-				filters = fmt.Sprint(filters, " AND space_id=", sID)
-			}
-			var hits []interface{}
-			hits, err = meilisearchx.SearchWithQuery("dega", searchQuery, filters, "podcast")
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.NetworkError()))
-				return
-			}
-
-			filteredPodcastIDs := meilisearchx.GetIDArray(hits)
-			if len(filteredPodcastIDs) == 0 {
-				renderx.JSON(w, http.StatusOK, result)
-				return
-			} else {
-				err = tx.Where(filteredPodcastIDs).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-				if err != nil {
-					loggerx.Error(err)
-					errorx.Render(w, errorx.Parser(errorx.DBError()))
-					return
-				}
-			}
-		} else {
-			// filter by sql filters
-			filters = generateSQLFilters(tx, searchQuery, queryMap["category"], queryMap["primary_category"], queryMap["language"])
-			err = tx.Where(filters).Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-			if err != nil {
-				loggerx.Error(err)
-				errorx.Render(w, errorx.Parser(errorx.DBError()))
-				return
-			}
-		}
-	} else {
-		err = tx.Count(&result.Total).Offset(offset).Limit(limit).Find(&result.Nodes).Error
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
+		return
 	}
-
 	renderx.JSON(w, http.StatusOK, result)
 }
 
