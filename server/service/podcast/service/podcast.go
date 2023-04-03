@@ -41,7 +41,7 @@ type Podcast struct {
 }
 
 type IPodcastService interface {
-	GetById(sID, id int) (model.Podcast, error)
+	GetById(sID, id int) (model.Podcast, []errorx.Message)
 	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Update(sID, uID, id int, podcast *Podcast) (model.Podcast, []errorx.Message)
@@ -153,8 +153,22 @@ func (*PodcastService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IPodcastService
-func (*PodcastService) GetById(sID int, id int) (model.Podcast, error) {
-	panic("unimplemented")
+func (*PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Message) {
+
+	result := &model.Podcast{}
+
+	result.ID = uint(id)
+
+	var err error
+	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
+		SpaceID: uint(sID),
+	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		return model.Podcast{}, errorx.Parser(errorx.RecordNotFound())
+	}
+	return *result, nil
 }
 
 // List implements IPodcastService
