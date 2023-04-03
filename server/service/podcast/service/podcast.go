@@ -45,7 +45,7 @@ type IPodcastService interface {
 	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, podcast *Podcast) (model.Podcast, []errorx.Message)
 	Update(sID, uID, id int, podcast *Podcast) (model.Podcast, []errorx.Message)
-	Delete(sID, id int) []errorx.Message
+	Delete(sID, id int, result model.Podcast) []errorx.Message
 }
 
 type PodcastService struct {
@@ -55,7 +55,7 @@ type PodcastService struct {
 var podcastUser config.ContextKey = "podcast_user"
 
 // Create implements IPodcastService
-func (*PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Podcast) (model.Podcast, []errorx.Message) {
+func (ps *PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Podcast) (model.Podcast, []errorx.Message) {
 
 	validationError := validationx.Check(podcast)
 
@@ -72,7 +72,7 @@ func (*PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Po
 	}
 
 	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
+	stmt := &gorm.Statement{DB: ps.model}
 	_ = stmt.Parse(&model.Podcast{})
 	tableName := stmt.Schema.Table
 
@@ -118,7 +118,7 @@ func (*PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Po
 		Title:             podcast.Title,
 		Description:       jsonDescription,
 		DescriptionHTML:   descriptionHTML,
-		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
+		Slug:              slugx.Approve(&ps.model, podcastSlug, sID, tableName),
 		Language:          podcast.Language,
 		MediumID:          mediumID,
 		PrimaryCategoryID: primaryCategoryID,
@@ -129,10 +129,10 @@ func (*PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Po
 	}
 
 	if len(podcast.CategoryIDs) > 0 {
-		config.DB.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
+		ps.model.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, podcastUser, uID)).Begin()
+	tx := ps.model.WithContext(context.WithValue(ctx, podcastUser, uID)).Begin()
 	err = tx.Model(&model.Podcast{}).Create(&result).Error
 
 	if err != nil {
@@ -148,19 +148,30 @@ func (*PodcastService) Create(ctx context.Context, sID int, uID int, podcast *Po
 }
 
 // Delete implements IPodcastService
-func (*PodcastService) Delete(sID int, id int) []errorx.Message {
-	panic("unimplemented")
+func (ps *PodcastService) Delete(sID int, id int, result model.Podcast) []errorx.Message {
+
+	tx := ps.model.Begin()
+
+	// delete all associations
+	if len(result.Categories) > 0 {
+		_ = tx.Model(&result).Association("Categories").Delete(result.Categories)
+	}
+
+	tx.Model(&model.Podcast{}).Delete(&result)
+	tx.Commit()
+
+	return nil
 }
 
 // GetById implements IPodcastService
-func (*PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Message) {
+func (ps *PodcastService) GetById(sID int, id int) (model.Podcast, []errorx.Message) {
 
 	result := &model.Podcast{}
 
 	result.ID = uint(id)
 
 	var err error
-	err = config.DB.Model(&model.Podcast{}).Where(&model.Podcast{
+	err = ps.model.Model(&model.Podcast{}).Where(&model.Podcast{
 		SpaceID: uint(sID),
 	}).Preload("Categories").Preload("Medium").Preload("PrimaryCategory").First(&result).Error
 
