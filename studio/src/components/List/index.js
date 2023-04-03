@@ -261,7 +261,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           onChange: (pageNumber, pageSize) => onPagination(pageNumber, pageSize),
           pageSizeOptions: ['10', '15', '20'],
         }}
-      />\\\\\\.
+      />
     </Space>
   );
 }

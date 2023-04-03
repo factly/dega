@@ -14,6 +14,9 @@ import {
   Menu,
   Modal,
   Typography,
+  Collapse,
+  Divider,
+  ConfigProvider
 } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
@@ -22,7 +25,7 @@ import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import {
-  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined, CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined
+  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined, CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined, AppstoreOutlined
 } from '@ant-design/icons';
 import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
@@ -43,6 +46,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [codeDrawer, setCodeDrawerVisible] = useState(false);
   const [metaFieldsDrawer, setMetaFieldsDrawerVisible] = useState(false);
+  const [seoDrawer, setSeoDrawerVisible] = useState(false);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showSchemaModal = () => {
@@ -222,6 +226,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
           setValueChange(true);
         }}
         layout="vertical"
+        className="edit-form"
       >
         <Space direction="vertical">
           <div style={{ float: 'right' }}>
@@ -368,56 +373,127 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   <Form.Item name="authors" label="Authors">
                     <Selector mode="multiple" display={'display_name'} action="Authors" />
                   </Form.Item>
-                  <Form.Item name="featured_medium_id" label="Featured Image" style={{ marginTop: '16px' }}>
+                  <Form.Item name="featured_medium_id" label="Featured Image">
                     <MediaSelector />
                   </Form.Item>
-
-                  <Form.Item
-                    name="excerpt"
-                    label="Excerpt"
-                    rules={[
-                      { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
-                      {
-                        message: 'Add Excerpt',
-                      },
-                    ]}
+                  <Form.Item name="is_featured" id="is_featured" style={{ marginBottom: '8px' }} >
+                    <Switch defaultChecked onChange={() => console.log("checked")} />
+                    <label htmlFor="is_featured"> Mark as Featured </label>
+                  </Form.Item>
+                  <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage" >
+                    <Switch defaultChecked onChange={() => console.log("checked")} />
+                    <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
+                  </Form.Item>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse bordered={false} accordion={true}
+                    expandIcon={({ isActive }) => <AppstoreOutlined />}
                   >
-                    <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
-                  </Form.Item>
-
-                  <Form.Item name="subtitle" label="Subtitle">
-                    <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
-                  </Form.Item>
-                  <SlugInput />
-                  <Form.Item name="categories" label="Categories">
-                    <Selector mode="multiple" action="Categories" createEntity="Category" />
-                  </Form.Item>
-                  <Form.Item name="tags" label="Tags">
-                    <Selector mode="multiple" action="Tags" createEntity="Tag" />
-                  </Form.Item>
-                  <Form.Item>
-                    <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                      Add Meta Data
-                    </Button>
-                  </Form.Item>
-                  <Form.Item>
-                    <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
-                      Code Injection
-                    </Button>
-                  </Form.Item>
-                  <Form.Item>
-                    <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
-                      View Schemas
-                    </Button>
-                  </Form.Item>
-                  <Form.Item>
-                    <Button
-                      style={{ width: '100%' }}
-                      onClick={() => setMetaFieldsDrawerVisible(true)}
-                    >
-                      Add Meta Fields
-                    </Button>
-                  </Form.Item>
+                    <Collapse.Panel header="Other Details" key="1">
+                      <SlugInput />
+                      <Form.Item name="subtitle" label="Subtitle">
+                        <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
+                      </Form.Item>
+                      <Form.Item
+                        name="excerpt"
+                        label="Excerpt"
+                        rules={[
+                          { max: 5000, message: 'Excerpt must be a maximum of 5000 characters.' },
+                          {
+                            message: 'Add Excerpt',
+                          },
+                        ]}
+                      >
+                        <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse bordered={false} accordion={true}
+                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                  >
+                    <Collapse.Panel header="Categories" key="1">
+                      <Form.Item name="categories" style={{ marginBottom: '8px' }}>
+                        <Selector mode="multiple" action="Categories" createEntity="Category" />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <Collapse bordered={false} accordion={true}
+                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                  >
+                    <Collapse.Panel header="Tags" key="1">
+                      <Form.Item name="tags" style={{ marginBottom: '8px' }}>
+                        <Selector mode="multiple" action="Tags" createEntity="Tag" />
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: 0 }} />
+                  <div style={{ display: 'flex', gap: '10px', cursor: "pointer", padding: '1rem 0' }} onClick={() => setSeoDrawerVisible(true)}>
+                    <AppstoreOutlined />
+                    <Typography.Text>
+                      SEO
+                    </Typography.Text>
+                  </div>
+                  <Divider style={{ margin: '0 10px' }} />
+                  <Drawer
+                    title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
+                    placement="right"
+                    closable={true}
+                    onClose={() => setSeoDrawerVisible(false)}
+                    visible={seoDrawer}
+                    //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
+                    width={480}
+                    bodyStyle={{ paddingBottom: 40 }}
+                    headerStyle={{ fontWeight: 'bold' }}
+                  >
+                    <Form {...formProps}>
+                      <Form.Item style={{ marginLeft: '-20px' }}>
+                        <Button type="text" onClick={() => setMetaDrawer(false)}>
+                          <LeftOutlined />
+                          Back
+                        </Button>
+                      </Form.Item>
+                      <Form.Item name={['meta', 'title']} label="Meta Title">
+                        <Input />
+                      </Form.Item>
+                      <Form.Item name={['meta', 'description']} label="Meta Description">
+                        <Input.TextArea />
+                      </Form.Item>
+                      <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
+                        <Input />
+                      </Form.Item>
+                    </Form>
+                  </Drawer>
+                  <Collapse bordered={false} accordion={true}
+                    expandIcon={({ isActive }) => <AppstoreOutlined />}
+                  >
+                    <Collapse.Panel header="Others" key="1">
+                      <Form.Item>
+                        <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
+                          Add Meta Data
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                          Code Injection
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button onClick={() => showSchemaModal()} style={{ width: '100%' }}>
+                          View Schemas
+                        </Button>
+                      </Form.Item>
+                      <Form.Item>
+                        <Button
+                          style={{ width: '100%' }}
+                          onClick={() => setMetaFieldsDrawerVisible(true)}
+                        >
+                          Add Meta Fields
+                        </Button>
+                      </Form.Item>
+                    </Collapse.Panel>
+                  </Collapse>
+                  <Divider style={{ margin: '0 10px' }} />
                   <Modal
                     title="View Schemas"
                     visible={isModalVisible}
@@ -543,7 +619,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
             </Col>
           </Row>
         </Space>
-      </Form>
+      </Form >
     </>
   );
 }

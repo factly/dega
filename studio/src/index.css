@@ -31,3 +31,12 @@ code {
 .ant-collapse-item-active {
   border: 0 !important;
 }
+
+
+.ant-collapse-header {
+ padding: 1rem 0 !important;
+}
+
+.ant-collapse-content-box {
+  padding-left: 0 !important;
+}
