@@ -389,7 +389,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     expandIcon={({ isActive }) => <AppstoreOutlined />}
                   >
                     <Collapse.Panel header="Other Details" key="1">
-                      <SlugInput />
                       <Form.Item name="subtitle" label="Subtitle">
                         <Input placeholder="Subtitle" style={{ fontSize: 'medium' }} />
                       </Form.Item>
@@ -436,10 +435,10 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </div>
                   <Divider style={{ margin: '0 10px' }} />
                   <Drawer
-                    title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
+                    title={<h4 style={{ fontWeight: 'bold' }}>Seo Data</h4>}
                     placement="right"
                     closable={true}
-                    onClose={() => setSeoDrawerVisible(false)}
+                    onClose={onClose}
                     visible={seoDrawer}
                     //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
                     width={480}
@@ -453,6 +452,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           Back
                         </Button>
                       </Form.Item>
+                      <SlugInput />
                       <Form.Item name={['meta', 'title']} label="Meta Title">
                         <Input />
                       </Form.Item>
@@ -468,11 +468,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     expandIcon={({ isActive }) => <AppstoreOutlined />}
                   >
                     <Collapse.Panel header="Others" key="1">
-                      <Form.Item>
-                        <Button style={{ width: '100%' }} onClick={() => setMetaDrawer(true)}>
-                          Add Meta Data
-                        </Button>
-                      </Form.Item>
                       <Form.Item>
                         <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
                           Code Injection
@@ -531,36 +526,6 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                         ))}
                     </div>
                   </Modal>
-                </Form>
-              </Drawer>
-
-              <Drawer
-                title={<h4 style={{ fontWeight: 'bold' }}>Post Meta data</h4>}
-                placement="right"
-                closable={true}
-                onClose={onClose}
-                visible={metaDrawer}
-                //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
-                width={480}
-                bodyStyle={{ paddingBottom: 40 }}
-                headerStyle={{ fontWeight: 'bold' }}
-              >
-                <Form {...formProps}>
-                  <Form.Item style={{ marginLeft: '-20px' }}>
-                    <Button type="text" onClick={() => setMetaDrawer(false)}>
-                      <LeftOutlined />
-                      Back
-                    </Button>
-                  </Form.Item>
-                  <Form.Item name={['meta', 'title']} label="Meta Title">
-                    <Input />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'description']} label="Meta Description">
-                    <Input.TextArea />
-                  </Form.Item>
-                  <Form.Item name={['meta', 'canonical_URL']} label="Canonical URL">
-                    <Input />
-                  </Form.Item>
                 </Form>
               </Drawer>
               <Drawer
