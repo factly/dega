@@ -109,7 +109,7 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 			UpdatedAt: claimant.UpdatedAt,
 		},
 		Name:            claimant.Name,
-		Slug:            slugx.Approve(&config.DB, claimantSlug, sID, tableName),
+		Slug:            slugx.Approve(&cs.model, claimantSlug, sID, tableName),
 		Description:     jsonDescription,
 		DescriptionHTML: descriptionHTML,
 		MediumID:        mediumID,
@@ -122,7 +122,7 @@ func (cs claimantService) Create(ctx context.Context, sID int, uID int, claimant
 		FooterCode:      claimant.FooterCode,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := cs.model.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
 	err = tx.Model(&model.Claimant{}).Create(&result).Error
 
 	if err != nil {
@@ -146,7 +146,7 @@ func (cs claimantService) Delete(sID int, id int) []errorx.Message {
 
 	// check if claimant is associated with claims
 	var totAssociated int64
-	config.DB.Model(&model.Claim{}).Where(&model.Claim{
+	cs.model.Model(&model.Claim{}).Where(&model.Claim{
 		ClaimantID: uint(id),
 	}).Count(&totAssociated)
 
@@ -155,7 +155,7 @@ func (cs claimantService) Delete(sID int, id int) []errorx.Message {
 		return errorx.Parser(errorx.CannotDelete("claimant", "claim"))
 	}
 
-	tx := config.DB.Begin()
+	tx := cs.model.Begin()
 	tx.Model(&model.Claimant{}).Delete(&result)
 	tx.Commit()
 
@@ -174,10 +174,10 @@ func (cs claimantService) GetById(sID int, id int) (model.Claimant, error) {
 }
 
 // List implements IClaimantService
-func (claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (paging, []errorx.Message) {
+func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (paging, []errorx.Message) {
 	var result paging
 	var err error
-	tx := config.DB.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
+	tx := cs.model.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
