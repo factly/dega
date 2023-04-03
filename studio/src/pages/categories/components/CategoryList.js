@@ -65,7 +65,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             }}
             to={`/categories/${record.id}/edit`}
           >
-            <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>
+            <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
               {record.parent_category?.name}
             </Typography.Text>
           </Link>
@@ -123,14 +123,14 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
   ];
 
   return (
-    <Space direction='vertical'>
+    <Space direction="vertical">
       <ConfigProvider
         theme={{
           components: {
             Typography: {
-              "colorText": "#101828"
+              colorText: '#101828',
             },
-          }
+          },
         }}
       >
         <Table
@@ -147,7 +147,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
               },
               onMouseLeave: (event) => {
                 document.body.style.cursor = 'default';
-              }
+              },
             };
           }}
           rowKey={'id'}

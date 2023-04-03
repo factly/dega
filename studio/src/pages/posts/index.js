@@ -216,7 +216,10 @@ function Posts({ formats }) {
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: 'inline', color: "#1E1E1E" }}>
+                  <Typography.Title
+                    level={3}
+                    style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
+                  >
                     Posts
                   </Typography.Title>
                 </Col>

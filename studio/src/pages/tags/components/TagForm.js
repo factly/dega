@@ -44,7 +44,8 @@ const TagForm = ({ onCreate, data = {} }) => {
             colorBgContainer: '#F9FAFB',
           },
         },
-      }}>
+      }}
+    >
       <Form
         form={form}
         style={{ padding: '0 1rem' }}
@@ -134,7 +135,9 @@ const TagForm = ({ onCreate, data = {} }) => {
                             />
                           </div>
                           {displayBgColorPicker ? (
-                            <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+                            <div
+                              style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}
+                            >
                               <div
                                 style={{
                                   position: 'fixed',
@@ -173,7 +176,10 @@ const TagForm = ({ onCreate, data = {} }) => {
                     </Col>
                     <Col span={6}>
                       <Form.Item label="Featured Image" name="medium_id">
-                        <MediaSelector maxWidth={'350px'} containerStyles={{ justifyContent: 'start' }} />
+                        <MediaSelector
+                          maxWidth={'350px'}
+                          containerStyles={{ justifyContent: 'start' }}
+                        />
                       </Form.Item>
                     </Col>
                   </Row>

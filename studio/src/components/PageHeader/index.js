@@ -20,8 +20,8 @@ function Pageheader() {
         (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'formats') ||
         (pathSnippets[0] === 'admin' && pathSnippets[1] === 'events') ||
         (pathSnippets[0] === 'advanced' && pathSnippets[1] === 'webhooks')
-        ? pathSnippets[1]
-        : pathSnippets[0];
+      ? pathSnippets[1]
+      : pathSnippets[0];
 
   const isBreadCrumbsHidden =
     (pathSnippets.includes('edit') || pathSnippets.includes('create')) &&

@@ -1,6 +1,18 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Row, Col, Skeleton, Form, Input, Button, Space, Popconfirm, Collapse, ConfigProvider, Typography } from 'antd';
+import {
+  Row,
+  Col,
+  Skeleton,
+  Form,
+  Input,
+  Button,
+  Space,
+  Popconfirm,
+  Collapse,
+  ConfigProvider,
+  Typography,
+} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMedium, updateMedium, deleteMedium } from '../../actions/media';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
@@ -61,7 +73,8 @@ function EditMedium() {
             colorBgContainer: '#F9FAFB',
           },
         },
-      }}>
+      }}
+    >
       <Helmet title={`${media?.name} - Edit Medium`} />
       <Form
         layout="vertical"
@@ -79,7 +92,10 @@ function EditMedium() {
         initialValues={media}
       >
         <Row gutter={[20, 20]} align="right">
-          <Col span={'24'} style={{ display: 'flex', justifyContent: 'end', paddingRight: "2.5rem" }}>
+          <Col
+            span={'24'}
+            style={{ display: 'flex', justifyContent: 'end', paddingRight: '2.5rem' }}
+          >
             <Form.Item>
               <Space>
                 <Popconfirm
@@ -99,7 +115,7 @@ function EditMedium() {
                   type="primary"
                   htmlType="submit"
                   disabled={disabled || !valueChange}
-                //  icon={<SendOutlined />}
+                  //  icon={<SendOutlined />}
                 >
                   Submit
                 </Button>
@@ -132,17 +148,16 @@ function EditMedium() {
                       </Form.Item>
                     </Col>
                     <Col span={'6'}>
-                      <Typography.Text strong>
-                        Featured Image
-                      </Typography.Text>
+                      <Typography.Text strong>Featured Image</Typography.Text>
                       <img
-                        src={/*media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']*/
-                          "https://source.unsplash.com/random/250*250"
+                        src={
+                          /*media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']*/
+                          'https://source.unsplash.com/random/250*250'
                         }
                         alt={'space'}
                         style={{
                           maxHeight: '250px',
-                          borderRadius: "8px",
+                          borderRadius: '8px',
                           display: 'block',
                           margin: '16px auto',
                           width: '305px',
@@ -155,9 +170,9 @@ function EditMedium() {
               </Collapse>
             </Row>
           </Col>
-        </Row >
+        </Row>
       </Form>
-    </ConfigProvider >
+    </ConfigProvider>
   );
 }
 

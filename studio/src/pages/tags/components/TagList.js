@@ -109,9 +109,9 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
         theme={{
           components: {
             Typography: {
-              "colorText": "#101828"
+              colorText: '#101828',
             },
-          }
+          },
         }}
       >
         <Table
@@ -129,7 +129,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
               },
               onMouseLeave: (event) => {
                 document.body.style.cursor = 'default';
-              }
+              },
             };
           }}
           pagination={{

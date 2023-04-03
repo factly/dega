@@ -202,7 +202,10 @@ function Pages({ formats }) {
             <Col>
               <Row gutter={16}>
                 <Col>
-                  <Typography.Title level={3} style={{ margin: 0, display: 'inline', color: "#1E1E1E" }}>
+                  <Typography.Title
+                    level={3}
+                    style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
+                  >
                     Pages
                   </Typography.Title>
                 </Col>
@@ -210,7 +213,8 @@ function Pages({ formats }) {
                   {searchFieldExpand ? (
                     <Row>
                       <Form.Item name="q">
-                        <Input placeholder="Search pages" />{/**/}
+                        <Input placeholder="Search pages" />
+                        {/**/}
                       </Form.Item>
                       <Form.Item>
                         <Button htmlType="submit" icon={<SearchOutlined />}>
@@ -236,11 +240,12 @@ function Pages({ formats }) {
                 </Col>
               </Row>
             </Col>
-            <Col span={ isMobileScreen ? 24 : 8 }>
+            <Col span={isMobileScreen ? 24 : 8}>
               <Row justify="end" gutter={16}>
                 <Col span={24}>
                   <Row justify="end">
-                    <Link to="/pages/create">{/**/}
+                    <Link to="/pages/create">
+                      {/**/}
                       <Button
                         disabled={!(actions.includes('admin') || actions.includes('create'))}
                         type="primary"
@@ -251,7 +256,7 @@ function Pages({ formats }) {
                       </Button>
                     </Link>
                   </Row>
-                  <Row gutter={16} justify= { isMobileScreen ? 'space-between' : 'end' }>
+                  <Row gutter={16} justify={isMobileScreen ? 'space-between' : 'end'}>
                     <Col>
                       <Form.Item label="Sort By" name="sort">
                         <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>

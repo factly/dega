@@ -16,7 +16,6 @@ import QuickEdit from '../../../components/List/QuickEdit';
 import QuickEditIcon from '../../../assets/QuickEditIcon';
 import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 
-
 function PageList({ actions, format, status, data, filters, setFilters, fetchPages }) {
   const dispatch = useDispatch();
   const [id, setID] = useState(0);
@@ -54,7 +53,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       width: 400,
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
-          <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>
+          <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
             {item.title}
           </Typography.Text>
           {/*
@@ -137,7 +136,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 size="large"
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={() => {
-                  alert("this do nothing")
+                  alert('this do nothing');
                 }}
               />
               <Modal
@@ -158,7 +157,9 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   setModalOpen(false);
                 }}
               >
-                <Typography.Text style={{ fontSize: '1rem', color: "#101828" }} strong>Are you sure you want to delete this page?</Typography.Text>
+                <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
+                  Are you sure you want to delete this page?
+                </Typography.Text>
               </Modal>
               {/* <Button
                   icon={<EditOutlined />}
@@ -193,7 +194,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
             },
             onMouseLeave: (event) => {
               document.body.style.cursor = 'default';
-            }
+            },
           };
         }}
         style={{ maxWidth: '100vw', overflowX: 'auto' }}
@@ -218,7 +219,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

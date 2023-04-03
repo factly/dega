@@ -147,14 +147,14 @@ function BasicLayout(props) {
           },
           Tabs: {
             margin: 10,
-            colorText: "#6C6C6C",
+            colorText: '#6C6C6C',
           },
           Pagination: {
-            colorPrimary: "#1E1E1E"
+            colorPrimary: '#1E1E1E',
           },
           Modal: {
-            colorBgMask: "#00000059"
-          }
+            colorBgMask: '#00000059',
+          },
         },
       }}
     >
@@ -174,7 +174,7 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            {['/posts', '/pages', '/categories', '/tags', "/media"].includes(location.pathname) || (
+            {['/posts', '/pages', '/categories', '/tags', '/media'].includes(location.pathname) || (
               <Pageheader location={location} />
             )}
             <Card key={selected.toString()} className="wrap-children-content">

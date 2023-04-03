@@ -16,7 +16,7 @@ import {
   Typography,
   Collapse,
   Divider,
-  ConfigProvider
+  ConfigProvider,
 } from 'antd';
 import Selector from '../../../components/Selector';
 import { maker } from '../../../utils/sluger';
@@ -25,18 +25,24 @@ import { useDispatch } from 'react-redux';
 import { addTemplate } from '../../../actions/posts';
 import { useHistory, Prompt } from 'react-router-dom';
 import {
-  SettingFilled, LeftOutlined, DownOutlined, MenuUnfoldOutlined,
-  CheckCircleOutlined, ExceptionOutlined, ClockCircleOutlined,
-  AppstoreOutlined, TagsOutlined, FileSearchOutlined, ProfileOutlined
+  SettingFilled,
+  LeftOutlined,
+  DownOutlined,
+  MenuUnfoldOutlined,
+  CheckCircleOutlined,
+  ExceptionOutlined,
+  ClockCircleOutlined,
+  AppstoreOutlined,
+  TagsOutlined,
+  FileSearchOutlined,
+  ProfileOutlined,
 } from '@ant-design/icons';
-import ThreeDotIcon from '../../../assets/ThreeDotIcon'
+import ThreeDotIcon from '../../../assets/ThreeDotIcon';
 import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
-import {
-  getDatefromStringWithoutDay
-} from '../../../utils/date';
+import { getDatefromStringWithoutDay } from '../../../utils/date';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -127,8 +133,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.status = status;
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
-        ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-        : getCurrentDate())
+          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          : getCurrentDate())
       : (finalData.published_date = null);
     onCreate(finalData);
   };
@@ -191,15 +197,14 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     {
       key: 'save',
       label: (
-        <Button
-          type="link"
-
-          disabled={!valueChange}
-        >
+        <Button type="link" disabled={!valueChange}>
           Save Draft
         </Button>
       ),
-      onClick: () => { setStatus('draft'); form.submit(); },
+      onClick: () => {
+        setStatus('draft');
+        form.submit();
+      },
     },
     {
       key: 'publish',
@@ -208,9 +213,12 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
           Ready to Publish
         </Button>
       ),
-      onClick: () => { setStatus('ready'); form.submit(); }
+      onClick: () => {
+        setStatus('ready');
+        form.submit();
+      },
     },
-  ]
+  ];
 
   return (
     <>
@@ -241,21 +249,25 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               ) : null}
               {actions.includes('admin') || actions.includes('publish') ? (
                 <Form.Item name="actions">
-                  <Dropdown.Button type='primary'
-                    onClick={
-                      () => { setStatus('publish'); form.submit(); }
-                    }
-                    menu={{ items: postActions }} htmlType="submit" icon={<DownOutlined style={{ fontSize: '14px' }} />}>
+                  <Dropdown.Button
+                    type="primary"
+                    onClick={() => {
+                      setStatus('publish');
+                      form.submit();
+                    }}
+                    menu={{ items: postActions }}
+                    htmlType="submit"
+                    icon={<DownOutlined style={{ fontSize: '14px' }} />}
+                  >
                     <span style={{ width: '100px' }}>
-
                       {data.id && status === 'publish' ? 'Update' : 'Publish'}
                     </span>
                   </Dropdown.Button>
                 </Form.Item>
               ) : null}
               <Form.Item name="drawerOpen">
-                <Button onClick={showDrawer} type='link'>
-                  <SettingFilled style={{ fontSize: '14px', color: "#000" }} />
+                <Button onClick={showDrawer} type="link">
+                  <SettingFilled style={{ fontSize: '14px', color: '#000' }} />
                 </Button>
               </Form.Item>
             </Space>
@@ -296,13 +308,17 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   <>
                     {actions.includes('admin') || actions.includes('publish') ? (
                       <Form.Item name="actions" style={{ float: 'right', margin: 0 }}>
-                        <Dropdown.Button type='primary'
-                          onClick={
-                            () => { setStatus('publish'); form.submit(); }
-                          }
-                          menu={{ items: postActions }} htmlType="submit" icon={<DownOutlined style={{ fontSize: '12px' }} />}>
+                        <Dropdown.Button
+                          type="primary"
+                          onClick={() => {
+                            setStatus('publish');
+                            form.submit();
+                          }}
+                          menu={{ items: postActions }}
+                          htmlType="submit"
+                          icon={<DownOutlined style={{ fontSize: '12px' }} />}
+                        >
                           <span style={{ width: '60px' }}>
-
                             {data.id && status === 'publish' ? 'Update' : 'Publish'}
                           </span>
                         </Dropdown.Button>
@@ -331,9 +347,15 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   }}
                   layout="vertical"
                 >
-                  <Collapse bordered={false} accordion={true} defaultActiveKey={['1']}
-                    expandIcon={({ isActive }) => <MenuUnfoldOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }}
-                    />}
+                  <Collapse
+                    bordered={false}
+                    accordion={true}
+                    defaultActiveKey={['1']}
+                    expandIcon={({ isActive }) => (
+                      <MenuUnfoldOutlined
+                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
+                      />
+                    )}
                   >
                     <Collapse.Panel header="Details" key="1">
                       <Row justify="space-between" style={{ margin: '8px 0', marginTop: 0 }}>
@@ -341,8 +363,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           <Col span={16}>
                             <Typography.Text style={{ color: '#575757E0' }}>
                               <span style={{ color: '#000', fontWeight: 'bold' }}>
-
-                                Last updated on: {' '}
+                                Last updated on:{' '}
                               </span>
                               {getDatefromStringWithoutDay(data.updated_at)}
                             </Typography.Text>
@@ -373,19 +394,29 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       <Form.Item name="featured_medium_id" label="Featured Image">
                         <MediaSelector />
                       </Form.Item>
-                      <Form.Item name="is_featured" id="is_featured" style={{ marginBottom: '8px' }} >
-                        <Switch defaultChecked onChange={() => console.log("checked")} />
+                      <Form.Item
+                        name="is_featured"
+                        id="is_featured"
+                        style={{ marginBottom: '8px' }}
+                      >
+                        <Switch defaultChecked onChange={() => console.log('checked')} />
                         <label htmlFor="is_featured"> Mark as Featured </label>
                       </Form.Item>
-                      <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage" >
-                        <Switch defaultChecked onChange={() => console.log("checked")} />
+                      <Form.Item name="is_exclude_from_homepage" id="is_exclude_from_homepage">
+                        <Switch defaultChecked onChange={() => console.log('checked')} />
                         <label htmlFor="is_exclude_from_homepage"> Exclude from Homepage </label>
                       </Form.Item>
                     </Collapse.Panel>
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
-                  <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <ProfileOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />}
+                  <Collapse
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <ProfileOutlined
+                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
+                      />
+                    )}
                   >
                     <Collapse.Panel header="Other Details" key="1">
                       <Form.Item name="subtitle" label="Subtitle">
@@ -401,14 +432,23 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                           },
                         ]}
                       >
-                        <Input.TextArea rows={4} placeholder="Excerpt" style={{ fontSize: 'medium' }} />
+                        <Input.TextArea
+                          rows={4}
+                          placeholder="Excerpt"
+                          style={{ fontSize: 'medium' }}
+                        />
                       </Form.Item>
                     </Collapse.Panel>
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
-                  <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <AppstoreOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />
-                    }
+                  <Collapse
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <AppstoreOutlined
+                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
+                      />
+                    )}
                   >
                     <Collapse.Panel header="Categories" key="1">
                       <Form.Item name="categories" style={{ marginBottom: '8px' }}>
@@ -417,9 +457,14 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     </Collapse.Panel>
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
-                  <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) => <TagsOutlined style={{ fontSize: '14px', color: isActive ? "#3473ED" : "#000" }} />
-                    }
+                  <Collapse
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <TagsOutlined
+                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
+                      />
+                    )}
                   >
                     <Collapse.Panel header="Tags" key="1">
                       <Form.Item name="tags" style={{ marginBottom: '8px' }}>
@@ -428,19 +473,29 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     </Collapse.Panel>
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
-                  <div style={{ display: 'flex', gap: '10px', cursor: "pointer", padding: '1rem 0' }} onClick={() => setSeoDrawerVisible(true)}>
-                    <FileSearchOutlined style={{ fontSize: '14px', color: seoDrawer ? "#3473ED" : "#000" }} />
-                    <Typography.Text strong >
-                      SEO
-                    </Typography.Text>
+                  <div
+                    style={{ display: 'flex', gap: '10px', cursor: 'pointer', padding: '1rem 0' }}
+                    onClick={() => setSeoDrawerVisible(true)}
+                  >
+                    <FileSearchOutlined
+                      style={{ fontSize: '14px', color: seoDrawer ? '#3473ED' : '#000' }}
+                    />
+                    <Typography.Text strong>SEO</Typography.Text>
                   </div>
                   <Divider style={{ margin: '0 10px' }} />
-                  <Collapse bordered={false} accordion={true}
-                    expandIcon={({ isActive }) =>  <ThreeDotIcon color={ isActive ? "#3473ED" : "#000"} />}
+                  <Collapse
+                    bordered={false}
+                    accordion={true}
+                    expandIcon={({ isActive }) => (
+                      <ThreeDotIcon color={isActive ? '#3473ED' : '#000'} />
+                    )}
                   >
                     <Collapse.Panel header="Others" key="1">
                       <Form.Item>
-                        <Button style={{ width: '100%' }} onClick={() => setCodeDrawerVisible(true)}>
+                        <Button
+                          style={{ width: '100%' }}
+                          onClick={() => setCodeDrawerVisible(true)}
+                        >
                           Code Injection
                         </Button>
                       </Form.Item>
@@ -586,7 +641,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
             </Col>
           </Row>
         </Space>
-      </Form >
+      </Form>
     </>
   );
 }

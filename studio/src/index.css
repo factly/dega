@@ -32,14 +32,13 @@ code {
   border: 0 !important;
 }
 
-
 .ant-collapse-header {
- padding: 1rem 0 !important;
- font-weight: 600 !important;
+  padding: 1rem 0 !important;
+  font-weight: 600 !important;
 }
 
 .ant-collapse-item-active .ant-collapse-header {
-  color: #3473ED !important;
+  color: #3473ed !important;
   font-weight: 600 !important;
 }
 

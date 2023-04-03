@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 import { Modal, Button, Space, Tag, Table, Typography, ConfigProvider } from 'antd';
-import QuickEditIcon from '../../assets/QuickEditIcon'
-import ThreeDotIcon from '../../assets/ThreeDotIcon'
+import QuickEditIcon from '../../assets/QuickEditIcon';
+import ThreeDotIcon from '../../assets/ThreeDotIcon';
 import { EditOutlined, DeleteOutlined, CloseOutlined, CheckOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost } from '../../actions/posts';
-import {
-  formatDate,
-  getDifferenceInModifiedTime,
-} from '../../utils/date';
+import { formatDate, getDifferenceInModifiedTime } from '../../utils/date';
 import { Link, useHistory } from 'react-router-dom';
 import QuickEdit from './QuickEdit';
 
@@ -18,7 +15,6 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
   const [expandedRowKeys, setExpandedRowKeys] = useState([0]);
   const [modalOpen, setModalOpen] = useState(false);
   const history = useHistory();
-
 
   const getTagList = (tagids) => {
     return tagids?.map((id) => (
@@ -61,18 +57,24 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           to={format.slug === 'article' ? `/posts/${item.id}/edit` : `/fact-checks/${item.id}/edit`}
         >
           {/* <p style={{ fontSize: '1rem', fontWeight: 500 }}></p> */}
-          <Typography.Text style={{
-            fontSize: '1rem', color:
-              ['draft', 'ready', 'publish'].includes(query) ? '#101828' : (item.status === 'draft' ? '#454545' : "#101828")
-
-          }} strong>
+          <Typography.Text
+            style={{
+              fontSize: '1rem',
+              color: ['draft', 'ready', 'publish'].includes(query)
+                ? '#101828'
+                : item.status === 'draft'
+                ? '#454545'
+                : '#101828',
+            }}
+            strong
+          >
             {item.title} {item.status}
           </Typography.Text>
-          {['draft', 'ready', 'publish'].includes(query) ? null :
-            ((item.status === 'draft')
-              ? <EditOutlined style={{ color: "#454545", marginLeft: '10px', fontSize: '14px' }} />
-              : (item.status === 'ready') ? <CheckOutlined style={{ color: "#101828", marginLeft: '10px', fontSize: '14px' }} /> : null
-            )}
+          {['draft', 'ready', 'publish'].includes(query) ? null : item.status === 'draft' ? (
+            <EditOutlined style={{ color: '#454545', marginLeft: '10px', fontSize: '14px' }} />
+          ) : item.status === 'ready' ? (
+            <CheckOutlined style={{ color: '#101828', marginLeft: '10px', fontSize: '14px' }} />
+          ) : null}
           {/*
           {item.published_date && (
             <p style={{ color: 'CaptionText' }}>
@@ -95,9 +97,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
           item && (
             <>
               <Typography.Text strong>
-                {item.published_date
-                  ? formatDate(item.published_date)
-                  : '---'}
+                {item.published_date ? formatDate(item.published_date) : '---'}
                 <br />
               </Typography.Text>
               <Typography.Text type="secondary">
@@ -120,8 +120,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                  ? authors[author]?.['email']
-                  : null}
+                ? authors[author]?.['email']
+                : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -198,7 +198,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 icon={<ThreeDotIcon style={{ color: '#858585' }} />}
                 onClick={(e) => {
                   e.stopPropagation();
-                  alert("this do nothing")
+                  alert('this do nothing');
                 }}
               />
             </div>
@@ -225,7 +225,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
             },
             onMouseLeave: (event) => {
               document.body.style.cursor = 'default';
-            }
+            },
           };
         }}
         style={{ maxWidth: '100vw', overflowX: 'auto' }}
@@ -251,7 +251,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

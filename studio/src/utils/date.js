@@ -5,7 +5,8 @@ export const getDatefromString = (dateString) => {
   return dateObj.toDateString();
 };
 
-export const getDateAndTimeFromString = (dateString) =>  new Date(dateString).toLocaleString().replaceAll(",","").replaceAll("/","-")
+export const getDateAndTimeFromString = (dateString) =>
+  new Date(dateString).toLocaleString().replaceAll(',', '').replaceAll('/', '-');
 
 export const getDatefromStringWithoutDay = (dateString) => {
   const dateObj = new Date(Date.parse(dateString));
@@ -25,7 +26,10 @@ export const formatDate = (dateString) => {
   let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
   formattedDate = formattedDate.replaceAll(',', '').replaceAll('/', '-');
   const [month, day, year, time] = formattedDate.split(' ');
-  const formattedTime = time.split(':').map((str) => str.padStart(2, '0')).join(':');
+  const formattedTime = time
+    .split(':')
+    .map((str) => str.padStart(2, '0'))
+    .join(':');
   const formattedDateString = `${month} ${day}, ${year} ${formattedTime}`;
 
   return formattedDateString;

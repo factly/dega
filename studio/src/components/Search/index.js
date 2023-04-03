@@ -55,7 +55,7 @@ function Search({ collapsed }) {
         });
         setSelected({ entityIndex, indexItem });
       }}
-      style={{ width: '100%', display: 'flex', justifyContent: 'center',  }}
+      style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
     >
       {!collapsed ? (
         <Input

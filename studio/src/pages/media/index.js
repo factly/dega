@@ -1,6 +1,17 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Row, Col, Form, Input, Select, ConfigProvider, Typography, Tooltip } from 'antd';
+import {
+  Space,
+  Button,
+  Row,
+  Col,
+  Form,
+  Input,
+  Select,
+  ConfigProvider,
+  Typography,
+  Tooltip,
+} from 'antd';
 import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import MediumList from './components/MediumList';
@@ -22,7 +33,6 @@ function Media({ permission }) {
     ...params,
   });
   const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
-
 
   const pathName = useLocation().pathname;
 
@@ -75,35 +85,35 @@ function Media({ permission }) {
           },
         }}
       >
-      <Form
-        initialValues={filters}
-        form={form}
-        name="filters"
-        onFinish={(values) => {
-          let filterValue = {};
-          Object.keys(values).forEach(function (key) {
-            if (values[key]) {
-              filterValue[key] = values[key];
+        <Form
+          initialValues={filters}
+          form={form}
+          name="filters"
+          onFinish={(values) => {
+            let filterValue = {};
+            Object.keys(values).forEach(function (key) {
+              if (values[key]) {
+                filterValue[key] = values[key];
+              }
+            });
+            setFilters({
+              ...filters,
+              ...filterValue,
+            });
+          }}
+          style={{ width: '100%', marginBottom: '1rem' }}
+          onValuesChange={(changedValues, allValues) => {
+            if (!changedValues.q) {
+              if (changedValues.q === '') {
+                const { q, ...filtersWithoutQuery } = filters;
+                setFilters({ ...filtersWithoutQuery });
+                return;
+              }
+              setFilters({ ...filters, ...changedValues });
             }
-          });
-          setFilters({
-            ...filters,
-            ...filterValue,
-          });
-        }}
-        style={{ width: '100%', marginBottom: '1rem' }}
-        onValuesChange={(changedValues, allValues) => {
-          if (!changedValues.q) {
-            if (changedValues.q === '') {
-              const { q, ...filtersWithoutQuery } = filters;
-              setFilters({ ...filtersWithoutQuery });
-              return;
-            }
-            setFilters({ ...filters, ...changedValues });
-          }
-        }}
-      >
-<Row justify="space-between" gutter={16}>
+          }}
+        >
+          <Row justify="space-between" gutter={16}>
             <Col>
               <Row gutter={16}>
                 <Col>
@@ -173,7 +183,7 @@ function Media({ permission }) {
               </Row>
             </Col>
           </Row>
-      </Form>
+        </Form>
       </ConfigProvider>
       <MediumList
         actions={actions}
