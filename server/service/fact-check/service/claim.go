@@ -63,7 +63,7 @@ type claimService struct {
 }
 
 // Create implements IClaimService
-func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim) (model.Claim, []errorx.Message) {
+func (cs *claimService) Create(ctx context.Context, sID int, uID int, claim *Claim) (model.Claim, []errorx.Message) {
 	validationError := validationx.Check(claim)
 
 	if validationError != nil {
@@ -72,7 +72,7 @@ func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim)
 	}
 
 	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
+	stmt := &gorm.Statement{DB: cs.model}
 	_ = stmt.Parse(&model.Claim{})
 	tableName := stmt.Schema.Table
 
@@ -119,7 +119,7 @@ func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim)
 			UpdatedAt: claim.UpdatedAt,
 		},
 		Claim:           claim.Claim,
-		Slug:            slugx.Approve(&config.DB, claimSlug, sID, tableName),
+		Slug:            slugx.Approve(&cs.model, claimSlug, sID, tableName),
 		ClaimDate:       claim.ClaimDate,
 		CheckedDate:     claim.CheckedDate,
 		ClaimSources:    claim.ClaimSources,
@@ -140,7 +140,7 @@ func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim)
 		MigratedHTML:    claim.MigratedHTML,
 	}
 
-	tx := config.DB.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
+	tx := cs.model.WithContext(context.WithValue(ctx, userContext, uID)).Begin()
 	err = tx.Model(&model.Claim{}).Create(&result).Error
 
 	if err != nil {
@@ -156,14 +156,14 @@ func (*claimService) Create(ctx context.Context, sID int, uID int, claim *Claim)
 }
 
 // Delete implements IClaimService
-func (*claimService) Delete(sID int, id int) []errorx.Message {
+func (cs *claimService) Delete(sID int, id int) []errorx.Message {
 
 	claim := model.Claim{}
 	claim.ID = uint(id)
 
 	// check if claim is associated with posts
 	var totAssociated int64
-	config.DB.Model(&model.PostClaim{}).Where(&model.PostClaim{
+	cs.model.Model(&model.PostClaim{}).Where(&model.PostClaim{
 		ClaimID: uint(id),
 	}).Count(&totAssociated)
 
@@ -172,7 +172,7 @@ func (*claimService) Delete(sID int, id int) []errorx.Message {
 		return errorx.Parser(errorx.CannotDelete("claim", "post"))
 	}
 
-	tx := config.DB.Begin()
+	tx := cs.model.Begin()
 	tx.Delete(&claim)
 
 	tx.Commit()
@@ -181,13 +181,13 @@ func (*claimService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IClaimService
-func (*claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
+func (cs *claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
 
 	result := &model.Claim{}
 
 	result.ID = uint(id)
 
-	err := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
+	err := cs.model.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
 	}).First(&result).Error
 
@@ -204,10 +204,10 @@ func (*claimService) GetById(sID int, id int) (model.Claim, []errorx.Message) {
 }
 
 // List implements IClaimService
-func (*claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+func (cs *claimService) List(sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
 	var result paging
 	result.Nodes = make([]model.Claim, 0)
-	tx := config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
+	tx := cs.model.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 	var err error
@@ -257,7 +257,7 @@ func (*claimService) List(sID uint, offset int, limit int, searchQuery string, s
 }
 
 // Update implements IClaimService
-func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim, []errorx.Message) {
+func (cs *claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim, []errorx.Message) {
 
 	validationError := validationx.Check(claim)
 
@@ -270,7 +270,7 @@ func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim
 	result.ID = uint(id)
 	var err error
 	// check record exists or not
-	err = config.DB.Where(&model.Claim{
+	err = cs.model.Where(&model.Claim{
 		Base: config.Base{
 			ID: uint(id),
 		},
@@ -290,19 +290,19 @@ func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim
 	}
 
 	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
+	stmt := &gorm.Statement{DB: cs.model}
 	_ = stmt.Parse(&model.Claim{})
 	tableName := stmt.Schema.Table
 
 	if result.Slug == claim.Slug {
 		claimSlug = result.Slug
 	} else if claim.Slug != "" && slugx.Check(slug) {
-		claimSlug = slugx.Approve(&config.DB, slug, sID, tableName)
+		claimSlug = slugx.Approve(&cs.model, slug, sID, tableName)
 	} else {
 		if len(claim.Claim) > 150 {
-			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim[:150]), sID, tableName)
+			claimSlug = slugx.Approve(&cs.model, slugx.Make(claim.Claim[:150]), sID, tableName)
 		} else {
-			claimSlug = slugx.Approve(&config.DB, slugx.Make(claim.Claim), sID, tableName)
+			claimSlug = slugx.Approve(&cs.model, slugx.Make(claim.Claim), sID, tableName)
 		}
 	}
 
@@ -322,7 +322,7 @@ func (*claimService) Update(sID int, uID int, id int, claim *Claim) (model.Claim
 		}
 	}
 
-	tx := config.DB.Begin()
+	tx := cs.model.Begin()
 
 	updateMap := map[string]interface{}{
 		"created_at":       claim.CreatedAt,
