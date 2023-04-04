@@ -1,27 +1,19 @@
 package episode
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
-	"github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
-	"gorm.io/gorm"
 )
 
 // create - Create episode
@@ -53,7 +45,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	episode := &episode{}
+	episode := &service.Episode{}
 
 	err = json.NewDecoder(r.Body).Decode(&episode)
 
@@ -63,113 +55,13 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(episode)
+	episodeService := service.GetEpisodeService()
 
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+	result, serviceErr := episodeService.Create(r.Context(), sID, uID, episode)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	var episodeSlug string
-	if episode.Slug != "" && slugx.Check(episode.Slug) {
-		episodeSlug = episode.Slug
-	} else {
-		episodeSlug = slugx.Make(episode.Title)
-	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Episode{})
-	tableName := stmt.Schema.Table
-
-	mediumID := &episode.MediumID
-	if episode.MediumID == 0 {
-		mediumID = nil
-	}
-	podcastID := &episode.PodcastID
-	if episode.PodcastID == 0 {
-		podcastID = nil
-	}
-
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(episode.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(episode.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	result := &episodeData{}
-	result.Episode = model.Episode{
-		Base: config.Base{
-			CreatedAt: episode.CreatedAt,
-			UpdatedAt: episode.UpdatedAt,
-		},
-		Title:           episode.Title,
-		Description:     jsonDescription,
-		DescriptionHTML: descriptionHTML,
-		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
-		Season:          episode.Season,
-		Episode:         episode.Episode,
-		AudioURL:        episode.AudioURL,
-		PodcastID:       podcastID,
-		PublishedDate:   episode.PublishedDate,
-		MediumID:        mediumID,
-		MetaFields:      episode.MetaFields,
-		SpaceID:         uint(sID),
-	}
-	tx := config.DB.WithContext(context.WithValue(r.Context(), episodeUser, uID)).Begin()
-	err = tx.Model(&model.Episode{}).Create(&result.Episode).Error
-
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	if len(episode.AuthorIDs) > 0 {
-		authorMap, err := author.All(r.Context())
-		if err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-
-		episodeAuthors := make([]model.EpisodeAuthor, 0)
-		for _, each := range episode.AuthorIDs {
-			if _, found := authorMap[fmt.Sprint(each)]; found {
-				ea := model.EpisodeAuthor{
-					EpisodeID: result.ID,
-					AuthorID:  each,
-				}
-				episodeAuthors = append(episodeAuthors, ea)
-				result.Authors = append(result.Authors, authorMap[fmt.Sprint(each)])
-			}
-		}
-
-		if err = tx.Model(&model.EpisodeAuthor{}).Create(&episodeAuthors).Error; err != nil {
-			tx.Rollback()
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DBError()))
-			return
-		}
-	}
-
-	tx.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").First(&result.Episode)
-
 	// Insert into meili index
 	var publishedDate int64
 	if result.PublishedDate == nil {
@@ -177,6 +69,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 	} else {
 		publishedDate = result.PublishedDate.Unix()
 	}
+
 	meiliObj := map[string]interface{}{
 		"id":             result.Episode.ID,
 		"kind":           "episode",
@@ -196,7 +89,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
 
-	tx.Commit()
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("episode.created", strconv.Itoa(sID), r) {
 			if err = util.NC.Publish("episode.created", result); err != nil {
