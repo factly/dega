@@ -175,7 +175,23 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 
 // Delete implements IEpisodeService
 func (*episodeService) Delete(sID int, id int) []errorx.Message {
-	panic("unimplemented")
+	result := model.EpisodeAuthor{}
+	result.ID = uint(id)
+
+	tx := config.DB.Begin()
+	tx.Delete(&result)
+
+	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+		EpisodeID: uint(id),
+	}).Delete(&model.EpisodeAuthor{})
+
+	if config.SearchEnabled() {
+		_ = meilisearchx.DeleteDocument("dega", result.ID, "episode")
+	}
+
+	tx.Commit()
+
+	return nil
 }
 
 // GetById implements IEpisodeService
