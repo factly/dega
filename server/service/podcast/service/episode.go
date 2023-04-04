@@ -13,6 +13,7 @@ import (
 	coreModel "github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/util"
+	"github.com/factly/dega-server/util/arrays"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
@@ -56,7 +57,7 @@ type IEpisodeService interface {
 	GetById(ctx context.Context, sID, id int) (model.Episode, []errorx.Message)
 	List(ctx context.Context, sID uint, offset, limit int, searchQuery, sort string, queryMap url.Values) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, episode *Episode) (EpisodeData, []errorx.Message)
-	Update(sID, uID, id int, episode *Episode) (model.Episode, []errorx.Message)
+	Update(ctx context.Context, sID, uID, id int, episode *Episode) (EpisodeData, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
 }
 
@@ -174,11 +175,11 @@ func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode 
 }
 
 // Delete implements IEpisodeService
-func (*episodeService) Delete(sID int, id int) []errorx.Message {
+func (es *episodeService) Delete(sID int, id int) []errorx.Message {
 	result := model.EpisodeAuthor{}
 	result.ID = uint(id)
 
-	tx := config.DB.Begin()
+	tx := es.model.Begin()
 	tx.Delete(&result)
 
 	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
@@ -231,9 +232,9 @@ func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.E
 }
 
 // List implements IEpisodeService
-func (*episodeService) List(ctx context.Context, sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
+func (es *episodeService) List(ctx context.Context, sID uint, offset int, limit int, searchQuery string, sort string, queryMap url.Values) (paging, []errorx.Message) {
 
-	tx := config.DB.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
+	tx := es.model.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
 		SpaceID: uint(sID),
 	}).Order("created_at " + sort)
 
@@ -299,7 +300,7 @@ func (*episodeService) List(ctx context.Context, sID uint, offset int, limit int
 	}
 
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
-	config.DB.Model(&model.EpisodeAuthor{}).Where("episode_id IN (?)", episodeIDs).Find(&authorEpisodes)
+	es.model.Model(&model.EpisodeAuthor{}).Where("episode_id IN (?)", episodeIDs).Find(&authorEpisodes)
 
 	episodeAuthorMap := make(map[uint][]coreModel.Author)
 	for _, authEpi := range authorEpisodes {
@@ -320,8 +321,143 @@ func (*episodeService) List(ctx context.Context, sID uint, offset int, limit int
 }
 
 // Update implements IEpisodeService
-func (*episodeService) Update(sID int, uID int, id int, episode *Episode) (model.Episode, []errorx.Message) {
-	panic("unimplemented")
+func (es *episodeService) Update(ctx context.Context, sID int, uID int, id int, episode *Episode) (EpisodeData, []errorx.Message) {
+
+	validationError := validationx.Check(episode)
+
+	if validationError != nil {
+		loggerx.Error(errors.New("validation error"))
+		return EpisodeData{}, validationError
+	}
+	var result EpisodeData
+	result.Episode.ID = uint(id)
+	var err error
+	// check record exists or not
+	err = es.model.Where(&model.Episode{
+		Base: config.Base{
+			ID: uint(id),
+		},
+		SpaceID: uint(sID),
+	}).First(&result.Episode).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		return EpisodeData{}, errorx.Parser(errorx.RecordNotFound())
+	}
+
+	var episodeSlug string
+
+	// Get table title
+	stmt := &gorm.Statement{DB: es.model}
+	_ = stmt.Parse(&model.Episode{})
+	tableName := stmt.Schema.Table
+
+	if result.Slug == episode.Slug {
+		episodeSlug = result.Slug
+	} else if episode.Slug != "" && slugx.Check(episode.Slug) {
+		episodeSlug = slugx.Approve(&es.model, episode.Slug, sID, tableName)
+	} else {
+		episodeSlug = slugx.Approve(&es.model, slugx.Make(episode.Title), sID, tableName)
+	}
+
+	var descriptionHTML string
+	var jsonDescription postgres.Jsonb
+	if len(episode.Description.RawMessage) > 0 {
+		descriptionHTML, err = util.GetDescriptionHTML(episode.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return EpisodeData{}, errorx.Parser(errorx.DecodeError())
+		}
+
+		jsonDescription, err = util.GetJSONDescription(episode.Description)
+		if err != nil {
+			loggerx.Error(err)
+			return EpisodeData{}, errorx.Parser(errorx.DecodeError())
+		}
+	}
+
+	tx := es.model.Begin()
+
+	updateMap := map[string]interface{}{
+		"created_at":       episode.CreatedAt,
+		"updated_at":       episode.UpdatedAt,
+		"updated_by_id":    uint(uID),
+		"title":            episode.Title,
+		"slug":             episodeSlug,
+		"description_html": descriptionHTML,
+		"description":      jsonDescription,
+		"season":           episode.Season,
+		"episode":          episode.Episode,
+		"audio_url":        episode.AudioURL,
+		"podcast_id":       episode.PodcastID,
+		"published_date":   episode.PublishedDate,
+		"medium_id":        episode.MediumID,
+		"meta_fields":      episode.MetaFields,
+	}
+
+	if episode.MediumID == 0 {
+		updateMap["medium_id"] = nil
+	}
+
+	if episode.PodcastID == 0 {
+		updateMap["podcast_id"] = nil
+	}
+
+	tx.Model(&result.Episode).Updates(&updateMap).Preload("Medium").Preload("Podcast").Preload("Podcast.Medium").First(&result.Episode)
+
+	// fetch old authors
+	prevEpisodeAuthors := make([]model.EpisodeAuthor, 0)
+	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+		EpisodeID: uint(result.Episode.ID),
+	}).Find(&prevEpisodeAuthors)
+
+	prevAuthorIDs := make([]uint, 0)
+	for _, each := range prevEpisodeAuthors {
+		prevAuthorIDs = append(prevAuthorIDs, each.AuthorID)
+	}
+
+	toCreateIDs, toDeleteIDs := arrays.Difference(prevAuthorIDs, episode.AuthorIDs)
+
+	if len(toDeleteIDs) > 0 {
+		tx.Model(&model.EpisodeAuthor{}).Where("author_id IN (?)", toDeleteIDs).Delete(&model.EpisodeAuthor{})
+	}
+
+	if len(toCreateIDs) > 0 {
+		createEpisodeAuthors := make([]model.EpisodeAuthor, 0)
+		for _, each := range toCreateIDs {
+			epiAuth := model.EpisodeAuthor{
+				EpisodeID: uint(result.Episode.ID),
+				AuthorID:  each,
+			}
+			createEpisodeAuthors = append(createEpisodeAuthors, epiAuth)
+		}
+
+		if err = tx.Model(&model.EpisodeAuthor{}).Create(&createEpisodeAuthors).Error; err != nil {
+			tx.Rollback()
+			loggerx.Error(err)
+			return EpisodeData{}, errorx.Parser(errorx.DBError())
+		}
+	}
+
+	// Fetch current authors
+	authorMap, err := author.All(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return EpisodeData{}, errorx.Parser(errorx.DBError())
+	}
+
+	authorEpisodes := make([]model.EpisodeAuthor, 0)
+	tx.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+		EpisodeID: uint(id),
+	}).Find(&authorEpisodes)
+
+	for _, each := range authorEpisodes {
+		result.Authors = append(result.Authors, authorMap[fmt.Sprint(each.AuthorID)])
+	}
+
+	tx.Commit()
+
+	return result, nil
 }
 
 func GetEpisodeService() IEpisodeService {
