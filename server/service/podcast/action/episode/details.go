@@ -1,13 +1,10 @@
 package episode
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/core/action/author"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
@@ -44,36 +41,12 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := episodeData{}
+	episodeService := service.GetEpisodeService()
 
-	result.Episode.ID = uint(id)
-
-	err = config.DB.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
-		SpaceID: uint(sID),
-	}).First(&result.Episode).Error
-
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
+	result, serviceErr := episodeService.GetById(r.Context(), sID, id)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	// Adding authors in response
-	authorMap, err := author.All(r.Context())
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	authorEpisodes := make([]model.EpisodeAuthor, 0)
-	config.DB.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
-		EpisodeID: uint(id),
-	}).Find(&authorEpisodes)
-
-	for _, each := range authorEpisodes {
-		result.Authors = append(result.Authors, authorMap[fmt.Sprint(each.AuthorID)])
-	}
-
 	renderx.JSON(w, http.StatusOK, result)
 }

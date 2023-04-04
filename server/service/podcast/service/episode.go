@@ -50,7 +50,7 @@ type paging struct {
 }
 
 type IEpisodeService interface {
-	GetById(sID, id int) (model.Episode, error)
+	GetById(ctx context.Context, sID, id int) (model.Episode, []errorx.Message)
 	List(sID uint, offset, limit int, searchQuery, sort string) (paging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, episode *Episode) (EpisodeData, []errorx.Message)
 	Update(sID, uID, id int, episode *Episode) (model.Episode, []errorx.Message)
@@ -176,8 +176,39 @@ func (*episodeService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IEpisodeService
-func (*episodeService) GetById(sID int, id int) (model.Episode, error) {
-	panic("unimplemented")
+func (*episodeService) GetById(ctx context.Context, sID int, id int) (model.Episode, []errorx.Message) {
+
+	result := EpisodeData{}
+
+	result.Episode.ID = uint(id)
+
+	var err error
+	err = config.DB.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
+		SpaceID: uint(sID),
+	}).First(&result.Episode).Error
+
+	if err != nil {
+		loggerx.Error(err)
+		return model.Episode{}, errorx.Parser(errorx.RecordNotFound())
+	}
+
+	// Adding authors in response
+	authorMap, err := author.All(ctx)
+	if err != nil {
+		loggerx.Error(err)
+		return model.Episode{}, errorx.Parser(errorx.DBError())
+	}
+
+	authorEpisodes := make([]model.EpisodeAuthor, 0)
+	config.DB.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+		EpisodeID: uint(id),
+	}).Find(&authorEpisodes)
+
+	for _, each := range authorEpisodes {
+		result.Authors = append(result.Authors, authorMap[fmt.Sprint(each.AuthorID)])
+	}
+
+	return result.Episode, nil
 }
 
 // List implements IEpisodeService
