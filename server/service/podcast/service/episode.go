@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"time"
 
 	"github.com/factly/dega-server/config"
@@ -135,7 +134,6 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 	if err != nil {
 		tx.Rollback()
 		loggerx.Error(err)
-		log.Println("=========>", err)
 		return EpisodeData{}, errorx.Parser(errorx.DBError())
 	}
 
@@ -144,7 +142,6 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 		if err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
-			log.Println("=========>", err)
 			return EpisodeData{}, errorx.Parser(errorx.DBError())
 		}
 
@@ -163,7 +160,6 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 		if err = tx.Model(&model.EpisodeAuthor{}).Create(&episodeAuthors).Error; err != nil {
 			tx.Rollback()
 			loggerx.Error(err)
-			log.Println("=========>", err)
 			return EpisodeData{}, errorx.Parser(errorx.DBError())
 		}
 	}
