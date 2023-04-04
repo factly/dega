@@ -62,7 +62,7 @@ type episodeService struct {
 }
 
 // Create implements IEpisodeService
-func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Episode) (EpisodeData, []errorx.Message) {
+func (es *episodeService) Create(ctx context.Context, sID int, uID int, episode *Episode) (EpisodeData, []errorx.Message) {
 
 	validationError := validationx.Check(episode)
 
@@ -79,7 +79,7 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 	}
 
 	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
+	stmt := &gorm.Statement{DB: es.model}
 	_ = stmt.Parse(&EpisodeData{})
 	tableName := stmt.Schema.Table
 
@@ -118,7 +118,7 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 		Title:           episode.Title,
 		Description:     jsonDescription,
 		DescriptionHTML: descriptionHTML,
-		Slug:            slugx.Approve(&config.DB, episodeSlug, sID, tableName),
+		Slug:            slugx.Approve(&es.model, episodeSlug, sID, tableName),
 		Season:          episode.Season,
 		Episode:         episode.Episode,
 		AudioURL:        episode.AudioURL,
@@ -128,7 +128,7 @@ func (*episodeService) Create(ctx context.Context, sID int, uID int, episode *Ep
 		MetaFields:      episode.MetaFields,
 		SpaceID:         uint(sID),
 	}
-	tx := config.DB.WithContext(context.WithValue(ctx, episodeUser, uID)).Begin()
+	tx := es.model.WithContext(context.WithValue(ctx, episodeUser, uID)).Begin()
 	err = tx.Model(&model.Episode{}).Create(&result.Episode).Error
 
 	if err != nil {
@@ -176,14 +176,14 @@ func (*episodeService) Delete(sID int, id int) []errorx.Message {
 }
 
 // GetById implements IEpisodeService
-func (*episodeService) GetById(ctx context.Context, sID int, id int) (model.Episode, []errorx.Message) {
+func (es *episodeService) GetById(ctx context.Context, sID int, id int) (model.Episode, []errorx.Message) {
 
 	result := EpisodeData{}
 
 	result.Episode.ID = uint(id)
 
 	var err error
-	err = config.DB.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
+	err = es.model.Model(&model.Episode{}).Preload("Podcast").Preload("Medium").Preload("Podcast.Medium").Preload("Podcast.PrimaryCategory").Preload("Podcast.Categories").Where(&model.Episode{
 		SpaceID: uint(sID),
 	}).First(&result.Episode).Error
 
@@ -200,7 +200,7 @@ func (*episodeService) GetById(ctx context.Context, sID int, id int) (model.Epis
 	}
 
 	authorEpisodes := make([]model.EpisodeAuthor, 0)
-	config.DB.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
+	es.model.Model(&model.EpisodeAuthor{}).Where(&model.EpisodeAuthor{
 		EpisodeID: uint(id),
 	}).Find(&authorEpisodes)
 
