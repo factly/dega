@@ -36,7 +36,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       title: 'Slug',
       dataIndex: 'slug',
       key: 'slug',
-      width: 200,
+      width: 400,
       render: (_, record) => {
         return (
           <Link
@@ -151,7 +151,9 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
             };
           }}
           rowKey={'id'}
-          style={{ maxWidth: '100vw', overflowX: 'auto' }}
+          scroll={{
+            x: "100vw",
+          }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
             total: data.total,

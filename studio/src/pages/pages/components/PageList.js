@@ -50,7 +50,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      width: 400,
+      width: "100%",
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
@@ -197,7 +197,10 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
             },
           };
         }}
-        style={{ maxWidth: '100vw', overflowX: 'auto' }}
+        // style={{ maxWidth: '100vw', overflowX: 'auto' }}
+        scroll={{
+          x: "100vw",
+        }}
         columns={columns}
         rowKey={(record) => record.id}
         expandable={{
@@ -219,7 +222,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => {},
+          expandIcon: () => { },
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

@@ -132,6 +132,9 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
               },
             };
           }}
+          scroll={{
+            x: "100vw",
+          }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
             total: data.total,

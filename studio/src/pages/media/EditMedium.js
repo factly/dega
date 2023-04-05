@@ -151,8 +151,7 @@ function EditMedium() {
                       <Typography.Text strong>Featured Image</Typography.Text>
                       <img
                         src={
-                          /*media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']*/
-                          'https://source.unsplash.com/random/250*250'
+                          media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
                         }
                         alt={'space'}
                         style={{

@@ -42,7 +42,7 @@ import dayjs from 'dayjs';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { DescriptionInput, SlugInput } from '../../../components/FormItems';
-import { getDatefromStringWithoutDay } from '../../../utils/date';
+import { formatDate } from '../../../utils/date';
 
 function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
   const history = useHistory();
@@ -133,8 +133,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.status = status;
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
-          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-          : getCurrentDate())
+        ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+        : getCurrentDate())
       : (finalData.published_date = null);
     onCreate(finalData);
   };
@@ -267,7 +267,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
               ) : null}
               <Form.Item name="drawerOpen">
                 <Button onClick={showDrawer} type="link">
-                  <SettingFilled style={{ fontSize: '14px', color: '#000' }} />
+                  <SettingFilled style={{ fontSize: '14px', color: '#000000E0' }} />
                 </Button>
               </Form.Item>
             </Space>
@@ -304,6 +304,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 noLabel
               />
               <Drawer
+                className="edit-drawer"
                 title={
                   <>
                     {actions.includes('admin') || actions.includes('publish') ? (
@@ -331,7 +332,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={onClose}
                 visible={drawerVisible}
                 //  //getContainer={false}
-                width={366}
+                width={440}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >
@@ -348,24 +349,29 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   layout="vertical"
                 >
                   <Collapse
+                    ghost
                     bordered={false}
                     accordion={true}
                     defaultActiveKey={['1']}
                     expandIcon={({ isActive }) => (
-                      <MenuUnfoldOutlined
-                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
-                      />
+                      <div
+                        className='collapse-icon-background'
+                      >
+                        <MenuUnfoldOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
                     )}
                   >
                     <Collapse.Panel header="Details" key="1">
-                      <Row justify="space-between" style={{ margin: '8px 0', marginTop: 0 }}>
+                      <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
                         {data?.updated_at ? (
                           <Col span={16}>
-                            <Typography.Text style={{ color: '#575757E0' }}>
-                              <span style={{ color: '#000', fontWeight: 'bold' }}>
-                                Last updated on:{' '}
+                            <Typography.Text style={{ color: '#575757E0', fontSize: "14px" }}>
+                              <span style={{ color: '#000000E0', fontWeight:400 }}>
+                                Last updated:{' '}
                               </span>
-                              {getDatefromStringWithoutDay(data.updated_at)}
+                              {formatDate(data.updated_at)}
                             </Typography.Text>
                           </Col>
                         ) : null}
@@ -410,12 +416,17 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse
+                    ghost
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <ProfileOutlined
-                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
-                      />
+                      <div
+                        className='collapse-icon-background'
+                      >
+                        <ProfileOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
                     )}
                   >
                     <Collapse.Panel header="Other Details" key="1">
@@ -442,12 +453,17 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse
+                    ghost
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <AppstoreOutlined
-                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
-                      />
+                      <div
+                        className='collapse-icon-background'
+                      >
+                        <AppstoreOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
                     )}
                   >
                     <Collapse.Panel header="Categories" key="1">
@@ -458,12 +474,17 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                   </Collapse>
                   <Divider style={{ margin: 0 }} />
                   <Collapse
+                    ghost
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <TagsOutlined
-                        style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000' }}
-                      />
+                      <div
+                        className='collapse-icon-background'
+                      >
+                        <TagsOutlined
+                          style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
+                        />
+                      </div>
                     )}
                   >
                     <Collapse.Panel header="Tags" key="1">
@@ -477,17 +498,27 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     style={{ display: 'flex', gap: '10px', cursor: 'pointer', padding: '1rem 0' }}
                     onClick={() => setSeoDrawerVisible(true)}
                   >
-                    <FileSearchOutlined
-                      style={{ fontSize: '14px', color: seoDrawer ? '#3473ED' : '#000' }}
-                    />
+                    <div
+                      className='collapse-icon-background'
+                    >
+
+                      <FileSearchOutlined
+                        style={{ fontSize: '14px', color: seoDrawer ? '#3473ED' : '#000000E0' }}
+                      />
+                    </div>
                     <Typography.Text strong>SEO</Typography.Text>
                   </div>
                   <Divider style={{ margin: '0 10px' }} />
                   <Collapse
+                    ghost
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <ThreeDotIcon color={isActive ? '#3473ED' : '#000'} />
+                      <div
+                        className='collapse-icon-background'
+                      >
+                        <ThreeDotIcon color={isActive ? '#3473ED' : '#000000E0'} />
+                      </div>
                     )}
                   >
                     <Collapse.Panel header="Others" key="1">
@@ -615,7 +646,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                 onClose={() => setSeoDrawerVisible(false)}
                 visible={seoDrawer}
                 //    getContainer={()=>{console.log(formRef.current);if(formRef.current)return formRef.current;return false;}}
-                width={366}
+                width={440}
                 bodyStyle={{ paddingBottom: 40 }}
                 headerStyle={{ fontWeight: 'bold' }}
               >

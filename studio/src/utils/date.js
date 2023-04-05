@@ -25,12 +25,14 @@ export const formatDate = (dateString) => {
   };
   let formattedDate = new Intl.DateTimeFormat('en-US', options).format(date);
   formattedDate = formattedDate.replaceAll(',', '').replaceAll('/', '-');
-  const [month, day, year, time] = formattedDate.split(' ');
+  let [month, day, year, time, period] = formattedDate.split(' ');
   const formattedTime = time
     .split(':')
     .map((str) => str.padStart(2, '0'))
     .join(':');
-  const formattedDateString = `${month} ${day}, ${year} ${formattedTime}`;
+
+  day = day.padStart(2, '0');
+  const formattedDateString = `${month} ${day}, ${year} ${formattedTime} ${period}`;
 
   return formattedDateString;
 };

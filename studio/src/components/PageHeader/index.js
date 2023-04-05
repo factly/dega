@@ -6,7 +6,6 @@ import routes from '../../config/routesConfig';
 import _ from 'lodash';
 import { matchPath } from 'react-router';
 import { useSelector } from 'react-redux';
-import './index.css';
 
 function Pageheader() {
   const state = useSelector((state) => state);
