@@ -59,3 +59,7 @@ code {
   justify-content: center;
   align-items: center;
 }
+
+.edit-form .ant-collapse-header {
+  font-weight: 600 !important;
+}

@@ -42,6 +42,7 @@ const TagForm = ({ onCreate, data = {} }) => {
         components: {
           Collapse: {
             colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
           },
         },
       }}
@@ -51,6 +52,7 @@ const TagForm = ({ onCreate, data = {} }) => {
         style={{ padding: '0 1rem' }}
         initialValues={{ ...data }}
         name="create-tag"
+        className="edit-form"
         layout="vertical"
         onFinish={(values) => {
           if (values.meta_fields) {
@@ -88,8 +90,8 @@ const TagForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="General">
-                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '2rem' }}>
-                    <Col span={10}>
+                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+                    <Col xs={24} md={10}>
                       <TitleInput
                         name="name"
                         label="Category Name"
@@ -174,7 +176,7 @@ const TagForm = ({ onCreate, data = {} }) => {
                         initialValue={data.description_html}
                       />
                     </Col>
-                    <Col span={6}>
+                    <Col xs={24} md={6}>
                       <Form.Item label="Featured Image" name="medium_id">
                         <MediaSelector
                           maxWidth={'350px'}

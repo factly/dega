@@ -64,6 +64,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         components: {
           Collapse: {
             colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
           },
         },
       }}
@@ -74,6 +75,7 @@ const CategoryForm = ({ onCreate, data = {} }) => {
         style={{ padding: '0 1rem' }}
         name="create-category"
         layout="vertical"
+        className="edit-form"
         onFinish={(values) => {
           if (values.meta_fields) {
             values.meta_fields = getJsonValue(values.meta_fields);
@@ -111,8 +113,8 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="General">
-                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '2rem' }}>
-                    <Col span={10}>
+                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+                    <Col xs={24} md={10}>
                       <TitleInput
                         name="name"
                         label="Category Name"
@@ -224,7 +226,8 @@ const CategoryForm = ({ onCreate, data = {} }) => {
                         initialValue={formData.description_html}
                       />
                     </Col>
-                    <Col span={6}>
+
+                    <Col xs={24} md={6}>
                       <Form.Item label="Featured Image" name="medium_id">
                         <MediaSelector
                           maxWidth={'350px'}

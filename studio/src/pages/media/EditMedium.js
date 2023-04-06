@@ -27,6 +27,21 @@ import { Helmet } from 'react-helmet';
 function EditMedium() {
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    function handleResize() {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const { id } = useParams();
   const history = useHistory();
@@ -71,6 +86,7 @@ function EditMedium() {
         components: {
           Collapse: {
             colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
           },
         },
       }}
@@ -80,6 +96,7 @@ function EditMedium() {
         layout="vertical"
         form={form}
         name="create-space"
+        className="edit-form"
         onFinish={(values) => {
           if (values.meta_fields) {
             values.meta_fields = getJsonValue(values.meta_fields);
@@ -94,7 +111,7 @@ function EditMedium() {
         <Row gutter={[20, 20]} align="right">
           <Col
             span={'24'}
-            style={{ display: 'flex', justifyContent: 'end', paddingRight: '2.5rem' }}
+            style={{ display: 'flex', justifyContent: 'end'}}
           >
             <Form.Item>
               <Space>
@@ -115,7 +132,7 @@ function EditMedium() {
                   type="primary"
                   htmlType="submit"
                   disabled={disabled || !valueChange}
-                  //  icon={<SendOutlined />}
+                //  icon={<SendOutlined />}
                 >
                   Submit
                 </Button>
@@ -123,16 +140,16 @@ function EditMedium() {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Row gutter={40}>
+            <Row gutter={40} style={{ padding: '0 1rem' }}>
               <Collapse
                 defaultActiveKey={['1']}
                 expandIconPosition="right"
                 expandIcon={({ isActive }) => <Button>{isActive ? 'Collapse' : 'Expand'}</Button>}
-                style={{ width: '100%', background: '#f0f2f5', border: 0, margin: '0 2.5rem' }}
+                style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel key="1" header="General">
                   <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '3rem' }}>
-                    <Col span={'10'}>
+                    <Col xs={24} md={10}>
                       <TitleInput name="name" label="Name" inputProps={{ disabled }} />
                       <Form.Item name="alt_text" label="Alt Text">
                         <Input disabled={disabled} />
@@ -144,14 +161,16 @@ function EditMedium() {
                         <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
                       </Form.Item>
                       <Form.Item name="meta_fields" label="Metafields">
-                        <MonacoEditor language="json" />
+                        <MonacoEditor language="json" width="100%"/>
                       </Form.Item>
                     </Col>
-                    <Col span={'6'}>
-                      <Typography.Text strong>Featured Image</Typography.Text>
+                    <Col xs={24} md={6}>
+                      <Typography.Text>Featured Image</Typography.Text>
                       <img
                         src={
-                          media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                          // media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                          'https://source.unsplash.com/random/?city,night'
+
                         }
                         alt={'space'}
                         style={{
@@ -159,7 +178,7 @@ function EditMedium() {
                           borderRadius: '8px',
                           display: 'block',
                           margin: '16px auto',
-                          width: '305px',
+                          width: isMobileScreen ? '100%' : '305px',
                           height: '170px',
                         }}
                       />
