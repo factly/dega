@@ -17,6 +17,13 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       dataIndex: 'name',
       key: 'name',
       width: 400,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          }
+        }
+      },
       render: (_, record) => {
         return (
           <Link
@@ -37,6 +44,13 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       dataIndex: 'slug',
       key: 'slug',
       width: 400,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          }
+        }
+      },
       render: (_, record) => {
         return (
           <Link
@@ -57,6 +71,13 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
       dataIndex: ['parent_category'],
       key: 'parent_id',
       width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          }
+        }
+      },
       render: (_, record) => {
         return (
           <Link
@@ -152,7 +173,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           }}
           rowKey={'id'}
           scroll={{
-            x: "100vw",
+            x: "1000",
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

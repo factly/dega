@@ -15,7 +15,15 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
     {
       title: 'Name',
       dataIndex: 'name',
+      width: 400,
       key: 'name',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          }
+        }
+      },
       render: (_, record) => {
         return (
           <Link
@@ -34,7 +42,15 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
     {
       title: 'Slug',
       dataIndex: 'slug',
+      width: 400,
       key: 'slug',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          }
+        }
+      },
       render: (_, record) => {
         return (
           <Link
@@ -133,7 +149,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
             };
           }}
           scroll={{
-            x: "100vw",
+            x: "1000",
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

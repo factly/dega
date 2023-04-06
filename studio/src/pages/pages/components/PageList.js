@@ -50,7 +50,14 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
-      width: "100%",
+      width: "400",
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          }
+        }
+      },
       render: (_, item) => (
         <Link to={`/pages/${item.id}/edit`}>
           <Typography.Text style={{ fontSize: '1rem', color: '#101828' }} strong>
@@ -149,7 +156,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                   borderRadius: '18px',
                 }}
                 onOk={() => {
-                  () => dispatch(deletePage(item.id)).then(() => fetchPages());
+                  dispatch(deletePage(item.id)).then(() => fetchPages())
                 }}
                 cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
                 onCancel={(e) => {
@@ -199,7 +206,7 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
         }}
         // style={{ maxWidth: '100vw', overflowX: 'auto' }}
         scroll={{
-          x: "100vw",
+          x: "1000",
         }}
         columns={columns}
         rowKey={(record) => record.id}

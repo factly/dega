@@ -184,7 +184,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                   borderRadius: '18px',
                 }}
                 onOk={() => {
-                  () => dispatch(deletePost(item.id)).then(() => fetchPosts());
+                  dispatch(deletePost(item.id)).then(() => fetchPosts());
                 }}
                 onCancel={(e) => {
                   e.stopPropagation();
@@ -230,7 +230,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         }}
         // style={{ maxWidth: '100vw', overflowX: 'auto' }}
         scroll={{
-          x: "100vw",
+          x: "1000",
         }}
         expandable={{
           expandIconColumnIndex: -1,
