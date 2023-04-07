@@ -168,8 +168,8 @@ function EditMedium() {
                       <Typography.Text>Featured Image</Typography.Text>
                       <img
                         src={
-                          // media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
-                          'https://source.unsplash.com/random/?city,night'
+                          media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
+                          // 'https://source.unsplash.com/random/?city,night'
 
                         }
                         alt={'space'}

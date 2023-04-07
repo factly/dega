@@ -68,7 +68,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
             }}
             strong
           >
-            {item.title} {item.status}
+            {item.title}
           </Typography.Text>
           {['draft', 'ready', 'publish'].includes(query) ? null : item.status === 'draft' ? (
             <EditOutlined style={{ color: '#454545', marginLeft: '10px', fontSize: '14px' }} />
