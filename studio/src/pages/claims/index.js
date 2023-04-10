@@ -1,6 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
-import { Space, Button, Row, Col, Form, Input, Select } from 'antd';
+import {
+  Space, Button, Row, Col, Form, Input, Select,
+  Typography,
+  Tooltip,
+  ConfigProvider,
+} from 'antd';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { Link, useLocation, useHistory } from 'react-router-dom';
 import ClaimList from './components/ClaimList';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +26,21 @@ function Claims({ permission }) {
   const { search } = useLocation();
   const history = useHistory();
   const query = new URLSearchParams(search);
+  const [searchFieldExpand, setSearchFieldExpand] = React.useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const keys = ['page', 'limit', 'q', 'sort', 'rating', 'claimant'];
   const params = getUrlParams(query, keys);
@@ -93,57 +114,114 @@ function Claims({ permission }) {
   ) : (
     <Space direction="vertical">
       <Helmet title={'Claims'} />
-      <Form
-        initialValues={params}
-        form={form}
-        name="filters"
-        onFinish={(values) => onSave(values)}
-        style={{ maxWidth: '100%' }}
-        onValuesChange={(changedValues, allValues) => {
-          if (!changedValues.q) {
-            onSave(allValues);
-          }
+      <ConfigProvider
+        theme={{
+          components: {
+            Form: {
+              marginLG: 0,
+            },
+          },
         }}
       >
-        <Row justify="end" gutter={16}>
-          <Col key={2} style={{ display: 'flex', justifyContent: 'end' }}>
-            <Form.Item name="q">
-              <Input placeholder="search claims" />
-            </Form.Item>
-            <Form.Item>
-              <Button htmlType="submit">Search</Button>
-            </Form.Item>
-          </Col>
-          <Col span={5}>
-            <Form.Item name="claimant" label="Claimants">
-              <Selector mode="multiple" action="Claimants" />
-            </Form.Item>
-          </Col>
-          <Col span={4}>
-            <Form.Item name="rating" label="Ratings">
-              <Selector mode="multiple" action="Ratings" />
-            </Form.Item>
-          </Col>
-          <Col>
-            <Form.Item name="sort" style={{ width: '100%' }}>
-              <Select>
-                <Option value="desc">Sort By: Latest</Option>
-                <Option value="asc">Sort By: Old</Option>
-              </Select>
-            </Form.Item>
-          </Col>
-          <Col key={1}>
-            <Link to="/claims/create">
-              <Button
-                disabled={!(actions.includes('admin') || actions.includes('create'))}
-                type="primary"
-              >
-                New Claim
-              </Button>
-            </Link>
-          </Col>
-        </Row>
-      </Form>
+        <Form
+          initialValues={params}
+          form={form}
+          name="filters"
+          onFinish={(values) => onSave(values)}
+          style={{ maxWidth: '100%' }}
+          onValuesChange={(changedValues, allValues) => {
+            if (!changedValues.q) {
+              onSave(allValues);
+            }
+          }}
+        >
+          <Row justify="space-between" gutter={16}>
+            <Col>
+              <Row gutter={16}>
+                <Col>
+                  <Typography.Title
+                    level={3}
+                    style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
+                  >
+                    Claims
+                  </Typography.Title>
+                </Col>
+                <Col>
+                  {searchFieldExpand ? (
+                    <Row>
+                      <Form.Item name="q">
+                        <Input placeholder="Search pages" />
+                      </Form.Item>
+                      <Form.Item>
+                        <Button htmlType="submit" icon={<SearchOutlined />}>
+                          Search
+                        </Button>
+                      </Form.Item>
+                    </Row>
+                  ) : (
+                    <Tooltip title="search">
+                      <Button
+                        shape="circle"
+                        style={{ border: 'none' }}
+                        onFocus={() => {
+                          setSearchFieldExpand(true);
+                          setTimeout(() => {
+                            form.getFieldsValue().q === undefined && setSearchFieldExpand(false);
+                          }, 10000);
+                        }}
+                        icon={<SearchOutlined />}
+                      />
+                    </Tooltip>
+                  )}
+                </Col>
+              </Row>
+            </Col>
+            <Col span={ isMobileScreen ? 24 : 16}>
+              <Row justify="end" gutter={16}>
+                <Col span={24}>
+                  <Row justify="end">
+                    <Link to="/claims/create">
+                      <Button
+                        disabled={!(actions.includes('admin') || actions.includes('create'))}
+                        type="primary"
+                        icon={<PlusOutlined />}
+                        style={{ marginBottom: 16 }}
+                      >
+                        Create
+                      </Button>
+                    </Link>
+                  </Row>
+                  <Row gutter={16} justify={isMobileScreen ? 'space-between' : 'end'}>
+                    <Col span={6}>
+                      <Form.Item name="claimant" label="Claimants">
+                        <Selector mode="multiple" action="Claimants" />
+                      </Form.Item>
+                    </Col>
+                    <Col span={6}>
+                      <Form.Item name="rating" label="Ratings">
+                        <Selector mode="multiple" action="Ratings" />
+                      </Form.Item>
+                    </Col>
+
+                    <Col>
+                      <Form.Item label="Sort By" name="sort">
+                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                          <Option value="desc" key={'desc'}>
+                            Latest
+                          </Option>
+                          <Option value="asc" key={'asc'}>
+                            Old
+                          </Option>
+                        </Select>
+                      </Form.Item>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+        </Form>
+      </ConfigProvider>
       <ClaimList
         actions={actions}
         data={{ claims: claims, total: total, loading: loading }}

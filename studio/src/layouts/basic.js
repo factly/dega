@@ -174,7 +174,8 @@ function BasicLayout(props) {
         <Layout style={{ background: '#fff' }}>
           {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
           <Content className="layout-content">
-            {['/posts', '/pages', '/categories', '/tags', '/media'].includes(location.pathname) || (
+            {['/posts', '/pages', '/categories', '/tags', '/media', '/fact-checks', '/claims', '/claimants',
+            ].includes(location.pathname) || (
               <Pageheader location={location} />
             )}
             <Card key={selected.toString()} className="wrap-children-content">

@@ -68,7 +68,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
             }}
             strong
           >
-            {item.title} {item.status}
+            {item.title}
           </Typography.Text>
           {['draft', 'ready', 'publish'].includes(query) ? null : item.status === 'draft' ? (
             <EditOutlined style={{ color: '#454545', marginLeft: '10px', fontSize: '14px' }} />
@@ -96,7 +96,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         return (
           item && (
             <>
-              <Typography.Text strong>
+              <Typography.Text  style={{ color: '#101828' }} strong>
                 {item.published_date ? formatDate(item.published_date) : '---'}
                 <br />
               </Typography.Text>
@@ -116,7 +116,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
       render: (items) => {
         return items?.map((author) => (
           <>
-            <Typography.Text strong>
+            <Typography.Text  style={{ color: '#101828' }} strong>
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
@@ -218,7 +218,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/posts/${record.id}/edit`);
+              history.push(format.slug === 'article' ? `/posts/${record.id}/edit` : `/fact-checks/${record.id}/edit`)
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';
