@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Typography, Table, Space, Modal, ConfigProvider, } from 'antd';
+import { Button, Typography, Table, Space, Modal, ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaimant } from '../../../actions/claimants';
 import { Link, useHistory } from 'react-router-dom';
@@ -38,7 +38,9 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
       width: '40%',
       render: (_, record) => {
         return (
-          <Typography.Paragraph style={{ color: '#101828' }} strong ellipsis={{ rows: 2 }}>{record.tag_line}</Typography.Paragraph>
+          <Typography.Paragraph style={{ color: '#101828' }} strong ellipsis={{ rows: 2 }}>
+            {record.tag_line}
+          </Typography.Paragraph>
         );
       },
     },
@@ -60,7 +62,9 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
                 },
               },
             }}
-          > <Button
+          >
+            {' '}
+            <Button
               size="large"
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
               onClick={(e) => {
@@ -96,19 +100,19 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
   return (
     <Space direction={'vertical'}>
       <Table
-       onRow={(record, rowIndex) => {
-        return {
-          onClick: (event) => {
-            history.push(`/claimants/${record.id}/edit`);
-          },
-          onMouseEnter: (event) => {
-            document.body.style.cursor = 'pointer';
-          },
-          onMouseLeave: (event) => {
-            document.body.style.cursor = 'default';
-          },
-        };
-      }}
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/claimants/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
         columns={columns}
         dataSource={data.claimants}
         loading={data.loading}

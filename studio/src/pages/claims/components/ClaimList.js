@@ -1,7 +1,5 @@
 import React from 'react';
-import {
-  Popconfirm, Button, Table, Space, Typography, Modal, ConfigProvider,
-} from 'antd';
+import { Popconfirm, Button, Table, Space, Typography, Modal, ConfigProvider } from 'antd';
 import { useDispatch } from 'react-redux';
 import { deleteClaim } from '../../../actions/claims';
 import { Link, useHistory } from 'react-router-dom';
@@ -27,13 +25,16 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
             to={`/claims/${record.id}/edit`}
           >
             <Typography.Text style={{ color: '#101828' }} strong>
-              {record.claim}</Typography.Text>
+              {record.claim}
+            </Typography.Text>
           </Link>
         );
       },
     },
     {
-      title: 'Claimant', dataIndex: 'claimant', key: 'claimant',
+      title: 'Claimant',
+      dataIndex: 'claimant',
+      key: 'claimant',
       width: '20%',
       render: (_, record) => {
         return (
@@ -44,21 +45,26 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
             to={`/claimants/${record.claimant_id}/edit`}
           >
             <Typography.Text style={{ color: '#101828' }} strong>
-              {record.claimant}</Typography.Text>
+              {record.claimant}
+            </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
-      title: 'Rating', dataIndex: 'rating', key: 'rating', width: '20%',
+      title: 'Rating',
+      dataIndex: 'rating',
+      key: 'rating',
+      width: '20%',
       render: (_, record) => {
         return (
           <Link to={`/ratings/${record.rating_id}/edit`}>
             <Typography.Text style={{ color: '#101828' }} strong>
-              {record.rating}</Typography.Text>
+              {record.rating}
+            </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
       title: 'Claim Date',
@@ -92,7 +98,9 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
                 },
               },
             }}
-          > <Button
+          >
+            {' '}
+            <Button
               size="large"
               icon={<DeleteOutlined style={{ color: '#858585' }} />}
               onClick={(e) => {
@@ -112,7 +120,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
                 borderRadius: '18px',
               }}
               onOk={() => {
-                dispatch(deleteClaim(record.id)).then(() => fetchClaims())
+                dispatch(deleteClaim(record.id)).then(() => fetchClaims());
               }}
               onCancel={(e) => {
                 e.stopPropagation();
@@ -148,7 +156,7 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
         loading={data.loading}
         rowKey={'id'}
         scroll={{
-          x: "1000",
+          x: '1000',
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

@@ -42,7 +42,6 @@ function EditMedium() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const { id } = useParams();
   const history = useHistory();
   const spaces = useSelector(({ spaces }) => spaces);
@@ -109,10 +108,7 @@ function EditMedium() {
         initialValues={media}
       >
         <Row gutter={[20, 20]} align="right">
-          <Col
-            span={'24'}
-            style={{ display: 'flex', justifyContent: 'end'}}
-          >
+          <Col span={'24'} style={{ display: 'flex', justifyContent: 'end' }}>
             <Form.Item>
               <Space>
                 <Popconfirm
@@ -132,7 +128,7 @@ function EditMedium() {
                   type="primary"
                   htmlType="submit"
                   disabled={disabled || !valueChange}
-                //  icon={<SendOutlined />}
+                  //  icon={<SendOutlined />}
                 >
                   Submit
                 </Button>
@@ -161,7 +157,7 @@ function EditMedium() {
                         <Input.TextArea autoSize={{ minRows: 3, maxRows: 6 }} disabled={disabled} />
                       </Form.Item>
                       <Form.Item name="meta_fields" label="Metafields">
-                        <MonacoEditor language="json" width="100%"/>
+                        <MonacoEditor language="json" width="100%" />
                       </Form.Item>
                     </Col>
                     <Col xs={24} md={6}>
@@ -170,7 +166,6 @@ function EditMedium() {
                         src={
                           // media.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw']
                           'https://source.unsplash.com/random/?city,night'
-
                         }
                         alt={'space'}
                         style={{

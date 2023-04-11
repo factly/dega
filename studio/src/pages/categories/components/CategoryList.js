@@ -21,8 +21,8 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
         return {
           style: {
             minWidth: '200px',
-          }
-        }
+          },
+        };
       },
       render: (_, record) => {
         return (
@@ -48,8 +48,8 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
         return {
           style: {
             minWidth: '200px',
-          }
-        }
+          },
+        };
       },
       render: (_, record) => {
         return (
@@ -75,8 +75,8 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
         return {
           style: {
             minWidth: '150px',
-          }
-        }
+          },
+        };
       },
       render: (_, record) => {
         return (
@@ -173,7 +173,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
           }}
           rowKey={'id'}
           scroll={{
-            x: "1000",
+            x: '1000',
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

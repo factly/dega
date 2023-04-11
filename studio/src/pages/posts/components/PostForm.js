@@ -133,8 +133,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
     finalData.status = status;
     finalData.status === 'publish'
       ? (finalData.published_date = finalData.published_date
-        ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
-        : getCurrentDate())
+          ? dayjs(finalData.published_date).format('YYYY-MM-DDTHH:mm:ssZ')
+          : getCurrentDate())
       : (finalData.published_date = null);
     onCreate(finalData);
   };
@@ -354,9 +354,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     accordion={true}
                     defaultActiveKey={['1']}
                     expandIcon={({ isActive }) => (
-                      <div
-                        className='collapse-icon-background'
-                      >
+                      <div className="collapse-icon-background">
                         <MenuUnfoldOutlined
                           style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
                         />
@@ -367,8 +365,8 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                       <Row justify="space-between" style={{ margin: '16px 0', marginTop: 0 }}>
                         {data?.updated_at ? (
                           <Col span={16}>
-                            <Typography.Text style={{ color: '#575757E0', fontSize: "14px" }}>
-                              <span style={{ color: '#000000E0', fontWeight:400 }}>
+                            <Typography.Text style={{ color: '#575757E0', fontSize: '14px' }}>
+                              <span style={{ color: '#000000E0', fontWeight: 400 }}>
                                 Last updated:{' '}
                               </span>
                               {formatDate(data.updated_at)}
@@ -420,9 +418,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <div
-                        className='collapse-icon-background'
-                      >
+                      <div className="collapse-icon-background">
                         <ProfileOutlined
                           style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
                         />
@@ -457,9 +453,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <div
-                        className='collapse-icon-background'
-                      >
+                      <div className="collapse-icon-background">
                         <AppstoreOutlined
                           style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
                         />
@@ -478,9 +472,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <div
-                        className='collapse-icon-background'
-                      >
+                      <div className="collapse-icon-background">
                         <TagsOutlined
                           style={{ fontSize: '14px', color: isActive ? '#3473ED' : '#000000E0' }}
                         />
@@ -498,10 +490,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     style={{ display: 'flex', gap: '10px', cursor: 'pointer', padding: '1rem 0' }}
                     onClick={() => setSeoDrawerVisible(true)}
                   >
-                    <div
-                      className='collapse-icon-background'
-                    >
-
+                    <div className="collapse-icon-background">
                       <FileSearchOutlined
                         style={{ fontSize: '14px', color: seoDrawer ? '#3473ED' : '#000000E0' }}
                       />
@@ -514,9 +503,7 @@ function PostForm({ onCreate, data = {}, actions = {}, format, page = false }) {
                     bordered={false}
                     accordion={true}
                     expandIcon={({ isActive }) => (
-                      <div
-                        className='collapse-icon-background'
-                      >
+                      <div className="collapse-icon-background">
                         <ThreeDotIcon color={isActive ? '#3473ED' : '#000000E0'} />
                       </div>
                     )}

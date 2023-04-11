@@ -21,8 +21,8 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
         return {
           style: {
             minWidth: '200px',
-          }
-        }
+          },
+        };
       },
       render: (_, record) => {
         return (
@@ -48,8 +48,8 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
         return {
           style: {
             minWidth: '200px',
-          }
-        }
+          },
+        };
       },
       render: (_, record) => {
         return (
@@ -149,7 +149,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
             };
           }}
           scroll={{
-            x: "1000",
+            x: '1000',
           }}
           pagination={{
             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

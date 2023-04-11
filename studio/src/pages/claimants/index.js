@@ -2,7 +2,13 @@
 import React, { useEffect } from 'react';
 import ClaimantList from './components/ClaimantList';
 import {
-  Space, Button, Form, Row, Col, Select, Input,
+  Space,
+  Button,
+  Form,
+  Row,
+  Col,
+  Select,
+  Input,
   Typography,
   Tooltip,
   ConfigProvider,

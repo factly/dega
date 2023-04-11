@@ -63,8 +63,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               color: ['draft', 'ready', 'publish'].includes(query)
                 ? '#101828'
                 : item.status === 'draft'
-                  ? '#454545'
-                  : '#101828',
+                ? '#454545'
+                : '#101828',
             }}
             strong
           >
@@ -96,7 +96,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         return (
           item && (
             <>
-              <Typography.Text  style={{ color: '#101828' }} strong>
+              <Typography.Text style={{ color: '#101828' }} strong>
                 {item.published_date ? formatDate(item.published_date) : '---'}
                 <br />
               </Typography.Text>
@@ -116,12 +116,12 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
       render: (items) => {
         return items?.map((author) => (
           <>
-            <Typography.Text  style={{ color: '#101828' }} strong>
+            <Typography.Text style={{ color: '#101828' }} strong>
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                  ? authors[author]?.['email']
-                  : null}
+                ? authors[author]?.['email']
+                : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -183,7 +183,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 style={{
                   borderRadius: '18px',
                 }}
-                onOk={() => {
+                onOk={(e) => {
+                  e.stopPropagation();
                   dispatch(deletePost(item.id)).then(() => fetchPosts());
                 }}
                 onCancel={(e) => {
@@ -218,7 +219,11 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(format.slug === 'article' ? `/posts/${record.id}/edit` : `/fact-checks/${record.id}/edit`)
+              history.push(
+                format.slug === 'article'
+                  ? `/posts/${record.id}/edit`
+                  : `/fact-checks/${record.id}/edit`,
+              );
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';
@@ -230,7 +235,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
         }}
         // style={{ maxWidth: '100vw', overflowX: 'auto' }}
         scroll={{
-          x: "1000",
+          x: '1000',
         }}
         expandable={{
           expandIconColumnIndex: -1,
@@ -251,7 +256,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,

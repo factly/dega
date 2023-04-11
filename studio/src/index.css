@@ -28,14 +28,13 @@ code {
   width: 36px;
 }
 
-
 .edit-drawer .ant-collapse-item-active {
   border: 0 !important;
 }
 
 .edit-drawer .ant-collapse-header {
   padding: 1rem 0 !important;
-  color: #000000E0;
+  color: #000000e0;
   font-weight: 600 !important;
 }
 
@@ -45,13 +44,13 @@ code {
 }
 
 .edit-drawer .ant-collapse-content-box {
-  color: #000000E0;
+  color: #000000e0;
   padding-left: 0 !important;
 }
 
 .edit-drawer .collapse-icon-background {
   border-radius: 21px;
-  background: #E8EFF2;
+  background: #e8eff2;
   width: 28px;
   height: 28px;
   padding: 8px;

@@ -1,7 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import {
-  Space, Button, Row, Col, Form, Input, Select,
+  Space,
+  Button,
+  Row,
+  Col,
+  Form,
+  Input,
+  Select,
   Typography,
   Tooltip,
   ConfigProvider,
@@ -176,7 +182,7 @@ function Claims({ permission }) {
                 </Col>
               </Row>
             </Col>
-            <Col span={ isMobileScreen ? 24 : 16}>
+            <Col span={isMobileScreen ? 24 : 16}>
               <Row justify="end" gutter={16}>
                 <Col span={24}>
                   <Row justify="end">
