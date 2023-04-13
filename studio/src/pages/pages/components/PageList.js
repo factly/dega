@@ -155,8 +155,10 @@ function PageList({ actions, format, status, data, filters, setFilters, fetchPag
                 style={{
                   borderRadius: '18px',
                 }}
-                onOk={() => {
+                onOk={(e) => {
+                  e.stopPropagation();
                   dispatch(deletePage(item.id)).then(() => fetchPages());
+                  setModalOpen(false)
                 }}
                 cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
                 onCancel={(e) => {

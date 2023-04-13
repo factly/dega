@@ -103,7 +103,11 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
               style={{
                 borderRadius: '18px',
               }}
-              onOk={() => dispatch(deleteTag(record.id)).then(() => fetchTags())}
+              onOk={(e) => {
+                e.stopPropagation();
+                dispatch(deleteTag(record.id)).then(() => fetchTags())
+                setModalOpen(false);
+              }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
               cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
               onCancel={(e) => {

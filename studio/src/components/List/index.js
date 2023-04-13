@@ -186,6 +186,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
                 onOk={(e) => {
                   e.stopPropagation();
                   dispatch(deletePost(item.id)).then(() => fetchPosts());
+                  setModalOpen(false);
                 }}
                 onCancel={(e) => {
                   e.stopPropagation();
