@@ -136,8 +136,8 @@ function Categories({ permission }) {
                   ) : (
                     <Tooltip title="search">
                       <Button
+                        type="text"
                         shape="circle"
-                        style={{ border: 'none' }}
                         onFocus={() => {
                           setSearchFieldExpand(true);
                           setTimeout(() => {

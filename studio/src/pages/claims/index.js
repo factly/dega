@@ -168,7 +168,7 @@ function Claims({ permission }) {
                     <Tooltip title="search">
                       <Button
                         shape="circle"
-                        style={{ border: 'none' }}
+                        type="text"
                         onFocus={() => {
                           setSearchFieldExpand(true);
                           setTimeout(() => {

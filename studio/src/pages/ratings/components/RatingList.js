@@ -1,13 +1,15 @@
 import React from 'react';
-import { Popconfirm, Button, Table } from 'antd';
+import { ConfigProvider, Button, Table, Modal, Typography } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deleteRating } from '../../../actions/ratings';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const [modalOpen, setModalOpen] = React.useState(false);
   const columns = [
     {
       title: 'Name',
@@ -21,13 +23,23 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
             }}
             to={`/ratings/${record.id}/edit`}
           >
-            {record.name}
+            <Typography.Text style={{ color: '#101828' }} strong>
+              {record.name}
+            </Typography.Text>
           </Link>
         );
       },
     },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value' },
+    {
+      title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value',
+      render: (_, record) => {
+        return (
+          <Typography.Text style={{ color: '#101828' }} strong>
+            {record.numeric_value}
+          </Typography.Text>
+        )
+      }
+    },
     {
       title: 'Preview',
       dataIndex: 'preview',
@@ -54,17 +66,55 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
       width: 150,
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deleteRating(record.id)).then(() => fetchRatings())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+                Modal: {
+                  colorBgMask: '#0000000B',
+                },
+              },
+            }}
           >
+            {' '}
             <Button
-              icon={<DeleteOutlined />}
+              size="large"
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+              }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              danger
             />
-          </Popconfirm>
+            <Modal
+              open={modalOpen}
+              closable={false}
+              centered
+              width={311}
+              className="delete-modal-container"
+              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+              style={{
+                borderRadius: '18px',
+              }}
+              onOk={(e) => {
+                e.stopPropagation();
+                dispatch(deleteRating(record.id)).then(() => fetchRatings())
+                // alert(record.id)
+                // console.log(record)
+                setModalOpen(false);
+              }}
+              onCancel={(e) => {
+                e.stopPropagation();
+                setModalOpen(false);
+              }}
+            >
+              <Typography.Text strong>Are you sure you want to delete this rating?</Typography.Text>
+            </Modal>
+          </ConfigProvider>
         );
       },
     },
@@ -72,11 +122,26 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
 
   return (
     <Table
-      bordered
+      onRow={(record, rowIndex) => {
+        return {
+          onClick: (event) => {
+            history.push(`/ratings/${record.id}/edit`);
+          },
+          onMouseEnter: (event) => {
+            document.body.style.cursor = 'pointer';
+          },
+          onMouseLeave: (event) => {
+            document.body.style.cursor = 'default';
+          },
+        };
+      }}
       columns={columns}
       dataSource={data.ratings}
       loading={data.loading}
       rowKey={'id'}
+      scroll={{
+        x: '1000',
+      }}
       pagination={{
         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
         total: data.total,

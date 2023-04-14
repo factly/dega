@@ -119,8 +119,10 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
               style={{
                 borderRadius: '18px',
               }}
-              onOk={() => {
+              onOk={(e) => {
+                e.stopPropagation();
                 dispatch(deleteClaim(record.id)).then(() => fetchClaims());
+                setModalOpen(false);
               }}
               onCancel={(e) => {
                 e.stopPropagation();

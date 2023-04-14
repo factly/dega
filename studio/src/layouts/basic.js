@@ -153,7 +153,7 @@ function BasicLayout(props) {
             colorPrimary: '#1E1E1E',
           },
           Modal: {
-            colorBgMask: '#00000059',
+            colorBgMask: '#00000051',
           },
         },
       }}

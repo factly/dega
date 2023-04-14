@@ -135,7 +135,7 @@ function Claimants({ permission }) {
                     level={3}
                     style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
                   >
-                    Claims
+                    Claimants
                   </Typography.Title>
                 </Col>
                 <Col>
