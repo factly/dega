@@ -183,7 +183,7 @@ function BasicLayout(props) {
               '/fact-checks',
               '/claims',
               '/claimants',
-              '/ratings'
+              '/ratings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
               {children}

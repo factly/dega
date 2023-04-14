@@ -85,7 +85,7 @@ function ClaimantList({ actions, data, filters, setFilters, fetchClaimants }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteClaimant(record.id)).then(() => fetchClaimants())
+                dispatch(deleteClaimant(record.id)).then(() => fetchClaimants());
                 setModalOpen(false);
               }}
               onCancel={(e) => {

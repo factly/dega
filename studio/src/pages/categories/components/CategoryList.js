@@ -130,7 +130,7 @@ function CategoryList({ actions, data, filters, setFilters, fetchCategories }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteCategory(record.id)).then(() => fetchCategories())
+                dispatch(deleteCategory(record.id)).then(() => fetchCategories());
                 setModalOpen(false);
               }}
               cancelButtonProps={{ type: 'text', style: { color: '#000' } }}

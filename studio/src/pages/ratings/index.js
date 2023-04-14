@@ -45,12 +45,9 @@ function Ratings({ permission }) {
   ) : (
     <Space direction="vertical">
       <Helmet title={'Ratings'} />
-      <Row justify="space-between" style={{marginBottom: 16}}>
+      <Row justify="space-between" style={{ marginBottom: 16 }}>
         <Col>
-          <Typography.Title
-            level={3}
-            style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
-          >
+          <Typography.Title level={3} style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}>
             Ratings
           </Typography.Title>
         </Col>

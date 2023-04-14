@@ -31,14 +31,16 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
       },
     },
     {
-      title: 'Rating Value', dataIndex: 'numeric_value', key: 'numeric_value',
+      title: 'Rating Value',
+      dataIndex: 'numeric_value',
+      key: 'numeric_value',
       render: (_, record) => {
         return (
           <Typography.Text style={{ color: '#101828' }} strong>
             {record.numeric_value}
           </Typography.Text>
-        )
-      }
+        );
+      },
     },
     {
       title: 'Preview',
@@ -102,7 +104,7 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteRating(record.id)).then(() => fetchRatings())
+                dispatch(deleteRating(record.id)).then(() => fetchRatings());
                 // alert(record.id)
                 // console.log(record)
                 setModalOpen(false);

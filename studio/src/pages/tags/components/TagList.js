@@ -105,7 +105,7 @@ function TagList({ actions, filters, setFilters, fetchTags, data }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteTag(record.id)).then(() => fetchTags())
+                dispatch(deleteTag(record.id)).then(() => fetchTags());
                 setModalOpen(false);
               }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
