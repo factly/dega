@@ -1,6 +1,6 @@
 import React from 'react';
 import RatingList from './components/RatingList';
-import { Space, Button, Row } from 'antd';
+import { Space, Button, Row, Col, Typography } from 'antd';
 import { Link, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRatings } from '../../actions/ratings';
@@ -45,15 +45,25 @@ function Ratings({ permission }) {
   ) : (
     <Space direction="vertical">
       <Helmet title={'Ratings'} />
-      <Row justify="end">
-        <Link key="1" to="/ratings/create">
-          <Button
-            disabled={!(actions.includes('admin') || actions.includes('create'))}
-            type="primary"
+      <Row justify="space-between" style={{marginBottom: 16}}>
+        <Col>
+          <Typography.Title
+            level={3}
+            style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
           >
-            New Rating
-          </Button>
-        </Link>
+            Ratings
+          </Typography.Title>
+        </Col>
+        <Col>
+          <Link key="1" to="/ratings/create">
+            <Button
+              disabled={!(actions.includes('admin') || actions.includes('create'))}
+              type="primary"
+            >
+              New Rating
+            </Button>
+          </Link>
+        </Col>
       </Row>
 
       <RatingList
