@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { SearchOutlined } from '@ant-design/icons';
 import { getGoogleFactChecks } from '../../actions/googleFactChecks';
 import { Form, Input, Select, Button, List, Typography, Space } from 'antd';
 import deepEqual from 'deep-equal';
@@ -102,19 +103,21 @@ function GoogleFactCheck() {
       >
         <Form.Item
           name="query"
-          label="Search"
           rules={[
             {
               required: true,
               message: 'Please enter your search query!',
             },
           ]}
-          style={{ width: '25%' }}
+          style={{ width: '20%' }}
         >
-          <Input placeholder="search fact checks" />
+          <Input
+            prefix={<SearchOutlined style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }} />}
+            placeholder="Search fact checks"
+          />
         </Form.Item>
-        <Form.Item name="language" label="language" style={{ width: '25%' }}>
-          <Select defaultValue={'all'}>
+        <Form.Item name="language" label="Language" style={{ width: '15%' }}>
+          <Select defaultValue={'all'} >
             {langCode.map((e, key) => {
               return (
                 <Option key={key} value={e.code}>
