@@ -112,12 +112,14 @@ function GoogleFactCheck() {
           style={{ width: '20%' }}
         >
           <Input
-            prefix={<SearchOutlined style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }} />}
+            prefix={
+              <SearchOutlined style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }} />
+            }
             placeholder="Search fact checks"
           />
         </Form.Item>
         <Form.Item name="language" label="Language" style={{ width: '15%' }}>
-          <Select defaultValue={'all'} >
+          <Select defaultValue={'all'}>
             {langCode.map((e, key) => {
               return (
                 <Option key={key} value={e.code}>

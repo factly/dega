@@ -116,13 +116,25 @@ function Factly() {
     <Space direction="vertical" size="medium">
       <Row justify="space-between" style={{ marginBottom: '16px' }}>
         <Col span={8}>
-          <Form name="sach-form" form={form} onFinish={handleFinish} layout={'inline'} style={{ width: '100%' }}>
+          <Form
+            name="sach-form"
+            form={form}
+            onFinish={handleFinish}
+            layout={'inline'}
+            style={{ width: '100%' }}
+          >
             <Row justify="space-between" style={{ width: '97%' }}>
               <Col span={18}>
                 <Form.Item name="query" style={{ width: '100%' }}>
                   <Input
-                    prefix={<SearchOutlined style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }} />}
-                    placeholder={'Search for Fact-Checks about a person or topic or a specific claim'}
+                    prefix={
+                      <SearchOutlined
+                        style={{ color: '#000000E0', fontSize: '16px', paddingRight: 8 }}
+                      />
+                    }
+                    placeholder={
+                      'Search for Fact-Checks about a person or topic or a specific claim'
+                    }
                     allowClear
                   />
                 </Form.Item>
@@ -145,8 +157,7 @@ function Factly() {
               gap: '8px',
             }}
           >
-            <Typography.Text style={{ width: '100%' }}>
-              Sort by: </Typography.Text>
+            <Typography.Text style={{ width: '100%' }}>Sort by: </Typography.Text>
             <Select
               name="selectedDateOrder"
               placeholder={'Sort by date'}
@@ -234,73 +245,71 @@ function Factly() {
           </Select>
         </Col>
       </Row>
-      {
-        loading ? (
-          <Skeleton />
-        ) : (
-          <div
-            style={{
-              marginTop: '20px',
-            }}
-          >
-            {isResultTextVisible && factChecks?.length ? (
-              <p
-                style={{
-                  color: ' #4b5563',
-                  fontSize: '16px',
-                }}
-              >
-                {getResultStringFromStats(resultStats, totalMatches)}
-              </p>
-            ) : null}
-            {factChecks?.length
-              ? factChecks.map((factCheck, index) => (
+      {loading ? (
+        <Skeleton />
+      ) : (
+        <div
+          style={{
+            marginTop: '20px',
+          }}
+        >
+          {isResultTextVisible && factChecks?.length ? (
+            <p
+              style={{
+                color: ' #4b5563',
+                fontSize: '16px',
+              }}
+            >
+              {getResultStringFromStats(resultStats, totalMatches)}
+            </p>
+          ) : null}
+          {factChecks?.length
+            ? factChecks.map((factCheck, index) => (
                 <FactCheck
                   factCheck={factCheck}
                   key={index}
-                // active={true}
-                // setActiveFactCheck={setActiveFactCheck}
+                  // active={true}
+                  // setActiveFactCheck={setActiveFactCheck}
                 />
               ))
-              : null}
-            {totalMatches > pageLimit ? (
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  marginTop: '20px',
-                  gap: '10px',
-                }}
-              >
-                {pageNum > 1 ? (
-                  <Button
-                    onClick={handlePrevious}
-                    type="primary"
-                    style={{
-                      marginRight: 'auto',
-                    }}
-                  >
-                    Previous
-                  </Button>
-                ) : null}
-                {pageNum * pageLimit < totalMatches ? (
-                  <Button
-                    onClick={handleNext}
-                    type="primary"
-                    style={{
-                      marginLeft: 'auto',
-                    }}
-                  >
-                    Next
-                  </Button>
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-        )
-      }
-    </Space >
+            : null}
+          {totalMatches > pageLimit ? (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginTop: '20px',
+                gap: '10px',
+              }}
+            >
+              {pageNum > 1 ? (
+                <Button
+                  onClick={handlePrevious}
+                  type="primary"
+                  style={{
+                    marginRight: 'auto',
+                  }}
+                >
+                  Previous
+                </Button>
+              ) : null}
+              {pageNum * pageLimit < totalMatches ? (
+                <Button
+                  onClick={handleNext}
+                  type="primary"
+                  style={{
+                    marginLeft: 'auto',
+                  }}
+                >
+                  Next
+                </Button>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+      )}
+    </Space>
   );
 }
 
