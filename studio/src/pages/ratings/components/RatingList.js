@@ -15,6 +15,14 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -34,6 +42,14 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
       title: 'Rating Value',
       dataIndex: 'numeric_value',
       key: 'numeric_value',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      width: 200,
       render: (_, record) => {
         return (
           <Typography.Text style={{ color: '#101828' }} strong>
@@ -45,6 +61,14 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
     {
       title: 'Preview',
       dataIndex: 'preview',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      width: 200,
       render: (_, record) => (
         <div
           style={{
@@ -63,9 +87,15 @@ function RatingList({ actions, data, filters, setFilters, fetchRatings }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <ConfigProvider

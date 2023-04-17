@@ -14,8 +14,15 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
     {
       title: 'Claim',
       dataIndex: 'claim',
+      width: 200,
       key: 'claim',
-      width: '30%',
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -35,7 +42,15 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
       title: 'Claimant',
       dataIndex: 'claimant',
       key: 'claimant',
-      width: '20%',
+      // width: '20%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -55,7 +70,15 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
       title: 'Rating',
       dataIndex: 'rating',
       key: 'rating',
-      width: '20%',
+      // width: '20%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link to={`/ratings/${record.rating_id}/edit`}>
@@ -69,7 +92,15 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
     {
       title: 'Claim Date',
       dataIndex: 'claim_date',
-      width: '20%',
+      // width: '20%',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Typography.Text style={{ color: '#101828' }} strong>
@@ -83,9 +114,15 @@ function ClaimList({ actions, data, filters, fetchClaims, onPagination }) {
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <ConfigProvider
