@@ -104,9 +104,11 @@ const RatingForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="Basic" key="1">
-                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem' }} gutter={{ xs: 16, md: 70 }}>
+                  <Row
+                    style={{ background: '#F9FAFB', marginBottom: '1rem' }}
+                    gutter={{ xs: 16, md: 70 }}
+                  >
                     <Col xs={24} md={10}>
-
                       <TitleInput
                         name="name"
                         label="Rating Name"
@@ -151,7 +153,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
                             />
                           </div>
                           {displayBgColorPicker ? (
-                            <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+                            <div
+                              style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}
+                            >
                               <div
                                 style={{
                                   position: 'fixed',
@@ -194,7 +198,9 @@ const RatingForm = ({ onCreate, data = {} }) => {
                             />
                           </div>
                           {displayTextColorPicker ? (
-                            <div style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}>
+                            <div
+                              style={{ position: 'absolute', zIndex: '2', top: 0, left: '120px' }}
+                            >
                               <div
                                 style={{
                                   position: 'fixed',

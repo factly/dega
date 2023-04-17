@@ -40,7 +40,9 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
       },
     },
     {
-      title: 'Season', dataIndex: 'season', key: 'season',
+      title: 'Season',
+      dataIndex: 'season',
+      key: 'season',
       width: 200,
       onCell: () => {
         return {
@@ -62,10 +64,12 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
-      title: 'Podcast', dataIndex: 'podcast', key: 'podcast',
+      title: 'Podcast',
+      dataIndex: 'podcast',
+      key: 'podcast',
       width: 200,
       onCell: () => {
         return {
@@ -87,7 +91,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
       title: 'Action',
@@ -136,7 +140,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deletePodcast(record?.id)).then(() => fetchPodcasts())
+                dispatch(deletePodcast(record?.id)).then(() => fetchPodcasts());
                 setModalOpen(false);
               }}
               onCancel={(e) => {

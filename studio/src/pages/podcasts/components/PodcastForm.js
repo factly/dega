@@ -99,9 +99,11 @@ const PodcastForm = ({ onCreate, data = {} }) => {
                 style={{ width: '100%', background: '#f0f2f5', border: 0 }}
               >
                 <Collapse.Panel header="Basic" key="1">
-                  <Row style={{ background: '#F9FAFB', marginBottom: '1rem' }} gutter={{ xs: 16, md: 54 }}>
+                  <Row
+                    style={{ background: '#F9FAFB', marginBottom: '1rem' }}
+                    gutter={{ xs: 16, md: 54 }}
+                  >
                     <Col xs={24} md={10}>
-
                       <TitleInput onChange={(e) => onTitleChange(e.target.value)} />
                       <SlugInput />
                       <Form.Item name="language" label="Language">
