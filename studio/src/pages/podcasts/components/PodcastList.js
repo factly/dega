@@ -1,18 +1,29 @@
 import React from 'react';
-import { Popconfirm, Button, Table, Space } from 'antd';
+import { Button, Table, Space, Typography, Modal, ConfigProvider } from 'antd';
 
 import { useDispatch } from 'react-redux';
 import { deletePodcast } from '../../../actions/podcasts';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
 
 function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const [modalOpen, setModalOpen] = React.useState(false);
+
   const columns = [
     {
       title: 'Title',
       dataIndex: 'title',
       key: 'title',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
           <Link
@@ -21,33 +32,121 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
             }}
             to={`/podcasts/${record?.id}/edit`}
           >
-            {record?.title}
+            <Typography.Text style={{ color: '#101828' }} strong>
+              {record?.title}
+            </Typography.Text>
           </Link>
         );
       },
     },
-    { title: 'Slug', dataIndex: 'slug', key: 'slug' },
-    { title: 'Season', dataIndex: 'season', key: 'season' },
-    { title: 'Podcast', dataIndex: 'podcast', key: 'podcast' },
+    {
+      title: 'Season', dataIndex: 'season', key: 'season',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/podcasts/${record?.id}/edit`}
+          >
+            <Typography.Text style={{ color: '#101828' }} strong>
+              {record?.season}
+            </Typography.Text>
+          </Link>
+        );
+      }
+    },
+    {
+      title: 'Podcast', dataIndex: 'podcast', key: 'podcast',
+      width: 200,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '200px',
+          },
+        };
+      },
+      render: (_, record) => {
+        return (
+          <Link
+            style={{
+              marginRight: 8,
+            }}
+            to={`/podcasts/${record?.id}/edit`}
+          >
+            <Typography.Text style={{ color: '#101828' }} strong>
+              {record?.podcast}
+            </Typography.Text>
+          </Link>
+        );
+      }
+    },
     {
       title: 'Action',
       dataIndex: 'operation',
-      fixed: 'right',
       align: 'center',
       width: 150,
+      onCell: () => {
+        return {
+          style: {
+            minWidth: '150px',
+          },
+        };
+      },
       render: (_, record) => {
         return (
-          <Popconfirm
-            title="Are you sure you want to delete this?"
-            onConfirm={() => dispatch(deletePodcast(record?.id)).then(() => fetchPodcasts())}
-            disabled={!(actions.includes('admin') || actions.includes('delete'))}
+          <ConfigProvider
+            theme={{
+              components: {
+                Button: {
+                  controlHeight: 35,
+                  colorBorder: '#F2F2F2',
+                  colorPrimaryHover: '#00000026',
+                },
+              },
+            }}
           >
+            {' '}
             <Button
-              icon={<DeleteOutlined />}
+              size="large"
+              icon={<DeleteOutlined style={{ color: '#858585' }} />}
+              onClick={(e) => {
+                e.stopPropagation();
+                setModalOpen(true);
+              }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
-              danger
             />
-          </Popconfirm>
+            <Modal
+              open={modalOpen}
+              closable={false}
+              centered
+              width={311}
+              className="delete-modal-container"
+              cancelButtonProps={{ type: 'text', style: { color: '#000' } }}
+              style={{
+                borderRadius: '18px',
+              }}
+              onOk={(e) => {
+                e.stopPropagation();
+                dispatch(deletePodcast(record?.id)).then(() => fetchPodcasts())
+                setModalOpen(false);
+              }}
+              onCancel={(e) => {
+                e.stopPropagation();
+                setModalOpen(false);
+              }}
+            >
+              <Typography.Text strong>Are you sure you want to delete this claim?</Typography.Text>
+            </Modal>
+          </ConfigProvider>
         );
       },
     },
@@ -56,11 +155,26 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
   return (
     <Space direction={'vertical'}>
       <Table
-        bordered
+        onRow={(record, rowIndex) => {
+          return {
+            onClick: (event) => {
+              history.push(`/podacasts/${record.id}/edit`);
+            },
+            onMouseEnter: (event) => {
+              document.body.style.cursor = 'pointer';
+            },
+            onMouseLeave: (event) => {
+              document.body.style.cursor = 'default';
+            },
+          };
+        }}
         columns={columns}
         dataSource={data.podcasts}
         loading={data.loading}
         rowKey={'id'}
+        scroll={{
+          x: '1000',
+        }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
           total: data.total,
