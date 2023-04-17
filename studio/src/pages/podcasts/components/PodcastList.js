@@ -162,7 +162,7 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
         onRow={(record, rowIndex) => {
           return {
             onClick: (event) => {
-              history.push(`/podacasts/${record.id}/edit`);
+              history.push(`/podcasts/${record.id}/edit`);
             },
             onMouseEnter: (event) => {
               document.body.style.cursor = 'pointer';

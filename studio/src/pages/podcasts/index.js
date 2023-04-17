@@ -85,6 +85,7 @@ function Podcasts({ permission }) {
     const node = state.podcasts.req.find((item) => {
       return deepEqual(item.query, params);
     });
+    console.log('node', state.podcasts);
 
     if (node)
       return {
@@ -101,7 +102,6 @@ function Podcasts({ permission }) {
     fetchPodcasts();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
-
   const fetchPodcasts = () => {
     dispatch(getPodcasts(filters));
   };
@@ -158,7 +158,7 @@ function Podcasts({ permission }) {
                     level={3}
                     style={{ margin: 0, display: 'inline', color: '#1E1E1E' }}
                   >
-                    Posts
+                    Podcasts
                   </Typography.Title>
                 </Col>
                 <Col>
