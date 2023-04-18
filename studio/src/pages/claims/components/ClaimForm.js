@@ -19,6 +19,22 @@ const layout = {
 };
 
 const ClaimForm = ({ onCreate, data = {} }) => {
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);
@@ -86,7 +102,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         {...layout}
         form={form}
         initialValues={data}
-        style={{ padding: '0 1rem' }}
+        style={{ padding: isMobileScreen || '0 1rem' }}
         name="create-claim"
         className="edit-form"
         onFinish={(values) => {
@@ -134,7 +150,7 @@ const ClaimForm = ({ onCreate, data = {} }) => {
         >
           <Panel header="Basic" key="1">
             <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
-              <Col span={16}>
+              <Col span={isMobileScreen ? 24 : 16}>
                 <Form.Item
                   name="claim"
                   label="Claim"

@@ -22,6 +22,20 @@ function Factly() {
   const [totalMatches, setTotalMatches] = useState(0);
   const [resultStats, setResultStats] = useState({});
   const [isResultTextVisible, setIsResultTextVisible] = useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   let languageNames = new Intl.DisplayNames(['en'], { type: 'language' });
 
   const pageLimit = 20;
@@ -115,7 +129,7 @@ function Factly() {
   return (
     <Space direction="vertical" size="medium">
       <Row justify="space-between" style={{ marginBottom: '16px' }}>
-        <Col span={8}>
+        <Col span={isMobileScreen ? 24 : 8}>
           <Form
             name="sach-form"
             form={form}
@@ -124,7 +138,7 @@ function Factly() {
             style={{ width: '100%' }}
           >
             <Row justify="space-between" style={{ width: '97%' }}>
-              <Col span={18}>
+              <Col span={isMobileScreen ? 16 : 18}>
                 <Form.Item name="query" style={{ width: '100%' }}>
                   <Input
                     prefix={
@@ -151,6 +165,7 @@ function Factly() {
         <Col>
           <div
             style={{
+              marginTop: isMobileScreen ? '16px' : '0px',
               width: 'fit-content',
               display: 'flex',
               alignItems: 'center',
@@ -174,7 +189,7 @@ function Factly() {
       </Row>
       <Row justify="space-between" gutter={[16, 16]}>
         <Col
-          span={8}
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -197,7 +212,7 @@ function Factly() {
           </Select>
         </Col>
         <Col
-          span={8}
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -221,7 +236,7 @@ function Factly() {
           </Select>
         </Col>
         <Col
-          span={8}
+          span={isMobileScreen ? 24 : 8}
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -265,13 +280,13 @@ function Factly() {
           ) : null}
           {factChecks?.length
             ? factChecks.map((factCheck, index) => (
-                <FactCheck
-                  factCheck={factCheck}
-                  key={index}
-                  // active={true}
-                  // setActiveFactCheck={setActiveFactCheck}
-                />
-              ))
+              <FactCheck
+                factCheck={factCheck}
+                key={index}
+              // active={true}
+              // setActiveFactCheck={setActiveFactCheck}
+              />
+            ))
             : null}
           {totalMatches > pageLimit ? (
             <div

@@ -18,6 +18,21 @@ function GoogleFactCheck() {
   const [currPageToken, setCurrPageToken] = React.useState('');
   const [paginationStack, setPaginationStack] = React.useState([]);
   const [indexPointer, setIndexPointer] = React.useState(null);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const { factChecks, loading, nextPage } = useSelector(({ googleFactChecks }) => {
     const node = googleFactChecks.req.find((item) => {
@@ -95,7 +110,7 @@ function GoogleFactCheck() {
       <Form
         form={form}
         name="google-fact-check"
-        layout="inline"
+        layout={isMobileScreen ? 'vertical' : "inline"}
         onFinish={(values) => {
           onSubmit(values);
         }}
@@ -109,7 +124,7 @@ function GoogleFactCheck() {
               message: 'Please enter your search query!',
             },
           ]}
-          style={{ width: '20%' }}
+          style={{ width: isMobileScreen || '20%' }}
         >
           <Input
             prefix={
@@ -118,7 +133,7 @@ function GoogleFactCheck() {
             placeholder="Search fact checks"
           />
         </Form.Item>
-        <Form.Item name="language" label="Language" style={{ width: '15%' }}>
+        <Form.Item name="language" label="Language" style={{ width: isMobileScreen || '15%' }}>
           <Select defaultValue={'all'}>
             {langCode.map((e, key) => {
               return (
