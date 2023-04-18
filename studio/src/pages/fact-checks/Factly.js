@@ -280,13 +280,13 @@ function Factly() {
           ) : null}
           {factChecks?.length
             ? factChecks.map((factCheck, index) => (
-              <FactCheck
-                factCheck={factCheck}
-                key={index}
-              // active={true}
-              // setActiveFactCheck={setActiveFactCheck}
-              />
-            ))
+                <FactCheck
+                  factCheck={factCheck}
+                  key={index}
+                  // active={true}
+                  // setActiveFactCheck={setActiveFactCheck}
+                />
+              ))
             : null}
           {totalMatches > pageLimit ? (
             <div

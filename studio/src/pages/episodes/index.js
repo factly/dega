@@ -2,7 +2,14 @@
 import React, { useEffect } from 'react';
 import EpisodeList from './components/EpisodeList';
 import {
-  Space, Button, Form, Col, Row, Select, Input, Typography,
+  Space,
+  Button,
+  Form,
+  Col,
+  Row,
+  Select,
+  Input,
+  Typography,
   Tooltip,
   ConfigProvider,
 } from 'antd';
@@ -126,7 +133,6 @@ function Episodes({ permission }) {
           },
         }}
       >
-
         <Form
           initialValues={filters}
           form={form}
@@ -199,7 +205,12 @@ function Episodes({ permission }) {
                   <Row gutter={16} justify={isMobileScreen ? 'space-between' : 'end'}>
                     <Col span={isMobileScreen ? 24 : 8}>
                       <Form.Item name="podcast" label="Podcasts">
-                        <Selector mode="multiple" action="Podcasts" display="title" style={{ width: '100%' }} />
+                        <Selector
+                          mode="multiple"
+                          action="Podcasts"
+                          display="title"
+                          style={{ width: '100%' }}
+                        />
                       </Form.Item>
                     </Col>
                     <Col>
@@ -228,7 +239,7 @@ function Episodes({ permission }) {
         setFilters={setFilters}
         fetchEpisodes={fetchEpisodes}
       />
-    </Space >
+    </Space>
   );
 }
 

@@ -34,7 +34,6 @@ const ClaimForm = ({ onCreate, data = {} }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   if (data && data.meta_fields) {
     if (typeof data.meta_fields !== 'string') {
       data.meta_fields = JSON.stringify(data.meta_fields);

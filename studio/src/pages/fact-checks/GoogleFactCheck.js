@@ -33,7 +33,6 @@ function GoogleFactCheck() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const { factChecks, loading, nextPage } = useSelector(({ googleFactChecks }) => {
     const node = googleFactChecks.req.find((item) => {
       return deepEqual(item.query, filters);
@@ -110,7 +109,7 @@ function GoogleFactCheck() {
       <Form
         form={form}
         name="google-fact-check"
-        layout={isMobileScreen ? 'vertical' : "inline"}
+        layout={isMobileScreen ? 'vertical' : 'inline'}
         onFinish={(values) => {
           onSubmit(values);
         }}

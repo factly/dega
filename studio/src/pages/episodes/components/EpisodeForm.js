@@ -1,5 +1,16 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, InputNumber, Space, Radio, Row, Col, ConfigProvider, Collapse } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  InputNumber,
+  Space,
+  Radio,
+  Row,
+  Col,
+  ConfigProvider,
+  Collapse,
+} from 'antd';
 import { maker } from '../../../utils/sluger';
 import MediaSelector from '../../../components/MediaSelector';
 import Audio from './Audio';
@@ -80,11 +91,9 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
         }}
         onValuesChange={() => {
           setValueChange(true);
-        }}>
-        <Row
-          justify="center"
-          style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}
-        >
+        }}
+      >
+        <Row justify="center" style={{ maxWidth: '1200px', width: '100%', margin: '0 auto' }}>
           <Col span={24}>
             <Row justify="end" gutter={40}>
               <Form.Item>
@@ -129,7 +138,10 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
                         <Row gutter={16}>
                           <Col span={12}>
                             <Form.Item label="Season" name={'season'}>
-                              <InputNumber style={{ width: '100%', marginRight: 16 }} placeholder="Input season" />
+                              <InputNumber
+                                style={{ width: '100%', marginRight: 16 }}
+                                placeholder="Input season"
+                              />
                             </Form.Item>
                           </Col>
                           <Col span={12}>
@@ -137,7 +149,7 @@ const EpisodeForm = ({ onCreate, data = {} }) => {
                               <InputNumber style={{ width: '100%' }} placeholder="Input episode" />
                             </Form.Item>
                           </Col>
-                        </ Row>
+                        </Row>
                       </Form.Item>
                       <Form.Item name="audio_url" label="Audio">
                         <Audio

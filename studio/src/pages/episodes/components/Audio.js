@@ -44,10 +44,9 @@ const Audio = ({ url, onUpload }) => {
         ) : null}
         <Space direction="horizontal">
           {url ? <Button onClick={() => onUpload('')}>Remove</Button> : null}{' '}
-          <Button
-            icon={<UploadOutlined />}
-            onClick={() => setShow(true)}
-          >Upload</Button>
+          <Button icon={<UploadOutlined />} onClick={() => setShow(true)}>
+            Upload
+          </Button>
         </Space>
       </Space>
     </>

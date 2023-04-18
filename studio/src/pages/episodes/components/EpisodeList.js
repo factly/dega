@@ -40,7 +40,9 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
       },
     },
     {
-      title: 'Season', dataIndex: 'season', key: 'season',
+      title: 'Season',
+      dataIndex: 'season',
+      key: 'season',
       width: 200,
       onCell: () => {
         return {
@@ -62,10 +64,12 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
             </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
-      title: 'Episode', dataIndex: 'episode', key: 'episode',
+      title: 'Episode',
+      dataIndex: 'episode',
+      key: 'episode',
       width: 200,
       onCell: () => {
         return {
@@ -87,7 +91,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
             </Typography.Text>
           </Link>
         );
-      }
+      },
     },
     {
       title: 'Action',
@@ -137,7 +141,7 @@ function EpisodeList({ actions, data, filters, setFilters, fetchEpisodes }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deleteEpisode(record?.id)).then(() => fetchEpisodes())
+                dispatch(deleteEpisode(record?.id)).then(() => fetchEpisodes());
                 setModalOpen(false);
               }}
               onCancel={(e) => {
