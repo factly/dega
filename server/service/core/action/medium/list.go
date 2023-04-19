@@ -13,12 +13,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-// list response
-type paging struct {
-	Total int64          `json:"total"`
-	Nodes []model.Medium `json:"nodes"`
-}
-
 // list - Get all media
 // @Summary Show all media
 // @Description Get all media
