@@ -1,7 +1,6 @@
 package claimant
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/factly/dega-server/service/fact-check/model"
@@ -55,7 +54,6 @@ func list(w http.ResponseWriter, r *http.Request) {
 	claimantService := service.GetClaimantService()
 	result, serviceErr := claimantService.List(uint(sID), offset, limit, all, searchQuery, sort)
 	if serviceErr != nil {
-		log.Println("=======>", serviceErr)
 		errorx.Render(w, serviceErr)
 		return
 	}
