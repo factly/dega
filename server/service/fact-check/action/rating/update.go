@@ -61,6 +61,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 
 	rating := &rating{}
 	err = json.NewDecoder(r.Body).Decode(&rating)
+	// log.Fatal("====", rating.NumericValue)
 	if err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.DecodeError()))

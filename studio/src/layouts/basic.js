@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Layout, Card, notification, BackTop } from 'antd';
+import { Layout, Card, notification, BackTop, ConfigProvider } from 'antd';
 import { withRouter } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import Sidebar from '../components/GlobalNav/Sidebar';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpaces } from '../actions/spaces';
 import './basic.css';
 import { getSuperOrganisation } from '../actions/admin';
-import PageHeader from '../components/PageHeader';
+import Pageheader from '../components/PageHeader';
 import routes from '../config/routesConfig';
 import _ from 'lodash';
 
@@ -113,30 +113,47 @@ function BasicLayout(props) {
       location.pathname.includes('pages')) &&
     (location.pathname.includes('edit') || location.pathname.includes('create'));
   return (
-    <Layout hasSider={true}>
-      <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
-      {!hideSidebar && (
-        <Sidebar
-          permission={permission}
-          menuKey={enteredRoute?.menuKey}
-          orgs={orgs}
-          loading={loading}
-          superOrg={superOrg}
-          applications={applications}
-          services={services}
-        />
-      )}
-      <Layout style={{ background: '#fff' }}>
-        {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
-        <Content className="layout-content">
-          <PageHeader location={location} />
-          <Card key={selected.toString()} className="wrap-children-content">
-            {children}
-          </Card>
-        </Content>
-        <BackTop style={{ right: 50 }} />
+    <ConfigProvider
+    // theme={
+    // {
+    // we can customize the theme here , commenting it for now.
+    // token: {
+    //   colorPrimary: '#4F46E5',
+    //   colorLink: '#4F46E5',
+    // },
+    // components: {
+    //   Menu: {
+    //     colorItemBgSelected: '#D1D5DB',
+    //   },
+    // },
+    // }
+    // }
+    >
+      <Layout hasSider={true}>
+        <Helmet titleTemplate={'%s | Dega Studio'} title={'Dega Studio'} />
+        {!hideSidebar && (
+          <Sidebar
+            permission={permission}
+            menuKey={enteredRoute?.menuKey}
+            orgs={orgs}
+            loading={loading}
+            superOrg={superOrg}
+            applications={applications}
+            services={services}
+          />
+        )}
+        <Layout style={{ background: '#fff' }}>
+          {/* <Header applications={applications} hideSidebar={hideSidebar} /> */}
+          <Content className="layout-content">
+            <Pageheader location={location} />
+            <Card key={selected.toString()} className="wrap-children-content">
+              {children}
+            </Card>
+          </Content>
+          <BackTop style={{ right: 50 }} />
+        </Layout>
       </Layout>
-    </Layout>
+    </ConfigProvider>
   );
 }
 

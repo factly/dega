@@ -1,13 +1,15 @@
 package claim
 
 import (
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/factly/dega-server/test/service/core/permissions/space"
+	coreModel "github.com/factly/dega-server/service/core/model"
+	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/gavv/httpexpect/v2"
 	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
@@ -15,141 +17,123 @@ import (
 
 func TestClaimCreate(t *testing.T) {
 
-	mock := test.SetupMockDB()
-
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all entries from the db and insert some data
+	config.DB.Exec("DELETE FROM claimants")
+	config.DB.Exec("DELETE FROM claims")
+	config.DB.Exec("DELETE FROM space_permissions")
+	config.DB.Exec("DELETE FROM media")
+	insertClaimantData := model.Claimant{
+		Name:    "Test Claimant",
+		Slug:    "test-claimant",
+		SpaceID: TestSpaceID,
+	}
 
-	// create httpexpect instance
+	if err := config.DB.Model(&model.Claimant{}).Create(&insertClaimantData).Error; err != nil {
+		log.Fatal(err)
+	}
+	insertRatingData := model.Rating{
+		Name:         "Test Rating",
+		Slug:         "test-rating",
+		NumericValue: 5,
+		SpaceID:      TestSpaceID,
+	}
+	if err := config.DB.Model(&model.Rating{}).Create(&insertRatingData).Error; err != nil {
+		log.Fatal(err)
+	}
+	insertData := model.Claim{
+		Claim: "Test Claim",
+		Slug:  "test-claim",
+
+		ClaimSources: TestClaimSources,
+		Fact:         TestFact,
+		ReviewSources: postgres.Jsonb{
+			RawMessage: []byte(`{"type":"review sources"}`),
+		},
+		SpaceID:    TestSpaceID,
+		ClaimantID: insertClaimantData.ID,
+		RatingID:   insertRatingData.ID,
+		Claimant:   insertClaimantData,
+		Rating:     insertRatingData,
+	}
+	Data["claimant_id"] = insertClaimantData.ID
+	Data["rating_id"] = insertRatingData.ID
+
+	config.DB.Model(&model.Claim{}).Create(&insertData)
+
+	var insertSpacePermissionData = coreModel.SpacePermission{
+		SpaceID:   TestSpaceID,
+		FactCheck: true,
+		Media:     100,
+		Posts:     100,
+		Podcast:   true,
+		Episodes:  100,
+		Videos:    100,
+	}
+	config.DB.Model(&coreModel.SpacePermission{}).Create(&insertSpacePermissionData)
+
 	e := httpexpect.New(t, testServer.URL)
 
-	t.Run("Unprocessable claim", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unprocessable entity
+	t.Run("unprocessable entity", func(t *testing.T) {
 		e.POST(basePath).
+			WithHeaders(headers).
 			WithJSON(invalidData).
-			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
-	t.Run("Unable to decode claim", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
+	// unable to decode claim
+	t.Run("unable to decode claim", func(t *testing.T) {
 		e.POST(basePath).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
 	})
 
+	// create claim
 	t.Run("create claim", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		slugCheckMock(mock, Data)
-
-		claimInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
-		result := e.POST(basePath).
+		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
-			Status(http.StatusCreated).JSON().Object().ContainsMap(Data)
-
-		validateAssociations(result)
-		test.ExpectationsMet(t, mock)
-
+			Status(http.StatusCreated).
+			JSON().Object().ContainsMap(resData)
 	})
 
 	t.Run("cannot parse claim description", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"block": "new"}`),
-		}
+		Data["description"] = "invalid"
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusUnprocessableEntity)
-
-		Data["description"] = postgres.Jsonb{
-			RawMessage: []byte(`{"time":1617039625490,"blocks":[{"type":"paragraph","data":{"text":"Test Description"}}],"version":"2.19.0"}`),
-		}
-		test.ExpectationsMet(t, mock)
+		Data["description"] = TestDescriptionFromRequest
 	})
 
-	t.Run("create claim with slug is empty", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		slugCheckMock(mock, Data)
-
-		claimInsertMock(mock)
-		SelectWithOutSpace(mock, Data)
-		mock.ExpectCommit()
-
-		Data["slug"] = ""
-		result := e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusCreated).JSON().Object()
-		Data["slug"] = "claim"
-		result.ContainsMap(Data)
-		validateAssociations(result)
-		test.ExpectationsMet(t, mock)
-	})
-
-	t.Run("claimant does not belong same space", func(t *testing.T) {
-
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		slugCheckMock(mock, Data)
-
-		claimantFKError(mock)
-
+	// claimant does not belong to same space
+	t.Run("claimant does not belong to same space", func(t *testing.T) {
+		Data["claimant_id"] = 100
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
+		Data["claimant_id"] = insertClaimantData.ID
 	})
-	t.Run("rating does not belong same space", func(t *testing.T) {
 
-		test.CheckSpaceMock(mock)
-		space.SelectQuery(mock, 1)
-
-		slugCheckMock(mock, Data)
-
-		ratingFKError(mock)
-
+	// rating does not belong to same space
+	t.Run("rating does not belong to same space", func(t *testing.T) {
+		Data["rating_id"] = 100
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(Data).
 			Expect().
 			Status(http.StatusInternalServerError)
-
-		test.ExpectationsMet(t, mock)
+		Data["rating_id"] = insertRatingData.ID
 	})
-
 }

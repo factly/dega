@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/util"
 	httpx "github.com/factly/dega-server/util/http"
@@ -64,12 +63,12 @@ func space(w http.ResponseWriter, r *http.Request) {
 	space := model.Space{}
 	space.ID = uint(sID)
 
-	err = config.DB.Model(&model.Space{}).First(&space).Error
-	if err != nil {
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
+	// err = config.DB.Model(&model.Space{}).First(&space).Error
+	// if err != nil {
+	// 	loggerx.Error(err)
+	// 	errorx.Render(w, errorx.Parser(errorx.DBError()))
+	// 	return
+	// }
 
 	isAdmin, err := util.CheckAdmin(uint(oID), uint(uID))
 	if err != nil {
@@ -92,7 +91,7 @@ func space(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Println(err)
 	}
-
+	// log.Fatal("=============", res)
 	if res != nil {
 		hits := res.Hits
 		if len(hits) > 0 {
@@ -112,6 +111,7 @@ func space(w http.ResponseWriter, r *http.Request) {
 			}
 		}
 	}
+
 	if err = util.ReindexAllEntities(uint(sID)); err != nil {
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))

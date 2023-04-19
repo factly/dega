@@ -3,7 +3,7 @@ import { MEDIA_API } from '../../constants/media';
 import '@uppy/core/dist/style.css';
 import '@uppy/dashboard/dist/style.css';
 import '@uppy/url/dist/style.css';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
 import { Empty } from 'antd';
 import ReactDOMServer from 'react-dom/server';
 import Tunes from './Tunes';
@@ -196,7 +196,9 @@ class UppyUploader {
           this.nodes.wrapper.children[0].setAttribute('style', `${style.img} ${style[tune]}`);
         }
       });
-      this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
+      this.nodes.wrapper.children[0].src = this.data.url?.[
+        window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+      ];
     }
     return this.nodes.wrapper;
   }
@@ -281,7 +283,8 @@ class UppyUploader {
   createDisplayList(data, query, total) {
     function handleClick(imageDetails, obj) {
       obj.data = imageDetails;
-      obj.nodes.wrapper.children[0].src = imageDetails.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
+      obj.nodes.wrapper.children[0].src =
+        imageDetails.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
       obj.nodes.wrapper.children[2].style.display = 'none';
       obj.nodes.wrapper.children[1].style.display = 'none';
     }
@@ -436,7 +439,9 @@ class UppyUploader {
             this.data = res.data.nodes[0];
             this.nodes.wrapper.children[2].style.display = 'none';
             this.nodes.wrapper.children[1].style.display = 'none';
-            this.nodes.wrapper.children[0].src = this.data.url?.[window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'];
+            this.nodes.wrapper.children[0].src = this.data.url?.[
+              window.REACT_APP_ENABLE_IMGPROXY ? 'proxy' : 'raw'
+            ];
           })
           .catch((error) => {
             this.api.notifier.show({

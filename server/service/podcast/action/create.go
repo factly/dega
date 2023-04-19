@@ -1,25 +1,18 @@
 package podcast
 
 import (
-	"context"
 	"encoding/json"
-	"errors"
 	"net/http"
 	"strconv"
 
 	"github.com/factly/dega-server/config"
-	coreModel "github.com/factly/dega-server/service/core/model"
-	"github.com/factly/dega-server/service/podcast/model"
+	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/dega-server/util"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
-	"github.com/factly/x/slugx"
-	"github.com/factly/x/validationx"
-	"github.com/jinzhu/gorm/dialects/postgres"
-	"gorm.io/gorm"
 )
 
 // create - Create podcast
@@ -51,7 +44,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	podcast := &podcast{}
+	podcast := &service.Podcast{}
 
 	err = json.NewDecoder(r.Body).Decode(&podcast)
 
@@ -61,96 +54,12 @@ func create(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	validationError := validationx.Check(podcast)
-
-	if validationError != nil {
-		loggerx.Error(errors.New("validation error"))
-		errorx.Render(w, validationError)
+	podcastService := service.GetPodcastService()
+	result, serviceErr := podcastService.Create(r.Context(), sID, uID, podcast)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
-
-	var podcastSlug string
-	if podcast.Slug != "" && slugx.Check(podcast.Slug) {
-		podcastSlug = podcast.Slug
-	} else {
-		podcastSlug = slugx.Make(podcast.Title)
-	}
-
-	// Get table name
-	stmt := &gorm.Statement{DB: config.DB}
-	_ = stmt.Parse(&model.Podcast{})
-	tableName := stmt.Schema.Table
-
-	// Check if podcast with same name exist
-	if util.CheckName(uint(sID), podcast.Title, tableName) {
-		loggerx.Error(errors.New(`podcast with same name exist`))
-		errorx.Render(w, errorx.Parser(errorx.SameNameExist()))
-		return
-	}
-
-	mediumID := &podcast.MediumID
-	if podcast.MediumID == 0 {
-		mediumID = nil
-	}
-
-	primaryCategoryID := &podcast.PrimaryCategoryID
-	if podcast.PrimaryCategoryID == 0 {
-		primaryCategoryID = nil
-	}
-
-	// Store HTML description
-	var descriptionHTML string
-	var jsonDescription postgres.Jsonb
-	if len(podcast.Description.RawMessage) > 0 {
-		descriptionHTML, err = util.GetDescriptionHTML(podcast.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-
-		jsonDescription, err = util.GetJSONDescription(podcast.Description)
-		if err != nil {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.DecodeError()))
-			return
-		}
-	}
-
-	result := &model.Podcast{
-		Base: config.Base{
-			CreatedAt: podcast.CreatedAt,
-			UpdatedAt: podcast.UpdatedAt,
-		},
-		Title:             podcast.Title,
-		Description:       jsonDescription,
-		DescriptionHTML:   descriptionHTML,
-		Slug:              slugx.Approve(&config.DB, podcastSlug, sID, tableName),
-		Language:          podcast.Language,
-		MediumID:          mediumID,
-		PrimaryCategoryID: primaryCategoryID,
-		HeaderCode:        podcast.HeaderCode,
-		FooterCode:        podcast.FooterCode,
-		MetaFields:        podcast.MetaFields,
-		SpaceID:           uint(sID),
-	}
-
-	if len(podcast.CategoryIDs) > 0 {
-		config.DB.Model(&coreModel.Category{}).Where(podcast.CategoryIDs).Find(&result.Categories)
-	}
-
-	tx := config.DB.WithContext(context.WithValue(r.Context(), podcastUser, uID)).Begin()
-	err = tx.Model(&model.Podcast{}).Create(&result).Error
-
-	if err != nil {
-		tx.Rollback()
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
-		return
-	}
-
-	tx.Model(&model.Podcast{}).Preload("Medium").Preload("Categories").Preload("PrimaryCategory").First(&result)
-
 	// Insert into meili index
 	meiliObj := map[string]interface{}{
 		"id":                  result.ID,
@@ -168,8 +77,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 	if config.SearchEnabled() {
 		_ = meilisearchx.AddDocument("dega", meiliObj)
 	}
-
-	tx.Commit()
 
 	if util.CheckNats() {
 		if util.CheckWebhookEvent("podcast.created", strconv.Itoa(sID), r) {

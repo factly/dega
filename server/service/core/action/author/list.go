@@ -3,6 +3,7 @@ package author
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
@@ -96,6 +97,7 @@ func list(w http.ResponseWriter, r *http.Request) {
 	err = json.NewDecoder(resp.Body).Decode(&users)
 
 	if err != nil {
+		log.Fatal(err)
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.InternalServerError()))
 		return

@@ -63,7 +63,7 @@ function Search({ collapsed }) {
           setTimeout(() => inputRef.current.focus(), 0); // antd dialog prevents using inputRef directly, don't modify this while refactoring dega studio
         }}
       />
-      <Modal visible={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
+      <Modal open={open} footer={null} onOk={handleOk} onCancel={handleCancel} closable={false}>
         <div>
           <Input
             onChange={(e) => {

@@ -5,70 +5,59 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/service"
-	"github.com/factly/dega-server/test"
-	"github.com/gavv/httpexpect"
+	"github.com/factly/dega-server/service/core/model"
+	"github.com/gavv/httpexpect/v2"
 	"gopkg.in/h2non/gock.v1"
 )
 
 func TestMenuDelete(t *testing.T) {
-	mock := test.SetupMockDB()
 
-	test.MockServer()
 	defer gock.DisableNetworking()
-
 	testServer := httptest.NewServer(service.RegisterRoutes())
 	gock.New(testServer.URL).EnableNetworking().Persist()
 	defer gock.DisableNetworking()
 	defer testServer.Close()
+	//delete all the entries from the db and then insert some data
+	config.DB.Exec("DELETE FROM menus")
 
-	// create httpexpect instance
+	var insertData = model.Menu{
+		Name:       "Test Menu",
+		Slug:       "test-menu",
+		Menu:       TestMenu,
+		MetaFields: TestMetaFields,
+		SpaceID:    TestSpaceID,
+	}
+
+	config.DB.Model(&model.Menu{}).Create(&insertData)
+
 	e := httpexpect.New(t, testServer.URL)
 
+	// invalid menu id
 	t.Run("invalid menu id", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
 		e.DELETE(path).
 			WithPath("menu_id", "invalid_id").
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusBadRequest)
-		test.ExpectationsMet(t, mock)
 	})
 
+	// menu record not found
 	t.Run("menu record not found", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		mock.ExpectQuery(selectQuery).
-			WithArgs(1, 1).
-			WillReturnRows(sqlmock.NewRows(Columns))
-
 		e.DELETE(path).
-			WithPath("menu_id", "1").
+			WithPath("menu_id", 100).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusNotFound)
-		test.ExpectationsMet(t, mock)
 	})
 
+	// delete menu
 	t.Run("delete menu", func(t *testing.T) {
-		test.CheckSpaceMock(mock)
-
-		SelectQuery(mock, 1, 1)
-
-		mock.ExpectBegin()
-		mock.ExpectExec(deleteQuery).
-			WithArgs(test.AnyTime{}, 1).
-			WillReturnResult(sqlmock.NewResult(1, 1))
-		mock.ExpectCommit()
-
 		e.DELETE(path).
-			WithPath("menu_id", "1").
+			WithPath("menu_id", insertData.ID).
 			WithHeaders(headers).
 			Expect().
 			Status(http.StatusOK)
-		test.ExpectationsMet(t, mock)
 	})
-
 }
