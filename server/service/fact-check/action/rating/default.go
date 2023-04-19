@@ -64,8 +64,8 @@ func createDefaults(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ratingSercice := service.GetRatingService()
-	result, serviceErr := ratingSercice.Default(r.Context(), sID, uID, ratings)
+	ratingService := service.GetRatingService()
+	result, serviceErr := ratingService.Default(r.Context(), sID, uID, ratings)
 	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return

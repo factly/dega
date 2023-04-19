@@ -2,7 +2,6 @@ package rating
 
 import (
 	"encoding/json"
-	"log"
 	"net/http"
 	"strconv"
 
@@ -41,7 +40,6 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	uID, err := middlewarex.GetUser(r.Context())
 	if err != nil {
-		log.Println("==========>", err)
 		loggerx.Error(err)
 		errorx.Render(w, errorx.Parser(errorx.Unauthorized()))
 		return

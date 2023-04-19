@@ -3,7 +3,6 @@ package rating
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/fact-check/model"
 	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
@@ -11,12 +10,6 @@ import (
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
 )
-
-// list response
-type paging struct {
-	Total int64          `json:"total"`
-	Nodes []model.Rating `json:"nodes"`
-}
 
 // list - Get all ratings
 // @Summary Show all ratings
