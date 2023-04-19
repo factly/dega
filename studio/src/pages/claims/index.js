@@ -198,20 +198,20 @@ function Claims({ permission }) {
                     </Link>
                   </Row>
                   <Row gutter={[16, 12]} justify={isMobileScreen ? 'space-between' : 'end'}>
-                    <Col span={isMobileScreen ? 24 : 6}>
-                      <Form.Item name="claimant" label="Claimants" labelCol={{ span: 6 }}>
+                    <Col span={isMobileScreen ? 24 : 8}>
+                      <Form.Item name="claimant" label="Claimants" >
                         <Selector mode="multiple" action="Claimants" />
                       </Form.Item>
                     </Col>
-                    <Col span={isMobileScreen ? 24 : 6}>
-                      <Form.Item name="rating" label="Ratings" labelCol={{ span: 6 }}>
+                    <Col span={isMobileScreen ? 24 : 8}>
+                      <Form.Item name="rating" label="Ratings" >
                         <Selector mode="multiple" action="Ratings" />
                       </Form.Item>
                     </Col>
 
-                    <Col>
-                      <Form.Item label="Sort By" name="sort" labelCol={{ span: 6 }}>
-                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '100%' }}>
+                    <Col span={isMobileScreen ? 12 : 6}>
+                      <Form.Item label="Sort By" name="sort" >
+                        <Select placeholder="Sort By" defaultValue="desc" style={{ width: '90%' }}>
                           <Option value="desc" key={'desc'}>
                             Latest
                           </Option>
