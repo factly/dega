@@ -3,7 +3,6 @@ package menu
 import (
 	"net/http"
 
-	"github.com/factly/dega-server/service/core/model"
 	"github.com/factly/dega-server/service/core/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"

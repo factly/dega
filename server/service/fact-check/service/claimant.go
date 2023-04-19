@@ -20,7 +20,7 @@ import (
 	"gorm.io/gorm"
 )
 
-type paging struct {
+type claimantPaging struct {
 	Total int64      `json:"total"`
 	Nodes []Claimant `json:"nodes"`
 }
@@ -45,7 +45,7 @@ var userContext config.ContextKey = "claimant_user"
 
 type IClaimantService interface {
 	GetById(sID, id int) (model.Claimant, error)
-	List(sID uint, offset, limit int, all, searchQuery, sort string) (paging, []errorx.Message)
+	List(sID uint, offset, limit int, all, searchQuery, sort string) (claimantPaging, []errorx.Message)
 	Create(ctx context.Context, sID, uID int, claimant *Claimant) (model.Claimant, []errorx.Message)
 	Update(sID, uID, id int, claimant *Claimant) (model.Claimant, []errorx.Message)
 	Delete(sID, id int) []errorx.Message
@@ -174,8 +174,8 @@ func (cs claimantService) GetById(sID int, id int) (model.Claimant, error) {
 }
 
 // List implements IClaimantService
-func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (paging, []errorx.Message) {
-	var result paging
+func (cs claimantService) List(sID uint, offset int, limit int, all, searchQuery string, sort string) (claimantPaging, []errorx.Message) {
+	var result claimantPaging
 	var err error
 	tx := cs.model.Model(&model.Claimant{}).Preload("Medium").Where(&model.Claimant{
 		SpaceID: uint(sID),
