@@ -12,12 +12,6 @@ import (
 	"github.com/factly/x/renderx"
 )
 
-// list response
-type paging struct {
-	Total int64        `json:"total"`
-	Nodes []model.Menu `json:"nodes"`
-}
-
 // list - Get all menus
 // @Summary Show all menus
 // @Description Get all menus

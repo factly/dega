@@ -57,7 +57,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 
 	menuService := service.GetMenuService()
 	result, serviceErr := menuService.Create(r.Context(), sID, uID, menu)
-	if err != nil {
+	if serviceErr != nil {
 		errorx.Render(w, serviceErr)
 		return
 	}
