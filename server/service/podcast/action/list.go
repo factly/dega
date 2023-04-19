@@ -1,28 +1,16 @@
 package podcast
 
 import (
-	"fmt"
 	"net/http"
 	"net/url"
-	"strings"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/podcast/model"
 	"github.com/factly/dega-server/service/podcast/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
-	"github.com/factly/x/meilisearchx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/paginationx"
 	"github.com/factly/x/renderx"
-	"gorm.io/gorm"
 )
-
-// list response
-type paging struct {
-	Total int64           `json:"total"`
-	Nodes []model.Podcast `json:"nodes"`
-}
 
 // list - Get all podcasts
 // @Summary Show all podcasts
@@ -71,68 +59,4 @@ func list(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	renderx.JSON(w, http.StatusOK, result)
-}
-
-func generateFilters(categoryIDs, primaryCatID, language []string) string {
-	filters := ""
-	if len(categoryIDs) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(categoryIDs, "category_ids"), " AND ")
-	}
-
-	if len(primaryCatID) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(primaryCatID, "primary_category_id"), " AND ")
-	}
-
-	if len(language) > 0 {
-		filters = fmt.Sprint(filters, meilisearchx.GenerateFieldFilter(language, "language"), " AND ")
-	}
-
-	if filters != "" && filters[len(filters)-5:] == " AND " {
-		filters = filters[:len(filters)-5]
-	}
-
-	return filters
-}
-
-func generateSQLFilters(tx *gorm.DB, searchQuery string, categoryIDs, primaryCatID, language []string) string {
-	filters := ""
-	if config.Sqlite() {
-		if searchQuery != "" {
-			filters = fmt.Sprint(filters, "title LIKE '%", strings.ToLower(searchQuery), "%' AND ")
-		}
-	} else {
-		if searchQuery != "" {
-			filters = fmt.Sprint(filters, "title ILIKE '%", strings.ToLower(searchQuery), "%' AND ")
-		}
-	}
-	if len(primaryCatID) > 0 {
-		filters = filters + " primary_category_id IN ("
-		for _, id := range primaryCatID {
-			filters = fmt.Sprint(filters, id, ", ")
-		}
-		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
-	}
-
-	if len(language) > 0 {
-		filters = filters + " language IN ("
-		for _, lan := range language {
-			filters = fmt.Sprint(filters, "'", lan, "'", ", ")
-		}
-		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
-	}
-
-	if len(categoryIDs) > 0 {
-		tx.Joins("INNER JOIN podcast_categories ON podcasts.id = podcast_categories.podcast_id")
-		filters = filters + " podcast_categories.category_id IN ("
-		for _, id := range categoryIDs {
-			filters = fmt.Sprint(filters, id, ", ")
-		}
-		filters = fmt.Sprint("(", strings.Trim(filters, ", "), ")) AND ")
-	}
-
-	if filters != "" && filters[len(filters)-5:] == " AND " {
-		filters = filters[:len(filters)-5]
-	}
-
-	return filters
 }
