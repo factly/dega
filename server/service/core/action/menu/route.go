@@ -9,18 +9,6 @@ import (
 	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
-// menu request body
-type menu struct {
-	CreatedAt  time.Time      `json:"created_at"`
-	UpdatedAt  time.Time      `json:"updated_at"`
-	Name       string         `json:"name" validate:"required,min=3,max=50"`
-	Slug       string         `json:"slug"`
-	Menu       postgres.Jsonb `json:"menu" swaggertype:"primitive,string"`
-	MetaFields postgres.Jsonb `json:"meta_fields" swaggertype:"primitive,string"`
-}
-
-var userContext config.ContextKey = "menu_user"
-
 // Router - Group of menu router
 func Router() chi.Router {
 	r := chi.NewRouter()
