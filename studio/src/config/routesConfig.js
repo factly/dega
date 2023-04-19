@@ -895,13 +895,6 @@ export const sidebarMenu = [
     isService: true,
   },
   {
-    title: 'Settings',
-    Icon: (props) => <SettingOutlined {...props} />,
-    children: [routes.website, routes.members, routes.advanced],
-    isService: false,
-    isAdmin: true,
-  },
-  {
     title: 'Administration',
     Icon: (props) => <GlobalOutlined {...props} />,
     children: [routes.spaces, routes.requests, routes.permissions, routes.events],
