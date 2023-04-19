@@ -47,7 +47,9 @@ function EditPolicy() {
   }
 
   const onUpdate = (values) => {
-    dispatch(updatePolicy({ ...policy, ...values })).then(() => history.push(`/members/policies/`));
+    dispatch(updatePolicy({ ...policy, ...values })).then(() =>
+      history.push(`/settings/members/policies/`),
+    );
   };
 
   return (

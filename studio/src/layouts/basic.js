@@ -186,6 +186,7 @@ function BasicLayout(props) {
               '/ratings',
               '/podcasts',
               '/episodes',
+              '/settings',
             ].includes(location.pathname) || <Pageheader location={location} />}
             <Card key={selected.toString()} className="wrap-children-content">
               {children}

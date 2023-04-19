@@ -11,7 +11,7 @@ function CreateFormat({ setReloadFlag, reloadFlag }) {
   const dispatch = useDispatch();
   const onCreate = (values) => {
     dispatch(createFormat(values)).then(() => {
-      history.push('/advanced/formats');
+      history.push('/settings/advanced/formats');
       setReloadFlag(!reloadFlag);
     });
   };

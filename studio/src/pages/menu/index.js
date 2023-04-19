@@ -46,7 +46,7 @@ function Menu() {
     <Space direction="vertical">
       <Helmet title={'Menu'} />
       <Row justify="end">
-        <Link to="/website/menus/create">
+        <Link to="/settings/website/menus/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"

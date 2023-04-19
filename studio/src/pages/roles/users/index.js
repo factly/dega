@@ -47,7 +47,7 @@ export default function RoleUsers() {
         gap: '20px',
       }}
     >
-      <Link key="1" to={`/members/roles`}>
+      <Link key="1" to={`/settings/members/roles`}>
         <Button type="primary">Back to Roles</Button>
       </Link>
       {loading && loadingUserRole ? (

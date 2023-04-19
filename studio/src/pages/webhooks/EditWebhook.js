@@ -33,7 +33,7 @@ function EditWebhook() {
 
   const onUpdate = (values) => {
     dispatch(updateWebhook({ ...webhook, ...values }));
-    history.push(`/advanced/webhooks/${id}/edit`);
+    history.push(`/settings/advanced/webhooks/${id}/edit`);
   };
   return (
     <>

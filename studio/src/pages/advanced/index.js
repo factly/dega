@@ -13,13 +13,14 @@ const Advanced = () => {
       <Helmet title={'Advanced'} />
       <Row gutter={[16, 16]}>
         <Col span={12}>
-          <Link to="/advanced/webhooks">
+          <Link to="/settings/advanced/webhooks">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<ApiTwoTone twoToneColor="#51bbf6" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Webhooks"
@@ -29,13 +30,14 @@ const Advanced = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/advanced/reindex">
+          <Link to="/settings/advanced/reindex">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<InteractionTwoTone twoToneColor="#7b2feb" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Re-Indexing Meili"
@@ -45,13 +47,14 @@ const Advanced = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/advanced/formats">
+          <Link to="/settings/advanced/formats">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<FileTextTwoTone twoToneColor="#30cf43" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Formats"

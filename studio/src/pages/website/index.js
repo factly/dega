@@ -16,15 +16,15 @@ const Website = () => {
   return (
     <div>
       <Helmet title={'Website'} />
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 24]}>
         <Col span={12}>
-          <Link to={`/website/general`}>
+          <Link to={`/settings/website/general`}>
             <Card hoverable>
               <Meta
                 avatar={
                   <Avatar
                     icon={<DeploymentUnitOutlined />} //<SettingTwoTone twoToneColor="#ffb41f" />}
-                    style={{ backgroundColor: 'transparent', color: '#ffb41f' }}
+                    style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
                   />
                 }
                 title="General"
@@ -34,13 +34,14 @@ const Website = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to={`/website/branding`}>
+          <Link to={`/settings/website/branding`}>
             <Card hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<TagsTwoTone twoToneColor="#51bbf6" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Branding"
@@ -50,13 +51,14 @@ const Website = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/website/menus">
+          <Link to="/settings/website/menus">
             <Card hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<CompassTwoTone twoToneColor="#7b2feb" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Navigation"
@@ -66,13 +68,14 @@ const Website = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to={`/website/code-injection`}>
+          <Link to={`/settings/website/code-injection`}>
             <Card hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<ApiTwoTone twoToneColor="#30cf43" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Code Injection"
@@ -82,13 +85,14 @@ const Website = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to={`/website/analytics`}>
+          <Link to={`/settings/website/analytics`}>
             <Card hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<FundTwoTone twoToneColor="#fb2d8d" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Analytics"

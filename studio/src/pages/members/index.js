@@ -13,13 +13,14 @@ const Members = () => {
       <Row gutter={[16, 16]}>
         <Helmet title={'Members'} />
         <Col span={12}>
-          <Link to="/members/users">
+          <Link to="/settings/members/users">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<UserOutlined twoToneColor="#ffb41f" />}
-                    style={{ backgroundColor: 'transparent', color: '#ffb41f' }}
+                    style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
                   />
                 }
                 title="Users"
@@ -29,13 +30,14 @@ const Members = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/members/policies">
+          <Link to="/settings/members/policies">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<EyeTwoTone twoToneColor="#51bbf6" />}
-                    style={{ backgroundColor: 'transparent' }}
+                    style={{ backgroundColor: '#E8EFF2' }}
                   />
                 }
                 title="Policies"
@@ -45,13 +47,14 @@ const Members = () => {
           </Link>
         </Col>
         <Col span={12}>
-          <Link to="/members/roles">
+          <Link to="/settings/members/roles">
             <Card style={gridStyle} hoverable>
               <Meta
                 avatar={
                   <Avatar
+                    gap={4}
                     icon={<UsergroupAddOutlined twoToneColor="#ffb41f" />}
-                    style={{ backgroundColor: 'transparent', color: '#ffb41f' }}
+                    style={{ backgroundColor: '#E8EFF2', color: '#ffb41f' }}
                   />
                 }
                 title="Roles"

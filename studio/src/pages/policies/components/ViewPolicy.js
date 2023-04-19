@@ -43,7 +43,7 @@ export default function ViewPolicy() {
         gap: '20px',
       }}
     >
-      <Link key="1" to={`/members/policies`}>
+      <Link key="1" to={`/settings/members/policies`}>
         <Button type="primary">Back to Policies</Button>
       </Link>
       <h2> Policy Details </h2>

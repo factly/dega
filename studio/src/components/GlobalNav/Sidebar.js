@@ -249,9 +249,11 @@ function Sidebar({ superOrg, permission, orgs, loading, applications, services, 
         >
           <AccountMenu />
           <div>
-            <Button style={{ ...buttonStyle }} onClick={() => alert('Setting page')}>
-              <SettingOutlined />
-            </Button>
+            <Link to="/settings">
+              <Button style={{ ...buttonStyle }}>
+                <SettingOutlined />
+              </Button>
+            </Link>
             {applications.length > 0 ? (
               <>
                 <Popover

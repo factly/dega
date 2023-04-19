@@ -38,7 +38,7 @@ function Roles() {
     <Space direction="vertical">
       <Helmet title={'Roles'} />
       <Row gutter={16} justify="end">
-        <Link to="/members/roles/create">
+        <Link to="/settings/members/roles/create">
           <Button
             disabled={!(actions.includes('admin') || actions.includes('create'))}
             type="primary"
