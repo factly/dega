@@ -1,12 +1,8 @@
 package menu
 
 import (
-	"time"
-
-	"github.com/factly/dega-server/config"
 	"github.com/factly/dega-server/util"
 	"github.com/go-chi/chi"
-	"github.com/jinzhu/gorm/dialects/postgres"
 )
 
 // Router - Group of menu router
