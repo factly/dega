@@ -63,8 +63,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               color: ['draft', 'ready', 'publish'].includes(query)
                 ? '#101828'
                 : item.status === 'draft'
-                  ? '#454545'
-                  : '#101828',
+                ? '#454545'
+                : '#101828',
             }}
             strong
           >
@@ -120,8 +120,8 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               {authors[author]?.display_name
                 ? authors[author]?.display_name
                 : authors[author]?.['email']
-                  ? authors[author]?.['email']
-                  : null}
+                ? authors[author]?.['email']
+                : null}
             </Typography.Text>{' '}
             <br />
           </>
@@ -257,7 +257,7 @@ function PostList({ actions, format, filters, onPagination, data, fetchPosts, qu
               onQuickEditUpdate={() => setExpandedRowKeys([])}
             />
           ),
-          expandIcon: () => { },
+          expandIcon: () => {},
         }}
         pagination={{
           showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} results`,
