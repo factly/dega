@@ -4,14 +4,12 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/factly/dega-server/config"
-	"github.com/factly/dega-server/service/fact-check/model"
+	"github.com/factly/dega-server/service/fact-check/service"
 	"github.com/factly/x/errorx"
 	"github.com/factly/x/loggerx"
 	"github.com/factly/x/middlewarex"
 	"github.com/factly/x/renderx"
 	"github.com/go-chi/chi"
-	"gorm.io/gorm"
 )
 
 // details - Get claim by id
@@ -43,22 +41,11 @@ func details(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result := &model.Claim{}
+	claimService := service.GetClaimService()
 
-	result.ID = uint(id)
-
-	err = config.DB.Model(&model.Claim{}).Preload("Rating").Preload("Rating.Medium").Preload("Claimant").Preload("Claimant.Medium").Where(&model.Claim{
-		SpaceID: uint(sID),
-	}).First(&result).Error
-
-	if err != nil {
-		if err == gorm.ErrRecordNotFound {
-			loggerx.Error(err)
-			errorx.Render(w, errorx.Parser(errorx.RecordNotFound()))
-			return
-		}
-		loggerx.Error(err)
-		errorx.Render(w, errorx.Parser(errorx.DBError()))
+	result, serviceErr := claimService.GetById(sID, id)
+	if serviceErr != nil {
+		errorx.Render(w, serviceErr)
 		return
 	}
 
