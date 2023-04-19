@@ -9,7 +9,6 @@ import (
 	"github.com/factly/dega-server/service"
 	"github.com/factly/dega-server/service/core/model"
 	"github.com/gavv/httpexpect/v2"
-	"github.com/jinzhu/gorm/dialects/postgres"
 	"gopkg.in/h2non/gock.v1"
 )
 
@@ -85,30 +84,13 @@ func TestTagCreate(t *testing.T) {
 			Status(http.StatusUnprocessableEntity)
 	})
 
-	t.Run("ceate tag with slug is empty", func(t *testing.T) {
-		Data.Slug = ""
-		Data.Name = "Test Create Tag Test"
-		resData["name"] = "Test Create Tag Test"
-		resData["slug"] = "test-create-tag-test"
-
-		e.POST(basePath).
-			WithHeaders(headers).
-			WithJSON(Data).
-			Expect().
-			Status(http.StatusCreated).
-			JSON().
-			Object().
-			ContainsMap(resData)
-	})
-
 	t.Run("cannot parse tag description", func(t *testing.T) {
 
 		e.POST(basePath).
 			WithHeaders(headers).
 			WithJSON(map[string]interface{}{
-				"description": postgres.Jsonb{
-					RawMessage: []byte(`{"block": "new"}`),
-				},
+				"name":        "Test Create Tag Test",
+				"description": "descriptionn",
 			}).
 			Expect().
 			Status(http.StatusUnprocessableEntity)

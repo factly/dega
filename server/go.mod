@@ -3,7 +3,6 @@ module github.com/factly/dega-server
 go 1.18
 
 require (
-	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/alecthomas/template v0.0.0-20190718012654-fb15b899a751
 	github.com/dlmiddlecote/sqlstats v1.0.2
 	github.com/eduncan911/podcast v1.4.2
@@ -15,6 +14,7 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/meilisearch/meilisearch-go v0.20.0
 	github.com/nats-io/gnatsd v1.4.1
+	github.com/nats-io/go-nats v1.7.2
 	github.com/nats-io/nats.go v1.10.0
 	github.com/prometheus/client_golang v1.9.0
 	github.com/spf13/cobra v1.1.3
@@ -74,7 +74,6 @@ require (
 	github.com/matttproud/golang_protobuf_extensions v1.0.1 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
 	github.com/moul/http2curl v1.0.0 // indirect
-	github.com/nats-io/go-nats v1.7.2 // indirect
 	github.com/nats-io/jwt v1.1.0 // indirect
 	github.com/nats-io/nkeys v0.1.4 // indirect
 	github.com/nats-io/nuid v1.0.1 // indirect
