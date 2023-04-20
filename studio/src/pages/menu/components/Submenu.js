@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Button, Space } from 'antd';
+import { Form, Button, Row, Col } from 'antd';
 import MenuField from './MenuField';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 function Submenu({ fieldKey }) {
@@ -9,33 +9,40 @@ function Submenu({ fieldKey }) {
         {(submenus, { add, remove }) => {
           return (
             <div>
-              <div>
-                <Form.Item>
-                  <Button
-                    onClick={() => {
-                      add();
-                    }}
-                  >
-                    <PlusOutlined /> Add submenu
-                  </Button>
-                </Form.Item>
-              </div>
-              {submenus.map((submenu, index2) => (
-                <Space key={submenu.key}>
-                  <Form.Item>
-                    <Space direction="horizontal">
-                      <MenuField field={submenu} />
-                      <MinusCircleOutlined
-                        onClick={() => {
-                          remove(submenu.name);
-                        }}
-                      />
-                    </Space>
-                    <div style={{ marginLeft: '25px' }}>
-                      <Submenu fieldKey={submenu.name} />
-                    </div>
-                  </Form.Item>
-                </Space>
+              <Form.Item>
+                <Button
+                  style={{ marginTop: '10px' }}
+                  onClick={() => {
+                    add();
+                  }}
+                >
+                  <PlusOutlined /> Add submenu
+                </Button>
+              </Form.Item>
+              {submenus.map((field, index2) => (
+                <Row key={field.key}>
+                  <Col span={24}>
+                    <Form.Item>
+                      <Row key={index2} align="middle" gutter={16}>
+                        <Col span={6}>
+                          <MenuField field={field} />
+                        </Col>
+                        <Col span={6}>
+                          <Button
+                            onClick={() => {
+                              remove(field.name);
+                            }}
+                          >
+                            Remove menu
+                          </Button>
+                        </Col>
+                      </Row>
+                      <div style={{ marginLeft: '25px' }}>
+                        <Submenu fieldKey={field.name} />
+                      </div>
+                    </Form.Item>
+                  </Col>
+                </Row>
               ))}
             </div>
           );

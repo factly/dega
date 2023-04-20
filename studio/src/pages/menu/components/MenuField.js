@@ -15,7 +15,10 @@ function MenuField({ field }) {
     }
   }, [inputRef]);
   return (
-    <Collapse defaultActiveKey={['1']}>
+    <Collapse
+      style={{ maxWidth: '375px', background: '#f0f2f5', border: 0, marginLeft: '25px' }}
+      defaultActiveKey={['1']}
+    >
       <Panel header={panelHeader} key={['1']}>
         <Form.Item
           {...field}

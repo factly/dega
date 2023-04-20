@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Button, Collapse, Form, Input, Row, Select } from 'antd';
+import { Button, Collapse, Form, Input, Row, Select, Col, ConfigProvider } from 'antd';
 import MonacoEditor from '../../../components/MonacoEditor';
 import getJsonValue from '../../../utils/getJsonValue';
 import { SlugInput } from '../../../components/FormItems';
@@ -24,10 +24,20 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
   const [valueChange, setValueChange] = React.useState(false);
   const { Panel } = Collapse;
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        components: {
+          Collapse: {
+            colorBgContainer: '#F9FAFB',
+            colorText: '#000000E0',
+          },
+        },
+      }}
+    >
       <Form
         layout="vertical"
         form={form}
+        className="edit-form"
         initialValues={{ ...data, space_id: currentSpaceID }}
         name="create-space"
         onFinish={(values) => {
@@ -46,9 +56,6 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
         onValuesChange={() => {
           setValueChange(true);
         }}
-        style={{
-          paddingTop: '24px',
-        }}
       >
         <Row justify="end">
           <Form.Item>
@@ -61,58 +68,73 @@ const WebsiteEditForm = ({ onCreate, data = {} }) => {
           expandIconPosition="right"
           expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
           defaultActiveKey={['1']}
-          style={{ width: '100%' }}
+          style={{ width: '100%', background: '#f0f2f5', border: 0 }}
         >
           <Panel header="Title and Description" key="1">
-            <Form.Item
-              name="organisation_id"
-              label="Organisation"
-              rules={[{ required: true, message: 'Organisation is required' }]}
-            >
-              <Select placeholder="Select organisation" disabled>
-                {orgs.map((org) => (
-                  <Option key={org.id} value={org.id}>
-                    {org.title}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-            <Form.Item rules={[{ required: true }]} name="space_id" label="SpaceID">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item
-              name="name"
-              label="Name"
-              rules={[
-                { required: true, message: 'Name is required' },
-                { min: 3, message: 'Name must be minimum 3 characters.' },
-                { max: 50, message: 'Name must be maximum 50 characters.' },
-              ]}
-            >
-              <Input placeholder="Input name" />
-            </Form.Item>
-            <Form.Item name="site_title" label="Title">
-              <Input />
-            </Form.Item>
-            <Form.Item name="tag_line" label="Tag line">
-              <Input />
-            </Form.Item>
-            <Form.Item name="description" label="Description">
-              <TextArea placeholder="Enter Description..." />
-            </Form.Item>
-            <SlugInput />
-            <Form.Item name="site_address" label="Site Address">
-              <Input />
-            </Form.Item>
+            <Row style={{ background: '#F9FAFB', marginBottom: '1rem', gap: '1rem' }}>
+              <Col xs={24} md={10}>
+                <Form.Item
+                  name="organisation_id"
+                  label="Organisation"
+                  rules={[{ required: true, message: 'Organisation is required' }]}
+                >
+                  <Select placeholder="Select organisation" disabled>
+                    {orgs.map((org) => (
+                      <Option key={org.id} value={org.id}>
+                        {org.title}
+                      </Option>
+                    ))}
+                  </Select>
+                </Form.Item>
+                <Form.Item rules={[{ required: true }]} name="space_id" label="SpaceID">
+                  <Input disabled />
+                </Form.Item>
+                <Form.Item
+                  name="name"
+                  label="Name"
+                  rules={[
+                    { required: true, message: 'Name is required' },
+                    { min: 3, message: 'Name must be minimum 3 characters.' },
+                    { max: 50, message: 'Name must be maximum 50 characters.' },
+                  ]}
+                >
+                  <Input placeholder="Input name" />
+                </Form.Item>
+                <Form.Item name="site_title" label="Title">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="tag_line" label="Tag line">
+                  <Input />
+                </Form.Item>
+                <Form.Item name="description" label="Description">
+                  <TextArea placeholder="Enter Description..." />
+                </Form.Item>
+                <SlugInput />
+                <Form.Item name="site_address" label="Site Address">
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
           </Panel>
-          <Panel header="Meta Fields" key="2">
+        </Collapse>
+        <Collapse
+          expandIconPosition="right"
+          expandIcon={({ isActive }) => <Button>{isActive ? 'Close' : 'Expand'}</Button>}
+          style={{
+            width: '100%',
+            background: '#f0f2f5',
+            border: 0,
+            marginTop: '1rem',
+          }}
+        >
+          <Panel header="Meta Fields" key="1">
             <Form.Item name="meta_fields" label="Metafields">
               <MonacoEditor language="json" width="100%" />
             </Form.Item>
           </Panel>
         </Collapse>
       </Form>
-    </div>
+    </ConfigProvider>
   );
 };
 
