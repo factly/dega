@@ -9,6 +9,7 @@ import (
 // Tag model
 type Tag struct {
 	config.Base
+	MigrationID      *uint          `gorm:"column:migration_id;default:NULL" json:"migration_id"`
 	Name             string         `gorm:"column:name" json:"name" validate:"required"`
 	Slug             string         `gorm:"column:slug" json:"slug" validate:"required"`
 	BackgroundColour postgres.Jsonb `json:"background_colour" validate:"required" swaggertype:"primitive,string"`

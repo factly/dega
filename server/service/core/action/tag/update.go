@@ -157,6 +157,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["medium_id"] = nil
 	}
 
+	if tag.MigrationID != nil {
+		updateMap["migration_id"] = tag.MigrationID
+	}
 	if tag.CreatedAt.IsZero() {
 		updateMap["created_at"] = result.CreatedAt
 	}

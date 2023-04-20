@@ -127,8 +127,8 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Meta:             tag.Meta,
 		HeaderCode:       tag.HeaderCode,
 		FooterCode:       tag.FooterCode,
+		MigrationID:      tag.MigrationID,
 	}
-
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Tag{}).Create(&result).Error
 
