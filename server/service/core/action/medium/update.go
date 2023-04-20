@@ -121,7 +121,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"description":   medium.Description,
 		"meta_fields":   medium.MetaFields,
 	}
-
+	if medium.MigrationID != nil {
+		updateMap["migration_id"] = medium.MigrationID
+	}
 	err = tx.Model(&result).Updates(&updateMap).First(&result).Error
 
 	if err != nil {

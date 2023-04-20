@@ -14,6 +14,7 @@ import (
 // Medium model
 type Medium struct {
 	config.Base
+	MigrationID *uint          `gorm:"column:migration_id;default:NULL" json:"migration_id"`
 	Name        string         `gorm:"column:name" json:"name"`
 	Slug        string         `gorm:"column:slug" json:"slug"`
 	Type        string         `gorm:"column:type" json:"type"`
