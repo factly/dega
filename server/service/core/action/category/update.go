@@ -173,6 +173,11 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"footer_code":       category.FooterCode,
 		"background_colour": category.BackgroundColour,
 	}
+
+	if category.MigrationID != nil {
+		updateMap["migration_id"] = category.MigrationID
+	}
+
 	if category.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}

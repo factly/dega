@@ -11,6 +11,7 @@ import (
 
 // category request body
 type category struct {
+	MigrationID      *uint          `gorm:"column:migration_id;default:false" json:"migration_id"`
 	CreatedAt        time.Time      `json:"created_at"`
 	UpdatedAt        time.Time      `json:"updated_at"`
 	Name             string         `json:"name" validate:"required,max=500"`

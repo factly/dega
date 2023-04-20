@@ -156,6 +156,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Meta:             category.Meta,
 		HeaderCode:       category.HeaderCode,
 		FooterCode:       category.FooterCode,
+		MigrationID:      category.MigrationID,
 	}
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()
 	err = tx.Model(&model.Category{}).Create(result).Error

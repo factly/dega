@@ -12,6 +12,7 @@ import (
 // Category model
 type Category struct {
 	config.Base
+	MigrationID      *uint          `gorm:"column:migration_id;default:NULL" json:"migration_id"`
 	Name             string         `gorm:"column:name" json:"name"`
 	Slug             string         `gorm:"column:slug" json:"slug"`
 	BackgroundColour postgres.Jsonb `gorm:"column:background_colour" json:"background_colour" swaggertype:"primitive,string"`
