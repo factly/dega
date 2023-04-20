@@ -188,4 +188,4 @@ dist/
 
 *.sqlite
 
-./prebuild.sh
+setupConfig.sh
