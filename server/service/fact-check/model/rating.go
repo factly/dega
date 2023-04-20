@@ -14,6 +14,7 @@ import (
 type Rating struct {
 	config.Base
 	Name             string         `gorm:"column:name" json:"name"`
+	MigrationID      *uint          `gorm:"column:migration_id;default:NULL" json:"migration_id"`
 	Slug             string         `gorm:"column:slug" json:"slug"`
 	BackgroundColour postgres.Jsonb `gorm:"column:background_colour" json:"background_colour" swaggertype:"primitive,string"`
 	TextColour       postgres.Jsonb `gorm:"column:text_colour" json:"text_colour" swaggertype:"primitive,string"`

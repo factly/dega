@@ -129,6 +129,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 			UpdatedAt: rating.UpdatedAt,
 		},
 		Name:             rating.Name,
+		MigrationID:      rating.MigrationID,
 		Slug:             slugx.Approve(&config.DB, ratingSlug, sID, tableName),
 		BackgroundColour: rating.BackgroundColour,
 		TextColour:       rating.TextColour,

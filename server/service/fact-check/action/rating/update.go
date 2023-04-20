@@ -168,6 +168,10 @@ func update(w http.ResponseWriter, r *http.Request) {
 		"footer_code":       rating.FooterCode,
 	}
 
+	if rating.MigrationID != nil {
+		updateMap["migration_id"] = rating.MigrationID
+	}
+
 	if rating.MediumID == 0 {
 		updateMap["medium_id"] = nil
 	}

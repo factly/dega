@@ -11,6 +11,7 @@ import (
 
 // rating model
 type rating struct {
+	MigrationID      *uint          `json:"migration_id"`
 	CreatedAt        time.Time      `json:"created_at"`
 	UpdatedAt        time.Time      `json:"updated_at"`
 	Name             string         `json:"name" validate:"required,max=500"`
@@ -42,7 +43,7 @@ func Router() chi.Router {
 		r.With(util.CheckKetoPolicy(entity, "get")).Get("/", details)
 		r.With(util.CheckKetoPolicy(entity, "update")).Put("/", update)
 		r.With(util.CheckKetoPolicy(entity, "delete")).Delete("/", delete)
-	})	
+	})
 
 	return r
 
