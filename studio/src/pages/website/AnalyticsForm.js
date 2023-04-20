@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Skeleton, Row } from 'antd';
+import { Button, Form, Input, Skeleton, Row, Col, ConfigProvider } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSpace } from '../../actions/spaces';
 import RecordNotFound from '../../components/ErrorsAndImage/RecordNotFound';
@@ -33,7 +33,15 @@ function AnalyticsForm() {
     form.resetFields();
   };
   return (
-    <div>
+    <ConfigProvider
+      theme={{
+        components: {
+          Form: {
+            marginLG: 12,
+          },
+        },
+      }}
+    >
       <Helmet title={'Analytics Form'} />
       <Form
         form={form}
@@ -54,28 +62,27 @@ function AnalyticsForm() {
         onValuesChange={() => {
           setValueChange(true);
         }}
-        style={{
-          paddingTop: '24px',
-        }}
       >
-        <Row justify="end">
+        <Row>
+          <Col span={8}>
+            <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
+              <Input style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item name={['analytics', 'plausible', 'domain']} label="Domain">
+              <Input style={{ width: '100%' }} />
+            </Form.Item>
+            <Form.Item name={['analytics', 'plausible', 'embed_code']} label="Embed Code">
+              <Input.TextArea style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+        </Row>
           <Form.Item>
             <Button disabled={!valueChange} type="primary" htmlType="submit">
               Update
             </Button>
           </Form.Item>
-        </Row>
-        <Form.Item name={['analytics', 'plausible', 'server_url']} label="Server URL">
-          <Input style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item name={['analytics', 'plausible', 'domain']} label="Domain">
-          <Input style={{ width: '100%' }} />
-        </Form.Item>
-        <Form.Item name={['analytics', 'plausible', 'embed_code']} label="Embed Code">
-          <Input.TextArea style={{ width: '100%' }} />
-        </Form.Item>
       </Form>
-    </div>
+    </ConfigProvider>
   );
 }
 
