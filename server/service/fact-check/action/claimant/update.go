@@ -160,6 +160,9 @@ func update(w http.ResponseWriter, r *http.Request) {
 		updateMap["created_at"] = result.CreatedAt
 	}
 
+	if claimant.MigrationID != nil {
+		updateMap["migration_id"] = claimant.MigrationID
+	}
 	if claimant.UpdatedAt.IsZero() {
 		updateMap["updated_at"] = time.Now()
 	}

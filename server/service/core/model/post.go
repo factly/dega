@@ -45,8 +45,9 @@ type Post struct {
 // PostAuthor model
 type PostAuthor struct {
 	config.Base
-	AuthorID uint `gorm:"column:author_id" json:"author_id"`
-	PostID   uint `gorm:"column:post_id" json:"post_id"`
+	MigrationID *uint `gorm:"column:migration_id;default:NULL" json:"migration_id"`
+	AuthorID    uint  `gorm:"column:author_id" json:"author_id"`
+	PostID      uint  `gorm:"column:post_id" json:"post_id"`
 }
 
 var postUser config.ContextKey = "post_user"

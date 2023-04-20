@@ -128,6 +128,7 @@ func create(w http.ResponseWriter, r *http.Request) {
 		Meta:            claimant.Meta,
 		HeaderCode:      claimant.HeaderCode,
 		FooterCode:      claimant.FooterCode,
+		MigrationID:     claimant.MigrationID,
 	}
 
 	tx := config.DB.WithContext(context.WithValue(r.Context(), userContext, uID)).Begin()

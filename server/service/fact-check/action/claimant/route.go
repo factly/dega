@@ -11,6 +11,7 @@ import (
 
 // claimant model
 type claimant struct {
+	MigrationID *uint          `json:"migration_id"`
 	CreatedAt   time.Time      `json:"created_at"`
 	UpdatedAt   time.Time      `json:"updated_at"`
 	Name        string         `json:"name" validate:"required,max=500"`

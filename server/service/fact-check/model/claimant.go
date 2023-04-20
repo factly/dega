@@ -13,6 +13,7 @@ import (
 // Claimant model
 type Claimant struct {
 	config.Base
+	MigrationID     *uint          `gorm:"column:migration_id;default:NULL" json:"migration_id"`
 	Name            string         `gorm:"column:name" json:"name"`
 	Slug            string         `gorm:"column:slug" json:"slug"`
 	Description     postgres.Jsonb `gorm:"column:description" json:"description" swaggertype:"primitive,string"`
