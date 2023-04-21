@@ -76,11 +76,11 @@ function AnalyticsForm() {
             </Form.Item>
           </Col>
         </Row>
-          <Form.Item>
-            <Button disabled={!valueChange} type="primary" htmlType="submit">
-              Update
-            </Button>
-          </Form.Item>
+        <Form.Item>
+          <Button disabled={!valueChange} type="primary" htmlType="submit">
+            Update
+          </Button>
+        </Form.Item>
       </Form>
     </ConfigProvider>
   );

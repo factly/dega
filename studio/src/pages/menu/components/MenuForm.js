@@ -29,7 +29,6 @@ function MenuForm({ onCreate, data = {} }) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-
   const addMenu = React.useRef(null);
 
   const onReset = () => {
@@ -128,7 +127,12 @@ function MenuForm({ onCreate, data = {} }) {
                       >
                         <Col span={24}>
                           <Form.Item>
-                            <Row key={index} align="middle" justify={isMobileScreen ? "end" :"start"} style={{ gap: '16px' }}>
+                            <Row
+                              key={index}
+                              align="middle"
+                              justify={isMobileScreen ? 'end' : 'start'}
+                              style={{ gap: '16px' }}
+                            >
                               <Col md={6} xs={24}>
                                 <MenuField field={field} />
                               </Col>
@@ -158,7 +162,7 @@ function MenuForm({ onCreate, data = {} }) {
         <Row>
           <Col xs={24} md={9}>
             <Form.Item style={{ marginTop: '20px' }} name="meta_fields" label="Metafields">
-              <MonacoEditor language="json" width={"100%"} />
+              <MonacoEditor language="json" width={'100%'} />
             </Form.Item>
           </Col>
         </Row>

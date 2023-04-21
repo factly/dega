@@ -23,7 +23,12 @@ function Submenu({ fieldKey, isMobileScreen }) {
                 <Row key={field.key}>
                   <Col span={24}>
                     <Form.Item>
-                      <Row key={index2} align={"middle"} justify={isMobileScreen ? "end" : "start"} gutter={16}>
+                      <Row
+                        key={index2}
+                        align={'middle'}
+                        justify={isMobileScreen ? 'end' : 'start'}
+                        gutter={16}
+                      >
                         <Col md={6} xs={24}>
                           <MenuField field={field} />
                         </Col>
@@ -38,7 +43,7 @@ function Submenu({ fieldKey, isMobileScreen }) {
                         </Col>
                       </Row>
                       <div style={{ marginLeft: '25px' }}>
-                        <Submenu fieldKey={field.name} isMobileScreen={isMobileScreen}/>
+                        <Submenu fieldKey={field.name} isMobileScreen={isMobileScreen} />
                       </div>
                     </Form.Item>
                   </Col>
