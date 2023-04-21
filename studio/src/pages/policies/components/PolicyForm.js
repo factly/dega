@@ -100,8 +100,8 @@ function PolicyForm({ data = {}, onCreate }) {
             marginLG: 12,
           },
           Checkbox: {
-            marginXS: 0
-          }
+            marginXS: 0,
+          },
         },
       }}
     >
@@ -144,22 +144,23 @@ function PolicyForm({ data = {}, onCreate }) {
             <Typography.Title level={5} strong>
               Authorization
             </Typography.Title>
-            <Divider style={{ margin: '14 0' }}
-            />
+            <Divider style={{ margin: '14 0' }} />
             {entities.map((entity, index) => (
-              <Form.Item
-                key={'permissions-' + index}
-                name={['permissions', entity.name]}
-              >
+              <Form.Item key={'permissions-' + index} name={['permissions', entity.name]}>
                 <Row gutter={[16, 8]}>
                   <Col md={6} xs={24}>
                     <Typography.Text>{entity.label}</Typography.Text>
                   </Col>
                   <Col md={18} xs={24}>
-                    <Checkbox.Group style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
-                      defaultValue={data.permissions && data.permissions[entity.name] ? data.permissions[entity.name] : []}
+                    <Checkbox.Group
+                      style={{ flexWrap: 'wrap', justifyContent: 'space-between' }}
+                      defaultValue={
+                        data.permissions && data.permissions[entity.name]
+                          ? data.permissions[entity.name]
+                          : []
+                      }
                       options={entity.options}
-                      />
+                    />
                   </Col>
                 </Row>
               </Form.Item>

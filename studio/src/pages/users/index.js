@@ -37,7 +37,7 @@ function Users() {
         <Typography.Text style={{ fontSize: '1rem' }} strong>
           {record}
         </Typography.Text>
-        )
+      ),
     },
     {
       title: 'E-mail',
@@ -48,7 +48,7 @@ function Users() {
         <Typography.Text style={{ fontSize: '1rem' }} strong>
           {record}
         </Typography.Text>
-        )
+      ),
     },
   ];
 

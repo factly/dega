@@ -55,7 +55,9 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
       },
       render: (_, record) => {
         return (
-          <Typography.Paragraph style={{ fontSize: '1rem' }} strong ellipsis={{ rows: 2 }}>{record.description}</Typography.Paragraph>
+          <Typography.Paragraph style={{ fontSize: '1rem' }} strong ellipsis={{ rows: 2 }}>
+            {record.description}
+          </Typography.Paragraph>
         );
       },
     },
@@ -120,7 +122,7 @@ function PolicyList({ actions, data, filters, setFilters, fetchPolicies }) {
               }}
               onOk={(e) => {
                 e.stopPropagation();
-                dispatch(deletePolicy(record.id)).then(() => fetchPolicies())
+                dispatch(deletePolicy(record.id)).then(() => fetchPolicies());
                 setModalOpen(false);
               }}
               disabled={!(actions.includes('admin') || actions.includes('delete'))}
