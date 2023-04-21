@@ -14,6 +14,21 @@ function MenuForm({ onCreate, data = {} }) {
   }
   const [form] = Form.useForm();
   const [valueChange, setValueChange] = React.useState(false);
+  const [isMobileScreen, setIsMobileScreen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setIsMobileScreen(true);
+      } else {
+        setIsMobileScreen(false);
+      }
+    };
+    window.addEventListener('resize', handleResize);
+    handleResize();
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
 
   const addMenu = React.useRef(null);
 
@@ -67,7 +82,7 @@ function MenuForm({ onCreate, data = {} }) {
           </Form.Item>
         </Row>
         <Row gutter={16}>
-          <Col span={6}>
+          <Col md={6} xs={24}>
             <Form.Item
               name="name"
               label="Name"
@@ -81,9 +96,9 @@ function MenuForm({ onCreate, data = {} }) {
               <Input placeholder="Enter name" />
             </Form.Item>
           </Col>
-          <Col span={6}>
+          <Col md={6}>
             <Button
-              style={{ marginTop: '32px' }}
+              style={{ marginTop: isMobileScreen || '32px' }}
               onClick={() => {
                 addMenu.current();
               }}
@@ -92,30 +107,32 @@ function MenuForm({ onCreate, data = {} }) {
             </Button>
           </Col>
         </Row>
-        <Row>
+        <Row style={{ width: '100%' }}>
           <Col span={24}>
             <Form.List name="menu" style={{ width: '100%' }}>
               {(fields, { add, remove }) => {
                 addMenu.current = add;
                 return (
-                  <div style={{ width: '100%', marginLeft: '-25px' }}>
+                  <div style={{ width: '100%' }}>
                     {fields.map((field, index) => (
                       <Row
                         key={field.key}
                         style={{
                           background: '#f1f1f16b',
-                          margin: '16px',
+                          marginTop: '16px',
+                          width: '100%',
                           paddingTop: '16px',
                           borderRadius: '8px',
+                          overflowX: isMobileScreen ? 'scroll' : 'hidden',
                         }}
                       >
                         <Col span={24}>
                           <Form.Item>
-                            <Row key={index} align="middle" justify="start" gutter={16}>
-                              <Col span={6}>
+                            <Row key={index} align="middle" justify={isMobileScreen ? "end" :"start"} style={{ gap: '16px' }}>
+                              <Col md={6} xs={24}>
                                 <MenuField field={field} />
                               </Col>
-                              <Col span={6}>
+                              <Col>
                                 <Button
                                   onClick={() => {
                                     remove(field.name);
@@ -126,7 +143,7 @@ function MenuForm({ onCreate, data = {} }) {
                               </Col>
                             </Row>
                             <div style={{ marginLeft: '25px' }}>
-                              <Submenu fieldKey={field.name} />
+                              <Submenu fieldKey={field.name} isMobileScreen={isMobileScreen} />
                             </div>
                           </Form.Item>
                         </Col>
@@ -138,9 +155,13 @@ function MenuForm({ onCreate, data = {} }) {
             </Form.List>
           </Col>
         </Row>
-        <Form.Item style={{ marginTop: '20px' }} name="meta_fields" label="Metafields">
-          <MonacoEditor language="json" />
-        </Form.Item>
+        <Row>
+          <Col xs={24} md={9}>
+            <Form.Item style={{ marginTop: '20px' }} name="meta_fields" label="Metafields">
+              <MonacoEditor language="json" width={"100%"} />
+            </Form.Item>
+          </Col>
+        </Row>
       </Form>
     </ConfigProvider>
   );

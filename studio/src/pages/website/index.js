@@ -17,7 +17,7 @@ const Website = () => {
     <div>
       <Helmet title={'Website'} />
       <Row gutter={[16, 24]}>
-        <Col span={12}>
+        <Col md={12} xs={24}>
           <Link to={`/settings/website/general`}>
             <Card hoverable>
               <Meta
@@ -33,7 +33,7 @@ const Website = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to={`/settings/website/branding`}>
             <Card hoverable>
               <Meta
@@ -50,7 +50,7 @@ const Website = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/website/menus">
             <Card hoverable>
               <Meta
@@ -67,7 +67,7 @@ const Website = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col md={12} xs={24}>
           <Link to={`/settings/website/code-injection`}>
             <Card hoverable>
               <Meta
@@ -84,7 +84,7 @@ const Website = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to={`/settings/website/analytics`}>
             <Card hoverable>
               <Meta

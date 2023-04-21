@@ -11,8 +11,8 @@ const Advanced = () => {
   return (
     <div>
       <Helmet title={'Advanced'} />
-      <Row gutter={[16, 16]}>
-        <Col span={12}>
+      <Row gutter={[16, 24]}>
+        <Col xs={24} md={12}>
           <Link to="/settings/advanced/webhooks">
             <Card style={gridStyle} hoverable>
               <Meta
@@ -29,7 +29,7 @@ const Advanced = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/advanced/reindex">
             <Card style={gridStyle} hoverable>
               <Meta
@@ -46,7 +46,7 @@ const Advanced = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/advanced/formats">
             <Card style={gridStyle} hoverable>
               <Meta

@@ -83,7 +83,7 @@ function Branding() {
         >
           <Panel header="Icons and Logos" key="1">
             <Row gutter={[48, 16]}>
-              <Col span={5}>
+              <Col xs={24} md={5}>
                 <Form.Item label="Primary Logo" name="logo_id" extra="Primary Logo">
                   <MediaSelector
                     containerStyles={{
@@ -95,7 +95,7 @@ function Branding() {
                   />
                 </Form.Item>
               </Col>
-              <Col span={5}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Logo Mobile"
                   name="logo_mobile_id"
@@ -111,7 +111,7 @@ function Branding() {
                   />
                 </Form.Item>
               </Col>
-              <Col span={5}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Fav Icon"
                   name="fav_icon_id"
@@ -127,7 +127,7 @@ function Branding() {
                   />
                 </Form.Item>
               </Col>
-              <Col span={5}>
+              <Col xs={24} md={5}>
                 <Form.Item
                   label="Mobile Icon"
                   name="mobile_icon_id"

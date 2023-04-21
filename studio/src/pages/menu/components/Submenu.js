@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Button, Row, Col } from 'antd';
 import MenuField from './MenuField';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
-function Submenu({ fieldKey }) {
+function Submenu({ fieldKey, isMobileScreen }) {
   return (
     <>
       <Form.List name={[fieldKey, 'menu']}>
@@ -23,11 +23,11 @@ function Submenu({ fieldKey }) {
                 <Row key={field.key}>
                   <Col span={24}>
                     <Form.Item>
-                      <Row key={index2} align="middle" gutter={16}>
-                        <Col span={6}>
+                      <Row key={index2} align={"middle"} justify={isMobileScreen ? "end" : "start"} gutter={16}>
+                        <Col md={6} xs={24}>
                           <MenuField field={field} />
                         </Col>
-                        <Col span={6}>
+                        <Col>
                           <Button
                             onClick={() => {
                               remove(field.name);
@@ -38,7 +38,7 @@ function Submenu({ fieldKey }) {
                         </Col>
                       </Row>
                       <div style={{ marginLeft: '25px' }}>
-                        <Submenu fieldKey={field.name} />
+                        <Submenu fieldKey={field.name} isMobileScreen={isMobileScreen}/>
                       </div>
                     </Form.Item>
                   </Col>

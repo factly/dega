@@ -10,9 +10,9 @@ const Members = () => {
   };
   return (
     <div>
-      <Row gutter={[16, 16]}>
+      <Row gutter={[16, 24]}>
         <Helmet title={'Members'} />
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/members/users">
             <Card style={gridStyle} hoverable>
               <Meta
@@ -29,7 +29,7 @@ const Members = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/members/policies">
             <Card style={gridStyle} hoverable>
               <Meta
@@ -46,7 +46,7 @@ const Members = () => {
             </Card>
           </Link>
         </Col>
-        <Col span={12}>
+        <Col xs={24} md={12}>
           <Link to="/settings/members/roles">
             <Card style={gridStyle} hoverable>
               <Meta

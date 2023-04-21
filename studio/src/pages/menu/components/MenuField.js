@@ -16,7 +16,7 @@ function MenuField({ field }) {
   }, [inputRef]);
   return (
     <Collapse
-      style={{ maxWidth: '375px', background: '#f0f2f5', border: 0, marginLeft: '25px' }}
+      style={{ minWidth: '225px', maxWidth: '375px', background: '#f0f2f5', border: 0, marginLeft: '25px' }}
       defaultActiveKey={['1']}
     >
       <Panel header={panelHeader} key={['1']}>
