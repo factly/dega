@@ -137,7 +137,7 @@ function PolicyForm({ data = {}, onCreate }) {
               <Selector mode="multiple" display={'name'} action="Roles" />
             </Form.Item>
             <Form.Item name="description" label="Description">
-              <Input.TextArea />
+              <Input.TextArea rows={4} />
             </Form.Item>
           </Col>
           <Col md={12} xs={24}>
