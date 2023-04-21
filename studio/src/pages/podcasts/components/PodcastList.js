@@ -115,6 +115,9 @@ function PodcastList({ actions, data, filters, setFilters, fetchPodcasts }) {
                   colorBorder: '#F2F2F2',
                   colorPrimaryHover: '#00000026',
                 },
+                Modal: {
+                  colorBgMask: '#0000000B',
+                },
               },
             }}
           >

@@ -32,11 +32,23 @@ function Users() {
       title: 'Name',
       dataIndex: 'display_name',
       key: 'name',
+      width: '50%',
+      render: (record) => (
+        <Typography.Text style={{ fontSize: '1rem' }} strong>
+          {record}
+        </Typography.Text>
+        )
     },
     {
       title: 'E-mail',
       dataIndex: 'email',
       key: 'email',
+      width: '50%',
+      render: (record) => (
+        <Typography.Text style={{ fontSize: '1rem' }} strong>
+          {record}
+        </Typography.Text>
+        )
     },
   ];
 
@@ -46,7 +58,6 @@ function Users() {
     <Space direction={'vertical'}>
       <Helmet title={'Users'} />
       <Table
-        bordered
         columns={columns}
         dataSource={spaceUsers}
         loading={loading}
